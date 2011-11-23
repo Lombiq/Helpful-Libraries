@@ -7,12 +7,15 @@ OrchardVersion: 1.3
 Description: Libraries that can be handy when developing for Orchard
 Features:
     Piedone.HelpfulLibraries:
-        Description: Description for feature Piedone.HelpfulLibraries.
+		Description: Base of Helpful Libraries
+        Category: Developer
 	Piedone.HelpfulLibraries.ServiceValidation:
 		Name: Service Validation Libraries
         Description: These libraries help collecting and returning validation errors in service classes
 		Category: Developer
+		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.Tasks:
 		Name: Task Libraries
         Description: These libraries help dealing with System.Threading.Tasks in an Orchard environment
 		Category: Developer
+		Dependencies: Piedone.HelpfulLibraries
