@@ -55,7 +55,7 @@ namespace Piedone.HelpfulLibraries.Tasks
 
         public Task Factory(Action action, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true)
         {
-            return new Task(BuildTaskAction((param) => action(), catchExceptions), cancellationToken, creationOptions);
+            return new Task(BuildTaskAction(action, catchExceptions), cancellationToken, creationOptions);
         }
 
         public Task Factory(Action<object> action, object state, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true)
@@ -63,7 +63,39 @@ namespace Piedone.HelpfulLibraries.Tasks
             return new Task(BuildTaskAction(action, catchExceptions), cancellationToken, creationOptions);
         }
 
-        private Action<object> BuildTaskAction(Action<object> action, bool catchExceptions)
+        public Action BuildTaskAction(Action action, bool catchExceptions = true)
+        {
+            var taskContext = new TaskContext(_workContextAccessor.GetContext());
+
+            return () =>
+            {
+                using (var scope = _workContextAccessor.CreateWorkContextScope())
+                {
+                    using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
+                    {
+                        taskContext.Transcribe(_workContextAccessor.GetContext());
+
+                        if (catchExceptions)
+                        {
+                            try
+                            {
+                                action();
+                            }
+                            catch (Exception e)
+                            {
+                                Logger.Error(e, "Background task failed with exception " + e.Message);
+                            }
+                        }
+                        else
+                        {
+                            action();
+                        }
+                    }
+                }
+            };
+        }
+
+        public Action<object> BuildTaskAction(Action<object> action, bool catchExceptions = true)
         {
             var taskContext = new TaskContext(_workContextAccessor.GetContext());
 
@@ -73,7 +105,7 @@ namespace Piedone.HelpfulLibraries.Tasks
                 {
                     using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
                     {
-                        ((TaskContext)taskContext).Transcribe(_workContextAccessor.GetContext());
+                        taskContext.Transcribe(_workContextAccessor.GetContext());
 
                         if (catchExceptions)
                         {
@@ -94,5 +126,7 @@ namespace Piedone.HelpfulLibraries.Tasks
                 }
             };
         }
+
+
     }
 }

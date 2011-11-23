@@ -9,6 +9,7 @@ namespace Piedone.HelpfulLibraries.Tasks
     {
         Task Factory(Action action, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true);
         Task Factory(Action<object> action, object state, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true);
-        Orchard.Logging.ILogger Logger { get; set; }
+        Action BuildTaskAction(Action action, bool catchExceptions = true);
+        Action<object> BuildTaskAction(Action<object> action, bool catchExceptions = true);
     }
 }
