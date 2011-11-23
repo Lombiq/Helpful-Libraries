@@ -13,6 +13,6 @@ Features:
         Description: These libraries help collecting and returning validation errors in service classes
 		Category: Developer
 	Piedone.HelpfulLibraries.Tasks:
-		Name: Service Validation Libraries
-        Description: These libraries help collecting and returning validation errors in service classes
+		Name: Task Libraries
+        Description: These libraries help dealing with System.Threading.Tasks in an Orchard environment
 		Category: Developer

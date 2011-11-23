@@ -45,6 +45,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -77,7 +78,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Libs\Tasks\" />
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
@@ -89,6 +89,8 @@
     <Compile Include="Libs\ServiceValidation\ValidationDictionaries\IValidationDictionary.cs" />
     <Compile Include="Libs\ServiceValidation\ValidationDictionaries\ServiceValidationDictionary.cs" />
     <Compile Include="Libs\ServiceValidation\ValidationDictionaries\ValidationDictionary.cs" />
+    <Compile Include="Libs\Tasks\ITaskFactory.cs" />
+    <Compile Include="Libs\Tasks\TaskFactory.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
