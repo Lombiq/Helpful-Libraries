@@ -9,6 +9,7 @@ using System.Transactions;
 using Orchard.Logging;
 using System.Threading.Tasks;
 using Orchard.Environment.Extensions;
+using System.Threading;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
@@ -52,16 +53,21 @@ namespace Piedone.HelpfulLibraries.Tasks
             Logger = NullLogger.Instance; // Constructor injection of ILogger fails
         }
 
-        public Task Factory(Action action, bool catchExceptions = true)
+        public Task Factory(Action action, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true)
         {
-            return new Task(BuildTaskAction(action, catchExceptions));
+            return new Task(BuildTaskAction((param) => action(), catchExceptions), cancellationToken, creationOptions);
         }
 
-        private Action BuildTaskAction(Action action, bool catchExceptions)
+        public Task Factory(Action<object> action, object state, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true)
+        {
+            return new Task(BuildTaskAction(action, catchExceptions), cancellationToken, creationOptions);
+        }
+
+        private Action<object> BuildTaskAction(Action<object> action, bool catchExceptions)
         {
             var taskContext = new TaskContext(_workContextAccessor.GetContext());
 
-            return () =>
+            return (state) =>
             {
                 using (var scope = _workContextAccessor.CreateWorkContextScope())
                 {
@@ -73,7 +79,7 @@ namespace Piedone.HelpfulLibraries.Tasks
                         {
                             try
                             {
-                                action();
+                                action(state);
                             }
                             catch (Exception e)
                             {
@@ -82,7 +88,7 @@ namespace Piedone.HelpfulLibraries.Tasks
                         }
                         else
                         {
-                            action();
+                            action(state);
                         }
                     }
                 }
