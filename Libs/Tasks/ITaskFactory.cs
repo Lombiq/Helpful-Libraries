@@ -15,6 +15,11 @@ namespace Piedone.HelpfulLibraries.Tasks
         /// 
         /// All parameters are optional. For documentation please refer to the documentation of the Task class.
         /// </summary>
+        /// <param name="catchExceptions">
+        /// If true, exceptions thrown from the action will be caught and logged (defaults to true).
+        /// If you opt to false, be extremely cautious to catch every possible exception in your code as any uncaught
+        /// exception in a background thread causes the whole site to halt!
+        /// </param>
         /// <see cref="System.Threading.Tasks.Task"/>
         Task Factory(Action action, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true);
 
@@ -23,6 +28,11 @@ namespace Piedone.HelpfulLibraries.Tasks
         /// 
         /// All parameters are optional. For documentation please refer to the documentation of the Task class.
         /// </summary>
+        /// <param name="catchExceptions">
+        /// If true, exceptions thrown from the action will be caught and logged (defaults to true).
+        /// If you opt to false, be extremely cautious to catch every possible exception in your code as any uncaught
+        /// exception in a background thread causes the whole site to halt!
+        /// </param>
         /// <see cref="System.Threading.Tasks.Task"/>
         Task Factory(Action<object> action, object state, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true);
         
@@ -32,7 +42,11 @@ namespace Piedone.HelpfulLibraries.Tasks
         /// Use this if you want to instantiate Task yourself.
         /// </summary>
         /// <param name="action">The action to execute</param>
-        /// <param name="catchExceptions">If true, exceptions thrown from the action will be caught and logged (defaults to true, recommended)</param>
+        /// <param name="catchExceptions">
+        /// If true, exceptions thrown from the action will be caught and logged (defaults to true).
+        /// If you opt to false, be extremely cautious to catch every possible exception in your code as any uncaught
+        /// exception in a background thread causes the whole site to halt!
+        /// </param>
         /// <returns>The encapsulated action</returns>
         Action BuildTaskAction(Action action, bool catchExceptions = true);
 
@@ -42,7 +56,11 @@ namespace Piedone.HelpfulLibraries.Tasks
         /// Use this if you want to instantiate Task yourself.
         /// </summary>
         /// <param name="action">The action to execute</param>
-        /// <param name="catchExceptions">If true, exceptions thrown from the action will be caught and logged (defaults to true, recommended)</param>
+        /// <param name="catchExceptions">
+        /// If true, exceptions thrown from the action will be caught and logged (defaults to true).
+        /// If you opt to false, be extremely cautious to catch every possible exception in your code as any uncaught
+        /// exception in a background thread causes the whole site to halt!
+        /// </param>
         /// <returns>The encapsulated action</returns>
         Action<object> BuildTaskAction(Action<object> action, bool catchExceptions = true);
     }

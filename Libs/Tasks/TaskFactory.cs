@@ -76,6 +76,7 @@ namespace Piedone.HelpfulLibraries.Tasks
                 using (var scope = _workContextAccessor.CreateWorkContextScope())
                 {
                     taskContext.Transcribe(_workContextAccessor.GetContext());
+
                     if (catchExceptions)
                     {
                         try
