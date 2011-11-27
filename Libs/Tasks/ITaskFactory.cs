@@ -32,7 +32,7 @@ namespace Piedone.HelpfulLibraries.Tasks
         /// Use this if you want to instantiate Task yourself.
         /// </summary>
         /// <param name="action">The action to execute</param>
-        /// <param name="catchExceptions">If true, exceptions thrown from the action will be caught and logged (defaults to true)</param>
+        /// <param name="catchExceptions">If true, exceptions thrown from the action will be caught and logged (defaults to true, recommended)</param>
         /// <returns>The encapsulated action</returns>
         Action BuildTaskAction(Action action, bool catchExceptions = true);
 
@@ -42,7 +42,7 @@ namespace Piedone.HelpfulLibraries.Tasks
         /// Use this if you want to instantiate Task yourself.
         /// </summary>
         /// <param name="action">The action to execute</param>
-        /// <param name="catchExceptions">If true, exceptions thrown from the action will be caught and logged (defaults to true)</param>
+        /// <param name="catchExceptions">If true, exceptions thrown from the action will be caught and logged (defaults to true, recommended)</param>
         /// <returns>The encapsulated action</returns>
         Action<object> BuildTaskAction(Action<object> action, bool catchExceptions = true);
     }

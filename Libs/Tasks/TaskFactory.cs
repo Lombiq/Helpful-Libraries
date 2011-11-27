@@ -10,6 +10,7 @@ using Orchard.Logging;
 using System.Threading.Tasks;
 using Orchard.Environment.Extensions;
 using System.Threading;
+using Orchard.Security;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
@@ -24,12 +25,14 @@ namespace Piedone.HelpfulLibraries.Tasks
         {
             public string CurrentCulture { get; private set; }
             public ISite CurrentSite { get; private set; }
+            public IUser CurrentUser { get; set; }
             public HttpContextBase HttpContext { get; private set; }
 
             public TaskContext(WorkContext workContext)
             {
                 CurrentCulture = workContext.CurrentCulture;
                 CurrentSite = workContext.CurrentSite;
+                CurrentUser = workContext.CurrentUser;
                 //HttpContext = new HttpContextPlaceholder();
                 HttpContext = workContext.HttpContext;
             }
@@ -38,6 +41,7 @@ namespace Piedone.HelpfulLibraries.Tasks
             {
                 workContext.CurrentCulture = CurrentCulture;
                 workContext.CurrentSite = CurrentSite;
+                workContext.CurrentUser = CurrentUser;
                 workContext.HttpContext = HttpContext;
 
                 return workContext;
@@ -71,25 +75,21 @@ namespace Piedone.HelpfulLibraries.Tasks
             {
                 using (var scope = _workContextAccessor.CreateWorkContextScope())
                 {
-                    using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
+                    taskContext.Transcribe(_workContextAccessor.GetContext());
+                    if (catchExceptions)
                     {
-                        taskContext.Transcribe(_workContextAccessor.GetContext());
-
-                        if (catchExceptions)
-                        {
-                            try
-                            {
-                                action();
-                            }
-                            catch (Exception e)
-                            {
-                                Logger.Error(e, "Background task failed with exception " + e.Message);
-                            }
-                        }
-                        else
+                        try
                         {
                             action();
                         }
+                        catch (Exception e)
+                        {
+                            Logger.Error(e, "Background task failed with exception " + e.Message);
+                        }
+                    }
+                    else
+                    {
+                        action();
                     }
                 }
             };
@@ -103,25 +103,22 @@ namespace Piedone.HelpfulLibraries.Tasks
             {
                 using (var scope = _workContextAccessor.CreateWorkContextScope())
                 {
-                    using (var transactionScope = new TransactionScope(TransactionScopeOption.Required))
-                    {
-                        taskContext.Transcribe(_workContextAccessor.GetContext());
+                    taskContext.Transcribe(_workContextAccessor.GetContext());
 
-                        if (catchExceptions)
-                        {
-                            try
-                            {
-                                action(state);
-                            }
-                            catch (Exception e)
-                            {
-                                Logger.Error(e, "Background task failed with exception " + e.Message);
-                            } 
-                        }
-                        else
+                    if (catchExceptions)
+                    {
+                        try
                         {
                             action(state);
                         }
+                        catch (Exception e)
+                        {
+                            Logger.Error(e, "Background task failed with exception " + e.Message);
+                        }
+                    }
+                    else
+                    {
+                        action(state);
                     }
                 }
             };
