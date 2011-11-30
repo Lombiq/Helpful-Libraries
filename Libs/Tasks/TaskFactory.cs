@@ -1,16 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Orchard.Settings;
+using System.Threading;
+using System.Threading.Tasks;
 using System.Web;
 using Orchard;
-using System.Transactions;
-using Orchard.Logging;
-using System.Threading.Tasks;
 using Orchard.Environment.Extensions;
-using System.Threading;
+using Orchard.Logging;
 using Orchard.Security;
+using Orchard.Settings;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {

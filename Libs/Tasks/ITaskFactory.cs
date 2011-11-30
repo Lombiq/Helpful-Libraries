@@ -1,7 +1,7 @@
 ﻿using System;
-using Orchard;
 using System.Threading;
 using System.Threading.Tasks;
+using Orchard;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
