@@ -9,6 +9,11 @@ Features:
     Piedone.HelpfulLibraries:
 		Description: Base of Helpful Libraries
         Category: Developer
+	Piedone.HelpfulLibraries.Serialization:
+		Name: Serialization Libraries
+        Description: These libraries help the serialization and deserialization of objects
+		Category: Developer
+		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.ServiceValidation:
 		Name: Service Validation Libraries
         Description: These libraries help collecting and returning validation errors in service classes
