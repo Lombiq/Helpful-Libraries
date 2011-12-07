@@ -17,6 +17,14 @@ namespace Piedone.HelpfulLibraries.Serialization.Helpers
     [OrchardFeature("Piedone.HelpfulLibraries.Serialization")]
     public class Serializer
     {
+        /// <summary>
+        /// Serializes an object to string. Note that since the method uses DataContractSerializer under the hood classes
+        /// and their members should be decorated with the appropriate attributes, like [DataContract] (for classes) and 
+        /// [DataMember] (for properties).
+        /// </summary>
+        /// <typeparam name="T">The type of the object to serialize</typeparam>
+        /// <param name="obj">The object to serialize</param>
+        /// <returns>The string serialization of the object</returns>
         public static string Serialize<T>(T obj)
         {
             string serialization;
@@ -35,6 +43,12 @@ namespace Piedone.HelpfulLibraries.Serialization.Helpers
             return serialization;
         }
 
+        /// <summary>
+        /// Deserializes an object previously serialized with Serialize()
+        /// </summary>
+        /// <typeparam name="T">The type of the object that was serialized</typeparam>
+        /// <param name="serialization">String serialization of the object</param>
+        /// <returns>The deserialized object</returns>
         public static T Deserialize<T>(string serialization)
         {
             var serializer = new DataContractSerializer(typeof(T));
