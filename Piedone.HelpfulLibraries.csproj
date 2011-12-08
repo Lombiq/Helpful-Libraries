@@ -86,7 +86,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Libs\Serialization\Helpers\Serializer.cs" />
+    <Compile Include="Libs\Serialization\ISimpleSerializer.cs" />
+    <Compile Include="Libs\Serialization\SimpleSerializer.cs" />
     <Compile Include="Libs\ServiceValidation\Extensions\IUpdateModelExtensions.cs" />
     <Compile Include="Libs\ServiceValidation\Extensions\ModelStateDictionaryExtensions.cs" />
     <Compile Include="Libs\ServiceValidation\ServiceInterfaces\IValidatingService.cs" />
