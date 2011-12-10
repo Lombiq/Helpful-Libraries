@@ -13,7 +13,7 @@ namespace Piedone.HelpfulLibraries.Tasks
         /// <summary>
         /// Creates a new Task instance with the specified parameters
         /// 
-        /// All parameters are optional. For documentation please refer to the documentation of the Task class.
+        /// Other than action all parameters are optional. For documentation please refer to the documentation of the Task class.
         /// </summary>
         /// <param name="catchExceptions">
         /// If true, exceptions thrown from the action will be caught and logged (defaults to true).
@@ -26,7 +26,7 @@ namespace Piedone.HelpfulLibraries.Tasks
         /// <summary>
         /// Creates a new Task instance with the specified parameters
         /// 
-        /// All parameters are optional. For documentation please refer to the documentation of the Task class.
+        /// Other than action and state all parameters are optional. For documentation please refer to the documentation of the Task class.
         /// </summary>
         /// <param name="catchExceptions">
         /// If true, exceptions thrown from the action will be caught and logged (defaults to true).
