@@ -53,46 +53,66 @@ namespace Piedone.HelpfulLibraries.Tasks
             Logger = NullLogger.Instance; // Constructor injection of ILogger fails
         }
 
-        public Task Factory(Action action, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true)
+        public Action<TSender, TEventArgs> BuildAsyncEventHandler<TSender, TEventArgs>(Action<TSender, TEventArgs> action, bool catchExceptions = true)
+            where TEventArgs : EventArgs
         {
-            return new Task(BuildBackgroundAction(action, catchExceptions), cancellationToken, creationOptions);
-        }
+            var subAction = BuildBackgroundAction(
+                                (o) =>
+                                {
+                                    var eventParams = (Tuple<TSender, TEventArgs>)o;
 
-        public Task Factory(Action<object> action, object state, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true)
-        {
-            return new Task(BuildBackgroundAction(action, catchExceptions), cancellationToken, creationOptions);
+                                    action(eventParams.Item1, eventParams.Item2);
+                                }, catchExceptions);
+
+            return (sender, e) =>
+                    {
+                        subAction(new Tuple<TSender, TEventArgs>(sender, e));
+                    };
         }
 
         public Action BuildBackgroundAction(Action action, bool catchExceptions = true)
         {
-            var taskContext = new TaskContext(_workContextAccessor.GetContext());
-
+            var subAction = BuildBackgroundAction(
+                                (o) =>
+                                {
+                                    action();
+                                }, catchExceptions);
             return () =>
-            {
-                using (var scope = _workContextAccessor.CreateWorkContextScope())
-                {
-                    taskContext.Transcribe(_workContextAccessor.GetContext());
-
-                    if (catchExceptions)
                     {
-                        try
-                        {
-                            action();
-                        }
-                        catch (Exception e)
-                        {
-                            Logger.Error(e, "Background task failed with exception " + e.Message);
-                        }
-                    }
-                    else
-                    {
-                        action();
-                    }
-                }
-            };
+                        subAction(new object());
+                    };
         }
 
         public Action<object> BuildBackgroundAction(Action<object> action, bool catchExceptions = true)
+        {
+            var subFunction = BuildBackgroundFunction<int>(
+                                (o) =>
+                                {
+                                    action(o);
+                                    return 1;
+                                }, catchExceptions);
+
+            return (state) =>
+                    {
+                        subFunction(state);
+                    };
+        }
+
+        public Func<TResult> BuildBackgroundFunction<TResult>(Func<TResult> function, bool catchExceptions = true)
+        {
+            var subFunction = BuildBackgroundFunction<TResult>(
+                                (o) =>
+                                {
+                                    return function();
+                                }, catchExceptions);
+
+            return () =>
+                    {
+                        return subFunction(new object());
+                    };
+        }
+
+        public Func<object, TResult> BuildBackgroundFunction<TResult>(Func<object, TResult> function, bool catchExceptions = true)
         {
             var taskContext = new TaskContext(_workContextAccessor.GetContext());
 
@@ -106,21 +126,20 @@ namespace Piedone.HelpfulLibraries.Tasks
                     {
                         try
                         {
-                            action(state);
+                            return function(state);
                         }
                         catch (Exception e)
                         {
                             Logger.Error(e, "Background task failed with exception " + e.Message);
+                            return default(TResult);
                         }
                     }
                     else
                     {
-                        action(state);
+                        return function(state);
                     }
                 }
             };
         }
-
-
     }
 }
