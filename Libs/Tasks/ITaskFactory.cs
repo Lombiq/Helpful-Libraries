@@ -37,7 +37,7 @@ namespace Piedone.HelpfulLibraries.Tasks
         Task Factory(Action<object> action, object state, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true);
         
         /// <summary>
-        /// Encapsulates the specified action so that it can safely run Orchard code
+        /// Encapsulates the specified action so that it can safely run Orchard code in background
         /// 
         /// Use this if you want to instantiate Task yourself.
         /// </summary>
@@ -48,10 +48,10 @@ namespace Piedone.HelpfulLibraries.Tasks
         /// exception in a background thread causes the whole site to halt!
         /// </param>
         /// <returns>The encapsulated action</returns>
-        Action BuildTaskAction(Action action, bool catchExceptions = true);
+        Action BuildBackgroundAction(Action action, bool catchExceptions = true);
 
         /// <summary>
-        /// Encapsulates the specified action so that it can safely run Orchard code
+        /// Encapsulates the specified action so that it can safely run Orchard code in background
         /// 
         /// Use this if you want to instantiate Task yourself.
         /// </summary>
@@ -62,6 +62,6 @@ namespace Piedone.HelpfulLibraries.Tasks
         /// exception in a background thread causes the whole site to halt!
         /// </param>
         /// <returns>The encapsulated action</returns>
-        Action<object> BuildTaskAction(Action<object> action, bool catchExceptions = true);
+        Action<object> BuildBackgroundAction(Action<object> action, bool catchExceptions = true);
     }
 }

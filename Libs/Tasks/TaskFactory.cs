@@ -55,15 +55,15 @@ namespace Piedone.HelpfulLibraries.Tasks
 
         public Task Factory(Action action, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true)
         {
-            return new Task(BuildTaskAction(action, catchExceptions), cancellationToken, creationOptions);
+            return new Task(BuildBackgroundAction(action, catchExceptions), cancellationToken, creationOptions);
         }
 
         public Task Factory(Action<object> action, object state, CancellationToken cancellationToken = new CancellationToken(), TaskCreationOptions creationOptions = TaskCreationOptions.None, bool catchExceptions = true)
         {
-            return new Task(BuildTaskAction(action, catchExceptions), cancellationToken, creationOptions);
+            return new Task(BuildBackgroundAction(action, catchExceptions), cancellationToken, creationOptions);
         }
 
-        public Action BuildTaskAction(Action action, bool catchExceptions = true)
+        public Action BuildBackgroundAction(Action action, bool catchExceptions = true)
         {
             var taskContext = new TaskContext(_workContextAccessor.GetContext());
 
@@ -92,7 +92,7 @@ namespace Piedone.HelpfulLibraries.Tasks
             };
         }
 
-        public Action<object> BuildTaskAction(Action<object> action, bool catchExceptions = true)
+        public Action<object> BuildBackgroundAction(Action<object> action, bool catchExceptions = true)
         {
             var taskContext = new TaskContext(_workContextAccessor.GetContext());
 
