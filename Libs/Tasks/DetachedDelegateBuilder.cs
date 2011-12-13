@@ -11,7 +11,9 @@ using Orchard.Settings;
 namespace Piedone.HelpfulLibraries.Tasks
 {
     [OrchardFeature("Piedone.HelpfulLibraries.Tasks")]
-    public class TaskFactory : ITaskFactory
+    // The implementation of action and func passing below is quite ugly, but this is the only way to make it DRY. There is no
+    // real performance impact.
+    public class DetachedDelegateBuilder : IDetachedDelegateBuilder
     {
         private readonly IWorkContextAccessor _workContextAccessor;
 
@@ -44,7 +46,7 @@ namespace Piedone.HelpfulLibraries.Tasks
             }
         }
 
-        public TaskFactory(
+        public DetachedDelegateBuilder(
             IWorkContextAccessor workContextAcessor
             )
         {

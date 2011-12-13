@@ -6,9 +6,9 @@ using Orchard;
 namespace Piedone.HelpfulLibraries.Tasks
 {
     /// <summary>
-    /// Creates Task objects that work well with the Orchard ecosystem
+    /// Helps with producing delegates that can be safely invoked in the background or as an async callback
     /// </summary>
-    public interface ITaskFactory : IDependency
+    public interface IDetachedDelegateBuilder : IDependency
     {
         /// <summary>
         /// Encapsulates the specified action so that it can safely run Orchard code in an async event handler code.
