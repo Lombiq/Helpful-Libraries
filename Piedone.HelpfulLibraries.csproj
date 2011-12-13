@@ -95,8 +95,8 @@
     <Compile Include="Libs\ServiceValidation\ValidationDictionaries\IValidationDictionary.cs" />
     <Compile Include="Libs\ServiceValidation\ValidationDictionaries\ServiceValidationDictionary.cs" />
     <Compile Include="Libs\ServiceValidation\ValidationDictionaries\ValidationDictionary.cs" />
-    <Compile Include="Libs\Tasks\ITaskFactory.cs" />
-    <Compile Include="Libs\Tasks\TaskFactory.cs" />
+    <Compile Include="Libs\Tasks\IDetachedDelegateBuilder.cs" />
+    <Compile Include="Libs\Tasks\DetachedDelegateBuilder.cs" />
     <Compile Include="Libs\ServiceValidation\ServiceValidationModule.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
