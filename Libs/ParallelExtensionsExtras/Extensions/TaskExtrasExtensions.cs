@@ -7,7 +7,6 @@
 //--------------------------------------------------------------------------
 
 using System.Linq;
-using System.Windows.Threading;
 
 namespace System.Threading.Tasks
 {
@@ -277,18 +276,6 @@ namespace System.Threading.Tasks
         #endregion
 
         #region Waiting
-        /// <summary>Waits for the task to complete execution, pumping in the meantime.</summary>
-        /// <param name="task">The task for which to wait.</param>
-        /// <remarks>This method is intended for usage with Windows Presentation Foundation.</remarks>
-        public static void WaitWithPumping(this Task task)
-        {
-            if (task == null) throw new ArgumentNullException("task");
-            var nestedFrame = new DispatcherFrame();
-            task.ContinueWith(_ => nestedFrame.Continue = false);
-            Dispatcher.PushFrame(nestedFrame);
-            task.Wait();
-        }
-
         /// <summary>Waits for the task to complete execution, returning the task's final status.</summary>
         /// <param name="task">The task for which to wait.</param>
         /// <returns>The completion status of the task.</returns>
