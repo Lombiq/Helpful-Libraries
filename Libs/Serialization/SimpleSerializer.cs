@@ -6,6 +6,8 @@ using Orchard.Environment.Extensions;
 using System.IO;
 using System.Xml;
 using System.Runtime.Serialization;
+using System.CodeDom.Compiler;
+using System.Runtime.Serialization.Json;
 
 namespace Piedone.HelpfulLibraries.Serialization
 {
@@ -52,6 +54,32 @@ namespace Piedone.HelpfulLibraries.Serialization
             doc.LoadXml(serialization);
             var reader = new XmlNodeReader(doc.DocumentElement);
             return (T)serializer.ReadObject(reader);
+        }
+
+
+        public string JsonSerialize<T>(T obj)
+        {
+            using (var stream = new MemoryStream())
+            {
+                using (var sr = new StreamReader(stream))
+                {
+                    var serializer = new DataContractJsonSerializer(obj.GetType());
+                    serializer.WriteObject(stream, obj);
+                    stream.Position = 0;
+
+                    return sr.ReadToEnd();
+                }
+            }
+        }
+
+        public T JsonDeserialize<T>(string serialization)
+        {
+            using (var stream = new MemoryStream(System.Text.Encoding.Unicode.GetBytes(serialization)))
+            {
+                var serializer = new DataContractJsonSerializer(typeof(T));
+                stream.Position = 0;
+                return (T)serializer.ReadObject(stream);
+            }
         }
     }
 }
