@@ -74,7 +74,7 @@ namespace Piedone.HelpfulLibraries.Serialization
 
         public T JsonDeserialize<T>(string serialization)
         {
-            using (var stream = new MemoryStream(System.Text.Encoding.Unicode.GetBytes(serialization)))
+            using (var stream = new MemoryStream(Encoding.Unicode.GetBytes(serialization)))
             {
                 var serializer = new DataContractJsonSerializer(typeof(T));
                 stream.Position = 0;
