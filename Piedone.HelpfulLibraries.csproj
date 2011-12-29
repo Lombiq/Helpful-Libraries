@@ -87,6 +87,9 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Libs\DependencyInjection\IResolve.cs" />
+    <Compile Include="Libs\DependencyInjection\Resolve.cs" />
+    <Compile Include="Libs\DependencyInjection\DependencyInjectionModule.cs" />
     <Compile Include="Libs\ParallelExtensionsExtras\CoordinationDataStructures\AbstractStreamBase.cs" />
     <Compile Include="Libs\ParallelExtensionsExtras\CoordinationDataStructures\ActionCountdownEvent.cs" />
     <Compile Include="Libs\ParallelExtensionsExtras\CoordinationDataStructures\AsyncCoordination\AsyncBarrier.cs" />
