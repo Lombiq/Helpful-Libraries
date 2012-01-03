@@ -13,7 +13,7 @@ namespace Piedone.HelpfulLibraries.ServiceValidation.ValidationDictionaries
     /// Stores validation data in services
     /// </summary>
     /// <typeparam name="T">The type to use as the Errors dictionary key</typeparam>
-    public interface IServiceValidationDictionary<T> : IValidationDictionary<T>, ITransientDependency
+    public interface IServiceValidationDictionary<T> : IValidationDictionary<T>//, ITransientDependency
     {
     }
 }
