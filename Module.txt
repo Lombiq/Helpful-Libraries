@@ -2,7 +2,7 @@ Name: Helpful Libraries
 AntiForgery: enabled
 Author: Piedone
 Website: http://helpfullibraries.codeplex.com
-Version: 1.0
+Version: 1.1
 OrchardVersion: 1.3
 Description: Libraries that can be handy when developing for Orchard
 Features:
@@ -11,7 +11,7 @@ Features:
         Category: Developer
 	Piedone.HelpfulLibraries.DependencyInjection:
 		Name: Dependency Injection Libraries
-        Description: These libraries aid dependency injection.
+        Description: These libraries aid dependency injection
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.Serialization:
