@@ -47,7 +47,7 @@ namespace Piedone.HelpfulLibraries.Serialization
         T XmlDeserialize<T>(string serialization);
 
         /// <summary>
-        /// Serializes an object to a JSON string. Note that since the method uses DataContractSerializer under the hood classes
+        /// Serializes an object to a JSON string. Note that since the method uses DataContractJsonSerializer under the hood classes
         /// and their members should be decorated with the appropriate attributes, like [DataContract] (for classes) and 
         /// [DataMember] (for properties).
         /// </summary>
