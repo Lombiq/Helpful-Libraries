@@ -4,7 +4,7 @@ using Orchard.Environment.Extensions;
 
 namespace Piedone.HelpfulLibraries.DependencyInjection
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.ServiceValidation")]
+    [OrchardFeature("Piedone.HelpfulLibraries.DependencyInjection")]
     public class DependencyInjectionModule : IModule
     {
         public void Configure(IComponentRegistry componentRegistry)
