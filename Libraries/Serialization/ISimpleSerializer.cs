@@ -63,5 +63,21 @@ namespace Piedone.HelpfulLibraries.Serialization
         /// <param name="serialization">JSON string serialization of the object</param>
         /// <returns>The deserialized object</returns>
         T JsonDeserialize<T>(string serialization);
+
+        /// <summary>
+        /// Serializes an object to a Base64 string
+        /// </summary>
+        /// <typeparam name="T">The type of the object to serialize</typeparam>
+        /// <param name="obj">The object to serialize</param>
+        /// <returns>The Base64 string serialization of the object</returns>
+        string Base64Serialize<T>(T obj);
+
+        /// <summary>
+        /// Deserializes an object previously serialized with Base64Serialize()
+        /// </summary>
+        /// <typeparam name="T">The type of the object that was serialized</typeparam>
+        /// <param name="serialization">Base64 string serialization of the object</param>
+        /// <returns>The deserialized object</returns>
+        T Base64Deserialize<T>(string serialization);
     }
 }

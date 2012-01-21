@@ -8,14 +8,10 @@ using System.Xml;
 using System.Runtime.Serialization;
 using System.CodeDom.Compiler;
 using System.Runtime.Serialization.Json;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Piedone.HelpfulLibraries.Serialization
 {
-    /// <summary>
-    /// Simplified serialization to/from strings. Uses DataContractSerializer under the hood, therefore classes 
-    /// (and their members)of objects used to serialize should be decorated with the appropriate attributes, like
-    /// [DataContract] (for classes) and [DataMember] (for properties).
-    /// </summary>
     [OrchardFeature("Piedone.HelpfulLibraries.Serialization")]
     public class SimpleSerializer : ISimpleSerializer
     {
@@ -80,6 +76,32 @@ namespace Piedone.HelpfulLibraries.Serialization
                 stream.Position = 0;
                 return (T)serializer.ReadObject(stream);
             }
+        }
+
+        public string Base64Serialize<T>(T obj)
+        {
+            // Taken entirely from http://snipplr.com/view/8013/, refactored
+            var ms = new MemoryStream();
+            var bf = new BinaryFormatter();
+            bf.Serialize(ms, obj);
+            var bytes = ms.GetBuffer();
+            return bytes.Length + ":" + Convert.ToBase64String(bytes, 0, bytes.Length, Base64FormattingOptions.None);
+        }
+
+        public T Base64Deserialize<T>(string serialization)
+        {
+            // Taken entirely from http://snipplr.com/view/8014/, refactored
+
+            // We need to know the exact length of the string - Base64 can sometimes pad us by a byte or two
+            int lengthDelimiterPosition = serialization.IndexOf(':');
+            int length = Int32.Parse(serialization.Substring(0, lengthDelimiterPosition));
+
+            // Extract data from the base 64 string!
+            var bytes = Convert.FromBase64String(serialization.Substring(lengthDelimiterPosition + 1));
+            var ms = new MemoryStream(bytes, 0, length);
+            var bf = new BinaryFormatter();
+
+            return (T)bf.Deserialize(ms);
         }
     }
 }
