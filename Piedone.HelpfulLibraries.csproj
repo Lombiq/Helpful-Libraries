@@ -87,6 +87,7 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Libraries\Contents\ContentExtensions.cs" />
     <Compile Include="Libraries\DependencyInjection\DependencyInjectionModule.cs" />
     <Compile Include="Libraries\DependencyInjection\IResolve.cs" />
     <Compile Include="Libraries\DependencyInjection\Resolve.cs" />

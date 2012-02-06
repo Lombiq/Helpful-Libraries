@@ -9,6 +9,11 @@ Features:
     Piedone.HelpfulLibraries:
 		Description: Base of Helpful Libraries
         Category: Developer
+	Piedone.HelpfulLibraries.Contents:
+		Name: Contents Libraries
+        Description: These libraries help dealing with content items
+		Category: Developer
+		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.DependencyInjection:
 		Name: Dependency Injection Libraries
         Description: These libraries aid dependency injection
