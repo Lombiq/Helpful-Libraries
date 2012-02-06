@@ -25,7 +25,7 @@ namespace Piedone.HelpfulLibraries.Contents
         public static T AsField<T>(this IContent content, string partName, string fieldName)
             where T : ContentField
         {
-            // This is so the behaviour is consistent with built Orchard.ContentManagement.ContentExtensions.As<>()
+            // This is so the behaviour is consistent with Orchard.ContentManagement.ContentExtensions.As<>()
             if (content == null) return default(T);
 
             // Taken from Orchard.Tokens.Providers.ContentTokens
@@ -37,7 +37,7 @@ namespace Piedone.HelpfulLibraries.Contents
 
         public static bool HasField(this IContent content, string partName, string fieldName)
         {
-            // This is so the behaviour is consistent with built Orchard.ContentManagement.ContentExtensions.Has<>()
+            // This is so the behaviour is consistent with Orchard.ContentManagement.ContentExtensions.Has<>()
             if (content == null) return false;
 
             return content.ContentItem.Parts
