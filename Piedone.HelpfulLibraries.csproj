@@ -181,6 +181,10 @@
     <Compile Include="Libraries\ServiceValidation\ValidationDictionaries\ValidationDictionary.cs" />
     <Compile Include="Libraries\Tasks\DetachedDelegateBuilder.cs" />
     <Compile Include="Libraries\Tasks\IDetachedDelegateBuilder.cs" />
+    <Compile Include="Libraries\Tasks\ILockFile.cs" />
+    <Compile Include="Libraries\Tasks\ILockFileManager.cs" />
+    <Compile Include="Libraries\Tasks\LockFile.cs" />
+    <Compile Include="Libraries\Tasks\LockFileManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
