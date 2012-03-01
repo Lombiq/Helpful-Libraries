@@ -6,9 +6,9 @@ using Piedone.HelpfulLibraries.DependencyInjection;
 using System.Threading;
 using Orchard.Environment.Extensions;
 
-namespace Piedone.HelpfulLibraries.Tasks
+namespace Piedone.HelpfulLibraries.Caching
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Tasks")]
+    [OrchardFeature("Piedone.HelpfulLibraries.Caching")]
     public class LockFileManager : ILockFileManager
     {
         private readonly IResolve<ILockFile> _lockFileResolve;
@@ -25,7 +25,7 @@ namespace Piedone.HelpfulLibraries.Tasks
 
             while (!lockFile.TryAcquire(name) && waitedMilliseconds < millisecondsTimeout)
             {
-                Thread.Sleep(waitedMilliseconds);
+                Thread.Sleep(1000);
                 waitedMilliseconds += 1000;
             }
 

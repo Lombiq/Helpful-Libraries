@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Orchard;
 
-namespace Piedone.HelpfulLibraries.Tasks
+namespace Piedone.HelpfulLibraries.Caching
 {
     public interface ILockFile : IDisposable, ITransientDependency
     {
