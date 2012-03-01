@@ -87,6 +87,8 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Libraries\Caching\ILockingCacheManager.cs" />
+    <Compile Include="Libraries\Caching\LockingCacheManager.cs" />
     <Compile Include="Libraries\Contents\ContentExtensions.cs" />
     <Compile Include="Libraries\DependencyInjection\DependencyInjectionModule.cs" />
     <Compile Include="Libraries\DependencyInjection\IResolve.cs" />
@@ -181,10 +183,10 @@
     <Compile Include="Libraries\ServiceValidation\ValidationDictionaries\ValidationDictionary.cs" />
     <Compile Include="Libraries\Tasks\DetachedDelegateBuilder.cs" />
     <Compile Include="Libraries\Tasks\IDetachedDelegateBuilder.cs" />
-    <Compile Include="Libraries\Tasks\ILockFile.cs" />
-    <Compile Include="Libraries\Tasks\ILockFileManager.cs" />
-    <Compile Include="Libraries\Tasks\LockFile.cs" />
-    <Compile Include="Libraries\Tasks\LockFileManager.cs" />
+    <Compile Include="Libraries\Caching\ILockFile.cs" />
+    <Compile Include="Libraries\Caching\ILockFileManager.cs" />
+    <Compile Include="Libraries\Caching\LockFile.cs" />
+    <Compile Include="Libraries\Caching\LockFileManager.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
