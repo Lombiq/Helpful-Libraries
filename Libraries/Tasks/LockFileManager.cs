@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Piedone.HelpfulLibraries.DependencyInjection;
-using System.Threading;
+﻿using System.Threading;
 using Orchard.Environment.Extensions;
+using Piedone.HelpfulLibraries.DependencyInjection;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {

@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Orchard.Environment.Extensions;
 using System.IO;
-using System.Xml;
 using System.Runtime.Serialization;
-using System.CodeDom.Compiler;
-using System.Runtime.Serialization.Json;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization.Json;
+using System.Text;
+using System.Xml;
+using Orchard.Environment.Extensions;
 
 namespace Piedone.HelpfulLibraries.Serialization
 {

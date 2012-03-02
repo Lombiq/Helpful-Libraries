@@ -1,6 +1,4 @@
-﻿using System;
-using Orchard;
-
+﻿
 namespace Piedone.HelpfulLibraries.DependencyInjection
 {
     /// <summary>

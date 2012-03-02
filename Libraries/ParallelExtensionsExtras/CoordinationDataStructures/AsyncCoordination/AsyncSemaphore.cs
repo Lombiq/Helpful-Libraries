@@ -7,8 +7,8 @@
 //--------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using System.Diagnostics;
+using System.Threading.Tasks;
 
 namespace System.Threading.Async
 {

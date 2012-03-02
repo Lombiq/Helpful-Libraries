@@ -6,8 +6,6 @@
 //
 //--------------------------------------------------------------------------
 
-using System.Collections.Concurrent.Partitioners;
-using System.Collections.Generic;
 
 namespace System.Threading
 {

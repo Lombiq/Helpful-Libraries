@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Orchard.Tasks;
-using Orchard.Caching;
+﻿using Orchard.Caching;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {

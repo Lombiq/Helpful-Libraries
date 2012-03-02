@@ -6,7 +6,6 @@
 //
 //--------------------------------------------------------------------------
 
-using System.Collections.Concurrent.Partitioners;
 using System.Threading.Tasks;
 
 namespace System.Threading.Algorithms

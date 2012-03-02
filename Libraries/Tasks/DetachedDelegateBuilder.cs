@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Web;
 using Orchard;
 using Orchard.Environment.Extensions;

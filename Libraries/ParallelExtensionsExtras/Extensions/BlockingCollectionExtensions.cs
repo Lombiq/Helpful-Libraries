@@ -7,8 +7,8 @@
 //--------------------------------------------------------------------------
 
 using System.Collections.Generic;
-using System.Threading;
 using System.Linq;
+using System.Threading;
 
 namespace System.Collections.Concurrent
 {
