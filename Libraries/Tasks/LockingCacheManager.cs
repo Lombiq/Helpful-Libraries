@@ -5,7 +5,7 @@ using System.Text;
 using Orchard.Environment.Extensions;
 using Orchard.Caching;
 
-namespace Piedone.HelpfulLibraries.Caching
+namespace Piedone.HelpfulLibraries.Tasks
 {
     [OrchardFeature("Piedone.HelpfulLibraries.Caching")]
     public class LockingCacheManager : ILockingCacheManager

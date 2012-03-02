@@ -31,11 +31,6 @@ Features:
 		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.Tasks:
 		Name: Tasks Libraries
-        Description: These libraries help dealing with System.Threading.Tasks in an Orchard environment
-		Category: Developer
-		Dependencies: Piedone.HelpfulLibraries
-	Piedone.HelpfulLibraries.Caching:
-		Name: Caching Libraries
-        Description: These libraries help with locking caching and reliable task locking
+        Description: These libraries help dealing with units of tasks and related issues: locking caching and reliable task locking as well as System.Threading.Tasks in an Orchard environment
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries, Piedone.HelpfulLibraries.DependencyInjection

@@ -5,7 +5,7 @@ using System.Text;
 using Orchard;
 using Orchard.Caching;
 
-namespace Piedone.HelpfulLibraries.Caching
+namespace Piedone.HelpfulLibraries.Tasks
 {
     public interface ILockingCacheManager : IDependency
     {

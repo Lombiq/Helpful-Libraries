@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using Orchard.Caching;
 
-namespace Piedone.HelpfulLibraries.Caching
+namespace Piedone.HelpfulLibraries.Tasks
 {
     public interface ILockFileManager : IVolatileProvider
     {

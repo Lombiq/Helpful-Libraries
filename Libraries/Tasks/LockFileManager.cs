@@ -6,7 +6,7 @@ using Piedone.HelpfulLibraries.DependencyInjection;
 using System.Threading;
 using Orchard.Environment.Extensions;
 
-namespace Piedone.HelpfulLibraries.Caching
+namespace Piedone.HelpfulLibraries.Tasks
 {
     [OrchardFeature("Piedone.HelpfulLibraries.Caching")]
     public class LockFileManager : ILockFileManager

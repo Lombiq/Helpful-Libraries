@@ -6,7 +6,7 @@ using Orchard.Environment.Extensions;
 using Orchard.FileSystems.Media;
 using System.IO;
 
-namespace Piedone.HelpfulLibraries.Caching
+namespace Piedone.HelpfulLibraries.Tasks
 {
     [OrchardFeature("Piedone.HelpfulLibraries.Caching")]
     public class LockFile : ILockFile
