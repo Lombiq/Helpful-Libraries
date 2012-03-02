@@ -2,6 +2,10 @@
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
+    /// <summary>
+    /// Locking services bases on the usage of lock files that will work in any server environment
+    /// and independent from the lifecycle of database transactions.
+    /// </summary>
     public interface ILockFileManager : IVolatileProvider
     {
         /// <summary>
