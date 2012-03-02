@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Orchard;
+using Orchard.Tasks;
 using Orchard.Caching;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
+    /// <summary>
+    /// Provides locking cache management, i.e. concurrent cache access is synchronized so a cache
+    /// entry is not computed twice.
+    /// </summary>
     public interface ILockingCacheManager : IDependency
     {
         /// <summary>

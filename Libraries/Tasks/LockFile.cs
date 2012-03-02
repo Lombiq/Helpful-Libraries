@@ -8,7 +8,7 @@ using System.IO;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Caching")]
+    [OrchardFeature("Piedone.HelpfulLibraries.Tasks")]
     public class LockFile : ILockFile
     {
         private readonly IStorageProvider _storageProvider;

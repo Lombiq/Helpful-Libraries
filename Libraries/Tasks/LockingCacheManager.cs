@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Orchard.Environment.Extensions;
+using Orchard.Tasks;
 using Orchard.Caching;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Caching")]
+    [OrchardFeature("Piedone.HelpfulLibraries.Tasks")]
     public class LockingCacheManager : ILockingCacheManager
     {
         private readonly ICacheManager _cacheManager;

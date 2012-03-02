@@ -8,7 +8,7 @@ using Orchard.Environment.Extensions;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Caching")]
+    [OrchardFeature("Piedone.HelpfulLibraries.Tasks")]
     public class LockFileManager : ILockFileManager
     {
         private readonly IResolve<ILockFile> _lockFileResolve;
