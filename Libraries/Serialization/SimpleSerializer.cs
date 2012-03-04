@@ -12,16 +12,6 @@ namespace Piedone.HelpfulLibraries.Serialization
     [OrchardFeature("Piedone.HelpfulLibraries.Serialization")]
     public class SimpleSerializer : ISimpleSerializer
     {
-        public string Serialize<T>(T obj)
-        {
-            return XmlSerialize<T>(obj);
-        }
-
-        public T Deserialize<T>(string serialization)
-        {
-            return XmlDeserialize<T>(serialization);
-        }
-
         public string XmlSerialize<T>(T obj)
         {
             string serialization;
