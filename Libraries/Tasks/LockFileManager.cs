@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 using Orchard.Environment.Extensions;
 using Piedone.HelpfulLibraries.DependencyInjection;
+using System;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
@@ -27,6 +28,13 @@ namespace Piedone.HelpfulLibraries.Tasks
 
             if (waitedMilliseconds != millisecondsTimeout) return lockFile;
             else return null;
+        }
+
+        public ILockFile AcquireLock(string name, int millisecondsTimeout = 4000)
+        {
+            var lockResult = TryAcquireLock(name, millisecondsTimeout);
+            if (lockResult != null) return lockResult;
+            throw new TimeoutException("The lock on the file \"" + name + "\" couldn't be acquired in " + millisecondsTimeout.ToString() + " ms.");
         }
     }
 }
