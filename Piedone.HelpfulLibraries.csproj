@@ -87,6 +87,13 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Libraries\Contents\Linq\ContentQueryable.cs" />
+    <Compile Include="Libraries\Contents\Linq\ContentQueryContext.cs" />
+    <Compile Include="Libraries\Contents\Linq\ContentQueryProvider.cs" />
+    <Compile Include="Libraries\Contents\Linq\Evaluator.cs" />
+    <Compile Include="Libraries\Contents\Linq\ExpressionTreeHelpers.cs" />
+    <Compile Include="Libraries\Contents\Linq\ExpressionVisitors.cs" />
+    <Compile Include="Libraries\Contents\Linq\InvalidQueryException.cs" />
     <Compile Include="Libraries\Tasks\ILockingCacheManager.cs" />
     <Compile Include="Libraries\Tasks\LockingCacheManager.cs" />
     <Compile Include="Libraries\Contents\ContentExtensions.cs" />
