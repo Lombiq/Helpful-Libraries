@@ -187,6 +187,7 @@
     <Compile Include="Libraries\Tasks\ILockFileManager.cs" />
     <Compile Include="Libraries\Tasks\LockFile.cs" />
     <Compile Include="Libraries\Tasks\LockFileManager.cs" />
+    <Compile Include="Libraries\Utilities\AuthenticationServiceExtensions.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
     <Compile Include="Libraries\Utilities\IFreezable.cs" />
   </ItemGroup>
