@@ -53,6 +53,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Transactions" />
     <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Extensions" />
     <Reference Include="System.Web.Mvc, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\lib\aspnetmvc\System.Web.Mvc.dll</HintPath>
@@ -189,7 +190,11 @@
     <Compile Include="Libraries\Tasks\LockFileManager.cs" />
     <Compile Include="Libraries\Utilities\AuthenticationServiceExtensions.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
+    <Compile Include="Libraries\Serialization\IdSerializer.cs" />
     <Compile Include="Libraries\Utilities\IFreezable.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Views\Empty.cshtml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" />
