@@ -3,7 +3,7 @@ AntiForgery: enabled
 Author: Piedone
 Website: http://helpfullibraries.codeplex.com
 Version: 1.5
-OrchardVersion: 1.4
+OrchardVersion: 1.5
 Description: Libraries that can be handy when developing for Orchard
 Features:
     Piedone.HelpfulLibraries:

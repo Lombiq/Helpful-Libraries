@@ -5,6 +5,7 @@ using Orchard.Environment.Extensions;
 using Orchard.Logging;
 using Orchard.Security;
 using Orchard.Settings;
+using Orchard.Exceptions;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
@@ -128,9 +129,10 @@ namespace Piedone.HelpfulLibraries.Tasks
                         {
                             return function(state);
                         }
-                        catch (Exception e)
+                        catch (Exception ex)
                         {
-                            Logger.Error(e, "Background task failed with exception " + e.Message);
+                            if (ex.IsFatal()) throw;
+                            Logger.Error(ex, "Background task failed with exception " + ex.Message);
                             return default(TResult);
                         }
                     }
