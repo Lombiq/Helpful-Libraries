@@ -13,7 +13,7 @@ Features:
 		Name: Contents Libraries
         Description: These libraries help dealing with content items
 		Category: Developer
-		Dependencies: Piedone.HelpfulLibraries
+		Dependencies: Piedone.HelpfulLibraries, Orchard.Projections, Orchard.Forms, Common
 	Piedone.HelpfulLibraries.DependencyInjection:
 		Name: Dependency Injection Libraries
         Description: These libraries aid dependency injection
