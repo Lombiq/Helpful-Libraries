@@ -201,6 +201,7 @@
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
     <Compile Include="Libraries\Serialization\IdSerializer.cs" />
     <Compile Include="Libraries\Utilities\IFreezable.cs" />
+    <Compile Include="Libraries\Utilities\UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Views\Empty.cshtml" />
