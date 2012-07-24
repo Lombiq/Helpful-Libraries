@@ -9,16 +9,21 @@ using Orchard.Forms.Services;
 using Orchard.ContentManagement.Records;
 using Orchard.DisplayManagement;
 using Orchard.Environment.Extensions;
+using Orchard.Tokens;
 
 namespace Piedone.HelpfulLibraries.Libraries.Contents
 {
     [OrchardFeature("Piedone.HelpfulLibraries.Contents")]
     public class ContainedByFilter : Orchard.Projections.Services.IFilterProvider
     {
+        private readonly ITokenizer _tokenizer;
+
         public Localizer T { get; set; }
 
-        public ContainedByFilter()
+        public ContainedByFilter(ITokenizer tokenizer)
         {
+            _tokenizer = tokenizer;
+
             T = NullLocalizer.Instance;
         }
 
@@ -34,7 +39,8 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
 
         public void ApplyFilter(FilterContext context)
         {
-            context.Query.Where(a => a.ContentPartRecord<CommonPartRecord>(), p => p.Eq("Container.Id", context.State.ContainerId));
+            var id = _tokenizer.Replace(context.State.ContainerId, null, new ReplaceOptions { Encoding = ReplaceOptions.NoEncode });
+            context.Query.Where(a => a.ContentPartRecord<CommonPartRecord>(), p => p.Eq("Container.Id", id));
         }
 
         public LocalizedString DisplayFilter(FilterContext context)
@@ -57,7 +63,7 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
             T = NullLocalizer.Instance;
         }
 
-        public void Describe(DescribeContext context)
+        public void Describe(Orchard.Forms.Services.DescribeContext context)
         {
             Func<IShapeFactory, object> form =
                 shape =>
@@ -67,7 +73,8 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
                         _Parts: _shapeFactory.Textbox(
                             Id: "ContainerId", Name: "ContainerId",
                             Title: T("Container Id"),
-                            Description: T("The numerical id of the content item containing the items to fetch."))
+                            Description: T("The numerical id of the content item containing the items to fetch."),
+                            Classes: new[] { "tokenized" })
                         );
 
 

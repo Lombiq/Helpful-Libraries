@@ -90,6 +90,10 @@
       <Project>{5531E894-D259-45A3-AA61-26DBE720C1CE}</Project>
       <Name>Orchard.Projections</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Orchard.Tokens\Orchard.Tokens.csproj">
+      <Project>{6F759635-13D7-4E94-BCC9-80445D63F117}</Project>
+      <Name>Orchard.Tokens</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
