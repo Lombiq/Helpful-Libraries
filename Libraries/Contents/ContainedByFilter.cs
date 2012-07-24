@@ -69,7 +69,7 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
                 shape =>
                 {
                     var f = _shapeFactory.Form(
-                        Id: "FromShoutboxWidget",
+                        Id: "ContainedByFilterForm",
                         _Parts: _shapeFactory.Textbox(
                             Id: "ContainerId", Name: "ContainerId",
                             Title: T("Container Id"),
