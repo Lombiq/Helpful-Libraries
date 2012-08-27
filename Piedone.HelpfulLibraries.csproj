@@ -101,6 +101,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Libraries\Contents\ContainedByFilter.cs" />
+    <Compile Include="Libraries\Contents\DynamicPages\ContentExtensions.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\ContentManagerExtensions.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\PageAutorizationContext.cs" />
     <Compile Include="Libraries\Contents\IdsInFilter.cs" />
