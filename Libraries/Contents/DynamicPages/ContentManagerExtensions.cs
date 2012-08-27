@@ -10,12 +10,12 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
     [OrchardFeature("Piedone.HelpfulLibraries.Contents")]
     public static class ContentManagerExtensions
     {
-        public static IContent NewPage(this IContentManager contentManager, string pageName, IPageEventHandler evenHandler)
+        public static IContent NewPage(this IContentManager contentManager, string pageName, IPageEventHandler eventHandler)
         {
             var page = contentManager.New(pageName);
 
-            evenHandler.OnPageInitializing(page);
-            evenHandler.OnPageInitialized(page);
+            eventHandler.OnPageInitializing(page);
+            eventHandler.OnPageInitialized(page);
 
             return page;
         }
