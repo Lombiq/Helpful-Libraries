@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
+using Orchard.Core.Common.Models;
+using Orchard.DisplayManagement;
 using Orchard.Environment.Extensions;
-using Orchard.Tokens;
+using Orchard.Forms.Services;
 using Orchard.Localization;
 using Orchard.Projections.Descriptors.Filter;
-using Orchard.Core.Common.Models;
-using Orchard.Forms.Services;
-using Orchard.DisplayManagement;
+using Orchard.Tokens;
 
 namespace Piedone.HelpfulLibraries.Libraries.Contents
 {

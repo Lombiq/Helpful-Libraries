@@ -1,7 +1,7 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using Orchard.Environment.Extensions;
 using Piedone.HelpfulLibraries.DependencyInjection;
-using System;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
