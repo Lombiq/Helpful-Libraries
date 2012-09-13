@@ -11,9 +11,9 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
     /// </remarks>
     public interface IPageEventHandler : IEventHandler
     {
-        void OnPageInitializing(IContent page);
-        void OnPageInitialized(IContent page);
-        void OnPageBuilt(IContent page);
+        void OnPageInitializing(PageContext pageContext);
+        void OnPageInitialized(PageContext pageContext);
+        void OnPageBuilt(PageContext pageContext);
         void OnAuthorization(PageAutorizationContext authorizationContext);
     }
 }

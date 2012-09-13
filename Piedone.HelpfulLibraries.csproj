@@ -104,6 +104,7 @@
     <Compile Include="Libraries\Contents\DynamicPages\ContentExtensions.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\ContentManagerExtensions.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\PageAutorizationContext.cs" />
+    <Compile Include="Libraries\Contents\DynamicPages\PageContext.cs" />
     <Compile Include="Libraries\Contents\IdsInFilter.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\IPageEventHandler.cs" />
     <Compile Include="Libraries\Tasks\ILockingCacheManager.cs" />
