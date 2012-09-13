@@ -16,7 +16,7 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
         /// <param name="eventHandler">Page event handler</param>
         public static IContent NewPage(this IContentManager contentManager, string pageName, string group, Action<IContent> initializer, IPageEventHandler eventHandler)
         {
-            var page = contentManager.New(contentManager.CreatePageName(pageName));
+            var page = contentManager.New(contentManager.CreatePageName(pageName, group));
 
             initializer(page);
 
@@ -38,9 +38,14 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
             return contentManager.NewPage(pageName, group, (content) => { }, eventHandler);
         }
 
-        public static string CreatePageName(this IContentManager contentManager, string pageName)
+        /// <summary>
+        /// Compiles a conventional name for a page
+        /// </summary>
+        /// <param name="pageName">Name of the page</param>
+        /// <param name="group">String id of the group the page belongs to. Use this to distinct between a set of pages.</param>
+        public static string CreatePageName(this IContentManager contentManager, string pageName, string group)
         {
-            return pageName + "Page";
+            return group + pageName + "Page";
         }
 
         /// <summary>
