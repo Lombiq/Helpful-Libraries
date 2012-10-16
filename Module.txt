@@ -2,7 +2,7 @@ Name: Helpful Libraries
 AntiForgery: enabled
 Author: Piedone
 Website: http://helpfullibraries.codeplex.com
-Version: 1.7
+Version: 1.7.1
 OrchardVersion: 1.5.1
 Description: Libraries that can be handy when developing for Orchard
 Features:
