@@ -19,14 +19,15 @@ namespace Piedone.HelpfulLibraries.Tasks
         {
             int waitedMilliseconds = 0;
             var lockFile = _lockFileResolve.Value;
+            bool acquired;
 
-            while (!lockFile.TryAcquire(name) && waitedMilliseconds < millisecondsTimeout)
+            while (!(acquired = lockFile.TryAcquire(name)) && waitedMilliseconds < millisecondsTimeout)
             {
                 Thread.Sleep(1000);
                 waitedMilliseconds += 1000;
             }
 
-            if (waitedMilliseconds != millisecondsTimeout) return lockFile;
+            if (acquired) return lockFile;
             else return null;
         }
 
