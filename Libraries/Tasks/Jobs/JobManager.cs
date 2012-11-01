@@ -41,23 +41,27 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
         public IJob TakeJob(string industry)
         {
-            var jobs = _repository.Table.Where(record => record.Industry == industry);
-            var jobCount = jobs.Count();
+            var jobIdsQuery = _repository.Table
+                                    .Where(record => record.Industry == industry)
+                                    .OrderBy(record => record.Id)
+                                    .Select(record => record.Id)
+                                    .Take(50);
 
-            if (jobCount == 0) return null;
+            if (jobIdsQuery.Count() == 0) return null;
 
+            var jobIds = jobIdsQuery.ToArray();
             var lockFile = _lockFileResolve.Value;
             var jobNumber = 0;
 
-            while (!lockFile.TryAcquire("Job - " + industry + jobNumber) && jobNumber < jobCount)
+            while (!lockFile.TryAcquire("Job - " + industry + jobIds[jobNumber]) && jobNumber < jobIds.Length)
             {
                 jobNumber++;
             }
 
-            // All the jobs are locked, nothing to do
-            if (jobNumber == jobCount) return null;
+            // We couldn't find any open jobs in the first 50, not looking further
+            if (jobNumber == jobIds.Length) return null;
 
-            var jobRecord = jobs.OrderBy(record => record.Id).Skip(jobNumber).Take(1).Single();
+            var jobRecord = _repository.Get(jobIds[jobNumber]);
 
             var job = new Job
             (
@@ -71,7 +75,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
         public void Done(IJob job)
         {
-            if (!_jobReferences.ContainsKey(job)) return;
+            if (job == null || !_jobReferences.ContainsKey(job)) return;
 
             var jobReference = _jobReferences[job];
             jobReference.LockFile.Dispose();
@@ -82,7 +86,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
         public void GiveBack(IJob job)
         {
-            if (!_jobReferences.ContainsKey(job)) return;
+            if (job == null || !_jobReferences.ContainsKey(job)) return;
 
             _jobReferences[job].LockFile.Dispose();
             _jobReferences.Remove(job);
