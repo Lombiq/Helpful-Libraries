@@ -57,7 +57,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
             // All the jobs are locked, nothing to do
             if (jobNumber == jobCount) return null;
 
-            var jobRecord = jobs.Skip(jobNumber).Take(1).Single();
+            var jobRecord = jobs.OrderBy(record => record.Id).Skip(jobNumber).Take(1).Single();
 
             var job = new Job
             (
