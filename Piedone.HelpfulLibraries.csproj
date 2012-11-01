@@ -111,6 +111,9 @@
     <Compile Include="Libraries\Contents\IdsInFilter.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\IPageEventHandler.cs" />
     <Compile Include="Libraries\Tasks\ILockingCacheManager.cs" />
+    <Compile Include="Libraries\Tasks\Jobs\AtomicJobQueue.cs" />
+    <Compile Include="Libraries\Tasks\Jobs\IAtomicJobQueue.cs" />
+    <Compile Include="Libraries\Tasks\Jobs\IJobExecutor.cs" />
     <Compile Include="Libraries\Tasks\Jobs\IJobManager.cs" />
     <Compile Include="Libraries\Tasks\Jobs\Job.cs" />
     <Compile Include="Libraries\Tasks\Jobs\JobManager.cs" />

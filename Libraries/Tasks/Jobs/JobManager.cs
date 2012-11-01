@@ -39,7 +39,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
             _repository.Flush();
         }
 
-        public IJob<T> TakeJob<T>(string industry)
+        public IJob TakeJob(string industry)
         {
             var jobs = _repository.Table.Where(record => record.Industry == industry);
             var jobCount = jobs.Count();
@@ -59,10 +59,10 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
             var jobRecord = jobs.Skip(jobNumber).Take(1).Single();
 
-            var job = new Job<T>
+            var job = new Job
             (
                 industry,
-                JsonConvert.DeserializeObject<T>(jobRecord.ContextDefinion)
+                JsonConvert.DeserializeObject(jobRecord.ContextDefinion)
             );
             _jobReferences[job] = new JobReference { Id = jobRecord.Id, LockFile = lockFile };
 

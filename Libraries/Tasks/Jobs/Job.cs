@@ -12,32 +12,32 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
         object Context { get; }
     }
 
-    public interface IJob<T> : IJob
+    public interface IJob<TContext> : IJob
     {
-        new T Context { get; }
+        new TContext Context { get; }
     }
 
-
-    //public class Job : IJob
-    //{
-    //    public string Industry { get; private set; }
-    //    public object Context { get; private set; }
-
-    //    public Job(string industry, object context)
-    //    {
-    //        Industry = industry;
-    //        Context = context;
-    //    }
-    //}
-
     [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Jobs")]
-    public class Job<T> : IJob<T>
+    public class Job : IJob
     {
         public string Industry { get; private set; }
-        public T Context { get; private set; }
+        public object Context { get; private set; }
+
+        public Job(string industry, object context)
+        {
+            Industry = industry;
+            Context = context;
+        }
+    }
+
+    [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Jobs")]
+    public class Job<TContext> : IJob<TContext>
+    {
+        public string Industry { get; private set; }
+        public TContext Context { get; private set; }
         object IJob.Context { get { return Context; } }
 
-        public Job(string industry, T context)
+        public Job(string industry, TContext context)
         {
             Industry = industry;
             Context = context;
