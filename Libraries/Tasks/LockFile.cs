@@ -33,6 +33,7 @@ namespace Piedone.HelpfulLibraries.Tasks
             }
         }
 
+        // This will be called at least by Autofac when the request ends
         public void Dispose()
         {
             if (String.IsNullOrEmpty(_name) || isDisposed || !isAcquired) return;

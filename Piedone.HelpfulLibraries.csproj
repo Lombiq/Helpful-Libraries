@@ -45,6 +45,9 @@
       <HintPath>..\..\bin\Autofac.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\..\..\..\lib\newtonsoft.json\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.ComponentModel.DataAnnotations">
@@ -98,7 +101,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Libraries\Contents\ContainedByFilter.cs" />
@@ -109,6 +111,11 @@
     <Compile Include="Libraries\Contents\IdsInFilter.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\IPageEventHandler.cs" />
     <Compile Include="Libraries\Tasks\ILockingCacheManager.cs" />
+    <Compile Include="Libraries\Tasks\Jobs\IJobManager.cs" />
+    <Compile Include="Libraries\Tasks\Jobs\Job.cs" />
+    <Compile Include="Libraries\Tasks\Jobs\JobManager.cs" />
+    <Compile Include="Libraries\Tasks\Jobs\JobRecord.cs" />
+    <Compile Include="Libraries\Tasks\Jobs\Migrations.cs" />
     <Compile Include="Libraries\Tasks\LockingCacheManager.cs" />
     <Compile Include="Libraries\Contents\ContentExtensions.cs" />
     <Compile Include="Libraries\DependencyInjection\DependencyInjectionModule.cs" />
