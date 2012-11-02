@@ -10,8 +10,8 @@ namespace Piedone.HelpfulLibraries.Tasks
     {
         private readonly IStorageProvider _storageProvider;
         private string _name;
-        private bool isDisposed = false;
-        private bool isAcquired = false;
+        private bool _isDisposed = false;
+        private bool _isAcquired = false;
 
         private const string _folder = "HelpfulLibraries/Tasks/LockFiles/";
 
@@ -22,23 +22,28 @@ namespace Piedone.HelpfulLibraries.Tasks
 
         public bool TryAcquire(string name)
         {
-            _name = name;
-            isAcquired = true;
+            if (String.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
 
-            // Here really should be a file existence check, but it's not possible currently:
-            // http://orchard.codeplex.com/workitem/18279
             using (var stream = new MemoryStream())
             {
-                return _storageProvider.TrySaveStream(MakeFilePath(name), stream);
+                var canAcquire = _storageProvider.TrySaveStream(MakeFilePath(name), stream);
+
+                if (canAcquire)
+                {
+                    _name = name;
+                    _isAcquired = true;
+                }
+
+                return canAcquire;
             }
         }
 
         // This will be called at least by Autofac when the request ends
         public void Dispose()
         {
-            if (String.IsNullOrEmpty(_name) || isDisposed || !isAcquired) return;
+            if (_isDisposed || !_isAcquired) return;
 
-            isDisposed = true;
+            _isDisposed = true;
             // Could throw exception e.g. if the file was deleted. This should not happen.
             _storageProvider.DeleteFile(MakeFilePath(_name));
         }
