@@ -53,7 +53,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
             var lockFile = _lockFileResolve.Value;
             var jobNumber = 0;
 
-            while (!lockFile.TryAcquire("Job - " + industry + jobIds[jobNumber]) && jobNumber < jobIds.Length)
+            while (jobNumber < jobIds.Length && !lockFile.TryAcquire("Job - " + industry + jobIds[jobNumber]))
             {
                 jobNumber++;
             }
