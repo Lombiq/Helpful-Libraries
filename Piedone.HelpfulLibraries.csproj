@@ -218,6 +218,7 @@
     <Compile Include="Libraries\Tasks\ILockFileManager.cs" />
     <Compile Include="Libraries\Tasks\LockFile.cs" />
     <Compile Include="Libraries\Tasks\LockFileManager.cs" />
+    <Compile Include="Libraries\Tasks\ScheduledTaskManagerExtensions.cs" />
     <Compile Include="Libraries\Utilities\AuthenticationServiceExtensions.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
     <Compile Include="Libraries\Serialization\IdSerializer.cs" />
