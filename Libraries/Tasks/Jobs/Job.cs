@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using Orchard.Environment.Extensions;
 
 namespace Piedone.HelpfulLibraries.Tasks.Jobs
@@ -9,38 +10,31 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
     public interface IJob
     {
         string Industry { get; }
-        object Context { get; }
-    }
-
-    public interface IJob<TContext> : IJob
-    {
-        new TContext Context { get; }
+        T Context<T>();
     }
 
     [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Jobs")]
     public class Job : IJob
     {
-        public string Industry { get; private set; }
-        public object Context { get; private set; }
+        private readonly string _contextDefinition;
+        private object _context;
 
-        public Job(string industry, object context)
+        public string Industry { get; private set; }
+
+
+        public Job(string industry, string contextDefinition)
         {
             Industry = industry;
-            Context = context;
+            _contextDefinition = contextDefinition;
         }
-    }
 
-    [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Jobs")]
-    public class Job<TContext> : IJob<TContext>
-    {
-        public string Industry { get; private set; }
-        public TContext Context { get; private set; }
-        object IJob.Context { get { return Context; } }
 
-        public Job(string industry, TContext context)
+        public T Context<T>()
         {
-            Industry = industry;
-            Context = context;
+            if (_context != null) return (T)_context;
+
+            _context = JsonConvert.DeserializeObject<T>(_contextDefinition);
+            return (T)_context;
         }
     }
 }

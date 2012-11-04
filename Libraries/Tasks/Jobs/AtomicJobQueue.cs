@@ -59,7 +59,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
                 if (job == null) return;
 
-                executorResolver(_wca.GetContext()).Run(job.Context);
+                executorResolver(_wca.GetContext()).Run(job);
 
                 jobManager.Done(job);
             }

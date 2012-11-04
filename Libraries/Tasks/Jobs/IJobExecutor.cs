@@ -8,6 +8,6 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 {
     public interface IJobExecutor : IDependency
     {
-        void Run(object context);
+        void Run(IJob job);
     }
 }

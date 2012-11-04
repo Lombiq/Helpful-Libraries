@@ -63,11 +63,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
             var jobRecord = _repository.Get(jobIds[jobNumber]);
 
-            var job = new Job
-            (
-                industry,
-                JsonConvert.DeserializeObject(jobRecord.ContextDefinion)
-            );
+            var job = new Job(industry, jobRecord.ContextDefinion);
             _jobReferences[job] = new JobReference { Id = jobRecord.Id, LockFile = lockFile };
 
             return job;
