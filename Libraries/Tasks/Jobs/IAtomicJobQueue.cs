@@ -8,6 +8,6 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 {
     public interface IAtomicJobQueue : IDependency
     {
-        void Queue<TJobExecutor>(string industry) where TJobExecutor : IJobExecutor;
+        void Queue<TAtomicJobExecutor>(string industry) where TAtomicJobExecutor : IAtomicJobExecutor;
     }
 }

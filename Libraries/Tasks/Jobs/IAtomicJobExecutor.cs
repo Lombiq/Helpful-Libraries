@@ -6,7 +6,7 @@ using Orchard;
 
 namespace Piedone.HelpfulLibraries.Tasks.Jobs
 {
-    public interface IJobExecutor : IDependency
+    public interface IAtomicJobExecutor : IDependency
     {
         void Run(IJob job);
     }
