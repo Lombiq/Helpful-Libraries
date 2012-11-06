@@ -15,7 +15,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
     {
         private readonly IRepository<JobRecord> _repository;
         private readonly IResolve<ILockFile> _lockFileResolve;
-        private readonly Dictionary<IJob, JobReference> _jobReferences = new Dictionary<IJob,JobReference>();
+        private readonly Dictionary<IJob, JobReference> _jobReferences = new Dictionary<IJob, JobReference>();
 
 
         public JobManager(IRepository<JobRecord> repository, IResolve<ILockFile> lockFileResolve)
@@ -37,6 +37,25 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
             _repository.Create(record);
             _repository.Flush();
+        }
+
+        public IJob TakeOnlyJob(string industry)
+        {
+            var lockFile = _lockFileResolve.Value;
+            if (!lockFile.TryAcquire("Only Job - " + industry)) return null;
+
+            var jobRecord = _repository.Table
+                                .Where(record => record.Industry == industry)
+                                .OrderBy(record => record.Id)
+                                .Take(1)
+                                .FirstOrDefault();
+
+            if (jobRecord == null) return null;
+
+            var job = new Job(industry, jobRecord.ContextDefinion);
+            _jobReferences[job] = new JobReference { Id = jobRecord.Id, LockFile = lockFile };
+
+            return job;
         }
 
         public IJob TakeJob(string industry)

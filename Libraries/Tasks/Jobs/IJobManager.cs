@@ -10,6 +10,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
     public interface IJobManager : IDependency
     {
         void CreateJob(string industry, object context);
+        IJob TakeOnlyJob(string industry);
         IJob TakeJob(string industry);
         void Done(IJob job);
         void GiveBack(IJob job);
