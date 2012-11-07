@@ -113,7 +113,7 @@
     <Compile Include="Libraries\Tasks\ILockingCacheManager.cs" />
     <Compile Include="Libraries\Tasks\Jobs\AtomicJobQueue.cs" />
     <Compile Include="Libraries\Tasks\Jobs\IAtomicJobQueue.cs" />
-    <Compile Include="Libraries\Tasks\Jobs\IAtomicJobExecutor.cs" />
+    <Compile Include="Libraries\Tasks\Jobs\IAtomicWorker.cs" />
     <Compile Include="Libraries\Tasks\Jobs\IJobManager.cs" />
     <Compile Include="Libraries\Tasks\Jobs\Job.cs" />
     <Compile Include="Libraries\Tasks\Jobs\JobManager.cs" />

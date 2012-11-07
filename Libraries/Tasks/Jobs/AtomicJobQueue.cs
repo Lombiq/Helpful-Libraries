@@ -16,7 +16,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 {
     public interface IAtomicJobExecutor : IEventHandler
     {
-        void Execute(string industry, Func<WorkContext, IAtomicJobExecutor> executorResolver);
+        void Execute(string industry, Func<WorkContext, IAtomicWorker> executorResolver);
     }
 
     [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Jobs")]
@@ -48,7 +48,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
         }
 
 
-        public void Execute(string industry, Func<WorkContext, IAtomicJobExecutor> executorResolver)
+        public void Execute(string industry, Func<WorkContext, IAtomicWorker> executorResolver)
         {
             var jobManager = _jobManagerResolve.Value;
             IJob job = null;
@@ -59,7 +59,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
                 if (job == null) return;
 
-                executorResolver(_wca.GetContext()).Run(job);
+                executorResolver(_wca.GetContext()).WorkOn(job);
 
                 jobManager.Done(job);
             }
@@ -72,10 +72,10 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
             }
         }
 
-        public void Queue<TAtomicJobExecutor>(string industry) where TAtomicJobExecutor : IAtomicJobExecutor
+        public void Queue<TAtomicWorker>(string industry) where TAtomicWorker : IAtomicWorker
         {
             var shellDescriptor = _shellDescriptorManager.GetShellDescriptor();
-            Func<WorkContext, IAtomicJobExecutor> executorResolver = (workContext) => workContext.Resolve<TAtomicJobExecutor>();
+            Func<WorkContext, IAtomicWorker> executorResolver = (workContext) => workContext.Resolve<TAtomicWorker>();
 
             _processingEngine.AddTask(
                 _shellSettings,
