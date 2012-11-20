@@ -17,7 +17,8 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
         /// </summary>
         /// <param name="industry">"Industry", i.e. type, group of the job</param>
         /// <param name="context">An arbitrary serializable context object</param>
-        void CreateJob(string industry, object context);
+        /// <param name="priority">Priority affects the order jobs are retrieved in</param>
+        void CreateJob(string industry, object context, int priority);
 
         /// <summary>
         /// Takes the oldest job of the industry. Till this job is not done or given back calls to this method won't receive a job.

@@ -15,5 +15,6 @@ namespace Piedone.HelpfulLibraries.Models
         public virtual string Industry { get; set; }
         [StringLengthMax]
         public virtual string ContextDefinion { get; set; }
+        public virtual int Priority { get; set; }
     }
 }

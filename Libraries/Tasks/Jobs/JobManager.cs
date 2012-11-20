@@ -25,14 +25,15 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
         }
 
 
-        public void CreateJob(string industry, object context)
+        public void CreateJob(string industry, object context, int priority)
         {
             if (String.IsNullOrEmpty(industry)) throw new ArgumentNullException("industry");
 
             var record = new JobRecord
             {
                 Industry = industry,
-                ContextDefinion = JsonConvert.SerializeObject(context)
+                ContextDefinion = JsonConvert.SerializeObject(context),
+                Priority = priority
             };
 
             _repository.Create(record);
@@ -44,9 +45,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
             var lockFile = _lockFileResolve.Value;
             if (!lockFile.TryAcquire("Only Job - " + industry)) return null;
 
-            var jobRecord = _repository.Table
-                                .Where(record => record.Industry == industry)
-                                .OrderBy(record => record.Id)
+            var jobRecord = CreateJobQuery(industry)
                                 .Take(1)
                                 .FirstOrDefault();
 
@@ -60,9 +59,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
         public IJob TakeJob(string industry)
         {
-            var jobIdsQuery = _repository.Table
-                                    .Where(record => record.Industry == industry)
-                                    .OrderBy(record => record.Id)
+            var jobIdsQuery = CreateJobQuery(industry)
                                     .Select(record => record.Id)
                                     .Take(50);
 
@@ -116,6 +113,15 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
         //        lockFile.Dispose();
         //    }
         //}
+
+
+        private IQueryable<JobRecord> CreateJobQuery(string industry)
+        {
+            return _repository.Table
+                                    .Where(record => record.Industry == industry)
+                                    .OrderByDescending(record => record.Priority)
+                                    .ThenBy(record => record.Id);
+        }
 
 
         private class JobReference

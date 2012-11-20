@@ -18,6 +18,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
                     .Column<int>("Id", column => column.PrimaryKey().Identity())
                     .Column<string>("Industry", column => column.NotNull())
                     .Column<string>("ContextDefinion", column => column.Unlimited())
+                    .Column<int>("Priority")
                 )
                 .AlterTable(typeof(JobRecord).Name,
                 table => table
