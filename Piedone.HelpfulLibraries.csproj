@@ -227,7 +227,7 @@
     <Compile Include="Libraries\Utilities\UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Views\Empty.cshtml" />
+    <Content Include="Views\Empty.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
