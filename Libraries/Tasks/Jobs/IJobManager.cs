@@ -21,17 +21,19 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
         void CreateJob(string industry, object context, int priority);
 
         /// <summary>
-        /// Takes the oldest job of the industry. Till this job is not done or given back calls to this method won't receive a job.
+        /// Takes the job with the highest priority (or the oldest if there are only jobs with the same priority) of the industry. 
+        /// Till this job is not done or given back other calls to this method won't receive a job.
         /// </summary>
         /// <param name="industry">"Industry", i.e. type, group of the job</param>
-        /// <returns>The oldest job or null if there are no jobs or the only one is already worked on.</returns>
+        /// <returns>The job with the highest priority (or the oldest) or null if there are no jobs or the only one is already worked on.</returns>
         IJob TakeOnlyJob(string industry);
 
         /// <summary>
-        /// Takes the oldest available job of the industry. Subsequent calls to this method will get the next jobs, even if the calls were simultaneous.
+        /// Takes the job with the highest priority (or the oldest if there are only jobs with the same priority) available in the industry. 
+        /// Subsequent calls to this method will get the next jobs, even if the calls were simultaneous.
         /// </summary>
         /// <param name="industry">"Industry", i.e. type, group of the job</param>
-        /// <returns>The oldest available job of the industy or null if there are no available jobs left.</returns>
+        /// <returns>The job with the highest priority (or the oldest) available in the industy or null if there are no available jobs left.</returns>
         IJob TakeJob(string industry);
 
         /// <summary>
