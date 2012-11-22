@@ -33,7 +33,9 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
         {
             if (_context != null) return (T)_context;
 
-            _context = JsonConvert.DeserializeObject<T>(_contextDefinition);
+            _context = JsonConvert.DeserializeObject<T>(
+                            _contextDefinition,
+                            new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
             return (T)_context;
         }
     }

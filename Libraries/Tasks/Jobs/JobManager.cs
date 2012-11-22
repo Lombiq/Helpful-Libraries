@@ -32,7 +32,10 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
             var record = new JobRecord
             {
                 Industry = industry,
-                ContextDefinion = JsonConvert.SerializeObject(context),
+                ContextDefinion = JsonConvert.SerializeObject(
+                                    context,
+                                    Formatting.None,
+                                    new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto }),
                 Priority = priority
             };
 
