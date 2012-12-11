@@ -45,9 +45,7 @@ namespace Piedone.HelpfulLibraries.Tasks
             }
         }
 
-        public DetachedDelegateBuilder(
-            IWorkContextAccessor workContextAcessor
-            )
+        public DetachedDelegateBuilder(IWorkContextAccessor workContextAcessor)
         {
             _workContextAccessor = workContextAcessor;
 
