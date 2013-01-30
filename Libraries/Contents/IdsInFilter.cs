@@ -36,14 +36,13 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
 
         public void ApplyFilter(FilterContext context)
         {
-            if (context.State.ContentIds != null)
-            {
-                var ids = (string)_tokenizer.Replace(context.State.ContentIds, null, new ReplaceOptions { Encoding = ReplaceOptions.NoEncode });
-                var idsArray = ids.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
-                idsArray = (from p in idsArray select p.Trim()).ToArray();
-                
-                context.Query.Where(a => a.ContentPartRecord<CommonPartRecord>(), p => p.In("Id", idsArray));
-            }
+            if (context.State.ContentIds == null) return;
+
+            var ids = (string)_tokenizer.Replace(context.State.ContentIds, null, new ReplaceOptions { Encoding = ReplaceOptions.NoEncode });
+            var idsArray = ids.Split(new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+            idsArray = (from p in idsArray select p.Trim()).ToArray();
+
+            context.Query.Where(a => a.ContentPartRecord<CommonPartRecord>(), p => p.In("Id", idsArray));
         }
 
         public LocalizedString DisplayFilter(FilterContext context)
