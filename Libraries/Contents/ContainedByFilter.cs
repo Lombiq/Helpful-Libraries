@@ -16,12 +16,14 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
 
         public Localizer T { get; set; }
 
+
         public ContainedByFilter(ITokenizer tokenizer)
         {
             _tokenizer = tokenizer;
 
             T = NullLocalizer.Instance;
         }
+
 
         public void Describe(DescribeFilterContext describe)
         {
@@ -52,12 +54,14 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
 
         public Localizer T { get; set; }
 
+
         public ContentTypesFilterForms(IShapeFactory shapeFactory)
         {
             _shapeFactory = shapeFactory;
 
             T = NullLocalizer.Instance;
         }
+
 
         public void Describe(Orchard.Forms.Services.DescribeContext context)
         {
@@ -78,7 +82,6 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
                 };
 
             context.Form("ContainedByFilter", form);
-
         }
     }
 }
