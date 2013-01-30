@@ -41,7 +41,7 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
 
         public LocalizedString DisplayFilter(FilterContext context)
         {
-            return T("Content items contained by item with id " + context.State.ContainerId);
+            return T("Content items contained by item with id {0}", context.State.ContainerId);
         }
     }
 
