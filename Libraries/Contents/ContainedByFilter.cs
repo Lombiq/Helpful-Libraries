@@ -50,7 +50,7 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
     [OrchardFeature("Piedone.HelpfulLibraries.Contents")]
     public class ContentTypesFilterForms : IFormProvider
     {
-        private dynamic _shapeFactory { get; set; }
+        private readonly dynamic _shapeFactory;
 
         public Localizer T { get; set; }
 
