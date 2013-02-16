@@ -7,7 +7,7 @@ using Orchard.Localization;
 using Orchard.Projections.Descriptors.Filter;
 using Orchard.Tokens;
 
-namespace Piedone.HelpfulLibraries.Libraries.Contents
+namespace Piedone.HelpfulLibraries.Libraries.Contents.Projections
 {
     [OrchardFeature("Piedone.HelpfulLibraries.Contents")]
     public class ContainedByFilter : Orchard.Projections.Services.IFilterProvider
