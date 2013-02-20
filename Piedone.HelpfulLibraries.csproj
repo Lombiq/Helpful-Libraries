@@ -103,9 +103,7 @@
       <Name>Orchard.Tokens</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Controllers\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Compile Include="Libraries\Contents\Projections\ContainedByFilter.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\ContentExtensions.cs" />
