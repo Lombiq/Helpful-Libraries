@@ -86,33 +86,14 @@
       <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Orchard.Alias\Orchard.Alias.csproj">
-      <Project>{475b6c45-b27c-438b-8966-908b9d6d1077}</Project>
-      <Name>Orchard.Alias</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Orchard.Forms\Orchard.Forms.csproj">
-      <Project>{642A49D7-8752-4177-80D6-BFBBCFAD3DE0}</Project>
-      <Name>Orchard.Forms</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Orchard.Projections\Orchard.Projections.csproj">
-      <Project>{5531E894-D259-45A3-AA61-26DBE720C1CE}</Project>
-      <Name>Orchard.Projections</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Orchard.Tokens\Orchard.Tokens.csproj">
-      <Project>{6F759635-13D7-4E94-BCC9-80445D63F117}</Project>
-      <Name>Orchard.Tokens</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Compile Include="Libraries\Contents\Projections\ContainedByFilter.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\ContentExtensions.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\ContentManagerExtensions.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\PageAutorizationContext.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\PageContext.cs" />
-    <Compile Include="Libraries\Contents\Projections\IdsInFilter.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\IPageEventHandler.cs" />
-    <Compile Include="Libraries\Contents\Tokens\ContentTokens.cs" />
     <Compile Include="Libraries\Tasks\ILockingCacheManager.cs" />
     <Compile Include="Libraries\Tasks\Jobs\AtomicJobQueue.cs" />
     <Compile Include="Libraries\Tasks\Jobs\IAtomicJobQueue.cs" />
