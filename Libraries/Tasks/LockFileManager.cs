@@ -23,6 +23,7 @@ namespace Piedone.HelpfulLibraries.Tasks
 
             while (!(acquired = lockFile.TryAcquire(name)) && waitedMilliseconds < millisecondsTimeout)
             {
+                // Change to Task.Delay and progressive sleeping after .NET 4.5 update
                 Thread.Sleep(1000);
                 waitedMilliseconds += 1000;
             }
