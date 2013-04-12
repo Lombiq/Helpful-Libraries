@@ -212,6 +212,7 @@
     <Compile Include="Libraries\Utilities\MappingsManager.cs" />
     <Compile Include="Libraries\Utilities\MimeAssistant.cs" />
     <Compile Include="Libraries\Utilities\UriExtensions.cs" />
+    <Compile Include="Libraries\Utilities\UriHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Empty.cshtml" />
