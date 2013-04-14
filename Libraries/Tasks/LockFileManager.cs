@@ -15,7 +15,7 @@ namespace Piedone.HelpfulLibraries.Tasks
             _lockFileResolve = lockFileResolve;
         }
 
-        public ILockFile TryAcquireLock(string name, int millisecondsTimeout = 4000)
+        public ILockFile TryAcquireLock(string name, int millisecondsTimeout)
         {
             int waitedMilliseconds = 0;
             var lockFile = _lockFileResolve.Value;
@@ -32,7 +32,7 @@ namespace Piedone.HelpfulLibraries.Tasks
             else return null;
         }
 
-        public ILockFile AcquireLock(string name, int millisecondsTimeout = 4000)
+        public ILockFile AcquireLock(string name, int millisecondsTimeout)
         {
             var lockResult = TryAcquireLock(name, millisecondsTimeout);
             if (lockResult != null) return lockResult;
