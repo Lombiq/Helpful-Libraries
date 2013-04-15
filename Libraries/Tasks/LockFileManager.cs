@@ -15,28 +15,30 @@ namespace Piedone.HelpfulLibraries.Tasks
             _lockFileResolve = lockFileResolve;
         }
 
-        public ILockFile TryAcquireLock(string name, int millisecondsTimeout)
+        public ILockFile TryAcquireLock(string name, TimeSpan timeout)
         {
             int waitedMilliseconds = 0;
+            int millisecondsTimeout = (int)Math.Round(timeout.TotalMilliseconds);
+            int waitMilliseconds = millisecondsTimeout / 10;
             var lockFile = _lockFileResolve.Value;
             bool acquired;
 
             while (!(acquired = lockFile.TryAcquire(name)) && waitedMilliseconds < millisecondsTimeout)
             {
                 // Change to Task.Delay and progressive sleeping after .NET 4.5 update
-                Thread.Sleep(1000);
-                waitedMilliseconds += 1000;
+                Thread.Sleep(waitMilliseconds);
+                waitedMilliseconds += waitMilliseconds;
             }
 
             if (acquired) return lockFile;
             else return null;
         }
 
-        public ILockFile AcquireLock(string name, int millisecondsTimeout)
+        public ILockFile AcquireLock(string name, TimeSpan timeout)
         {
-            var lockResult = TryAcquireLock(name, millisecondsTimeout);
+            var lockResult = TryAcquireLock(name, timeout);
             if (lockResult != null) return lockResult;
-            throw new TimeoutException("The lock on the file \"" + name + "\" couldn't be acquired in " + millisecondsTimeout.ToString() + " ms.");
+            throw new TimeoutException("The lock on the file \"" + name + "\" couldn't be acquired in " + timeout.TotalMilliseconds.ToString() + " ms.");
         }
     }
 }
