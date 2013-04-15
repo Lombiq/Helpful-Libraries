@@ -13,7 +13,7 @@ namespace Piedone.HelpfulLibraries.Tasks
         {
             var outdatedTaskCount = taskManager.GetTasks(taskType, DateTime.UtcNow).Count();
             var taskCount = taskManager.GetTasks(taskType).Count();
-            if (taskCount != 0 && taskCount - outdatedTaskCount > 0) return;
+            if (taskCount != 0 && taskCount - outdatedTaskCount >= 0) return;
 
             taskManager.CreateTask(taskType, scheduledUtc, contentItem); 
         }
