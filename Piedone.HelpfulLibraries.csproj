@@ -104,6 +104,7 @@
     <Compile Include="Libraries\Tasks\Jobs\JobManager.cs" />
     <Compile Include="Libraries\Tasks\Jobs\JobRecord.cs" />
     <Compile Include="Libraries\Tasks\Jobs\Migrations.cs" />
+    <Compile Include="Libraries\Tasks\LockFileCleaner.cs" />
     <Compile Include="Libraries\Tasks\LockingCacheManager.cs" />
     <Compile Include="Libraries\Contents\ContentExtensions.cs" />
     <Compile Include="Libraries\DependencyInjection\DependencyInjectionModule.cs" />
@@ -204,6 +205,7 @@
     <Compile Include="Libraries\Tasks\LockFile.cs" />
     <Compile Include="Libraries\Tasks\LockFileManager.cs" />
     <Compile Include="Libraries\Tasks\ScheduledTaskManagerExtensions.cs" />
+    <Compile Include="Libraries\Tasks\WellKnownConstants.cs" />
     <Compile Include="Libraries\Utilities\AuthenticationServiceExtensions.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
     <Compile Include="Libraries\Serialization\IdSerializer.cs" />

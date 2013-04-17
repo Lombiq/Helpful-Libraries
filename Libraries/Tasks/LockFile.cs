@@ -13,8 +13,6 @@ namespace Piedone.HelpfulLibraries.Tasks
         private bool _isDisposed = false;
         private bool _isAcquired = false;
 
-        private const string _folder = "Modules/Piedone/HelpfulLibraries/Tasks/LockFiles/";
-
         public LockFile(IStorageProvider storageProvider)
         {
             _storageProvider = storageProvider;
@@ -50,7 +48,7 @@ namespace Piedone.HelpfulLibraries.Tasks
 
         private static string MakeFilePath(string name)
         {
-            return _folder + name + ".lock";
+            return WellKnownConstants.LockFileFolder + name + ".lock";
         }
     }
 }
