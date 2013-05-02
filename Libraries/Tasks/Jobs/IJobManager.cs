@@ -17,7 +17,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
         /// </summary>
         /// <param name="industry">"Industry", i.e. type, group of the job</param>
         /// <param name="context">An arbitrary serializable context object</param>
-        /// <param name="priority">Priority affects the order jobs are retrieved in</param>
+        /// <param name="priority">Priority affects the order jobs are retrieved in. A bigger number means higher priority.</param>
         void CreateJob(string industry, object context, int priority);
 
         /// <summary>
