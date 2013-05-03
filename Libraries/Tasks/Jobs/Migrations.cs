@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Orchard.Data.Migration;
+﻿using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
 using Piedone.HelpfulLibraries.Models;
 

@@ -1,5 +1,4 @@
-﻿using Orchard.ContentManagement;
-using Orchard.Events;
+﻿using Orchard.Events;
 
 namespace Piedone.HelpfulLibraries.Contents.DynamicPages
 {

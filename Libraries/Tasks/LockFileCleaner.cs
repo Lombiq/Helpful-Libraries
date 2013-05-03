@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Orchard.Environment;
+﻿using Orchard.Environment;
 using Orchard.FileSystems.Media;
 using Orchard.Services;
 using Orchard.Tasks.Scheduling;
-using Orchard.Exceptions;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {

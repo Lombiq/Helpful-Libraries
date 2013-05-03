@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
+﻿using System.IO;
 using Orchard.ContentManagement;
-using Orchard.ContentManagement.Handlers;
 using Orchard.DisplayManagement.Implementation;
 using Orchard.Environment.Extensions;
 

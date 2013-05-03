@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Orchard;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Descriptor;
 using Orchard.Environment.Extensions;
 using Orchard.Environment.State;
-using Piedone.HelpfulLibraries.DependencyInjection;
+using Orchard.Events;
 using Orchard.Exceptions;
 using Orchard.Logging;
-using Orchard;
-using Orchard.Events;
+using Piedone.HelpfulLibraries.DependencyInjection;
 
 namespace Piedone.HelpfulLibraries.Tasks.Jobs
 {
