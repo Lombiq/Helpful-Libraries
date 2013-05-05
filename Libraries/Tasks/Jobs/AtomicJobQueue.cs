@@ -66,14 +66,20 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
                 if (ex.IsFatal()) throw;
 
                 jobManager.GiveBack(job);
-                Logger.Error(ex, "Exception during the execution of an atomic job.");
+                Queue(industry, executorResolver);
+                Logger.Error(ex, "Exception during the execution of an atomic job. The job was re-queued.");
             }
         }
 
         public void Queue<TAtomicWorker>(string industry) where TAtomicWorker : IAtomicWorker
         {
+            Queue(industry, workContext => workContext.Resolve<TAtomicWorker>());
+        }
+
+
+        private void Queue(string industry, Func<WorkContext, IAtomicWorker> executorResolver)
+        {
             var shellDescriptor = _shellDescriptorManager.GetShellDescriptor();
-            Func<WorkContext, IAtomicWorker> executorResolver = (workContext) => workContext.Resolve<TAtomicWorker>();
 
             _processingEngine.AddTask(
                 _shellSettings,
@@ -81,7 +87,6 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
                 "IAtomicJobExecutor.Execute",
                 new Dictionary<string, object> { { "industry", industry }, { "executorResolver", executorResolver } }
             );
-
         }
     }
 }
