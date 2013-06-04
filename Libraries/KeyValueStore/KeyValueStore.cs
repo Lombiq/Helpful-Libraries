@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Orchard.Caching;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
 using Orchard.Services;
@@ -14,12 +15,20 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
     {
         private readonly IRepository<KeyValueRecord> _repository;
         private readonly IJsonConverter _jsonConverter;
+        private readonly ICacheManager _cacheManager;
+        private readonly ISignals _signals;
 
 
-        public KeyValueStore(IRepository<KeyValueRecord> repository, IJsonConverter jsonConverter)
+        public KeyValueStore(
+            IRepository<KeyValueRecord> repository,
+            IJsonConverter jsonConverter,
+            ICacheManager cacheManager,
+            ISignals signals)
         {
             _repository = repository;
             _jsonConverter = jsonConverter;
+            _cacheManager = cacheManager;
+            _signals = signals;
         }
 	
 			
@@ -42,6 +51,7 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
             {
                 record = new KeyValueRecord { StringKey = key, Value = serialized };
                 _repository.Create(record);
+                Trigger(key);
             }
             else record.Value = serialized;
         }
@@ -62,19 +72,34 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
             var record = GetRecord(key);
             if (record == null) return;
             _repository.Delete(record);
+            Trigger(key);
         }
 
 
         private KeyValueRecord GetRecord(string key)
         {
             ThrowIfKeyNull(key);
-            return _repository.Table.Where(record => record.StringKey == key).SingleOrDefault();
+            return _cacheManager.Get(CacheKey(key), ctx =>
+                {
+                    ctx.Monitor(_signals.When(CacheKey(key)));
+                    return _repository.Table.Where(record => record.StringKey == key).SingleOrDefault();
+                });
+        }
+
+        private void Trigger(string key)
+        {
+            _signals.Trigger(CacheKey(key));
         }
 
 
         private static void ThrowIfKeyNull(string key)
         {
             if (string.IsNullOrEmpty(key)) throw new ArgumentNullException("key");
+        }
+
+        private static string CacheKey(string key)
+        {
+            return "Piedone.HelpfulLibraries.KeyValueStore." + key;
         }
     }
 }
