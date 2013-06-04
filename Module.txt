@@ -10,37 +10,42 @@ Features:
 		Description: Base of Helpful Libraries
         Category: Developer
 	Piedone.HelpfulLibraries.Contents:
-		Name: Contents Libraries
+		Name: Contents Libraries - Helpful Libraries
         Description: These libraries help dealing with content items
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.DependencyInjection:
-		Name: Dependency Injection Libraries
+		Name: Dependency Injection Libraries - Helpful Libraries
         Description: These libraries aid dependency injection
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries
+	Piedone.HelpfulLibraries.KeyValueStore:
+		Name: Key Value Store - Helpful Libraries
+        Description: These are various utilities that aid module development
+		Category: Developer
+		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.Serialization:
-		Name: Serialization Libraries
+		Name: Serialization Libraries - Helpful Libraries
         Description: These libraries help the serialization and deserialization of objects
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.ServiceValidation:
-		Name: Service Validation Libraries
+		Name: Service Validation Libraries - Helpful Libraries
         Description: These libraries help collecting and returning validation errors in service classes
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.Tasks:
-		Name: Tasks Libraries
+		Name: Tasks Libraries - Helpful Libraries
         Description: These libraries help dealing with units of tasks and related issues: locking caching and reliable task locking as well as System.Threading.Tasks in an Orchard environment
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries, Piedone.HelpfulLibraries.DependencyInjection
 	Piedone.HelpfulLibraries.Tasks.Jobs:
-		Name: Tasks Libraries: Jobs
+		Name: Tasks Libraries: Jobs - Helpful Libraries
         Description: Orchard job management
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries.Tasks
 	Piedone.HelpfulLibraries.Utilities:
-		Name: Utilities
+		Name: Utilities - Helpful Libraries
         Description: These are various utilities that aid module development
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries

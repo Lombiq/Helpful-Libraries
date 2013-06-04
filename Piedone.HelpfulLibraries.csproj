@@ -95,6 +95,10 @@
     <Compile Include="Libraries\Contents\DynamicPages\PageContext.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\IPageEventHandler.cs" />
     <Compile Include="Libraries\Contents\StaticallyTypedShapeAlternates.cs" />
+    <Compile Include="Libraries\KeyValueStore\IKeyValueStore.cs" />
+    <Compile Include="Libraries\KeyValueStore\KeyValueRecord.cs" />
+    <Compile Include="Libraries\KeyValueStore\KeyValueStore.cs" />
+    <Compile Include="Libraries\KeyValueStore\Migrations.cs" />
     <Compile Include="Libraries\Tasks\ILockingCacheManager.cs" />
     <Compile Include="Libraries\Tasks\Jobs\AtomicJobQueue.cs" />
     <Compile Include="Libraries\Tasks\Jobs\IAtomicJobQueue.cs" />
