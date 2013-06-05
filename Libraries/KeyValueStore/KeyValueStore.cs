@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using Newtonsoft.Json;
 using Orchard.Caching;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
@@ -14,19 +15,16 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
     public class KeyValueStore : IKeyValueStore
     {
         private readonly IRepository<KeyValueRecord> _repository;
-        private readonly IJsonConverter _jsonConverter;
         private readonly ICacheManager _cacheManager;
         private readonly ISignals _signals;
 
 
         public KeyValueStore(
             IRepository<KeyValueRecord> repository,
-            IJsonConverter jsonConverter,
             ICacheManager cacheManager,
             ISignals signals)
         {
             _repository = repository;
-            _jsonConverter = jsonConverter;
             _cacheManager = cacheManager;
             _signals = signals;
         }
@@ -45,7 +43,7 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
             if (value == null) throw new ArgumentNullException("value");
             if (key.Length > 2048) throw new ArgumentException("The key can't be longer than 2048 characters");
 
-            var serialized = _jsonConverter.Serialize(value);
+            var serialized = JsonConvert.SerializeObject(value, Formatting.None, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
             var record = GetRecord(key);
             if (record == null)
             {
@@ -62,7 +60,7 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
 
             var record = GetRecord(key);
             if (record == null) return default(T);
-            return _jsonConverter.Deserialize<T>(record.Value);
+            return JsonConvert.DeserializeObject<T>(record.Value, new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto });
         }
 
         public void Remove(string key)
