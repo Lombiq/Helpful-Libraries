@@ -30,8 +30,8 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
             _cacheManager = cacheManager;
             _signals = signals;
         }
-	
-			
+
+
         public bool Exists(string key)
         {
             ThrowIfKeyNull(key);
@@ -79,11 +79,17 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
         private KeyValueRecord GetRecord(string key)
         {
             ThrowIfKeyNull(key);
-            return _cacheManager.Get(CacheKey(key), ctx =>
+
+            // The record can't be cached directly, but fetching by ID lets the second-level cache work.
+            var id = _cacheManager.Get(CacheKey(key), ctx =>
                 {
                     ctx.Monitor(_signals.When(CacheKey(key)));
-                    return _repository.Table.Where(record => record.StringKey == key).SingleOrDefault();
+                    var record = _repository.Table.Where(r => r.StringKey == key).SingleOrDefault();
+                    if (record == null) return 0;
+                    return record.Id;
                 });
+
+            return _repository.Get(id);
         }
 
         private void Trigger(string key)
@@ -99,7 +105,7 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
 
         private static string CacheKey(string key)
         {
-            return "Piedone.HelpfulLibraries.KeyValueStore." + key;
+            return "Piedone.HelpfulLibraries.KeyValueStore." + key + ".Id";
         }
     }
 }
