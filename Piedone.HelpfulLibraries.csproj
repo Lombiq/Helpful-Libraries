@@ -65,6 +65,10 @@
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
     <Reference Include="System.Web.Routing" />
+    <Reference Include="System.Web.WebPages, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\..\..\lib\aspnetmvc\System.Web.WebPages.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Xml.Linq" />
@@ -215,6 +219,7 @@
     <Compile Include="Libraries\Serialization\IdSerializer.cs" />
     <Compile Include="Libraries\Utilities\HqlExpressionFactoryExtensions.cs" />
     <Compile Include="Libraries\Utilities\HqlQueryExtensions.cs" />
+    <Compile Include="Libraries\Utilities\WebViewPageExtensions.cs" />
     <Compile Include="Libraries\Utilities\IFreezable.cs" />
     <Compile Include="Libraries\Utilities\IMappingsManager.cs" />
     <Compile Include="Libraries\Utilities\MappingsManager.cs" />
