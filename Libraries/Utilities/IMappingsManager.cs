@@ -1,6 +1,6 @@
 ﻿using Orchard;
 
-namespace Piedone.HelpfulLibraries.Libraries.Utilities
+namespace Piedone.HelpfulLibraries.Utilities
 {
     /// <summary>
     /// Service for managing ORM mappings
