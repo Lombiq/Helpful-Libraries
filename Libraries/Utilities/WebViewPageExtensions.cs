@@ -5,7 +5,7 @@ using System.Text;
 using System.Web.Mvc;
 using Orchard.Environment.Extensions;
 using Orchard;
-using Piedone.HelpfulLibraries.Libraries.Utilities;
+using Piedone.HelpfulLibraries.Utilities;
 using System.Web;
 using Orchard.Mvc.Spooling;
 
