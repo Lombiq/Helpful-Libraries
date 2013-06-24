@@ -12,7 +12,7 @@ namespace Piedone.HelpfulLibraries.Utilities
         /// <param name="segments">The segments to combine</param>
         public static string Combine(params string[] segments)
         {
-            return string.Join("/", segments.Select(f => f.Trim().Trim('/')));
+            return (string.Join("/", segments.Select(f => f.Trim().Trim('/'))) + (!string.IsNullOrEmpty(segments.Last()) && segments.Last().Last() == '/' ? "/" : string.Empty)).Replace("//", "/");
         }
     }
 }
