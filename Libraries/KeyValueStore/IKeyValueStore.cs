@@ -32,4 +32,21 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
         /// </summary>
         void Remove(string key);
     }
+
+
+    public static class KeyValueStoreExtensions
+    {
+        /// <summary>
+        /// Gets the value with the specified key if it exists, or creates it if it doesn't.
+        /// </summary>
+        /// <typeparam name="T">Type of the value that was saved</typeparam>
+        public static T GetOrAdd<T>(this IKeyValueStore kvStore, string key, Func<T> valueFactory)
+        {
+            if (kvStore.Exists(key)) return kvStore.Get<T>(key);
+
+            var value = valueFactory();
+            kvStore.Set(key, value);
+            return value;
+        }
+    }
 }
