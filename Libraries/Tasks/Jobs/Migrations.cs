@@ -16,7 +16,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
                     .Column<string>("ContextDefinion", column => column.Unlimited())
                     .Column<int>("Priority")
                 )
-                .AlterTable(typeof(JobRecord).Name,
+            .AlterTable(typeof(JobRecord).Name,
                 table => table
                     .CreateIndex("Industry", new string[] { "Industry" })
                 );

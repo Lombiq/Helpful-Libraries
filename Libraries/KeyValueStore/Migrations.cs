@@ -18,7 +18,8 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
                     .Column<int>("Id", column => column.PrimaryKey().Identity())
                     .Column<string>("StringKey", column => column.WithLength(2048).Unique())
                     .Column<string>("Value", column => column.Unlimited())
-            ).AlterTable(typeof(KeyValueRecord).Name,
+                )
+            .AlterTable(typeof(KeyValueRecord).Name,
                 table => table
                     .CreateIndex("StringKey", new string[] { "StringKey" })
             );
