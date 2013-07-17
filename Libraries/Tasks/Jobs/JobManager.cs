@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using Newtonsoft.Json;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
@@ -66,7 +65,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
                                     .Select(record => record.Id)
                                     .Take(50);
 
-            if (jobIdsQuery.Count() == 0) return null;
+            if (!jobIdsQuery.Any()) return null;
 
             var jobIds = jobIdsQuery.ToArray();
             var lockFile = _lockFileResolve.Value;

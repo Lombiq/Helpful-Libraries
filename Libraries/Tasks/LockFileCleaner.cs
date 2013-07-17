@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Orchard.Environment;
+﻿using Orchard.Environment;
 using Orchard.FileSystems.Media;
 using Orchard.Services;
 using Orchard.Tasks.Scheduling;
-using Orchard.Exceptions;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
@@ -51,18 +46,13 @@ namespace Piedone.HelpfulLibraries.Tasks
 
         private void CleanUp()
         {
-            try
+            if (!_storageProvider.FolderExists(WellKnownConstants.LockFileFolder)) return;
+
+            foreach (var file in _storageProvider.ListFiles(WellKnownConstants.LockFileFolder))
             {
-                foreach (var file in _storageProvider.ListFiles(WellKnownConstants.LockFileFolder))
-                {
-                    // Removing lock files that weren't touched in two minutes.
-                    if (_clock.UtcNow.Subtract(file.GetLastUpdated().ToUniversalTime()).Minutes > 2)
-                        _storageProvider.DeleteFile(file.GetPath());
-                }
-            }
-            catch (Exception ex) // Will happen if the folder doesn't exist, revise after 1.7 release.
-            {
-                if (ex.IsFatal()) throw;
+                // Removing lock files that weren't touched in two minutes.
+                if (_clock.UtcNow.Subtract(file.GetLastUpdated().ToUniversalTime()).Minutes > 2)
+                    _storageProvider.DeleteFile(file.GetPath());
             }
         }
 

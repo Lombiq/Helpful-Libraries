@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
 using Orchard.Environment.Extensions;
 
-namespace Piedone.HelpfulLibraries.Libraries.Utilities
+namespace Piedone.HelpfulLibraries.Utilities
 {
     // Taken from http://stackoverflow.com/a/7161265/220230 and a bit refactored
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]

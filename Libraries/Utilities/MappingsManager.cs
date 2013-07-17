@@ -1,12 +1,8 @@
 ﻿using Orchard.Environment.Configuration;
 using Orchard.Environment.Extensions;
 using Orchard.FileSystems.AppData;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Piedone.HelpfulLibraries.Libraries.Utilities
+namespace Piedone.HelpfulLibraries.Utilities
 {
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public class MappingsManager : IMappingsManager

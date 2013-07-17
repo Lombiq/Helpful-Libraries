@@ -1,16 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using Orchard;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Descriptor;
 using Orchard.Environment.Extensions;
 using Orchard.Environment.State;
-using Piedone.HelpfulLibraries.DependencyInjection;
+using Orchard.Events;
 using Orchard.Exceptions;
 using Orchard.Logging;
-using Orchard;
-using Orchard.Events;
+using Piedone.HelpfulLibraries.DependencyInjection;
 
 namespace Piedone.HelpfulLibraries.Tasks.Jobs
 {
@@ -68,14 +66,20 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
                 if (ex.IsFatal()) throw;
 
                 jobManager.GiveBack(job);
-                Logger.Error(ex, "Exception during the execution of an atomic job.");
+                Queue(industry, executorResolver);
+                Logger.Error(ex, "Exception during the execution of an atomic job. The job was re-queued.");
             }
         }
 
         public void Queue<TAtomicWorker>(string industry) where TAtomicWorker : IAtomicWorker
         {
+            Queue(industry, workContext => workContext.Resolve<TAtomicWorker>());
+        }
+
+
+        private void Queue(string industry, Func<WorkContext, IAtomicWorker> executorResolver)
+        {
             var shellDescriptor = _shellDescriptorManager.GetShellDescriptor();
-            Func<WorkContext, IAtomicWorker> executorResolver = (workContext) => workContext.Resolve<TAtomicWorker>();
 
             _processingEngine.AddTask(
                 _shellSettings,
@@ -83,7 +87,6 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
                 "IAtomicJobExecutor.Execute",
                 new Dictionary<string, object> { { "industry", industry }, { "executorResolver", executorResolver } }
             );
-
         }
     }
 }

@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using System.Linq;
 using Orchard.Environment.Extensions;
 
-namespace Piedone.HelpfulLibraries.Libraries.Utilities
+namespace Piedone.HelpfulLibraries.Utilities
 {
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class UriHelper
@@ -15,7 +12,9 @@ namespace Piedone.HelpfulLibraries.Libraries.Utilities
         /// <param name="segments">The segments to combine</param>
         public static string Combine(params string[] segments)
         {
-            return string.Join("/", segments.Select(f => f.Trim().Trim('/')));
+            var joined = string.Join("/", segments.Select(f => f.Trim().Trim('/')));
+            if (!string.IsNullOrEmpty(segments.Last()) && segments.Last().Last() == '/' && joined.Last() != '/') return joined + "/";
+            return joined;
         }
     }
 }

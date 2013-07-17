@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using Orchard.Data.Migration;
+﻿using Orchard.Data.Migration;
 using Orchard.Environment.Extensions;
 using Piedone.HelpfulLibraries.Models;
 
@@ -20,7 +16,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
                     .Column<string>("ContextDefinion", column => column.Unlimited())
                     .Column<int>("Priority")
                 )
-                .AlterTable(typeof(JobRecord).Name,
+            .AlterTable(typeof(JobRecord).Name,
                 table => table
                     .CreateIndex("Industry", new string[] { "Industry" })
                 );

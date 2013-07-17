@@ -1,10 +1,6 @@
 ﻿using Orchard;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace Piedone.HelpfulLibraries.Libraries.Utilities
+namespace Piedone.HelpfulLibraries.Utilities
 {
     /// <summary>
     /// Service for managing ORM mappings
