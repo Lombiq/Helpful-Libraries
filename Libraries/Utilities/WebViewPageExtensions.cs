@@ -14,6 +14,17 @@ namespace Piedone.HelpfulLibraries.Utilities
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class WebViewPageExtensions
     {
+        public static bool WasNotDisplayed(this WebViewPage page, string key)
+        {
+            var workContext = page.ViewContext.RequestContext.GetWorkContext();
+            if (workContext.GetState<string>(key) == null)
+            {
+                workContext.SetState(key, "displayed");
+                return true;
+            }
+            return false;
+        }
+
         public static IDisposable CaptureOnce(this WebViewPage page)
         {
             return new CaptureScope(page);
