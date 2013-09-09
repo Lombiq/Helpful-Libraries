@@ -16,4 +16,21 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
         dynamic BuildShape(IContent content, Func<IContent, dynamic> shapeFactory);
         dynamic UpdateEditor(IContent content, IUpdateModel updater, string groupId = "");
     }
+
+
+    public static class PrefixedEditorManagerExtensions
+    {
+        public static IEnumerable<dynamic> BuildShapes(this IPrefixedEditorManager prefixedEditorManager, IEnumerable<ContentItem> contentItems, Func<IContent, dynamic> shapeFactory)
+        {
+            return contentItems.Select(item => prefixedEditorManager.BuildShape(item, shapeFactory)); ;
+        }
+
+        public static void UpdateEditors(this IPrefixedEditorManager prefixedEditorManager, IEnumerable<ContentItem> contentItems, IUpdateModel updater, string groupId = "")
+        {
+            foreach (var contentItem in contentItems)
+            {
+                prefixedEditorManager.UpdateEditor(contentItem, updater, groupId);
+            }
+        }
+    }
 }
