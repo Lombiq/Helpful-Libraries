@@ -50,6 +50,7 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
 
         public static string AttachPrefixToPrefix(int itemId, string currentPrefix)
         {
+            if (currentPrefix.StartsWith("id-")) return currentPrefix;
             return "id-" + itemId + "_" + currentPrefix;
         }
 
