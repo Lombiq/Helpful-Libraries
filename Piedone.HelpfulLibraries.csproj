@@ -104,6 +104,7 @@
     <Compile Include="Libraries\Contents\DynamicPages\IPageEventHandler.cs" />
     <Compile Include="Libraries\Contents\IPrefixedEditorManager.cs" />
     <Compile Include="Libraries\Contents\PrefixedEditorManager.cs" />
+    <Compile Include="Libraries\Contents\ShapeOutputGenerator.cs" />
     <Compile Include="Libraries\Contents\StaticallyTypedShapeAlternates.cs" />
     <Compile Include="Libraries\KeyValueStore\IKeyValueStore.cs" />
     <Compile Include="Libraries\KeyValueStore\KeyValueRecord.cs" />
