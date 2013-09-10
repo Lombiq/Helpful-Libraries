@@ -14,8 +14,16 @@ using Orchard.Mvc;
 
 namespace Piedone.HelpfulLibraries.Contents
 {
+    /// <summary>
+    /// Generates the output (e.g. the HTML markup) and captures it for shapes
+    /// </summary>
     public interface IShapeOutputGenerator : IDependency
     {
+        /// <summary>
+        /// Generates the output (e.g. the HTML markup) and captures it for a shape 
+        /// </summary>
+        /// <param name="shape">The shape to generate the output for</param>
+        /// <returns>Stream containing the output</returns>
         Stream GenerateOutput(dynamic shape);
     }
 
