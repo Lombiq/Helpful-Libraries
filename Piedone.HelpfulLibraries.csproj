@@ -95,6 +95,10 @@
       <Project>{9916839C-39FC-4CEB-A5AF-89CA7E87119F}</Project>
       <Name>Orchard.Core</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Orchard.Caching\Orchard.Caching.csproj">
+      <Project>{7528bf74-25c7-4abe-883a-443b4eec4776}</Project>
+      <Name>Orchard.Caching</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Libraries\Contents\DynamicPages\ContentExtensions.cs" />
@@ -222,6 +226,7 @@
     <Compile Include="Libraries\Tasks\ScheduledTaskManagerExtensions.cs" />
     <Compile Include="Libraries\Tasks\WellKnownConstants.cs" />
     <Compile Include="Libraries\Utilities\AuthenticationServiceExtensions.cs" />
+    <Compile Include="Libraries\Utilities\CacheServiceMonitor.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
     <Compile Include="Libraries\Serialization\IdSerializer.cs" />
     <Compile Include="Libraries\Utilities\HqlExpressionFactoryExtensions.cs" />
