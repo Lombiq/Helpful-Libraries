@@ -20,15 +20,17 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
         private readonly IContentManager _contentManager;
         private readonly HashSet<int> _itemIds = new HashSet<int>();
 
-        IEnumerable<int> IPrefixedEditorManager.ItemIds
+        public IEnumerable<int> ItemIds
         {
             get { return _itemIds; }
         }
+
 
         public PrefixedEditorManager(IContentManager contentManager)
         {
             _contentManager = contentManager;
         }
+
 
         public dynamic BuildShape(IContent content, Func<IContent, dynamic> shapeFactory)
         {
@@ -41,26 +43,46 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
             return _contentManager.UpdateEditor(content, new PrefixedUpdater(updater, content.ContentItem.Id), groupId);
         }
 
+        public dynamic UpdateEditor(IContent content, IEnumerable<IPrefixedParent> prefixedParents, IUpdateModel updater, string groupId = "")
+        {
+            return _contentManager.UpdateEditor(content, new PrefixedUpdater(updater, content.ContentItem.Id, prefixedParents), groupId);
+        }
+
+
         public static string AttachPrefixToPrefix(int itemId, string currentPrefix)
         {
             if (!string.IsNullOrEmpty(currentPrefix) && currentPrefix.StartsWith("id-")) return currentPrefix;
             return "id-" + itemId + "_" + currentPrefix;
         }
 
+
         private class PrefixedUpdater : IUpdateModel
         {
             private readonly IUpdateModel _updater;
             private readonly int _itemId;
+            private readonly IEnumerable<IPrefixedParent> _parents;
+
 
             public PrefixedUpdater(IUpdateModel updater, int itemId)
             {
                 _updater = updater;
                 _itemId = itemId;
+                _parents = Enumerable.Empty<IPrefixedParent>();
             }
+
+            public PrefixedUpdater(IUpdateModel updater, int itemId, IEnumerable<IPrefixedParent> parents)
+                : this(updater, itemId)
+            {
+                _parents = parents;
+            }
+
 
             bool IUpdateModel.TryUpdateModel<TModel>(TModel model, string prefix, string[] includeProperties, string[] excludeProperties)
             {
-                return _updater.TryUpdateModel<TModel>(model, AttachPrefixToPrefix(_itemId, prefix), includeProperties, excludeProperties);
+                var prefixedPrefix = 
+                    string.Join(string.Empty, _parents.Select(parent => AttachPrefixToPrefix(parent.Content.ContentItem.Id, parent.Prefix) + "."))
+                   + AttachPrefixToPrefix(_itemId, prefix);
+                return _updater.TryUpdateModel<TModel>(model, prefixedPrefix, includeProperties, excludeProperties);
             }
 
             void IUpdateModel.AddModelError(string key, LocalizedString errorMessage)
@@ -71,7 +93,7 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
     }
 
 
-    // Corresponding ShapeTableProvider to set the prefix for editors built through the previous service
+    // Corresponding ShapeTableProvider to set the prefix for editors built through the previous service.
     [OrchardFeature("Piedone.HelpfulLibraries.Contents")]
     public class PrefixedEditorShapeTable : IShapeTableProvider
     {
