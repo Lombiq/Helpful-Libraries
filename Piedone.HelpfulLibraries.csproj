@@ -233,7 +233,6 @@
     <Compile Include="Libraries\Utilities\HqlQueryExtensions.cs" />
     <Compile Include="Libraries\Utilities\WebViewPageExtensions.cs" />
     <Compile Include="Libraries\Utilities\IFreezable.cs" />
-    <Compile Include="Libraries\Utilities\IMappingsManager.cs" />
     <Compile Include="Libraries\Utilities\MappingsManager.cs" />
     <Compile Include="Libraries\Utilities\MimeAssistant.cs" />
     <Compile Include="Libraries\Utilities\UriExtensions.cs" />
