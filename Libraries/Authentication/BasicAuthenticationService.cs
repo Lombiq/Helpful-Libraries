@@ -8,7 +8,7 @@ using Orchard.Environment.Extensions;
 using Orchard.Mvc;
 using Orchard.Security;
 
-namespace Piedone.HelpfulLibraries.Utilities
+namespace Piedone.HelpfulLibraries.Authentication
 {
     public interface IBasicAuthenticationCredentials
     {
@@ -39,7 +39,7 @@ namespace Piedone.HelpfulLibraries.Utilities
     }
 
 
-    [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
+    [OrchardFeature("Piedone.HelpfulLibraries.Authentication")]
     public class BasicAuthenticationService : IBasicAuthenticationService
     {
         private readonly IHttpContextAccessor _hca;
