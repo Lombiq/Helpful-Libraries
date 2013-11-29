@@ -226,6 +226,7 @@
     <Compile Include="Libraries\Tasks\ScheduledTaskManagerExtensions.cs" />
     <Compile Include="Libraries\Tasks\WellKnownConstants.cs" />
     <Compile Include="Libraries\Utilities\AuthenticationServiceExtensions.cs" />
+    <Compile Include="Libraries\Utilities\BasicAuthenticationService.cs" />
     <Compile Include="Libraries\Utilities\CacheServiceMonitor.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
     <Compile Include="Libraries\Serialization\IdSerializer.cs" />
