@@ -244,6 +244,7 @@
     <Compile Include="Libraries\Serialization\IdSerializer.cs" />
     <Compile Include="Libraries\Utilities\HqlExpressionFactoryExtensions.cs" />
     <Compile Include="Libraries\Utilities\HqlQueryExtensions.cs" />
+    <Compile Include="Libraries\Utilities\OrchardVersion.cs" />
     <Compile Include="Libraries\Utilities\WebViewPageExtensions.cs" />
     <Compile Include="Libraries\Utilities\IFreezable.cs" />
     <Compile Include="Libraries\Utilities\MappingsManager.cs" />
