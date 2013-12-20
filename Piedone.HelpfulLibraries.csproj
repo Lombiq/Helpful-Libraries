@@ -240,6 +240,7 @@
     <Compile Include="Libraries\Authentication\AuthenticationServiceExtensions.cs" />
     <Compile Include="Libraries\Authentication\BasicAuthenticationService.cs" />
     <Compile Include="Libraries\Utilities\CacheServiceMonitor.cs" />
+    <Compile Include="Libraries\Utilities\ConfigurationAccessor.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
     <Compile Include="Libraries\Serialization\IdSerializer.cs" />
     <Compile Include="Libraries\Utilities\HqlExpressionFactoryExtensions.cs" />
