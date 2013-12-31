@@ -18,7 +18,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
                 )
             .AlterTable(typeof(JobRecord).Name,
                 table => table
-                    .CreateIndex("Industry", new string[] { "Industry" })
+                    .CreateIndex("Industry", "Industry")
                 );
 
 
