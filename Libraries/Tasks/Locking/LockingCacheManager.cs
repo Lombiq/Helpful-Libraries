@@ -2,21 +2,23 @@
 using Orchard.Caching;
 using Orchard.Environment.Extensions;
 
-namespace Piedone.HelpfulLibraries.Tasks
+namespace Piedone.HelpfulLibraries.Tasks.Locking
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Tasks")]
+    [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Locking")]
     public class LockingCacheManager : ILockingCacheManager
     {
         private readonly ICacheManager _cacheManager;
-        private readonly ILockFileManager _lockFileManager;
+        private readonly IDistributedLockManager _lockFileManager;
+
 
         public LockingCacheManager(
             ICacheManager cacheManager,
-            ILockFileManager lockFileManager)
+            IDistributedLockManager lockFileManager)
         {
             _cacheManager = cacheManager;
             _lockFileManager = lockFileManager;
         }
+
 
         public TResult Get<TResult>(string key, Func<AcquireContext<string>, TResult> acquire, Func<TResult> fallback, TimeSpan timeout)
         {

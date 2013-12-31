@@ -1,10 +1,12 @@
 ﻿using Orchard.Environment;
+using Orchard.Environment.Extensions;
 using Orchard.FileSystems.Media;
 using Orchard.Services;
 using Orchard.Tasks.Scheduling;
 
-namespace Piedone.HelpfulLibraries.Tasks
+namespace Piedone.HelpfulLibraries.Tasks.Locking
 {
+    [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Locking")]
     public class LockFileCleaner : IOrchardShellEvents
     {
         private readonly IClock _clock;

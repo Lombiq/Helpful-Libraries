@@ -2,7 +2,7 @@
 using Orchard;
 using Orchard.Caching;
 
-namespace Piedone.HelpfulLibraries.Tasks
+namespace Piedone.HelpfulLibraries.Tasks.Locking
 {
     /// <summary>
     /// Provides locking cache management, i.e. concurrent cache access is synchronized so a cache

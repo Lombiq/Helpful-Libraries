@@ -126,7 +126,10 @@
     <Compile Include="Libraries\KeyValueStore\KeyValueRecord.cs" />
     <Compile Include="Libraries\KeyValueStore\KeyValueStore.cs" />
     <Compile Include="Libraries\KeyValueStore\Migrations.cs" />
-    <Compile Include="Libraries\Tasks\ILockingCacheManager.cs" />
+    <Compile Include="Libraries\Tasks\Locking\DatabaseLock.cs" />
+    <Compile Include="Libraries\Tasks\Locking\DatabaseLockMigrations.cs" />
+    <Compile Include="Libraries\Tasks\Locking\DatabaseLockRecord.cs" />
+    <Compile Include="Libraries\Tasks\Locking\ILockingCacheManager.cs" />
     <Compile Include="Libraries\Tasks\Jobs\AtomicJobQueue.cs" />
     <Compile Include="Libraries\Tasks\Jobs\IAtomicJobQueue.cs" />
     <Compile Include="Libraries\Tasks\Jobs\IAtomicWorker.cs" />
@@ -135,8 +138,8 @@
     <Compile Include="Libraries\Tasks\Jobs\JobManager.cs" />
     <Compile Include="Libraries\Tasks\Jobs\JobRecord.cs" />
     <Compile Include="Libraries\Tasks\Jobs\Migrations.cs" />
-    <Compile Include="Libraries\Tasks\LockFileCleaner.cs" />
-    <Compile Include="Libraries\Tasks\LockingCacheManager.cs" />
+    <Compile Include="Libraries\Tasks\Locking\LockFileCleaner.cs" />
+    <Compile Include="Libraries\Tasks\Locking\LockingCacheManager.cs" />
     <Compile Include="Libraries\Contents\ContentExtensions.cs" />
     <Compile Include="Libraries\DependencyInjection\DependencyInjectionModule.cs" />
     <Compile Include="Libraries\DependencyInjection\IResolve.cs" />
@@ -231,10 +234,11 @@
     <Compile Include="Libraries\ServiceValidation\ValidationDictionaries\ValidationDictionary.cs" />
     <Compile Include="Libraries\Tasks\DetachedDelegateBuilder.cs" />
     <Compile Include="Libraries\Tasks\IDetachedDelegateBuilder.cs" />
-    <Compile Include="Libraries\Tasks\ILockFile.cs" />
-    <Compile Include="Libraries\Tasks\ILockFileManager.cs" />
-    <Compile Include="Libraries\Tasks\LockFile.cs" />
-    <Compile Include="Libraries\Tasks\LockFileManager.cs" />
+    <Compile Include="Libraries\Tasks\Locking\IDistributedLock.cs" />
+    <Compile Include="Libraries\Tasks\Locking\IDistributedLockManager.cs" />
+    <Compile Include="Libraries\Tasks\Locking\FileLock.cs" />
+    <Compile Include="Libraries\Tasks\Locking\DistributedLockManager.cs" />
+    <Compile Include="Libraries\Tasks\Locking\LockRecordCleaner.cs" />
     <Compile Include="Libraries\Tasks\ScheduledTaskManagerExtensions.cs" />
     <Compile Include="Libraries\Tasks\WellKnownConstants.cs" />
     <Compile Include="Libraries\Authentication\AuthenticationServiceExtensions.cs" />
@@ -256,6 +260,7 @@
   <ItemGroup>
     <Content Include="Views\Empty.cshtml" />
   </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
