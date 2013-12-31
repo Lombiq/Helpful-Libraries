@@ -18,32 +18,6 @@ namespace Piedone.HelpfulLibraries.Tasks
 
         public ILogger Logger { get; set; }
 
-        private class TaskContext
-        {
-            public string CurrentCulture { get; private set; }
-            public ISite CurrentSite { get; private set; }
-            public IUser CurrentUser { get; set; }
-            public HttpContextBase HttpContext { get; private set; }
-
-            public TaskContext(WorkContext workContext)
-            {
-                CurrentCulture = workContext.CurrentCulture;
-                CurrentSite = workContext.CurrentSite;
-                CurrentUser = workContext.CurrentUser;
-                //HttpContext = new HttpContextPlaceholder();
-                HttpContext = workContext.HttpContext;
-            }
-
-            public WorkContext Transcribe(WorkContext workContext)
-            {
-                workContext.CurrentCulture = CurrentCulture;
-                workContext.CurrentSite = CurrentSite;
-                workContext.CurrentUser = CurrentUser;
-                workContext.HttpContext = HttpContext;
-
-                return workContext;
-            }
-        }
 
         public DetachedDelegateBuilder(IWorkContextAccessor workContextAcessor)
         {
@@ -51,6 +25,7 @@ namespace Piedone.HelpfulLibraries.Tasks
 
             Logger = NullLogger.Instance; // Constructor injection of ILogger fails
         }
+
 
         public Action<TSender, TEventArgs> BuildAsyncEventHandler<TSender, TEventArgs>(Action<TSender, TEventArgs> action, bool catchExceptions = true)
             where TEventArgs : EventArgs
@@ -140,6 +115,34 @@ namespace Piedone.HelpfulLibraries.Tasks
                     }
                 }
             };
+        }
+
+
+        private class TaskContext
+        {
+            public string CurrentCulture { get; private set; }
+            public ISite CurrentSite { get; private set; }
+            public IUser CurrentUser { get; set; }
+            public HttpContextBase HttpContext { get; private set; }
+
+            public TaskContext(WorkContext workContext)
+            {
+                CurrentCulture = workContext.CurrentCulture;
+                CurrentSite = workContext.CurrentSite;
+                CurrentUser = workContext.CurrentUser;
+                //HttpContext = new HttpContextPlaceholder();
+                HttpContext = workContext.HttpContext;
+            }
+
+            public WorkContext Transcribe(WorkContext workContext)
+            {
+                workContext.CurrentCulture = CurrentCulture;
+                workContext.CurrentSite = CurrentSite;
+                workContext.CurrentUser = CurrentUser;
+                workContext.HttpContext = HttpContext;
+
+                return workContext;
+            }
         }
     }
 }
