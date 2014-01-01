@@ -2,6 +2,7 @@
 using System.IO;
 using Orchard.Environment.Extensions;
 using Orchard.FileSystems.Media;
+using Orchard.Exceptions;
 
 namespace Piedone.HelpfulLibraries.Tasks.Locking
 {
@@ -46,7 +47,14 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
 
             _isDisposed = true;
             // Could throw exception e.g. if the file was deleted. This should not happen.
-            _storageProvider.DeleteFile(MakeFilePath(_name));
+            try
+            {
+                _storageProvider.DeleteFile(MakeFilePath(_name));
+            }
+            catch (Exception ex)
+            {
+                if (ex.IsFatal()) throw;
+            }
         }
 
         private static string MakeFilePath(string name)
