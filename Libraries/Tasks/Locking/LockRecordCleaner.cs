@@ -31,9 +31,13 @@ namespace Piedone.HelpfulLibraries.Libraries.Tasks.Locking
         {
             // If there are lock records on shell start older than one minute they were surely created before the shell startup,
             // thus are remainders of an earlier crash.
-            foreach (var record in _repository.Table.Where(record => _clock.UtcNow.Subtract(record.AcquiredUtc.Value).Minutes > 1))
+            foreach (var record in _repository.Table)
             {
-                _repository.Delete(record);
+                // Using this expression in a Where() clause is not supported. But there shouldn't be many records anyway.
+                if (_clock.UtcNow.Subtract(record.AcquiredUtc.Value).Minutes > 1)
+                {
+                    _repository.Delete(record); 
+                }
             }
         }
 
