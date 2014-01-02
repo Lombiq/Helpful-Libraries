@@ -23,6 +23,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
         private readonly ShellSettings _shellSettings;
         private readonly IClock _clock;
         private string _name;
+        private int _id;
         private bool _isDisposed = false;
         private bool _isAcquired = false;
 
@@ -47,20 +48,23 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
             // of the caller.
             using (var scope = BeginLifeTimeScope(name))
             {
-                var canAcquire = GetRecord(scope, name) == null;
+                var repository = scope.Resolve<IRepository<DatabaseLockRecord>>();
+
+                var canAcquire = repository.Table.Where(record => record.Name == name).FirstOrDefault() == null;
 
                 if (canAcquire)
                 {
-                    _name = name;
-                    _isAcquired = true;
-
-                    var repository = scope.Resolve<IRepository<DatabaseLockRecord>>();
-                    repository.Create(new DatabaseLockRecord
+                    var record = new DatabaseLockRecord
                     {
                         Name = name,
                         AcquiredUtc = _clock.UtcNow
-                    });
+                    };
+                    repository.Create(record);
                     repository.Flush();
+
+                    _name = name;
+                    _isAcquired = true;
+                    _id = record.Id;
                 }
 
                 return canAcquire;
@@ -78,10 +82,11 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
             {
                 try
                 {
-                    var record = GetRecord(scope, _name);
+                    var repository = scope.Resolve<IRepository<DatabaseLockRecord>>();
+
+                    var record = repository.Get(_id);
                     if (record != null)
                     {
-                        var repository = scope.Resolve<IRepository<DatabaseLockRecord>>();
                         repository.Delete(record);
                         repository.Flush();
                     }
@@ -97,13 +102,8 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
         private ILifetimeScope BeginLifeTimeScope(string name)
         {
             var scope = _orchardHost.GetShellContext(_shellSettings).LifetimeScope.BeginLifetimeScope("Piedone.HelpfulLibraries.Tasks.Locking.Database." + name);
-            scope.Resolve<ITransactionManager>().RequireNew(IsolationLevel.ReadUncommitted);
+            scope.Resolve<ITransactionManager>().RequireNew();
             return scope;
-        }
-
-        private DatabaseLockRecord GetRecord(ILifetimeScope scope, string name)
-        {
-            return scope.Resolve<IRepository<DatabaseLockRecord>>().Table.Where(record => record.Name == name).FirstOrDefault();
         }
     }
 }
