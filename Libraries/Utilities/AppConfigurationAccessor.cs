@@ -16,7 +16,7 @@ namespace Piedone.HelpfulLibraries.Utilities
     /// <remarks>
     /// As an injectable dependency this can be easily mocked or stubbed, on contrary to the default ConfigurationManager static class.
     /// </remarks>
-    public interface IConfigurationAccessor : ISingletonDependency
+    public interface IAppConfigurationAccessor : ISingletonDependency
     {
         NameValueCollection AppSettings { get; }
         ConnectionStringSettingsCollection ConnectionStrings { get; }
@@ -24,7 +24,7 @@ namespace Piedone.HelpfulLibraries.Utilities
 
 
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
-    public class ConfigurationAccessor : IConfigurationAccessor
+    public class AppConfigurationAccessor : IAppConfigurationAccessor
     {
         public NameValueCollection AppSettings
         {
