@@ -58,7 +58,7 @@ Features:
 		Name: Tasks Libraries: Jobs - Helpful Libraries
         Description: Orchard job management
 		Category: Developer
-		Dependencies: Piedone.HelpfulLibraries.Tasks
+		Dependencies: Piedone.HelpfulLibraries.Tasks.Locking
 	Piedone.HelpfulLibraries.Utilities:
 		Name: Utilities - Helpful Libraries
         Description: These are various utilities that aid module development
