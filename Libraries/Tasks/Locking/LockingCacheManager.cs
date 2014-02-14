@@ -8,15 +8,15 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
     public class LockingCacheManager : ILockingCacheManager
     {
         private readonly ICacheManager _cacheManager;
-        private readonly IDistributedLockManager _lockFileManager;
+        private readonly IDistributedLockManager _lockManager;
 
 
         public LockingCacheManager(
             ICacheManager cacheManager,
-            IDistributedLockManager lockFileManager)
+            IDistributedLockManager lockManager)
         {
             _cacheManager = cacheManager;
-            _lockFileManager = lockFileManager;
+            _lockManager = lockManager;
         }
 
 
@@ -29,7 +29,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
             {
                 return _cacheManager.Get(key, ctx =>
                     {
-                        using (var lockFile = _lockFileManager.AcquireLock(key, timeout))
+                        using (var lockFile = _lockManager.AcquireLock(key, timeout))
                         {
                             // If we waited for the lock to be released, here the result computed by the locking code should be returned.
                             return _cacheManager.Get(key, acquire);
