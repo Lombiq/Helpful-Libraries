@@ -110,6 +110,9 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
                 .OnDisplaying(displaying =>
                 {
                     var shape = displaying.Shape;
+
+                    if (shape.ContentItem == null) return;
+
                     int itemId = shape.ContentItem.Id;
 
                     if (!_prefixedEditorManagerWork.Value.ItemIds.Contains(itemId)) return;
