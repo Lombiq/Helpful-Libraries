@@ -8,7 +8,7 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
     public static class ContentManagerExtensions
     {
         /// <summary>
-        /// Creates a new page content items
+        /// Creates a new dynamic page content item.
         /// </summary>
         /// <param name="pageName">Name of the page</param>
         /// <param name="group">String id of the group the page belongs to. Use this to distinct between a set of pages.</param>
@@ -28,7 +28,7 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
         }
 
         /// <summary>
-        /// Creates a new page content items
+        /// Creates a new dyamic page content item.
         /// </summary>
         /// <param name="pageName">Name of the page</param>
         /// <param name="group">String id of the group the page belongs to. Use this to distinct between a set of pages.</param>
@@ -49,7 +49,7 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
         }
 
         /// <summary>
-        /// Builds the display shape of the page
+        /// Builds the display shape of the dynamic page.
         /// </summary>
         /// <param name="page">The page item</param>
         /// <param name="displayType">The display type (e.g. Summary, Detail) to use</param>
