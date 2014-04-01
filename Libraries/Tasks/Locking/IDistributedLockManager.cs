@@ -44,6 +44,19 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
         /// Tries to acquire a lock with the specified parameters
         /// </summary>
         /// <param name="name">Unique name of the lock</param>
+        /// <param name="timeout">Time span to wait for the lock before timing out</param>
+        /// <param name="distributedLock">The ILockFile instance on success or null if the lock couldn't be acquired.</param>
+        /// <returns>True if the lock could be acquired and false if not.</returns>
+        public static bool TryAcquireLock(this IDistributedLockManager lockFileManager, string name, TimeSpan timeout, out IDistributedLock distributedLock)
+        {
+            distributedLock = lockFileManager.TryAcquireLock(name, timeout);
+            return distributedLock != null;
+        }
+
+        /// <summary>
+        /// Tries to acquire a lock with the specified parameters
+        /// </summary>
+        /// <param name="name">Unique name of the lock</param>
         /// <returns>The ILockFile instance on success.</returns>
         /// <exception cref="System.TimeoutException">Thrown if the lock couldn't be acquired.</exception>
         public static IDistributedLock AcquireLock(this IDistributedLockManager lockFileManager, string name)
