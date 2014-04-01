@@ -11,29 +11,26 @@ using Orchard.Environment.Extensions;
 namespace Piedone.HelpfulLibraries.Utilities
 {
     /// <summary>
-    /// Can be used to access the <see cref="System.Configuration.ConfigurationManager">ConfigurationManager</see> collections.
+    /// Exposes application configuration (could be e.g. AppSettings from Web.config or CloudConfiguration on Azure).
     /// </summary>
-    /// <remarks>
-    /// As an injectable dependency this can be easily mocked or stubbed, on contrary to the default ConfigurationManager static class.
-    /// </remarks>
     public interface IAppConfigurationAccessor : ISingletonDependency
     {
-        NameValueCollection AppSettings { get; }
-        ConnectionStringSettingsCollection ConnectionStrings { get; }
+        string GetConfiguration(string name);
     }
 
 
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public class AppConfigurationAccessor : IAppConfigurationAccessor
     {
-        public NameValueCollection AppSettings
+        public string GetConfiguration(string name)
         {
-            get { return ConfigurationManager.AppSettings; }
-        }
+            var value = ConfigurationManager.AppSettings[name];
+            if (value != null) return value;
 
-        public ConnectionStringSettingsCollection ConnectionStrings
-        {
-            get { return ConfigurationManager.ConnectionStrings; }
+            var connectionStringSettings = ConfigurationManager.ConnectionStrings[name];
+            if (connectionStringSettings != null) return connectionStringSettings.ConnectionString;
+
+            return string.Empty;
         }
     }
 }
