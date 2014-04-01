@@ -79,11 +79,9 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
         private void Queue(string industry, Func<WorkContext, IAtomicWorker> executorResolver)
         {
-            var shellDescriptor = _shellDescriptorManager.GetShellDescriptor();
-
             _processingEngine.AddTask(
                 _shellSettings,
-                shellDescriptor,
+                _shellDescriptorManager.GetShellDescriptor(),
                 "IAtomicJobExecutor.Execute",
                 new Dictionary<string, object> { { "industry", industry }, { "executorResolver", executorResolver } }
             );

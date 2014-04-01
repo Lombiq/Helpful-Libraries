@@ -1,9 +1,9 @@
 ﻿using Orchard.Environment.Extensions;
 using Orchard.Security;
 
-namespace Piedone.HelpfulLibraries.Utilities
+namespace Piedone.HelpfulLibraries.Authentication
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
+    [OrchardFeature("Piedone.HelpfulLibraries.Authentication")]
     public static class AuthenticationServiceExtensions
     {
         /// <summary>

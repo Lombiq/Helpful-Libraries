@@ -3,12 +3,17 @@ AntiForgery: enabled
 Author: Piedone
 Website: http://helpfullibraries.codeplex.com
 Version: 1.9
-OrchardVersion: 1.7
+OrchardVersion: 1.8
 Description: Libraries that can be handy when developing for Orchard
 Features:
     Piedone.HelpfulLibraries:
 		Description: Base of Helpful Libraries
         Category: Developer
+	Piedone.HelpfulLibraries.Authentication:
+		Name: Authentication - Helpful Libraries
+        Description: These are various utilities and libraries for helping with user authentication
+		Category: Developer
+		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.Contents:
 		Name: Contents Libraries - Helpful Libraries
         Description: These libraries help dealing with content items
@@ -39,11 +44,21 @@ Features:
         Description: These libraries help dealing with units of tasks and related issues: locking caching and reliable task locking as well as System.Threading.Tasks in an Orchard environment
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries, Piedone.HelpfulLibraries.DependencyInjection
+	Piedone.HelpfulLibraries.Tasks.Locking:
+		Name: Tasks Libraries: Locking - Helpful Libraries
+        Description: Distributed locking services with file-based locking
+		Category: Developer
+		Dependencies: Piedone.HelpfulLibraries.Tasks
+	Piedone.HelpfulLibraries.Tasks.Locking.Database:
+		Name: Tasks Libraries: Database Locking - Helpful Libraries
+        Description: Distributed locking services with database-based locking
+		Category: Developer
+		Dependencies: Piedone.HelpfulLibraries.Tasks.Locking
 	Piedone.HelpfulLibraries.Tasks.Jobs:
 		Name: Tasks Libraries: Jobs - Helpful Libraries
         Description: Orchard job management
 		Category: Developer
-		Dependencies: Piedone.HelpfulLibraries.Tasks
+		Dependencies: Piedone.HelpfulLibraries.Tasks.Locking
 	Piedone.HelpfulLibraries.Utilities:
 		Name: Utilities - Helpful Libraries
         Description: These are various utilities that aid module development

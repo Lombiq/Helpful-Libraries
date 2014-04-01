@@ -6,6 +6,7 @@ using Orchard.Data;
 using Orchard.Environment.Extensions;
 using Piedone.HelpfulLibraries.DependencyInjection;
 using Piedone.HelpfulLibraries.Models;
+using Piedone.HelpfulLibraries.Tasks.Locking;
 
 namespace Piedone.HelpfulLibraries.Tasks.Jobs
 {
@@ -13,14 +14,14 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
     public class JobManager : IJobManager
     {
         private readonly IRepository<JobRecord> _repository;
-        private readonly IResolve<ILockFile> _lockFileResolve;
+        private readonly IResolve<IDistributedLock> _lockResolve;
         private readonly Dictionary<IJob, JobReference> _jobReferences = new Dictionary<IJob, JobReference>(); // No need to dispose undisposed jobs' lock files, as the Dispose() on the lock files will be called by Autofac
 
 
-        public JobManager(IRepository<JobRecord> repository, IResolve<ILockFile> lockFileResolve)
+        public JobManager(IRepository<JobRecord> repository, IResolve<IDistributedLock> lockResolve)
         {
             _repository = repository;
-            _lockFileResolve = lockFileResolve;
+            _lockResolve = lockResolve;
         }
 
 
@@ -44,7 +45,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
         public IJob TakeOnlyJob(string industry)
         {
-            var lockFile = _lockFileResolve.Value;
+            var lockFile = _lockResolve.Value;
             if (!lockFile.TryAcquire("Only Job - " + industry)) return null;
 
             var jobRecord = CreateJobQuery(industry)
@@ -68,7 +69,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
             if (!jobIdsQuery.Any()) return null;
 
             var jobIds = jobIdsQuery.ToArray();
-            var lockFile = _lockFileResolve.Value;
+            var lockFile = _lockResolve.Value;
             var jobNumber = 0;
 
             while (jobNumber < jobIds.Length && !lockFile.TryAcquire("Job - " + industry + jobIds[jobNumber]))
@@ -119,7 +120,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
         private class JobReference
         {
             public int Id { get; set; }
-            public ILockFile LockFile { get; set; }
+            public IDistributedLock LockFile { get; set; }
         }
     }
 }

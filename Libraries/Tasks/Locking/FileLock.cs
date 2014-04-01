@@ -2,26 +2,30 @@
 using System.IO;
 using Orchard.Environment.Extensions;
 using Orchard.FileSystems.Media;
+using Orchard.Exceptions;
 
-namespace Piedone.HelpfulLibraries.Tasks
+namespace Piedone.HelpfulLibraries.Tasks.Locking
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Tasks")]
-    public class LockFile : ILockFile
+    [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Locking")]
+    public class FileLock : IDistributedLock
     {
         private readonly IStorageProvider _storageProvider;
         private string _name;
         private bool _isDisposed = false;
         private bool _isAcquired = false;
 
-        public LockFile(IStorageProvider storageProvider)
+
+        public FileLock(IStorageProvider storageProvider)
         {
             _storageProvider = storageProvider;
         }
 
+
         public bool TryAcquire(string name)
         {
-            if (String.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
+            if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
 
+            name = name.Replace("-", "--").Replace('/', '-').Replace('\\', '-').Replace('.', '_');
             using (var stream = new MemoryStream())
             {
                 var canAcquire = _storageProvider.TrySaveStream(MakeFilePath(name), stream);
@@ -43,7 +47,14 @@ namespace Piedone.HelpfulLibraries.Tasks
 
             _isDisposed = true;
             // Could throw exception e.g. if the file was deleted. This should not happen.
-            _storageProvider.DeleteFile(MakeFilePath(_name));
+            try
+            {
+                _storageProvider.DeleteFile(MakeFilePath(_name));
+            }
+            catch (Exception ex)
+            {
+                if (ex.IsFatal()) throw;
+            }
         }
 
         private static string MakeFilePath(string name)

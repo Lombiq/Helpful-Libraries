@@ -2,21 +2,23 @@
 using Orchard.Caching;
 using Orchard.Environment.Extensions;
 
-namespace Piedone.HelpfulLibraries.Tasks
+namespace Piedone.HelpfulLibraries.Tasks.Locking
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Tasks")]
+    [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Locking")]
     public class LockingCacheManager : ILockingCacheManager
     {
         private readonly ICacheManager _cacheManager;
-        private readonly ILockFileManager _lockFileManager;
+        private readonly IDistributedLockManager _lockManager;
+
 
         public LockingCacheManager(
             ICacheManager cacheManager,
-            ILockFileManager lockFileManager)
+            IDistributedLockManager lockManager)
         {
             _cacheManager = cacheManager;
-            _lockFileManager = lockFileManager;
+            _lockManager = lockManager;
         }
+
 
         public TResult Get<TResult>(string key, Func<AcquireContext<string>, TResult> acquire, Func<TResult> fallback, TimeSpan timeout)
         {
@@ -27,7 +29,7 @@ namespace Piedone.HelpfulLibraries.Tasks
             {
                 return _cacheManager.Get(key, ctx =>
                     {
-                        using (var lockFile = _lockFileManager.AcquireLock(key, timeout))
+                        using (var lockFile = _lockManager.AcquireLock(key, timeout))
                         {
                             // If we waited for the lock to be released, here the result computed by the locking code should be returned.
                             return _cacheManager.Get(key, acquire);
