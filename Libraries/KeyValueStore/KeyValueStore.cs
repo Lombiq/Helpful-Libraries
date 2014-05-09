@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json;
 using Orchard.Caching;
+using Orchard.Caching.Services;
 using Orchard.Data;
 using Orchard.Environment.Extensions;
 using Orchard.Services;
@@ -15,17 +16,17 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
     public class KeyValueStore : IKeyValueStore
     {
         private readonly IRepository<KeyValueRecord> _repository;
-        private readonly ICacheManager _cacheManager;
+        private readonly ICacheService _cacheService;
         private readonly ISignals _signals;
 
 
         public KeyValueStore(
             IRepository<KeyValueRecord> repository,
-            ICacheManager cacheManager,
+            ICacheService cacheService,
             ISignals signals)
         {
             _repository = repository;
-            _cacheManager = cacheManager;
+            _cacheService = cacheService;
             _signals = signals;
         }
 
@@ -49,7 +50,7 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
             {
                 record = new KeyValueRecord { StringKey = key, Value = serialized };
                 _repository.Create(record);
-                Trigger(key);
+                EvictCache(key);
             }
             else record.Value = serialized;
         }
@@ -70,7 +71,7 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
             var record = GetRecord(key);
             if (record == null) return;
             _repository.Delete(record);
-            Trigger(key);
+            EvictCache(key);
         }
 
 
@@ -79,9 +80,8 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
             ThrowIfKeyNull(key);
 
             // The record can't be cached directly, but fetching by ID lets the second-level cache work.
-            var id = _cacheManager.Get(CacheKey(key), ctx =>
+            var id = _cacheService.Get(CacheKey(key), () =>
                 {
-                    ctx.Monitor(_signals.When(CacheKey(key)));
                     var record = _repository.Table.Where(r => r.StringKey == key).SingleOrDefault();
                     if (record == null) return 0;
                     return record.Id;
@@ -90,9 +90,9 @@ namespace Piedone.HelpfulLibraries.KeyValueStore
             return _repository.Get(id);
         }
 
-        private void Trigger(string key)
+        private void EvictCache(string key)
         {
-            _signals.Trigger(CacheKey(key));
+            _cacheService.Remove(CacheKey(key));
         }
 
 

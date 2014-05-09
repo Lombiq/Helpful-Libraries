@@ -28,7 +28,7 @@ Features:
 		Name: Key Value Store - Helpful Libraries
         Description: These are various utilities that aid module development
 		Category: Developer
-		Dependencies: Piedone.HelpfulLibraries
+		Dependencies: Piedone.HelpfulLibraries, Orchard.Caching
 	Piedone.HelpfulLibraries.Serialization:
 		Name: Serialization Libraries - Helpful Libraries
         Description: These libraries help the serialization and deserialization of objects
