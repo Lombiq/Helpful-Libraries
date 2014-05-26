@@ -19,8 +19,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
     [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Locking.Database")]
     public class DatabaseLock : IDistributedLock
     {
-        private readonly IOrchardHost _orchardHost;
-        private readonly ShellSettings _shellSettings;
+        private readonly ILifetimeScope _lifetimeScope;
         private readonly IClock _clock;
         private string _name;
         private int _id;
@@ -29,12 +28,10 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
 
 
         public DatabaseLock(
-            IOrchardHost orchardHost,
-            ShellSettings shellSettings,
+            ILifetimeScope lifetimeScope,
             IClock clock)
         {
-            _orchardHost = orchardHost;
-            _shellSettings = shellSettings;
+            _lifetimeScope = lifetimeScope;
             _clock = clock;
         }
 
@@ -101,7 +98,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
 
         private ILifetimeScope BeginLifeTimeScope(string name)
         {
-            var scope = _orchardHost.GetShellContext(_shellSettings).LifetimeScope.BeginLifetimeScope("Piedone.HelpfulLibraries.Tasks.Locking.Database." + name);
+            var scope = _lifetimeScope.BeginLifetimeScope("Piedone.HelpfulLibraries.Tasks.Locking.Database." + name);
             scope.Resolve<ITransactionManager>().RequireNew();
             return scope;
         }
