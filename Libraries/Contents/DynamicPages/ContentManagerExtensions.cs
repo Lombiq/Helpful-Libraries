@@ -13,29 +13,10 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
         /// <param name="pageName">Name of the page</param>
         /// <param name="group">String id of the group the page belongs to. Use this to distinct between a set of pages.</param>
         /// <param name="initializer">Delegate to run immediately after the page item is created</param>
-        /// <param name="eventHandler">Page event handler</param>
-        public static IContent NewPage(this IContentManager contentManager, string pageName, string group, Action<IContent> initializer, IPageEventHandler eventHandler)
+        public static IContent NewPage(this IContentManager contentManager, string pageName, string group)
         {
             var page = contentManager.New(contentManager.CreatePageName(pageName, group));
-
-            initializer(page);
-
-            var context = new PageContext(page, group);
-            eventHandler.OnPageInitializing(context);
-            eventHandler.OnPageInitialized(context);
-
             return page;
-        }
-
-        /// <summary>
-        /// Creates a new dyamic page content item.
-        /// </summary>
-        /// <param name="pageName">Name of the page</param>
-        /// <param name="group">String id of the group the page belongs to. Use this to distinct between a set of pages.</param>
-        /// <param name="eventHandler">Page event handler</param>
-        public static IContent NewPage(this IContentManager contentManager, string pageName, string group, IPageEventHandler eventHandler)
-        {
-            return contentManager.NewPage(pageName, group, (content) => { }, eventHandler);
         }
 
         /// <summary>
@@ -45,7 +26,9 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
         /// <param name="group">String id of the group the page belongs to. Use this to distinct between a set of pages.</param>
         public static string CreatePageName(this IContentManager contentManager, string pageName, string group)
         {
-            return group + pageName + "Page";
+            if (group.Contains(".")) throw new ArgumentException("Dynamic Page group names shouldn't contain dots.");
+
+            return group + "." + pageName + "-Page";
         }
 
         /// <summary>
@@ -57,7 +40,7 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
         public static dynamic BuildPageDisplay(this IContentManager contentManager, IContent page, string displayType = "", string groupId = "")
         {
             var shape = contentManager.BuildDisplay(page, displayType, groupId);
-            shape.Metadata.Wrappers.Add("PageWrapper_" + page.ContentItem.ContentType.Replace('.', '_'));
+            shape.Metadata.Wrappers.Add("PageWrapper_" + page.ContentItem.ContentType.Replace("-", "__").Replace('.', '_'));
             return shape;
         }
     }

@@ -1,6 +1,8 @@
 ﻿using System.Linq;
 using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
+using System;
+using Orchard.ContentManagement.Handlers;
 
 namespace Piedone.HelpfulLibraries.Contents
 {
@@ -66,6 +68,33 @@ namespace Piedone.HelpfulLibraries.Contents
                 .Where(part => part.PartDefinition.Name == partName)
                 .Any(part => part.Fields.Any(field => field.Name == fieldName));
         }
+
+        /// <summary>
+        /// Adds a content part to the content parts of a content item.
+        /// </summary>
+        /// <typeparam name="TPart">Type of the content part.</typeparam>
+        /// <param name="content">The content object.</param>
+        /// <param name="initializer">Optional initializer for the content part that will be run after the part is instantiated.</param>
+        public static void Weld<TPart>(this IContent content, Action<TPart> initializer = null)
+            where TPart : ContentPart, new()
+        {
+            content.Weld(new ContentItemBuilder(content.ContentItem.TypeDefinition).Weld<TPart>().Build().As<TPart>(), initializer);
+        }
+
+        /// <summary>
+        /// Adds a content part to the content parts of a content item.
+        /// </summary>
+        /// <typeparam name="TPart">Type of the content part.</typeparam>
+        /// <param name="content">The content object.</param>
+        /// <param name="part">The content part object.</param>
+        /// <param name="initializer">Optional initializer for the content part that will be run after the part is instantiated.</param>
+        public static void Weld<TPart>(this IContent content, TPart part, Action<TPart> initializer = null)
+            where TPart : ContentPart
+        {
+            if (initializer != null) initializer(part);
+            content.ContentItem.Weld(part);
+        }
+
 
         private static T LookupField<T>(IContent content, string partName)
             where T : ContentField
