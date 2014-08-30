@@ -281,5 +281,20 @@
   <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
     <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
   </Target>
+  <!-- Orchard App Host (https://orchardapphost.codeplex.com/) compatibility start. Enabling the usage of a lib folder at a different location. -->
+  <ItemGroup>
+    <LibReferenceSearchPathFiles Include="..\..\Orchard\lib\**\*.dll">
+        <InProject>false</InProject>
+    </LibReferenceSearchPathFiles>
+  </ItemGroup>
+  <Target Name="BeforeResolveReferences">
+    <RemoveDuplicates Inputs="@(LibReferenceSearchPathFiles->'%(RootDir)%(Directory)')">
+      <Output TaskParameter="Filtered" ItemName="LibReferenceSearchPath" />
+    </RemoveDuplicates>
+    <CreateProperty Value="@(LibReferenceSearchPath);$(AssemblySearchPaths)">
+      <Output TaskParameter="Value" PropertyName="AssemblySearchPaths" />
+    </CreateProperty>
+  </Target>
+  <!-- Orchard App Host (https://orchardapphost.codeplex.com/) compatibility end. -->
   <ProjectExtensions />
 </Project>
