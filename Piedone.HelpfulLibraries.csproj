@@ -236,6 +236,7 @@
     <Compile Include="Libraries\Tasks\WellKnownConstants.cs" />
     <Compile Include="Libraries\Authentication\AuthenticationServiceExtensions.cs" />
     <Compile Include="Libraries\Authentication\BasicAuthenticationService.cs" />
+    <Compile Include="Libraries\Utilities\AsyncHelper.cs" />
     <Compile Include="Libraries\Utilities\CacheServiceMonitor.cs" />
     <Compile Include="Libraries\Utilities\AppConfigurationAccessor.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
@@ -284,7 +285,7 @@
   <!-- Orchard App Host (https://orchardapphost.codeplex.com/) compatibility start. Enabling the usage of a lib folder at a different location. -->
   <ItemGroup>
     <LibReferenceSearchPathFiles Include="..\..\Orchard\lib\**\*.dll">
-        <InProject>false</InProject>
+      <InProject>false</InProject>
     </LibReferenceSearchPathFiles>
   </ItemGroup>
   <Target Name="BeforeResolveReferences">
