@@ -113,6 +113,7 @@
     <Compile Include="Libraries\Contents\DynamicPages\ContentManagerExtensions.cs" />
     <Compile Include="Libraries\Contents\IPrefixedEditorManager.cs" />
     <Compile Include="Libraries\Contents\PrefixedEditorManager.cs" />
+    <Compile Include="Libraries\Contents\TransientContextPart.cs" />
     <Compile Include="Libraries\Contents\ShapeOutputGenerator.cs" />
     <Compile Include="Libraries\Contents\StaticallyTypedShapeAlternates.cs" />
     <Compile Include="Libraries\KeyValueStore\IKeyValueStore.cs" />
