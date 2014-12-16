@@ -95,6 +95,38 @@ namespace Piedone.HelpfulLibraries.Contents
             content.ContentItem.Weld(part);
         }
 
+        /// <summary>
+        /// Saves a value to the transient context of the content. This context will be preserved as long as the content object
+        /// lives.
+        /// </summary>
+        /// <typeparam name="T">Type of the value to save.</typeparam>
+        /// <param name="key">The key to identify the value. If there is a value already saved under this key it will be overwritten.</param>
+        /// <param name="value">The value to store in the context.</param>
+        public static void SetContext<T>(this IContent content, string key, T value)
+        {
+            var contextPart = content.As<TransientContextPart>();
+            if (contextPart == null)
+            {
+                content.Weld<TransientContextPart>();
+                contextPart = content.As<TransientContextPart>();
+            }
+            contextPart.Context[key] = value;
+        }
+
+        /// <summary>
+        /// Saves a value to the transient context of the content. This context will be preserved as long as the content object
+        /// lives.
+        /// </summary>
+        /// <typeparam name="T">Type of the value to retrieve.</typeparam>
+        /// <param name="key">The key to identify the value.</param>
+        /// <returns>The stored value or the type's default if no value was found.</returns>
+        public static T GetContext<T>(this IContent content, string key)
+        {
+            var contextPart = content.As<TransientContextPart>();
+            if (contextPart == null || !contextPart.Context.ContainsKey(key)) return default(T);
+            return (T)contextPart.Context[key];
+        }
+
 
         private static T LookupField<T>(IContent content, string partName)
             where T : ContentField

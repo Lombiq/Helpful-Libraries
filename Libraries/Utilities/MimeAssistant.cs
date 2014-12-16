@@ -7,6 +7,13 @@ namespace Piedone.HelpfulLibraries.Utilities
 {
     // Taken from http://stackoverflow.com/a/7161265/220230 and a bit refactored
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
+    /// <summary>
+    /// Helper for determining the MIME type of files.
+    /// </summary>
+    /// <remarks>
+    /// Unlike the default implementation for <see cref="Orchard.FileSystems.Media.IMimeTypeProvider"/> this doesn't depend on the server
+    /// configuration to determine a MIME type.
+    /// </remarks>
     public static class MimeAssistant
     {
         private static readonly Dictionary<string, string> MimeTypesDictionary = new Dictionary<string, string>
@@ -202,13 +209,19 @@ namespace Piedone.HelpfulLibraries.Utilities
             {"zip", "application/zip"}
         };
 
+
+        /// <summary>
+        /// Retrieves the MIME type for the given file.
+        /// </summary>
+        /// <param name="fileName">The file name of the file, including its extension.</param>
+        /// <returns>The MIME type or "unknown/unknown" if none can be found.</returns>
         public static string GetMimeType(string fileName)
         {
             var extension = Path.GetExtension(fileName);
 
             if (String.IsNullOrEmpty(extension)) throw new ArgumentException("Only file names with extensions can be used");
 
-            var extensionWithoutDot = extension.Remove(0, 1);
+            var extensionWithoutDot = extension.Remove(0, 1).ToLowerInvariant();
 
             if (MimeTypesDictionary.ContainsKey(extensionWithoutDot)) return MimeTypesDictionary[extensionWithoutDot];
 
