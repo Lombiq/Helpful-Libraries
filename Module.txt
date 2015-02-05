@@ -18,7 +18,7 @@ Features:
 		Name: Contents Libraries - Helpful Libraries
 		Description: These libraries help dealing with content items
 		Category: Developer
-		Dependencies: Piedone.HelpfulLibraries
+		Dependencies: Piedone.HelpfulLibraries, Orchard.Alias
 	Piedone.HelpfulLibraries.DependencyInjection:
 		Name: Dependency Injection Libraries - Helpful Libraries
 		Description: These libraries aid dependency injection
