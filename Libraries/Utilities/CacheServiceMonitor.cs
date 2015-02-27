@@ -20,7 +20,9 @@ namespace Piedone.HelpfulLibraries.Utilities
 
 
         /// <summary>
-        /// Subscribe a cache key to an event. If the event is triggered the entry for the cache key will be removed.
+        /// Subscribe a cache key to an event. If the event is triggered the entry for the cache key will be removed. Call this method only
+        /// when the corresponding cache entry is newly created (like in the factory delegate of the ICacheService.Get() extension method)
+        /// so it's only executed when needed.
         /// </summary>
         /// <param name="eventKey">The key of the event that can be triggered.</param>
         /// <param name="cacheKey">The key of the cache entry.</param>
@@ -42,6 +44,7 @@ namespace Piedone.HelpfulLibraries.Utilities
         }
 
 
+        // A concurrent HashSet would be better, but there is no such collection currently.
         private static ConcurrentDictionary<string, byte> GetKeys(this ICacheService cacheService, string eventKey)
         {
             return cacheService.Get(KeyChainCacheKey + eventKey, () =>
