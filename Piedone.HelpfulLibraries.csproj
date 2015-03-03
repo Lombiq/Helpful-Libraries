@@ -104,10 +104,15 @@
       <Project>{7528bf74-25c7-4abe-883a-443b4eec4776}</Project>
       <Name>Orchard.Caching</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Orchard.Alias\Orchard.Alias.csproj">
+      <Project>{475b6c45-b27c-438b-8966-908b9d6d1077}</Project>
+      <Name>Orchard.Alias</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Libraries\Authentication\RequireAuthorizationAttribute.cs" />
     <Compile Include="Libraries\Authentication\RequireBasicAuthorizationAttribute.cs" />
+    <Compile Include="Libraries\Contents\CurrentContentIdAccessor.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\HandlerContextExtensions.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\ContentExtensions.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\ContentManagerExtensions.cs" />
