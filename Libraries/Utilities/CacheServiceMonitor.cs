@@ -50,7 +50,7 @@ namespace Piedone.HelpfulLibraries.Utilities
             return cacheService.Get(KeyChainCacheKey + eventKey, () =>
             {
                 return new ConcurrentDictionary<string, byte>();
-            });
+            }, TimeSpan.FromDays(365)); // This dictionary should remain in the cache until the whole cache is wiped.
         }
     }
 }
