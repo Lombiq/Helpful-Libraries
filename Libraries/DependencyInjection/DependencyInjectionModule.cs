@@ -9,7 +9,7 @@ namespace Piedone.HelpfulLibraries.DependencyInjection
     {
         public void Configure(IComponentRegistry componentRegistry)
         {
-            // This is necessary as generic dependencies are currently not resolved, see issue: http://orchard.codeplex.com/workitem/18141
+            // This is necessary as generic dependencies are currently not resolved, see issue: https://github.com/OrchardCMS/Orchard/issues/1968
             var builder = new ContainerBuilder();
             builder.RegisterGeneric(typeof(Resolve<>)).As(typeof(IResolve<>));
 

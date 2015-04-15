@@ -1,4 +1,4 @@
-﻿// This isn't working yet, see: https://orchard.codeplex.com/workitem/19479
+﻿// This isn't working yet, see: https://github.com/OrchardCMS/Orchard/issues/3308
 // Commenting out so nobody sees it with Shape Tracing.
 
 //using System.IO;
