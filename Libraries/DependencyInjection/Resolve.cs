@@ -17,7 +17,9 @@ namespace Piedone.HelpfulLibraries.DependencyInjection
         {
             get
             {
-                return _workContextAccessor.GetContext().Resolve<T>();
+                var wc = _workContextAccessor.GetContext();
+                if (wc == null) return default(T);
+                return wc.Resolve<T>();
             }
         }
     }
