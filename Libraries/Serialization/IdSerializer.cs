@@ -75,7 +75,7 @@ namespace Piedone.HelpfulLibraries.Serialization
         /// </summary>
         public static IEnumerable<int> DeserializeIds(string idsDefinition)
         {
-            if (String.IsNullOrEmpty(idsDefinition))
+            if (string.IsNullOrEmpty(idsDefinition))
             {
                 return Enumerable.Empty<int>();
             }

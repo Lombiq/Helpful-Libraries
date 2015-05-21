@@ -27,7 +27,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
         public void CreateJob(string industry, object context, int priority)
         {
-            if (String.IsNullOrEmpty(industry)) throw new ArgumentNullException("industry");
+            if (string.IsNullOrEmpty(industry)) throw new ArgumentNullException("industry");
 
             var record = new JobRecord
             {
