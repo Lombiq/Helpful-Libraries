@@ -46,7 +46,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
         public IJob TakeOnlyJob(string industry)
         {
             var lockFile = _lockResolve.Value;
-            if (!lockFile.TryAcquire("Only Job - " + industry)) return null;
+            if (lockFile == null || !lockFile.TryAcquire("Only Job - " + industry)) return null;
 
             var jobRecord = CreateJobQuery(industry)
                                 .Take(1)
@@ -70,6 +70,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
 
             var jobIds = jobIdsQuery.ToArray();
             var lockFile = _lockResolve.Value;
+            if (lockFile == null) return null;
             var jobNumber = 0;
 
             while (jobNumber < jobIds.Length && !lockFile.TryAcquire("Job - " + industry + jobIds[jobNumber]))
