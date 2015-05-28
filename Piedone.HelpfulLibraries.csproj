@@ -14,7 +14,8 @@
     <AssemblyName>Piedone.HelpfulLibraries</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <FileUpgradeFlags></FileUpgradeFlags>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <TargetFrameworkProfile />
@@ -244,7 +245,6 @@
     <Compile Include="Libraries\Authentication\BasicAuthenticationService.cs" />
     <Compile Include="Libraries\Utilities\AsyncHelper.cs" />
     <Compile Include="Libraries\Utilities\CacheServiceMonitor.cs" />
-    <Compile Include="Libraries\Utilities\AppConfigurationAccessor.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
     <Compile Include="Libraries\Serialization\IdSerializer.cs" />
     <Compile Include="Libraries\Utilities\HqlExpressionFactoryExtensions.cs" />
