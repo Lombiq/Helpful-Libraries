@@ -219,7 +219,7 @@ namespace Piedone.HelpfulLibraries.Utilities
         {
             var extension = Path.GetExtension(fileName);
 
-            if (String.IsNullOrEmpty(extension)) throw new ArgumentException("Only file names with extensions can be used");
+            if (string.IsNullOrEmpty(extension)) throw new ArgumentException("Only file names with extensions can be used");
 
             var extensionWithoutDot = extension.Remove(0, 1).ToLowerInvariant();
 

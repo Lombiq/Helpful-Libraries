@@ -8,6 +8,9 @@ using Autofac.Core;
 
 namespace Piedone.HelpfulLibraries.Libraries.DependencyInjection
 {
+    /// <summary>
+    /// A base class for an Autofac module that registers decorators for other services.
+    /// </summary>
     public abstract class DecoratorsModuleBase : Module
     {
         private IEnumerable<DecorationConfiguration> _decorationConfigurations;

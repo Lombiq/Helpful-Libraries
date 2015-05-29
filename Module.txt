@@ -59,6 +59,11 @@ Features:
 		Description: Orchard job management
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries.Tasks.Locking
+	Piedone.HelpfulLibraries.Tasks.TaskLease:
+		Name: Tasks Libraries: Enhanced Task Lease - Helpful Libraries
+		Description: Enhancing Task Lease with improved for multi-node support.
+		Category: Developer
+		Dependencies: Orchard.TaskLease, Orchard.Caching
 	Piedone.HelpfulLibraries.Utilities:
 		Name: Utilities - Helpful Libraries
 		Description: These are various utilities that aid module development
