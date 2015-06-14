@@ -9,6 +9,7 @@ using Orchard.Services;
 using Orchard.TaskLease.Services;
 using Piedone.HelpfulLibraries.KeyValueStore;
 using Piedone.HelpfulLibraries.Tasks.Locking;
+using Orchard.Environment;
 
 namespace Piedone.HelpfulLibraries.Tasks
 {
