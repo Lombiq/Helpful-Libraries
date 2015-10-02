@@ -24,19 +24,19 @@ namespace Piedone.HelpfulLibraries.Tasks
     {
         private readonly ITaskLeaseService _decorated;
         private readonly ICacheService _cacheService;
-        private readonly IMachineNameProvider _machineNameProvider;
+        private readonly IApplicationEnvironment _applicationEnvironment;
         private readonly IClock _clock;
 
 
         public TaskLeaseServiceDecorator(
             ITaskLeaseService decorated,
             ICacheService cacheService,
-            IMachineNameProvider machineNameProvider,
+            IApplicationEnvironment applicationEnvironment,
             IClock clock)
         {
             _decorated = decorated;
             _cacheService = cacheService;
-            _machineNameProvider = machineNameProvider;
+            _applicationEnvironment = applicationEnvironment;
             _clock = clock;
         }
 
@@ -44,7 +44,7 @@ namespace Piedone.HelpfulLibraries.Tasks
         public string Acquire(string taskName, DateTime expiredUtc)
         {
             var cacheKey = MakeCacheKey(taskName);
-            var machineName = _machineNameProvider.GetMachineName();
+            var machineName = _applicationEnvironment.GetEnvironmentIdentifier();
             var existingLease = _cacheService.Get(cacheKey);
             if (existingLease != null && ((string)existingLease) != machineName) return null;
             _cacheService.Put(cacheKey, machineName, expiredUtc - _clock.UtcNow);
@@ -53,13 +53,13 @@ namespace Piedone.HelpfulLibraries.Tasks
 
         public void Update(string taskName, string state)
         {
-            _cacheService.Put(MakeCacheKey(taskName), _machineNameProvider.GetMachineName());
+            _cacheService.Put(MakeCacheKey(taskName), _applicationEnvironment.GetEnvironmentIdentifier());
             _decorated.Update(taskName, state);
         }
 
         public void Update(string taskName, string state, DateTime expiredUtc)
         {
-            _cacheService.Put(MakeCacheKey(taskName), _machineNameProvider.GetMachineName(), expiredUtc - _clock.UtcNow);
+            _cacheService.Put(MakeCacheKey(taskName), _applicationEnvironment.GetEnvironmentIdentifier(), expiredUtc - _clock.UtcNow);
             _decorated.Update(taskName, state, expiredUtc);
         }
 
