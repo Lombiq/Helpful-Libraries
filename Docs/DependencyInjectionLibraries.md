@@ -46,7 +46,7 @@ The decorator pattern provided by Helpful Libraries can be used to create wrappe
     }
 
 
-## `Resolve<T>`
+## Resolve\<T\>
 
 It consists solely of IResolve<T> and its implementation with a single property, T Value. The purpose is to inject IResolve through the constructor and use its Value instead of injecting a WorkContext and using its Resolve(), which is more or less hidden (calling Value is exactly the same as calling Resolve()). Thus by requesting an IResolve in the constructor dependencies can be lazy-loaded, but still they're visible by looking at the constructor signature.
 
