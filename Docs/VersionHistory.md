@@ -1,0 +1,42 @@
+# Helpful Libraries Orchard module Version history
+
+
+
+- v1.9 (17.07.2013):
+	- Key Value Store for simple and efficient key-value pair storage
+	- Moved Projector filters to [Helpful Extensions](https://github.com/Lombiq/Helpful-Extensions)
+	- New extensions and utilities: HqlQueryExtensions, HqlExpressionFactoryExtensions and WebViewPageExtensions, UriHelper, MappingsManager
+	- General code housekeeping and smaller improvements
+- v1.8 (22.11.2012):
+	- JobManager and AtomicJobQueue
+	- Making LockFile safer
+	- MimeAssistant
+	- Updating to VS 2012
+- v1.7.1 (16.10.2012):
+	- Adding grouping to dynamic pages
+- v1.7 (28.08.2012):
+	- Adding dynamic page handlers
+- v1.6.1 (24.07.2012):
+	- Token support for ContainedByFilter
+	- New IdsInFilter Projector filter
+- v1.6 (24.07.2012):
+	- New extensions in Utilities
+	- ContainedByFilter Projector filter
+	- IdSerializer for simple serialization of collection of numerical ids
+	- IsFatal() exception checks
+- v1.5 (18.03.2012):
+	- Faster LockingCacheManager with no locking when reading cache entry
+	- Utilities with freezable class implementation
+- v1.4 (02.03.2012):
+	-Locking files and LockingCacheManager
+- v1.3 (06.02.2012):
+	- Contents Libraries
+- v1.2 (27.01.2012):
+	- Base64 serialization
+	- Bugfixes
+- v1.1 (04.01.2012):
+	- JSON serialization
+	- Lazy dependency resolver
+	- Orchard 1.4 proof
+- v1.0 (14.12.2011):
+	- First public release with PEE, Serialization, Service Validation and Tasks Libraries (successor of Service Validation Libraries)
