@@ -46,7 +46,7 @@ Public APIs are always documented so please always read method comments.
 
 The module is also available for [DotNest](http://dotnest.com/) sites.
 
-### See the [Version history](Docs/VersionHistory.md)
+**See the [Version history](Docs/VersionHistory.md).**
 
 The module's source is available in two public source repositories, automatically mirrored in both directions with [Git-hg Mirror](https://githgmirror.com):
 
