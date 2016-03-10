@@ -18,7 +18,9 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
         /// <summary>
         /// Gets the currently requested content item's (if any) numerical ID.
         /// </summary>
-        /// <returns>The currently requested content item's numerical ID if there is a corresponding content item or 0 otherwise.</returns>
+        /// <returns>
+        /// The currently requested content item's numerical ID if there is a corresponding content item or 0 otherwise.
+        /// </returns>
         int GetCurrentContentId();
     }
 

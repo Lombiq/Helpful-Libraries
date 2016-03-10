@@ -15,7 +15,8 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
     {
         private readonly IRepository<JobRecord> _repository;
         private readonly IResolve<IDistributedLock> _lockResolve;
-        private readonly Dictionary<IJob, JobReference> _jobReferences = new Dictionary<IJob, JobReference>(); // No need to dispose undisposed jobs' lock files, as the Dispose() on the lock files will be called by Autofac
+        // No need to dispose undisposed jobs' lock files, as the Dispose() on the lock files will be called by Autofac.
+        private readonly Dictionary<IJob, JobReference> _jobReferences = new Dictionary<IJob, JobReference>();
 
 
         public JobManager(IRepository<JobRecord> repository, IResolve<IDistributedLock> lockResolve)

@@ -7,7 +7,8 @@ using Orchard.Environment.Extensions;
 namespace Piedone.HelpfulLibraries.Serialization
 {
     /// <summary>
-    /// This class provides simple methods for serializing a collection of numerical ids (like the ones Orchard content items have).
+    /// This class provides simple methods for serializing a collection of numerical ids (like the ones Orchard content 
+    /// items have).
     /// </summary>
     [OrchardFeature("Piedone.HelpfulLibraries.Serialization")]
     public class IdSerializer
@@ -52,7 +53,7 @@ namespace Piedone.HelpfulLibraries.Serialization
 
 
         /// <summary>
-        /// Constructs a new IdSerializer
+        /// Constructs a new IdSerializer object.
         /// </summary>
         /// <param name="idsDefinition">JSON array of the ids</param>
         public IdSerializer(string idsDefinition = "")
@@ -62,7 +63,7 @@ namespace Piedone.HelpfulLibraries.Serialization
 
 
         /// <summary>
-        /// Serializes ids to a JSON array
+        /// Serializes ids to a JSON array.
         /// </summary>
         public static string SerializeIds(IEnumerable<int> ids)
         {
@@ -71,7 +72,7 @@ namespace Piedone.HelpfulLibraries.Serialization
         }
 
         /// <summary>
-        /// Deserializes ids from a JSON array
+        /// Deserializes ids from a JSON array.
         /// </summary>
         public static IEnumerable<int> DeserializeIds(string idsDefinition)
         {

@@ -41,8 +41,8 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
             if (string.IsNullOrEmpty(name)) throw new ArgumentNullException("name");
             if (name.Length > 255) throw new ArgumentException("The lock's name can't be longer than 255 characters.");
 
-            // This way we can create a nested transaction scope instead of having the unwanted effect of manipulating the transaction
-            // of the caller.
+            // This way we can create a nested transaction scope instead of having the unwanted effect of manipulating
+            // the transaction of the caller.
             using (var scope = BeginLifeTimeScope(name))
             {
                 var repository = scope.Resolve<IRepository<DatabaseLockRecord>>();

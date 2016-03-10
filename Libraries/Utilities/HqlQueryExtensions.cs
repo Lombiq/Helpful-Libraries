@@ -11,8 +11,8 @@ namespace Piedone.HelpfulLibraries.Utilities
     public static class HqlQueryExtensions
     {
         /// <summary>
-        /// Applies a partitioned IN() clause on the query, taken the collection of IDs. For each partition a new IN() is created, thus the
-        /// limitation on the maximal amount of arguments for IN() can be circumvented.
+        /// Applies a partitioned IN() clause on the query, taken the collection of IDs. For each partition a new IN() 
+        /// is created, thus the limitation on the maximal amount of arguments for IN() can be circumvented.
         /// </summary>
         /// <param name="query"></param>
         /// <param name="ids"></param>

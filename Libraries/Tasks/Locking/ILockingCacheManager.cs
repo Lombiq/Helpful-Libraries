@@ -11,8 +11,8 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
     public interface ILockingCacheManager : IDependency
     {
         /// <summary>
-        /// Tries to get the cache entry, if none is present, tries to acquire a lock on the entry so any other process simultaneously requesting the entry
-        /// has to wait.
+        /// Tries to get the cache entry, if none is present, tries to acquire a lock on the entry so any other process 
+        /// simultaneously requesting the entry has to wait.
         /// </summary>
         /// <typeparam name="TResult">Type of the computation's result</typeparam>
         /// <param name="key">Key for the cache entry</param>
@@ -23,11 +23,12 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
         TResult Get<TResult>(string key, Func<AcquireContext<string>, TResult> acquire, Func<TResult> fallback, TimeSpan timeout);
     }
 
+
     public static class LockingCacheManageExtensions
     {
         /// <summary>
-        /// Tries to get the cache entry, if none is present, tries to acquire a lock on the entry so any other process simultaneously requesting the entry
-        /// has to wait.
+        /// Tries to get the cache entry, if none is present, tries to acquire a lock on the entry so any other process 
+        /// simultaneously requesting the entry has to wait.
         /// </summary>
         /// <typeparam name="TResult">Type of the computation's result</typeparam>
         /// <param name="key">Key for the cache entry</param>

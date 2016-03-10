@@ -11,7 +11,7 @@ namespace Piedone.HelpfulLibraries.Utilities
     public interface IMappingsManager : IDependency
     {
         /// <summary>
-        /// Clears cached mappings and thus forces the regeneration of the cache
+        /// Clears cached mappings and thus forces the regeneration of the cache.
         /// </summary>
         void Clear();
     }

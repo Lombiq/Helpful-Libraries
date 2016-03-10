@@ -10,7 +10,7 @@ namespace Piedone.HelpfulLibraries.Contents
     public static class ContentExtensions
     {
         /// <summary>
-        /// Retrieves the first field with the specified type from the part
+        /// Retrieves the first field with the specified type from the part.
         /// </summary>
         /// <typeparam name="T">Type of the field</typeparam>
         /// <param name="partName">Name of the part that contains the field</param>
@@ -22,7 +22,7 @@ namespace Piedone.HelpfulLibraries.Contents
         }
 
         /// <summary>
-        /// Checks if the specified part contains the field with the specified type
+        /// Checks if the specified part contains the field with the specified type.
         /// </summary>
         /// <typeparam name="T">Type of the field</typeparam>
         /// <param name="partName">Name of the part that contains the field</param>
@@ -34,7 +34,7 @@ namespace Piedone.HelpfulLibraries.Contents
         }
 
         /// <summary>
-        /// Retrieves the field with the specified name from the part
+        /// Retrieves the field with the specified name from the part.
         /// </summary>
         /// <typeparam name="T">Type of the field</typeparam>
         /// <param name="partName">Name of the part that contains the field</param>
@@ -43,7 +43,7 @@ namespace Piedone.HelpfulLibraries.Contents
         public static T AsField<T>(this IContent content, string partName, string fieldName)
             where T : ContentField
         {
-            // This is so the behaviour is consistent with Orchard.ContentManagement.ContentExtensions.As<>()
+            // This is so the behaviour is consistent with Orchard.ContentManagement.ContentExtensions.As<>().
             if (content == null) return default(T);
 
             // Taken from Orchard.Tokens.Providers.ContentTokens
@@ -54,7 +54,7 @@ namespace Piedone.HelpfulLibraries.Contents
         }
 
         /// <summary>
-        /// Checks if the specified part contains the specified field
+        /// Checks if the specified part contains the specified field.
         /// </summary>
         /// <param name="partName">Name of the part that contains the field</param>
         /// <param name="fieldName">Name of the field</param>
@@ -96,11 +96,13 @@ namespace Piedone.HelpfulLibraries.Contents
         }
 
         /// <summary>
-        /// Saves a value to the transient context of the content. This context will be preserved as long as the content object
-        /// lives.
+        /// Saves a value to the transient context of the content. This context will be preserved as long as the content 
+        /// object lives.
         /// </summary>
         /// <typeparam name="T">Type of the value to save.</typeparam>
-        /// <param name="key">The key to identify the value. If there is a value already saved under this key it will be overwritten.</param>
+        /// <param name="key">
+        /// The key to identify the value. If there is a value already saved under this key it will be overwritten.
+        /// </param>
         /// <param name="value">The value to store in the context.</param>
         public static void SetContext<T>(this IContent content, string key, T value)
         {
@@ -114,8 +116,8 @@ namespace Piedone.HelpfulLibraries.Contents
         }
 
         /// <summary>
-        /// Saves a value to the transient context of the content. This context will be preserved as long as the content object
-        /// lives.
+        /// Saves a value to the transient context of the content. This context will be preserved as long as the content 
+        /// object lives.
         /// </summary>
         /// <typeparam name="T">Type of the value to retrieve.</typeparam>
         /// <param name="key">The key to identify the value.</param>

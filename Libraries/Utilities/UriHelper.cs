@@ -8,7 +8,7 @@ namespace Piedone.HelpfulLibraries.Utilities
     public static class UriHelper
     {
         /// <summary>
-        /// Combines uri segments with forward slashes (much like Path.Combine() for local paths)
+        /// Combines uri segments with forward slashes (much like Path.Combine() for local paths).
         /// </summary>
         /// <param name="segments">The segments to combine.</param>
         public static string Combine(params string[] segments)
@@ -21,7 +21,8 @@ namespace Piedone.HelpfulLibraries.Utilities
         }
 
         /// <summary>
-        /// Creates a Uri object from a string that can contain an absolute (even in protocol-relative form) or relative URL.
+        /// Creates a Uri object from a string that can contain an absolute (even in protocol-relative form) or relative
+        /// URL.
         /// </summary>
         /// <param name="uriString">The string to create the Uri from.</param>
         /// <returns></returns>

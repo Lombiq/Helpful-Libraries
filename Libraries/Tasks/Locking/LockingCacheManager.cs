@@ -22,7 +22,8 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
 
         public TResult Get<TResult>(string key, Func<AcquireContext<string>, TResult> acquire, Func<TResult> fallback, TimeSpan timeout)
         {
-            // When using with arbitrary types, key.ToString() could lead to errors if the key is not string or the ToString() is not properly implemented.
+            // When using with arbitrary types, key.ToString() could lead to errors if the key is not string or the 
+            // ToString() is not properly implemented.
             // That's why we only allow string keys here.
 
             try
@@ -31,7 +32,8 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
                     {
                         using (var lockFile = _lockManager.AcquireLock(key, timeout))
                         {
-                            // If we waited for the lock to be released, here the result computed by the locking code should be returned.
+                            // If we waited for the lock to be released, here the result computed by the locking code 
+                            // should be returned.
                             return _cacheManager.Get(key, acquire);
                         }
                     });

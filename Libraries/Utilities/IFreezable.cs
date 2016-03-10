@@ -2,7 +2,7 @@
 namespace Piedone.HelpfulLibraries.Utilities
 {
     /// <summary>
-    /// Describes a class that initially can be modified but after frozen not anymore
+    /// Describes a class that initially can be modified but after frozen not anymore.
     /// </summary>
     public interface IFreezable
     {

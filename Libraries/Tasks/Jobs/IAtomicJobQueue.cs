@@ -8,7 +8,7 @@ namespace Piedone.HelpfulLibraries.Tasks.Jobs
     public interface IAtomicJobQueue : IDependency
     {
         /// <summary>
-        /// Queues an executor to work on a job from the specified industry in an independent work context and transaction
+        /// Queues an executor to work on a job from the specified industry in an independent work context and transaction.
         /// </summary>
         /// <typeparam name="TAtomicWorker">The type working on the job. Must be resolvable.</typeparam>
         /// <param name="industry">"Industry", i.e. type, group of the job</param>

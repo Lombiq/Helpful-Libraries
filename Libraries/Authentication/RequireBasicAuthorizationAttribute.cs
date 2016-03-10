@@ -13,7 +13,7 @@ using Piedone.HelpfulLibraries.Authentication;
 namespace Piedone.HelpfulLibraries.Authentication
 {
     /// <summary>
-    /// Enforces the user to be authenticated with HTTP basic authentication and having the supplied permission(s)
+    /// Enforces the user to be authenticated with HTTP basic authentication and having the supplied permission(s).
     /// </summary>
     [OrchardFeature("Piedone.HelpfulLibraries.Authentication")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]

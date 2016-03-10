@@ -14,7 +14,8 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
     }
 
     /// <summary>
-    /// PrefixedEditorManager makes it possible to have multiple content item editors on the same page (even nesting them) by prefixing their fields with the content item IDs.
+    /// PrefixedEditorManager makes it possible to have multiple content item editors on the same page (even nesting them)
+    /// by prefixing their fields with the content item IDs.
     /// 
     /// PrefixedEditorManager is a contribution of Onestop Internet, Inc. (http://www.onestop.com/).
     /// </summary>
@@ -43,7 +44,10 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
         /// Updates a content whose editor was previously built with IPrefixedEditorManager with the updater
         /// </summary>
         /// <param name="content">The content object to use</param>
-        /// <param name="prefixedParents">To be used if this content's editor was wrapped into the prefixed editor of a parent. Specify all the parents, starting from the outer most.</param>
+        /// <param name="prefixedParents">
+        /// To be used if this content's editor was wrapped into the prefixed editor of a parent. Specify all the parents,
+        /// starting from the outer most.
+        /// </param>
         /// <param name="updater">The updater to update the content with</param>
         /// <param name="groupId">Optional editor group ID</param>
         /// <returns>The updated editor shape</returns>
@@ -87,8 +91,11 @@ namespace Piedone.HelpfulLibraries.Libraries.Contents
         /// Updates contents whose editor was previously built with IPrefixedEditorManager with the updater
         /// </summary>
         /// <param name="contents">The content objects to use</param>
-        /// <param name="prefixedParents">To be used if the contents' editor was wrapped into the prefixed editor of parents. Specify all the parents, starting from the outer most for each item.</param>
-        /// <param name="updater">The updater to update the contents with</param>
+        /// <param name="prefixedParents">
+        /// To be used if the contents' editor was wrapped into the prefixed editor of parents. Specify all the parents, 
+        /// starting from the outer most for each item.</param>
+        /// <param name="updater">The updater to update the contents with
+        /// </param>
         /// <param name="groupId">Optional editor group ID</param>
         /// <returns>The updated editor shapes</returns>
         public static IEnumerable<dynamic> UpdateEditors(this IPrefixedEditorManager prefixedEditorManager, IEnumerable<IContent> contents, IEnumerable<IEnumerable<IPrefixedParent>> prefixedParents, IUpdateModel updater, string groupId = "")

@@ -17,6 +17,7 @@ namespace Piedone.HelpfulLibraries.Contents
     /// <summary>
     /// Generates the output (e.g. the HTML markup) and captures it for shapes
     /// </summary>
+    [Obsolete("Use IShapeDisplay instead.")]
     public interface IShapeOutputGenerator : IDependency
     {
         /// <summary>

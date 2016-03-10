@@ -12,7 +12,7 @@ using Orchard.Security.Permissions;
 namespace Piedone.HelpfulLibraries.Libraries.Authentication
 {
     /// <summary>
-    /// Enforces the user to be authenticated and having the supplied permission(s)
+    /// Enforces the user to be authenticated and having the supplied permission(s).
     /// </summary>
     [OrchardFeature("Piedone.HelpfulLibraries.Authentication")]
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]

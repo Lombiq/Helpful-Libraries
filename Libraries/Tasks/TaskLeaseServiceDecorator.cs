@@ -14,10 +14,12 @@ using Orchard.Environment;
 namespace Piedone.HelpfulLibraries.Tasks
 {
     /// <summary>
-    /// A decorator for <see cref="ITaskLeaseService"/> that makes the lease visible from other server nodes even before it was committed to the DB.
+    /// A decorator for <see cref="ITaskLeaseService"/> that makes the lease visible from other server nodes even before
+    /// it was committed to the DB.
     /// </summary>
     /// <remarks>
-    /// Since an expiry date is needed distributed locks can't be used. This needs an Orchard.Caching provider with multi-node support.
+    /// Since an expiry date is needed distributed locks can't be used. This needs an Orchard.Caching provider with 
+    /// multi-node support.
     /// </remarks>
     [OrchardFeature("Piedone.HelpfulLibraries.Tasks.TaskLease")]
     internal class TaskLeaseServiceDecorator : ITaskLeaseService
