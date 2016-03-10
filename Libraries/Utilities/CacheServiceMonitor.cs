@@ -29,7 +29,9 @@ namespace Piedone.HelpfulLibraries.Utilities
         /// <param name="cacheKey">The key of the cache entry.</param>
         public static void Monitor(this ICacheService cacheService, string eventKey, string cacheKey)
         {
-            cacheService.GetKeys(eventKey).GetOrAdd(cacheKey, 0);
+            var keys = cacheService.GetKeys(eventKey);
+            keys.GetOrAdd(cacheKey, 0);
+            cacheService.Put(GetKeyChainKey(eventKey), keys);
         }
 
         /// <summary>
@@ -48,10 +50,15 @@ namespace Piedone.HelpfulLibraries.Utilities
         // A concurrent HashSet would be better, but there is no such collection currently.
         private static ConcurrentDictionary<string, byte> GetKeys(this ICacheService cacheService, string eventKey)
         {
-            return cacheService.Get(KeyChainCacheKey + eventKey, () =>
+            return cacheService.Get(GetKeyChainKey(eventKey), () =>
             {
                 return new ConcurrentDictionary<string, byte>();
             });
+        }
+
+        private static string GetKeyChainKey(string eventKey)
+        {
+            return KeyChainCacheKey + eventKey;
         }
     }
 }
