@@ -10,8 +10,9 @@ using Orchard.Environment.Extensions;
 namespace Piedone.HelpfulLibraries.Utilities
 {
     /// <summary>
-    /// Lets you subscribe ICacheService cache keys to events. If the event is triggered all the entries for the subscribed keys will
-    /// be removed.
+    /// Lets you subscribe ICacheService cache keys to events. If the event is triggered all the entries for the 
+    /// subscribed keys will be removed. You can use this to invalidate multiple subscribed cache entries at once,
+    /// without having to keep track of said cache entries.
     /// </summary>
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class CacheServiceMonitor
@@ -20,9 +21,9 @@ namespace Piedone.HelpfulLibraries.Utilities
 
 
         /// <summary>
-        /// Subscribe a cache key to an event. If the event is triggered the entry for the cache key will be removed. Call this method only
-        /// when the corresponding cache entry is newly created (like in the factory delegate of the ICacheService.Get() extension method)
-        /// so it's only executed when needed.
+        /// Subscribe a cache key to an event. If the event is triggered the entry for the cache key will be removed. 
+        /// Call this method only when the corresponding cache entry is newly created (like in the factory delegate of
+        /// the ICacheService.Get() extension method) so it's only executed when needed.
         /// </summary>
         /// <param name="eventKey">The key of the event that can be triggered.</param>
         /// <param name="cacheKey">The key of the cache entry.</param>
