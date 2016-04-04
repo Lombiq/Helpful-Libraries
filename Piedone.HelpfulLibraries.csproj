@@ -14,11 +14,11 @@
     <AssemblyName>Piedone.HelpfulLibraries</AssemblyName>
     <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <FileUpgradeFlags>
-    </FileUpgradeFlags>
+    <FileUpgradeFlags></FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -28,7 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\..\OrchardBasicCorrectness.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -302,7 +302,7 @@
     </LibReferenceSearchPathFiles>
   </ItemGroup>
   <Target Name="BeforeResolveReferences">
-    <RemoveDuplicates Inputs="@(LibReferenceSearchPathFiles->'%(RootDir)%(Directory)')">
+    <RemoveDuplicates Inputs="@(LibReferenceSearchPathFiles-&gt;'%(RootDir)%(Directory)')">
       <Output TaskParameter="Filtered" ItemName="LibReferenceSearchPath" />
     </RemoveDuplicates>
     <CreateProperty Value="@(LibReferenceSearchPath);$(AssemblySearchPaths)">
