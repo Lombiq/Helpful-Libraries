@@ -99,6 +99,7 @@
     <ProjectReference Include="$(ModulesRoot)..\..\..\Orchard\Orchard.Framework.csproj">
       <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
       <Name>Orchard.Framework</Name>
+      <Private>false</Private>
     </ProjectReference>
     <ProjectReference Include="$(ModulesRoot)..\Orchard.Caching\Orchard.Caching.csproj">
       <Project>{7528bf74-25c7-4abe-883a-443b4eec4776}</Project>
