@@ -304,7 +304,7 @@
     </LibReferenceSearchPathFiles>
   </ItemGroup>
   <Target Name="BeforeResolveReferences">
-    <RemoveDuplicates Inputs="@(LibReferenceSearchPathFiles-&gt;'%(RootDir)%(Directory)')">
+    <RemoveDuplicates Inputs="@(LibReferenceSearchPathFiles->'%(RootDir)%(Directory)')">
       <Output TaskParameter="Filtered" ItemName="LibReferenceSearchPath" />
     </RemoveDuplicates>
     <CreateProperty Value="@(LibReferenceSearchPath);$(AssemblySearchPaths)">
