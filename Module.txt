@@ -3,7 +3,7 @@ AntiForgery: enabled
 Author: Piedone
 Website: https://github.com/Lombiq/Helpful-Libraries
 Version: 1.9
-OrchardVersion: 1.9.0
+OrchardVersion: 1.10
 Description: Libraries that can be handy when developing for Orchard
 Features:
 	Piedone.HelpfulLibraries:
