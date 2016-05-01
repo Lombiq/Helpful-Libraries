@@ -22,7 +22,11 @@ namespace Piedone.HelpfulLibraries.Libraries.DependencyInjection
         {
             foreach (var configuration in GetDecorationConfigurations())
             {
-                builder.RegisterType(configuration.DecoratorType).AsSelf().InstancePerDependency();
+                builder
+                    .RegisterType(configuration.DecoratorType)
+                    .AsSelf()
+                    .InstancePerDependency()
+                    .WithMetadata("IsDecorator", true);
             }
         }
 
@@ -37,6 +41,8 @@ namespace Piedone.HelpfulLibraries.Libraries.DependencyInjection
                 {
                     registration.Activating += (sender, e) =>
                     {
+                        if (e.Component.Metadata.ContainsKey("IsDecorator")) return;
+
                         // This is needed so e.g. the Localizer and Logger can get registered.
                         registration.RaiseActivated(e.Context, e.Parameters, e.Instance);
 
