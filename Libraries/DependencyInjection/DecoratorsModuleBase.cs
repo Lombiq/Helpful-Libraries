@@ -22,22 +22,32 @@ namespace Piedone.HelpfulLibraries.Libraries.DependencyInjection
         {
             foreach (var configuration in GetDecorationConfigurations())
             {
-                builder.RegisterType(configuration.DecoratorType).AsSelf().InstancePerDependency();
+                builder
+                    .RegisterType(configuration.DecoratorType)
+                    .AsSelf()
+                    .InstancePerDependency()
+                    .WithMetadata("IsDecorator", true);
             }
         }
 
-        protected override void AttachToComponentRegistration(IComponentRegistry componentRegistry, IComponentRegistration registration)
+        protected override void AttachToComponentRegistration(
+            IComponentRegistry componentRegistry,
+            IComponentRegistration registration)
         {
             foreach (var configuration in GetDecorationConfigurations())
             {
-                if (configuration.DecoratedType.IsAssignableFrom(registration.Activator.LimitType) && registration.Activator.LimitType != configuration.DecoratorType)
+                if (configuration.DecoratedType.IsAssignableFrom(registration.Activator.LimitType) &&
+                    registration.Activator.LimitType != configuration.DecoratorType)
                 {
                     registration.Activating += (sender, e) =>
                     {
+                        if (e.Component.Metadata.ContainsKey("IsDecorator")) return;
+
                         // This is needed so e.g. the Localizer and Logger can get registered.
                         registration.RaiseActivated(e.Context, e.Parameters, e.Instance);
 
-                        e.Instance = e.Context.Resolve(configuration.DecoratorType, new TypedParameter(configuration.DecoratedType, e.Instance));
+                        e.Instance = e.Context
+                            .Resolve(configuration.DecoratorType, new TypedParameter(configuration.DecoratedType, e.Instance));
                     };
                 }
             }
