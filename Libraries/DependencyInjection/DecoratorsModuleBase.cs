@@ -26,18 +26,22 @@ namespace Piedone.HelpfulLibraries.Libraries.DependencyInjection
             }
         }
 
-        protected override void AttachToComponentRegistration(IComponentRegistry componentRegistry, IComponentRegistration registration)
+        protected override void AttachToComponentRegistration(
+            IComponentRegistry componentRegistry,
+            IComponentRegistration registration)
         {
             foreach (var configuration in GetDecorationConfigurations())
             {
-                if (configuration.DecoratedType.IsAssignableFrom(registration.Activator.LimitType) && registration.Activator.LimitType != configuration.DecoratorType)
+                if (configuration.DecoratedType.IsAssignableFrom(registration.Activator.LimitType) &&
+                    registration.Activator.LimitType != configuration.DecoratorType)
                 {
                     registration.Activating += (sender, e) =>
                     {
                         // This is needed so e.g. the Localizer and Logger can get registered.
                         registration.RaiseActivated(e.Context, e.Parameters, e.Instance);
 
-                        e.Instance = e.Context.Resolve(configuration.DecoratorType, new TypedParameter(configuration.DecoratedType, e.Instance));
+                        e.Instance = e.Context
+                            .Resolve(configuration.DecoratorType, new TypedParameter(configuration.DecoratedType, e.Instance));
                     };
                 }
             }
