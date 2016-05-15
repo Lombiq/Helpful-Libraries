@@ -243,6 +243,7 @@
     <Compile Include="Libraries\Authentication\AuthenticationServiceExtensions.cs" />
     <Compile Include="Libraries\Authentication\BasicAuthenticationService.cs" />
     <Compile Include="Libraries\Utilities\AsyncHelper.cs" />
+    <Compile Include="Libraries\Utilities\ContainerBuilderExtensions.cs" />
     <Compile Include="Libraries\Utilities\CacheServiceMonitor.cs" />
     <Compile Include="Libraries\Utilities\DeferredAppDomainRestarter.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
