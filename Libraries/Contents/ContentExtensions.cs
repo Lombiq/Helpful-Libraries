@@ -129,6 +129,18 @@ namespace Piedone.HelpfulLibraries.Contents
             return (T)contextPart.Context[key];
         }
 
+        /// <summary>
+        /// Lets you access the given content part if it exists on the content item.
+        /// </summary>
+        /// <typeparam name="T">Type of the content part.</typeparam>
+        /// <param name="partAction">The action to execute on the part.</param>
+        public static void AccessPartIfExists<T>(this IContent content, Action<T> partAction) where T : IContent
+        {
+            var part = content.As<T>();
+            if (part == null) return;
+            partAction(part);
+        }
+
 
         private static T LookupField<T>(IContent content, string partName)
             where T : ContentField

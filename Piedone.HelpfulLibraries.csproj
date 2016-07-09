@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -263,7 +263,19 @@
   <ItemGroup>
     <Content Include="Views\Empty.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <None Include="Docs\AuthenticationLibraries.md" />
+    <None Include="Docs\ContentsLibraries.md" />
+    <None Include="Docs\DependencyInjectionLibraries.md" />
+    <None Include="Docs\KeyValueStore.md" />
+    <None Include="Docs\ParallelExtensionsExtras.md" />
+    <None Include="Docs\SerializationLibraries.md" />
+    <None Include="Docs\ServiceValidationLibraries.md" />
+    <None Include="Docs\TasksLibraries.md" />
+    <None Include="Docs\Utilities.md" />
+    <None Include="Docs\VersionHistory.md" />
+    <None Include="Readme.md" />
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>

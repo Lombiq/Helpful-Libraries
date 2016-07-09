@@ -50,6 +50,9 @@ All methods have inline documentation.
 	contentItem.SetContext("key", value);
 	var retrievedValue = contentItem.GetContext<string>("key");
 
+    // Shorthand for checking if a part exists on the content item and accessing it.
+    siteSettings.AccessPartIfExists<CombinatorSettingsPart>(combinatorSettings => combinatorSettings.ResourceBaseUrl = string.Empty);
+
 
 ## ContainedByFilter Projector filter
 
