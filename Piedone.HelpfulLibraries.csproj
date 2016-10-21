@@ -93,15 +93,15 @@
       <Name>Orchard.Framework</Name>
       <Private>false</Private>
     </ProjectReference>
-    <ProjectReference Include="$(ModulesRoot)..\Orchard.Caching\Orchard.Caching.csproj">
+    <ProjectReference Include="$(ModulesRoot)..\..\Modules\Orchard.Caching\Orchard.Caching.csproj">
       <Project>{7528bf74-25c7-4abe-883a-443b4eec4776}</Project>
       <Name>Orchard.Caching</Name>
     </ProjectReference>
-    <ProjectReference Include="$(ModulesRoot)..\Orchard.Alias\Orchard.Alias.csproj">
+    <ProjectReference Include="$(ModulesRoot)..\..\Modules\Orchard.Alias\Orchard.Alias.csproj">
       <Project>{475b6c45-b27c-438b-8966-908b9d6d1077}</Project>
       <Name>Orchard.Alias</Name>
     </ProjectReference>
-    <ProjectReference Include="$(ModulesRoot)..\Orchard.TaskLease\Orchard.TaskLease.csproj">
+    <ProjectReference Include="$(ModulesRoot)..\..\Modules\Orchard.TaskLease\Orchard.TaskLease.csproj">
       <Project>{3f72a4e9-7b72-4260-b010-c16ec54f9baf}</Project>
       <Name>Orchard.TaskLease</Name>
     </ProjectReference>
