@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -14,7 +14,8 @@
     <AssemblyName>Piedone.HelpfulLibraries</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <MvcBuildViews>false</MvcBuildViews>
-    <FileUpgradeFlags></FileUpgradeFlags>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
     <UpgradeBackupLocation />
     <TargetFrameworkProfile />
@@ -120,10 +121,6 @@
       <Project>{475b6c45-b27c-438b-8966-908b9d6d1077}</Project>
       <Name>Orchard.Alias</Name>
     </ProjectReference>
-    <ProjectReference Include="$(ModulesRoot)..\..\Modules\Orchard.TaskLease\Orchard.TaskLease.csproj">
-      <Project>{3f72a4e9-7b72-4260-b010-c16ec54f9baf}</Project>
-      <Name>Orchard.TaskLease</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Libraries\Authentication\RequireAuthorizationAttribute.cs" />
@@ -145,7 +142,6 @@
     <Compile Include="Libraries\Tasks\Locking\DatabaseLock.cs" />
     <Compile Include="Libraries\Tasks\Locking\DatabaseLockMigrations.cs" />
     <Compile Include="Libraries\Tasks\Locking\DatabaseLockRecord.cs" />
-    <Compile Include="Libraries\Tasks\TaskLeaseServiceDecorator.cs" />
     <Compile Include="Libraries\Tasks\Locking\ILockingCacheManager.cs" />
     <Compile Include="Libraries\Tasks\Jobs\AtomicJobQueue.cs" />
     <Compile Include="Libraries\Tasks\Jobs\IAtomicJobQueue.cs" />
@@ -256,7 +252,6 @@
     <Compile Include="Libraries\Tasks\Locking\FileLock.cs" />
     <Compile Include="Libraries\Tasks\Locking\DistributedLockManager.cs" />
     <Compile Include="Libraries\Tasks\Locking\LockRecordCleaner.cs" />
-    <Compile Include="Libraries\Tasks\TaskLeaseDecoratorModule.cs" />
     <Compile Include="Libraries\Tasks\ScheduledTaskManagerExtensions.cs" />
     <Compile Include="Libraries\Tasks\WellKnownConstants.cs" />
     <Compile Include="Libraries\Authentication\AuthenticationServiceExtensions.cs" />
