@@ -267,6 +267,7 @@
     <Compile Include="Libraries\Utilities\HttpContextPlaceholderAccessor.cs" />
     <Compile Include="Libraries\Utilities\LocalizerDependency.cs" />
     <Compile Include="Libraries\Utilities\OrchardVersion.cs" />
+    <Compile Include="Libraries\Utilities\ShapeDisplayingContextExtensions.cs" />
     <Compile Include="Libraries\Utilities\WebViewPageExtensions.cs" />
     <Compile Include="Libraries\Utilities\IFreezable.cs" />
     <Compile Include="Libraries\Utilities\MappingsManager.cs" />

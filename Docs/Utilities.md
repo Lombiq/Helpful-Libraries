@@ -46,13 +46,23 @@ Various extensions methods that enhance built-in functionality. Don't forget to 
 	// You can use the above to invalidate multiple cache entries at once: when they Monitor the same event key, triggering the event will remove all of the cache entries.
 	
 	// HqlQueryExtensions
-	// From a Projector IFilterProvider
+	// From a Projector IFilterProvider.
 	public void ApplyFilter(FilterContext context)
 	{
 	    IEnumerable<int> ids = ...
 	    context.Query.WhereIdIn(ids); // Applies the IN() in partitions of given size so the maximal number of IN() arguments isn't an issue.
 	}
 	// HqlExpressionFactoryExtensions has an extension to use such partitioned clauses in a generic way.
+
+	// ShapeDisplayingContextExtensions
+	public class ShapeHider : ShapeDisplayEvents
+    {
+        public override void Displaying(ShapeDisplayingContext context)
+        {
+			// ...
+            context.HideShape();
+        }
+    }
 	
 	// UriExtensions
 	var urlWithoutSchema = new Uri("http://orchardproject.net").ToStringWithoutScheme();
