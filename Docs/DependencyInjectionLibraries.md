@@ -9,15 +9,14 @@ The decorator pattern provided by Helpful Libraries can be used to create wrappe
     // Setting up the decorator.
     public class DecoratorsModule : DecoratorsModuleBase
     {
-        protected override IEnumerable<DecorationConfiguration> DescribeDecorators()
-        {
+        protected override IEnumerable<DecorationConfiguration> DescribeDecorators() =>
             // We could set up more than one decorator here.
-            return new[]
+            new[]
             {
                 DecorationConfiguration.Create<ISiteService, SiteServiceDecorator>()
             };
-        }
     }
+
 
     // Should be internal so it's not picked up by Orchard automatically and so it doesn't override the existing implementation.
     internal class SiteServiceDecorator : ISiteService
