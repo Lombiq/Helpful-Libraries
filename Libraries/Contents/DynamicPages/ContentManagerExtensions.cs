@@ -45,15 +45,5 @@ namespace Piedone.HelpfulLibraries.Contents.DynamicPages
             shape.Metadata.Wrappers.Add("PageWrapper_" + page.ContentItem.ContentType.Replace("-", "__").Replace('.', '_'));
             return shape;
         }
-
-        /// <summary>
-        /// Creates the Shapes for the given Content Items.
-        /// </summary>
-        public static Func<IEnumerable<dynamic>> GetShapesFactory(
-            this IContentManager contentManager,
-            IEnumerable<ContentItem> contentItems,
-            string displayType = "",
-            string groupId = "") =>
-            () => contentItems.Select(item => contentManager.BuildDisplay(item, displayType, groupId));
     }
 }

@@ -125,6 +125,7 @@
   <ItemGroup>
     <Compile Include="Libraries\Authentication\RequireAuthorizationAttribute.cs" />
     <Compile Include="Libraries\Authentication\RequireBasicAuthorizationAttribute.cs" />
+    <Compile Include="Libraries\Contents\ContentManagerExtensions.cs" />
     <Compile Include="Libraries\Contents\CurrentContentIdAccessor.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\HandlerContextExtensions.cs" />
     <Compile Include="Libraries\Contents\DynamicPages\ContentExtensions.cs" />
