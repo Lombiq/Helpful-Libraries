@@ -1,9 +1,8 @@
-﻿using System;
+﻿using Orchard.ContentManagement;
+using Orchard.Environment.Extensions;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using Orchard.ContentManagement;
-using Orchard.Environment.Extensions;
 
 namespace Piedone.HelpfulLibraries.Utilities
 {
@@ -11,7 +10,7 @@ namespace Piedone.HelpfulLibraries.Utilities
     public static class HqlExpressionFactoryExtensions
     {
         /// <summary>
-        /// Applies the expression in partitions of given size, ORed together.
+        /// Applies the expression in partitions of given size, ORed or ANDed together.
         /// This helps to overcome limitations with certain clauses (like IN()) that only accept a specific amount of 
         /// arguments.
         /// </summary>
@@ -20,21 +19,27 @@ namespace Piedone.HelpfulLibraries.Utilities
         /// <param name="partitionExpression">Expression to apply on a partition of values</param>
         /// <param name="values">All the values to use</param>
         /// <param name="partitionSize">Determines how many values will be used for one partition</param>
-        public static void PartitionedExpression<T>(this IHqlExpressionFactory expressionFactory, Action<IHqlExpressionFactory, T[]> partitionExpression, IEnumerable<T> values, int partitionSize = 1000)
+        /// <param name="and">Determines the operator between the partitions (false = OR, true = AND)</param>
+        public static void PartitionedExpression<T>(this IHqlExpressionFactory expressionFactory, Action<IHqlExpressionFactory, T[]> partitionExpression, IEnumerable<T> values, int partitionSize = 1000, bool and = false)
         {
-            BuildPartitionExpression(expressionFactory, partitionExpression, values, partitionSize);
+            BuildPartitionExpression(expressionFactory, partitionExpression, values, partitionSize, and);
         }
 
 
-        private static void BuildPartitionExpression<T>(IHqlExpressionFactory expressionFactory, Action<IHqlExpressionFactory, T[]> partitionExpression, IEnumerable<T> values, int partitionSize)
+        private static void BuildPartitionExpression<T>(IHqlExpressionFactory expressionFactory, Action<IHqlExpressionFactory, T[]> partitionExpression, IEnumerable<T> values, int partitionSize, bool and)
         {
-            if (values.Count() <= partitionSize)
+            if (!values.Skip(partitionSize).Any())
             {
                 partitionExpression(expressionFactory, values.ToArray());
                 return;
             }
 
-            expressionFactory.Or(lhs => partitionExpression(lhs, values.Take(partitionSize).ToArray()), rhs => BuildPartitionExpression(rhs, partitionExpression, values.Skip(partitionSize), partitionSize));
+            if (and) expressionFactory.And(
+                lhs => partitionExpression(lhs, values.Take(partitionSize).ToArray()),
+                rhs => BuildPartitionExpression(rhs, partitionExpression, values.Skip(partitionSize), partitionSize, and));
+            else expressionFactory.Or(
+                lhs => partitionExpression(lhs, values.Take(partitionSize).ToArray()),
+                rhs => BuildPartitionExpression(rhs, partitionExpression, values.Skip(partitionSize), partitionSize, and));
         }
     }
 }
