@@ -55,8 +55,8 @@ namespace Piedone.HelpfulLibraries.Authentication
             _membershipService = membershipService;
             _authenticationService = authenticationService;
         }
-	
-			
+    
+            
         public IBasicAuthenticationCredentials GetRequestCredentials()
         {
             var header = _hca.Current().Request.Headers["Authorization"];
