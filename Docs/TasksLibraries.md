@@ -5,7 +5,7 @@
 With these libraries you can use Orchard functionality or other modules' services with System.Threading.Tasks.Task objects or with async callbacks (due to Orchard's context handling this is not trivial) as well as use site-wide (even across multiple servers) locking for task-like blocks and cache entry computations.
 
 
-##Usage
+## Usage
 
 ### ILockingCacheManager
 
