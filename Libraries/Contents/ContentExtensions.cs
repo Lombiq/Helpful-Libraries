@@ -10,6 +10,26 @@ namespace Piedone.HelpfulLibraries.Contents
     public static class ContentExtensions
     {
         /// <summary>
+        /// Retrieves the content part of the given type from the content item or throws an exception if the part can't
+        /// be found.
+        /// </summary>
+        /// <typeparam name="T">Type of the part.</typeparam>
+        /// <param name="content">The content item.</param>
+        /// <returns>The content part of the given type, if found.</returns>
+        /// <exception cref="InvalidOperationException">Thrown if the content part can't be found.</exception>
+        public static T AsOrThrow<T>(this IContent content) where T : class, IContent
+        {
+            if (!content.Has<T>())
+            {
+                throw new InvalidOperationException(
+                    "The given content item with the ID " + content.ContentItem.Id +
+                    " doesn't have the content part " + nameof(T) + " attached.");
+            }
+
+            return content.As<T>();
+        }
+
+        /// <summary>
         /// Retrieves the first field with the specified type from the part.
         /// </summary>
         /// <typeparam name="T">Type of the field</typeparam>
