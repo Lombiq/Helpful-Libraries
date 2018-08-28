@@ -81,8 +81,7 @@ namespace Piedone.HelpfulLibraries.Authentication
             var credentials = GetRequestCredentials();
             if (credentials == null) return null;
 
-            var validationErrors = new List<LocalizedString>();
-            return _membershipService.ValidateUser(credentials.UserName, credentials.Password, out validationErrors);
+            return _membershipService.ValidateUser(credentials.UserName, credentials.Password, out var validationErrors);
         }
 
         public bool SetAuthenticatedUserForRequest()
