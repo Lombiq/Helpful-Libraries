@@ -63,6 +63,10 @@ Various extensions methods that enhance built-in functionality. Don't forget to 
             context.HideShape();
         }
     }
+
+    // StorageProviderExtensions
+    // Getting the directory separator used by an injected IStorageProvider:
+    var directorySeparator = _storageProvider.GetDirectorySeparator();
 	
 	// UriExtensions
 	var urlWithoutSchema = new Uri("http://orchardproject.net").ToStringWithoutScheme();
