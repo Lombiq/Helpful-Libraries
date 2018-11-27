@@ -2,7 +2,7 @@ Copyright © 2015, Lombiq Technologies Ltd., lombiq.com.
 
 All rights reserved.
 
-For more information and requests about licensing please [contact us through our website](http://lombiq.com/contact-us).
+For more information and requests about licensing please [contact us through our website](https://lombiq.com/contact-us).
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
 
