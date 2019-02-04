@@ -23,7 +23,7 @@ namespace Piedone.HelpfulLibraries.Contents
             {
                 throw new InvalidOperationException(
                     "The given content item with the ID " + content.ContentItem.Id +
-                    " doesn't have the content part " + nameof(T) + " attached.");
+                    " doesn't have the content part " + typeof(T).Name + " attached.");
             }
 
             return content.As<T>();
