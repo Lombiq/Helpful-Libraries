@@ -25,6 +25,34 @@ namespace Piedone.HelpfulLibraries.Utilities
             BuildPartitionExpression(expressionFactory, partitionExpression, values, partitionSize, and);
         }
 
+        /// <summary>
+        /// Given an expression and a list of values, this method will generate an aggregated expression
+        /// that ORs together the applications of the expression on each value.
+        /// </summary>
+        /// <param name="expressionFactory">The HQL expression factory</param>
+        /// <param name="expression">The expression to apply on each value</param>
+        /// <param name="values">The values to use</param>
+        /// <param name="property">The path of the property that the expression will compare the value to</param>
+        public static void AggregateOr(
+            this IHqlExpressionFactory expressionFactory,
+            Action<IHqlExpressionFactory, object, string> expression,
+            object[] values,
+            string property)
+        {
+            if (!values?.Any() ?? true) return;
+
+            if (!values.Skip(1).Any())
+            {
+                expression(expressionFactory, values.First(), property);
+
+                return;
+            }
+
+            expressionFactory.Or(
+                left => expression(expressionFactory, values.First(), property),
+                right => AggregateOr(right, expression, values.Skip(1).ToArray(), property));
+        }
+
 
         private static void BuildPartitionExpression<T>(IHqlExpressionFactory expressionFactory, Action<IHqlExpressionFactory, T[]> partitionExpression, IEnumerable<T> values, int partitionSize, bool and)
         {
