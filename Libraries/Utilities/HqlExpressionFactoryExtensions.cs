@@ -36,8 +36,8 @@ namespace Piedone.HelpfulLibraries.Utilities
         public static void AggregateOr(
             this IHqlExpressionFactory expressionFactory,
             Action<IHqlExpressionFactory, object, string> expression,
-            object[] values,
-            string property)
+            string property,
+            object[] values)
         {
             if (!values?.Any() ?? true) return;
 
@@ -50,7 +50,7 @@ namespace Piedone.HelpfulLibraries.Utilities
 
             expressionFactory.Or(
                 left => expression(expressionFactory, values.First(), property),
-                right => AggregateOr(right, expression, values.Skip(1).ToArray(), property));
+                right => AggregateOr(right, expression, property, values.Skip(1).ToArray()));
         }
 
 
