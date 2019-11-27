@@ -8,6 +8,7 @@
 
 using System.Text;
 using System.Threading.Tasks;
+using Piedone.HelpfulLibraries.Libraries.Helpers;
 
 namespace System.IO
 {
@@ -21,8 +22,11 @@ namespace System.IO
         /// <returns>A read-only FileStream on the specified path.</returns>
         public static FileStream OpenRead(string path)
         {
+            //File Path Validation
+            string pathValidated = FileCleanserHelper.GetSafeFilePath(path);
+
             // Open a file stream for reading and that supports asynchronous I/O
-            return new FileStream(path, FileMode.Open, FileAccess.Read, FileShare.Read, BUFFER_SIZE, true);
+            return new FileStream(pathValidated, FileMode.Open, FileAccess.Read, FileShare.Read, BUFFER_SIZE, true);
         }
 
         /// <summary>Opens an existing file for asynchronous writing.</summary>
@@ -30,12 +34,15 @@ namespace System.IO
         /// <returns>An unshared FileStream on the specified path with access for writing.</returns>
         public static FileStream OpenWrite(string path)
         {
+            //File Path Validation
+            string pathValidated = FileCleanserHelper.GetSafeFilePath(path);
+
             // Open a file stream for writing and that supports asynchronous I/O
-            return new FileStream(path, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, BUFFER_SIZE, true);
+            return new FileStream(pathValidated, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, BUFFER_SIZE, true);
         }
 
         /// <summary>
-        /// Opens a binary file for asynchronosu operation, reads the contents of the file into a byte array, and then closes the file.
+        /// Opens a binary file for asynchronous operation, reads the contents of the file into a byte array, and then closes the file.
         /// </summary>
         /// <param name="path">The path to the file to be read.</param>
         /// <returns>A task that will contain the contents of the file.</returns>
@@ -85,7 +92,7 @@ namespace System.IO
         }
 
         /// <summary>
-        /// Opens a text file for asynchronosu operation, reads the contents of the file into a string, and then closes the file.
+        /// Opens a text file for asynchronous operation, reads the contents of the file into a string, and then closes the file.
         /// </summary>
         /// <param name="path">The path to the file to be read.</param>
         /// <returns>A task that will contain the contents of the file.</returns>
@@ -113,7 +120,7 @@ namespace System.IO
         }
 
         /// <summary>
-        /// Opens a text file for asynchronosu operation, writes a string into the file, and then closes the file.
+        /// Opens a text file for asynchronous operation, writes a string into the file, and then closes the file.
         /// </summary>
         /// <param name="path">The path to the file to be written.</param>
         /// <returns>A task that will signal the completion of the operation.</returns>
