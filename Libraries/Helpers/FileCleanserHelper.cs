@@ -33,7 +33,7 @@ namespace Piedone.HelpfulLibraries.Libraries.Helpers
 
             var blackListChars = Path.GetInvalidPathChars();
 
-            //Replace black-listed characters.
+            // Replaces black-listed characters.
             foreach (var invalidChar in blackListChars)
             {
                 if (filePath.Contains(invalidChar))
@@ -64,7 +64,7 @@ namespace Piedone.HelpfulLibraries.Libraries.Helpers
         {
             var blackListFilename = Path.GetInvalidFileNameChars();
 
-            //Replace black-listed characters.
+            // Replaces black-listed characters.
             foreach (var invalidChar in blackListFilename)
             {
                 if (fileName.Contains(invalidChar))
