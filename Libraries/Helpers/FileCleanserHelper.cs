@@ -8,45 +8,49 @@ namespace Piedone.HelpfulLibraries.Libraries.Helpers
 {
     /// <summary>
     /// File Cleanser Helper Class
+    /// 
+    /// The purpose of this class is to cleanse either a file name or a path to a file. 
+    /// This helps prevent a CWE 73 security flaw outlined here: https://cwe.mitre.org/data/definitions/73.html
     /// </summary>
     public static class FileCleanserHelper
     {
         /// <summary>
         /// Gets a cleansed file name and path.
         /// </summary>
-        /// <param name="fileNameToValidate">File Name to Validate</param>
+        /// <param name="filePath">File path to cleanse.</param>
         /// <returns></returns>
-        public static string GetSafeFilePath(string fileNameToValidate)
+        public static string GetSafeFilePath(string filePath)
         {
-            if (string.IsNullOrEmpty(fileNameToValidate))
+            if (string.IsNullOrEmpty(filePath))
             {
-                throw new ArgumentException("Parameter 'fileNameToValidate' can not be null.", nameof(fileNameToValidate));
+                throw new ArgumentException("Parameter 'filePath' can not be null.", nameof(filePath));
             }
 
-            if (fileNameToValidate.StartsWith(".") || fileNameToValidate.StartsWith("/"))
+            if (filePath.StartsWith(".") || filePath.StartsWith("/"))
             {
-                throw new ApplicationException($"Invalid file path '{fileNameToValidate}'.");
+                throw new ApplicationException($"Invalid file path '{filePath}'.");
             }
 
-            char[] blackListChars = Path.GetInvalidPathChars();
+            var blackListChars = Path.GetInvalidPathChars();
 
-            //Replace Black-listed Characters
+            //Replace black-listed characters.
             foreach (var invalidChar in blackListChars)
             {
-                if (fileNameToValidate.Contains(invalidChar))
+                if (filePath.Contains(invalidChar))
                 {
-                    fileNameToValidate = fileNameToValidate.Replace(invalidChar, ' ').Trim();
+                    filePath = filePath.Replace(invalidChar, ' ');
                 }
             }
 
-            string fullPath = Path.GetFullPath(fileNameToValidate);
-            string directoryName = Path.GetDirectoryName(fullPath);
-            string fileName = Path.GetFileName(fullPath);
+            filePath = filePath.Trim();
+
+            var fullPath = Path.GetFullPath(filePath);
+            var directoryName = Path.GetDirectoryName(fullPath);
+            var fileName = Path.GetFileName(fullPath);
 
             fileName = GetSafeFileName(fileName);
 
-            //Validated Path
-            string finalPath = Path.Combine(directoryName, fileName);
+            var finalPath = Path.Combine(directoryName, fileName);
 
             return finalPath;
         }
@@ -54,20 +58,22 @@ namespace Piedone.HelpfulLibraries.Libraries.Helpers
         /// <summary>
         /// Gets cleansed file name.
         /// </summary>
-        /// <param name="fileName">File Name</param>
+        /// <param name="fileName">File name to cleanse.</param>
         /// <returns></returns>
         public static string GetSafeFileName(string fileName)
         {
-            char[] blackListFilename = Path.GetInvalidFileNameChars();
+            var blackListFilename = Path.GetInvalidFileNameChars();
 
-            //Replace Black-listed File Names
+            //Replace black-listed characters.
             foreach (var invalidChar in blackListFilename)
             {
                 if (fileName.Contains(invalidChar))
                 {
-                    fileName = fileName.Replace(invalidChar, ' ').Trim();
+                    fileName = fileName.Replace(invalidChar, ' ');
                 }
             }
+
+            fileName = fileName.Trim();
 
             return fileName;
         }
