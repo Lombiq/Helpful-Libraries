@@ -136,6 +136,7 @@
     <Compile Include="Libraries\Contents\ShapeOutputGenerator.cs" />
     <Compile Include="Libraries\Contents\StaticallyTypedShapeAlternates.cs" />
     <Compile Include="Libraries\DependencyInjection\DecoratorsModuleBase.cs" />
+    <Compile Include="Libraries\Helpers\FileCleanserHelper.cs" />
     <Compile Include="Libraries\KeyValueStore\IKeyValueStore.cs" />
     <Compile Include="Libraries\KeyValueStore\KeyValueRecord.cs" />
     <Compile Include="Libraries\KeyValueStore\KeyValueStore.cs" />
