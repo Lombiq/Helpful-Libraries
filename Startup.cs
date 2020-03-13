@@ -12,7 +12,7 @@ namespace Lombiq.HelpfulLibraries
         {
         }
 
-        public override void Configure(IApplicationBuilder builder, IRouteBuilder routes, IServiceProvider serviceProvider)
+        public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
         {
         }
     }
