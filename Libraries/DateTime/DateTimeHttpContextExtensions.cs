@@ -2,7 +2,7 @@
 
 namespace Microsoft.AspNetCore.Http
 {
-    public static class HttpContextExtensions
+    public static class DateTimeHttpContextExtensions
     {
         /// <summary>
         /// Sets the time-zone in the HTTP context.
