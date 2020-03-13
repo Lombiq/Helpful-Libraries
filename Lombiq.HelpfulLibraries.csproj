@@ -5,11 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove=".git" />
-    <None Remove=".gitattributes" />
-    <None Remove=".gitignore" />
-    <None Remove=".hgignore" />
-    <None Remove=".hgtags" />
+    <EmbeddedResource Remove=".git" />
+    <EmbeddedResource Remove=".gitattributes" />
+    <EmbeddedResource Remove=".gitignore" />
+    <EmbeddedResource Remove=".hgignore" />
+    <EmbeddedResource Remove=".hgtags" />
   </ItemGroup>
 
   <ItemGroup>
