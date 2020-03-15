@@ -11,16 +11,18 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
     {
         private readonly RequestDelegate _next;
 
+
         public ResourceFilterMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
+
         public async Task InvokeAsync(HttpContext context)
         {
             var resourceFilterProviders = context.RequestServices.GetService<IEnumerable<IResourceFilterProvider>>();
 
-            if (resourceFilterProviders?.Any() ?? false)
+            if (resourceFilterProviders?.Any() == true)
             {
                 var builder = new ResourceFilterBuilder();
 

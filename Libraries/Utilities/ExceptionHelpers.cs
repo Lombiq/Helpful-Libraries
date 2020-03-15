@@ -10,13 +10,10 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
             if (value == default) throw new ArgumentNullException(paramName, message);
         }
 
-        public static void ThrowIfEmptyOrNull(string value, string paramName, string message = null)
+        public static void ThrowIfIsNullOrEmpty(string value, string paramName, string message = null)
         {
             if (string.IsNullOrEmpty(value)) throw new ArgumentNullException(paramName, message);
         }
-
-        public static void ThrowArgumentException(string paramName = null, string message = null) => 
-            throw new ArgumentException(message, paramName);
 
         public static void ThrowIfNotValidContentType(IContent content, string expectedType, string paramName)
         {
