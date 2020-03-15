@@ -14,6 +14,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
             Execution = execute;
     }
 
+
     public static class ResourceFilterExtensions
     {
         public static void RegisterStylesheet(this ResourceFilter filter, string resource) =>

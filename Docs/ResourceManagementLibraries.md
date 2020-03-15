@@ -8,7 +8,7 @@ Makes it possible to include resources automatically based on the current contex
 
 Usage:
 
-Activate resource filter middleware by adding `app.UseResourceFilters()` to the Configure method of the Startup file located in a common module or the web project. E.g.:
+Activate the resource filter middleware by adding `app.UseResourceFilters()` to the Configure method of the Startup file located in a common module or the web project. E.g.:
 
 ```
 public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider)
