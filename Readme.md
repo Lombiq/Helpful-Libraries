@@ -1,4 +1,4 @@
-# Helpful Libraries Orchard module Readme
+# Helpful Libraries for Orchard Core
 
 
 
@@ -9,21 +9,28 @@ Various libraries that can be handy when developing for Orchard Core CMS, to be 
 
 ## Includes:
 
-- ...
-
-
-You can download an install the module from the [Orchard Gallery](https://gallery.orchardproject.net/List/Modules/Orchard.Module.Piedone.HelpfulLibraries).
+- Contents Libraries
+- DateTime Libraries with TimeZone conversion
+- Dependency Injection Libraries
+- Localization Libraries
+- MVC Libraries
+- Resource Management Libraries with Resource Filter feature
+- Utilities
 
 
 ## Documentation
 
 The module consists of the following independent libraries (all in their own features):
 
-- ...
+- [Contents Libraries](Docs/ContentsLibraries.md)
+- [DateTime Libraries](Docs/DateTimeLibraries.md)
+- [Dependency Injection Libraries](Docs/DependencyInjectionLibraries.md)
+- [Localization Libraries](Docs/LocalizationLibraries.md)
+- [MVC Libraries](Docs/MvcLibraries.md)
+- [Resource Management Libraries](Docs/ResourceManagementLibraries.md)
+- [Utilities](Docs/Utilities.md)
 
 Public APIs are always documented so please always read method comments.
-
-The module is also available for [DotNest](http://dotnest.com/) sites too.
 
 The module's source is available in two public source repositories, automatically mirrored in both directions with [Git-hg Mirror](https://githgmirror.com):
 
