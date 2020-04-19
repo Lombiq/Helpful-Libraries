@@ -32,7 +32,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         };
 
 
-        public static void AddCoreOrchardServiceImplementations(this IServiceCollection serviceCollection, Assembly assembly)
+        public static void AddCoreOrchardServiceImplementations(this IServiceCollection services, Assembly assembly)
         {
             var publicClassTypes = assembly
                 .GetExportedTypes()
@@ -44,19 +44,29 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
 
                 foreach (var singletonServiceType in _singletonTypes.Where(singletonType => singletonType.IsAssignableFrom(classType)))
                 {
-                    serviceCollection.AddSingleton(singletonServiceType, classType);
+                    services.AddSingleton(singletonServiceType, classType);
                 }
 
                 foreach (var scopedServiceType in _scopedTypes.Where(scopedType => scopedType.IsAssignableFrom(classType)))
                 {
-                    serviceCollection.AddScoped(scopedServiceType, classType);
+                    services.AddScoped(scopedServiceType, classType);
                 }
 
                 foreach (var transientServiceType in _transientTypes.Where(transientType => transientType.IsAssignableFrom(classType)))
                 {
-                    serviceCollection.AddScoped(transientServiceType, classType);
+                    services.AddScoped(transientServiceType, classType);
                 }
             }
+        }
+
+        // This implementation is based on this StackOverflow answer: https://stackoverflow.com/a/45775657/4611736
+        public static void AddLazyInjectionSupport(this IServiceCollection services) =>
+            services.AddTransient(typeof(Lazy<>), typeof(Lazier<>));
+
+
+        private class Lazier<T> : Lazy<T> where T : class
+        {
+            public Lazier(IServiceProvider provider) : base(() => provider.GetRequiredService<T>()) { }
         }
     }
 }

@@ -1,4 +1,4 @@
-﻿# Dependency Injection Libraries Documentation
+# Dependency Injection Libraries Documentation
 
 
 
@@ -12,5 +12,19 @@ Usage:
 public override void ConfigureServices(IServiceCollection services)
 {
     services.AddCoreOrchardServiceImplementations(typeof(Startup).Assembly);
+}
+```
+
+
+## Lazy injection support
+
+Using the `.AddLazyInjectionSupport()` extension will allow you to inject lazy dependencies like `Lazy<IMyService> myService`.
+
+Usage:
+
+```
+public override void ConfigureServices(IServiceCollection services)
+{
+    services.AddLazyInjectionSupport();
 }
 ```
