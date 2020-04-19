@@ -17,13 +17,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.0.0-rc1-12128" />
-    <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.0.0-rc1-12128" />
-    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.0.0-rc1-12128" />
-    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.0.0-rc1-12128" />
-    <PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-rc1-12128" />
-    <PackageReference Include="OrchardCore.Navigation.Core" Version="1.0.0-rc1-12128" />
-    <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.0.0-rc1-12128" />
+    <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.Navigation.Core" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.0.0-rc1-12811" />
   </ItemGroup>
 
 </Project>
