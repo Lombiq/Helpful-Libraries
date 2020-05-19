@@ -1,4 +1,4 @@
-# Helpful Libraries for Orchard Core
+# Lombiq Helpful Libraries for Orchard Core
 
 
 
