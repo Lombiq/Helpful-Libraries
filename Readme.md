@@ -2,6 +2,8 @@
 
 
 
+**Note** that the development of this modules now continues in the [dev branch](https://github.com/Lombiq/Helpful-Libraries/tree/dev).
+
 ## Project Description
 
 Various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules.
