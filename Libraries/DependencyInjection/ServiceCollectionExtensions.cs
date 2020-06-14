@@ -1,18 +1,15 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Admin;
 using OrchardCore.BackgroundTasks;
-using OrchardCore.ContentManagement;
-using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.Data.Migration;
 using OrchardCore.DisplayManagement.Theming;
 using OrchardCore.Modules;
 using OrchardCore.Navigation;
 using OrchardCore.ResourceManagement;
 using OrchardCore.Security.Permissions;
+using System;
+using System.Linq;
+using System.Reflection;
 
 namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
 {
@@ -20,12 +17,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
     {
         private static readonly Type[] _singletonTypes = new[]
         {
-            typeof(ContentPart), typeof(IBackgroundTask)
+            typeof(IBackgroundTask)
         };
 
         private static readonly Type[] _scopedTypes = new[]
         {
-            typeof(IDataMigration), typeof(IContentPartDisplayDriver), typeof(IResourceManifestProvider),
+            typeof(IDataMigration), typeof(IResourceManifestProvider),
             typeof(IPermissionProvider), typeof(IThemeSelector), typeof(IAdminThemeService), typeof(INavigationProvider)
         };
 
