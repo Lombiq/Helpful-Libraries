@@ -9,6 +9,7 @@ Adds extension methods to `Controller` objects like `.RedirectToLocal(redirectUr
 Please see the inline documentation of each extension methods learn more.
 
 
-## `DevelopmentOnlyAttribute`
+## Attributes for controllers
 
-Enforces the Development environment on controllers.
+- `DevelopmentOnlyAttribute`: Enforces the Development environment on controllers.
+- `DevelopmentAndLocalhostOnlyAttribute`: Enforces the Development environment as well as localhost.

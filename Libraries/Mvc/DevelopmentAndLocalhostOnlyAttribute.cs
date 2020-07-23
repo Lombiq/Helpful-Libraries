@@ -7,15 +7,16 @@ using System;
 namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 {
     /// <summary>
-    /// Enforces the Development environment. When put on a controller or an action it'll set a <see
-    /// cref="NotFoundResult"/> if the current <see cref="IHostEnvironment"/> is not Development.
+    /// Enforces the Development environment as well as localhost. When put on a controller or an action it'll set a
+    /// <see cref="NotFoundResult"/> if the current <see cref="IHostEnvironment"/> is not Development or if the host of
+    /// the current URL is "localhost".
     /// </summary>
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method, AllowMultiple = false, Inherited = true)]
-    public sealed class DevelopmentOnlyAttribute : ActionFilterAttribute
+    public sealed class DevelopmentAndLocalhostOnlyAttribute : ActionFilterAttribute
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (!context.HttpContext.IsDevelopment())
+            if (!context.HttpContext.IsDevelopment() || context.HttpContext.Request.Host.Host != "localhost")
             {
                 context.Result = new NotFoundResult();
                 return;
