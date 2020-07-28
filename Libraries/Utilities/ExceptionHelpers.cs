@@ -1,4 +1,4 @@
-﻿using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement;
 using System;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Utilities
@@ -19,7 +19,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
         {
             if (content.ContentItem.ContentType != expectedType)
             {
-                throw new ArgumentException($"Parameter {paramName} is not a(n) {expectedType} content.", paramName);
+#pragma warning disable S2302 // "nameof" should be used
+                throw new ArgumentException($"Parameter {paramName} is not of the {expectedType} content type.", paramName);
+#pragma warning restore S2302 // "nameof" should be used
             }
         }
 

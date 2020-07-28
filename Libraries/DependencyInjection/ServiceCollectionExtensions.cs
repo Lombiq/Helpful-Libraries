@@ -41,7 +41,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             foreach (var classType in publicClassTypes)
             {
                 // If classType implements multiple services then register it for each of them.
-
                 foreach (var singletonServiceType in _singletonTypes.Where(singletonType => singletonType.IsAssignableFrom(classType)))
                 {
                     services.AddSingleton(singletonServiceType, classType);
@@ -64,9 +63,11 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             services.AddTransient(typeof(Lazy<>), typeof(Lazier<>));
 
 
-        private class Lazier<T> : Lazy<T> where T : class
+        private class Lazier<T> : Lazy<T>
+            where T : class
         {
-            public Lazier(IServiceProvider provider) : base(() => provider.GetRequiredService<T>()) { }
+            public Lazier(IServiceProvider provider)
+                : base(() => provider.GetRequiredService<T>()) { }
         }
     }
 }
