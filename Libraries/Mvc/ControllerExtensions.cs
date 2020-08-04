@@ -10,16 +10,7 @@
         /// <remarks>
         /// Could be part of Orchard but <see href="https://github.com/OrchardCMS/OrchardCore/issues/2830">it won't</see>.
         /// </remarks>
-        public static ActionResult RedirectToLocal(this Controller controller, string redirectUrl)
-        {
-            if (controller.Url.IsLocalUrl(redirectUrl))
-            {
-                return controller.Redirect(redirectUrl);
-            }
-            else
-            {
-                return controller.Redirect("~/");
-            }
-        }
+        public static RedirectResult RedirectToLocal(this Controller controller, string redirectUrl) =>
+            controller.Redirect(controller.Url.IsLocalUrl(redirectUrl) ? redirectUrl : "~/");
     }
 }

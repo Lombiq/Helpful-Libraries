@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.Libraries.DateTime;
+using Lombiq.HelpfulLibraries.Libraries.DateTime;
 
 namespace Microsoft.AspNetCore.Http
 {
@@ -23,4 +23,3 @@ namespace Microsoft.AspNetCore.Http
                 (string)httpContext.Items[HttpContextKeys.TimeZoneIdKey] : null;
     }
 }
-

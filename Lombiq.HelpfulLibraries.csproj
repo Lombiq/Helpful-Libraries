@@ -6,20 +6,16 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="node_modules\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.Navigation.Core" Version="1.0.0-rc2-13450" />
-    <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.0.0-rc2-13450" />
+    <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.Navigation.Core" Version="1.0.0-rc1-12811" />
+    <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.0.0-rc1-12811" />
   </ItemGroup>
 
 </Project>
