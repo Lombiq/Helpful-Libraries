@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Localization;
+using Microsoft.AspNetCore.Localization;
 using System.Globalization;
 
 namespace Microsoft.AspNetCore.Http

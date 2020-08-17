@@ -17,18 +17,18 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
     {
         private static readonly Type[] _singletonTypes = new[]
         {
-            typeof(IBackgroundTask)
+            typeof(IBackgroundTask),
         };
 
         private static readonly Type[] _scopedTypes = new[]
         {
             typeof(IDataMigration), typeof(IResourceManifestProvider),
-            typeof(IPermissionProvider), typeof(IThemeSelector), typeof(IAdminThemeService), typeof(INavigationProvider)
+            typeof(IPermissionProvider), typeof(IThemeSelector), typeof(IAdminThemeService), typeof(INavigationProvider),
         };
 
         private static readonly Type[] _transientTypes = new[]
         {
-            typeof(IModularTenantEvents)
+            typeof(IModularTenantEvents),
         };
 
 

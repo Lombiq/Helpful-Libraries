@@ -25,7 +25,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
             }
         }
 
-        public static void ThrowIfHasNoElement<TElement>(IContent content, string paramName) where TElement : ContentElement
+        public static void ThrowIfHasNoElement<TElement>(IContent content, string paramName)
+            where TElement : ContentElement
         {
             if (!content.ContentItem.Has<TElement>())
             {

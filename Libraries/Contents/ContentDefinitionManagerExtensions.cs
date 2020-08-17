@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Linq;
 
 namespace OrchardCore.ContentManagement.Metadata
@@ -15,7 +15,8 @@ namespace OrchardCore.ContentManagement.Metadata
         public static T GetContentPartSettings<T>(
             this IContentDefinitionManager contentDefinitionManager,
             string contentType,
-            string contentPart) where T : new()
+            string contentPart)
+            where T : new()
         {
             var contentTypeDefinition = contentDefinitionManager.GetTypeDefinition(contentType);
             var contentTypePartDefinition = contentTypeDefinition.Parts

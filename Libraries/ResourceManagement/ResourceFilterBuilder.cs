@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 
@@ -12,25 +12,21 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
         {
             var resourceFilter = new ResourceFilter
             {
-                Filter = filter
+                Filter = filter,
             };
 
             ResourceFilters.Add(resourceFilter);
 
             return resourceFilter;
         }
-    }
 
 
-    public static class ResourceFilterBuilderExtensions
-    {
-        public static ResourceFilter WhenPath(this ResourceFilterBuilder builder, string path) =>
-            builder.When(context => context.Request.Path.Value.ToUpperInvariant() == path.ToUpperInvariant());
+        public ResourceFilter WhenPath(string path) =>
+            When(context => context.Request.Path.Value.ToUpperInvariant() == path.ToUpperInvariant());
 
-        public static ResourceFilter WhenHomePage(this ResourceFilterBuilder builder) =>
-            builder.WhenPath("/");
+        public ResourceFilter WhenHomePage() => WhenPath("/");
 
-        public static ResourceFilter WhenPathStartsWith(this ResourceFilterBuilder builder, string path) =>
-            builder.When(context => context.Request.Path.Value.ToUpperInvariant().StartsWith(path.ToUpperInvariant()));
+        public ResourceFilter WhenPathStartsWith(string path) =>
+            When(context => context.Request.Path.Value.ToUpperInvariant().StartsWith(path.ToUpperInvariant(), StringComparison.OrdinalIgnoreCase));
     }
 }
