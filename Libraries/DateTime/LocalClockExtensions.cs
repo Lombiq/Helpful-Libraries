@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.Libraries.DateTime;
+using Lombiq.HelpfulLibraries.Libraries.DateTime;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Threading.Tasks;
@@ -19,7 +19,7 @@ namespace OrchardCore.Modules
             DateTime dateTimeUtc,
             string timeZoneId,
             HttpContext httpContext) =>
-            (await ExecuteInDifferentTimeZone(
+            (await ExecuteInDifferentTimeZoneAsync(
                 httpContext,
                 timeZoneId,
                 async () =>
@@ -42,13 +42,13 @@ namespace OrchardCore.Modules
             DateTime dateTimeLocal,
             string timeZoneId,
             HttpContext httpContext) =>
-            await ExecuteInDifferentTimeZone(
+            await ExecuteInDifferentTimeZoneAsync(
                 httpContext,
                 timeZoneId,
                 async () => await localClock.ConvertToUtcAsync(dateTimeLocal));
 
 
-        private static async Task<T> ExecuteInDifferentTimeZone<T>(HttpContext httpContext, string timeZoneId, Func<Task<T>> asyncAction)
+        private static async Task<T> ExecuteInDifferentTimeZoneAsync<T>(HttpContext httpContext, string timeZoneId, Func<Task<T>> asyncAction)
         {
             var previousTimeZoneId = httpContext.GetTimeZoneId();
             httpContext.SetTimeZoneId(timeZoneId);

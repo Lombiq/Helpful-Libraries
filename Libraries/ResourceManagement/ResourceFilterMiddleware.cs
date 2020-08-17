@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ResourceManagement;
 using System.Collections.Generic;
@@ -12,10 +12,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
         private readonly RequestDelegate _next;
 
 
-        public ResourceFilterMiddleware(RequestDelegate next)
-        {
-            _next = next;
-        }
+        public ResourceFilterMiddleware(RequestDelegate next) => _next = next;
 
 
         public async Task InvokeAsync(HttpContext context)
@@ -43,7 +40,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
                     }
                 }
             }
-            
+
             await _next(context);
         }
     }
