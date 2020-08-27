@@ -13,6 +13,7 @@ Various libraries that can be handy when developing for Orchard Core CMS, to be 
 - DateTime Libraries with TimeZone conversion
 - Dependency Injection Libraries
 - Localization Libraries
+- Method Provider Libraries
 - MVC Libraries
 - Resource Management Libraries with Resource Filter feature
 - Utilities
@@ -26,6 +27,7 @@ The module consists of the following independent libraries (all in their own fea
 - [DateTime Libraries](Docs/DateTimeLibraries.md)
 - [Dependency Injection Libraries](Docs/DependencyInjectionLibraries.md)
 - [Localization Libraries](Docs/LocalizationLibraries.md)
+- [Method Provider Libraries](Docs/MethodProviderLibraries.md)
 - [MVC Libraries](Docs/MvcLibraries.md)
 - [Resource Management Libraries](Docs/ResourceManagementLibraries.md)
 - [Utilities](Docs/Utilities.md)
