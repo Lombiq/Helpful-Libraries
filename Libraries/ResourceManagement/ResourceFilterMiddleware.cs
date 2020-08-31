@@ -15,7 +15,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
         public ResourceFilterMiddleware(RequestDelegate next) => _next = next;
 
 
-        public async Task InvokeAsync(HttpContext context)
+        public Task InvokeAsync(HttpContext context)
         {
             var resourceFilterProviders = context.RequestServices.GetService<IEnumerable<IResourceFilterProvider>>();
 
@@ -41,7 +41,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
                 }
             }
 
-            await _next(context);
+            return _next(context);
         }
     }
 }
