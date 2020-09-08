@@ -19,7 +19,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.MethodProviders
                 var userId = user.Id.ToTechnicalString();
 
                 return userId;
-            })
+            }),
         };
 
         public IEnumerable<GlobalMethod> GetMethods()
