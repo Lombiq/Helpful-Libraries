@@ -79,7 +79,7 @@ namespace OrchardCore.ContentManagement
         {
             if (content?.ContentItem == null) return PublicationStatus.Unknown;
             if (content.ContentItem.Published) return PublicationStatus.Published;
-            return content.ContentItem.Latest ? PublicationStatus.Draft : PublicationStatus.Archived;
+            return content.ContentItem.Latest ? PublicationStatus.Draft : PublicationStatus.Deleted;
         }
     }
 }
