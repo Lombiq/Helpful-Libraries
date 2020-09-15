@@ -1,3 +1,4 @@
+using Lombiq.HelpfulLibraries.Enums;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
@@ -68,5 +69,17 @@ namespace OrchardCore.ContentManagement
         /// <returns>The modified <see cref="ContentItem"/> instance.</returns>
         public static IContent Merge(this IContent content, object properties, JsonMergeSettings jsonMergeSettings = null) =>
             content.ContentItem.Merge(properties, jsonMergeSettings);
+
+        /// <summary>
+        /// Returns the <see cref="PublicationStatus"/> of the content item.
+        /// </summary>
+        /// <param name="content">The <see cref="IContent"/> whose <see cref="ContentItem"/> to check.</param>
+        /// <returns>The status of the <see cref="ContentItem"/>'s publication if any.</returns>
+        public static PublicationStatus GetPublicationStatus(this IContent content)
+        {
+            if (content?.ContentItem == null) return PublicationStatus.Unknown;
+            if (content.ContentItem.Published) return PublicationStatus.Published;
+            return content.ContentItem.Latest ? PublicationStatus.Draft : PublicationStatus.Archived;
+        }
     }
 }
