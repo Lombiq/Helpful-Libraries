@@ -1,4 +1,4 @@
-﻿using System.Threading.Tasks;
+using System.Threading.Tasks;
 
 namespace System.Collections.Generic
 {
@@ -7,14 +7,14 @@ namespace System.Collections.Generic
         /// <summary>
         /// Awaits the tasks sequentially. An alternative to
         /// <see cref="Task.WhenAll(System.Collections.Generic.IEnumerable{System.Threading.Tasks.Task})"/> and
-        /// <code>Nito.AsyncEx.TaskExtensions.WhenAll</code> when true multi-threaded asynchronicity is not desirable.
+        /// Nito.AsyncEx.TaskExtensions.WhenAll when true multi-threaded asynchronicity is not desirable.
         /// </summary>
         /// <param name="source">A collection of items.</param>
-        /// <param name="asyncOperation">An <code>async</code> function to call on each item.</param>
+        /// <param name="asyncOperation">An async function to call on each item.</param>
         /// <typeparam name="TItem">The type of the input collection's items.</typeparam>
         /// <typeparam name="TResult">The type of the output collection's items.</typeparam>
         /// <returns>When awaited the task contains the results which were added one-by-one.</returns>
-        public static async Task<IList<TResult>> AwaitEach<TItem, TResult>(
+        public static async Task<IList<TResult>> AwaitEachAsync<TItem, TResult>(
             this IEnumerable<TItem> source,
             Func<TItem, Task<TResult>> asyncOperation)
         {
