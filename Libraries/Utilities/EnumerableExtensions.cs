@@ -1,3 +1,4 @@
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace System.Collections.Generic
@@ -22,5 +23,8 @@ namespace System.Collections.Generic
             foreach (var item in source) results.Add(await asyncOperation(item));
             return results;
         }
+
+        public static IList<T> AsList<T>(this IEnumerable<T> collection) =>
+            collection is IList<T> list ? list : new List<T>(collection);
     }
 }
