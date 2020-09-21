@@ -21,10 +21,5 @@ namespace Lombiq.HelpfulLibraries.Enums
         /// The content is deleted but remains in database as version history, eg. after pushing the Delete button.
         /// </summary>
         Deleted,
-
-        /// <summary>
-        /// The publication status is unknown, eg when the <see cref="ContentItem"/> doesn't exist.
-        /// </summary>
-        Unknown,
     }
 }

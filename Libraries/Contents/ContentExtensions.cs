@@ -77,7 +77,12 @@ namespace OrchardCore.ContentManagement
         /// <returns>The status of the <see cref="ContentItem"/>'s publication if any.</returns>
         public static PublicationStatus GetPublicationStatus(this IContent content)
         {
-            if (content?.ContentItem == null) return PublicationStatus.Unknown;
+            if (content == null) throw new ArgumentNullException(nameof(content));
+            if (content.ContentItem == null)
+            {
+                throw new NullReferenceException($"{nameof(content)}.{nameof(content.ContentItem)}");
+            }
+
             if (content.ContentItem.Published) return PublicationStatus.Published;
             return content.ContentItem.Latest ? PublicationStatus.Draft : PublicationStatus.Deleted;
         }
