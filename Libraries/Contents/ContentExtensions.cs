@@ -1,7 +1,7 @@
-using Lombiq.HelpfulLibraries.Enums;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
+using Lombiq.HelpfulLibraries.Libraries.Contents;
 
 namespace OrchardCore.ContentManagement
 {
