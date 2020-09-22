@@ -80,7 +80,7 @@ namespace OrchardCore.ContentManagement
             if (content == null) throw new ArgumentNullException(nameof(content));
             if (content.ContentItem == null)
             {
-                throw new NullReferenceException($"{nameof(content)}.{nameof(content.ContentItem)}");
+                throw new ArgumentNullException($"{nameof(content)}.{nameof(content.ContentItem)}");
             }
 
             if (content.ContentItem.Published) return PublicationStatus.Published;
