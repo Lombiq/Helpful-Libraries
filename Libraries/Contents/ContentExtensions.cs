@@ -1,6 +1,7 @@
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
+using Lombiq.HelpfulLibraries.Libraries.Contents;
 
 namespace OrchardCore.ContentManagement
 {
@@ -68,5 +69,22 @@ namespace OrchardCore.ContentManagement
         /// <returns>The modified <see cref="ContentItem"/> instance.</returns>
         public static IContent Merge(this IContent content, object properties, JsonMergeSettings jsonMergeSettings = null) =>
             content.ContentItem.Merge(properties, jsonMergeSettings);
+
+        /// <summary>
+        /// Returns the <see cref="PublicationStatus"/> of the content item.
+        /// </summary>
+        /// <param name="content">The <see cref="IContent"/> whose <see cref="ContentItem"/> to check.</param>
+        /// <returns>The status of the <see cref="ContentItem"/>'s publication if any.</returns>
+        public static PublicationStatus GetPublicationStatus(this IContent content)
+        {
+            if (content == null) throw new ArgumentNullException(nameof(content));
+            if (content.ContentItem == null)
+            {
+                throw new NullReferenceException($"{nameof(content)}.{nameof(content.ContentItem)}");
+            }
+
+            if (content.ContentItem.Published) return PublicationStatus.Published;
+            return content.ContentItem.Latest ? PublicationStatus.Draft : PublicationStatus.Deleted;
+        }
     }
 }
