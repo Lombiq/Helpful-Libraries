@@ -10,7 +10,7 @@ namespace OrchardCore.ContentManagement
         /// <summary>
         /// Gets a content part by its type.
         /// </summary>
-        /// <returns>The content part or <c>null</c> if it doesn't exist.</returns>
+        /// <returns>The content part or <see langword="null" /> if it doesn't exist.</returns>
         public static TPart As<TPart>(this IContent content)
             where TPart : ContentPart =>
             content.ContentItem.As<TPart>();
