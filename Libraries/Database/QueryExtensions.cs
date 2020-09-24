@@ -36,10 +36,8 @@ namespace YesSql
         /// The desired page of the resulting <see cref="ContentItem"/> s converted into the desired ContentPart. Those
         /// that don't have it are discarded.
         /// </returns>
-        public static async Task<IEnumerable<TPart>> PaginateAsync<TPart>(this IQuery<ContentItem> query, int pageIndex = 0, int count = int.MaxValue)
-            where TPart : ContentPart
-        {
-            return (await PaginateAsync(query, pageIndex, count)).As<TPart>().Where(part => part != null);
-        }
+        public static Task<IEnumerable<TPart>> PaginateAsync<TPart>(this IQuery<ContentItem> query, int pageIndex = 0, int count = int.MaxValue)
+            where TPart : ContentPart =>
+            PaginateAsync(query, pageIndex, count).ContinueWith(t => t.Result.As<TPart>().Where(part => part != null), TaskScheduler.Default);
     }
 }
