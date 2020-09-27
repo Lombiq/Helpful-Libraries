@@ -1,6 +1,5 @@
 using Lombiq.HelpfulLibraries.Libraries.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Lombiq.HelpfulLibraries
 {
