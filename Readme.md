@@ -24,6 +24,7 @@ Various libraries that can be handy when developing for Orchard Core CMS, to be 
 The module consists of the following independent libraries (all in their own features):
 
 - [Contents Libraries](Docs/ContentsLibraries.md)
+- [Database Libraries](Docs/DatabaseLibraries.md)
 - [DateTime Libraries](Docs/DateTimeLibraries.md)
 - [Dependency Injection Libraries](Docs/DependencyInjectionLibraries.md)
 - [Localization Libraries](Docs/LocalizationLibraries.md)

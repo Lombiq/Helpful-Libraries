@@ -1,7 +1,7 @@
+using Lombiq.HelpfulLibraries.Libraries.Contents;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Threading.Tasks;
-using Lombiq.HelpfulLibraries.Libraries.Contents;
 
 namespace OrchardCore.ContentManagement
 {
@@ -10,7 +10,7 @@ namespace OrchardCore.ContentManagement
         /// <summary>
         /// Gets a content part by its type.
         /// </summary>
-        /// <returns>The content part or <c>null</c> if it doesn't exist.</returns>
+        /// <returns>The content part or <see langword="null" /> if it doesn't exist.</returns>
         public static TPart As<TPart>(this IContent content)
             where TPart : ContentPart =>
             content.ContentItem.As<TPart>();
@@ -80,7 +80,7 @@ namespace OrchardCore.ContentManagement
             if (content == null) throw new ArgumentNullException(nameof(content));
             if (content.ContentItem == null)
             {
-                throw new NullReferenceException($"{nameof(content)}.{nameof(content.ContentItem)}");
+                throw new ArgumentNullException($"{nameof(content)}.{nameof(content.ContentItem)}");
             }
 
             if (content.ContentItem.Published) return PublicationStatus.Published;
