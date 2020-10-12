@@ -62,6 +62,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         public static void AddLazyInjectionSupport(this IServiceCollection services) =>
             services.AddTransient(typeof(Lazy<>), typeof(Lazier<>));
 
+        public static void AddOrchardServices(this IServiceCollection services) =>
+            services.AddTransient(typeof(IOrchardServices<>), typeof(OrchardServices<>));
+
 
         private class Lazier<T> : Lazy<T>
             where T : class
