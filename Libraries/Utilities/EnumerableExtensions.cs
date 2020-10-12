@@ -25,6 +25,22 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
+        /// Awaits the tasks sequentially until the action returns false.
+        /// </summary>
+        /// <returns><see langword="true"/> if the <see langword="foreach"/> was never broken.</returns>
+        public static async Task<bool> AwaitWhileAsync<TItem>(
+            this IEnumerable<TItem> source,
+            Func<TItem, Task<bool>> asyncWhileOperation)
+        {
+            foreach (var item in source)
+            {
+                if (!(await asyncWhileOperation(item))) return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
         /// Attempts to cast <paramref name="collection"/> into <see cref="List{T}"/>. If that's not possible then
         /// converts it into one. Not to be confused with <see cref="Enumerable.ToList{TSource}"/> that always creates a
         /// separate <see cref="List{T}"/> regardless of source type. This extension is more suitable when the
