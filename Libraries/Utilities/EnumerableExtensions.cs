@@ -25,7 +25,7 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Awaits the tasks sequentially while the action returns <see langword="true"/>.
+        /// Awaits the tasks sequentially while the action returns <see langword="false"/>.
         /// </summary>
         /// <returns><see langword="true"/> if the <see langword="foreach"/> was never broken.</returns>
         public static async Task<bool> AwaitWhileAsync<TItem>(
