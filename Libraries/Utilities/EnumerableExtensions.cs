@@ -25,7 +25,7 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Awaits the tasks sequentially until the action returns false.
+        /// Awaits the tasks sequentially while the action returns <see langword="true"/>.
         /// </summary>
         /// <returns><see langword="true"/> if the <see langword="foreach"/> was never broken.</returns>
         public static async Task<bool> AwaitWhileAsync<TItem>(
@@ -35,6 +35,22 @@ namespace System.Collections.Generic
             foreach (var item in source)
             {
                 if (!(await asyncWhileOperation(item))) return false;
+            }
+
+            return true;
+        }
+
+        /// <summary>
+        /// Awaits the tasks sequentially until the action returns <see langword="true"/>.
+        /// </summary>
+        /// <returns><see langword="true"/> if the <see langword="foreach"/> was never broken.</returns>
+        public static async Task<bool> AwaitUntilAsync<TItem>(
+            this IEnumerable<TItem> source,
+            Func<TItem, Task<bool>> asyncUntilOperation)
+        {
+            foreach (var item in source)
+            {
+                if (await asyncUntilOperation(item)) return false;
             }
 
             return true;
