@@ -34,7 +34,7 @@ namespace System.Collections.Generic
         {
             foreach (var item in source)
             {
-                if (!(await asyncWhileOperation(item))) return false;
+                if (!await asyncWhileOperation(item)) return false;
             }
 
             return true;
