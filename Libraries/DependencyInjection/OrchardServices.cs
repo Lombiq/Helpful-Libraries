@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement;
 using OrchardCore.Modules;
@@ -18,7 +19,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         public Lazy<ILogger<T>> Logger { get; }
         public Lazy<ISession> Session { get; }
         public Lazy<ISiteService> SiteService { get; }
+        public Lazy<IStringLocalizer<T>> StringLocalizer { get; }
 
+        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+            "Major Code Smell",
+            "S107:Methods should not have too many parameters",
+            Justification = "These are the most common Orchard services.")]
         public OrchardServices(
             Lazy<IClock> clock,
             Lazy<IContentAliasManager> contentAliasManager,
@@ -26,7 +32,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             Lazy<IHttpContextAccessor> httpContextAccessor,
             Lazy<ILogger<T>> logger,
             Lazy<ISession> session,
-            Lazy<ISiteService> siteService)
+            Lazy<ISiteService> siteService,
+            Lazy<IStringLocalizer<T>> stringLocalizer)
         {
             Clock = clock;
             ContentAliasManager = contentAliasManager;
@@ -35,6 +42,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             Logger = logger;
             Session = session;
             SiteService = siteService;
+            StringLocalizer = stringLocalizer;
         }
     }
 }

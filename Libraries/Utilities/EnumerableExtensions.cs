@@ -65,5 +65,22 @@ namespace System.Collections.Generic
         /// </summary>
         public static IList<T> AsList<T>(this IEnumerable<T> collection) =>
             collection is IList<T> list ? list : new List<T>(collection);
+
+        /// <summary>
+        /// Transforms the specified <paramref name="collection"/> with the <paramref name="select"/> function and
+        /// returns the items that are not null. Or if the <paramref name="where"/> function is given then those that
+        /// return <see langword="true"/> with it.
+        /// </summary>
+        public static IEnumerable<TOut> SelectWhere<TIn, TOut>(
+            this IEnumerable<TIn> collection,
+            Func<TIn, TOut> select,
+            Func<TOut, bool> where = null)
+        {
+            foreach (var item in collection)
+            {
+                var converted = select(item);
+                if (where?.Invoke(converted) ?? !(converted is null)) yield return converted;
+            }
+        }
     }
 }
