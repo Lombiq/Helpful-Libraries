@@ -8,7 +8,10 @@ namespace Microsoft.AspNetCore.Mvc
         /// <param name="redirectUrl">Local URL to redirect to.</param>
         /// <returns>Redirect action result.</returns>
         /// <remarks>
-        /// Could be part of Orchard but <see href="https://github.com/OrchardCMS/OrchardCore/issues/2830">it won't</see>.
+        /// <para>
+        /// Could be part of Orchard but <see href="https://github.com/OrchardCMS/OrchardCore/issues/2830">it
+        /// won't</see>.
+        /// </para>
         /// </remarks>
         public static RedirectResult RedirectToLocal(this Controller controller, string redirectUrl) =>
             controller.Redirect(controller.Url.IsLocalUrl(redirectUrl) ? redirectUrl : "~/");
