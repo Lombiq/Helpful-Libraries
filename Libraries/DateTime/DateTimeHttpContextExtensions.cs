@@ -14,8 +14,11 @@ namespace Microsoft.AspNetCore.Http
         /// <summary>
         /// Gets the time-zone set in the HTTP context.
         /// </summary>
-        /// <remarks>It returns null if the HTTP context doesn't contain any time-zone data which doesn't mean that no
-        /// time-zone information is provided by other providers.
+        /// <remarks>
+        /// <para>
+        /// It returns null if the HTTP context doesn't contain any time-zone data which doesn't mean that no time-zone
+        /// information is provided by other providers.
+        /// </para>
         /// </remarks>
         /// <returns>IANA time-zone ID.</returns>
         public static string GetTimeZoneId(this HttpContext httpContext) =>
