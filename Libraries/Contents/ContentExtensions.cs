@@ -2,7 +2,6 @@ using Lombiq.HelpfulLibraries.Libraries.Contents;
 using Newtonsoft.Json.Linq;
 using OrchardCore.ContentManagement.Records;
 using System;
-using System.Linq;
 using System.Threading.Tasks;
 using YesSql;
 
@@ -95,13 +94,21 @@ namespace OrchardCore.ContentManagement
         /// the same time. For example this is possible if the update was done through XHR.
         /// </summary>
         /// <param name="content">The desired latest version of the content.</param>
+        /// <remarks>
+        /// <para>
+        /// If the <paramref name="content"/> is not <see cref="ContentItem.Latest"/> nothing will happen. This is to
+        /// prevent accidental deletion.
+        /// </para>
+        /// </remarks>
         public static async Task SanitizeContentItemVersionsAsync(this IContent content, ISession session)
         {
+            if (!content.ContentItem.Latest) return;
+
             var contentItemId = content.ContentItem.ContentItemId;
             var contentItemVersionId = content.ContentItem.ContentItemVersionId;
             var stuckOtherDocuments = await session
                 .Query<ContentItem, ContentItemIndex>(index =>
-                    (index.Latest || index.Published) &&
+                    index.Latest &&
                     index.ContentItemId == contentItemId &&
                     index.ContentItemVersionId != contentItemVersionId)
                 .ListAsync();
