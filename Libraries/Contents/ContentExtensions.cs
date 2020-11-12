@@ -95,17 +95,17 @@ namespace OrchardCore.ContentManagement
         /// the same time. For example this is possible if the update was done through XHR.
         /// </summary>
         /// <param name="content">The desired latest version of the content.</param>
-        public static async Task SanitizeSurveyVersionsAsync(this IContent content, ISession session)
+        public static async Task SanitizeContentItemVersionsAsync(this IContent content, ISession session)
         {
             var contentItemId = content.ContentItem.ContentItemId;
             var contentItemVersionId = content.ContentItem.ContentItemVersionId;
-            var stuckOtherDocuments = (await session
-                    .Query<ContentItem, ContentItemIndex>(index =>
-                        (index.Latest || index.Published) &&
-                        index.ContentItemId == contentItemId &&
-                        index.ContentItemVersionId != contentItemVersionId)
-                    .ListAsync())
-                .ToList();
+            var stuckOtherDocuments = await session
+                .Query<ContentItem, ContentItemIndex>(index =>
+                    (index.Latest || index.Published) &&
+                    index.ContentItemId == contentItemId &&
+                    index.ContentItemVersionId != contentItemVersionId)
+                .ListAsync();
+
             foreach (var toRemove in stuckOtherDocuments)
             {
                 toRemove.Published = false;
