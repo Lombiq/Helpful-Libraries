@@ -1,7 +1,10 @@
 using Lombiq.HelpfulLibraries.Libraries.Contents;
 using Newtonsoft.Json.Linq;
+using OrchardCore.ContentManagement.Records;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
+using YesSql;
 
 namespace OrchardCore.ContentManagement
 {
@@ -85,6 +88,30 @@ namespace OrchardCore.ContentManagement
 
             if (content.ContentItem.Published) return PublicationStatus.Published;
             return content.ContentItem.Latest ? PublicationStatus.Draft : PublicationStatus.Deleted;
+        }
+
+        /// <summary>
+        /// Prevents multiple "latest" versions in case somehow two threads edited the same <see cref="ContentItem"/> at
+        /// the same time. For example this is possible if the update was done through XHR.
+        /// </summary>
+        /// <param name="content">The desired latest version of the content.</param>
+        public static async Task SanitizeSurveyVersionsAsync(IContent content, ISession session)
+        {
+            var contentItemId = content.ContentItem.ContentItemId;
+            var contentItemVersionId = content.ContentItem.ContentItemVersionId;
+            var stuckOtherDocuments = (await session
+                    .Query<ContentItem, ContentItemIndex>(index =>
+                        (index.Latest || index.Published) &&
+                        index.ContentItemId == contentItemId &&
+                        index.ContentItemVersionId != contentItemVersionId)
+                    .ListAsync())
+                .ToList();
+            foreach (var toRemove in stuckOtherDocuments)
+            {
+                toRemove.Published = false;
+                toRemove.Latest = false;
+                session.Save(toRemove);
+            }
         }
     }
 }
