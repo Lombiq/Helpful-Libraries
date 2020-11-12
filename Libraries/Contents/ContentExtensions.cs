@@ -95,7 +95,7 @@ namespace OrchardCore.ContentManagement
         /// the same time. For example this is possible if the update was done through XHR.
         /// </summary>
         /// <param name="content">The desired latest version of the content.</param>
-        public static async Task SanitizeSurveyVersionsAsync(IContent content, ISession session)
+        public static async Task SanitizeSurveyVersionsAsync(this IContent content, ISession session)
         {
             var contentItemId = content.ContentItem.ContentItemId;
             var contentItemVersionId = content.ContentItem.ContentItemVersionId;
