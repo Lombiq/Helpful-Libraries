@@ -1,4 +1,4 @@
-﻿namespace Lombiq.HelpfulLibraries.Libraries.DateTime
+namespace Lombiq.HelpfulLibraries.Libraries.DateTime
 {
     public static class HttpContextKeys
     {
