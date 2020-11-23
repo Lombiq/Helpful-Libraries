@@ -14,7 +14,7 @@ namespace YesSql
         /// <param name="query">The query to paginate.</param>
         /// <param name="pageIndex">Zero-based index of the desired page.</param>
         /// <param name="count">The page size.</param>
-        /// <returns>The desired page of the resulting <see cref="ContentItem"/> s.</returns>
+        /// <returns>The desired page of the resulting <see cref="ContentItem"/>s.</returns>
         public static Task<IEnumerable<ContentItem>> PaginateAsync(this IQuery<ContentItem> query, int pageIndex = 0, int count = int.MaxValue)
         {
             if (pageIndex > 0) query = query.Skip(pageIndex * count);
@@ -33,7 +33,7 @@ namespace YesSql
         /// <param name="pageIndex">Zero-based index of the desired page.</param>
         /// <param name="count">The page size.</param>
         /// <returns>
-        /// The desired page of the resulting <see cref="ContentItem"/> s converted into the desired ContentPart. Those
+        /// The desired page of the resulting <see cref="ContentItem"/>s converted into the desired ContentPart. Those
         /// that don't have it are discarded.
         /// </returns>
         public static Task<IEnumerable<TPart>> PaginateAsync<TPart>(this IQuery<ContentItem> query, int pageIndex = 0, int count = int.MaxValue)
