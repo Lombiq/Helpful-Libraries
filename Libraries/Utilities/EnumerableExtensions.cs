@@ -7,7 +7,7 @@ namespace System.Collections.Generic
     {
         /// <summary>
         /// Awaits the tasks sequentially. An alternative to <see
-        /// cref="Task.WhenAll(System.Collections.Generic.IEnumerable{System.Threading.Tasks.Task})"/> and
+        /// cref="Task.WhenAll(IEnumerable{Task})"/> and
         /// <c>Nito.AsyncEx.TaskExtensions.WhenAll</c> when true multi-threaded asynchronicity is not desirable.
         /// </summary>
         /// <param name="source">A collection of items.</param>
