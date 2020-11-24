@@ -14,7 +14,7 @@ namespace OrchardCore.Users.Services
 #pragma warning disable IDE0046 // Convert to conditional expression
             if (user == null) return null;
 
-            return !(user is User orchardUser)
+            return user is not User orchardUser
                 ? throw new ArgumentException("The given username identifies a non-Orchard user.", nameof(userName))
                 : orchardUser;
 #pragma warning restore IDE0046 // Convert to conditional expression
