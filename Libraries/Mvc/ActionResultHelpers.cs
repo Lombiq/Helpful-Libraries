@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
@@ -11,7 +12,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
         /// Compresses the <paramref name="files"/> into a zip archive ready to be served by a controller.
         /// </summary>
         /// <param name="files">The file collection where key is the zip entry file name and value is the data.</param>
-        /// <param name="zipFileName">The file name of the archive without the ".zip" at the end.</param>
+        /// <param name="zipFileName">The filename of the archive, can be with or without the ".zip" at the end.</param>
         public static FileResult ZipFile(IDictionary<string, byte[]> files, string zipFileName)
         {
             // The MemoryStream gets disposed by the FileStreamResult. see: https://stackoverflow.com/a/51655063
@@ -30,7 +31,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 
             var compressedBytes = outStream.ToArray();
 
-            return new FileContentResult(compressedBytes, MimeTypes.Zip) { FileDownloadName = zipFileName + ".zip" };
+            if (!zipFileName.EndsWith(".zip", StringComparison.InvariantCultureIgnoreCase)) zipFileName += ".zip";
+            return new FileContentResult(compressedBytes, MimeTypes.Zip) { FileDownloadName = zipFileName };
         }
     }
 }
