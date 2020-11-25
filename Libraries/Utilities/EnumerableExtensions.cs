@@ -6,8 +6,8 @@ namespace System.Collections.Generic
     public static class EnumerableExtensions
     {
         /// <summary>
-        /// Awaits the tasks sequentially. An alternative to
-        /// <see cref="Task.WhenAll(System.Collections.Generic.IEnumerable{System.Threading.Tasks.Task})"/> and
+        /// Awaits the tasks sequentially. An alternative to <see
+        /// cref="Task.WhenAll(IEnumerable{Task})"/> and
         /// <c>Nito.AsyncEx.TaskExtensions.WhenAll</c> when true multi-threaded asynchronicity is not desirable.
         /// </summary>
         /// <param name="source">A collection of items.</param>
@@ -59,9 +59,9 @@ namespace System.Collections.Generic
         /// <summary>
         /// Attempts to cast <paramref name="collection"/> into <see cref="List{T}"/>. If that's not possible then
         /// converts it into one. Not to be confused with <see cref="Enumerable.ToList{TSource}"/> that always creates a
-        /// separate <see cref="List{T}"/> regardless of source type. This extension is more suitable when the
-        /// <paramref name="collection"/> is expected to be <see cref="List{T}"/> but has to be stored as
-        /// <see cref="IEnumerable{T}"/>.
+        /// separate <see cref="List{T}"/> regardless of source type. This extension is more suitable when the <paramref
+        /// name="collection"/> is expected to be <see cref="List{T}"/> but has to be stored as <see
+        /// cref="IEnumerable{T}"/>.
         /// </summary>
         public static IList<T> AsList<T>(this IEnumerable<T> collection) =>
             collection is IList<T> list ? list : new List<T>(collection);

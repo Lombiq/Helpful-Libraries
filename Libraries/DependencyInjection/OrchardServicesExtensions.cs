@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.Libraries.DependencyInjection;
+using Lombiq.HelpfulLibraries.Libraries.DependencyInjection;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;

@@ -1,11 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement;
 using OrchardCore.Modules;
 using OrchardCore.Settings;
 using System;
-using YesSql;
 using ISession = YesSql.ISession;
 
 namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
