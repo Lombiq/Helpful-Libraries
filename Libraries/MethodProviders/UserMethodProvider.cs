@@ -1,9 +1,9 @@
-using System;
-using System.Collections.Generic;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Scripting;
 using OrchardCore.Users.Models;
 using OrchardCore.Users.Services;
+using System;
+using System.Collections.Generic;
 
 namespace Lombiq.HelpfulLibraries.Libraries.MethodProviders
 {
