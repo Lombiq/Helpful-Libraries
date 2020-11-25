@@ -5,7 +5,7 @@ using System.IO.Compression;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 {
-    public static class ResultHelpers
+    public static class ActionResultHelpers
     {
         /// <summary>
         /// Compresses the <paramref name="files"/> into a zip archive ready to be served by a controller.
