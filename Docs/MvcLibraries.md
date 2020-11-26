@@ -17,4 +17,4 @@ Please see the inline documentation of each extension methods learn more.
 
 ## Controller Helpers
 
-- `ResultHelpers`: For returning common specialized `IActionResult`s, such as `ZipFile`,  
+- `ActionResultHelpers`: For returning common specialized `IActionResult`s, such as `ZipFile`,  
