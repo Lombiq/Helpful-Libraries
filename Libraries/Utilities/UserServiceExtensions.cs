@@ -10,14 +10,11 @@ namespace OrchardCore.Users.Services
         {
             var user = await userService.GetUserAsync(userName);
 
-            // Would result in a multi-level ternary.
-#pragma warning disable IDE0046 // Convert to conditional expression
             if (user == null) return null;
 
             return user is not User orchardUser
                 ? throw new ArgumentException("The given username identifies a non-Orchard user.", nameof(userName))
                 : orchardUser;
-#pragma warning restore IDE0046 // Convert to conditional expression
         }
     }
 }
