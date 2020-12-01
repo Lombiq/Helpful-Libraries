@@ -87,24 +87,19 @@ namespace System.Collections.Generic
         /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
         /// later in the enumeration overwrites the earlier one.
         /// </summary>
-        /// <param name="collection">The source data.</param>
-        /// <param name="keySelector">Creates the key for the dictionary item.</param>
-        /// <param name="valueSelector">
-        /// If not <see langword="null"/>, it creates the value for the dictionary item. Otherwise the value will be the
-        /// item itself.
-        /// </param>
         public static Dictionary<TKey, TValue> ToDictionaryOverwrite<TIn, TKey, TValue>(
             this IEnumerable<TIn> collection,
             Func<TIn, TKey> keySelector,
-            Func<TIn, TValue> valueSelector = null)
+            Func<TIn, TValue> valueSelector)
         {
             var dictionary = new Dictionary<TKey, TValue>();
-            foreach (var item in collection)
-            {
-                dictionary[keySelector(item)] = valueSelector is { } ? valueSelector(item) : item;
-            }
-
+            foreach (var item in collection) dictionary[keySelector(item)] = valueSelector(item);
             return dictionary;
         }
+
+        public static Dictionary<TKey, TIn> ToDictionaryOverwrite<TIn, TKey>(
+            this IEnumerable<TIn> collection,
+            Func<TIn, TKey> keySelector) =>
+            ToDictionaryOverwrite(collection, keySelector, item => item);
     }
 }
