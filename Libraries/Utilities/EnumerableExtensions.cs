@@ -82,5 +82,28 @@ namespace System.Collections.Generic
                 if (where?.Invoke(converted) ?? !(converted is null)) yield return converted;
             }
         }
+
+        /// <summary>
+        /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
+        /// later in the enumeration overwrites the earlier one.
+        /// </summary>
+        public static Dictionary<TKey, TValue> ToDictionaryOverwrite<TIn, TKey, TValue>(
+            this IEnumerable<TIn> collection,
+            Func<TIn, TKey> keySelector,
+            Func<TIn, TValue> valueSelector)
+        {
+            var dictionary = new Dictionary<TKey, TValue>();
+            foreach (var item in collection) dictionary[keySelector(item)] = valueSelector(item);
+            return dictionary;
+        }
+
+        /// <summary>
+        /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
+        /// later in the enumeration overwrites the earlier one.
+        /// </summary>
+        public static Dictionary<TKey, TIn> ToDictionaryOverwrite<TIn, TKey>(
+            this IEnumerable<TIn> collection,
+            Func<TIn, TKey> keySelector) =>
+            ToDictionaryOverwrite(collection, keySelector, item => item);
     }
 }
