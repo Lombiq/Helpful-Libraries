@@ -97,6 +97,10 @@ namespace System.Collections.Generic
             return dictionary;
         }
 
+        /// <summary>
+        /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
+        /// later in the enumeration overwrites the earlier one.
+        /// </summary>
         public static Dictionary<TKey, TIn> ToDictionaryOverwrite<TIn, TKey>(
             this IEnumerable<TIn> collection,
             Func<TIn, TKey> keySelector) =>
