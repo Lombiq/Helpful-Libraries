@@ -57,6 +57,18 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
+        /// Determines whether any element of a sequence satisfies a condition, asynchronously, like LINQ Any().
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if any elements in the source sequence pass the test in the specified predicate;
+        /// otherwise, <see langword="false"/>.
+        /// </returns>
+        public static async Task<bool> AnyAsync<TItem>(
+            this IEnumerable<TItem> source,
+            Func<TItem, Task<bool>> asyncUntilOperation) =>
+            !await AwaitUntilAsync(source, asyncUntilOperation);
+
+        /// <summary>
         /// Attempts to cast <paramref name="collection"/> into <see cref="List{T}"/>. If that's not possible then
         /// converts it into one. Not to be confused with <see cref="Enumerable.ToList{TSource}"/> that always creates a
         /// separate <see cref="List{T}"/> regardless of source type. This extension is more suitable when the <paramref
