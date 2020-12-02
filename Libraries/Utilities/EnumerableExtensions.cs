@@ -65,8 +65,8 @@ namespace System.Collections.Generic
         /// </returns>
         public static async Task<bool> AnyAsync<TItem>(
             this IEnumerable<TItem> source,
-            Func<TItem, Task<bool>> asyncUntilOperation) =>
-            !await AwaitUntilAsync(source, asyncUntilOperation);
+            Func<TItem, Task<bool>> predicate) =>
+            !await AwaitUntilAsync(source, predicate);
 
         /// <summary>
         /// Attempts to cast <paramref name="collection"/> into <see cref="List{T}"/>. If that's not possible then
