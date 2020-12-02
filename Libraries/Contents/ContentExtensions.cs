@@ -85,11 +85,8 @@ namespace OrchardCore.ContentManagement
                 throw new ArgumentNullException($"{nameof(content)}.{nameof(content.ContentItem)}");
             }
 
-            // Would result in a multi-level ternary.
-#pragma warning disable IDE0046 // Convert to conditional expression
             if (content.ContentItem.Published) return PublicationStatus.Published;
             return content.ContentItem.Latest ? PublicationStatus.Draft : PublicationStatus.Deleted;
-#pragma warning restore IDE0046 // Convert to conditional expression
         }
 
         /// <summary>
