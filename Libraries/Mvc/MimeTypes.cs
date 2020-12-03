@@ -1,4 +1,4 @@
-﻿namespace Lombiq.HelpfulLibraries.Libraries.Mvc
+namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 {
     public static class MimeTypes
     {

@@ -47,7 +47,6 @@ namespace OrchardCore.Modules
                 timeZoneId,
                 async () => await localClock.ConvertToUtcAsync(dateTimeLocal));
 
-
         private static async Task<T> ExecuteInDifferentTimeZoneAsync<T>(HttpContext httpContext, string timeZoneId, Func<Task<T>> asyncAction)
         {
             var previousTimeZoneId = httpContext.GetTimeZoneId();
