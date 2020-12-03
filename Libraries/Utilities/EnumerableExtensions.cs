@@ -6,8 +6,7 @@ namespace System.Collections.Generic
     public static class EnumerableExtensions
     {
         /// <summary>
-        /// Awaits the tasks sequentially. An alternative to <see
-        /// cref="Task.WhenAll(IEnumerable{Task})"/> and
+        /// Awaits the tasks sequentially. An alternative to <see cref="Task.WhenAll(IEnumerable{Task})"/> and
         /// <c>Nito.AsyncEx.TaskExtensions.WhenAll</c> when true multi-threaded asynchronicity is not desirable.
         /// </summary>
         /// <param name="source">A collection of items.</param>
