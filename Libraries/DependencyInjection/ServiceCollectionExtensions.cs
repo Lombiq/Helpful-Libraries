@@ -31,7 +31,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             typeof(IModularTenantEvents),
         };
 
-
         public static void AddCoreOrchardServiceImplementations(this IServiceCollection services, Assembly assembly)
         {
             var publicClassTypes = assembly
@@ -64,7 +63,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
 
         public static void AddOrchardServices(this IServiceCollection services) =>
             services.AddTransient(typeof(IOrchardServices<>), typeof(OrchardServices<>));
-
 
         private class Lazier<T> : Lazy<T>
             where T : class

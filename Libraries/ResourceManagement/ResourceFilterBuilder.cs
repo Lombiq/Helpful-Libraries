@@ -20,7 +20,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
             return resourceFilter;
         }
 
-
         public ResourceFilter WhenPath(string path) =>
             When(context => context.Request.Path.Value.ToUpperInvariant() == path.ToUpperInvariant());
 

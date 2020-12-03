@@ -11,9 +11,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
     {
         private readonly RequestDelegate _next;
 
-
         public ResourceFilterMiddleware(RequestDelegate next) => _next = next;
-
 
         public Task InvokeAsync(HttpContext context)
         {
