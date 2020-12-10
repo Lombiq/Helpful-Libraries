@@ -2,7 +2,7 @@
 
 
 
-## Controller extensions
+## `Controller` extensions
 
 Adds extension methods to `Controller` objects like `.RedirectToLocal(redirectUrl)`.
 

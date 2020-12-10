@@ -1,8 +1,8 @@
-﻿# Dependency Injection Libraries Documentation
+# Dependency Injection Libraries Documentation
 
 
 
-## HttpContext extensions
+## `HttpContext` extensions
 
 Adds extension methods to `HttpContext` objects that can be used to fetch localization-specific values such as the current request's UI culture.
 
