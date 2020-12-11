@@ -17,4 +17,8 @@ Please see the inline documentation of each extension methods learn more.
 
 ## Controller Helpers
 
-- `ActionResultHelpers`: For returning common specialized `IActionResult`s, such as `ZipFile`,  
+- `ActionResultHelpers`: For returning common specialized `IActionResult`s, such as `ZipFile`, 
+
+## Filter extensions
+ 
+Use `ResultExecutingContextExtensions` to get some shortcuts to usual context operations in `IAsyncResultFilter`s.
