@@ -122,6 +122,11 @@ namespace OrchardCore.ContentManagement
             }
         }
 
+        /// <summary>
+        /// Returns the alias of the content item if the <see cref="AliasPart"/> is attached to it.
+        /// </summary>
+        /// <param name="content">Content item containing <see cref="AliasPart"/>.</param>
+        /// <returns>Alias of the content item.</returns>
         public static string GetAlias(this IContent content) => content.As<AliasPart>()?.Alias;
     }
 }
