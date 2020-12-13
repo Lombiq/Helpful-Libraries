@@ -1,5 +1,6 @@
 using Lombiq.HelpfulLibraries.Libraries.Contents;
 using Newtonsoft.Json.Linq;
+using OrchardCore.Alias.Models;
 using OrchardCore.ContentManagement.Records;
 using System;
 using System.Threading.Tasks;
@@ -120,5 +121,7 @@ namespace OrchardCore.ContentManagement
                 session.Save(toRemove);
             }
         }
+
+        public static string GetAlias(this IContent content) => content.As<AliasPart>()?.Alias;
     }
 }
