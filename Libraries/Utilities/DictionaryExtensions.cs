@@ -6,16 +6,7 @@ namespace System.Collections.Generic
     public static class DictionaryExtensions
     {
         /// <summary>
-        /// Safely returns the value by key if it's in the dictionary. Otherwise, it'll return <see langword="null" />.
-        /// </summary>
-        /// <param name="key">Key in the dictionary.</param>
-        /// <typeparam name="T">Type of the values in the dictionary.</typeparam>
-        /// <returns>Value identified by the key if it's in the dictionary.</returns>
-        public static T GetMaybe<T>(this IDictionary<string, T> dictionary, string key) =>
-            key != null && dictionary.TryGetValue(key, out var value) ? value : default;
-
-        /// <summary>
-        /// Safely returns the value by key if it's in the dictionary. Otherwise, it'll return <see langword="null" />.
+        /// Safely returns the value by key if it's in the dictionary. Otherwise, it'll return <see langword="default" />.
         /// </summary>
         /// <param name="key">Key in the dictionary.</param>
         /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
@@ -66,7 +57,7 @@ namespace System.Collections.Generic
         /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
         /// <returns>Values in the dictionary including the newly added ones.</returns>
         public static async Task<IEnumerable<TValue>> GetValuesOrAddIfMissingAsync<TKey, TValue>(
-            this Dictionary<TKey, TValue> dictionary,
+            this IDictionary<TKey, TValue> dictionary,
             IEnumerable<TKey> keys,
             Func<TKey, Task<TValue>> valueFactory) =>
             await keys.AwaitEachAsync(async key => await GetValueOrAddIfMissingAsync(dictionary, key, valueFactory));
@@ -81,7 +72,7 @@ namespace System.Collections.Generic
         /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
         /// <returns>Value in the dictionary.</returns>
         public static async Task<TValue> GetValueOrAddIfMissingAsync<TKey, TValue>(
-            this Dictionary<TKey, TValue> dictionary,
+            this IDictionary<TKey, TValue> dictionary,
             TKey key,
             Func<TKey, Task<TValue>> valueFactory)
         {

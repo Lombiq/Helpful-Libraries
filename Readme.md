@@ -31,6 +31,7 @@ The module consists of the following independent libraries (all in their own fea
 - [Method Provider Libraries](Docs/MethodProviderLibraries.md)
 - [MVC Libraries](Docs/MvcLibraries.md)
 - [Resource Management Libraries](Docs/ResourceManagementLibraries.md)
+- [Users](Docs/Users.md)
 - [Utilities](Docs/Utilities.md)
 
 Public APIs are always documented so please always read method comments.
