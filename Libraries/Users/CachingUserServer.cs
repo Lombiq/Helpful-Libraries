@@ -29,10 +29,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
                 _userByNameCache);
 
         public async Task<User> GetUserByClaimsPrincipalAsync(ClaimsPrincipal claimsPrincipal) =>
-            await GetUserAsync(
-                claimsPrincipal.Identity.Name,
-                async () => await _userService.GetAuthenticatedUserAsync(claimsPrincipal) as User,
-                _userByNameCache);
+            claimsPrincipal.Identity?.Name != null
+                ? await GetUserAsync(
+                    claimsPrincipal.Identity.Name,
+                    async () => await _userService.GetAuthenticatedUserAsync(claimsPrincipal) as User,
+                    _userByNameCache)
+                : null;
 
         private async Task<User> GetUserAsync(
             string identifier,
