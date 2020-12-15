@@ -45,8 +45,10 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
                 identifier,
                 _ => factory());
 
-            if (!Equals(cache, _userByIdCache)) _userByIdCache.TryAdd(user.UserName, user);
-            else _userByNameCache.TryAdd(user.UserName, user);
+            if (user == null) return null;
+
+            if (!Equals(cache, _userByIdCache)) _userByIdCache.TryAdd(user.Id.ToTechnicalString(), user);
+            if (!Equals(cache, _userByNameCache)) _userByNameCache.TryAdd(user.UserName, user);
 
             return user;
         }
