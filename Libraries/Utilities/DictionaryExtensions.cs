@@ -6,15 +6,15 @@ namespace System.Collections.Generic
     public static class DictionaryExtensions
     {
         /// <summary>
-        /// Safely returns the value by key if it's in the dictionary. Otherwise, it'll return <see langword="default" />.
+        /// Safely returns the value by key if it's in the dictionary. If the key is <see langword="default" /> or not
+        /// found in the dictionary, it'll return <see langword="default" />.
         /// </summary>
         /// <param name="key">Key in the dictionary.</param>
         /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
         /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
         /// <returns>Value identified by the key if it's in the dictionary.</returns>
-        public static TValue GetMaybe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key)
-            where TKey : notnull =>
-            dictionary.TryGetValue(key, out var value) ? value : default;
+        public static TValue GetMaybe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) =>
+            !Equals(key, default) && dictionary.TryGetValue(key, out var value) ? value : default;
 
         /// <summary>
         /// Returns values from the dictionary identified by the given keys. In case of missing items it will also add
