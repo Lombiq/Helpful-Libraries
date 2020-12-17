@@ -7,7 +7,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
     /// <summary>
     /// Retrieves <see cref="User"/>s from a transient per-request cache or sets them if they are not set yet.
     /// </summary>
-    public interface ICachingUserServer
+    public interface ICachingUserService
     {
         /// <summary>
         /// Retrieves <see cref="User"/>s from a transient per-request cache by their unique ID or gets them from the

@@ -7,14 +7,14 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Users
 {
-    public class CachingUserServer : ICachingUserServer
+    public class CachingUserService : ICachingUserService
     {
         private readonly Dictionary<string, User> _userByNameCache = new();
         private readonly Dictionary<string, User> _userByIdCache = new();
 
         private readonly IUserService _userService;
 
-        public CachingUserServer(IUserService userService) => _userService = userService;
+        public CachingUserService(IUserService userService) => _userService = userService;
 
         public async Task<User> GetUserByIdAsync(string userId) =>
             await GetUserAsync(
