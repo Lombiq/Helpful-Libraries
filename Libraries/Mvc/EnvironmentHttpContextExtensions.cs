@@ -25,11 +25,11 @@ namespace Microsoft.AspNetCore.Http
 
         /// <summary>
         /// Returns <see langword="true" /> if the current <see cref="IHostEnvironment.EnvironmentName"/> is
-        /// <see cref="Environments.Development"/> and host is localhost.
+        /// <see cref="Environments.Development"/> and the host is localhost.
         /// </summary>
         /// <returns>
         /// <see langword="true" /> if the current <see cref="IHostEnvironment.EnvironmentName"/> is
-        /// <see cref="Environments.Development"/> and host is localhost.
+        /// <see cref="Environments.Development"/> and the host is localhost.
         /// </returns>
         public static bool IsDevelopmentAndLocalhost(this HttpContext httpContext) =>
             httpContext.IsDevelopment() && httpContext.IsLocalhost();
