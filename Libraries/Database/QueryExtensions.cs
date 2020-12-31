@@ -48,7 +48,7 @@ namespace YesSql
         /// <param name="skip">Number of items to skip. Can be null.</param>
         /// <param name="count">The page size. Can be null.</param>
         /// <returns>The desired page of the resulting <see cref="ContentItem"/>s.</returns>
-        public static Task<IEnumerable<ContentItem>> SliceAsync(this IQuery<ContentItem> query, int? skip = 0, int? count = int.MaxValue)
+        public static Task<IEnumerable<ContentItem>> SliceAsync(this IQuery<ContentItem> query, int? skip, int? count)
         {
             if (skip is not null and > 0) query = query.Skip(skip.Value);
             if (count is not null and > 0) query = query.Take(count.Value);
