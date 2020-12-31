@@ -41,8 +41,7 @@ namespace YesSql
             PaginateAsync(query, pageIndex, count).ContinueWith(t => t.Result.As<TPart>().Where(part => part != null), TaskScheduler.Default);
 
         /// <summary>
-        /// Breaks the query up into pages and lists the page. If skip is 0 and
-        /// count is <see cref="int.MaxValue"/> then the whole query is listed.
+        /// Breaks the query up into pages and lists the page.
         /// </summary>
         /// <param name="query">The query to paginate.</param>
         /// <param name="skip">Number of items to skip. Can be null.</param>
