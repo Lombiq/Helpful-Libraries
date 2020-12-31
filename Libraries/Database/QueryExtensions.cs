@@ -39,5 +39,20 @@ namespace YesSql
         public static Task<IEnumerable<TPart>> PaginateAsync<TPart>(this IQuery<ContentItem> query, int pageIndex = 0, int count = int.MaxValue)
             where TPart : ContentPart =>
             PaginateAsync(query, pageIndex, count).ContinueWith(t => t.Result.As<TPart>().Where(part => part != null), TaskScheduler.Default);
+
+        /// <summary>
+        /// Breaks the query up into slices and lists the slice.
+        /// </summary>
+        /// <param name="query">The query to slice.</param>
+        /// <param name="skip">Number of items to skip. Can be null.</param>
+        /// <param name="count">Number of items to take. Can be null.</param>
+        /// <returns>The desired slices of the resulting <see cref="ContentItem"/>s.</returns>
+        public static Task<IEnumerable<ContentItem>> SliceAsync(this IQuery<ContentItem> query, int? skip, int? count)
+        {
+            if (skip is not null and > 0) query = query.Skip(skip.Value);
+            if (count is not null and > 0) query = query.Take(count.Value);
+
+            return query.ListAsync();
+        }
     }
 }
