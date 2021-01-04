@@ -9,7 +9,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
         public Func<HttpContext, bool> Filter { get; set; }
         public Action<IResourceManager> Execution { get; set; }
 
-
         public void Execute(Action<IResourceManager> action) => Execution = action;
 
         public void RegisterStylesheet(string resource) =>

@@ -16,7 +16,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
     {
         public override void OnActionExecuting(ActionExecutingContext context)
         {
-            if (!context.HttpContext.IsDevelopment() || context.HttpContext.Request.Host.Host != "localhost")
+            if (!context.HttpContext.IsDevelopmentAndLocalhost())
             {
                 context.Result = new NotFoundResult();
                 return;

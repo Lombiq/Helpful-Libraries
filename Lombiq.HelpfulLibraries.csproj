@@ -10,13 +10,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Moq.AutoMock" Version="2.0.1" />
+    <PackageReference Include="Moq.AutoMock" Version="2.2.0.124" />
     <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.0.0-rc2-13929" />
+    <PackageReference Include="OrchardCore.Alias" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.ContentManagement" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.Navigation.Core" Version="1.0.0-rc2-13929" />
+    <PackageReference Include="OrchardCore.Queries" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.Users.Core" Version="1.0.0-rc2-13929" />
   </ItemGroup>

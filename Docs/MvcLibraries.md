@@ -2,7 +2,7 @@
 
 
 
-## Controller extensions
+## `Controller` extensions
 
 Adds extension methods to `Controller` objects like `.RedirectToLocal(redirectUrl)`.
 
@@ -17,4 +17,12 @@ Please see the inline documentation of each extension methods learn more.
 
 ## Controller Helpers
 
-- `ActionResultHelpers`: For returning common specialized `IActionResult`s, such as `ZipFile`,  
+- `ActionResultHelpers`: For returning common specialized `IActionResult`s, such as `ZipFile`.
+
+## Environment `HttpContext` extensions
+
+- `EnvironmentHttpContextExtensions`: Provides shortcuts to determine information about the current hosting environment, like whether the app is running in Development mode.
+
+## Filter extensions
+ 
+Use `ResultExecutingContextExtensions` to get some shortcuts to usual context operations in `IAsyncResultFilter`s.

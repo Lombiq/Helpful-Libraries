@@ -1,5 +1,6 @@
 using Lombiq.HelpfulLibraries.Libraries.Contents;
 using Newtonsoft.Json.Linq;
+using OrchardCore.Alias.Models;
 using OrchardCore.ContentManagement.Records;
 using System;
 using System.Threading.Tasks;
@@ -12,7 +13,7 @@ namespace OrchardCore.ContentManagement
         /// <summary>
         /// Gets a content part by its type.
         /// </summary>
-        /// <returns>The content part or <see langword="null" /> if it doesn't exist.</returns>
+        /// <returns>The content part or <see langword="null"/> if it doesn't exist.</returns>
         public static TPart As<TPart>(this IContent content)
             where TPart : ContentPart =>
             content.ContentItem.As<TPart>();
@@ -85,11 +86,8 @@ namespace OrchardCore.ContentManagement
                 throw new ArgumentNullException($"{nameof(content)}.{nameof(content.ContentItem)}");
             }
 
-            // Would result in a multi-level ternary.
-#pragma warning disable IDE0046 // Convert to conditional expression
             if (content.ContentItem.Published) return PublicationStatus.Published;
             return content.ContentItem.Latest ? PublicationStatus.Draft : PublicationStatus.Deleted;
-#pragma warning restore IDE0046 // Convert to conditional expression
         }
 
         /// <summary>
@@ -123,5 +121,22 @@ namespace OrchardCore.ContentManagement
                 session.Save(toRemove);
             }
         }
+
+        /// <summary>
+        /// Returns the alias of the content item if the <see cref="AliasPart"/> is attached to it.
+        /// </summary>
+        /// <param name="content">Content item containing <see cref="AliasPart"/>.</param>
+        /// <returns>Alias of the content item.</returns>
+        public static string GetAlias(this IContent content) => content.As<AliasPart>()?.Alias;
+
+        /// <summary>
+        /// Provides the most essential data for a <see cref="ContentItem"/> enough to identify it in a text format. Can
+        /// be used as a human-readable text representing the <see cref="ContentItem"/> in a log.
+        /// </summary>
+        /// <returns>Technical text representing a Content Item.</returns>
+        public static string ToTechnicalString(this IContent content) =>
+            $"DisplayText: {content.ContentItem.DisplayText}, " +
+            $"ID: {content.ContentItem.ContentItemId}, " +
+            $"Version ID: {content.ContentItem.ContentItemVersionId}";
     }
 }

@@ -6,8 +6,7 @@ namespace System.Collections.Generic
     public static class EnumerableExtensions
     {
         /// <summary>
-        /// Awaits the tasks sequentially. An alternative to <see
-        /// cref="Task.WhenAll(IEnumerable{Task})"/> and
+        /// Awaits the tasks sequentially. An alternative to <see cref="Task.WhenAll(IEnumerable{Task})"/> and
         /// <c>Nito.AsyncEx.TaskExtensions.WhenAll</c> when true multi-threaded asynchronicity is not desirable.
         /// </summary>
         /// <param name="source">A collection of items.</param>
@@ -57,6 +56,18 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
+        /// Determines whether any element of a sequence satisfies a condition, asynchronously, like LINQ Any().
+        /// </summary>
+        /// <returns>
+        /// <see langword="true"/> if any elements in the source sequence pass the test in the specified predicate;
+        /// otherwise, <see langword="false"/>.
+        /// </returns>
+        public static async Task<bool> AnyAsync<TItem>(
+            this IEnumerable<TItem> source,
+            Func<TItem, Task<bool>> predicate) =>
+            !await AwaitUntilAsync(source, predicate);
+
+        /// <summary>
         /// Attempts to cast <paramref name="collection"/> into <see cref="List{T}"/>. If that's not possible then
         /// converts it into one. Not to be confused with <see cref="Enumerable.ToList{TSource}"/> that always creates a
         /// separate <see cref="List{T}"/> regardless of source type. This extension is more suitable when the <paramref
@@ -82,5 +93,28 @@ namespace System.Collections.Generic
                 if (where?.Invoke(converted) ?? !(converted is null)) yield return converted;
             }
         }
+
+        /// <summary>
+        /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
+        /// later in the enumeration overwrites the earlier one.
+        /// </summary>
+        public static Dictionary<TKey, TValue> ToDictionaryOverwrite<TIn, TKey, TValue>(
+            this IEnumerable<TIn> collection,
+            Func<TIn, TKey> keySelector,
+            Func<TIn, TValue> valueSelector)
+        {
+            var dictionary = new Dictionary<TKey, TValue>();
+            foreach (var item in collection) dictionary[keySelector(item)] = valueSelector(item);
+            return dictionary;
+        }
+
+        /// <summary>
+        /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
+        /// later in the enumeration overwrites the earlier one.
+        /// </summary>
+        public static Dictionary<TKey, TIn> ToDictionaryOverwrite<TIn, TKey>(
+            this IEnumerable<TIn> collection,
+            Func<TIn, TKey> keySelector) =>
+            ToDictionaryOverwrite(collection, keySelector, item => item);
     }
 }
