@@ -10,7 +10,7 @@ namespace OrchardCore.DisplayManagement.Razor
         /// <param name="segment">Text of the title segment.</param>
         /// <param name="position">Position of the title segment.</param>
         /// <param name="separator">Separator between segments.</param>
-        /// <returns></returns>
+        /// <returns>Rendered segment of the title.</returns>
         public static IHtmlContent RenderDynamicTitleSegments(
             this RazorPage<dynamic> razorPage,
             dynamic segment,
