@@ -76,6 +76,27 @@ namespace YesSql
                     session.Query<ContentItem, ContentItemIndex>(index => !index.Latest && !index.Published),
                 _ => throw new ArgumentOutOfRangeException(nameof(status), status, null),
             };
+
+        /// <summary>
+        /// Returns an index query that matches the publication status in <see cref="ContentItemIndex"/>.
+        /// </summary>
+        public static IQueryIndex<ContentItemIndex> QueryContentItemIndex(
+            this ISession session,
+            PublicationStatus status) =>
+            status switch
+            {
+                PublicationStatus.All =>
+                    session.QueryIndex<ContentItemIndex>(),
+                PublicationStatus.Published =>
+                    session.QueryIndex<ContentItemIndex>(index => index.Published),
+                PublicationStatus.Draft =>
+                    session.QueryIndex<ContentItemIndex>(index => index.Latest && !index.Published),
+                PublicationStatus.Latest =>
+                    session.QueryIndex<ContentItemIndex>(index => index.Latest),
+                PublicationStatus.Deleted =>
+                    session.QueryIndex<ContentItemIndex>(index => !index.Latest && !index.Published),
+                _ => throw new ArgumentOutOfRangeException(nameof(status), status, null),
+            };
     }
 
     // We could use SqlException but that doesn't have a ctor for messages.
