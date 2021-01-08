@@ -1,4 +1,7 @@
 using Dapper;
+using Lombiq.HelpfulLibraries.Libraries.Contents;
+using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement.Records;
 using OrchardCore.Queries.Sql;
 using System;
 using System.Collections.Generic;
@@ -52,6 +55,27 @@ namespace YesSql
                 ? await transaction.Connection.QueryAsync<TRow>(query, transaction: transaction)
                 : await queryExecutor((query, transaction));
         }
+
+        /// <summary>
+        /// Returns a query that matches the publication status in <see cref="ContentItemIndex"/>.
+        /// </summary>
+        public static IQuery<ContentItem, ContentItemIndex> QueryContentItem(
+            this ISession session,
+            PublicationStatus status) =>
+            status switch
+            {
+                PublicationStatus.All =>
+                    session.Query<ContentItem, ContentItemIndex>(),
+                PublicationStatus.Published =>
+                    session.Query<ContentItem, ContentItemIndex>(index => index.Published),
+                PublicationStatus.Draft =>
+                    session.Query<ContentItem, ContentItemIndex>(index => index.Latest && !index.Published),
+                PublicationStatus.Latest =>
+                    session.Query<ContentItem, ContentItemIndex>(index => index.Latest),
+                PublicationStatus.Deleted =>
+                    session.Query<ContentItem, ContentItemIndex>(index => !index.Latest && !index.Published),
+                _ => throw new ArgumentOutOfRangeException(nameof(status), status, null),
+            };
     }
 
     // We could use SqlException but that doesn't have a ctor for messages.
