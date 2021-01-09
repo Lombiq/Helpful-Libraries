@@ -55,13 +55,15 @@ namespace YesSql
         /// The raw SQL string. Doesn't need to use table prefixes or care about SQL dialects.
         /// </param>
         /// <param name="parameters">Input parameters passed to the query.</param>
+        /// <param name="transaction">If not <see langword="null"/> it must be an open DB transaction.</param>
         /// <returns>The number of rows affected.</returns>
         public static async Task<int> RawExecuteAsync(
             this ISession session,
             string sql,
-            IDictionary<string, object> parameters = null)
+            IDictionary<string, object> parameters = null,
+            DbTransaction transaction = null)
         {
-            var transaction = await session.DemandAsync();
+            transaction ??= await session.DemandAsync();
 
             var parserResult = SqlParser.TryParse(
                 sql,
