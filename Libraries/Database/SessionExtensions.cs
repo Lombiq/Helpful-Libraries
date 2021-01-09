@@ -40,17 +40,50 @@ namespace YesSql
                 parameters,
                 out var query,
                 out var messages);
-
-            if (!parserResult)
-            {
-                throw new RawQueryException(
-                    $"Error during parsing the query \"{sql}\" with the following messages: {Environment.NewLine}{string.Join(Environment.NewLine, messages)}",
-                    messages);
-            }
+            ThrowIfParseFailed(parserResult, sql, messages);
 
             return queryExecutor == null
                 ? await transaction.Connection.QueryAsync<TRow>(query, transaction: transaction)
                 : await queryExecutor((query, transaction));
+        }
+
+        /// <summary>
+        /// Executes a raw SQL string command in a database-agnostic way by running it through Orchard's <see
+        /// cref="SqlParser"/>.
+        /// </summary>
+        /// <param name="sql">
+        /// The raw SQL string. Doesn't need to use table prefixes or care about SQL dialects.
+        /// </param>
+        /// <param name="parameters">Input parameters passed to the query.</param>
+        /// <returns>The number of rows affected.</returns>
+        public static async Task<int> RawExecuteAsync(
+            this ISession session,
+            string sql,
+            IDictionary<string, object> parameters = null)
+        {
+            var transaction = await session.DemandAsync();
+
+            var parserResult = SqlParser.TryParse(
+                sql,
+                TransactionSqlDialectFactory.For(transaction),
+                session.Store.Configuration.TablePrefix,
+                parameters,
+                out var query,
+                out var messages);
+            ThrowIfParseFailed(parserResult, sql, messages);
+
+            return await transaction.Connection.ExecuteAsync(query, transaction: transaction);
+        }
+
+        private static void ThrowIfParseFailed(bool parserResult, string sql, IEnumerable<string> messages)
+        {
+            if (parserResult) return;
+            var messagesList = messages is IList<string> list ? list : messages.ToList();
+
+            throw new RawQueryException(
+                $"Error during parsing the query \"{sql}\" with the following messages: {Environment.NewLine}" +
+                $"{string.Join(Environment.NewLine, messagesList)}",
+                messagesList);
         }
     }
 
