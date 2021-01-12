@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.IO.Compression;
+using static System.Net.Mime.MediaTypeNames.Application;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 {
@@ -32,7 +33,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             var compressedBytes = outStream.ToArray();
 
             if (!zipFileName.EndsWith(".zip", StringComparison.InvariantCultureIgnoreCase)) zipFileName += ".zip";
-            return new FileContentResult(compressedBytes, MimeTypes.Zip) { FileDownloadName = zipFileName };
+            return new FileContentResult(compressedBytes, Zip) { FileDownloadName = zipFileName };
         }
     }
 }
