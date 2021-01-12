@@ -40,6 +40,7 @@ namespace YesSql
                 parameters,
                 out var query,
                 out var messages);
+
             ThrowIfParseFailed(parserResult, sql, messages);
 
             return queryExecutor == null
@@ -72,6 +73,7 @@ namespace YesSql
                 parameters,
                 out var query,
                 out var messages);
+
             ThrowIfParseFailed(parserResult, sql, messages);
 
             return await transaction.Connection.ExecuteAsync(query, transaction: transaction);
@@ -80,6 +82,7 @@ namespace YesSql
         private static void ThrowIfParseFailed(bool parserResult, string sql, IEnumerable<string> messages)
         {
             if (parserResult) return;
+
             var messagesList = messages is IList<string> list ? list : messages.ToList();
 
             throw new RawQueryException(
