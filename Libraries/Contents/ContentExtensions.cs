@@ -128,5 +128,15 @@ namespace OrchardCore.ContentManagement
         /// <param name="content">Content item containing <see cref="AliasPart"/>.</param>
         /// <returns>Alias of the content item.</returns>
         public static string GetAlias(this IContent content) => content.As<AliasPart>()?.Alias;
+
+        /// <summary>
+        /// Provides the most essential data for a <see cref="ContentItem"/> enough to identify it in a text format. Can
+        /// be used as a human-readable text representing the <see cref="ContentItem"/> in a log.
+        /// </summary>
+        /// <returns>Technical text representing a Content Item.</returns>
+        public static string ToTechnicalString(this IContent content) =>
+            $"DisplayText: {content.ContentItem.DisplayText}, " +
+            $"ID: {content.ContentItem.ContentItemId}, " +
+            $"Version ID: {content.ContentItem.ContentItemVersionId}";
     }
 }
