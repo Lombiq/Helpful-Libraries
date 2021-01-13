@@ -79,7 +79,6 @@ namespace YesSql
             if (parserResult) return query;
 
             var messagesList = messages is IList<string> list ? list : messages.ToList();
-
             throw new RawQueryException(
                 $"Error during parsing the query \"{sql}\" with the following messages: {Environment.NewLine}" +
                 $"{string.Join(Environment.NewLine, messagesList)}",
