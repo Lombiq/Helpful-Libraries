@@ -51,7 +51,7 @@ namespace YesSql
         /// <param name="parameters">Input parameters passed to the query.</param>
         /// <param name="transaction">If not <see langword="null"/> it must be an open DB transaction.</param>
         /// <returns>The number of rows affected.</returns>
-        public static async Task<int> RawExecuteNonQuery(
+        public static async Task<int> RawExecuteNonQueryAsync(
             this ISession session,
             string sql,
             IDictionary<string, object> parameters = null,
