@@ -76,6 +76,7 @@ namespace YesSql
                 parameters,
                 out var query,
                 out var messages);
+
             if (parserResult) return query;
 
             var messagesList = messages is IList<string> list ? list : messages.ToList();
