@@ -4,7 +4,7 @@
     {
         /// <summary>
         /// Returns the value referenced by <paramref name="key"/> if it exists and it's of <typeparamref name="T"/>.
-        /// Otherwise returns a new instance without saving it into the cache.
+        /// Otherwise returns a new instance without saving it into the cache. Never <see langword="null"/>.
         /// </summary>
         public static T GetOrNew<T>(this IMemoryCache memoryCache, string key)
             where T : new() =>
