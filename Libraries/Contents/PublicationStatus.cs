@@ -10,7 +10,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
         /// <summary>
         /// Only used for querying to return all regardless of publication status or to indicate that the status was unset.
         /// </summary>
-        All,
+        Any,
 
         /// <summary>
         /// The content published (eg. after clicking the Publish button).

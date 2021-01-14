@@ -64,7 +64,7 @@ namespace YesSql
             PublicationStatus status) =>
             status switch
             {
-                PublicationStatus.All =>
+                PublicationStatus.Any =>
                     session.Query<ContentItem, ContentItemIndex>(),
                 PublicationStatus.Published =>
                     session.Query<ContentItem, ContentItemIndex>(index => index.Published),
@@ -85,7 +85,7 @@ namespace YesSql
             PublicationStatus status) =>
             status switch
             {
-                PublicationStatus.All =>
+                PublicationStatus.Any =>
                     session.QueryIndex<ContentItemIndex>(),
                 PublicationStatus.Published =>
                     session.QueryIndex<ContentItemIndex>(index => index.Published),
