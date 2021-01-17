@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace System.Collections.Generic
@@ -56,11 +56,15 @@ namespace System.Collections.Generic
         /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
         /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
         /// <returns>Values in the dictionary including the newly added ones.</returns>
+        // The method returns Task<IEnumerable<TValue>> while keys.AwaitEachAsync() Task<IList<TValue>> so there needs
+        // to be an await for polymorphism. See: https://github.com/semihokur/AsyncFixer/issues/3.
+#pragma warning disable AsyncFixer01 // Unnecessary async/await usage
         public static async Task<IEnumerable<TValue>> GetValuesOrAddIfMissingAsync<TKey, TValue>(
             this IDictionary<TKey, TValue> dictionary,
             IEnumerable<TKey> keys,
             Func<TKey, Task<TValue>> valueFactory) =>
-            await keys.AwaitEachAsync(async key => await GetValueOrAddIfMissingAsync(dictionary, key, valueFactory));
+            await keys.AwaitEachAsync(key => GetValueOrAddIfMissingAsync(dictionary, key, valueFactory));
+#pragma warning restore AsyncFixer01 // Unnecessary async/await usage
 
         /// <summary>
         /// Returns a value from the dictionary identified by the given key. In case of it's missing it will add it.

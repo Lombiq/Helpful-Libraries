@@ -60,9 +60,13 @@ namespace OrchardCore.ContentManagement
         /// <param name="action">An action to apply on the content part.</param>
         /// <typeparam name="TPart">The type of the part to update.</typeparam>
         /// <returns>The current <see cref="IContent"/> instance.</returns>
+        // The method returns Task<IContent> while AlterAsync Task<ContentItem> so there needs to be an await for
+        // polymorphism. See: https://github.com/semihokur/AsyncFixer/issues/3.
+#pragma warning disable AsyncFixer01 // Unnecessary async/await usage
         public static async Task<IContent> AlterAsync<TPart>(this IContent content, Func<TPart, Task> action)
             where TPart : ContentPart, new() =>
             await content.ContentItem.AlterAsync(action);
+#pragma warning restore AsyncFixer01 // Unnecessary async/await usage
 
         /// <summary>
         /// Merges properties to the contents of a content item.

@@ -1,4 +1,4 @@
-﻿using OrchardCore.Users.Models;
+using OrchardCore.Users.Models;
 using OrchardCore.Users.Services;
 using System;
 using System.Collections.Generic;
@@ -16,14 +16,14 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
 
         public CachingUserService(IUserService userService) => _userService = userService;
 
-        public async Task<User> GetUserByIdAsync(string userId) =>
-            await GetUserAsync(
+        public Task<User> GetUserByIdAsync(string userId) =>
+            GetUserAsync(
                 userId,
                 async () => await _userService.GetUserByUniqueIdAsync(userId) as User,
                 _userByIdCache);
 
-        public async Task<User> GetUserByNameAsync(string username) =>
-            await GetUserAsync(
+        public Task<User> GetUserByNameAsync(string username) =>
+            GetUserAsync(
                 username,
                 async () => await _userService.GetUserAsync(username) as User,
                 _userByNameCache);
