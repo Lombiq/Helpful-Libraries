@@ -24,7 +24,7 @@ namespace System.Collections.Generic
         /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
         /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
         /// <returns>Value identified by the key if it's in the dictionary.</returns>
-        public static TValue GetMaybe<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key) =>
+        public static TValue GetMaybeReadOnly<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key) =>
             !Equals(key, default) && dictionary.TryGetValue(key, out var value) ? value : default;
 
         /// <summary>
