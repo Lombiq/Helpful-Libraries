@@ -1,6 +1,7 @@
 using Dapper;
 using OrchardCore.Queries.Sql;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Common;
@@ -52,6 +53,27 @@ namespace YesSql
                 ? await transaction.Connection.QueryAsync<TRow>(query, transaction: transaction)
                 : await queryExecutor((query, transaction));
         }
+
+        /// <summary>
+        /// Updates the Content value of a <see cref="Document"/> directly in the Document table. It won't alter the
+        /// <see cref="Document"/>'s version and won't execute index provider's either. Should be used for maintenance
+        /// purposes only.
+        /// </summary>
+        /// <param name="documentId">ID of the <see cref="Document"/> in the Document table.</param>
+        /// <param name="entity">Object that needs to be serialized to the Content field of the Document table.</param>
+        /// <returns><see langword="true" /> if the query updated an existing <see cref="Document"/> successfully.</returns>
+        public static async Task<bool> UpdateDocumentDirectlyAsync(this ISession session, int documentId, object entity)
+        {
+            var transaction = await session.DemandAsync();
+            var dialect = session.Store.Dialect;
+            var content = session.Store.Configuration.ContentSerializer.Serialize(entity);
+
+            var sql = @$"UPDATE {dialect.QuoteForTableName(session.Store.Configuration.TablePrefix + Store.DocumentTable)}
+                SET {dialect.QuoteForColumnName("Content")} = @Content
+                WHERE {dialect.QuoteForColumnName("Id")} = @Id";
+
+            return await transaction.Connection.ExecuteAsync(sql, new { Id = documentId, Content = content }, transaction) > 0;
+        }
     }
 
     // We could use SqlException but that doesn't have a ctor for messages.
@@ -65,7 +87,7 @@ namespace YesSql
         Justification = "There's no need to make this class serializable.")]
     public class RawQueryException : DbException
     {
-        public override System.Collections.IDictionary Data { get; }
+        public override IDictionary Data { get; }
 
         public RawQueryException(string message, IEnumerable<string> errorMessages)
             : base(message) =>
