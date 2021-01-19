@@ -1,4 +1,4 @@
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 
 namespace System.Collections.Generic
@@ -87,7 +87,8 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Checks for a value from the dictionary identified by the given key. In case of it's missing it will add it.
+        /// Checks for a value from the dictionary identified by the given key. In case it's missing this method will
+        /// add it.
         /// </summary>
         /// <param name="key">Key in the dictionary.</param>
         /// <param name="valueFactory">Operation returning the missing item for a missing key.</param>
