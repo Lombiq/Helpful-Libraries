@@ -17,6 +17,17 @@ namespace System.Collections.Generic
             !Equals(key, default) && dictionary.TryGetValue(key, out var value) ? value : default;
 
         /// <summary>
+        /// Safely returns the value by key if it's in the dictionary. If the key is <see langword="default" /> or not
+        /// found in the dictionary, it'll return <see langword="default" />.
+        /// </summary>
+        /// <param name="key">Key in the dictionary.</param>
+        /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
+        /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
+        /// <returns>Value identified by the key if it's in the dictionary.</returns>
+        public static TValue GetMaybeReadOnly<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key) =>
+            !Equals(key, default) && dictionary.TryGetValue(key, out var value) ? value : default;
+
+        /// <summary>
         /// Returns values from the dictionary identified by the given keys. In case of missing items it will also add
         /// these in one batch. Could be used as a simple memory cache where the items are fetched from the database in
         /// one query for example.
@@ -84,6 +95,23 @@ namespace System.Collections.Generic
             dictionary[key] = value;
 
             return value;
+        }
+
+        /// <summary>
+        /// Checks for a value from the dictionary identified by the given key. In case it's missing this method will
+        /// add it.
+        /// </summary>
+        /// <param name="key">Key in the dictionary.</param>
+        /// <param name="valueFactory">Operation returning the missing item for a missing key.</param>
+        /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
+        /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
+        public static async Task AddIfMissingAsync<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary,
+            TKey key,
+            Func<TKey, Task<TValue>> valueFactory)
+        {
+            if (dictionary.ContainsKey(key)) return;
+            dictionary[key] = await valueFactory(key);
         }
     }
 }

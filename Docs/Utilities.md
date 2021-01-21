@@ -8,6 +8,7 @@
 - `EnumExtensions`: Adds extensions for working with `enum` types. (eg. `UnknownEnumException` which can be used to raise a standardized exception on the default arm of a `switch`).
 - `ExceptionHelpers`: Using these helpers, arguments can be tested without writing `if` statements. There are Orchard Core content-specific helpers as well for example checks if the `ContentItem` has a the given part attached to it).
 - `JsonHelpers`: JSON syntax can be validated with the `ValidateJsonIfNotNull` helper method.
+- `MemoryCacheExtensions`: Adds extensions for `IMemoryCache` manipulation. (E.g. `GetOrNew<T>` type-safely returns the item or creates a new instance.)
 - `NonSecurityRandomizer`: A wrapper around `System.Random` for explicitly not security-related usage-cases.
 - `NumberExtensions`: Adds extensions for primitive numeric types. (E.g. `ToTechnicalString` converts int into culture invariant string).
 - `UserServiceExtensions`: Adds extensions for `IUserService`. (E.g. `GetOrchardUserAsync` retrieves the user by user name or throws an exception if none found.)
