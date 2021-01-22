@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace System.Collections.Generic
@@ -71,7 +71,7 @@ namespace System.Collections.Generic
             this IDictionary<TKey, TValue> dictionary,
             IEnumerable<TKey> keys,
             Func<TKey, Task<TValue>> valueFactory) =>
-            await keys.AwaitEachAsync(async key => await GetValueOrAddIfMissingAsync(dictionary, key, valueFactory));
+            await keys.AwaitEachAsync(key => GetValueOrAddIfMissingAsync(dictionary, key, valueFactory));
 
         /// <summary>
         /// Returns a value from the dictionary identified by the given key. In case of it's missing it will add it.

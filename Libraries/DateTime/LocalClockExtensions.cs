@@ -22,8 +22,8 @@ namespace OrchardCore.Modules
             (await ExecuteInDifferentTimeZoneAsync(
                 httpContext,
                 timeZoneId,
-                async () =>
-                    await localClock.ConvertToLocalAsync(
+                () =>
+                    localClock.ConvertToLocalAsync(
                         new DateTimeOffset(
                             dateTimeUtc.Kind != DateTimeKind.Utc ?
                             new DateTime(dateTimeUtc.Ticks, DateTimeKind.Utc) :
@@ -37,15 +37,15 @@ namespace OrchardCore.Modules
         /// <param name="timeZoneId">IANA time-zone ID.</param>
         /// <param name="httpContext">HTTP context to be used to temporarily set in the HTTP context.</param>
         /// <returns>UTC date.</returns>
-        public static async Task<DateTime> ConvertToUtcAsync(
+        public static Task<DateTime> ConvertToUtcAsync(
             this ILocalClock localClock,
             DateTime dateTimeLocal,
             string timeZoneId,
             HttpContext httpContext) =>
-            await ExecuteInDifferentTimeZoneAsync(
+            ExecuteInDifferentTimeZoneAsync(
                 httpContext,
                 timeZoneId,
-                async () => await localClock.ConvertToUtcAsync(dateTimeLocal));
+                () => localClock.ConvertToUtcAsync(dateTimeLocal));
 
         private static async Task<T> ExecuteInDifferentTimeZoneAsync<T>(HttpContext httpContext, string timeZoneId, Func<Task<T>> asyncAction)
         {
