@@ -1,17 +1,34 @@
-﻿using Lombiq.HelpfulLibraries.Libraries.Utilities;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
+using OrchardCore.Environment.Shell;
 using OrchardCore.Environment.Shell.Scope;
+using System.Threading.Tasks;
 
 namespace System
 {
     public static class ServiceProviderExtensions
     {
         /// <summary>
-        /// Creates a new service scope under the <paramref name="serviceProvider"/> and wraps it for safe concurrent
-        /// disposal if true concurrency can not be avoided. Necessary becuase the <see cref="ShellScope"/>
-        /// implementation is not thread safe.
+        /// Executes <paramref name="asyncAction"/> in the specified shell's scope.
         /// </summary>
-        public static LockingDisposable<IServiceScope> CreateConcurrentScope(this IServiceProvider serviceProvider) =>
-            new LockingDisposable<IServiceScope>(serviceProvider.CreateScope());
+        public static async Task WithShellScopeAsync(
+            this IServiceProvider serviceProvider,
+            Func<ShellScope, Task> asyncAction,
+            string scopeName = "Default")
+        {
+            var shellHost = serviceProvider.GetRequiredService<IShellHost>();
+            var shellScope = await shellHost.GetScopeAsync(scopeName);
+            await shellScope.UsingAsync(asyncAction);
+        }
+
+        public static async Task<T> GetWithShellScopeAsync<T>(
+            this IServiceProvider serviceProvider,
+            Func<ShellScope, Task<T>> asyncFunc)
+        {
+            T result = default;
+
+            await serviceProvider.WithShellScopeAsync(async scope => result = await asyncFunc(scope));
+
+            return result;
+        }
     }
 }
