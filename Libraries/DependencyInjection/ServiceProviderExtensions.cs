@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Environment.Shell;
 using OrchardCore.Environment.Shell.Scope;
 using System.Threading.Tasks;
@@ -22,11 +22,12 @@ namespace System
 
         public static async Task<T> GetWithShellScopeAsync<T>(
             this IServiceProvider serviceProvider,
-            Func<ShellScope, Task<T>> asyncFunc)
+            Func<ShellScope, Task<T>> asyncFunc,
+            string scopeName = "Default")
         {
             T result = default;
 
-            await serviceProvider.WithShellScopeAsync(async scope => result = await asyncFunc(scope));
+            await serviceProvider.WithShellScopeAsync(async scope => result = await asyncFunc(scope), scopeName);
 
             return result;
         }
