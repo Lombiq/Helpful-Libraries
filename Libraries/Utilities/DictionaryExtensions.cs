@@ -1,4 +1,4 @@
-﻿using System.Linq;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace System.Collections.Generic
@@ -71,7 +71,7 @@ namespace System.Collections.Generic
             this IDictionary<TKey, TValue> dictionary,
             IEnumerable<TKey> keys,
             Func<TKey, Task<TValue>> valueFactory) =>
-            await keys.AwaitEachAsync(async key => await GetValueOrAddIfMissingAsync(dictionary, key, valueFactory));
+            await keys.AwaitEachAsync(key => GetValueOrAddIfMissingAsync(dictionary, key, valueFactory));
 
         /// <summary>
         /// Returns a value from the dictionary identified by the given key. In case of it's missing it will add it.
@@ -95,6 +95,23 @@ namespace System.Collections.Generic
             dictionary[key] = value;
 
             return value;
+        }
+
+        /// <summary>
+        /// Checks for a value from the dictionary identified by the given key. In case it's missing this method will
+        /// add it.
+        /// </summary>
+        /// <param name="key">Key in the dictionary.</param>
+        /// <param name="valueFactory">Operation returning the missing item for a missing key.</param>
+        /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
+        /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
+        public static async Task AddIfMissingAsync<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary,
+            TKey key,
+            Func<TKey, Task<TValue>> valueFactory)
+        {
+            if (dictionary.ContainsKey(key)) return;
+            dictionary[key] = await valueFactory(key);
         }
     }
 }
