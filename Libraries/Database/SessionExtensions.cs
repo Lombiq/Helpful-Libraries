@@ -84,6 +84,7 @@ namespace YesSql
             if (parserResult) return query;
 
             var messagesList = messages is IList<string> list ? list : messages.ToList();
+
             throw new RawQueryException(
                 $"Error during parsing the query \"{sql}\" with the following messages: {Environment.NewLine}" +
                 $"{string.Join(Environment.NewLine, messagesList)}",
@@ -92,7 +93,7 @@ namespace YesSql
 
         /// <summary>
         /// Updates the Content value of a <see cref="Document"/> directly in the Document table. It won't alter the
-        /// <see cref="Document"/>'s version and won't execute index provider's either. Should be used for maintenance
+        /// <see cref="Document"/>'s version and won't execute index providers either. Should be used for maintenance
         /// purposes only.
         /// </summary>
         /// <param name="documentId">ID of the <see cref="Document"/> in the Document table.</param>
