@@ -8,7 +8,7 @@ Using the `.AddCoreOrchardServiceImplementations(assembly)` extension method in 
 
 Usage:
 
-```
+```csharp
 public override void ConfigureServices(IServiceCollection services)
 {
     services.AddCoreOrchardServiceImplementations(typeof(Startup).Assembly);
@@ -22,9 +22,23 @@ Using the `.AddLazyInjectionSupport()` extension will allow you to inject lazy d
 
 Usage:
 
-```
+```csharp
 public override void ConfigureServices(IServiceCollection services)
 {
     services.AddLazyInjectionSupport();
 }
+```
+
+## Shell scope extensions
+
+Use `WithShellScopeAsync()` and `GetWithShellScopeAsync()` to [access services from another tenant](https://orcharddojo.net/blog/how-to-access-services-from-another-tenant-in-orchard-core-orchard-nuggets). If multi-tenancy is not enabled, the default `scopeName` is suitable to access the Default tenant.
+
+Usage:
+
+```csharp
+var contentItem = await context.ServiceProvider.GetWithShellScopeAsync(scope =>
+{
+    var contentManager = scope.ServiceProvider.GetService<IContentManager>();
+    return contentManager.GetAsync(contentItemId);
+});
 ```
