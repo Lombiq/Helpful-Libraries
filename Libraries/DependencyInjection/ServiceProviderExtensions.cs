@@ -44,11 +44,11 @@ namespace System
         public static IHttpClientBuilder AddRestEaseHttpClient<TClient>(
             this IServiceCollection services,
             string name,
-            Func<string> getBaseUrl)
+            Func<IServiceProvider, string> getBaseUrl)
             where TClient : class =>
-            services.AddHttpClient(name, client =>
+            services.AddHttpClient(name, (provider, client) =>
                 {
-                    client.BaseAddress = new Uri(getBaseUrl());
+                    client.BaseAddress = new Uri(getBaseUrl(provider));
                 })
                 .AddTypedClient(RestClient.For<TClient>);
     }
