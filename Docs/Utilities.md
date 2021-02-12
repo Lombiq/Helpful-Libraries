@@ -11,6 +11,7 @@
 - `MemoryCacheExtensions`: Adds extensions for `IMemoryCache` manipulation. (E.g. `GetOrNew<T>` type-safely returns the item or creates a new instance.)
 - `NonSecurityRandomizer`: A wrapper around `System.Random` for explicitly not security-related usage-cases.
 - `NumberExtensions`: Adds extensions for primitive numeric types. (E.g. `ToTechnicalString` converts int into culture invariant string).
+- `JsonStringExtensions`: Adds JSON related extensions for the `string` type. (E.g. `JsonHtmlContent` which safely serializes a string for use in `<script>` elements.)
 - `UserServiceExtensions`: Adds extensions for `IUserService`. (E.g. `GetOrchardUserAsync` retrieves the user by user name or throws an exception if none found.)
 
 Please see the inline documentation of each extension method to learn more.
