@@ -6,10 +6,15 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
     {
         private const string DocumentId = nameof(DocumentId);
 
-        public static void CreateDocumentIdIndex<T>(this ISchemaBuilder schemaBuilder)
-            where T : class => schemaBuilder.AlterTable(typeof(T).Name, table => table
-                                 .CreateIndex(
-                                     $"IDX_{typeof(T).Name}_{DocumentId}",
-                                     DocumentId));
+        /// <summary>
+        /// Creates a non-clustered DocumentId index for a specific table.
+        /// </summary>
+        /// <typeparam name="T">Index table type.</typeparam>
+        /// <param name="schemaBuilder">SchemaBuilder Interface</param>
+        public static void CreateDocumentIdIndex<T>(this ISchemaBuilder schemaBuilder) =>
+            schemaBuilder.AlterTable(typeof(T).Name, table => table
+                .CreateIndex(
+                    $"IDX_{typeof(T).Name}_{DocumentId}",
+                    DocumentId));
     }
 }
