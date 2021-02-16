@@ -10,7 +10,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
         /// Creates a non-clustered DocumentId index for a specific table.
         /// </summary>
         /// <typeparam name="T">Index table type.</typeparam>
-        /// <param name="schemaBuilder">SchemaBuilder Interface</param>
+        /// <param name="schemaBuilder">SchemaBuilder Interface.</param>
         public static void CreateDocumentIdIndex<T>(this ISchemaBuilder schemaBuilder) =>
             schemaBuilder.AlterTable(typeof(T).Name, table => table
                 .CreateIndex(
