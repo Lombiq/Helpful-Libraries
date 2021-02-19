@@ -14,7 +14,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
         public static string GetFile(Assembly assembly, string path)
         {
             var provider = new EmbeddedFileProvider(assembly);
-            using var stream = provider.GetFileInfo(path.Replace('/', '.')).CreateReadStream();
+            using var stream = provider.GetFileInfo(path).CreateReadStream();
             using var streamReader = new StreamReader(stream);
             return streamReader.ReadToEnd();
         }
@@ -26,6 +26,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
         /// <typeparam name="T">A type defined in the same assembly where the embedded resource is.</typeparam>
         /// <param name="extension">The extension of the target file.</param>
         public static string GetFile<T>(string extension) =>
-            GetFile(typeof(T).Assembly, $"Resources/{typeof(T).Name}.{extension}");
+            GetFile(typeof(T).Assembly, $"Resources>{typeof(T).Name}.{extension}");
     }
 }
