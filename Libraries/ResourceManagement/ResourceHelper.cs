@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.FileProviders;
 using System.IO;
+using System.Linq;
 using System.Reflection;
 
 namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
@@ -14,7 +15,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
         public static string GetFile(Assembly assembly, string path)
         {
             var provider = new EmbeddedFileProvider(assembly);
-            using var stream = provider.GetFileInfo(path).CreateReadStream();
+            var fileInfo = provider.GetDirectoryContents(string.Empty).Single(x => x.Name == path);
+            using var stream = fileInfo.CreateReadStream();
             using var streamReader = new StreamReader(stream);
             return streamReader.ReadToEnd();
         }
