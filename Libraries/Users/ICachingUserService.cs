@@ -18,12 +18,20 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         Task<User> GetUserByIdAsync(string userId);
 
         /// <summary>
-        /// Retrieves <see cref="User"/>s from a transient per-request cache by their unique ID or gets them from the
+        /// Retrieves <see cref="User"/>s from a transient per-request cache by their username or gets them from the
         /// store if not yet cached.
         /// </summary>
         /// <param name="username">Username of the <see cref="User"/>.</param>
         /// <returns>Potentially cached <see cref="User"/>.</returns>
         Task<User> GetUserByNameAsync(string username);
+
+        /// <summary>
+        /// Retrieves <see cref="User"/>s from a transient per-request cache by their email or gets them from the store
+        /// if not yet cached.
+        /// </summary>
+        /// <param name="email">Email of the <see cref="User"/>.</param>
+        /// <returns>Potentially cached <see cref="User"/>.</returns>
+        Task<User> GetUserByEmailAsync(string email);
 
         /// <summary>
         /// Retrieves an authenticated <see cref="User"/> from a transient per-request cache or gets them from the
@@ -34,5 +42,17 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         /// </param>
         /// <returns>Potentially cached <see cref="User"/>.</returns>
         Task<User> GetUserByClaimsPrincipalAsync(ClaimsPrincipal claimsPrincipal);
+    }
+
+    public static class CachingUserServiceExtensions
+    {
+        /// <summary>
+        /// Retrieves <see cref="User"/>s from a transient per-request cache by their username or email or gets them
+        /// from the store if not yet cached.
+        /// </summary>
+        /// <param name="nameOrEmail">Username or email of the <see cref="User"/>.</param>
+        /// <returns>Potentially cached <see cref="User"/>.</returns>
+        public static async Task<User> GetUserByNameOrEmailAsync(this ICachingUserService service, string nameOrEmail) =>
+            await service.GetUserByNameAsync(nameOrEmail) ?? await service.GetUserByEmailAsync(nameOrEmail);
     }
 }
