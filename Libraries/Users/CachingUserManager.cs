@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Users
 {
-    public class CachingUserService : ICachingUserService
+    public class CachingUserManager : ICachingUserManager
     {
         private readonly Dictionary<string, User> _userByNameCache = new();
         private readonly Dictionary<string, User> _userByEmailCache = new();
@@ -16,7 +16,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
 
         private readonly UserManager<IUser> _userManager;
 
-        public CachingUserService(UserManager<IUser> userManager) => _userManager = userManager;
+        public CachingUserManager(UserManager<IUser> userManager) => _userManager = userManager;
 
         public Task<User> GetUserByIdAsync(string userId) =>
             GetUserAsync(
