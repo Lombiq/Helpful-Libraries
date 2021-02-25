@@ -5,6 +5,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
     public static class ServiceCollectionExtensions
     {
         public static IServiceCollection AddCachingUserServer(this IServiceCollection services) =>
-            services.AddScoped<ICachingUserService, CachingUserService>();
+            services.AddScoped<ICachingUserManager, CachingUserManager>();
     }
 }
