@@ -1,5 +1,6 @@
+using Microsoft.AspNetCore.Identity;
+using OrchardCore.Users;
 using OrchardCore.Users.Models;
-using OrchardCore.Users.Services;
 using System;
 using System.Collections.Generic;
 using System.Security.Claims;
@@ -7,32 +8,39 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Users
 {
-    public class CachingUserService : ICachingUserService
+    public class CachingUserManager : ICachingUserManager
     {
         private readonly Dictionary<string, User> _userByNameCache = new();
+        private readonly Dictionary<string, User> _userByEmailCache = new();
         private readonly Dictionary<string, User> _userByIdCache = new();
 
-        private readonly IUserService _userService;
+        private readonly UserManager<IUser> _userManager;
 
-        public CachingUserService(IUserService userService) => _userService = userService;
+        public CachingUserManager(UserManager<IUser> userManager) => _userManager = userManager;
 
         public Task<User> GetUserByIdAsync(string userId) =>
             GetUserAsync(
                 userId,
-                async () => await _userService.GetUserByUniqueIdAsync(userId) as User,
+                async () => await _userManager.FindByIdAsync(userId) as User,
                 _userByIdCache);
 
         public Task<User> GetUserByNameAsync(string username) =>
             GetUserAsync(
                 username,
-                async () => await _userService.GetUserAsync(username) as User,
+                async () => await _userManager.FindByNameAsync(username) as User,
                 _userByNameCache);
+
+        public Task<User> GetUserByEmailAsync(string email) =>
+            GetUserAsync(
+                email,
+                async () => await _userManager.FindByEmailAsync(email) as User,
+                _userByEmailCache);
 
         public async Task<User> GetUserByClaimsPrincipalAsync(ClaimsPrincipal claimsPrincipal) =>
             claimsPrincipal.Identity?.Name != null
                 ? await GetUserAsync(
                     claimsPrincipal.Identity.Name,
-                    async () => await _userService.GetAuthenticatedUserAsync(claimsPrincipal) as User,
+                    async () => await _userManager.GetUserAsync(claimsPrincipal) as User,
                     _userByNameCache)
                 : null;
 
@@ -49,6 +57,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
 
             if (!Equals(cache, _userByIdCache)) _userByIdCache.TryAdd(user.Id.ToTechnicalString(), user);
             if (!Equals(cache, _userByNameCache)) _userByNameCache.TryAdd(user.UserName, user);
+            if (!Equals(cache, _userByEmailCache)) _userByEmailCache.TryAdd(user.Email, user);
 
             return user;
         }
