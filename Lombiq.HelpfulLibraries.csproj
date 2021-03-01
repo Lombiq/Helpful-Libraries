@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Lombiq.HelpfulLibraries.RestEase\**" />
+    <Content Remove="Lombiq.HelpfulLibraries.RestEase\**" />
+    <EmbeddedResource Remove="Lombiq.HelpfulLibraries.RestEase\**" />
+    <None Remove="Lombiq.HelpfulLibraries.RestEase\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>
 

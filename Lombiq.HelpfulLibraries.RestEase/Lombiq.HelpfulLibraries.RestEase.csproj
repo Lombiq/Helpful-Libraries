@@ -1,0 +1,57 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
+    <RootNamespace>Lombiq.HelpfulLibraries.RestEase</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Libraries\Contents\**" />
+    <Compile Remove="Libraries\Database\**" />
+    <Compile Remove="Libraries\DateTime\**" />
+    <Compile Remove="Libraries\DependencyInjection\**" />
+    <Compile Remove="Libraries\GraphQL\**" />
+    <Compile Remove="Libraries\Localization\**" />
+    <Compile Remove="Libraries\MethodProviders\**" />
+    <Compile Remove="Libraries\Mvc\**" />
+    <Compile Remove="Libraries\ResourceManagement\**" />
+    <Compile Remove="Libraries\Users\**" />
+    <Compile Remove="Libraries\Utilities\**" />
+    <EmbeddedResource Remove="Libraries\Contents\**" />
+    <EmbeddedResource Remove="Libraries\Database\**" />
+    <EmbeddedResource Remove="Libraries\DateTime\**" />
+    <EmbeddedResource Remove="Libraries\DependencyInjection\**" />
+    <EmbeddedResource Remove="Libraries\GraphQL\**" />
+    <EmbeddedResource Remove="Libraries\Localization\**" />
+    <EmbeddedResource Remove="Libraries\MethodProviders\**" />
+    <EmbeddedResource Remove="Libraries\Mvc\**" />
+    <EmbeddedResource Remove="Libraries\ResourceManagement\**" />
+    <EmbeddedResource Remove="Libraries\Users\**" />
+    <EmbeddedResource Remove="Libraries\Utilities\**" />
+    <None Remove="Libraries\Contents\**" />
+    <None Remove="Libraries\Database\**" />
+    <None Remove="Libraries\DateTime\**" />
+    <None Remove="Libraries\DependencyInjection\**" />
+    <None Remove="Libraries\GraphQL\**" />
+    <None Remove="Libraries\Localization\**" />
+    <None Remove="Libraries\MethodProviders\**" />
+    <None Remove="Libraries\Mvc\**" />
+    <None Remove="Libraries\ResourceManagement\**" />
+    <None Remove="Libraries\Users\**" />
+    <None Remove="Libraries\Utilities\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OrchardCore.Module.Targets" Version="1.0.0-rc2-13929" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="1.0.0-rc2-13929" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.0.0-rc2-13929" />
+    <PackageReference Include="OrchardCore.ResourceManagement" Version="1.0.0-rc2-13929" />
+    <PackageReference Include="RestEase" Version="1.5.2" />
+  </ItemGroup>
+
+</Project>
