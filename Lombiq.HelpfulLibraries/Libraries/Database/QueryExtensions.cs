@@ -15,7 +15,8 @@ namespace YesSql
         /// <param name="pageIndex">Zero-based index of the desired page.</param>
         /// <param name="count">The page size.</param>
         /// <returns>The desired page of the resulting <see cref="ContentItem"/>s.</returns>
-        public static Task<IEnumerable<ContentItem>> PaginateAsync(this IQuery<ContentItem> query, int pageIndex = 0, int count = int.MaxValue)
+        public static Task<IEnumerable<T>> PaginateAsync<T>(this IQuery<T> query, int pageIndex = 0, int count = int.MaxValue)
+            where T : class
         {
             if (pageIndex > 0) query = query.Skip(pageIndex * count);
             if (count < int.MaxValue) query = query.Take(count);
