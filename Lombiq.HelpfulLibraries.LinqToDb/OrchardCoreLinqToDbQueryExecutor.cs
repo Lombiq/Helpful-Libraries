@@ -39,15 +39,15 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
             IDbTransaction transaction,
             Func<ITableAccessor, IQueryable> query)
         {
+            // Generate aliases for final projection.
+            LinqToDB.Common.Configuration.Sql.GenerateFinalAliases = true;
+
             // Instantiating a linq2db connection object as it is required to start building the query. Note that it
             // won't create an actual connection with the database yet.
             await using var linqToDbConnection = new PrefixedDataConnection(
                 GetDatabaseProvider(session.Store.Dialect.Name),
                 transaction.Connection.ConnectionString,
                 session.Store.Configuration.TablePrefix);
-
-            // Generate aliases for final projection.
-            LinqToDB.Common.Configuration.Sql.GenerateFinalAliases = true;
 
             return query(linqToDbConnection).ToString();
         }
