@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
+    <RootNamespace>Lombiq.HelpfulLibraries.Linq2Db</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="linq2db" Version="3.1.6" />
+    <PackageReference Include="OrchardCore.Abstractions" Version="1.0.0-rc2-13929" />
+    <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.0.0-rc2-13929" />
+  </ItemGroup>
+
+</Project>
