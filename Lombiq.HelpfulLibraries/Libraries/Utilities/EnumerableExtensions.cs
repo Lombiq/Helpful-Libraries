@@ -122,7 +122,7 @@ namespace System.Collections.Generic
         /// </summary>
         /// <remarks>
         /// <para>
-        /// We use <see cref="Enumerable.FirstOrDefault{TSource}(System.Collections.Generic.IEnumerable{TSource})"/>
+        /// We use <see cref="Enumerable.FirstOrDefault{TSource}(IEnumerable{TSource})"/>
         /// to improve compatibility. It returning <see langword="default"/> is theoretically impossible, but some DB
         /// frameworks require the "or default" after grouping.
         /// </para>
