@@ -116,5 +116,20 @@ namespace System.Collections.Generic
             this IEnumerable<TIn> collection,
             Func<TIn, TKey> keySelector) =>
             ToDictionaryOverwrite(collection, keySelector, item => item);
+
+        /// <summary>
+        /// Returns the <paramref name="collection"/> without any duplicate items.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// We use <see cref="Enumerable.FirstOrDefault{TSource}(IEnumerable{TSource})"/>
+        /// to improve compatibility. It returning <see langword="default"/> is theoretically impossible, but some DB
+        /// frameworks require the "or default" after grouping.
+        /// </para>
+        /// </remarks>
+        public static IEnumerable<TItem> Unique<TItem, TKey>(
+            this IEnumerable<TItem> collection,
+            Func<TItem, TKey> keySelector) =>
+            collection.GroupBy(keySelector).Select(group => group.FirstOrDefault());
     }
 }
