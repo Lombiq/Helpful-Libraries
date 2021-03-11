@@ -1,11 +1,11 @@
+using Dapper;
+using LinqToDB;
+using Lombiq.HelpfulLibraries.LinqToDb;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Dapper;
-using LinqToDB;
-using Lombiq.HelpfulLibraries.LinqToDb;
 using YesSql;
 
 namespace Lombiq.HelpfulLibraries.LinqToDb
@@ -17,7 +17,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
             Func<ITableAccessor, IQueryable> query)
         {
             var transaction = await session.DemandAsync();
-            var convertedSql = await SetupAndConvertSqlToDialectAsync(session, transaction, query);
+            var convertedSql = SetupAndConvertSqlToDialect(session, transaction, query);
 
             return await transaction.Connection.QueryAsync<TResult>(convertedSql, transaction: transaction);
         }
@@ -29,12 +29,12 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
             string splitOn)
         {
             var transaction = await session.DemandAsync();
-            var convertedSql = await SetupAndConvertSqlToDialectAsync(session, transaction, query);
+            var convertedSql = SetupAndConvertSqlToDialect(session, transaction, query);
 
             return await transaction.Connection.QueryAsync(convertedSql, map: map, transaction: transaction, splitOn: splitOn);
         }
 
-        private static async Task<string> SetupAndConvertSqlToDialectAsync(
+        private static string SetupAndConvertSqlToDialect(
             ISession session,
             IDbTransaction transaction,
             Func<ITableAccessor, IQueryable> query)
@@ -44,7 +44,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
 
             // Instantiating a linq2db connection object as it is required to start building the query. Note that it
             // won't create an actual connection with the database yet.
-            await using var linqToDbConnection = new PrefixedDataConnection(
+            using var linqToDbConnection = new PrefixedDataConnection(
                 GetDatabaseProvider(session.Store.Dialect.Name),
                 transaction.Connection.ConnectionString,
                 session.Store.Configuration.TablePrefix);
