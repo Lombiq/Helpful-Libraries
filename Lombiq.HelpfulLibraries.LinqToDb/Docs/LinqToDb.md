@@ -65,7 +65,7 @@ IQueryable RawQuery(ITableAccessor accessor) =>
     {
         qContentItemIndex.ContentItemId,
         qContentItemIndex.DisplayText,
-    });
+    };
 
 
 await _session.QueryAsync<string, int, KeyValuePair<string, int>>(

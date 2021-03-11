@@ -60,8 +60,6 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
                 // exception. See: https://github.com/linq2db/linq2db/issues/2191#issuecomment-618450439
                 "SqlServer" => "Microsoft.Data.SqlClient",
                 "Sqlite" => ProviderName.SQLite,
-                "MySql" => ProviderName.MySql,
-                "Postgres" => ProviderName.PostgreSQL,
                 _ => throw new NotSupportedException("The provider name is not supported."),
             };
     }

@@ -1,4 +1,4 @@
-﻿using LinqToDB;
+using LinqToDB;
 using LinqToDB.Data;
 
 namespace Lombiq.HelpfulLibraries.LinqToDb
