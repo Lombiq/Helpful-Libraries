@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics.CodeAnalysis;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Utilities
@@ -12,6 +12,10 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
     [SuppressMessage(
         "Microsoft.Security",
         "CA5394",
+        Justification = "The name makes it explicit that it's not a security concern.")]
+    [SuppressMessage(
+        "Security",
+        "SCS0005:Weak random number generator.",
         Justification = "The name makes it explicit that it's not a security concern.")]
     public class NonSecurityRandomizer
     {

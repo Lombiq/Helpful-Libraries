@@ -27,25 +27,6 @@ namespace YesSql
         }
 
         /// <summary>
-        /// Breaks the index query up into pages and lists the page using the given zero-based index. If pageIndex is 0
-        /// and count is <see cref="int.MaxValue"/> then the whole query is listed.
-        /// </summary>
-        /// <param name="query">The index query to paginate.</param>
-        /// <param name="pageIndex">Zero-based index of the desired page.</param>
-        /// <param name="count">The page size.</param>
-        /// <returns>The desired page of the resulting <see cref="IIndex"/>es.</returns>
-        public static Task<IEnumerable<TIndex>> PaginateAsync<TIndex>(
-            this IQueryIndex<TIndex> query,
-            int pageIndex = 0,
-            int count = int.MaxValue)
-            where TIndex : class, IIndex
-        {
-            if (pageIndex > 0) query = query.Skip(pageIndex * count);
-            if (count < int.MaxValue) query = query.Take(count);
-            return query.ListAsync();
-        }
-
-        /// <summary>
         /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and
         /// count is <see cref="int.MaxValue"/> then the whole query is listed.
         /// </summary>
@@ -65,6 +46,17 @@ namespace YesSql
             int count = int.MaxValue)
             where TPart : ContentPart =>
             PaginateAsync(query, pageIndex, count).ContinueWith(t => t.Result.As<TPart>().Where(part => part != null), TaskScheduler.Default);
+
+        /// <summary>
+        /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and
+        /// count is <see cref="int.MaxValue"/> then the whole query is listed.
+        /// </summary>
+        public static Task<IEnumerable<TIndex>> PaginateAsync<TIndex>(
+            this IQueryIndex<TIndex> query,
+            int pageIndex = 0,
+            int count = int.MaxValue)
+            where TIndex : IIndex =>
+            query.Skip(pageIndex * count).Take(count).ListAsync();
 
         /// <summary>
         /// Breaks the query up into slices and lists the slice.
