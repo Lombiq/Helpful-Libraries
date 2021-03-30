@@ -134,6 +134,27 @@ namespace YesSql
             };
 
         /// <summary>
+        /// Filters a query to match the publication status in <see cref="ContentItemIndex"/>.
+        /// </summary>
+        public static IQuery<ContentItem, ContentItemIndex> WithContentItem(
+            this IQuery<ContentItem> session,
+            PublicationStatus status) =>
+            status switch
+            {
+                PublicationStatus.Any =>
+                    session.With<ContentItemIndex>(),
+                PublicationStatus.Published =>
+                    session.With<ContentItemIndex>(index => index.Published),
+                PublicationStatus.Draft =>
+                    session.With<ContentItemIndex>(index => index.Latest && !index.Published),
+                PublicationStatus.Latest =>
+                    session.With<ContentItemIndex>(index => index.Latest),
+                PublicationStatus.Deleted =>
+                    session.With<ContentItemIndex>(index => !index.Latest && !index.Published),
+                _ => throw new ArgumentOutOfRangeException(nameof(status), status, null),
+            };
+
+        /// <summary>
         /// Returns an index query that matches the publication status in <see cref="ContentItemIndex"/>.
         /// </summary>
         public static IQueryIndex<ContentItemIndex> QueryContentItemIndex(
