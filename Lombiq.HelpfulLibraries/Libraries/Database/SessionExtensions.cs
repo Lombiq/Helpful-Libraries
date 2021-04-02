@@ -48,22 +48,23 @@ namespace YesSql
         /// Executes a raw SQL string command that doesn't return data in a database-agnostic way by running it
         /// through Orchard's <see cref="SqlParser"/>.
         /// </summary>
-        /// <param name="sql">
-        /// The raw SQL string. Doesn't need to use table prefixes or care about SQL dialects.
-        /// </param>
+        /// <param name="getSqlQuery">The function that generates the raw SQL string given the transaction, dialect and prefix.</param>
         /// <param name="parameters">Input parameters passed to the query.</param>
         /// <param name="transaction">If not <see langword="null"/> it must be an open DB transaction.</param>
         /// <returns>The number of rows affected.</returns>
+        /// <remarks><para>This uses unparsed SQL because the parser always expects SELECT.</para></remarks>
         public static async Task<int> RawExecuteNonQueryAsync(
             this ISession session,
-            string sql,
-            IDictionary<string, object> parameters = null,
+            GetSqlQuery getSqlQuery,
+            object parameters = null,
             DbTransaction transaction = null)
         {
             transaction ??= await session.DemandAsync();
-            var query = GetQuery(sql, transaction, session, parameters);
+            var dialect = TransactionSqlDialectFactory.For(transaction);
+            var prefix = session.Store.Configuration.TablePrefix;
+            var query = getSqlQuery(transaction, dialect, prefix);
 
-            return await transaction.Connection.ExecuteAsync(query, transaction: transaction);
+            return await transaction.Connection.ExecuteAsync(query, parameters, transaction);
         }
 
         private static string GetQuery(
@@ -172,4 +173,6 @@ namespace YesSql
                 .Select((errorMessage, index) => (errorMessage, index))
                 .ToDictionary(messageItem => messageItem.index, messageItem => messageItem.errorMessage);
     }
+
+    public delegate string GetSqlQuery(IDbTransaction transaction, ISqlDialect dialect, string prefix);
 }
