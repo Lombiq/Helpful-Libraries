@@ -8,5 +8,6 @@
 - `QueryExtensions`: Adds `IQuery` manipulating extension methods to YesSql queries. (eg. `PaginateAsync` for breaking the result into pages).
 - `TransactionSqlDialectFactory`: Shortcut to create and `ISqlDialect` with a `DbTransaction`.
 - `SchemaBuilderExtensions`: Adds shortcut extension method for `SchemaBuilder`.
+- `SqlDialectExtensions`: Adds extensions to check the type of SQL language used.
 
 Please see the inline documentation of each extension method to learn more.
