@@ -21,6 +21,6 @@ namespace System
         /// returns <see langword="false"/> if either parameters are <see langword="null"/>.
         /// </summary>
         public static bool ContainsLoose(this string? text, string? toFind) =>
-            (text != null && toFind != null) && text.Contains(toFind, StringComparison.InvariantCultureIgnoreCase);
+            text != null && toFind != null && text.Contains(toFind, StringComparison.InvariantCultureIgnoreCase);
     }
 }
