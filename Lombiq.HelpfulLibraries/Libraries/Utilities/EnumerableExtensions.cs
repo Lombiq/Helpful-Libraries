@@ -140,12 +140,11 @@ namespace System.Collections.Generic
         /// </returns>
         public static string JoinNotNullOrEmpty(this IEnumerable<string> strings, string separator = ",")
         {
-            if (strings == null) return null;
+            var filteredStrings = strings?.Where(text => !string.IsNullOrWhiteSpace(text)).ToList();
 
-            var filteredStrings = strings.Where(text => !string.IsNullOrWhiteSpace(text)).ToList();
-            return filteredStrings.Count > 0
+            return filteredStrings?.Count > 0
                 ? string.Join(separator, filteredStrings)
-                : string.Empty;
+                : null;
         }
     }
 }
