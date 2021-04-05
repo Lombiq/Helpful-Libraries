@@ -138,7 +138,7 @@ namespace System.Collections.Generic
         /// <returns>
         /// The concatenated texts if there are any nonempty, otherwise <see langword="null"/>.
         /// </returns>
-        public static string Join(this IEnumerable<string> strings, string separator = ",")
+        public static string JoinNotNullOrEmpty(this IEnumerable<string> strings, string separator = ",")
         {
             if (strings == null) return null;
 
