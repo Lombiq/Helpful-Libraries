@@ -87,7 +87,7 @@ namespace System.Collections.Generic
             Func<TIn, TOut> select,
             Func<TOut, bool> where = null)
         {
-            foreach (var item in collection)
+            foreach (var item in collection ?? Array.Empty<TIn>())
             {
                 var converted = select(item);
                 if (where?.Invoke(converted) ?? !(converted is null)) yield return converted;
