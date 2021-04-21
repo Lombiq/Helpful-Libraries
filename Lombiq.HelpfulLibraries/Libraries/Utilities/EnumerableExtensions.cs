@@ -116,5 +116,35 @@ namespace System.Collections.Generic
             this IEnumerable<TIn> collection,
             Func<TIn, TKey> keySelector) =>
             ToDictionaryOverwrite(collection, keySelector, item => item);
+
+        /// <summary>
+        /// Returns the <paramref name="collection"/> without any duplicate items.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// We use <see cref="Enumerable.FirstOrDefault{TSource}(IEnumerable{TSource})"/>
+        /// to improve compatibility. It returning <see langword="default"/> is theoretically impossible, but some DB
+        /// frameworks require the "or default" after grouping.
+        /// </para>
+        /// </remarks>
+        public static IEnumerable<TItem> Unique<TItem, TKey>(
+            this IEnumerable<TItem> collection,
+            Func<TItem, TKey> keySelector) =>
+            collection.GroupBy(keySelector).Select(group => group.FirstOrDefault());
+
+        /// <summary>
+        /// Returns a string that joins the string collection. It excludes null or empty items if there are any.
+        /// </summary>
+        /// <returns>
+        /// The concatenated texts if there are any nonempty, otherwise <see langword="null"/>.
+        /// </returns>
+        public static string JoinNotNullOrEmpty(this IEnumerable<string> strings, string separator = ",")
+        {
+            var filteredStrings = strings?.Where(text => !string.IsNullOrWhiteSpace(text)).ToList();
+
+            return filteredStrings?.Count > 0
+                ? string.Join(separator, filteredStrings)
+                : null;
+        }
     }
 }
