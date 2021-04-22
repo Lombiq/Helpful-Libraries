@@ -22,7 +22,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
 
         private static readonly Type[] _scopedTypes = new[]
         {
-            typeof(IDataMigration), typeof(IResourceManifestProvider),
+            typeof(IDataMigration), typeof(IResourceManager),
             typeof(IPermissionProvider), typeof(IThemeSelector), typeof(IAdminThemeService), typeof(INavigationProvider),
         };
 

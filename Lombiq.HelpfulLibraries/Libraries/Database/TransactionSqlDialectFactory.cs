@@ -7,6 +7,6 @@ namespace YesSql
         /// <summary>
         /// Retrieves the <see cref="ISqlDialect"/> for the given <see cref="DbTransaction"/>.
         /// </summary>
-        public static ISqlDialect For(DbTransaction transaction) => SqlDialectFactory.For(transaction.Connection);
+        public static ISqlDialect For(DbTransaction transaction) => TransactionSqlDialectFactory.For(transaction);
     }
 }
