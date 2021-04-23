@@ -1,5 +1,6 @@
 using OrchardCore.Data.Migration;
 using YesSql.Indexes;
+using YesSql.Sql.Schema;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Database
 {
@@ -8,8 +9,21 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
     /// and doesn't actually do anything. Use it in case you need to synchronize type constraints in your code.
     /// </summary>
     /// <typeparam name="TIndex">The type of the <see cref="MapIndex"/> this migration is for.</typeparam>
-    public class IndexDataMigration<TIndex> : DataMigration
+    public abstract class IndexDataMigration<TIndex> : DataMigration
         where TIndex : MapIndex
     {
+        protected virtual int CreateVersion => 1;
+
+        public int Create()
+        {
+
+            SchemaBuilder.CreateMapIndexTable(nameof(TIndex), CreateIndex);
+
+            SchemaBuilder.CreateDocumentIdIndex<TIndex>();
+
+            return CreateVersion;
+        }
+
+        protected abstract void CreateIndex(ICreateTableCommand table);
     }
 }
