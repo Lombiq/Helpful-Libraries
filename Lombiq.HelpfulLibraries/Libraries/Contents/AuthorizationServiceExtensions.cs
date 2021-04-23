@@ -24,6 +24,5 @@ namespace Microsoft.AspNetCore.Authorization
                 .FirstOrDefaultAsync();
             return first != null && await authorizationService.AuthorizeAsync(user, DeleteContent, first);
         }
-
     }
 }
