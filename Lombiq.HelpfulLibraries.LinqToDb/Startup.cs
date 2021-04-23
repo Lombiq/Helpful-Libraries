@@ -25,8 +25,6 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
 
         public override void ConfigureServices(IServiceCollection services)
         {
-            var connectionString = _shellSettings["ConnectionString"];
-
             switch (_shellSettings["DatabaseProvider"])
             {
                 case "SqlConnection":
@@ -36,7 +34,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
                         // Using explicit string instead of LinqToDB.ProviderName.SQLServer because the "System.Data.SqlClient"
                         // provider will be used causing "Could not load type System.Data.SqlClient.SqlCommandBuilder"
                         // exception. See: https://github.com/linq2db/linq2db/issues/2191#issuecomment-618450439
-                        .UseConnectionString("Microsoft.Data.SqlClient", connectionString)
+                        .UseConnectionString("Microsoft.Data.SqlClient", _shellSettings["ConnectionString"])
                         .UseDefaultLogging(provider),
                     ServiceLifetime.Transient);
                     break;
