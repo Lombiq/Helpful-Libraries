@@ -1,6 +1,6 @@
 using LinqToDB;
 
-namespace Lombiq.HelpfulLibraries.LinqToDb
+namespace Lombiq.HelpfulLibraries.Linq2Db
 {
     /// <summary>
     /// Abstraction that retrieves a table for query building purposes.

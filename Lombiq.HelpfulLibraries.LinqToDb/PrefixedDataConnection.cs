@@ -1,21 +1,21 @@
 using LinqToDB;
+using LinqToDB.Configuration;
 using LinqToDB.Data;
 
-namespace Lombiq.HelpfulLibraries.LinqToDb
+namespace Lombiq.HelpfulLibraries.Linq2Db
 {
     public class PrefixedDataConnection : DataConnection, ITableAccessor
     {
-        private readonly string _tablePrefix;
+        public static string TablePrefix { get; set; }
 
-        public PrefixedDataConnection(string databaseName, string connectionString, string tablePrefix)
-            : base(databaseName, connectionString) =>
-            _tablePrefix = tablePrefix;
+        public PrefixedDataConnection(LinqToDbConnectionOptions<PrefixedDataConnection> options)
+            : base(options) { }
 
         public ITable<T> GetPrefixedTable<T>()
             where T : class
         {
             var table = GetTable<T>();
-            return table.TableName(_tablePrefix + table.TableName);
+            return table.TableName(TablePrefix + table.TableName);
         }
 
         ITable<T> ITableAccessor.GetTable<T>() => GetPrefixedTable<T>();
