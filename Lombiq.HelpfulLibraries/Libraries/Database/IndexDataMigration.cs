@@ -16,8 +16,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
 
         public int Create()
         {
-
-            SchemaBuilder.CreateMapIndexTable(nameof(TIndex), CreateIndex);
+            SchemaBuilder.CreateMapIndexTable(typeof(IndexDataMigration<TIndex>).GetGenericArguments()[0].Name, CreateIndex);
 
             SchemaBuilder.CreateDocumentIdIndex<TIndex>();
 
