@@ -1,7 +1,7 @@
 using LinqToDB;
 using System;
 
-namespace Lombiq.HelpfulLibraries.Linq2Db
+namespace Lombiq.HelpfulLibraries.LinqToDb.Extensions
 {
     public static class CustomSqlExtensions
     {
