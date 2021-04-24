@@ -8,6 +8,7 @@ using OrchardCore.Modules;
 using System;
 using System.IO;
 using static Lombiq.HelpfulLibraries.LinqToDb.Constants.FeatureIds;
+using Configuration = LinqToDB.Common.Configuration;
 
 namespace Lombiq.HelpfulLibraries.LinqToDb
 {
@@ -53,6 +54,11 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
                 default:
                     throw new ArgumentException("Unknown database provider: " + _shellSettings["DatabaseProvider"]);
             }
+
+            PrefixedDataConnection.TablePrefix = _shellSettings["TablePrefix"];
+
+            // Generate aliases for final projection.
+            Configuration.Sql.GenerateFinalAliases = true;
         }
     }
 }
