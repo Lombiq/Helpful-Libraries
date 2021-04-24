@@ -4,11 +4,11 @@ using LinqToDB.Data;
 
 namespace Lombiq.HelpfulLibraries.LinqToDb
 {
-    public class PrefixedDataConnection : DataConnection
+    public class LinqToDbConnection : DataConnection
     {
         public static string TablePrefix { get; set; }
 
-        public PrefixedDataConnection(LinqToDbConnectionOptions<PrefixedDataConnection> options)
+        public LinqToDbConnection(LinqToDbConnectionOptions<LinqToDbConnection> options)
             : base(options) { }
 
         public ITable<T> GetPrefixedTable<T>()

@@ -29,7 +29,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
             switch (_shellSettings["DatabaseProvider"])
             {
                 case "SqlConnection":
-                    services.AddLinqToDbContext<PrefixedDataConnection>(
+                    services.AddLinqToDbContext<LinqToDbConnection>(
                     (provider, options) =>
                         options
                         // Using explicit string instead of LinqToDB.ProviderName.SQLServer because the "System.Data.SqlClient"
@@ -44,7 +44,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
                     var databaseFolder = Path.Combine(option.ShellsApplicationDataPath, option.ShellsContainerName, _shellSettings.Name);
                     var databaseFile = Path.Combine(databaseFolder, "yessql.db");
 
-                    services.AddLinqToDbContext<PrefixedDataConnection>(
+                    services.AddLinqToDbContext<LinqToDbConnection>(
                     (provider, options) =>
                         options
                         .UseSQLite($"Data Source={databaseFile};Cache=Shared")
@@ -55,7 +55,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
                     throw new ArgumentException("Unknown database provider: " + _shellSettings["DatabaseProvider"]);
             }
 
-            PrefixedDataConnection.TablePrefix = _shellSettings["TablePrefix"];
+            LinqToDbConnection.TablePrefix = _shellSettings["TablePrefix"];
 
             // Generate aliases for final projection.
             Configuration.Sql.GenerateFinalAliases = true;
