@@ -140,11 +140,10 @@ namespace System.Collections.Generic
         public static IEnumerable<TItem> Unique<TItem, TKey, TOrder>(
             this IEnumerable<TItem> collection,
             Func<TItem, TKey> keySelector,
-            Func<IGrouping<TKey, TItem>, TOrder> orderBySelector) =>
+            Func<TItem, TOrder> orderBySelector) =>
             collection
                 .GroupBy(keySelector)
-                .OrderBy(orderBySelector)
-                .Select(group => group.FirstOrDefault());
+                .Select(group => group.OrderBy(orderBySelector).FirstOrDefault());
 
         /// <summary>
         /// Returns the <paramref name="collection"/> without any duplicate items picking the last of each when sorting
@@ -153,11 +152,10 @@ namespace System.Collections.Generic
         public static IEnumerable<TItem> UniqueDescending<TItem, TKey, TOrder>(
             this IEnumerable<TItem> collection,
             Func<TItem, TKey> keySelector,
-            Func<IGrouping<TKey, TItem>, TOrder> orderBySelector) =>
+            Func<TItem, TOrder> orderBySelector) =>
             collection
                 .GroupBy(keySelector)
-                .OrderByDescending(orderBySelector)
-                .Select(group => group.FirstOrDefault());
+                .Select(group => group.OrderByDescending(orderBySelector).FirstOrDefault());
 
         /// <summary>
         /// Returns a string that joins the string collection. It excludes null or empty items if there are any.
