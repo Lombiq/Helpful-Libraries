@@ -173,7 +173,7 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Re-flattens <c>ILookup&lt;TKey, ContentItem&gt;</c> or <c>GroupBy</c> collections and eliminates duplicates
+        /// Re-flattens <see cref="ILookup{TKey, ContentItem}"/> or <c>GroupBy</c> collections and eliminates duplicates
         /// using <see cref="ContentItem.ContentItemVersionId"/>.
         /// </summary>
         public static IEnumerable<ContentItem> GetUniqueValues<TKey>(
@@ -183,8 +183,8 @@ namespace System.Collections.Generic
                 .Unique(contentItem => contentItem.ContentItemVersionId);
 
         /// <summary>
-        /// Re-flattens <c>ILookup&lt;TKey, ContentItem&gt;</c> or <c>GroupBy</c> collections and ensures that each
-        /// grouping only had one item (ie. one-to-one relationships).
+        /// Re-flattens <see cref="ILookup{TKey, ContentItem}"/> or <c>GroupBy</c> collections and ensures that each
+        /// grouping only had one item (i.e. one-to-one relationships).
         /// </summary>
         public static IEnumerable<ContentItem> GetSingleValues<TKey>(
             this IEnumerable<IGrouping<TKey, ContentItem>> lookup) =>
