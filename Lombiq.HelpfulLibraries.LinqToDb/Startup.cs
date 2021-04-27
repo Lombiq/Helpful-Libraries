@@ -55,7 +55,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
                     throw new ArgumentException("Unknown database provider: " + _shellSettings["DatabaseProvider"]);
             }
 
-            LinqToDbConnection.TablePrefix = _shellSettings["TablePrefix"] + "_";
+            LinqToDbConnection.TablePrefix = _shellSettings["TablePrefix"] is { } tableprefix ? tableprefix + "_" : string.Empty;
 
             // Generate aliases for final projection.
             Configuration.Sql.GenerateFinalAliases = true;
