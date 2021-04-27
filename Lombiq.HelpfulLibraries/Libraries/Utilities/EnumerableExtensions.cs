@@ -134,7 +134,8 @@ namespace System.Collections.Generic
             collection.GroupBy(keySelector).Select(group => group.FirstOrDefault());
 
         /// <summary>
-        /// Returns the <paramref name="collection"/> without any duplicate items.
+        /// Returns the <paramref name="collection"/> without any duplicate items picking the first of each when sorting
+        /// by <paramref name="orderBySelector"/>.
         /// </summary>
         public static IEnumerable<TItem> Unique<TItem, TKey, TOrder>(
             this IEnumerable<TItem> collection,
@@ -143,6 +144,19 @@ namespace System.Collections.Generic
             collection
                 .GroupBy(keySelector)
                 .OrderBy(orderBySelector)
+                .Select(group => group.FirstOrDefault());
+
+        /// <summary>
+        /// Returns the <paramref name="collection"/> without any duplicate items picking the last of each when sorting
+        /// by <paramref name="orderBySelector"/>.
+        /// </summary>
+        public static IEnumerable<TItem> UniqueDescending<TItem, TKey, TOrder>(
+            this IEnumerable<TItem> collection,
+            Func<TItem, TKey> keySelector,
+            Func<IGrouping<TKey, TItem>, TOrder> orderBySelector) =>
+            collection
+                .GroupBy(keySelector)
+                .OrderByDescending(orderBySelector)
                 .Select(group => group.FirstOrDefault());
 
         /// <summary>
