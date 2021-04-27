@@ -134,6 +134,18 @@ namespace System.Collections.Generic
             collection.GroupBy(keySelector).Select(group => group.FirstOrDefault());
 
         /// <summary>
+        /// Returns the <paramref name="collection"/> without any duplicate items.
+        /// </summary>
+        public static IEnumerable<TItem> Unique<TItem, TKey, TOrder>(
+            this IEnumerable<TItem> collection,
+            Func<TItem, TKey> keySelector,
+            Func<IGrouping<TKey, TItem>, TOrder> orderBySelector) =>
+            collection
+                .GroupBy(keySelector)
+                .OrderBy(orderBySelector)
+                .Select(group => group.FirstOrDefault());
+
+        /// <summary>
         /// Returns a string that joins the string collection. It excludes null or empty items if there are any.
         /// </summary>
         /// <returns>
