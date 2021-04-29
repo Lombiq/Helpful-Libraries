@@ -73,5 +73,34 @@ namespace YesSql
 
             return query.ListAsync();
         }
+
+        /// <summary>
+        /// A more compact shortcut for the <see cref="IQuery{T, TIndex}"/> ordering methods.
+        /// </summary>
+        /// <param name="query">The query to be ordered.</param>
+        /// <param name="sql">The column name or other expression that may be put in the WHERE clause.</param>
+        /// <param name="isAscending">
+        /// If <see langword="true"/>, <see cref="IQuery{T,TIndex}.OrderBy(string)"/> or
+        /// <see cref="IQuery{T,TIndex}.ThenBy(string)"/> is used, otherwise their <c>Descending</c> counterparts.
+        /// </param>
+        /// <param name="isFirstClause">
+        /// If <see langword="true"/>, additional sorting expression is added. If <see langword="fase"/> the primary
+        /// sorting expression is set or overwritten.
+        /// </param>
+        /// <typeparam name="T">The query's item type after listing.</typeparam>
+        /// <typeparam name="TIndex">The index used for sorting.</typeparam>
+        /// <returns>A query</returns>
+        public static IQuery<T, TIndex> OrderBy<T, TIndex>(
+            this IQuery<T, TIndex> query,
+            string sql,
+            bool isAscending,
+            bool isFirstClause = true)
+            where T : class
+            where TIndex : IIndex
+        {
+            if (isFirstClause) return isAscending ? query.OrderBy(sql) : query.OrderByDescending(sql);
+
+            return isAscending ? query.ThenBy(sql) : query.ThenByDescending(sql);
+        }
     }
 }
