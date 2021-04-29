@@ -21,7 +21,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
     public interface IOrchardServices<T>
     {
         Lazy<IClock> Clock { get; }
-        Lazy<IContentAliasManager> ContentAliasManager { get; }
+        Lazy<IContentHandleManager> ContentHandleManager { get; }
         Lazy<IContentManager> ContentManager { get; }
         Lazy<IHttpContextAccessor> HttpContextAccessor { get; }
         Lazy<ILogger<T>> Logger { get; }

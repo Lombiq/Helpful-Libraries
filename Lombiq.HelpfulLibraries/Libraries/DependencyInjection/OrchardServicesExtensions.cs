@@ -15,7 +15,7 @@ namespace Moq.AutoMock
             mocker.Use<IOrchardServices<T>>(
                 new OrchardServices<T>(
                     new Lazy<IClock>(mocker.Get<IClock>),
-                    new Lazy<IContentAliasManager>(mocker.Get<IContentAliasManager>),
+                    new Lazy<IContentHandleManager>(mocker.Get<IContentHandleManager>),
                     new Lazy<IContentManager>(mocker.Get<IContentManager>),
                     new Lazy<IHttpContextAccessor>(() => mocker.Get<IHttpContextAccessor>(true)),
                     new Lazy<ILogger<T>>(mocker.Get<ILogger<T>>),
