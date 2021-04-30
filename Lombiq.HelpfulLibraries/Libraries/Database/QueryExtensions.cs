@@ -84,12 +84,12 @@ namespace YesSql
         /// <see cref="IQuery{T,TIndex}.ThenBy(string)"/> is used, otherwise their <c>Descending</c> counterparts.
         /// </param>
         /// <param name="isFirstClause">
-        /// If <see langword="true"/>, additional sorting expression is added. If <see langword="fase"/> the primary
+        /// If <see langword="true"/>, additional sorting expression is added. If <see langword="false"/> the primary
         /// sorting expression is set or overwritten.
         /// </param>
         /// <typeparam name="T">The query's item type after listing.</typeparam>
         /// <typeparam name="TIndex">The index used for sorting.</typeparam>
-        /// <returns>A query</returns>
+        /// <returns>An ordered query.</returns>
         public static IQuery<T, TIndex> OrderBy<T, TIndex>(
             this IQuery<T, TIndex> query,
             string sql,
