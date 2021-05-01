@@ -118,8 +118,10 @@ namespace YesSql
         /// </summary>
         public static IQuery<ContentItem, ContentItemIndex> QueryContentItem(
             this ISession session,
-            PublicationStatus status) =>
-            status switch
+            PublicationStatus status,
+            string contentType = null)
+        {
+            var query = status switch
             {
                 PublicationStatus.Any =>
                     session.Query<ContentItem, ContentItemIndex>(),
@@ -133,6 +135,9 @@ namespace YesSql
                     session.Query<ContentItem, ContentItemIndex>(index => !index.Latest && !index.Published),
                 _ => throw new ArgumentOutOfRangeException(nameof(status), status, null),
             };
+
+            return string.IsNullOrEmpty(contentType) ? query : query.Where(index => index.ContentType == contentType);
+        }
 
         /// <summary>
         /// Filters a query to match the publication status in <see cref="ContentItemIndex"/>.
