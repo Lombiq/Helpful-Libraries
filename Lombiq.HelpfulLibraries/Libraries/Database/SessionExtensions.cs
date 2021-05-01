@@ -165,8 +165,10 @@ namespace YesSql
         /// </summary>
         public static IQueryIndex<ContentItemIndex> QueryContentItemIndex(
             this ISession session,
-            PublicationStatus status) =>
-            status switch
+            PublicationStatus status,
+            string contentType = null)
+        {
+            var query = status switch
             {
                 PublicationStatus.Any =>
                     session.QueryIndex<ContentItemIndex>(),
@@ -180,6 +182,9 @@ namespace YesSql
                     session.QueryIndex<ContentItemIndex>(index => !index.Latest && !index.Published),
                 _ => throw new ArgumentOutOfRangeException(nameof(status), status, null),
             };
+
+            return string.IsNullOrEmpty(contentType) ? query : query.Where(index => index.ContentType == contentType);
+        }
     }
 
     // We could use SqlException but that doesn't have a ctor for messages.
