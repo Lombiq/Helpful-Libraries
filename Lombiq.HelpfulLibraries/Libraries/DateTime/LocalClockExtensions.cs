@@ -1,6 +1,8 @@
 using Lombiq.HelpfulLibraries.Libraries.DateTime;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Localization;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace OrchardCore.Modules
@@ -58,6 +60,17 @@ namespace OrchardCore.Modules
             else httpContext.SetTimeZoneId(previousTimeZoneId);
 
             return result;
+        }
+
+        public static async Task<string> LocalizeAndFormatAsync(
+            this ILocalClock localClock,
+            DateTime? dateTimeUtc,
+            IStringLocalizer stringLocalizer)
+        {
+            if (dateTimeUtc == null) return null;
+
+            var local = await localClock.ConvertToLocalAsync(dateTimeUtc.Value);
+            return local.DateTime.ToString(stringLocalizer["G"].Value, CultureInfo.InvariantCulture);
         }
     }
 }
