@@ -17,7 +17,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
     ///     <item><description>Create a <see cref="MapIndex"/> as usual, but make no <see cref="IndexProvider{T}"/>.</description></item>
     ///     <item><description>Register this class for the index as singleton.</description></item>
     ///     <item><description>Manually create the indices with <see cref="AddAsync"/>.</description></item>
-    ///     <item><description>Look up the results using <see cref="YesSql.IQuery"/> as usual.</description></item>
+    ///     <item><description>Look up the results using <see cref="IQuery"/> as usual.</description></item>
     /// </list>
     /// </remarks>
     public interface IManualConnectingIndexService<in T>
