@@ -1,4 +1,4 @@
-using Finitive.Common.Tests.Models;
+using Lombiq.HelpfulLibraries.Tests.Models;
 using Shouldly;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,7 +6,7 @@ using Xunit;
 using YesSql;
 using YesSql.Services;
 
-namespace Finitive.Common.Tests.UnitTests.Services
+namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
 {
     public class ManualConnectingIndexServiceTests : IClassFixture<ManualConnectingIndexServiceFixture>
     {

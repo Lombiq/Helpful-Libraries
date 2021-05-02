@@ -1,4 +1,4 @@
-namespace Finitive.Common.Tests.Models
+namespace Lombiq.HelpfulLibraries.Tests.Models
 {
     public class TestDocument
     {

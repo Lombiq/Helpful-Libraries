@@ -1,6 +1,6 @@
 using Dapper;
-using Finitive.Common.Tests.Models;
 using Lombiq.HelpfulLibraries.Libraries.Database;
+using Lombiq.HelpfulLibraries.Tests.Models;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;
 using OrchardCore.Data;
@@ -15,7 +15,7 @@ using YesSql;
 using YesSql.Provider.Sqlite;
 using YesSql.Sql;
 
-namespace Finitive.Common.Tests.UnitTests.Services
+namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
 {
     public sealed class ManualConnectingIndexServiceFixture : IDisposable
     {

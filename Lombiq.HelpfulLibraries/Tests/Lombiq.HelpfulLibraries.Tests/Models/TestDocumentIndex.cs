@@ -1,6 +1,6 @@
 using YesSql.Indexes;
 
-namespace Finitive.Common.Tests.Models
+namespace Lombiq.HelpfulLibraries.Tests.Models
 {
     public class TestDocumentIndex : MapIndex
     {
