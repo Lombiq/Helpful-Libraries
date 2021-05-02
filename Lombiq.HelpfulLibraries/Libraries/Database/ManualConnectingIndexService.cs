@@ -20,9 +20,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
         private readonly Dictionary<string, PropertyInfo> _properties;
         private readonly IDbConnectionAccessor _dbAccessor;
         private readonly ILogger _logger;
+        private readonly string _keys;
 
         private string _documentIdKey;
-        private string _keys;
         private string _columns;
         private string _tablePrefix;
 
@@ -38,13 +38,13 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
 
             _dbAccessor = dbAccessor;
             _logger = logger;
+            _keys = string.Join(", ", _properties.Keys.Select(key => "@" + key));
         }
 
         public Task AddAsync(T item, ISession session, int? setDocumentId = null) =>
             RunTransactionAsync(session, async (connection, transaction, dialect, name) =>
             {
                 _documentIdKey ??= dialect.QuoteForColumnName("DocumentId");
-                _keys ??= string.Join(", ", _properties.Keys.Select(key => "@" + key));
                 _columns ??= string.Join(", ", _properties.Keys.Select(dialect.QuoteForColumnName));
 
                 var documentId = setDocumentId ?? (item as IIndex).GetAddedDocuments().Single().Id;
