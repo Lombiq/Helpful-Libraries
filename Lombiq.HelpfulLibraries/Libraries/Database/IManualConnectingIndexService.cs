@@ -24,7 +24,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
         where T : MapIndex
     {
         /// <summary>
-        /// Adds a new index.
+        /// Adds a new entry to the index that refers to the document with the id in <paramref name="setDocumentId"/>.
+        /// If that's <see langword="null"/> then the <see cref="MapIndex.Document"/> of the <paramref name="item"/>.
         /// </summary>
         /// <param name="item">The index object to be recorded.</param>
         /// <param name="setDocumentId">
