@@ -8,6 +8,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
     /// </summary>
     public static class CommonContentDisplayTypes
     {
+        public const string Detail = nameof(Detail);
         public const string Summary = nameof(Summary);
         public const string SummaryAdmin = nameof(SummaryAdmin);
     }
