@@ -9,7 +9,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.MethodProviders
 {
     public class UserMethodProvider : IGlobalMethodProvider
     {
-        private static readonly GlobalMethod _getUserIdByUserName = new GlobalMethod
+        private static readonly GlobalMethod _getUserIdByUserName = new()
         {
             Name = "getUserIdByUserName",
             Method = serviceProvider => (Func<string, string>)(email =>
