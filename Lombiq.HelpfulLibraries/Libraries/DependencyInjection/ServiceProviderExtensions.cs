@@ -38,6 +38,6 @@ namespace System
         /// </summary>
         /// <typeparam name="T">The type of the required service.</typeparam>
         public static Lazy<T> GetLazyService<T>(this IServiceProvider serviceProvider) =>
-            new Lazy<T>(serviceProvider.GetRequiredService<T>);
+            new(serviceProvider.GetRequiredService<T>);
     }
 }
