@@ -25,7 +25,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
                     .ListAsync())
                 .ToList();
 
-            return versions.FindIndex(version => version.ContentItemVersionId == contentItemVersionId) + 1;
+            return versions.FindLastIndex(version => version.ContentItemVersionId == contentItemVersionId) + 1;
         }
     }
 }
