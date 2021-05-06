@@ -76,9 +76,8 @@ namespace OrchardCore.Modules
         }
 
         private static DateTimeOffset ForceUtc(DateTime dateTimeUtc) =>
-            new DateTimeOffset(
-                dateTimeUtc.Kind != DateTimeKind.Utc
-                    ? new DateTime(dateTimeUtc.Ticks, DateTimeKind.Utc)
-                    : dateTimeUtc);
+            new(dateTimeUtc.Kind != DateTimeKind.Utc
+                ? new DateTime(dateTimeUtc.Ticks, DateTimeKind.Utc)
+                : dateTimeUtc);
     }
 }
