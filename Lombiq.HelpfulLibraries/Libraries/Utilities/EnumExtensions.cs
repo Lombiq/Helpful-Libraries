@@ -4,6 +4,6 @@ namespace System
     {
         public static InvalidOperationException UnknownEnumException<T>(this T other)
             where T : Enum =>
-            new InvalidOperationException($"Unknown {other.GetType().Name}: '{other}'");
+            new($"Unknown {other.GetType().Name}: '{other}'");
     }
 }
