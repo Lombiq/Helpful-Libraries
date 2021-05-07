@@ -25,7 +25,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
     {
         /// <summary>
         /// Adds a new entry to the index that refers to the document with the id in <paramref name="setDocumentId"/>.
-        /// If that's <see langword="null"/> then the <c>Document</c> of the <paramref name="item"/>.
+        /// If that's <see langword="null"/> then the <see cref="Document"/> of the <paramref name="item"/>.
         /// </summary>
         /// <param name="item">The index object to be recorded.</param>
         /// <param name="setDocumentId">
