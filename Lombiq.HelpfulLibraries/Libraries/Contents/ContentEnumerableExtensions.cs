@@ -10,10 +10,7 @@ namespace OrchardCore.ContentManagement
         /// </summary>
         /// <returns>The content part enumeration or empty enumeration if it doesn't exist.</returns>
         public static IEnumerable<TPart> As<TPart>(this IEnumerable<IContent> contents)
-            where TPart : ContentPart
-        {
-            var parts = contents?.Select(content => content.As<TPart>()) ?? Enumerable.Empty<TPart>();
-            return parts.Any(content => content == null) ? Enumerable.Empty<TPart>() : parts;
-        }
+            where TPart : ContentPart =>
+            contents?.SelectWhere(content => content.As<TPart>()) ?? Enumerable.Empty<TPart>();
     }
 }
