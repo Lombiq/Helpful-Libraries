@@ -1,6 +1,10 @@
 # Contents Libraries Documentation
 
 
+## Constants
+
+- `CommonContentDisplayTypes`: Hast constants for values that can be used with `IContentItemDisplayManager.BuildDisplayAsync` or `OrchardRazorHelperExtensions.DisplayAsync` to safely select the correct display type.
+
 
 ## Extensions
 
