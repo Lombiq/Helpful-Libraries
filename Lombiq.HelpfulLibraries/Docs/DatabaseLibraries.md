@@ -10,4 +10,9 @@
 - `SchemaBuilderExtensions`: Adds shortcut extension method for `SchemaBuilder`.
 - `SqlDialectExtensions`: Adds extensions to check the type of SQL language used.
 
+
+## Services
+
+- `IManualConnectingIndexService<in T>`: A service for managing a `MapIndex` without an automatic provider. The index refers to documents of `T` type and they can be added or removed via the service's methods only. 
+
 Please see the inline documentation of each extension method to learn more.
