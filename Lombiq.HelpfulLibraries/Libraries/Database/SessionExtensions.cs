@@ -11,6 +11,7 @@ using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
+using YesSql.Services;
 
 namespace YesSql
 {
@@ -185,6 +186,21 @@ namespace YesSql
 
             return string.IsNullOrEmpty(contentType) ? query : query.Where(index => index.ContentType == contentType);
         }
+
+        /// <summary>
+        /// Returns a dictionary that correlated the latest <see cref="ContentItem.DisplayText"/> to the given
+        /// <paramref name="contentItemIds"/> based on <see cref="ContentItemIndex"/>.
+        /// </summary>
+        public static async Task<IDictionary<string, string>> GetDisplayTextsViaIndexAsync(
+            this ISession session,
+            IEnumerable<string> contentItemIds) =>
+            (await session
+                .QueryIndex<ContentItemIndex>(index => index.ContentItemId.IsIn(contentItemIds))
+                .ListAsync())
+            .UniqueDescending(
+                index => index.ContentItemId,
+                index => index.PublishedUtc ?? index.ModifiedUtc ?? index.CreatedUtc ?? DateTime.MinValue)
+            .ToDictionary(index => index.ContentItemId, index => index.DisplayText);
     }
 
     // We could use SqlException but that doesn't have a ctor for messages.
