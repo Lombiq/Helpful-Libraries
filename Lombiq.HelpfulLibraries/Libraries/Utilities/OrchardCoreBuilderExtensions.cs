@@ -1,4 +1,6 @@
 using Microsoft.Extensions.Configuration;
+using OrchardCore.Email;
+using OrchardCore.Environment.Shell.Configuration;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
@@ -16,6 +18,30 @@ namespace Microsoft.Extensions.DependencyInjection
                 .GetValue<string>("OrchardCore:OrchardCore_Shells_Database:ConnectionString");
 
             if (!string.IsNullOrEmpty(shellsConnectionString)) builder.AddDatabaseShellsConfiguration();
+
+            return builder;
+        }
+
+        /// <summary>
+        /// Configures SMTP settings (<see cref="SmtpSettings"/>) from the configuration provider.
+        /// </summary>
+        /// <param name="overrideAdminSettings">
+        /// If set to <see langword="true"/> the settings coming from the configuration provider will override the ones
+        /// set up from the admin UI.
+        /// </param>
+        public static OrchardCoreBuilder ConfigureSmtpSettings(
+            this OrchardCoreBuilder builder,
+            bool overrideAdminSettings = true)
+        {
+            builder.ConfigureServices((tenantServices, serviceProvider) =>
+            {
+                var shellConfiguration = serviceProvider.GetRequiredService<IShellConfiguration>().GetSection("SmtpSettings");
+                tenantServices.PostConfigure<SmtpSettings>(settings =>
+                {
+                    if (!overrideAdminSettings && !string.IsNullOrEmpty(settings.Host)) return;
+                    shellConfiguration.Bind(settings);
+                });
+            });
 
             return builder;
         }
