@@ -1,5 +1,6 @@
 using OrchardCore.Data.Migration;
 using YesSql.Indexes;
+using YesSql.Sql;
 using YesSql.Sql.Schema;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Database
@@ -16,7 +17,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
 
         public int Create()
         {
-            SchemaBuilder.CreateMapIndexTable(typeof(IndexDataMigration<TIndex>).GetGenericArguments()[0].Name, CreateIndex);
+            SchemaBuilder.CreateMapIndexTable<TIndex>(CreateIndex);
 
             SchemaBuilder.CreateDocumentIdIndex<TIndex>();
 

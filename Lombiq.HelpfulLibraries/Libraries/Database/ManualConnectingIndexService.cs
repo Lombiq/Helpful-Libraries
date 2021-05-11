@@ -89,7 +89,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
                 return result;
             }
 
-            if (session != null) return await Run(await session.DemandAsync(), false, request);
+            if (session != null) return await Run(await session.BeginTransactionAsync(), false, request);
 
             await using var connection = _dbAccessor.CreateConnection();
             await connection.OpenAsync();
