@@ -27,7 +27,7 @@
     <PackageReference Include="OrchardCore.Queries" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.Users.Core" Version="1.0.0-rc2-13929" />
-    <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.0.0-rc2-16154" />
+    <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.0.0-rc2-13929" />
   </ItemGroup>
 
 </Project>
