@@ -34,15 +34,15 @@ namespace YesSql
         public static async Task<IEnumerable<TRow>> RawQueryAsync<TRow>(
             this ISession session,
             string sql,
-            IDictionary<string, object> parameters = null,
+            object parameters = null,
             Func<(string ParsedQuery, IDbTransaction Transaction), Task<IEnumerable<TRow>>> queryExecutor = null,
             DbTransaction transaction = null)
         {
             transaction ??= await session.DemandAsync();
-            var query = GetQuery(sql, transaction, session, parameters);
+            var query = GetQuery(sql, transaction, session);
 
             return queryExecutor == null
-                ? await transaction.Connection.QueryAsync<TRow>(query, transaction: transaction)
+                ? await transaction.Connection.QueryAsync<TRow>(query, parameters, transaction)
                 : await queryExecutor((query, transaction));
         }
 
@@ -72,14 +72,13 @@ namespace YesSql
         private static string GetQuery(
             string sql,
             DbTransaction transaction,
-            ISession session,
-            IDictionary<string, object> parameters)
+            ISession session)
         {
             var parserResult = SqlParser.TryParse(
                 sql,
                 TransactionSqlDialectFactory.For(transaction),
                 session.Store.Configuration.TablePrefix,
-                parameters,
+                parameters: null,
                 out var query,
                 out var messages);
 
