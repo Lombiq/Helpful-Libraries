@@ -1,6 +1,6 @@
+using OrchardCore.Taxonomies.Models;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using OrchardCore.Taxonomies.Models;
 
 namespace OrchardCore.ContentManagement
 {
@@ -27,10 +27,10 @@ namespace OrchardCore.ContentManagement
 
         public static async Task<List<ContentItem>> GetTaxonomyTermsAsync(
             this IContentManager contentManager,
-            IContentAliasManager contentAliasManager,
+            IContentHandleManager contentHandleManager,
             string taxonomyAlias)
         {
-            var taxonomyContentItemId = await contentAliasManager.GetContentItemIdAsync($"alias:{taxonomyAlias}");
+            var taxonomyContentItemId = await contentHandleManager.GetContentItemIdAsync($"alias:{taxonomyAlias}");
             var taxonomy = await contentManager.GetAsync(taxonomyContentItemId);
 
             return taxonomy.As<TaxonomyPart>().Terms;
