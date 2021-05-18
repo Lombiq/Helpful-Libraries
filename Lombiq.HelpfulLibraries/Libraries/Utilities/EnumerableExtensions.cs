@@ -1,3 +1,4 @@
+using OrchardCore.ContentManagement;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -87,7 +88,7 @@ namespace System.Collections.Generic
             Func<TIn, TOut> select,
             Func<TOut, bool> where = null)
         {
-            foreach (var item in collection)
+            foreach (var item in collection ?? Array.Empty<TIn>())
             {
                 var converted = select(item);
                 if (where?.Invoke(converted) ?? !(converted is null)) yield return converted;
@@ -133,6 +134,30 @@ namespace System.Collections.Generic
             collection.GroupBy(keySelector).Select(group => group.FirstOrDefault());
 
         /// <summary>
+        /// Returns the <paramref name="collection"/> without any duplicate items picking the first of each when sorting
+        /// by <paramref name="orderBySelector"/>.
+        /// </summary>
+        public static IEnumerable<TItem> Unique<TItem, TKey, TOrder>(
+            this IEnumerable<TItem> collection,
+            Func<TItem, TKey> keySelector,
+            Func<TItem, TOrder> orderBySelector) =>
+            collection
+                .GroupBy(keySelector)
+                .Select(group => group.OrderBy(orderBySelector).FirstOrDefault());
+
+        /// <summary>
+        /// Returns the <paramref name="collection"/> without any duplicate items picking the last of each when sorting
+        /// by <paramref name="orderBySelector"/>.
+        /// </summary>
+        public static IEnumerable<TItem> UniqueDescending<TItem, TKey, TOrder>(
+            this IEnumerable<TItem> collection,
+            Func<TItem, TKey> keySelector,
+            Func<TItem, TOrder> orderBySelector) =>
+            collection
+                .GroupBy(keySelector)
+                .Select(group => group.OrderByDescending(orderBySelector).FirstOrDefault());
+
+        /// <summary>
         /// Returns a string that joins the string collection. It excludes null or empty items if there are any.
         /// </summary>
         /// <returns>
@@ -146,5 +171,23 @@ namespace System.Collections.Generic
                 ? string.Join(separator, filteredStrings)
                 : null;
         }
+
+        /// <summary>
+        /// Re-flattens <see cref="ILookup{TKey, ContentItem}"/> or <c>GroupBy</c> collections and eliminates duplicates
+        /// using <see cref="ContentItem.ContentItemVersionId"/>.
+        /// </summary>
+        public static IEnumerable<ContentItem> GetUniqueValues<TKey>(
+            this IEnumerable<IGrouping<TKey, ContentItem>> lookup) =>
+            lookup
+                .SelectMany(grouping => grouping)
+                .Unique(contentItem => contentItem.ContentItemVersionId);
+
+        /// <summary>
+        /// Re-flattens <see cref="ILookup{TKey, ContentItem}"/> or <c>GroupBy</c> collections and ensures that each
+        /// grouping only had one item (i.e. one-to-one relationships).
+        /// </summary>
+        public static IEnumerable<ContentItem> GetSingleValues<TKey>(
+            this IEnumerable<IGrouping<TKey, ContentItem>> lookup) =>
+            lookup.Select(item => item.Single());
     }
 }

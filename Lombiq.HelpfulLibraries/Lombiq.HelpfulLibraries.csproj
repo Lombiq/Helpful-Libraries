@@ -2,8 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <DefaultItemExcludes>$(DefaultItemExcludes);.git*;node_modules\**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*;node_modules\**;Tests\**</DefaultItemExcludes>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Tests\**" />
+  </ItemGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
@@ -14,6 +18,7 @@
     <PackageReference Include="Moq.AutoMock" Version="2.3.0" />
     <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.Alias" Version="1.0.0-rc2-13929" />
+    <PackageReference Include="OrchardCore.Taxonomies" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.ContentManagement" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.0.0-rc2-13929" />
@@ -23,6 +28,7 @@
     <PackageReference Include="OrchardCore.Queries" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.0.0-rc2-13929" />
     <PackageReference Include="OrchardCore.Users.Core" Version="1.0.0-rc2-13929" />
+    <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.0.0-rc2-13929" />
   </ItemGroup>
 
 </Project>
