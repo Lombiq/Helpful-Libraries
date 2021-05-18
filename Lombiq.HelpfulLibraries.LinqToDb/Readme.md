@@ -4,8 +4,7 @@
 
 ## About
 
-LINQ to DB is the fastest LINQ database access library offering a simple, light, fast, and type-safe layer between your POCO objects and your database.
-Read more about this [library here](https://github.com/linq2db/linq2db).
+With the help of this module you can write LINQ expressions instead of plain SQL query syntax.
 
 
 ## Documentation
