@@ -2,17 +2,18 @@ using OrchardCore.Modules.Manifest;
 using static Lombiq.HelpfulLibraries.LinqToDb.Constants.FeatureIds;
 
 [assembly: Module(
-    Name = "Lombiq HelpfulLibraries LinqToDb",
+    Name = "LinqToDb - Lombiq HelpfulLibraries",
     Author = "Lombiq Technologies",
     Version = "1.0",
-    Description = "Module for writing linq db queries."
+    Description = "Module for writing LINQ to DB queries.",
+    Website = "https://github.com/Lombiq/Helpful-Libraries"
 )]
 
 [assembly: Feature(
     Id = Default,
-    Name = "Lombiq HelpfulLibraries LinqToDb",
-    Category = "Lombiq - HelpfulLibraries",
-    Description = "Module for writing linq db queries.",
+    Name = "LinqToDb - Lombiq HelpfulLibraries",
+    Category = "Development",
+    Description = "Module for writing LINQ to DB queries.",
     Dependencies = new[]
     {
         "OrchardCore.Environment",

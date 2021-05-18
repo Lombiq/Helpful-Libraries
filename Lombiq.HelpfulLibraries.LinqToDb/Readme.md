@@ -1,12 +1,18 @@
-# Lombiq Linq2DB for Orchard Core
+# Lombiq LinqToDb - Lombiq HelpfulLibraries for Orchard Core
+
+
+
+## About
+
 LINQ to DB is the fastest LINQ database access library offering a simple, light, fast, and type-safe layer between your POCO objects and your database.
 Read more about this [library here](https://github.com/linq2db/linq2db).
 
-## Sample
 
-Enable `Lombiq.HelpfulLibraries.LinqToDb` feature and use dependency injection for the dataconnection.
+## Documentation
+
+Enable `Lombiq.HelpfulLibraries.LinqToDb` feature and use dependency injection for the data connection.
 Keep in mind, that the LinqToDbConnection object is [disposable](https://linq2db.github.io/articles/general/Managing-data-connection.html)!
-```
+```csharp
 public class LinqToDbSamplesController
     {
         private readonly LinqToDbConnection _db;
@@ -37,7 +43,7 @@ public class LinqToDbSamplesController
     }
 ```
 
-## Extensions
+### Extensions
 
 You can write custom SQL syntax extensions and functions as you can see it in `Extensions\CustomSqlExtensions.cs`.
 
