@@ -12,7 +12,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
 {
     public static class LinqToDbQueryExecutor
     {
-        public static async Task<IEnumerable<TResult>> QueryLinqAsync<TResult>(
+        public static async Task<IEnumerable<TResult>> LinqQueryAsync<TResult>(
             this ISession session,
             Func<ITableAccessor, IQueryable> query)
         {
