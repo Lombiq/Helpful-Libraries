@@ -10,9 +10,9 @@ using YesSql;
 
 namespace Lombiq.HelpfulLibraries.LinqToDb
 {
-    public static class OrchardCoreLinqToDbQueryExecutor
+    public static class LinqToDbQueryExecutor
     {
-        public static async Task<IEnumerable<TResult>> LinqQueryAsync<TResult>(
+        public static async Task<IEnumerable<TResult>> QueryLinqAsync<TResult>(
             this ISession session,
             Func<ITableAccessor, IQueryable> query)
         {
