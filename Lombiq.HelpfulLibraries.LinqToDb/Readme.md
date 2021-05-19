@@ -20,6 +20,7 @@ LinqQueryAsync<TResult>(this ISession session,Func<ITableAccessor, IQueryable> q
 public class LinqToDbSamplesController
     {
         private readonly ISession _session;
+        
         public LinqToDbSamplesController(ISession session) => _session = session;
 
         public async Task<ActionResult> SimpleQuery()
@@ -53,4 +54,3 @@ public class LinqToDbSamplesController
 You can write custom SQL syntax extensions and functions as you can see it in *[Extensions/CustomSqlExtensions.cs](Extensions/CustomSqlExtensions.cs)*.
 
 For more examples check out [this article](http://blog.linq2db.com/2016/06/how-to-teach-linq-to-db-convert-custom.html).
-
