@@ -4,7 +4,7 @@
 
 ## About
 
-With the help of this module you can write LINQ expressions to query from DB instead of plain SQL queries.
+With the help of this module you can write LINQ expressions and run it with an `ISession` extension method to query from the DB instead of writing plain SQL queries.
 
 
 ## Documentation
