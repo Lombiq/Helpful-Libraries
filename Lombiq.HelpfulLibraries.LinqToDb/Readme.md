@@ -9,45 +9,42 @@ With the help of this module you can write LINQ expressions and run it with an `
 
 ## Documentation
 
-Use the `LinqQueryAsync` ISession extension for running LINQ syntax-based DB queries.
-
-```csharp 
-LinqQueryAsync<TResult>(this ISession session,Func<ITableAccessor, IQueryable> query)
-```
+Use the `LinqQueryAsync` ISession extension method for running LINQ syntax-based DB queries. 
+Check out it's documentation inline.
 
 ### Sample controller
 
 ```csharp
 public class LinqToDbSamplesController
-    {
-        private readonly ISession _session;
+{
+    private readonly ISession _session;
         
-        public LinqToDbSamplesController(ISession session) => _session = session;
+    public LinqToDbSamplesController(ISession session) => _session = session;
 
-        public async Task<ActionResult> SimpleQuery()
-        {
-            var result = await _session.LinqQueryAsync<AutoroutePartIndex>(
-                accessor => accessor
-                    .GetTable<AutoroutePartIndex>()
-                    .Where(index => index.Path.Contains("a", StringComparison.OrdinalIgnoreCase))
-                    .OrderByDescending(index => index.Path));
+    public async Task<ActionResult> SimpleQuery()
+    {
+        var result = await _session.LinqQueryAsync<AutoroutePartIndex>(
+            accessor => accessor
+                .GetTable<AutoroutePartIndex>()
+                .Where(index => index.Path.Contains("a", StringComparison.OrdinalIgnoreCase))
+                .OrderByDescending(index => index.Path));
 
-            return Ok(result);
-        }
-
-        public async Task<ActionResult> JoinQuery()
-        {
-            var result = await _session.LinqQueryAsync<string>(
-                accessor =>
-                    from qContentItemIndex in accessor.GetTable<ContentItemIndex>()
-                    join qAutoroutePartIndex in accessor.GetTable<AutoroutePartIndex>()
-                        on qContentItemIndex.ContentItemId equals qAutoroutePartIndex.ContentItemId
-                    where qAutoroutePartIndex.Path.StartsWith("press-release/", StringComparison.OrdinalIgnoreCase)
-                    select qContentItemIndex.DisplayText);
-
-            return Ok(result);
-        }
+        return Ok(result);
     }
+
+    public async Task<ActionResult> JoinQuery()
+    {
+        var result = await _session.LinqQueryAsync<string>(
+            accessor =>
+                from contentItemIndex in accessor.GetTable<ContentItemIndex>()
+                join autoroutePartIndex in accessor.GetTable<AutoroutePartIndex>()
+                    on contentItemIndex.ContentItemId equals autoroutePartIndex.ContentItemId
+                where autoroutePartIndex.Path.StartsWith("press-release/", StringComparison.OrdinalIgnoreCase)
+                select contentItemIndex.DisplayText);
+
+        return Ok(result);
+    }
+}
 ```
 
 ### Extensions

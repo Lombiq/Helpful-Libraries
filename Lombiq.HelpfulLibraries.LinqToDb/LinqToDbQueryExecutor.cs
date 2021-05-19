@@ -12,6 +12,13 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
 {
     public static class LinqToDbQueryExecutor
     {
+        /// <summary>
+        /// Use this extension method for running LINQ syntax-based DB queries.
+        /// </summary>
+        /// <typeparam name="TResult">The type of results to return.</typeparam>
+        /// <param name="session">Its connection and transaction is used instead of creating a new one.</param>
+        /// <param name="query">The IQueryable which will be run as a DB query.</param>
+        /// <returns>An IEnumerable with the input type.</returns>
         public static async Task<IEnumerable<TResult>> LinqQueryAsync<TResult>(
             this ISession session,
             Func<ITableAccessor, IQueryable> query)
