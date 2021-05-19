@@ -7,17 +7,17 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
 {
     public class LinqToDbConnection : DataConnection, ITableAccessor
     {
-        public string TablePrefix { get; set; }
+        private readonly string _tablePrefix;
 
         public LinqToDbConnection(IDataProvider dataProvider, IDbTransaction dbTransaction, string tablePrefix)
             : base(dataProvider, dbTransaction) =>
-                TablePrefix = tablePrefix;
+                _tablePrefix = tablePrefix;
 
         public ITable<T> GetPrefixedTable<T>()
             where T : class
         {
             var table = base.GetTable<T>();
-            return table.TableName(TablePrefix + table.TableName);
+            return table.TableName(_tablePrefix + table.TableName);
         }
 
         public new ITable<T> GetTable<T>()
