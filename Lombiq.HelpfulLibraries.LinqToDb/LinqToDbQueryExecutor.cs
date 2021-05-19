@@ -46,11 +46,13 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
         private static string GetDatabaseProviderName(string dbName) =>
             dbName switch
             {
-                // Using explicit string instead of LinqToDB.ProviderName.SQLite because the "System.Data.SqlClient"
+                // Using explicit string instead of LinqToDB.ProviderName.SqlServer because the "System.Data.SqlClient"
                 // provider will be used causing "Could not load type System.Data.SqlClient.SqlCommandBuilder"
                 // exception. See: https://github.com/linq2db/linq2db/issues/2191#issuecomment-618450439
                 "SqlServer" => "Microsoft.Data.SqlClient",
                 "Sqlite" => ProviderName.SQLite,
+                "MySql" => ProviderName.MySql,
+                "PostgreSql" => ProviderName.PostgreSQL,
                 _ => throw new NotSupportedException("The provider name is not supported."),
             };
     }
