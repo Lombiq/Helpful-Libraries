@@ -11,7 +11,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Middleware
         /// <summary>
         /// Gets or sets a value indicating whether the task was scheduled.
         /// </summary>
-        bool IsStarted { get; set; }
+        bool IsScheduled { get; set; }
 
         /// <summary>
         /// A task executed on the starting edge of the middleware pipeline (ie this is not "deferred").

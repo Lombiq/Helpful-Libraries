@@ -17,7 +17,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Middleware
         {
             foreach (var deferredTask in deferredTasks)
             {
-                deferredTask.IsStarted = true;
+                deferredTask.IsScheduled = true;
                 await deferredTask.PreProcessAsync(context);
             }
 
