@@ -14,7 +14,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Middleware
         bool IsScheduled { get; set; }
 
         /// <summary>
-        /// A task executed on the starting edge of the middleware pipeline (ie this is not "deferred").
+        /// A task executed on the starting edge of the middleware pipeline (i.e. this is not "deferred").
         /// </summary>
         Task PreProcessAsync(HttpContext context) => Task.CompletedTask;
 
