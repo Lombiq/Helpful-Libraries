@@ -1,9 +1,6 @@
-using Dapper;
 using LinqToDB;
 using LinqToDB.Data;
 using System;
-using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using YesSql;
@@ -14,27 +11,10 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
 {
     public static class LinqToDbQueryExecutor
     {
-        /// <summary>
-        /// Use this extension method for running LINQ syntax-based DB queries.
-        /// </summary>
-        /// <typeparam name="TResult">The type of results to return.</typeparam>
-        /// <param name="session">A YesSql session whose connection is used instead of creating a new one.</param>
-        /// <param name="query">The <see cref="IQueryable"/> which will be run as a DB query.</param>
-        /// <returns>An <see cref="IEnumerable{T}"/> with the input type.</returns>
-        public static async Task<IEnumerable<TResult>> LinqQueryAsync<TResult>(
-            this ISession session,
-            Func<ITableAccessor, IQueryable> query)
-        {
-            var transaction = await session.BeginTransactionAsync();
-            var convertedSql = ConvertSqlToDialect(session, transaction, query);
-
-            return await transaction.Connection.QueryAsync<TResult>(convertedSql, transaction: transaction);
-        }
-
-        private static string ConvertSqlToDialect(
-            ISession session,
-            IDbTransaction transaction,
-            Func<ITableAccessor, IQueryable> query)
+        // We have no control over where these fields are declared.
+#pragma warning disable CA1810 // Initialize reference type static fields inline
+        static LinqToDbQueryExecutor()
+#pragma warning restore CA1810 // Initialize reference type static fields inline
         {
             // Generate aliases for final projection.
             Sql.GenerateFinalAliases = true;
@@ -42,6 +22,26 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
             // We need to disable null comparison for joins. Otherwise it would generate a syntax like this:
             // JOIN Table2 ON Table1.Key = Table2.Key OR Table1.Key IS NULL AND Table2.Key IS NULL
             Linq.CompareNullsAsValues = false;
+        }
+
+        /// <summary>
+        /// Use this extension method for running LINQ syntax-based DB queries.
+        /// </summary>
+        /// <typeparam name="TResult">The type of results to return.</typeparam>
+        /// <param name="session">A YesSql session whose connection is used instead of creating a new one.</param>
+        /// <param name="query">The <see cref="IQueryable"/> which will be run as a DB query.</param>
+        /// <returns>The output of the query.</returns>
+        /// <remarks>
+        /// <para>
+        /// The API uses a function to execute the query so we can handle disposing <see cref="LinqToDbConnection"/>
+        /// too.
+        /// </para>
+        /// </remarks>
+        public static async Task<TResult> LinqQueryAsync<TResult>(
+            this ISession session,
+            Func<ITableAccessor, Task<TResult>> query)
+        {
+            var transaction = await session.BeginTransactionAsync();
 
             // Instantiating a LinqToDB connection object as it is required to start building the query. Note that it
             // won't create an actual connection with the database.
@@ -53,7 +53,8 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
                 dataProvider,
                 transaction,
                 session.Store.Configuration.TablePrefix);
-            return query(linqToDbConnection).ToString();
+
+            return await query(linqToDbConnection);
         }
 
         private static string GetDatabaseProviderName(string dbName) =>
