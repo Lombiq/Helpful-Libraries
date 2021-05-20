@@ -43,8 +43,8 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
             // JOIN Table2 ON Table1.Key = Table2.Key OR Table1.Key IS NULL AND Table2.Key IS NULL
             Linq.CompareNullsAsValues = false;
 
-            // Instantiating a linq2db connection object as it is required to start building the query. Note that it
-            // won't create an actual connection with the database yet.
+            // Instantiating a LinqToDB connection object as it is required to start building the query. Note that it
+            // won't create an actual connection with the database.
             var dataProvider = DataConnection.GetDataProvider(
                 GetDatabaseProviderName(session.Store.Dialect.Name),
                 transaction.Connection.ConnectionString);
