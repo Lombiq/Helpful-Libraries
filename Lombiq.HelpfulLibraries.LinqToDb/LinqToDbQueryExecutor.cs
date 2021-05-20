@@ -25,7 +25,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
             this ISession session,
             Func<ITableAccessor, IQueryable> query)
         {
-            var transaction = await session.DemandAsync();
+            var transaction = await session.BeginTransactionAsync();
             var convertedSql = ConvertSqlToDialect(session, transaction, query);
 
             return await transaction.Connection.QueryAsync<TResult>(convertedSql, transaction: transaction);
@@ -46,7 +46,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
             // Instantiating a LinqToDB connection object as it is required to start building the query. Note that it
             // won't create an actual connection with the database.
             var dataProvider = DataConnection.GetDataProvider(
-                GetDatabaseProviderName(session.Store.Dialect.Name),
+                GetDatabaseProviderName(session.Store.Configuration.SqlDialect.Name),
                 transaction.Connection.ConnectionString);
 
             using var linqToDbConnection = new LinqToDbConnection(
