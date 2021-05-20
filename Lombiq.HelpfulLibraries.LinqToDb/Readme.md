@@ -9,8 +9,7 @@ With the help of this module you can write LINQ expressions and run it with an `
 
 ## Documentation
 
-Use the `LinqQueryAsync` ISession extension method for running LINQ syntax-based DB queries. 
-Check out it's documentation inline.
+Use the `LinqQueryAsync` ISession extension method for running LINQ syntax-based DB queries. Check out it's documentation inline.
 
 ### Sample controller
 
