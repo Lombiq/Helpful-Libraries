@@ -13,5 +13,6 @@
 	<ItemGroup>
 		<PackageReference Include="linq2db" Version="3.3.0" />
 		<PackageReference Include="OrchardCore.Data.Abstractions" Version="1.0.0-rc2-13929" />
+		<PackageReference Include="OrchardCore.Data.YesSql" Version="1.0.0-rc2-13929" />
 	</ItemGroup>
 </Project>
