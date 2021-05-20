@@ -7,6 +7,8 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using YesSql;
+using static LinqToDB.Common.Configuration;
+using Sql = LinqToDB.Common.Configuration.Sql;
 
 namespace Lombiq.HelpfulLibraries.LinqToDb
 {
@@ -35,7 +37,11 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
             Func<ITableAccessor, IQueryable> query)
         {
             // Generate aliases for final projection.
-            LinqToDB.Common.Configuration.Sql.GenerateFinalAliases = true;
+            Sql.GenerateFinalAliases = true;
+
+            // We need to disable null comparison for joins. Otherwise it would generate a syntax like this:
+            // JOIN Table2 ON Table1.Key = Table2.Key OR Table1.Key IS NULL AND Table2.Key IS NULL
+            Linq.CompareNullsAsValues = false;
 
             // Instantiating a linq2db connection object as it is required to start building the query. Note that it
             // won't create an actual connection with the database yet.
