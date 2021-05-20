@@ -14,6 +14,16 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
 {
     public static class LinqToDbQueryExecutor
     {
+        static LinqToDbQueryExecutor()
+        {
+            // Generate aliases for final projection.
+            Sql.GenerateFinalAliases = true;
+
+            // We need to disable null comparison for joins. Otherwise it would generate a syntax like this:
+            // JOIN Table2 ON Table1.Key = Table2.Key OR Table1.Key IS NULL AND Table2.Key IS NULL
+            Linq.CompareNullsAsValues = false;
+        }
+
         /// <summary>
         /// Use this extension method for running LINQ syntax-based DB queries.
         /// </summary>
@@ -36,13 +46,6 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
             IDbTransaction transaction,
             Func<ITableAccessor, IQueryable> query)
         {
-            // Generate aliases for final projection.
-            Sql.GenerateFinalAliases = true;
-
-            // We need to disable null comparison for joins. Otherwise it would generate a syntax like this:
-            // JOIN Table2 ON Table1.Key = Table2.Key OR Table1.Key IS NULL AND Table2.Key IS NULL
-            Linq.CompareNullsAsValues = false;
-
             // Instantiating a LinqToDB connection object as it is required to start building the query. Note that it
             // won't create an actual connection with the database.
             var dataProvider = DataConnection.GetDataProvider(
