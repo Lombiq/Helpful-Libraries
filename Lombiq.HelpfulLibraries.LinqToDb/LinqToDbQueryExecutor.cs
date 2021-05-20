@@ -25,7 +25,21 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
         }
 
         /// <summary>
-        /// Use this extension method for running LINQ syntax-based DB queries.
+        /// Run LINQ syntax-based DB queries on the current DB connection with LINQ to DB, on a single table.
+        /// </summary>
+        /// <typeparam name="TTable">The type of the table to query on.</typeparam>
+        /// <typeparam name="TResult">The type of results to return.</typeparam>
+        /// <param name="session">A YesSql session whose connection is used instead of creating a new one.</param>
+        /// <param name="query">The <see cref="IQueryable"/> which will be run as a DB query.</param>
+        /// <returns>The output of the query.</returns>
+        public static Task<TResult> LinqTableQueryAsync<TTable, TResult>(
+            this ISession session,
+            Func<ITable<TTable>, Task<TResult>> query)
+            where TTable : class =>
+            session.LinqQueryAsync(accessor => query(accessor.GetTable<TTable>()));
+
+        /// <summary>
+        /// Run LINQ syntax-based DB queries on the current DB connection with LINQ to DB.
         /// </summary>
         /// <typeparam name="TResult">The type of results to return.</typeparam>
         /// <param name="session">A YesSql session whose connection is used instead of creating a new one.</param>
