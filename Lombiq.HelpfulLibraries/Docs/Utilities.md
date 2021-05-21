@@ -10,7 +10,6 @@
 - `HttpContextExtensions`: Some shortcuts for managing cookies.
 - `JsonHelpers`: JSON syntax can be validated with the `ValidateJsonIfNotNull` helper method.
 - `JsonStringExtensions`: Adds JSON related extensions for the `string` type. (E.g. `JsonHtmlContent` which safely serializes a string for use in `<script>` elements.)
-- `LiquidTemplateManagerExtensions`: Some shortcuts for working with `ILiquidTemplateManager` like rendering a Liquid expression to string.
 - `MemoryCacheExtensions`: Adds extensions for `IMemoryCache` manipulation. (E.g. `GetOrNew<T>` type-safely returns the item or creates a new instance.)
 - `NonSecurityRandomizer`: A wrapper around `System.Random` for explicitly not security-related usage-cases.
 - `NumberExtensions`: Adds extensions for primitive numeric types. (E.g. `ToTechnicalString` converts `int` into culture invariant `string`.)
