@@ -13,6 +13,7 @@
 - `NonSecurityRandomizer`: A wrapper around `System.Random` for explicitly not security-related usage-cases.
 - `NumberExtensions`: Adds extensions for primitive numeric types. (E.g. `ToTechnicalString` converts `int` into culture invariant `string`.)
 - `OrchardCoreBuilderExtensions`: Shortcuts when initializing Orchard with `OrchardCoreBuilder`, i.e. `AddOrchardCms()`.
+- `RNGCryptoServiceProviderExtensions`: Shortcuts for retrieving cryptographically secure random numbers.
 - `Sha256Helper`: A static helper class with the `ComputeHash` utility function that converts text into [SHA-256](https://en.wikipedia.org/wiki/SHA-256) hash string.
 - `StringExtensions`: Adds common useful extensions to the `string` type. (E.g. `SplitByCommas` and `ContainsLoose`.) 
 - `UserServiceExtensions`: Adds extensions for `IUserService`. (E.g. `GetOrchardUserAsync` retrieves the user by user name or throws an exception if none found.)
