@@ -34,7 +34,8 @@ The module consists of the following independent libraries (all in their own fea
 - [Resource Management Libraries](Lombiq.HelpfulLibraries/Docs/ResourceManagementLibraries.md)
 - [User Libraries](Lombiq.HelpfulLibraries/Docs/UserLibraries.md)
 - [Utilities](Lombiq.HelpfulLibraries/Docs/Utilities.md)
-- [RestEase DI helper](Lombiq.HelpfulLibraries.RestEase/Docs/RestEase.md)
+- [RestEase DI helper](Lombiq.HelpfulLibraries.RestEase/Readme.md)
+- [LinqToDb](Lombiq.HelpfulLibraries.LinqToDb/Readme.md)
 
 Public APIs are always documented so please always read method comments.
 
