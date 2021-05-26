@@ -187,8 +187,8 @@ namespace YesSql
         }
 
         /// <summary>
-        /// Returns a dictionary that correlated the latest <see cref="ContentItem.DisplayText"/> to the given
-        /// <paramref name="contentItemIds"/> based on <see cref="ContentItemIndex"/>.
+        /// Returns a dictionary that correates the latest <see cref="ContentItem.DisplayText"/>s to the given
+                                                   /// <paramref name="contentItemIds"/> via the <see cref="ContentItemIndex"/>.l
         /// </summary>
         public static async Task<IDictionary<string, string>> GetDisplayTextsViaIndexAsync(
             this ISession session,
