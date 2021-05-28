@@ -33,7 +33,7 @@ namespace YesSql
         public static async Task<IEnumerable<TRow>> RawQueryAsync<TRow>(
             this ISession session,
             string sql,
-            object parameters = null,
+            IDictionary<string, object> parameters = null,
             Func<(string ParsedQuery, IDbTransaction Transaction), Task<IEnumerable<TRow>>> queryExecutor = null,
             DbTransaction transaction = null)
         {
