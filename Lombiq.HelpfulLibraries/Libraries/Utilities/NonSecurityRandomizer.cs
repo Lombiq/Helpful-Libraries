@@ -27,8 +27,13 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
         public int GetFromRange(int below) => _random.Next(below);
 
         /// <summary>
-        /// Returns a random integer between 0 and <see cref="int.MaxValue"/> inclusive.
+        /// Returns a random <see cref="double"/> between 0 and <see cref="int.MaxValue"/> inclusive.
         /// </summary>
         public int Get() => _random.Next();
+
+        /// <summary>
+        /// Returns a random <see cref="double"/> between 0 and <see cref="double.MaxValue"/> inclusive.
+        /// </summary>
+        public double GetDouble() => _random.NextDouble();
     }
 }
