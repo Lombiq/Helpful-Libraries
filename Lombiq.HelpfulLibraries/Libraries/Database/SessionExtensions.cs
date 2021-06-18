@@ -38,10 +38,10 @@ namespace YesSql
             DbTransaction transaction = null)
         {
             transaction ??= await session.BeginTransactionAsync();
-            var query = GetQuery(sql, transaction, session, parameters);
+            var query = GetQuery(sql, transaction, session);
 
             return queryExecutor == null
-                ? await transaction.Connection.QueryAsync<TRow>(query, transaction: transaction)
+                ? await transaction.Connection.QueryAsync<TRow>(query, parameters, transaction)
                 : await queryExecutor((query, transaction));
         }
 
@@ -71,14 +71,13 @@ namespace YesSql
         private static string GetQuery(
             string sql,
             DbTransaction transaction,
-            ISession session,
-            IDictionary<string, object> parameters)
+            ISession session)
         {
             var parserResult = SqlParser.TryParse(
                 sql,
                 TransactionSqlDialectFactory.For(transaction),
                 session.Store.Configuration.TablePrefix,
-                parameters,
+                parameters: null,
                 out var query,
                 out var messages);
 
