@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using OrchardCore.DisplayManagement;
+using System;
 using System.Threading.Tasks;
 
 namespace OrchardCore
 {
-    public static class ContentUrlOrchardHelperExtensions
+    public static class ContentOrchardHelperExtensions
     {
         /// <summary>
         /// Gets the given content item's edit URL.
@@ -39,6 +40,32 @@ namespace OrchardCore
             var urlHelper = urlHelperFactory.GetUrlHelper(viewContextAccessor.ViewContext);
             var metadata = await contentManager.PopulateAspectAsync<ContentItemMetadata>(contentItem);
             return urlHelper.Action(metadata.DisplayRouteValues["action"].ToString(), metadata.DisplayRouteValues);
+        }
+
+        /// <summary>
+        /// Runs a getter delegate to get a content item or loads the item currently viewed via Content Preview.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// This is useful when supporting preview in a decoupled scenario.
+        /// </para>
+        /// </remarks>
+        public static Task<ContentItem> GetContentItemOrPreviewAsync(
+            this IOrchardHelper orchardHelper,
+            Func<Task<ContentItem>> contentItemGetter)
+        {
+            var httpContext = orchardHelper.HttpContext;
+
+            if (httpContext.Request.Method == "POST")
+            {
+                var previewContentItemId = httpContext.Request.Form["PreviewContentItemId"];
+                if (!string.IsNullOrEmpty(previewContentItemId))
+                {
+                    return httpContext.RequestServices.GetService<IContentManager>().GetAsync(previewContentItemId);
+                }
+            }
+
+            return contentItemGetter();
         }
     }
 }
