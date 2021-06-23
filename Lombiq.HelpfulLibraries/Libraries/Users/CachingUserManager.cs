@@ -14,33 +14,35 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         private readonly Dictionary<string, User> _userByEmailCache = new();
         private readonly Dictionary<string, User> _userByIdCache = new();
 
-        private readonly UserManager<IUser> _userManager;
+        private readonly Lazy<UserManager<IUser>> _userManagerLazy;
 
-        public CachingUserManager(UserManager<IUser> userManager) => _userManager = userManager;
+        // Injecting UserManager<IUser> lazily to avoid StackOverflowException when injecting ICachingUserManager to
+        // ContentHandlers.
+        public CachingUserManager(Lazy<UserManager<IUser>> userManagerLazy) => _userManagerLazy = userManagerLazy;
 
         public Task<User> GetUserByIdAsync(string userId) =>
             GetUserAsync(
                 userId,
-                async () => await _userManager.FindByIdAsync(userId) as User,
+                async () => await _userManagerLazy.Value.FindByIdAsync(userId) as User,
                 _userByIdCache);
 
         public Task<User> GetUserByNameAsync(string username) =>
             GetUserAsync(
                 username,
-                async () => await _userManager.FindByNameAsync(username) as User,
+                async () => await _userManagerLazy.Value.FindByNameAsync(username) as User,
                 _userByNameCache);
 
         public Task<User> GetUserByEmailAsync(string email) =>
             GetUserAsync(
                 email,
-                async () => await _userManager.FindByEmailAsync(email) as User,
+                async () => await _userManagerLazy.Value.FindByEmailAsync(email) as User,
                 _userByEmailCache);
 
         public async Task<User> GetUserByClaimsPrincipalAsync(ClaimsPrincipal claimsPrincipal) =>
             claimsPrincipal.Identity?.Name != null
                 ? await GetUserAsync(
                     claimsPrincipal.Identity.Name,
-                    async () => await _userManager.GetUserAsync(claimsPrincipal) as User,
+                    async () => await _userManagerLazy.Value.GetUserAsync(claimsPrincipal) as User,
                     _userByNameCache)
                 : null;
 
