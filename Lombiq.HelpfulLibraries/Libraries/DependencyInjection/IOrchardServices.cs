@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement;
@@ -28,5 +29,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         Lazy<ISession> Session { get; }
         Lazy<ISiteService> SiteService { get; }
         Lazy<IStringLocalizer<T>> StringLocalizer { get; }
+        Lazy<IHtmlLocalizer<T>> HtmlLocalizer { get; }
     }
 }

@@ -1,5 +1,6 @@
 using Lombiq.HelpfulLibraries.Libraries.DependencyInjection;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement;
@@ -21,6 +22,7 @@ namespace Moq.AutoMock
                     new Lazy<ILogger<T>>(mocker.Get<ILogger<T>>),
                     new Lazy<YesSql.ISession>(mocker.Get<YesSql.ISession>),
                     new Lazy<ISiteService>(mocker.Get<ISiteService>),
-                    new Lazy<IStringLocalizer<T>>(mocker.Get<IStringLocalizer<T>>)));
+                    new Lazy<IStringLocalizer<T>>(mocker.Get<IStringLocalizer<T>>),
+                    new Lazy<IHtmlLocalizer<T>>(mocker.Get<IHtmlLocalizer<T>>)));
     }
 }
