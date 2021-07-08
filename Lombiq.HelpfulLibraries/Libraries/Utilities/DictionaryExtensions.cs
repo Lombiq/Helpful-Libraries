@@ -17,6 +17,16 @@ namespace System.Collections.Generic
             !Equals(key, default) && dictionary.TryGetValue(key, out var value) ? value : default;
 
         /// <summary>
+        /// Safely returns the value by key converted to the given type if it's in the dictionary. It'll return
+        /// <see langword="default" /> if the key is not present in the dictionary or if the value can't be converted.
+        /// </summary>
+        /// <param name="key">Key in the dictionary.</param>
+        /// <typeparam name="TValue">Type to convert to.</typeparam>
+        /// <returns>Value identified by the key if it's in the dictionary.</returns>
+        public static TValue GetMaybe<TValue>(this IDictionary<object, object> dictionary, object key) =>
+            GetMaybe(dictionary, key) is TValue value ? value : default;
+
+        /// <summary>
         /// Safely returns the value by key if it's in the dictionary. If the key is <see langword="default" /> or not
         /// found in the dictionary, it'll return <see langword="default" />.
         /// </summary>
