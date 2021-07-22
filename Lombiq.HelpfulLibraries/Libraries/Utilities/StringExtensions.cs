@@ -22,5 +22,11 @@ namespace System
         /// </summary>
         public static bool ContainsLoose(this string? text, string? toFind) =>
             text != null && toFind != null && text.Contains(toFind, StringComparison.InvariantCultureIgnoreCase);
+
+        /// <summary>
+        /// A shortcut for <c>string.Contains(string, StringComparison.OrdinalIgnoreCase)</c>.
+        /// </summary>
+        public static bool ContainsOrdinalIgnoreCase(this string? text, string? value) =>
+            text != null && !string.IsNullOrEmpty(value) && text.Contains(value, StringComparison.OrdinalIgnoreCase);
     }
 }
