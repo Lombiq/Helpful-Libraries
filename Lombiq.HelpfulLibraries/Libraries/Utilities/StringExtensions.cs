@@ -34,5 +34,11 @@ namespace System
         /// </summary>
         public static bool StartsWithOrdinalIgnoreCase(this string? text, string? value) =>
             text != null && !string.IsNullOrEmpty(value) && text.StartsWith(value, StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// A shortcut for <c>string.Equals(string, StringComparison.OrdinalIgnoreCase)</c>.
+        /// </summary>
+        public static bool EqualsOrdinalIgnoreCase(this string? text, string? value) =>
+            text != null && !string.IsNullOrEmpty(value) && text.Equals(value, StringComparison.OrdinalIgnoreCase);
     }
 }
