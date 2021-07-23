@@ -31,3 +31,9 @@ public class ResourceFilters : IResourceFilterProvider
     }
 }
 ```
+
+## Extensions:
+
+- `ApplicationBuilderExtensions`: Shortcut extensions for application setup, e.g.: `UseResourceFilters` (see above)
+- `ResourceManifestExtensions`: Extensions for building the resource manifest, e.g.: `SetDependenciesRecursively` helps registering multi-level dependencies.
+- `ResourceManagerExtensions`: Extensions for resource usage, e.g.: `RegisterStyle` registers a stylesheet resource by name without having to use the "stylesheet" literal which is error-prone.
