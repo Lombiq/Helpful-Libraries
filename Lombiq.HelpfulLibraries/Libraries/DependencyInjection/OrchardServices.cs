@@ -13,7 +13,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
     public class OrchardServices<T> : IOrchardServices<T>
     {
         public Lazy<IClock> Clock { get; }
-        public Lazy<IContentAliasManager> ContentAliasManager { get; }
+        public Lazy<IContentHandleManager> ContentHandleManager { get; }
         public Lazy<IContentManager> ContentManager { get; }
         public Lazy<IHttpContextAccessor> HttpContextAccessor { get; }
         public Lazy<ILogger<T>> Logger { get; }
@@ -28,7 +28,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             Justification = "These are the most common Orchard services.")]
         public OrchardServices(
             Lazy<IClock> clock,
-            Lazy<IContentAliasManager> contentAliasManager,
+            Lazy<IContentHandleManager> contentHandleManager,
             Lazy<IContentManager> contentManager,
             Lazy<IHttpContextAccessor> httpContextAccessor,
             Lazy<ILogger<T>> logger,
@@ -38,7 +38,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             Lazy<IHtmlLocalizer<T>> htmlLocalizer)
         {
             Clock = clock;
-            ContentAliasManager = contentAliasManager;
+            ContentHandleManager = contentHandleManager;
             ContentManager = contentManager;
             HttpContextAccessor = httpContextAccessor;
             Logger = logger;
