@@ -29,6 +29,8 @@
     <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.0.0" />
     <PackageReference Include="OrchardCore.Users.Core" Version="1.0.0" />
     <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.0.0" />
+    <PackageReference Include="OrchardCore.Infrastructure" Version="1.0.0" />
+    <PackageReference Include="NodaTime" Version="3.0.5" />
   </ItemGroup>
 
 </Project>
