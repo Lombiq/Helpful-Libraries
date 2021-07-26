@@ -4,7 +4,7 @@
 
 ## About
 
-Various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules. Note that this module has a more recent version targeting the nightly build of Orchard in the [orchard-core-preview branch](https://github.com/Lombiq/Helpful-Libraries/tree/orchard-core-preview), as well as an Orchard 1 version in the [dev-orchard-1 branch](https://github.com/Lombiq/Helpful-Libraries/tree/dev-orchard-1).
+Various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules. Note that this module has an Orchard 1 version in the [dev-orchard-1 branch](https://github.com/Lombiq/Helpful-Libraries/tree/dev-orchard-1).
 
 
 ## Includes:
@@ -13,22 +13,29 @@ Various libraries that can be handy when developing for Orchard Core CMS, to be 
 - DateTime Libraries with TimeZone conversion
 - Dependency Injection Libraries
 - Localization Libraries
+- Method Provider Libraries
 - MVC Libraries
 - Resource Management Libraries with Resource Filter feature
 - Utilities
+- RestEase DI helper
 
 
 ## Documentation
 
 The module consists of the following independent libraries (all in their own features):
 
-- [Contents Libraries](Docs/ContentsLibraries.md)
-- [DateTime Libraries](Docs/DateTimeLibraries.md)
-- [Dependency Injection Libraries](Docs/DependencyInjectionLibraries.md)
-- [Localization Libraries](Docs/LocalizationLibraries.md)
-- [MVC Libraries](Docs/MvcLibraries.md)
-- [Resource Management Libraries](Docs/ResourceManagementLibraries.md)
-- [Utilities](Docs/Utilities.md)
+- [Contents Libraries](Lombiq.HelpfulLibraries/Docs/ContentsLibraries.md)
+- [Database Libraries](Lombiq.HelpfulLibraries/Docs/DatabaseLibraries.md)
+- [DateTime Libraries](Lombiq.HelpfulLibraries/Docs/DateTimeLibraries.md)
+- [Dependency Injection Libraries](Lombiq.HelpfulLibraries/Docs/DependencyInjectionLibraries.md)
+- [Localization Libraries](Lombiq.HelpfulLibraries/Docs/LocalizationLibraries.md)
+- [Method Provider Libraries](Lombiq.HelpfulLibraries/Docs/MethodProviderLibraries.md)
+- [MVC Libraries](Lombiq.HelpfulLibraries/Docs/MvcLibraries.md)
+- [Resource Management Libraries](Lombiq.HelpfulLibraries/Docs/ResourceManagementLibraries.md)
+- [User Libraries](Lombiq.HelpfulLibraries/Docs/UserLibraries.md)
+- [Utilities](Lombiq.HelpfulLibraries/Docs/Utilities.md)
+- [RestEase DI helper](Lombiq.HelpfulLibraries.RestEase/Readme.md)
+- [LinqToDb](Lombiq.HelpfulLibraries.LinqToDb/Readme.md)
 
 Public APIs are always documented so please always read method comments.
 
