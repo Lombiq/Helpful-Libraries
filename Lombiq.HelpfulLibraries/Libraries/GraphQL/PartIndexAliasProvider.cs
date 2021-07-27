@@ -22,7 +22,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.GraphQL
                     .Replace("PartIndex", string.Empty, StringComparison.Ordinal)
                     .ToCamelCase(),
                 Index = typeof(TIndex).Name,
-                With = q => q.With<TIndex>(),
+                With = query => query.With<TIndex>(),
             },
         };
 
