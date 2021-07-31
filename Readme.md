@@ -30,6 +30,7 @@ The module consists of the following independent libraries (all in their own fea
 - [Dependency Injection Libraries](Lombiq.HelpfulLibraries/Docs/DependencyInjectionLibraries.md)
 - [Localization Libraries](Lombiq.HelpfulLibraries/Docs/LocalizationLibraries.md)
 - [Method Provider Libraries](Lombiq.HelpfulLibraries/Docs/MethodProviderLibraries.md)
+- [Middlewares](Lombiq.HelpfulLibraries/Docs/Middlewares.md)
 - [MVC Libraries](Lombiq.HelpfulLibraries/Docs/MvcLibraries.md)
 - [Resource Management Libraries](Lombiq.HelpfulLibraries/Docs/ResourceManagementLibraries.md)
 - [User Libraries](Lombiq.HelpfulLibraries/Docs/UserLibraries.md)
