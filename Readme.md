@@ -24,6 +24,7 @@ Various libraries that can be handy when developing for Orchard Core CMS, to be 
 
 The module consists of the following independent libraries (all in their own features):
 
+- [ASP.NET Core Libraries](Lombiq.HelpfulLibraries/Docs/AspNetCoreLibraries.md)
 - [Contents Libraries](Lombiq.HelpfulLibraries/Docs/ContentsLibraries.md)
 - [Database Libraries](Lombiq.HelpfulLibraries/Docs/DatabaseLibraries.md)
 - [DateTime Libraries](Lombiq.HelpfulLibraries/Docs/DateTimeLibraries.md)
