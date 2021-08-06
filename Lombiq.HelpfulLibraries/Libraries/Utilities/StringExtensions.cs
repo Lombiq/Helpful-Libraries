@@ -36,9 +36,11 @@ namespace System
             text != null && !string.IsNullOrEmpty(value) && text.StartsWith(value, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
-        /// A shortcut for <c>string.Equals(string, StringComparison.OrdinalIgnoreCase)</c>.
+        /// A shortcut for <c>string.Equals(string, StringComparison.OrdinalIgnoreCase)</c>. Also returns <see
+        /// langword="true"/> if both are <see langword="null"/>.
         /// </summary>
         public static bool EqualsOrdinalIgnoreCase(this string? text, string? value) =>
-            text != null && !string.IsNullOrEmpty(value) && text.Equals(value, StringComparison.OrdinalIgnoreCase);
+            (text == null && value == null) ||
+            (text != null && value != null && text.Equals(value, StringComparison.OrdinalIgnoreCase));
     }
 }
