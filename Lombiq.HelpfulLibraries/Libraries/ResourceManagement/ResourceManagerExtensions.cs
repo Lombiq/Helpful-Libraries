@@ -6,7 +6,7 @@ namespace OrchardCore.ResourceManagement
         /// Registers a <c>stylesheet</c> resource by name at head.
         /// </summary>
         public static RequireSettings RegisterStyle(this IResourceManager resourceManager, string resourceName) =>
-            resourceManager.RegisterResource("stylesheet", resourceName).AtHead();
+            resourceManager.RegisterResource("stylesheet", resourceName);
 
         /// <summary>
         /// Registers a <c>script</c> resource by name at the given <paramref name="location"/> (at foot by default).
