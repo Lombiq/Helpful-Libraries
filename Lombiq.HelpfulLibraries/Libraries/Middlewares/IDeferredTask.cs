@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using System.Threading.Tasks;
 
-namespace Lombiq.HelpfulLibraries.Libraries.Middleware
+namespace Lombiq.HelpfulLibraries.Libraries.Middlewares
 {
     /// <summary>
     /// A task that can be executed in the return edge of the middleware pipeline.
