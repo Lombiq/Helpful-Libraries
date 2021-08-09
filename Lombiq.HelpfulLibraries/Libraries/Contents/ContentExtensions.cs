@@ -159,7 +159,7 @@ namespace OrchardCore.ContentManagement
         ///     </item>
         /// </list>
         /// </returns>
-        public static DateTime GetDateTime(this IContent content) =>
+        public static DateTime GetDateTimeUtc(this IContent content) =>
             content.ContentItem.ModifiedUtc ??
             content.ContentItem.PublishedUtc ??
             content.ContentItem.CreatedUtc ??
