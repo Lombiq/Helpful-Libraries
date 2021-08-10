@@ -105,7 +105,10 @@ namespace YesSql
             var dialect = session.Store.Configuration.SqlDialect;
             var content = session.Store.Configuration.ContentSerializer.Serialize(entity);
 
-            var sql = @$"UPDATE {dialect.QuoteForTableName(session.Store.Configuration.TablePrefix + session.Store.Configuration.TableNameConvention.GetDocumentTable())}
+            var tableName = session.Store.Configuration.TablePrefix +
+                session.Store.Configuration.TableNameConvention.GetDocumentTable();
+
+            var sql = @$"UPDATE {dialect.QuoteForTableName(tableName)}
                 SET {dialect.QuoteForColumnName("Content")} = @Content
                 WHERE {dialect.QuoteForColumnName("Id")} = @Id";
 
