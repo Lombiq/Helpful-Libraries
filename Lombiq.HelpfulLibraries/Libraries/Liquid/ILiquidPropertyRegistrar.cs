@@ -7,7 +7,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Liquid
 {
     /// <summary>
     /// A service that supplies the getter for a Liquid property. Use it along with the <see
-    /// cref="LiquidPropertyRegistrarServiceCollectionExtensions.RegisterLiquidPropertyAccessor{TService}"/> extension.
+    /// cref="LiquidServiceCollectionExtensions.RegisterLiquidPropertyAccessor{TService}"/> extension.
     /// </summary>
     public interface ILiquidPropertyRegistrar
     {

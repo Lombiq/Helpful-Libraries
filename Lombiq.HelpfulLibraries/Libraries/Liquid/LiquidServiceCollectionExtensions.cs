@@ -7,7 +7,7 @@ using System.Linq;
 
 namespace Microsoft.Extensions.DependencyInjection
 {
-    public static class LiquidPropertyRegistrarServiceCollectionExtensions
+    public static class LiquidServiceCollectionExtensions
     {
         public static void RegisterLiquidPropertyAccessor<TService>(this IServiceCollection services, string name)
             where TService : class, ILiquidPropertyRegistrar
