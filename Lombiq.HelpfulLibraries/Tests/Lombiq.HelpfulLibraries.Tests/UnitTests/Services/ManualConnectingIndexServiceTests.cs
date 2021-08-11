@@ -26,7 +26,7 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
         });
 
         [Fact]
-        public Task AllIndexShouldRetreiveItsDocument() => _fixture.SessionAsync(async session =>
+        public Task AllIndexShouldRetrieveItsDocument() => _fixture.SessionAsync(async session =>
         {
             // In the example 3's index was intentionally skipped and 6's index was deleted after the fact.
             var numbers = Enumerable.Range(0, 10).Where(i => i is not 3 and not 6).ToList();
