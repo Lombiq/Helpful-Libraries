@@ -26,19 +26,19 @@ namespace System
         /// <summary>
         /// A shortcut for <c>string.Contains(string, StringComparison.OrdinalIgnoreCase)</c>.
         /// </summary>
-        public static bool ContainsOrdinalIgnoreCase(this string? text, string? value) =>
-            text != null && !string.IsNullOrEmpty(value) && text.Contains(value, StringComparison.OrdinalIgnoreCase);
+        public static bool ContainsOrdinalIgnoreCase(this string text, string value) =>
+            text.Contains(value, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         /// A shortcut for <c>string.StartsWith(string, StringComparison.OrdinalIgnoreCase)</c>.
         /// </summary>
-        public static bool StartsWithOrdinalIgnoreCase(this string? text, string? value) =>
-            text != null && !string.IsNullOrEmpty(value) && text.StartsWith(value, StringComparison.OrdinalIgnoreCase);
+        public static bool StartsWithOrdinalIgnoreCase(this string text, string value) =>
+            text.StartsWith(value, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         /// A shortcut for <c>string.Equals(string, StringComparison.OrdinalIgnoreCase)</c>.
         /// </summary>
-        public static bool EqualsOrdinalIgnoreCase(this string? text, string? value) =>
-            text != null && !string.IsNullOrEmpty(value) && text.Equals(value, StringComparison.OrdinalIgnoreCase);
+        public static bool EqualsOrdinalIgnoreCase(this string text, string? value) =>
+            text.Equals(value, StringComparison.OrdinalIgnoreCase);
     }
 }
