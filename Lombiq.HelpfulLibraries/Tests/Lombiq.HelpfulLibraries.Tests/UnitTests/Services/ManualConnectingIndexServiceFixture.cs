@@ -103,7 +103,9 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
 
                 var index = new TestDocumentIndex
                 {
-                    Number = int.Parse(Documents[i].Name.Replace(NamePrefix, string.Empty, StringComparison.InvariantCulture), CultureInfo.InvariantCulture),
+                    Number = int.Parse(
+                        Documents[i].Name.Replace(NamePrefix, string.Empty, StringComparison.InvariantCulture),
+                        CultureInfo.InvariantCulture),
                 };
 
                 await SessionAsync(session => manualConnectingIndexService.AddAsync(index, session, i + 1));
