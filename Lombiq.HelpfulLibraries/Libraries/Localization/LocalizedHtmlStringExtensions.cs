@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Html;
+using Microsoft.AspNetCore.Html;
 using Newtonsoft.Json;
 
 namespace Microsoft.AspNetCore.Mvc.Localization
@@ -10,6 +10,6 @@ namespace Microsoft.AspNetCore.Mvc.Localization
         /// tags in a Razor view.
         /// </summary>
         public static IHtmlContent Json(this LocalizedHtmlString htmlString) =>
-            new HtmlString(JsonConvert.SerializeObject(htmlString.Value));
+            new HtmlString(JsonConvert.SerializeObject(htmlString?.Value));
     }
 }
