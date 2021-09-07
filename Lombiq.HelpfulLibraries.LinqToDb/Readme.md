@@ -1,10 +1,10 @@
-# LinqToDb - Lombiq Helpful Libraries for Orchard Core
+# LINQ to DB - Lombiq Helpful Libraries for Orchard Core
 
 
 
 ## About
 
-With the help of this module you can write LINQ expressions and run it with an `ISession` extension method to query from the DB instead of writing plain SQL queries.
+With the help of this project you can write LINQ expressions and run it with an `ISession` extension method to query from the DB instead of writing plain SQL queries. Uses the [LINQ to DB project](https://linq2db.github.io/).
 
 
 ## Documentation
