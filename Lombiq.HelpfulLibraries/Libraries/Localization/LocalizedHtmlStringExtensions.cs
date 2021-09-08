@@ -13,9 +13,16 @@ namespace Microsoft.AspNetCore.Mvc.Localization
         /// </summary>
         public static IHtmlContent Json(this LocalizedHtmlString htmlString)
         {
-            using var stringWriter = new StringWriter();
-            htmlString.WriteTo(stringWriter, HtmlEncoder.Default);
-            return new HtmlString(JsonConvert.SerializeObject(stringWriter.ToString()));
+            if (htmlString != null)
+            {
+                using var stringWriter = new StringWriter();
+                htmlString.WriteTo(stringWriter, HtmlEncoder.Default);
+                return new HtmlString(JsonConvert.SerializeObject(stringWriter.ToString()));
+            }
+            else
+            {
+                return new HtmlString("null");
+            }
         }
     }
 }
