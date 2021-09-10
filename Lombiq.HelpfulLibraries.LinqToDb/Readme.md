@@ -1,10 +1,10 @@
-# LinqToDb - Lombiq HelpfulLibraries for Orchard Core
+# LINQ to DB - Lombiq Helpful Libraries for Orchard Core
 
 
 
 ## About
 
-With the help of this module you can write LINQ expressions and run it with an `ISession` extension method to query from the DB instead of writing plain SQL queries.
+With the help of this project you can write LINQ expressions and run it with an `ISession` extension method to query from the DB instead of writing plain SQL queries. Uses the [LINQ to DB project](https://linq2db.github.io/).
 
 
 ## Documentation
@@ -22,24 +22,26 @@ public class LinqToDbSamplesController
 
     public async Task<ActionResult> SimpleQuery()
     {
-        var result = await _session.LinqQueryAsync<AutoroutePartIndex>(
+        var result = await _session.LinqQueryAsync(
             accessor => accessor
                 .GetTable<AutoroutePartIndex>()
                 .Where(index => index.Path.Contains("a", StringComparison.OrdinalIgnoreCase))
-                .OrderByDescending(index => index.Path));
+                .OrderByDescending(index => index.Path)
+                .ToListAsync());
 
         return Ok(result);
     }
 
     public async Task<ActionResult> JoinQuery()
     {
-        var result = await _session.LinqQueryAsync<string>(
+        var result = await _session.LinqQueryAsync(
             accessor =>
-                from contentItemIndex in accessor.GetTable<ContentItemIndex>()
-                join autoroutePartIndex in accessor.GetTable<AutoroutePartIndex>()
-                    on contentItemIndex.ContentItemId equals autoroutePartIndex.ContentItemId
-                where autoroutePartIndex.Path.StartsWith("press-release/", StringComparison.OrdinalIgnoreCase)
-                select contentItemIndex.DisplayText);
+                (from contentItemIndex in accessor.GetTable<ContentItemIndex>()
+                    join autoroutePartIndex in accessor.GetTable<AutoroutePartIndex>()
+                        on contentItemIndex.ContentItemId equals autoroutePartIndex.ContentItemId
+                    where autoroutePartIndex.Path.StartsWith("tags/", StringComparison.OrdinalIgnoreCase)
+                    select contentItemIndex.DisplayText)
+                .ToListAsync());
 
         return Ok(result);
     }

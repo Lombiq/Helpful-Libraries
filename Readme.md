@@ -4,7 +4,11 @@
 
 ## About
 
-Various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules. Note that this module has an Orchard 1 version in the [dev-orchard-1 branch](https://github.com/Lombiq/Helpful-Libraries/tree/dev-orchard-1).
+Various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules.
+
+Do you want to quickly try out this project and see it in action? Check it out in our [Open-Source Orchard Core Extensions](https://github.com/Lombiq/Open-Source-Orchard-Core-Extensions) full Orchard Core solution and also see our other useful Orchard Core-related open-source projects!
+
+Note that this module has an Orchard 1 version in the [dev-orchard-1 branch](https://github.com/Lombiq/Helpful-Libraries/tree/dev-orchard-1).
 
 
 ## Includes:

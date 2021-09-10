@@ -3,7 +3,6 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
-    <RootNamespace>Lombiq.HelpfulLibraries.Linq2Db</RootNamespace>
   </PropertyGroup>
   
   <ItemGroup>

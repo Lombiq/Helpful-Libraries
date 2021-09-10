@@ -105,7 +105,10 @@ namespace YesSql
             var dialect = session.Store.Configuration.SqlDialect;
             var content = session.Store.Configuration.ContentSerializer.Serialize(entity);
 
-            var sql = @$"UPDATE {dialect.QuoteForTableName(session.Store.Configuration.TablePrefix + session.Store.Configuration.TableNameConvention.GetDocumentTable())}
+            var tableName = session.Store.Configuration.TablePrefix +
+                session.Store.Configuration.TableNameConvention.GetDocumentTable();
+
+            var sql = @$"UPDATE {dialect.QuoteForTableName(tableName)}
                 SET {dialect.QuoteForColumnName("Content")} = @Content
                 WHERE {dialect.QuoteForColumnName("Id")} = @Id";
 
@@ -191,10 +194,6 @@ namespace YesSql
         "Design",
         "CA1032:Implement standard exception constructors",
         Justification = "The exception is used in a very particular single case.")]
-    [SuppressMessage(
-        "Major Code Smell",
-        "S3925:\"ISerializable\" should be implemented correctly",
-        Justification = "There's no need to make this class serializable.")]
     public class RawQueryException : DbException
     {
         public override IDictionary Data { get; }
