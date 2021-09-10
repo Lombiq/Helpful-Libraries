@@ -34,7 +34,7 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
             var list = await query.ListAsync();
             var documents = list.ToList();
             documents.Select(x => x.Name)
-                .ShouldBe(_fixture.Documents.Where((x, i) => i is not 3 and not 6).Select(x => x.Name));
+                .ShouldBe(_fixture.Documents.Where((_, index) => index is not 3 and not 6).Select(x => x.Name));
         });
 
         [Fact]

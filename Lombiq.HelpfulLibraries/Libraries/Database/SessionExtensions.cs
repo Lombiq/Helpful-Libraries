@@ -32,13 +32,14 @@ namespace YesSql
         /// <returns>The result set of the query, rows mapped to <typeparamref name="TRow"/>.</returns>
         public static async Task<IEnumerable<TRow>> RawQueryAsync<TRow>(
             this ISession session,
+            ISqlDialect dialect,
             string sql,
             IDictionary<string, object> parameters = null,
             Func<(string ParsedQuery, IDbTransaction Transaction), Task<IEnumerable<TRow>>> queryExecutor = null,
             DbTransaction transaction = null)
         {
             transaction ??= await session.BeginTransactionAsync();
-            var query = GetQuery(sql, transaction, session);
+            var query = GetQuery(sql, dialect, session);
 
             return queryExecutor == null
                 ? await transaction.Connection.QueryAsync<TRow>(query, parameters, transaction)
@@ -61,21 +62,20 @@ namespace YesSql
             DbTransaction transaction = null)
         {
             transaction ??= await session.BeginTransactionAsync();
-            var dialect = TransactionSqlDialectFactory.For(transaction);
             var prefix = session.Store.Configuration.TablePrefix;
-            var query = getSqlQuery(transaction, dialect, prefix);
+            var query = getSqlQuery(transaction, prefix);
 
             return await transaction.Connection.ExecuteAsync(query, parameters, transaction);
         }
 
         private static string GetQuery(
             string sql,
-            DbTransaction transaction,
+            ISqlDialect dialect,
             ISession session)
         {
             var parserResult = SqlParser.TryParse(
                 sql,
-                TransactionSqlDialectFactory.For(transaction),
+                dialect,
                 session.Store.Configuration.TablePrefix,
                 parameters: null,
                 out var query,
@@ -205,5 +205,5 @@ namespace YesSql
                 .ToDictionary(messageItem => messageItem.index, messageItem => messageItem.errorMessage);
     }
 
-    public delegate string GetSqlQuery(IDbTransaction transaction, ISqlDialect dialect, string prefix);
+    public delegate string GetSqlQuery(IDbTransaction transaction, string prefix);
 }

@@ -20,6 +20,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
         private readonly Dictionary<string, PropertyInfo> _properties;
         private readonly IDbConnectionAccessor _dbAccessor;
         private readonly ILogger _logger;
+        private readonly ISqlDialect _dialect;
         private readonly string _keys;
 
         private string _documentIdKey;
@@ -28,7 +29,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
 
         public ManualConnectingIndexService(
             IDbConnectionAccessor dbAccessor,
-            ILogger<ManualConnectingIndexService<T>> logger)
+            ILogger<ManualConnectingIndexService<T>> logger,
+            ISqlDialect dialect)
         {
             _type = typeof(T);
             _properties = _type
@@ -38,11 +40,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
 
             _dbAccessor = dbAccessor;
             _logger = logger;
+            _dialect = dialect;
             _keys = string.Join(", ", _properties.Keys.Select(key => "@" + key));
         }
 
         public Task AddAsync(T item, ISession session, int? setDocumentId = null) =>
-            RunTransactionAsync(session, async (connection, transaction, dialect, name) =>
+            RunTransactionAsync(session, _dialect, async (connection, transaction, dialect, name) =>
             {
                 _documentIdKey ??= dialect.QuoteForColumnName("DocumentId");
                 _columns ??= string.Join(", ", _properties.Keys.Select(dialect.QuoteForColumnName));
@@ -65,7 +68,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
             });
 
         public Task RemoveAsync(string columnName, object value, ISession session) =>
-            RunTransactionAsync(session, (connection, transaction, dialect, name) =>
+            RunTransactionAsync(session, _dialect, (connection, transaction, dialect, name) =>
             connection.ExecuteAsync(
                 $"DELETE FROM {name} WHERE {dialect.QuoteForColumnName(columnName)} = @value",
                 new { value },
@@ -73,14 +76,15 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
 
         private async Task<TOut> RunTransactionAsync<TOut>(
             ISession session,
+            ISqlDialect dialect,
             Func<DbConnection, DbTransaction, ISqlDialect, string, Task<TOut>> request)
         {
             async Task<TOut> Run(
                 DbTransaction transaction,
+                ISqlDialect dialect,
                 bool doCommit,
                 Func<DbConnection, DbTransaction, ISqlDialect, string, Task<TOut>> request)
             {
-                var dialect = TransactionSqlDialectFactory.For(transaction);
                 _tablePrefix ??= session?.Store.Configuration.TablePrefix;
                 var quotedTableName = dialect.QuoteForTableName(_tablePrefix + _type.Name);
 
@@ -89,12 +93,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
                 return result;
             }
 
-            if (session != null) return await Run(await session.BeginTransactionAsync(), false, request);
+            if (session != null) return await Run(await session.BeginTransactionAsync(), dialect, false, request);
 
             await using var connection = _dbAccessor.CreateConnection();
             await connection.OpenAsync();
             await using var transaction = await connection.BeginTransactionAsync();
-            return await Run(transaction, true, request);
+            return await Run(transaction, dialect, true, request);
         }
     }
 }
