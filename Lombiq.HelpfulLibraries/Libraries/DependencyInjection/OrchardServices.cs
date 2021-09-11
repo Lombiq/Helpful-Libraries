@@ -6,7 +6,7 @@ using OrchardCore.ContentManagement;
 using OrchardCore.Modules;
 using OrchardCore.Settings;
 using System;
-using YesSql;
+using System.Diagnostics.CodeAnalysis;
 using ISession = YesSql.ISession;
 
 namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
@@ -19,12 +19,11 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         public Lazy<IHttpContextAccessor> HttpContextAccessor { get; }
         public Lazy<ILogger<T>> Logger { get; }
         public Lazy<ISession> Session { get; }
-        public Lazy<ISqlDialect> Dialect { get; }
         public Lazy<ISiteService> SiteService { get; }
         public Lazy<IStringLocalizer<T>> StringLocalizer { get; }
         public Lazy<IHtmlLocalizer<T>> HtmlLocalizer { get; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Major Code Smell",
             "S107:Methods should not have too many parameters",
             Justification = "These are the most common Orchard services.")]
@@ -35,7 +34,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             Lazy<IHttpContextAccessor> httpContextAccessor,
             Lazy<ILogger<T>> logger,
             Lazy<ISession> session,
-            Lazy<ISqlDialect> dialect,
             Lazy<ISiteService> siteService,
             Lazy<IStringLocalizer<T>> stringLocalizer,
             Lazy<IHtmlLocalizer<T>> htmlLocalizer)
@@ -46,7 +44,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             HttpContextAccessor = httpContextAccessor;
             Logger = logger;
             Session = session;
-            Dialect = dialect;
             SiteService = siteService;
             StringLocalizer = stringLocalizer;
             HtmlLocalizer = htmlLocalizer;

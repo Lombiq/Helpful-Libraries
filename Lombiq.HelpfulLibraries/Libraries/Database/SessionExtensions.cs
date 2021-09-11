@@ -32,14 +32,13 @@ namespace YesSql
         /// <returns>The result set of the query, rows mapped to <typeparamref name="TRow"/>.</returns>
         public static async Task<IEnumerable<TRow>> RawQueryAsync<TRow>(
             this ISession session,
-            ISqlDialect dialect,
             string sql,
             IDictionary<string, object> parameters = null,
             Func<(string ParsedQuery, IDbTransaction Transaction), Task<IEnumerable<TRow>>> queryExecutor = null,
             DbTransaction transaction = null)
         {
             transaction ??= await session.BeginTransactionAsync();
-            var query = GetQuery(sql, dialect, session);
+            var query = GetQuery(sql, session);
 
             return queryExecutor == null
                 ? await transaction.Connection.QueryAsync<TRow>(query, parameters, transaction)
@@ -70,12 +69,11 @@ namespace YesSql
 
         private static string GetQuery(
             string sql,
-            ISqlDialect dialect,
             ISession session)
         {
             var parserResult = SqlParser.TryParse(
                 sql,
-                dialect,
+                session.Store.Configuration.SqlDialect,
                 session.Store.Configuration.TablePrefix,
                 parameters: null,
                 out var query,

@@ -95,8 +95,7 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
 
             var manualConnectingIndexService = new ManualConnectingIndexService<TestDocumentIndex>(
                 dbAccessor,
-                new NullLogger<ManualConnectingIndexService<TestDocumentIndex>>(),
-                new SqliteDialect());
+                new NullLogger<ManualConnectingIndexService<TestDocumentIndex>>());
             for (var i = 0; i < Documents.Count; i++)
             {
                 if (i == 3) continue;

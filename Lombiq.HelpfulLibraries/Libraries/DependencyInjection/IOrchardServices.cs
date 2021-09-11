@@ -7,7 +7,6 @@ using OrchardCore.Modules;
 using OrchardCore.Settings;
 using System;
 using System.Diagnostics.CodeAnalysis;
-using YesSql;
 using ISession = YesSql.ISession;
 
 namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
@@ -28,7 +27,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         Lazy<IHttpContextAccessor> HttpContextAccessor { get; }
         Lazy<ILogger<T>> Logger { get; }
         Lazy<ISession> Session { get; }
-        Lazy<ISqlDialect> Dialect { get; }
         Lazy<ISiteService> SiteService { get; }
         Lazy<IStringLocalizer<T>> StringLocalizer { get; }
         Lazy<IHtmlLocalizer<T>> HtmlLocalizer { get; }

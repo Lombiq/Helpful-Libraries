@@ -21,7 +21,6 @@ namespace Moq.AutoMock
                     new Lazy<IHttpContextAccessor>(() => mocker.Get<IHttpContextAccessor>(true)),
                     new Lazy<ILogger<T>>(mocker.Get<ILogger<T>>),
                     new Lazy<YesSql.ISession>(mocker.Get<YesSql.ISession>),
-                    new Lazy<YesSql.ISqlDialect>(mocker.Get<YesSql.ISqlDialect>),
                     new Lazy<ISiteService>(mocker.Get<ISiteService>),
                     new Lazy<IStringLocalizer<T>>(mocker.Get<IStringLocalizer<T>>),
                     new Lazy<IHtmlLocalizer<T>>(mocker.Get<IHtmlLocalizer<T>>)));
