@@ -46,5 +46,11 @@ namespace System
         /// </summary>
         public static bool EndsWithOrdinalIgnoreCase(this string text, string value) =>
             text.EndsWith(value, StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// A shortcut for <c>string.Replace(string, string, StringComparison.OrdinalIgnoreCase)</c>.
+        /// </summary>
+        public static string ReplaceOrdinalIgnoreCase(this string text, string oldValue, string? newValue) =>
+            text.Replace(oldValue, newValue, StringComparison.OrdinalIgnoreCase);
     }
 }
