@@ -6,7 +6,7 @@ using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Folkways.Collection.Extensions
+namespace OrchardCore.ContentManagement
 {
     /// <summary>
     /// Uses the <see cref="IContentManagerSession"/> scoped cache around any <see cref="ContentItem"/> query done
