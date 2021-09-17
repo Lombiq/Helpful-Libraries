@@ -164,5 +164,14 @@ namespace OrchardCore.ContentManagement
             content.ContentItem.PublishedUtc ??
             content.ContentItem.CreatedUtc ??
             DateTime.MinValue;
+
+        /// <summary>
+        /// Indicates whether the <see cref="ContentItem"/> is a newly created one or an already existing one.
+        /// </summary>
+        /// <returns>Returns true if the item is new.</returns>
+        public static bool IsNew(this IContent content) =>
+            !content.ContentItem.Latest &&
+            !content.ContentItem.Published &&
+            content.ContentItem.Id == 0;
     }
 }
