@@ -166,9 +166,9 @@ namespace OrchardCore.ContentManagement
             DateTime.MinValue;
 
         /// <summary>
-        /// Indicates whether the <see cref="ContentItem"/> is a newly created one or an already existing one.
+        /// Indicates whether the <see cref="ContentItem"/> is a newly instantiated one or an already existing one.
         /// </summary>
-        /// <returns>Returns true if the item is new.</returns>
+        /// <returns>Returns <see langword="true"/> if the item is new.</returns>
         public static bool IsNew(this IContent content) =>
             !content.ContentItem.Latest &&
             !content.ContentItem.Published &&
