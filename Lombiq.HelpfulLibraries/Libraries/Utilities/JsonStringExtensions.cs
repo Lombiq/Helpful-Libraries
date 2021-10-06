@@ -10,6 +10,7 @@ namespace System
         /// tags in a Razor view.
         /// </summary>
         public static IHtmlContent JsonHtmlContent(this string htmlString) =>
-            new HtmlString(JsonConvert.SerializeObject(htmlString));
+            new HtmlString(JsonConvert.SerializeObject(
+                htmlString, new JsonSerializerSettings { StringEscapeHandling = StringEscapeHandling.EscapeHtml }));
     }
 }
