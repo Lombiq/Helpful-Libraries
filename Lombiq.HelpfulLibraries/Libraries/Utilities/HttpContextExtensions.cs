@@ -37,6 +37,9 @@ namespace Microsoft.AspNetCore.Http
             return (T)httpContext.Items.GetMaybe(GetContentSessionDataKey(content));
         }
 
+        public static bool ContainsContentSessionData(this HttpContext httpContext, IContent content) =>
+            httpContext.Items.ContainsKey(GetContentSessionDataKey(content));
+
         private static string GetContentSessionDataKey(IContent content) =>
             content.ContentItem.ContentType + ContentSessionDataInfix + content.ContentItem.ContentItemId;
     }
