@@ -31,9 +31,11 @@ namespace OrchardCore.ContentManagement
             string taxonomyAlias)
         {
             var taxonomyContentItemId = await contentHandleManager.GetContentItemIdAsync($"alias:{taxonomyAlias}");
-            var taxonomy = await contentManager.GetAsync(taxonomyContentItemId);
+            var taxonomy = string.IsNullOrEmpty(taxonomyContentItemId)
+                ? null
+                : await contentManager.GetAsync(taxonomyContentItemId);
 
-            return taxonomy.As<TaxonomyPart>().Terms;
+            return taxonomy?.As<TaxonomyPart>()?.Terms;
         }
     }
 }
