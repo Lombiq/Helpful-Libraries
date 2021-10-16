@@ -39,9 +39,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
                 throw new ArgumentException($"{nameof(columnNames)} must contain at least one column name");
             }
 
-            return schemaBuilder.AlterTable(nameof(TTable), table => table
+            return schemaBuilder.AlterTable(typeof(TTable).Name, table => table
                 .CreateIndex(
-                    $"IDX_{nameof(TTable)}_{string.Join("_", columnNames)}",
+                    $"IDX_{typeof(TTable).Name}_{string.Join("_", columnNames)}",
                     columnNames));
         }
     }
