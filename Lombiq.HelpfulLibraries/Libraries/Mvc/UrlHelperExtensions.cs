@@ -27,6 +27,9 @@ namespace Microsoft.AspNetCore.Mvc.Routing
             return $"{url}#tab-{tabIdPart.HtmlClassify()}-{content.ContentItem.ContentItemId}";
         }
 
+        /// <summary>
+        /// Returns the URL for the <see cref="ContentItem"/> display page for the given <paramref name="content"/>.
+        /// </summary>
         public static string DisplayContentItem(this IUrlHelper helper, IContent content) =>
             helper.Action(
                 "Display",
