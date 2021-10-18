@@ -11,9 +11,10 @@ namespace System
         public static string ToTechnicalString(this int number) => number.ToString(CultureInfo.InvariantCulture);
 
         /// <summary>
-        /// Returns culture-invariant <see cref="int"/> created from the specified <see cref="string"/>.
+        /// Returns the result if the <paramref name="number"/> can be parsed to <see cref="int"/>. Returns -1 if the
+        /// parse failed.
         /// </summary>
-        /// <param name="number">The number as <see cref="string"/> to parse to <see cref="int"/>.</param>
-        public static int ToTechnicalInt(this string number) => int.Parse(number, CultureInfo.InvariantCulture);
+        public static int ToTechnicalInt(this string number) =>
+            int.TryParse(number, NumberStyles.Any, CultureInfo.InvariantCulture, out var result) ? result : -1;
     }
 }
