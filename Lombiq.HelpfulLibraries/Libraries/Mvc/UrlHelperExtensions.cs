@@ -33,7 +33,7 @@ namespace Microsoft.AspNetCore.Mvc.Routing
         public static string DisplayContentItem(this IUrlHelper helper, IContent content) =>
             helper.Action(
                 "Display",
-                "ItemController",
+                "Item",
                 new
                 {
                     area = OrchardCoreContentsArea,
