@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement;
 using OrchardCore.Modules;
 using OrchardCore.Settings;
+using OrchardCore.Users;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using ISession = YesSql.ISession;
@@ -30,5 +32,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         Lazy<ISiteService> SiteService { get; }
         Lazy<IStringLocalizer<T>> StringLocalizer { get; }
         Lazy<IHtmlLocalizer<T>> HtmlLocalizer { get; }
+        Lazy<UserManager<IUser>> UserManager { get; }
     }
 }
