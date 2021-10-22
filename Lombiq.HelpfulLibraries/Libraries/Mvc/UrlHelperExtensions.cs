@@ -7,6 +7,8 @@ namespace Microsoft.AspNetCore.Mvc.Routing
 {
     public static class UrlHelperExtensions
     {
+        private const string OrchardCoreContentsArea = "OrchardCore.Contents";
+
         /// <summary>
         /// Returns a relative URL for the editor action of <paramref name="content"/> with the tab of
         /// <paramref name="tabIdPart"/> selected.
@@ -19,10 +21,23 @@ namespace Microsoft.AspNetCore.Mvc.Routing
                 typeof(AdminController).ControllerName(),
                 new
                 {
-                    area = "OrchardCore.Contents",
+                    area = OrchardCoreContentsArea,
                     content.ContentItem.ContentItemId,
                 });
             return $"{url}#tab-{tabIdPart.HtmlClassify()}-{content.ContentItem.ContentItemId}";
         }
+
+        /// <summary>
+        /// Returns the URL for the <see cref="ContentItem"/> display page for the given <paramref name="content"/>.
+        /// </summary>
+        public static string DisplayContentItem(this IUrlHelper helper, IContent content) =>
+            helper.Action(
+                "Display",
+                "Item",
+                new
+                {
+                    area = OrchardCoreContentsArea,
+                    content.ContentItem.ContentItemId,
+                });
     }
 }

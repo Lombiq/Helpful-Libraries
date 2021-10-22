@@ -123,5 +123,21 @@ namespace System.Collections.Generic
             if (dictionary.ContainsKey(key)) return;
             dictionary[key] = await valueFactory(key);
         }
+
+        /// <summary>
+        /// Adds several entries to the dictionary (e.g. from another dictionary). This uses <see
+        /// cref="Dictionary{TKey,TValue}.Add"/> so duplicate keys are not permitted. It is safe if the <paramref
+        /// name="additionalEntries"/> is <see langword="null"/>, nothing will happen.
+        /// </summary>
+        public static void AddRange<TKey, TValue>(
+            this IDictionary<TKey, TValue> dictionary,
+            IEnumerable<KeyValuePair<TKey, TValue>> additionalEntries)
+        {
+            if (additionalEntries == null) return;
+            foreach (var (key, value) in additionalEntries)
+            {
+                dictionary.Add(key, value);
+            }
+        }
     }
 }
