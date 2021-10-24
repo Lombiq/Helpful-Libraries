@@ -189,5 +189,20 @@ namespace System.Collections.Generic
         public static IEnumerable<ContentItem> GetSingleValues<TKey>(
             this IEnumerable<IGrouping<TKey, ContentItem>> lookup) =>
             lookup.Select(item => item.Single());
+
+        /// <summary>
+        /// A simple conditional enumeration where the items are <see langword="yield"/>ed from the <paramref
+        /// name="collection"/> if the <paramref name="negativePredicate"/> returns <see langword="false"/>.
+        /// </summary>
+        public static IEnumerable<T> WhereNot<T>(this IEnumerable<T> collection, Func<T, bool> negativePredicate)
+        {
+            foreach (var item in collection)
+            {
+                if (!negativePredicate(item))
+                {
+                    yield return item;
+                }
+            }
+        }
     }
 }
