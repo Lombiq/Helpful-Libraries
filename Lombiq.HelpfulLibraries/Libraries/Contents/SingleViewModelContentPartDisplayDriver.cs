@@ -19,6 +19,7 @@ namespace OrchardCore.ContentManagement.Display.ContentDisplay
         /// <summary>
         /// Performs the update activity and returns any model state errors.
         /// </summary>
+        /// <returns>A collection of custom validation errors, or <see langword="null"/>.</returns>
         protected abstract Task<IEnumerable<(string Key, string Error)>> UpdateAsync(
             TPart part,
             TViewModel viewModel,
@@ -30,9 +31,10 @@ namespace OrchardCore.ContentManagement.Display.ContentDisplay
             UpdatePartEditorContext context)
         {
             var viewModel = new TViewModel();
-            if (await updater.TryUpdateModelAsync(viewModel, Prefix))
+            if (await updater.TryUpdateModelAsync(viewModel, Prefix) &&
+                await UpdateAsync(part, viewModel, context) is { } updateResults)
             {
-                foreach (var (key, error) in await UpdateAsync(part, viewModel, context))
+                foreach (var (key, error) in updateResults)
                 {
                     updater.ModelState.AddModelError(key, error);
                 }
