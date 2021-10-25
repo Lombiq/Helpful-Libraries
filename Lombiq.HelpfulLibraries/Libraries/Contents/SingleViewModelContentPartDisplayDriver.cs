@@ -6,6 +6,12 @@ using System.Threading.Tasks;
 
 namespace OrchardCore.ContentManagement.Display.ContentDisplay
 {
+    /// <summary>
+    /// A version of <see cref="ContentPartDisplayDriver{TPart}"/> where there is only one type of viewmodel used so the
+    /// <see cref="IUpdateModel.TryUpdateModelAsync{TModel}(TModel)"/> logic can be extracted in update.
+    /// </summary>
+    /// <typeparam name="TPart">The <see cref="ContentPart"/> to be edited.</typeparam>
+    /// <typeparam name="TViewModel">The designated viewmodel.</typeparam>
     public abstract class SingleViewModelContentPartDisplayDriver<TPart, TViewModel> : ContentPartDisplayDriver<TPart>
         where TPart : ContentPart, new()
         where TViewModel : class, new()
