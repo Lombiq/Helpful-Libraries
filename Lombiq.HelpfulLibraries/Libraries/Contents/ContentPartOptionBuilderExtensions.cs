@@ -10,10 +10,10 @@ namespace OrchardCore.ContentManagement
         /// Adds an <see cref="IIndexProvider"/> to the service collection while maintaining the call chain for the
         /// content part builder.
         /// </summary>
-        public static ContentPartOptionBuilder WithIndex<TIndex>(this ContentPartOptionBuilder builder)
-            where TIndex : class, IIndexProvider
+        public static ContentPartOptionBuilder WithIndex<TIndexProvider>(this ContentPartOptionBuilder builder)
+            where TIndexProvider : class, IIndexProvider
         {
-            builder.Services.AddSingleton<IIndexProvider, TIndex>();
+            builder.Services.AddSingleton<IIndexProvider, TIndexProvider>();
             return builder;
         }
 
@@ -32,9 +32,10 @@ namespace OrchardCore.ContentManagement
         /// Adds an <see cref="IDataMigration"/> and an <see cref="IIndexProvider"/> to the service collection while
         /// maintaining the call chain for the content part builder.
         /// </summary>
-        public static ContentPartOptionBuilder WithMigration<TMigration, TIndex>(this ContentPartOptionBuilder builder)
+        public static ContentPartOptionBuilder WithMigration<TMigration, TIndexProvider>(
+            this ContentPartOptionBuilder builder)
             where TMigration : IDataMigration
-            where TIndex : class, IIndexProvider =>
-            builder.WithMigration<TMigration>().WithIndex<TIndex>();
+            where TIndexProvider : class, IIndexProvider =>
+            builder.WithMigration<TMigration>().WithIndex<TIndexProvider>();
     }
 }
