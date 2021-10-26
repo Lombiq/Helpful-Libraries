@@ -46,10 +46,10 @@ namespace OrchardCore.ContentManagement
         /// </summary>
         public static async Task<string> GetTaxonomyTermDisplayTextAsync(
             this IContentManager contentManager,
-            IContentAliasManager contentAliasManager,
+            IContentHandleManager contentHandleManager,
             string alias,
             string termId) =>
-            (await contentManager.GetTaxonomyTermsAsync(contentAliasManager, alias))
+            (await contentManager.GetTaxonomyTermsAsync(contentHandleManager, alias))
             .FirstOrDefault(term => term.ContentItemId == termId)?
             .DisplayText;
     }
