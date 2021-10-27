@@ -24,9 +24,7 @@ namespace System.Collections.Generic
             return results;
         }
 
-#pragma warning disable S103 // Lines should not be too long - when it's technically possible.
-        /// <inheritdoc cref="AwaitEachAsync{TItem,TResult}(System.Collections.Generic.IEnumerable{TItem},System.Func{TItem,System.Threading.Tasks.Task{TResult}})"/>
-#pragma warning restore S103 // Lines should not be too long - when it's technically possible.
+        /// <inheritdoc cref="AwaitEachAsync{TItem,TResult}(IEnumerable{TItem},Func{TItem,Task{TResult}})"/>
         public static async Task<IList<TResult>> AwaitEachAsync<TItem, TResult>(
             this IEnumerable<TItem> source,
             Func<TItem, int, Task<TResult>> asyncOperation)
