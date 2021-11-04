@@ -5,7 +5,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
 {
     /// <summary>
     /// Taxonomy-related helper functions.
-
     /// </summary>
     public interface ITaxonomyHelper
     {
