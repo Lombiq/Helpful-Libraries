@@ -9,6 +9,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
     {
         private readonly IContentAliasManager _contentAliasManager;
         private readonly IContentManager _contentManager;
+
         public TaxonomyHelper(IContentAliasManager contentAliasManager, IContentManager contentManager)
         {
             _contentAliasManager = contentAliasManager;
