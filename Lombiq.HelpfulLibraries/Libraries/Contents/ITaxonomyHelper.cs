@@ -4,7 +4,8 @@ using System.Threading.Tasks;
 namespace Lombiq.HelpfulLibraries.Libraries.Contents
 {
     /// <summary>
-    /// Taxonomy related helper functions.
+    /// Taxonomy-related helper functions.
+
     /// </summary>
     public interface ITaxonomyHelper
     {
