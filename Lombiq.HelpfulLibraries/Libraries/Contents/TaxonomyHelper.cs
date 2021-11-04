@@ -16,7 +16,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
             _contentManager = contentManager;
         }
 
-        public async Task<ContentItem> GetTermContentItemAsync(string alias, string termId)
+        public async Task<ContentItem> GetTermContentItemByTaxonomyAliasAsync(string alias, string termId)
         {
             var contentItemId = await _contentAliasManager.GetContentItemIdAsync($"alias:{alias}");
             var terms = (await _contentManager.GetAsync(contentItemId)).As<TaxonomyPart>().Terms;
