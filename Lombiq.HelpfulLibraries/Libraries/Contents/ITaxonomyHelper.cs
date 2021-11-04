@@ -12,6 +12,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
         /// <summary>
         /// Returns <see cref="ContentItem"/> by the given <paramref name="alias"/> and <paramref name="termId"/>.
         /// </summary>
-        Task<ContentItem> GetTermContentItemAsync(string alias, string termId);
+        Task<ContentItem> GetTermContentItemByTaxonomyAliasAsync(string alias, string termId);
     }
 }
