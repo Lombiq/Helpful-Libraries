@@ -1,10 +1,12 @@
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement;
 using OrchardCore.Modules;
 using OrchardCore.Settings;
+using OrchardCore.Users;
 using System;
 using ISession = YesSql.ISession;
 
@@ -21,6 +23,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         public Lazy<ISiteService> SiteService { get; }
         public Lazy<IStringLocalizer<T>> StringLocalizer { get; }
         public Lazy<IHtmlLocalizer<T>> HtmlLocalizer { get; }
+        public Lazy<UserManager<IUser>> UserManager { get; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Major Code Smell",
@@ -35,7 +38,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             Lazy<ISession> session,
             Lazy<ISiteService> siteService,
             Lazy<IStringLocalizer<T>> stringLocalizer,
-            Lazy<IHtmlLocalizer<T>> htmlLocalizer)
+            Lazy<IHtmlLocalizer<T>> htmlLocalizer,
+            Lazy<UserManager<IUser>> userManager)
         {
             Clock = clock;
             ContentAliasManager = contentAliasManager;
@@ -46,6 +50,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             SiteService = siteService;
             StringLocalizer = stringLocalizer;
             HtmlLocalizer = htmlLocalizer;
+            UserManager = userManager;
         }
     }
 }
