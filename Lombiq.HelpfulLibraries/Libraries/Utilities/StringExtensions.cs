@@ -40,22 +40,5 @@ namespace System
         /// </summary>
         public static bool EqualsOrdinalIgnoreCase(this string text, string? value) =>
             text.Equals(value, StringComparison.OrdinalIgnoreCase);
-
-        /// <summary>
-        /// Returns the first string that's not <see langword="null"/> or empty, starting with <paramref name="text"/>
-        /// and then the items in <paramref name="alternatives"/> sequentially. Finally <see cref="string.Empty"/> if
-        /// none matched the criteria.
-        /// </summary>
-        public static string OrIfEmpty(this string text, params string[] alternatives)
-        {
-            if (!string.IsNullOrEmpty(text)) return text;
-
-            foreach (var alternative in alternatives)
-            {
-                if (!string.IsNullOrEmpty(alternative)) return alternative;
-            }
-
-            return string.Empty;
-        }
     }
 }
