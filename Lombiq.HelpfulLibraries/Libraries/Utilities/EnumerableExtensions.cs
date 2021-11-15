@@ -215,5 +215,19 @@ namespace System.Collections.Generic
                 }
             }
         }
+
+        /// <summary>
+        /// Returns <paramref name="collection"/> if it's not <see langword="null"/>, otherwise <see
+        /// cref="Enumerable.Empty{TResult}"/>.
+        /// </summary>
+        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> collection) =>
+            collection ?? Enumerable.Empty<T>();
+
+        /// <summary>
+        /// Returns <paramref name="array"/> if it's not <see langword="null"/>, otherwise <see
+        /// cref="Array.Empty{TResult}"/>.
+        /// </summary>
+        public static IEnumerable<T> EmptyIfNull<T>(this T[] array) =>
+            array ?? Array.Empty<T>();
     }
 }

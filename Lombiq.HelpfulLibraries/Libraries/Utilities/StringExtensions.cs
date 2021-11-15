@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 #nullable enable
 
 namespace System
@@ -64,5 +66,16 @@ namespace System
         /// </summary>
         public static string? OrIf(this string? text, Func<string?, bool> condition, string? alternative) =>
             condition(text) ? alternative : text;
+
+        /// <summary>
+        /// Returns the result of <paramref name="alternativeAsync"/> if <paramref name="condition"/> is <see
+        /// langword="true"/>, otherwise returns <paramref name="text"/>. A delegate is used to avoid unnecessary
+        /// expensive async calls.
+        /// </summary>
+        public static Task<string?> OrIfAsync(
+            this string? text,
+            Func<string?, bool> condition,
+            Func<Task<string?>> alternativeAsync) =>
+            condition(text) ? alternativeAsync() : Task.FromResult(text);
     }
 }
