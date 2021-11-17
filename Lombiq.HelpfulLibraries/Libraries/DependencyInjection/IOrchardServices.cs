@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -23,6 +24,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         Justification = "There is nothing to add past what's already on the individual services' documentations.")]
     public interface IOrchardServices<T>
     {
+        Lazy<IAuthorizationService> AuthorizationService { get; }
         Lazy<IClock> Clock { get; }
         Lazy<IContentAliasManager> ContentAliasManager { get; }
         Lazy<IContentManager> ContentManager { get; }
