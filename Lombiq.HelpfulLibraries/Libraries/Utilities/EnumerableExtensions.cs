@@ -24,6 +24,17 @@ namespace System.Collections.Generic
             return results;
         }
 
+        /// <inheritdoc cref="AwaitEachAsync{TItem,TResult}(IEnumerable{TItem},Func{TItem,Task{TResult}})"/>
+        public static async Task<IList<TResult>> AwaitEachAsync<TItem, TResult>(
+            this IEnumerable<TItem> source,
+            Func<TItem, int, Task<TResult>> asyncOperation)
+        {
+            var results = new List<TResult>();
+            int index = 0;
+            foreach (var item in source) results.Add(await asyncOperation(item, index++));
+            return results;
+        }
+
         /// <summary>
         /// Awaits the tasks sequentially while the action returns <see langword="false"/>.
         /// </summary>
@@ -189,5 +200,20 @@ namespace System.Collections.Generic
         public static IEnumerable<ContentItem> GetSingleValues<TKey>(
             this IEnumerable<IGrouping<TKey, ContentItem>> lookup) =>
             lookup.Select(item => item.Single());
+
+        /// <summary>
+        /// A simple conditional enumeration where the items are <see langword="yield"/>ed from the <paramref
+        /// name="collection"/> if the <paramref name="negativePredicate"/> returns <see langword="false"/>.
+        /// </summary>
+        public static IEnumerable<T> WhereNot<T>(this IEnumerable<T> collection, Func<T, bool> negativePredicate)
+        {
+            foreach (var item in collection)
+            {
+                if (!negativePredicate(item))
+                {
+                    yield return item;
+                }
+            }
+        }
     }
 }

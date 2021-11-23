@@ -1,5 +1,6 @@
 using OrchardCore.Taxonomies.Models;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace OrchardCore.ContentManagement
@@ -31,9 +32,25 @@ namespace OrchardCore.ContentManagement
             string taxonomyAlias)
         {
             var taxonomyContentItemId = await contentHandleManager.GetContentItemIdAsync($"alias:{taxonomyAlias}");
-            var taxonomy = await contentManager.GetAsync(taxonomyContentItemId);
+            var taxonomy = string.IsNullOrEmpty(taxonomyContentItemId)
+                ? null
+                : await contentManager.GetAsync(taxonomyContentItemId);
 
-            return taxonomy.As<TaxonomyPart>().Terms;
+            return taxonomy?.As<TaxonomyPart>()?.Terms;
         }
+
+        /// <summary>
+        /// Returns the <see cref="ContentItem.DisplayText"/> of a specific term identified by its <paramref
+        /// name="termId"/> within a taxonomy identified by its <paramref name="alias"/>. If none are found <see
+        /// langword="null"/> is returned.
+        /// </summary>
+        public static async Task<string> GetTaxonomyTermDisplayTextAsync(
+            this IContentManager contentManager,
+            IContentAliasManager contentAliasManager,
+            string alias,
+            string termId) =>
+            (await contentManager.GetTaxonomyTermsAsync(contentAliasManager, alias))
+            .FirstOrDefault(term => term.ContentItemId == termId)?
+            .DisplayText;
     }
 }
