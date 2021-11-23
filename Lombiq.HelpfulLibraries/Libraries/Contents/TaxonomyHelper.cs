@@ -7,18 +7,18 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
 {
     public class TaxonomyHelper : ITaxonomyHelper
     {
-        private readonly IContentAliasManager _contentAliasManager;
+        private readonly IContentHandleManager _contentHandleManager;
         private readonly IContentManager _contentManager;
 
-        public TaxonomyHelper(IContentAliasManager contentAliasManager, IContentManager contentManager)
+        public TaxonomyHelper(IContentHandleManager contentHandleManager, IContentManager contentManager)
         {
-            _contentAliasManager = contentAliasManager;
+            _contentHandleManager = contentHandleManager;
             _contentManager = contentManager;
         }
 
         public async Task<ContentItem> GetTermContentItemByTaxonomyAliasAsync(string alias, string termId)
         {
-            var contentItemId = await _contentAliasManager.GetContentItemIdAsync($"alias:{alias}");
+            var contentItemId = await _contentHandleManager.GetContentItemIdAsync($"alias:{alias}");
             var terms = (await _contentManager.GetAsync(contentItemId)).As<TaxonomyPart>().Terms;
             return terms.FirstOrDefault(term => term.ContentItemId == termId);
         }
