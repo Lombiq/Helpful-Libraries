@@ -1,4 +1,5 @@
 using Lombiq.HelpfulLibraries.Libraries.DependencyInjection;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -17,6 +18,7 @@ namespace Moq.AutoMock
         public static void MockOrchardServices<T>(this AutoMocker mocker) =>
             mocker.Use<IOrchardServices<T>>(
                 new OrchardServices<T>(
+                    new Lazy<IAuthorizationService>(mocker.Get<IAuthorizationService>),
                     new Lazy<IClock>(mocker.Get<IClock>),
                     new Lazy<IContentAliasManager>(mocker.Get<IContentAliasManager>),
                     new Lazy<IContentManager>(mocker.Get<IContentManager>),

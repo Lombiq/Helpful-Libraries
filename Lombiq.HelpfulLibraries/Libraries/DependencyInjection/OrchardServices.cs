@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Localization;
@@ -14,6 +15,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
 {
     public class OrchardServices<T> : IOrchardServices<T>
     {
+        public Lazy<IAuthorizationService> AuthorizationService { get; }
         public Lazy<IClock> Clock { get; }
         public Lazy<IContentAliasManager> ContentAliasManager { get; }
         public Lazy<IContentManager> ContentManager { get; }
@@ -30,6 +32,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             "S107:Methods should not have too many parameters",
             Justification = "These are the most common Orchard services.")]
         public OrchardServices(
+            Lazy<IAuthorizationService> authorizationService,
             Lazy<IClock> clock,
             Lazy<IContentAliasManager> contentAliasManager,
             Lazy<IContentManager> contentManager,
@@ -41,6 +44,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             Lazy<IHtmlLocalizer<T>> htmlLocalizer,
             Lazy<UserManager<IUser>> userManager)
         {
+            AuthorizationService = authorizationService;
             Clock = clock;
             ContentAliasManager = contentAliasManager;
             ContentManager = contentManager;
