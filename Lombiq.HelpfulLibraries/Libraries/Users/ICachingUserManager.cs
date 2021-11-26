@@ -1,6 +1,8 @@
+using OrchardCore.ContentManagement;
 using OrchardCore.Users.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using YesSql;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Users
 {
@@ -10,12 +12,20 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
     public interface ICachingUserManager
     {
         /// <summary>
-        /// Retrieves <see cref="User"/>s from a transient per-request cache by their unique ID or gets them from the
-        /// store if not yet cached.
+        /// Retrieves <see cref="User"/>s from a transient per-request cache by their <see cref="User.Id"/> or gets them
+        /// from the store if not yet cached.
+        /// </summary>
+        /// <param name="id">Unique ID identifying the <see cref="User"/> document.</param>
+        /// <returns>Potentially cached <see cref="User"/>.</returns>
+        Task<User> GetUserByIdAsync(string id);
+
+        /// <summary>
+        /// Retrieves <see cref="User"/>s from a transient per-request cache by their <see cref="User.Id"/> or gets them
+        /// from the store if not yet cached.
         /// </summary>
         /// <param name="userId">Unique ID identifying the <see cref="User"/>.</param>
         /// <returns>Potentially cached <see cref="User"/>.</returns>
-        Task<User> GetUserByIdAsync(string userId);
+        Task<User> GetUserByUserIdAsync(string userId);
 
         /// <summary>
         /// Retrieves <see cref="User"/>s from a transient per-request cache by their username or gets them from the
