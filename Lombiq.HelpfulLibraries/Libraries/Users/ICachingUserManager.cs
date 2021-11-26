@@ -1,8 +1,6 @@
-using OrchardCore.ContentManagement;
 using OrchardCore.Users.Models;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using YesSql;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Users
 {
@@ -17,7 +15,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         /// </summary>
         /// <param name="id">Unique ID identifying the <see cref="User"/> document.</param>
         /// <returns>Potentially cached <see cref="User"/>.</returns>
-        Task<User> GetUserByIdAsync(string id);
+        Task<User> GetUserByIdAsync(string id, bool forceUpdate = false);
 
         /// <summary>
         /// Retrieves <see cref="User"/>s from a transient per-request cache by their <see cref="User.Id"/> or gets them
@@ -25,7 +23,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         /// </summary>
         /// <param name="userId">Unique ID identifying the <see cref="User"/>.</param>
         /// <returns>Potentially cached <see cref="User"/>.</returns>
-        Task<User> GetUserByUserIdAsync(string userId);
+        Task<User> GetUserByUserIdAsync(string userId, bool forceUpdate = false);
 
         /// <summary>
         /// Retrieves <see cref="User"/>s from a transient per-request cache by their username or gets them from the
@@ -33,7 +31,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         /// </summary>
         /// <param name="username">Username of the <see cref="User"/>.</param>
         /// <returns>Potentially cached <see cref="User"/>.</returns>
-        Task<User> GetUserByNameAsync(string username);
+        Task<User> GetUserByNameAsync(string username, bool force = false);
 
         /// <summary>
         /// Retrieves <see cref="User"/>s from a transient per-request cache by their email or gets them from the store
@@ -41,7 +39,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         /// </summary>
         /// <param name="email">Email of the <see cref="User"/>.</param>
         /// <returns>Potentially cached <see cref="User"/>.</returns>
-        Task<User> GetUserByEmailAsync(string email);
+        Task<User> GetUserByEmailAsync(string email, bool forceUpdate = false);
 
         /// <summary>
         /// Retrieves an authenticated <see cref="User"/> from a transient per-request cache or gets them from the
@@ -51,7 +49,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         /// <see cref="ClaimsPrincipal"/> representing the authenticated <see cref="User"/>.
         /// </param>
         /// <returns>Potentially cached <see cref="User"/>.</returns>
-        Task<User> GetUserByClaimsPrincipalAsync(ClaimsPrincipal claimsPrincipal);
+        Task<User> GetUserByClaimsPrincipalAsync(ClaimsPrincipal claimsPrincipal, bool forceUpdate = false);
     }
 
     public static class CachingUserServiceExtensions
