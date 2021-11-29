@@ -46,8 +46,9 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
         {
             if (Store == null) await CreateDatabaseAsync();
 
-            using var session = Store.CreateSession();
+            await using var session = Store.CreateSession();
             await action(session);
+            await session.SaveChangesAsync();
         }
 
         public void Dispose()
