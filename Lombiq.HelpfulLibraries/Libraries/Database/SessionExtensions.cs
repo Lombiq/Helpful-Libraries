@@ -61,10 +61,11 @@ namespace YesSql
             DbTransaction transaction = null)
         {
             transaction ??= await session.BeginTransactionAsync();
+            var dialect = session.Store.Configuration.SqlDialect;
             var prefix = session.Store.Configuration.TablePrefix;
-            var query = getSqlQuery(transaction, prefix);
+            var query = getSqlQuery(transaction, dialect, prefix);
 
-            return await transaction.Connection.ExecuteAsync(query, parameters, transaction);
+            return await session.CurrentTransaction.Connection.ExecuteAsync(query, parameters, transaction);
         }
 
         private static string GetQuery(

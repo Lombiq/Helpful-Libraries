@@ -17,7 +17,9 @@ namespace Microsoft.AspNetCore.Mvc.Localization
             {
                 using var stringWriter = new StringWriter();
                 htmlString.WriteTo(stringWriter, HtmlEncoder.Default);
-                return new HtmlString(JsonConvert.SerializeObject(stringWriter.ToString()));
+                return new HtmlString(JsonConvert.SerializeObject(
+                    stringWriter.ToString(),
+                    new JsonSerializerSettings { StringEscapeHandling = StringEscapeHandling.EscapeHtml }));
             }
             else
             {
