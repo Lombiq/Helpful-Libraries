@@ -88,7 +88,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
                 user = await cache.GetValueOrAddIfMissingAsync(identifier, _ => factory());
             }
 
-            if (user == null) return null;
+            if (string.IsNullOrEmpty(user?.UserId) ||
+                string.IsNullOrEmpty(user.UserName) ||
+                string.IsNullOrEmpty(user.Email))
+            {
+                return null;
+            }
 
             if (!Equals(cache, _userByIdCache)) _userByIdCache.TryAdd(user.Id.ToTechnicalString(), user);
             if (!Equals(cache, _userByUserIdCache)) _userByUserIdCache.TryAdd(user.UserId, user);
