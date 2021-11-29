@@ -92,7 +92,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
                 string.IsNullOrEmpty(user.UserName) ||
                 string.IsNullOrEmpty(user.Email))
             {
-                return null;
+                return user;
             }
 
             if (!Equals(cache, _userByIdCache)) _userByIdCache.TryAdd(user.Id.ToTechnicalString(), user);
