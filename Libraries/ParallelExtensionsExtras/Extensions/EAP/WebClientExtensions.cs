@@ -73,8 +73,8 @@ namespace System.Net
         /// <returns>A Task that contains the downloaded data.</returns>
         public static Task DownloadFileTask(this WebClient webClient, Uri address, string fileName)
         {
-            //File Path Validation
-            string fileNameValidated = FileCleanserHelper.GetSafeFileName(fileName);
+            // File Path Validation
+            var fileNameValidated = FileCleanserHelper.GetSafeFileName(fileName);
 
             // Create the task to be returned
             var tcs = new TaskCompletionSource<object>(address);
@@ -286,8 +286,8 @@ namespace System.Net
         /// <returns>A Task containing the data in the response from the upload.</returns>
         public static Task<byte[]> UploadFileTask(this WebClient webClient, Uri address, string method, string fileName)
         {
-            //File Path Validation
-            string fileNameValidated = FileCleanserHelper.GetSafeFileName(fileName);
+            // File Path Validation
+            var fileNameValidated = FileCleanserHelper.GetSafeFileName(fileName);
 
             // Create the task to be returned
             var tcs = new TaskCompletionSource<byte[]>(address);

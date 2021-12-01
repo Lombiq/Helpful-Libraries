@@ -22,8 +22,8 @@ namespace System.IO
         /// <returns>A read-only FileStream on the specified path.</returns>
         public static FileStream OpenRead(string path)
         {
-            //File Path Validation
-            string pathValidated = FileCleanserHelper.GetSafeFilePath(path);
+            // File Path Validation
+            var pathValidated = FileCleanserHelper.GetSafeFilePath(path);
 
             // Open a file stream for reading and that supports asynchronous I/O
             return new FileStream(pathValidated, FileMode.Open, FileAccess.Read, FileShare.Read, BUFFER_SIZE, true);
@@ -34,8 +34,8 @@ namespace System.IO
         /// <returns>An unshared FileStream on the specified path with access for writing.</returns>
         public static FileStream OpenWrite(string path)
         {
-            //File Path Validation
-            string pathValidated = FileCleanserHelper.GetSafeFilePath(path);
+            // File Path Validation
+            var pathValidated = FileCleanserHelper.GetSafeFilePath(path);
 
             // Open a file stream for writing and that supports asynchronous I/O
             return new FileStream(pathValidated, FileMode.OpenOrCreate, FileAccess.Write, FileShare.None, BUFFER_SIZE, true);
