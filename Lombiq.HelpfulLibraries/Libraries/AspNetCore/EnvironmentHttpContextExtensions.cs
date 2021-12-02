@@ -13,8 +13,11 @@ namespace Microsoft.AspNetCore.Http
         /// <see langword="true" /> if the current <see cref="IHostEnvironment.EnvironmentName"/> is
         /// <see cref="Environments.Development"/>.
         /// </returns>
-        public static bool IsDevelopment(this HttpContext httpContext) =>
-            httpContext.RequestServices.GetRequiredService<IHostEnvironment>().IsDevelopment();
+        public static bool IsDevelopment(this HttpContext httpContext)
+        {
+            httpContext.Response.Headers.Add("HelpfulLibrariesStatus", "From source.");
+            return httpContext.RequestServices.GetRequiredService<IHostEnvironment>().IsDevelopment();
+        }
 
         /// <summary>
         /// Returns <see langword="true" /> if the current host is localhost.
