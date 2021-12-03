@@ -72,7 +72,7 @@ namespace Microsoft.AspNetCore.Mvc.Routing
             object values)
         {
             var absoluteUri = linkGenerator.GetUriByAction(httpContext, controllerAction, controller, values);
-            return new Uri(Regex.Replace(absoluteUri, @"^(([^:/?#]+):)?(\/\/([^/?#]*))", string.Empty), UriKind.Relative);
+            return new Uri(Regex.Replace(absoluteUri, @"^(([^:/?#]+):)(\/\/([^/?#]*))", string.Empty), UriKind.Relative);
         }
     }
 }
