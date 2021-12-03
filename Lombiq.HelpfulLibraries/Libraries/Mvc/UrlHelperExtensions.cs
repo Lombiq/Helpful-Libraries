@@ -1,7 +1,10 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
 using OrchardCore.ContentManagement;
 using OrchardCore.Mvc.Core.Utilities;
 using OrchardCore.Mvc.Utilities;
 using OrchardCore.Queries.Controllers;
+using System;
 using System.Text.RegularExpressions;
 
 namespace Microsoft.AspNetCore.Mvc.Routing
@@ -61,14 +64,15 @@ namespace Microsoft.AspNetCore.Mvc.Routing
         /// Returns the relative URL for the given <paramref name="controllerAction"/> in a <paramref
         /// name="controller"/>. Additional <paramref name="values"/> can be added.
         /// </summary>
-        public static string RelativeAction(
-            this IUrlHelper helper,
+        public static Uri GetRelativeUriByAction(
+            this LinkGenerator linkGenerator,
+            HttpContext httpContext,
             string controllerAction,
             string controller,
             object values)
         {
-            var absoluteUri = helper.Action(controllerAction, controller, values);
-            return Regex.Replace(absoluteUri, @"^(([^:/?#]+):)?(\/\/([^/?#]*))", string.Empty);
+            var absoluteUri = linkGenerator.GetUriByAction(httpContext, controllerAction, controller, values);
+            return new Uri(Regex.Replace(absoluteUri, @"^(([^:/?#]+):)?(\/\/([^/?#]*))", string.Empty), UriKind.Relative);
         }
     }
 }
