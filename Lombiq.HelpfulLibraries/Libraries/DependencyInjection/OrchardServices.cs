@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement;
+using OrchardCore.Environment.Shell.Configuration;
 using OrchardCore.Modules;
 using OrchardCore.Settings;
 using OrchardCore.Users;
@@ -26,6 +27,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         public Lazy<IStringLocalizer<T>> StringLocalizer { get; }
         public Lazy<IHtmlLocalizer<T>> HtmlLocalizer { get; }
         public Lazy<UserManager<IUser>> UserManager { get; }
+        public Lazy<IShellConfiguration> ShellConfiguration { get; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage(
             "Major Code Smell",
@@ -42,7 +44,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             Lazy<ISiteService> siteService,
             Lazy<IStringLocalizer<T>> stringLocalizer,
             Lazy<IHtmlLocalizer<T>> htmlLocalizer,
-            Lazy<UserManager<IUser>> userManager)
+            Lazy<UserManager<IUser>> userManager,
+            Lazy<IShellConfiguration> shellConfiguration)
         {
             AuthorizationService = authorizationService;
             Clock = clock;
@@ -55,6 +58,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
             StringLocalizer = stringLocalizer;
             HtmlLocalizer = htmlLocalizer;
             UserManager = userManager;
+            ShellConfiguration = shellConfiguration;
         }
     }
 }

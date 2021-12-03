@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement;
+using OrchardCore.Environment.Shell.Configuration;
 using OrchardCore.Modules;
 using OrchardCore.Settings;
 using OrchardCore.Users;
@@ -35,5 +36,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         Lazy<IStringLocalizer<T>> StringLocalizer { get; }
         Lazy<IHtmlLocalizer<T>> HtmlLocalizer { get; }
         Lazy<UserManager<IUser>> UserManager { get; }
+        Lazy<IShellConfiguration> ShellConfiguration { get; }
     }
 }

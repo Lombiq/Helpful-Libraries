@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
 using OrchardCore.ContentManagement;
+using OrchardCore.Environment.Shell.Configuration;
 using OrchardCore.Modules;
 using OrchardCore.Settings;
 using OrchardCore.Users;
@@ -28,6 +29,7 @@ namespace Moq.AutoMock
                     new Lazy<ISiteService>(mocker.Get<ISiteService>),
                     new Lazy<IStringLocalizer<T>>(mocker.Get<IStringLocalizer<T>>),
                     new Lazy<IHtmlLocalizer<T>>(mocker.Get<IHtmlLocalizer<T>>),
-                    new Lazy<UserManager<IUser>>(mocker.Get<UserManager<IUser>>)));
+                    new Lazy<UserManager<IUser>>(mocker.Get<UserManager<IUser>>),
+                    new Lazy<IShellConfiguration>(mocker.Get<IShellConfiguration>)));
     }
 }
