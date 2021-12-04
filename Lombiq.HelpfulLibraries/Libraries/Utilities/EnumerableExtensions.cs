@@ -189,5 +189,31 @@ namespace System.Collections.Generic
         public static IEnumerable<ContentItem> GetSingleValues<TKey>(
             this IEnumerable<IGrouping<TKey, ContentItem>> lookup) =>
             lookup.Select(item => item.Single());
+
+        /// <summary>
+        /// Maps the provided collection of pairs using a selector with separate arguments.
+        /// </summary>
+        public static IEnumerable<TResult> Select<TKey, TValue, TResult>(
+            this IEnumerable<KeyValuePair<TKey, TValue>> pairs,
+            Func<TKey, TValue, TResult> selector)
+        {
+            foreach (var (key, value) in pairs)
+            {
+                yield return selector(key, value);
+            }
+        }
+
+        /// <summary>
+        /// Maps the provided collection of pairs using a selector with separate arguments.
+        /// </summary>
+        public static IEnumerable<TResult> Select<TKey, TValue, TResult>(
+            this IEnumerable<(TKey Key, TValue Value)> pairs,
+            Func<TKey, TValue, TResult> selector)
+        {
+            foreach (var (key, value) in pairs)
+            {
+                yield return selector(key, value);
+            }
+        }
     }
 }
