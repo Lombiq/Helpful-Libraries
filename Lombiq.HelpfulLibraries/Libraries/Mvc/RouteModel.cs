@@ -48,7 +48,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 controller.GetCustomAttribute<AdminAttribute>() != null ||
                 action.GetCustomAttribute<AdminAttribute>() != null);
             _routeLazy = new Lazy<string>(() =>
-                action.GetCustomAttribute<RouteAttribute>()?.Name is { } route && !string.IsNullOrWhiteSpace(route)
+                action.GetCustomAttribute<RouteAttribute>()?.Template is { } route && !string.IsNullOrWhiteSpace(route)
                 ? GetRoute(route)
                 : $"{area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
         }
@@ -71,11 +71,14 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 
         private string GetRoute(string route)
         {
-            foreach (var (name, value) in _arguments)
+            var argumentsCopy = _arguments.ToList(); // This way modifying _arguments in the loop won't cause problems.
+            foreach (var (name, value) in argumentsCopy)
             {
                 var placeholder = $"{{{name}}}";
                 if (!route.ContainsOrdinalIgnoreCase(placeholder)) continue;
+
                 route = route.ReplaceOrdinalIgnoreCase(placeholder, WebUtility.UrlEncode(value));
+                _arguments.RemoveAll(pair => pair.Key == name);
             }
 
             return route;
