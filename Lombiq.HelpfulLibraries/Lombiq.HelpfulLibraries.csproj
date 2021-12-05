@@ -37,6 +37,7 @@
     <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.0.0" />
     <PackageReference Include="OrchardCore.Infrastructure" Version="1.0.0" />
     <PackageReference Include="NodaTime" Version="3.0.5" />
+    <PackageReference Include="YesSql.Abstractions" Version="3.0.7" />
   </ItemGroup>
 
 </Project>

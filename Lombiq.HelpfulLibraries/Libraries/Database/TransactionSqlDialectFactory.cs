@@ -1,3 +1,4 @@
+using System;
 using System.Data.Common;
 
 namespace YesSql
@@ -7,6 +8,7 @@ namespace YesSql
         /// <summary>
         /// Retrieves the <see cref="ISqlDialect"/> for the given <see cref="DbTransaction"/>.
         /// </summary>
-        public static ISqlDialect For(DbTransaction transaction) => TransactionSqlDialectFactory.For(transaction);
+        [Obsolete("This is no longer supported since YesSql 3. Use ISession.Value.Store.Configuration.SqlDialect.")]
+        public static ISqlDialect For(DbTransaction transaction) => throw new NotSupportedException();
     }
 }

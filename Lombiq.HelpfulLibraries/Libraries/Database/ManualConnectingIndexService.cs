@@ -80,9 +80,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
                 bool doCommit,
                 Func<DbConnection, DbTransaction, ISqlDialect, string, Task<TOut>> request)
             {
-                var dialect = TransactionSqlDialectFactory.For(transaction);
                 _tablePrefix ??= session?.Store.Configuration.TablePrefix;
-                var quotedTableName = dialect.QuoteForTableName(_tablePrefix + _type.Name);
+                var dialect = session?.Store.Configuration.SqlDialect;
+                var quotedTableName = dialect?.QuoteForTableName(_tablePrefix + _type.Name);
 
                 var result = await request(transaction.Connection, transaction, dialect, quotedTableName);
                 if (doCommit) await transaction.CommitAsync();

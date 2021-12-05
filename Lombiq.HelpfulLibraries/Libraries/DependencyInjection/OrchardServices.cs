@@ -6,6 +6,7 @@ using OrchardCore.ContentManagement;
 using OrchardCore.Modules;
 using OrchardCore.Settings;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using ISession = YesSql.ISession;
 
 namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
@@ -22,7 +23,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
         public Lazy<IStringLocalizer<T>> StringLocalizer { get; }
         public Lazy<IHtmlLocalizer<T>> HtmlLocalizer { get; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage(
+        [SuppressMessage(
             "Major Code Smell",
             "S107:Methods should not have too many parameters",
             Justification = "These are the most common Orchard services.")]
