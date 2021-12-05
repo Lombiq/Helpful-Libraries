@@ -19,7 +19,9 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
         [Fact]
         public Task IndicesShouldHaveMatchingDocuments() => _fixture.SessionAsync(async session =>
         {
-            var indices = await session.QueryIndex<TestDocumentIndex>().ListAsync();
+            var indices = (await session.QueryIndex<TestDocumentIndex>().ListAsync()).ToList();
+            indices.ShouldNotBeEmpty();
+
             var documents = (await session.Query<TestDocument, TestDocumentIndex>().ListAsync())
                 .ToDictionary(document => document.Name);
             foreach (var index in indices) documents.ShouldContainKey(NamePrefix + index.Number);

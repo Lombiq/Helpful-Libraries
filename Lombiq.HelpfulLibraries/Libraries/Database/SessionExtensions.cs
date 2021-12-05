@@ -64,7 +64,7 @@ namespace YesSql
             var prefix = session.Store.Configuration.TablePrefix;
             var query = getSqlQuery(transaction, prefix);
 
-            return await transaction.Connection.ExecuteAsync(query, parameters, transaction);
+            return await session.CurrentTransaction.Connection.ExecuteAsync(query, parameters, transaction);
         }
 
         private static string GetQuery(
