@@ -5,6 +5,7 @@ using OrchardCore.Modules.Manifest;
 using OrchardCore.Mvc.Core.Utilities;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
@@ -95,7 +96,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 .Arguments
                 .Select((argument, index) => new KeyValuePair<string, string>(
                     methodParameters[index].Name,
-                    Expression.Lambda(argument).Compile().DynamicInvoke()?.ToString() ?? string.Empty))
+                    ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke() ?? string.Empty)))
                 .Concat(additionalArguments);
 
             return new RouteModel(
@@ -104,5 +105,14 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 arguments,
                 typeFeatureProvider);
         }
+
+        private static string ValueToString(object value) =>
+            value switch
+            {
+                null => string.Empty,
+                string text => text,
+                System.DateTime date => date.ToString("s", CultureInfo.InvariantCulture),
+                _ => string.Format(CultureInfo.InvariantCulture, "{0}", value),
+            };
     }
 }
