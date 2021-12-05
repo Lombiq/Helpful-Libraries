@@ -68,11 +68,21 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 : $"/{tenantName}{this}";
 
         public static RouteModel CreateFromExpression<TController>(
-            Expression<Action<TController>> action,
+            Expression<Action<TController>> actionExpression,
+            IEnumerable<(string Key, object Value)> additionalArguments,
+            ITypeFeatureProvider typeFeatureProvider = null) =>
+            CreateFromExpression(
+                actionExpression,
+                additionalArguments
+                    .Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
+                typeFeatureProvider);
+
+        public static RouteModel CreateFromExpression<TController>(
+            Expression<Action<TController>> actionExpression,
             IEnumerable<KeyValuePair<string, string>> additionalArguments,
             ITypeFeatureProvider typeFeatureProvider = null)
         {
-            var operation = (MethodCallExpression)action.Body;
+            var operation = (MethodCallExpression)actionExpression.Body;
             var methodParameters = operation.Method.GetParameters();
 
             var arguments = operation
