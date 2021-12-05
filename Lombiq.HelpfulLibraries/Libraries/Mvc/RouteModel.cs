@@ -50,6 +50,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             {
                 _area = typeFeatureProvider?.GetFeatureForDependency(_controller).Extension.Id ??
                         _controller.Assembly.GetCustomAttribute<ModuleNameAttribute>()?.Name ??
+                        _controller.Assembly.GetCustomAttribute<ModuleMarkerAttribute>()?.Name ??
                         throw new InvalidOperationException(
                             "No area argument was provided and couldn't figure out the module technical name. Are " +
                             "you sure this controller belongs to an Orchard Core module?");
@@ -79,8 +80,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 ? ToString()
                 : $"/{tenantName}{this}";
 
-        public static RouteModel Create<TController, TActionResult>(
-            Expression<Func<TController, TActionResult>> action,
+        public static RouteModel CreateFromExpression<TController>(
+            Expression<Action<TController>> action,
             IEnumerable<KeyValuePair<string, string>> additionalArguments,
             ITypeFeatureProvider typeFeatureProvider = null)
         {
@@ -91,7 +92,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 .Arguments
                 .Select((argument, index) => new KeyValuePair<string, string>(
                     methodParameters[index].Name,
-                    ((ConstantExpression)argument).Value?.ToString() ?? string.Empty))
+                    Expression.Lambda(argument).Compile().DynamicInvoke()?.ToString() ?? string.Empty))
                 .Concat(additionalArguments);
 
             return new RouteModel(
