@@ -92,9 +92,9 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Models
                 },
                 new object[]
                 {
-                    "/I/Am/Routed?wat=is%20this",
+                    "/I/Am/Routed?wat=is+this",
                     AsExpression(controller => controller.Route()),
-                    new[] { ("wat", "is this") },
+                    new (string Name, object Value)[] { ("wat", "is this") },
                     noTenant,
                 },
                 new object[]
