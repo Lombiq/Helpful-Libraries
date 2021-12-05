@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq.Expressions;
-
-namespace Lombiq.HelpfulLibraries.Libraries.Utilities
+﻿namespace System.Linq.Expressions
 {
     public static class ExpressionExtensions
     {
