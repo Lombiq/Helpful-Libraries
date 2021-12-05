@@ -74,7 +74,10 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             return prefix + route + arguments;
         }
 
-        public string ToString(string tenantName) => $"/{tenantName}{this}";
+        public string ToString(string tenantName) =>
+            string.IsNullOrWhiteSpace(tenantName) || tenantName.EqualsOrdinalIgnoreCase("Default")
+                ? ToString()
+                : $"/{tenantName}{this}";
 
         public static RouteModel Create<TController, TActionResult>(
             Expression<Func<TController, TActionResult>> action,
