@@ -1,3 +1,4 @@
+using Lombiq.HelpfulLibraries.Libraries.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
@@ -77,5 +78,13 @@ namespace OrchardCore
             string tenantName = null,
             params (string Key, object Value)[] additionalArguments) =>
             orchardHelper.HttpContext.Action(actionExpression, tenantName, additionalArguments);
+
+        /// <inheritdoc cref="HttpContextExtensions.Action{TController}"/>
+        public static string Action<TController>(
+            this IOrchardHelper orchardHelper,
+            Expression<Func<TController, Task>> taskActionExpression,
+            string tenantName = null,
+            params (string Key, object Value)[] additionalArguments) =>
+            orchardHelper.HttpContext.Action(taskActionExpression.StripResult(), tenantName, additionalArguments);
     }
 }

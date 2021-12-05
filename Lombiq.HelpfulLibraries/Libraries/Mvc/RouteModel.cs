@@ -78,11 +78,17 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 typeFeatureProvider);
 
         public static RouteModel CreateFromExpression<TController>(
-            Expression<Action<TController>> actionExpression,
+            Expression<Action<TController>> action,
             IEnumerable<KeyValuePair<string, string>> additionalArguments,
             ITypeFeatureProvider typeFeatureProvider = null)
         {
-            var operation = (MethodCallExpression)actionExpression.Body;
+            Expression actionExpression = action;
+            while (actionExpression is LambdaExpression { Body: not MethodCallExpression } lambdaExpression)
+            {
+                actionExpression = lambdaExpression.Body;
+            }
+
+            var operation = (MethodCallExpression)((LambdaExpression)actionExpression).Body;
             var methodParameters = operation.Method.GetParameters();
 
             var arguments = operation
