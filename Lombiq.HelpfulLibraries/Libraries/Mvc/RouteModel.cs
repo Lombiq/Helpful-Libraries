@@ -9,20 +9,12 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
-using EnumerableExtensions = System.Collections.Generic.EnumerableExtensions;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 {
     public class RouteModel
     {
-        private readonly Type _controller;
-        private readonly MethodInfo _action;
-
-        private readonly string _controllerName;
-        private readonly string _actionName;
-
         private readonly List<KeyValuePair<string, string>> _arguments;
-        private readonly string _area;
 
         private readonly Lazy<bool> _isAdminLazy;
         private readonly Lazy<string> _routeLazy;
@@ -33,24 +25,19 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             IEnumerable<KeyValuePair<string, string>> arguments,
             ITypeFeatureProvider typeFeatureProvider = null)
         {
-            _controller = controller;
-            _action = action;
-
-            _controllerName = _controller.ControllerName();
-            _actionName = _action.Name;
-
+            string area;
             _arguments = arguments is List<KeyValuePair<string, string>> list ? list : arguments.ToList();
             var areaPair = _arguments.FirstOrDefault(pair => pair.Key.EqualsOrdinalIgnoreCase("area"));
-            if (areaPair.Value is { } area)
+            if (areaPair.Value is { } areaArgumentValue)
             {
-                _area = area;
+                area = areaArgumentValue;
                 _arguments.Remove(areaPair);
             }
             else
             {
-                _area = typeFeatureProvider?.GetFeatureForDependency(_controller).Extension.Id ??
-                        _controller.Assembly.GetCustomAttribute<ModuleNameAttribute>()?.Name ??
-                        _controller.Assembly.GetCustomAttribute<ModuleMarkerAttribute>()?.Name ??
+                area = typeFeatureProvider?.GetFeatureForDependency(controller).Extension.Id ??
+                        controller.Assembly.GetCustomAttribute<ModuleNameAttribute>()?.Name ??
+                        controller.Assembly.GetCustomAttribute<ModuleMarkerAttribute>()?.Name ??
                         throw new InvalidOperationException(
                             "No area argument was provided and couldn't figure out the module technical name. Are " +
                             "you sure this controller belongs to an Orchard Core module?");
@@ -60,8 +47,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 controller.GetCustomAttribute<AdminAttribute>() != null ||
                 action.GetCustomAttribute<AdminAttribute>() != null);
             _routeLazy = new Lazy<string>(() =>
-                _action.GetCustomAttribute<RouteAttribute>()?.Name ??
-                $"{_area}/{_controllerName}/{_actionName}");
+                action.GetCustomAttribute<RouteAttribute>()?.Name ??
+                $"{area}/{controller.ControllerName()}/{action.Name}");
         }
 
         public override string ToString()
@@ -69,7 +56,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             var prefix = _isAdminLazy.Value ? "/Admin/" : "/";
             var route = _routeLazy.Value;
             var arguments = _arguments.Any()
-                ? "?" + string.Join("&", EnumerableExtensions.Select(_arguments, (key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
+                ? "?" + string.Join("&", _arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
                 : string.Empty;
 
             return prefix + route + arguments;
