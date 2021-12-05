@@ -48,8 +48,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 controller.GetCustomAttribute<AdminAttribute>() != null ||
                 action.GetCustomAttribute<AdminAttribute>() != null);
             _routeLazy = new Lazy<string>(() =>
-                action.GetCustomAttribute<RouteAttribute>()?.Name ??
-                $"{area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
+                action.GetCustomAttribute<RouteAttribute>()?.Name is { } route && !string.IsNullOrWhiteSpace(route)
+                ? GetRoute(route)
+                : $"{area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
         }
 
         public override string ToString()
@@ -67,6 +68,18 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             string.IsNullOrWhiteSpace(tenantName) || tenantName.EqualsOrdinalIgnoreCase("Default")
                 ? ToString()
                 : $"/{tenantName}{this}";
+
+        private string GetRoute(string route)
+        {
+            foreach (var (name, value) in _arguments)
+            {
+                var placeholder = $"{{{name}}}";
+                if (!route.ContainsOrdinalIgnoreCase(placeholder)) continue;
+                route = route.ReplaceOrdinalIgnoreCase(placeholder, WebUtility.UrlEncode(value));
+            }
+
+            return route;
+        }
 
         public static RouteModel CreateFromExpression<TController>(
             Expression<Action<TController>> actionExpression,
