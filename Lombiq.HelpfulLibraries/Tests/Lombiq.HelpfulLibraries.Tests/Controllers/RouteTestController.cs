@@ -1,9 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc;
 using OrchardCore.Admin;
 using System;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Lombiq.HelpfulLibraries.Tests.Controllers
 {
+    [SuppressMessage("Usage", "CA1801:Review unused parameters", Justification = "Just a dummy controller to test URL generation.")]
     public class RouteTestController : Controller
     {
         public IActionResult Foo() => Content(string.Empty);
