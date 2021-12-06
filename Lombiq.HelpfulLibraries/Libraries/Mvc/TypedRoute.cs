@@ -112,7 +112,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 .Arguments
                 .Select((argument, index) => new KeyValuePair<string, string>(
                     methodParameters[index].Name,
-                    ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke() ?? string.Empty)))
+                    ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke())))
+                .Where((_, value) => value != null)
                 .Concat(additionalArguments);
 
             return new TypedRoute(
@@ -125,7 +126,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
         private static string ValueToString(object value) =>
             value switch
             {
-                null => string.Empty,
+                null => null,
                 string text => text,
                 System.DateTime date => date.ToString("s", CultureInfo.InvariantCulture),
                 _ => string.Format(CultureInfo.InvariantCulture, "{0}", value),
