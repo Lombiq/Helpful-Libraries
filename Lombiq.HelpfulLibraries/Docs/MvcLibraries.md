@@ -28,3 +28,8 @@ Use `ResultExecutingContextExtensions` to get some shortcuts to usual context op
 
 - `UrlHelperExtensions`: Adds extension methods to the `@Url` helper, such as `EditContentItemWithTab`.
 - `ShapeResultExtensions`: Adds extensions methods generating placement strings on your shape description, such as `UseTab`.
+
+
+## `RouteModel`
+
+This class provides a strongly typed way to generate local URLs for Orchard Core MVC actions. It uses lambda expressions to select the action and provide arguments. Use `RouteModel.CreateFromExpression<TClass>(...).ToString()` or the provided `OrchardHelper.Action` and `HttpContext.Action` extensions. If you also use our [UI Testing Toolbox](https://github.com/Lombiq/UI-Testing-Toolbox/) that has a `UITestContext.GoTo` extension method as well.   
