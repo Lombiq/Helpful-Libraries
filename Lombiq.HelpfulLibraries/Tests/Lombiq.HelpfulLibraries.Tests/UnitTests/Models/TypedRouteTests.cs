@@ -10,11 +10,11 @@ using Xunit;
 
 namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Models
 {
-    public class RouteModelTests
+    public class TypedRouteTests
     {
         [Theory]
-        [MemberData(nameof(RouteModelShouldWorkCorrectlyData))]
-        public void RouteModelShouldWorkCorrectly(
+        [MemberData(nameof(TypedRouteShouldWorkCorrectlyData))]
+        public void TypedRouteShouldWorkCorrectly(
             string expected,
             Expression<Action<RouteTestController>> actionExpression,
             (string Name, object Value)[] additional,
@@ -25,11 +25,11 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Models
             var typeFeatureProvider = new TypeFeatureProvider();
             typeFeatureProvider.TryAdd(typeof(RouteTestController), new FeatureInfo(id, new ExtensionInfo(id)));
 
-            var model = RouteModel.CreateFromExpression(actionExpression, additional, typeFeatureProvider);
+            var model = TypedRoute.CreateFromExpression(actionExpression, additional, typeFeatureProvider);
             model.ToString(tenantName).ShouldBe(expected);
         }
 
-        public static IEnumerable<object[]> RouteModelShouldWorkCorrectlyData()
+        public static IEnumerable<object[]> TypedRouteShouldWorkCorrectlyData()
         {
             static Expression<Action<RouteTestController>> AsExpression(
                 Expression<Action<RouteTestController>> expression) =>

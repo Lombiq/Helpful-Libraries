@@ -13,14 +13,14 @@ using System.Reflection;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 {
-    public class RouteModel
+    public class TypedRoute
     {
         private readonly List<KeyValuePair<string, string>> _arguments;
 
         private readonly Lazy<bool> _isAdminLazy;
         private readonly Lazy<string> _routeLazy;
 
-        public RouteModel(
+        public TypedRoute(
             Type controller,
             MethodInfo action,
             IEnumerable<KeyValuePair<string, string>> arguments,
@@ -84,7 +84,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             return route;
         }
 
-        public static RouteModel CreateFromExpression<TController>(
+        public static TypedRoute CreateFromExpression<TController>(
             Expression<Action<TController>> actionExpression,
             IEnumerable<(string Key, object Value)> additionalArguments,
             ITypeFeatureProvider typeFeatureProvider = null) =>
@@ -94,7 +94,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                     .Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
                 typeFeatureProvider);
 
-        public static RouteModel CreateFromExpression<TController>(
+        public static TypedRoute CreateFromExpression<TController>(
             Expression<Action<TController>> action,
             IEnumerable<KeyValuePair<string, string>> additionalArguments,
             ITypeFeatureProvider typeFeatureProvider = null)
@@ -115,7 +115,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                     ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke() ?? string.Empty)))
                 .Concat(additionalArguments);
 
-            return new RouteModel(
+            return new TypedRoute(
                 typeof(TController),
                 operation.Method,
                 arguments,
