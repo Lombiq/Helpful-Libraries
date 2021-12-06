@@ -113,7 +113,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 .Select((argument, index) => new KeyValuePair<string, string>(
                     methodParameters[index].Name,
                     ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke())))
-                .Where((_, value) => value != null)
+                .Where(pair => pair.Value != null)
                 .Concat(additionalArguments);
 
             return new TypedRoute(
