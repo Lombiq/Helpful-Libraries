@@ -36,9 +36,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
         {
             if (columnNames?.Any() != true)
             {
-                throw new ArgumentException(
-                    "You must provide at least one column name",
-                    nameof(columnNames));
+                throw new ArgumentException("You must provide at least one column name.", nameof(columnNames));
             }
 
             if (columnNames.Any(string.IsNullOrWhiteSpace))
