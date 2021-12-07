@@ -7,7 +7,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
     public static class LayoutExtensions
     {
         /// <summary>
-        /// Adds the <paramref name="shape"/> to the zone called <paramref name="zoneName"/>. Optionally at the given
+        /// Adds the <paramref name="shape"/> to the zone called <paramref name="zoneName"/>, optionally at the given
         /// <paramref name="position"/>.
         /// </summary>
         public static async Task AddShapeToZoneAsync(
