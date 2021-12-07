@@ -49,8 +49,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 action.GetCustomAttribute<AdminAttribute>() != null);
             _routeLazy = new Lazy<string>(() =>
                 action.GetCustomAttribute<RouteAttribute>()?.Template is { } route && !string.IsNullOrWhiteSpace(route)
-                ? GetRoute(route)
-                : $"{area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
+                    ? GetRoute(route)
+                    : $"{area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
         }
 
         public override string ToString()

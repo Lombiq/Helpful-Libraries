@@ -59,11 +59,11 @@ namespace Microsoft.AspNetCore.Http
             params (string Key, object Value)[] additionalArguments)
         {
             var provider = httpContext.RequestServices.GetService<ITypeFeatureProvider>();
-            var model = TypedRoute.CreateFromExpression(
+            var route = TypedRoute.CreateFromExpression(
                 actionExpression,
                 additionalArguments,
                 provider);
-            return model.ToString(tenantName);
+            return route.ToString(tenantName);
         }
     }
 }
