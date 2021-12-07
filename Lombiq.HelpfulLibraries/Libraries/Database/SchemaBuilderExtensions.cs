@@ -36,7 +36,16 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
         {
             if (columnNames?.Any() != true)
             {
-                throw new ArgumentException($"{nameof(columnNames)} must contain at least one column name");
+                throw new ArgumentException(
+                    "You must provide at least one column name",
+                    nameof(columnNames));
+            }
+
+            if (columnNames.Any(string.IsNullOrWhiteSpace))
+            {
+                throw new ArgumentException(
+                    "The column names shouldn't be null, empty string or all whitespace.",
+                    nameof(columnNames));
             }
 
             return schemaBuilder.AlterTable(typeof(TTable).Name, table => table
