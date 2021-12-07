@@ -16,11 +16,10 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
             _contentManager = contentManager;
         }
 
-        public async Task<ContentItem> GetTermContentItemByTaxonomyAliasAsync(string alias, string termId)
-        {
-            var contentItemId = await _contentHandleManager.GetContentItemIdAsync($"alias:{alias}");
-            var terms = (await _contentManager.GetAsync(contentItemId)).As<TaxonomyPart>().Terms;
-            return terms.FirstOrDefault(term => term.ContentItemId == termId);
-        }
+        public async Task<ContentItem> GetTermContentItemByTaxonomyAliasAsync(string alias, string termId) =>
+            await _contentHandleManager.GetContentItemIdAsync($"alias:{alias}") is { } contentItemId &&
+            await _contentManager.GetAsync(contentItemId) is { } contentItem
+                ? contentItem.As<TaxonomyPart>()?.Terms?.FirstOrDefault(term => term.ContentItemId == termId)
+                : null;
     }
 }
