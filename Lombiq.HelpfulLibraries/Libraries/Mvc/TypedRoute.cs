@@ -95,7 +95,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 
         public static TypedRoute CreateFromExpression<TController>(
             Expression<Action<TController>> actionExpression,
-            IList<(string Key, object Value)> additionalArguments,
+            IEnumerable<(string Key, object Value)> additionalArguments,
             ITypeFeatureProvider typeFeatureProvider = null) =>
             CreateFromExpression(
                 actionExpression,
@@ -104,7 +104,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 
         public static TypedRoute CreateFromExpression<TController>(
             Expression<Action<TController>> action,
-            IList<KeyValuePair<string, string>> additionalArguments,
+            IEnumerable<KeyValuePair<string, string>> additionalArguments,
             ITypeFeatureProvider typeFeatureProvider = null)
         {
             Expression actionExpression = action;
