@@ -125,13 +125,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 .Concat(additionalArguments)
                 .ToList();
 
-            var key = string.Join(
-                separator: '|',
-                typeof(TController),
-                operation.Method,
-                string.Join(",", arguments.Select(pair => $"{pair.Key}={pair.Value}")));
             return _cache.GetOrAdd(
-                key,
+                string.Join(
+                    separator: '|',
+                    typeof(TController),
+                    operation.Method,
+                    string.Join(",", arguments.Select(pair => $"{pair.Key}={pair.Value}"))),
                 _ => new TypedRoute(
                     operation.Method,
                     arguments,
