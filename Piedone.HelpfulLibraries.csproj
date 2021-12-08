@@ -246,6 +246,7 @@
     <Compile Include="Libraries\Utilities\OrchardVersion.cs" />
     <Compile Include="Libraries\Utilities\ShapeDisplayingContextExtensions.cs" />
     <Compile Include="Libraries\Utilities\StorageProviderExtensions.cs" />
+    <Compile Include="Libraries\Utilities\StringExtensions.cs" />
     <Compile Include="Libraries\Utilities\WebViewPageExtensions.cs" />
     <Compile Include="Libraries\Utilities\IFreezable.cs" />
     <Compile Include="Libraries\Utilities\MappingsManager.cs" />
