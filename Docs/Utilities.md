@@ -83,6 +83,24 @@ public class ShapeHider : ShapeDisplayEvents
 var directorySeparator = _storageProvider.GetDirectorySeparator();
 ```
 
+#### StringExtensions
+```razor
+// Conditional output of a string, especially in Views:
+<div class='@("awesome".If(Model.IsAwesome))'>
+```
+```csharp
+// Join strings fluently:
+var output = someStringEnumerable.Join(", ");
+// Or:
+var output = someStringEnumerable.JoinNonEmpty(", ");
+// ... to omit all empty or null strings.
+```
+```csharp
+// Split a string by some separator string (not char):
+var parts = input.Split(", ");
+// ... which is a lot shorter than: input.Split(new[] { ", " }, StringSplitOptions.None).
+```
+
 #### UriExtensions
 ```csharp
 var urlWithoutSchema = new Uri("http://orchardproject.net").ToStringWithoutScheme();
