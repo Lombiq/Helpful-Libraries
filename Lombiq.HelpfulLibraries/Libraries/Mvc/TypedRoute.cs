@@ -99,7 +99,11 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             ITypeFeatureProvider typeFeatureProvider = null) =>
             CreateFromExpression(
                 actionExpression,
-                additionalArguments.Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
+                additionalArguments.Any()
+                    ? additionalArguments
+                        .Select((key, value) => new KeyValuePair<string, string>(key, value.ToString()))
+                        .ToList()
+                    : Array.Empty<KeyValuePair<string, string>>(),
                 typeFeatureProvider);
 
         public static TypedRoute CreateFromExpression<TController>(
