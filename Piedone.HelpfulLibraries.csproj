@@ -7,7 +7,7 @@
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{EA61AD10-39D6-41A9-B12B-227F50C54158}</ProjectGuid>
-    <ProjectTypeGuids>{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Piedone.HelpfulLibraries</RootNamespace>
@@ -21,6 +21,12 @@
     <TargetFrameworkProfile />
     <UseGlobalApplicationHostFile />
     <ReferencePath>$(SolutionDir)\Website\bin\;$(SolutionDir)\Website\Modules\Orchard.Alias\bin;$(SolutionDir)\Website\Modules\Orchard.Caching\bin;</ReferencePath>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -268,6 +274,7 @@
     <None Include="Docs\TasksLibraries.md" />
     <None Include="Docs\Utilities.md" />
     <None Include="Docs\VersionHistory.md" />
+    <None Include="Properties\PublishProfiles\care.pubxml" />
     <None Include="Readme.md" />
   </ItemGroup>
   <PropertyGroup>
@@ -294,7 +301,7 @@
     -->
   </Target>
   <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
-    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+    <AspNetCompiler VirtualPath="/" PhysicalPath="$(ProjectDir)" Clean="true" />
   </Target>
   <!-- Orchard App Host (https://github.com/Lombiq/Orchard-Application-Host) compatibility start. Enabling the usage of a lib folder at a different location. -->
   <ItemGroup>
@@ -323,7 +330,25 @@
     <ModulesRoot>..\..\Orchard\src\Orchard.Web\Modules\Orchard.Alias\</ModulesRoot>
   </PropertyGroup>
   <!-- Orchard App Host (https://github.com/Lombiq/Orchard-Application-Host) compatibility end. -->
-  <ProjectExtensions />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>False</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>0</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>
+          </IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
   <ItemGroup>
     <Content Include="packages.config" />
   </ItemGroup>
