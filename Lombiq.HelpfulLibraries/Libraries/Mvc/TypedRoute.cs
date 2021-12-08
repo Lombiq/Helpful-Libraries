@@ -1,9 +1,11 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using OrchardCore.Admin;
 using OrchardCore.Environment.Extensions;
 using OrchardCore.Modules.Manifest;
 using OrchardCore.Mvc.Core.Utilities;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
@@ -15,17 +17,24 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 {
     public class TypedRoute
     {
+        private static readonly ConcurrentDictionary<string, TypedRoute> _cache = new();
+
         private readonly List<KeyValuePair<string, string>> _arguments;
 
         private readonly Lazy<bool> _isAdminLazy;
         private readonly Lazy<string> _routeLazy;
 
         public TypedRoute(
-            Type controller,
             MethodInfo action,
             IEnumerable<KeyValuePair<string, string>> arguments,
             ITypeFeatureProvider typeFeatureProvider = null)
         {
+            if (action?.DeclaringType is not { } controller)
+            {
+                throw new InvalidOperationException(
+                    $"{action?.Name ?? nameof(action)}'s {nameof(action.DeclaringType)} cannot be null.");
+            }
+
             string area;
             _arguments = arguments is List<KeyValuePair<string, string>> list ? list : arguments.ToList();
             var areaPair = _arguments.FirstOrDefault(pair => pair.Key.EqualsOrdinalIgnoreCase("area"));
@@ -86,17 +95,20 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 
         public static TypedRoute CreateFromExpression<TController>(
             Expression<Action<TController>> actionExpression,
-            IEnumerable<(string Key, object Value)> additionalArguments,
+            IList<(string Key, object Value)> additionalArguments,
             ITypeFeatureProvider typeFeatureProvider = null) =>
             CreateFromExpression(
                 actionExpression,
-                additionalArguments
-                    .Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
+                additionalArguments.Any()
+                    ? additionalArguments
+                        .Select((key, value) => new KeyValuePair<string, string>(key, value.ToString()))
+                        .ToList()
+                    : Array.Empty<KeyValuePair<string, string>>(),
                 typeFeatureProvider);
 
         public static TypedRoute CreateFromExpression<TController>(
             Expression<Action<TController>> action,
-            IEnumerable<KeyValuePair<string, string>> additionalArguments,
+            IList<KeyValuePair<string, string>> additionalArguments,
             ITypeFeatureProvider typeFeatureProvider = null)
         {
             Expression actionExpression = action;
@@ -116,11 +128,13 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 .Where(pair => pair.Value != null)
                 .Concat(additionalArguments);
 
-            return new TypedRoute(
-                typeof(TController),
-                operation.Method,
-                arguments,
-                typeFeatureProvider);
+            var key = $"{action}:{string.Join(",", additionalArguments.Select(pair => $"{pair.Key}={pair.Value}"))}";
+            return _cache.GetOrAdd(
+                key,
+                _ => new TypedRoute(
+                    operation.Method,
+                    arguments,
+                    typeFeatureProvider));
         }
 
         private static string ValueToString(object value) =>
@@ -129,7 +143,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 null => null,
                 string text => text,
                 System.DateTime date => date.ToString("s", CultureInfo.InvariantCulture),
-                _ => string.Format(CultureInfo.InvariantCulture, "{0}", value),
+                byte or sbyte or short or ushort or int or uint or long or ulong or float or double or decimal =>
+                    string.Format(CultureInfo.InvariantCulture, "{0}", value),
+                _ => JsonConvert.SerializeObject(value),
             };
     }
 }
