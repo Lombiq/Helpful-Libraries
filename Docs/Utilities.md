@@ -27,61 +27,80 @@ The IFreezable interface describes a freezable class, the FreezableBase abstract
 
 ## Extensions
 
-Various extensions methods that enhance built-in functionality. Don't forget to add the using `Piedone.HelpfulLibraries.Utilities;` declaration to your code.
+Various extension methods that enhance built-in functionality. Don't forget to add the `using Piedone.HelpfulLibraries.Utilities;` declaration to your code to use (most of) these.
 
 ### Examples
 
-	// CacheServiceMonitor
-	// _cacheService is an injected Orchard.Caching ICacheService.
-	var value = _cacheService.Get<MyClass>("key", () => 
-	{
-	    // If the event is triggered the entry for the cache key will be removed. It will work otherwise too but it's better to call Monitor() only when the cache entry is created newly.
-	    _cacheService.Monitor("event key", "cache key");
-	
-	    // ...
-	});
-	
-	// Removes all cache entries that were subscribed to the specified event.
-	_cacheService.Trigger("event key");
-	// You can use the above to invalidate multiple cache entries at once: when they Monitor the same event key, triggering the event will remove all of the cache entries.
-	
-	// HqlQueryExtensions
-	// From a Projector IFilterProvider.
-	public void ApplyFilter(FilterContext context)
-	{
-	    IEnumerable<int> ids = ...
-	    context.Query.WhereIdIn(ids); // Applies the IN() in partitions of given size so the maximal number of IN() arguments isn't an issue.
-	}
-	// HqlExpressionFactoryExtensions has an extension to use such partitioned clauses in a generic way.
+Here, we show usage examples for most of the extension methods.
 
-	// ShapeDisplayingContextExtensions
-	public class ShapeHider : ShapeDisplayEvents
-    {
-        public override void Displaying(ShapeDisplayingContext context)
-        {
-			// ...
-            context.HideShape();
-        }
-    }
+#### CacheServiceMonitor
+```csharp
+// _cacheService is an injected Orchard.Caching ICacheService.
+var value = _cacheService.Get<MyClass>("key", () => 
+{
+	// If the event is triggered the entry for the cache key will be removed. It will work otherwise too, but it's
+	// better to call Monitor() only when the cache entry is created newly.
+	_cacheService.Monitor("event key", "cache key");
 
-    // StorageProviderExtensions
-    // Getting the directory separator used by an injected IStorageProvider:
-    var directorySeparator = _storageProvider.GetDirectorySeparator();
+	// ...
+});
+
+// Removes all cache entries that were subscribed to the specified event.
+_cacheService.Trigger("event key");
+// You can use the above to invalidate multiple cache entries at once: when they Monitor the same event key, triggering
+// the event will remove all of the cache entries.
+```
 	
-	// UriExtensions
-	var urlWithoutSchema = new Uri("http://orchardproject.net").ToStringWithoutScheme();
-	
-	// WebViewPageExtensions
-	if (this.WasNotDisplayed("myKey"))
+#### HqlQueryExtensions
+```csharp
+// From a Projector IFilterProvider.
+public void ApplyFilter(FilterContext context)
+{
+	IEnumerable<int> ids = ...
+	// Applies the IN() in partitions of given size so the maximal number of IN() arguments isn't an issue.
+	context.Query.WhereIdIn(ids);
+}
+```
+
+#### HqlExpressionFactoryExtensions
+... contains extensions to use such partitioned clauses in a generic way.
+
+#### ShapeDisplayingContextExtensions
+```csharp
+public class ShapeHider : ShapeDisplayEvents
+{
+	public override void Displaying(ShapeDisplayingContext context)
 	{
-	    // Display something that should only be displayed once, no matter how many times the view is rendered
+		// ...
+		context.HideShape();
 	}
+}
+```
+
+#### StorageProviderExtensions
+```csharp
+// Getting the directory separator used by an injected IStorageProvider:
+var directorySeparator = _storageProvider.GetDirectorySeparator();
+```
+
+#### UriExtensions
+```csharp
+var urlWithoutSchema = new Uri("http://orchardproject.net").ToStringWithoutScheme();
+```
 	
-	// Usable in a views, similar to the built-in Capture() method.
-	@using (this.CaptureOnce())
-	{
-	    // This will be included in the resulting html markup only once, no matter how many times the block is run.
-	}
+#### WebViewPageExtensions
+```razor
+if (this.WasNotDisplayed("myKey"))
+{
+	// Display something that should only be displayed once, no matter how many times the view is rendered
+}
+
+// Usable in views, similar to the built-in Capture() method.
+@using (this.CaptureOnce())
+{
+	// This will be included in the resulting html markup only once, no matter how many times the block is run.
+}
+```
 
 See [this blogpost](https://english.orchardproject.hu/blog/making-sure-your-inline-script-is-only-incuded-once-when-multiple-content-items-are-listed) for a sample usage of CaptureOnce().
 
