@@ -42,7 +42,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
             if (columnNames.Any(string.IsNullOrWhiteSpace))
             {
                 throw new ArgumentException(
-                    "The column names shouldn't be null, empty string or all whitespace.",
+                    "The column names shouldn't be null, empty or all whitespace.",
                     nameof(columnNames));
             }
 
