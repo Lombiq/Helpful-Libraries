@@ -9,20 +9,20 @@ The IFreezable interface describes a freezable class, the FreezableBase abstract
 
 ### Example
 
-	public abstract class MyFreezable : FreezableBase
-	{
-	    private string _data;
-	    public string Data
-	    {
-	        get { return _data; }
-	        set
-	        {
-	            // This method will throw ReadonlyException if the object's Freeze() method was called.
-	            ThrowIfFrozen();
-	            _data= value;
-	        }
-	    }
-	}
+    public abstract class MyFreezable : FreezableBase
+    {
+        private string _data;
+        public string Data
+        {
+            get { return _data; }
+            set
+            {
+                // This method will throw ReadonlyException if the object's Freeze() method was called.
+                ThrowIfFrozen();
+                _data= value;
+            }
+        }
+    }
 
 
 ## Extensions
@@ -38,11 +38,11 @@ Here, we show usage examples for most of the extension methods.
 // _cacheService is an injected Orchard.Caching ICacheService.
 var value = _cacheService.Get<MyClass>("key", () => 
 {
-	// If the event is triggered the entry for the cache key will be removed. It will work otherwise too, but it's
-	// better to call Monitor() only when the cache entry is created newly.
-	_cacheService.Monitor("event key", "cache key");
+    // If the event is triggered the entry for the cache key will be removed. It will work otherwise too, but it's
+    // better to call Monitor() only when the cache entry is created newly.
+    _cacheService.Monitor("event key", "cache key");
 
-	// ...
+    // ...
 });
 
 // Removes all cache entries that were subscribed to the specified event.
@@ -50,15 +50,15 @@ _cacheService.Trigger("event key");
 // You can use the above to invalidate multiple cache entries at once: when they Monitor the same event key, triggering
 // the event will remove all of the cache entries.
 ```
-	
+
 #### HqlQueryExtensions
 ```csharp
 // From a Projector IFilterProvider.
 public void ApplyFilter(FilterContext context)
 {
-	IEnumerable<int> ids = ...
-	// Applies the IN() in partitions of given size so the maximal number of IN() arguments isn't an issue.
-	context.Query.WhereIdIn(ids);
+    IEnumerable<int> ids = ...
+    // Applies the IN() in partitions of given size so the maximal number of IN() arguments isn't an issue.
+    context.Query.WhereIdIn(ids);
 }
 ```
 
@@ -69,11 +69,11 @@ public void ApplyFilter(FilterContext context)
 ```csharp
 public class ShapeHider : ShapeDisplayEvents
 {
-	public override void Displaying(ShapeDisplayingContext context)
-	{
-		// ...
-		context.HideShape();
-	}
+    public override void Displaying(ShapeDisplayingContext context)
+    {
+        // ...
+        context.HideShape();
+    }
 }
 ```
 
@@ -105,18 +105,18 @@ var parts = input.Split(", ");
 ```csharp
 var urlWithoutSchema = new Uri("http://orchardproject.net").ToStringWithoutScheme();
 ```
-	
+
 #### WebViewPageExtensions
 ```razor
 if (this.WasNotDisplayed("myKey"))
 {
-	// Display something that should only be displayed once, no matter how many times the view is rendered
+    // Display something that should only be displayed once, no matter how many times the view is rendered
 }
 
 // Usable in views, similar to the built-in Capture() method.
 @using (this.CaptureOnce())
 {
-	// This will be included in the resulting html markup only once, no matter how many times the block is run.
+    // This will be included in the resulting html markup only once, no matter how many times the block is run.
 }
 ```
 
@@ -127,26 +127,26 @@ See [this blogpost](https://english.orchardproject.hu/blog/making-sure-your-inli
 
 Service for managing ORM mappings, particularly for clearing NHibernate mappings by deleting mappings.bin. Can be useful if you want to use new mappings immediately their update (e.g. inside a migration).
 
-	_mappingsManager.Clear(); // _mappingsManager is an injected IMappingsManager instance
+    _mappingsManager.Clear(); // _mappingsManager is an injected IMappingsManager instance
 
 
 ## MimeAssistant
 
 A simple helper for determining the MIME type of a file, depending on its extension. Its code is taken from a [SO post](http://stackoverflow.com/a/7161265/220230).
 
-	var mime = MimeAssistant.GetMimeType("test.jpg"); // image/jpeg
+    var mime = MimeAssistant.GetMimeType("test.jpg"); // image/jpeg
 
 ## OrchardVersion
 
 The following code returns the version of the currently executing Orchard application.
 
-	var version = OrchardVersion.Current();
+    var version = OrchardVersion.Current();
  
 ## UriHelper
 
 Combines uri segments with forward slashes (much like Path.Combine() for local paths).
 
-	var uri = UriHelper.Combine("sub", "folder"); // Returns sub/folders
+    var uri = UriHelper.Combine("sub", "folder"); // Returns sub/folders
 
 
 ## LocalizerDependency
