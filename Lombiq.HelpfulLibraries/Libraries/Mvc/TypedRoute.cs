@@ -126,9 +126,10 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                     methodParameters[index].Name,
                     ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke())))
                 .Where(pair => pair.Value != null)
-                .Concat(additionalArguments);
+                .Concat(additionalArguments)
+                .ToList();
 
-            var key = $"{action}:{string.Join(",", additionalArguments.Select(pair => $"{pair.Key}={pair.Value}"))}";
+            var key = $"{typeof(TController)}.{operation.Method}:{string.Join(",", arguments.Select(pair => $"{pair.Key}={pair.Value}"))}";
             return _cache.GetOrAdd(
                 key,
                 _ => new TypedRoute(
