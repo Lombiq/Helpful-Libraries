@@ -9,21 +9,22 @@ The IFreezable interface describes a freezable class, the FreezableBase abstract
 
 ### Example
 
-    public abstract class MyFreezable : FreezableBase
-    {
-        private string _data;
-        public string Data
-        {
-            get { return _data; }
-            set
-            {
-                // This method will throw ReadonlyException if the object's Freeze() method was called.
-                ThrowIfFrozen();
-                _data= value;
-            }
-        }
-    }
-
+```csharp
+public abstract class MyFreezable : FreezableBase
+{
+	private string _data;
+	public string Data
+	{
+		get { return _data; }
+		set
+		{
+			// This method will throw ReadonlyException if the object's Freeze() method was called.
+			ThrowIfFrozen();
+			_data= value;
+		}
+	}
+}
+```
 
 ## Extensions
 
@@ -36,7 +37,7 @@ Here, we show usage examples for most of the extension methods.
 #### CacheServiceMonitor
 ```csharp
 // _cacheService is an injected Orchard.Caching ICacheService.
-var value = _cacheService.Get<MyClass>("key", () => 
+var value = _cacheService.Get<MyClass>("key", () =>
 {
     // If the event is triggered the entry for the cache key will be removed. It will work otherwise too, but it's
     // better to call Monitor() only when the cache entry is created newly.
@@ -127,26 +128,34 @@ See [this blogpost](https://english.orchardproject.hu/blog/making-sure-your-inli
 
 Service for managing ORM mappings, particularly for clearing NHibernate mappings by deleting mappings.bin. Can be useful if you want to use new mappings immediately their update (e.g. inside a migration).
 
-    _mappingsManager.Clear(); // _mappingsManager is an injected IMappingsManager instance
+```csharp
+_mappingsManager.Clear(); // _mappingsManager is an injected IMappingsManager instance
+```
 
 
 ## MimeAssistant
 
 A simple helper for determining the MIME type of a file, depending on its extension. Its code is taken from a [SO post](http://stackoverflow.com/a/7161265/220230).
 
-    var mime = MimeAssistant.GetMimeType("test.jpg"); // image/jpeg
+```csharp
+var mime = MimeAssistant.GetMimeType("test.jpg"); // image/jpeg
+```
 
 ## OrchardVersion
 
 The following code returns the version of the currently executing Orchard application.
 
-    var version = OrchardVersion.Current();
- 
+```csharp
+var version = OrchardVersion.Current();
+```
+
 ## UriHelper
 
 Combines uri segments with forward slashes (much like Path.Combine() for local paths).
 
-    var uri = UriHelper.Combine("sub", "folder"); // Returns sub/folders
+```csharp
+var uri = UriHelper.Combine("sub", "folder"); // Returns sub/folders
+```
 
 
 ## LocalizerDependency
