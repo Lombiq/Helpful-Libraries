@@ -99,11 +99,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             ITypeFeatureProvider typeFeatureProvider = null) =>
             CreateFromExpression(
                 actionExpression,
-                additionalArguments.Any()
-                    ? additionalArguments
-                        .Select((key, value) => new KeyValuePair<string, string>(key, value.ToString()))
-                        .ToList()
-                    : Array.Empty<KeyValuePair<string, string>>(),
+                additionalArguments.Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
                 typeFeatureProvider);
 
         public static TypedRoute CreateFromExpression<TController>(
@@ -129,12 +125,14 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 .Concat(additionalArguments)
                 .ToList();
 
+            var key = string.Join(
+                separator: '|',
+                typeof(TController),
+                operation.Method,
+                string.Join(",", arguments.Select(pair => $"{pair.Key}={pair.Value}")));
+
             return _cache.GetOrAdd(
-                string.Join(
-                    separator: '|',
-                    typeof(TController),
-                    operation.Method,
-                    string.Join(",", arguments.Select(pair => $"{pair.Key}={pair.Value}"))),
+                key,
                 _ => new TypedRoute(
                     operation.Method,
                     arguments,
