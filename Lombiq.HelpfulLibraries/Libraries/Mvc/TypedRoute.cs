@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Newtonsoft.Json;
 using OrchardCore.Admin;
 using OrchardCore.Environment.Extensions;
@@ -19,6 +21,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
     {
         private static readonly ConcurrentDictionary<string, TypedRoute> _cache = new();
 
+        private readonly string _area;
+        private readonly Type _controller;
+        private readonly MethodInfo _action;
         private readonly List<KeyValuePair<string, string>> _arguments;
 
         private readonly Lazy<bool> _isAdminLazy;
@@ -35,17 +40,19 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                     $"{action?.Name ?? nameof(action)}'s {nameof(action.DeclaringType)} cannot be null.");
             }
 
-            string area;
+            _controller = controller;
+            _action = action;
+
             _arguments = arguments is List<KeyValuePair<string, string>> list ? list : arguments.ToList();
             var areaPair = _arguments.FirstOrDefault(pair => pair.Key.EqualsOrdinalIgnoreCase("area"));
             if (areaPair.Value is { } areaArgumentValue)
             {
-                area = areaArgumentValue;
+                _area = areaArgumentValue;
                 _arguments.Remove(areaPair);
             }
             else
             {
-                area = typeFeatureProvider?.GetFeatureForDependency(controller).Extension.Id ??
+                _area = typeFeatureProvider?.GetFeatureForDependency(controller).Extension.Id ??
                         controller.Assembly.GetCustomAttribute<ModuleNameAttribute>()?.Name ??
                         controller.Assembly.GetCustomAttribute<ModuleMarkerAttribute>()?.Name ??
                         throw new InvalidOperationException(
@@ -59,7 +66,19 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             _routeLazy = new Lazy<string>(() =>
                 action.GetCustomAttribute<RouteAttribute>()?.Template is { } route && !string.IsNullOrWhiteSpace(route)
                     ? GetRoute(route)
-                    : $"{area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
+                    : $"{_area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
+        }
+
+        public string WithLinkGenerator(LinkGenerator linkGenerator, HttpContext httpContext)
+        {
+            var arguments = _arguments.ToDictionaryOverwrite(pair => pair.Key, pair => pair.Value);
+            arguments["area"] = _area;
+
+            return linkGenerator.GetUriByAction(
+                httpContext,
+                _action.Name,
+                _controller.ControllerName(),
+                arguments);
         }
 
         public override string ToString()

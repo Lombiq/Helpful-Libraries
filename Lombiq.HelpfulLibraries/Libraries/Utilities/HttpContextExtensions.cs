@@ -1,5 +1,6 @@
 using Lombiq.HelpfulLibraries.Libraries.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using OrchardCore.Environment.Extensions;
@@ -56,16 +57,16 @@ namespace Microsoft.AspNetCore.Http
         public static string Action<TController>(
             this HttpContext httpContext,
             Expression<Action<TController>> actionExpression,
-            string tenantName = null,
             params (string Key, object Value)[] additionalArguments)
             where TController : ControllerBase
         {
+            var linkGenerator = httpContext.RequestServices.GetRequiredService<LinkGenerator>();
             var provider = httpContext.RequestServices.GetService<ITypeFeatureProvider>();
             var route = TypedRoute.CreateFromExpression(
                 actionExpression,
                 additionalArguments,
                 provider);
-            return route.ToString(tenantName);
+            return route.WithLinkGenerator(linkGenerator, httpContext);
         }
     }
 }

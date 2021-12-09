@@ -74,16 +74,16 @@ namespace OrchardCore
         public static string Action<TController>(
             this IOrchardHelper orchardHelper,
             Expression<Action<TController>> actionExpression,
-            string tenantName = null,
-            params (string Key, object Value)[] additionalArguments) =>
-            orchardHelper.HttpContext.Action(actionExpression, tenantName, additionalArguments);
+            params (string Key, object Value)[] additionalArguments)
+            where TController : ControllerBase =>
+            orchardHelper.HttpContext.Action(actionExpression, additionalArguments);
 
         /// <inheritdoc cref="HttpContextExtensions.Action{TController}"/>
         public static string Action<TController>(
             this IOrchardHelper orchardHelper,
             Expression<Func<TController, Task>> taskActionExpression,
-            string tenantName = null,
-            params (string Key, object Value)[] additionalArguments) =>
-            orchardHelper.HttpContext.Action(taskActionExpression.StripResult(), tenantName, additionalArguments);
+            params (string Key, object Value)[] additionalArguments)
+            where TController : ControllerBase =>
+            orchardHelper.HttpContext.Action(taskActionExpression.StripResult(), additionalArguments);
     }
 }
