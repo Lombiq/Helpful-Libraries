@@ -1,8 +1,9 @@
+@using Microsoft.AspNetCore.Mvc.Localization
 <h2>@T["Typed Route Sample"]</h2>
 
 <p>@T["These two are generated differently but result in the same."]</p>
 
-<ul>
+<ul class="typedRouteExample">
     <li>
         @* You don't need all of these here because it's the same controller & module, but here we demonstrate how it
            would be if it was a different one. *@
@@ -20,3 +21,21 @@
         </a>
     </li>
 </ul>
+
+<script asp-name="jQuery" at="Foot"></script>
+<script at="Foot" depends-on="jQuery">
+    jQuery(function ($) {
+        const $typedRouteExample = $('.typedRouteExample');
+
+        const links = $typedRouteExample.find('li a').map((_,  a) => a.href);
+        const areAllTheSame = $.unique(links).length === 1;
+
+        $typedRouteExample.after(
+            $('<p>')
+                .text(@T["Are the URLs the same?"].Json() + ' ')
+                .append(
+                    $('<span>')
+                        .text(areAllTheSame ? @T["Yes"].Json() : @T["No"].Json())
+                        .css('color', areAllTheSame ? 'green' : 'red')));
+    });
+</script>
