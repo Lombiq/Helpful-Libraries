@@ -71,8 +71,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 
         public string WithLinkGenerator(LinkGenerator linkGenerator, HttpContext httpContext)
         {
-            var arguments = _arguments.ToDictionaryOverwrite(pair => pair.Key, pair => pair.Value);
-            arguments["area"] = _area;
+            var arguments = new RouteValueDictionary(_arguments) { ["area"] = _area };
 
             return linkGenerator.GetUriByAction(
                 httpContext,
