@@ -96,7 +96,8 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
         public static TypedRoute CreateFromExpression<TController>(
             Expression<Action<TController>> actionExpression,
             IEnumerable<(string Key, object Value)> additionalArguments,
-            ITypeFeatureProvider typeFeatureProvider = null) =>
+            ITypeFeatureProvider typeFeatureProvider = null)
+            where TController : ControllerBase =>
             CreateFromExpression(
                 actionExpression,
                 additionalArguments.Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
@@ -106,6 +107,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
             Expression<Action<TController>> action,
             IEnumerable<KeyValuePair<string, string>> additionalArguments,
             ITypeFeatureProvider typeFeatureProvider = null)
+            where TController : ControllerBase
         {
             Expression actionExpression = action;
             while (actionExpression is LambdaExpression { Body: not MethodCallExpression } lambdaExpression)
