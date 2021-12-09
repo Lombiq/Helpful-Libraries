@@ -46,9 +46,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
                 async () => await _userManagerLazy.Value.FindByIdAsync(userId) as User,
                 _userByUserIdCache);
 
-        public Task<User> GetUserByNameAsync(string username, bool force = false) =>
+        public Task<User> GetUserByNameAsync(string username, bool forceUpdate = false) =>
             GetUserAsync(
-                force,
+                forceUpdate,
                 username,
                 async () => await _userManagerLazy.Value.FindByNameAsync(username) as User,
                 _userByNameCache);

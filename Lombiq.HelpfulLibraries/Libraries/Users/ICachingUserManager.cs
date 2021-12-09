@@ -31,7 +31,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         /// </summary>
         /// <param name="username">Username of the <see cref="User"/>.</param>
         /// <returns>Potentially cached <see cref="User"/>.</returns>
-        Task<User> GetUserByNameAsync(string username, bool force = false);
+        Task<User> GetUserByNameAsync(string username, bool forceUpdate = false);
 
         /// <summary>
         /// Retrieves <see cref="User"/>s from a transient per-request cache by their email or gets them from the store
