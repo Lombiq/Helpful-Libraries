@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using Newtonsoft.Json;
 using OrchardCore.Admin;
 using OrchardCore.Environment.Extensions;
@@ -69,8 +70,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                     : $"{_area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
         }
 
-        public string WithLinkGenerator(LinkGenerator linkGenerator, HttpContext httpContext)
+        public string ToString(HttpContext httpContext)
         {
+            var linkGenerator = httpContext.RequestServices.GetRequiredService<LinkGenerator>();
             var arguments = new RouteValueDictionary(_arguments) { ["area"] = _area };
 
             return linkGenerator.GetUriByAction(
