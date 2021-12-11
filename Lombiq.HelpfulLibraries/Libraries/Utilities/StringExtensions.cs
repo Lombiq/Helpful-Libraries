@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 #nullable enable
 
 namespace System
@@ -52,5 +54,40 @@ namespace System
         /// </summary>
         public static string ReplaceOrdinalIgnoreCase(this string text, string oldValue, string? newValue) =>
             text.Replace(oldValue, newValue, StringComparison.OrdinalIgnoreCase);
+
+        /// <summary>
+        /// Returns the first string that's not <see langword="null"/> or empty, starting with <paramref name="text"/>
+        /// and then the items in <paramref name="alternatives"/> sequentially. Finally <see cref="string.Empty"/> if
+        /// none matched the criteria.
+        /// </summary>
+        public static string OrIfEmpty(this string? text, params string?[] alternatives)
+        {
+            if (!string.IsNullOrEmpty(text)) return text;
+
+            foreach (var alternative in alternatives)
+            {
+                if (!string.IsNullOrEmpty(alternative)) return alternative;
+            }
+
+            return string.Empty;
+        }
+
+        /// <summary>
+        /// Returns <paramref name="alternative"/> if <paramref name="condition"/> is <see langword="true"/>, otherwise
+        /// returns <paramref name="text"/>.
+        /// </summary>
+        public static string? OrIf(this string? text, Func<string?, bool> condition, string? alternative) =>
+            condition(text) ? alternative : text;
+
+        /// <summary>
+        /// Returns the result of <paramref name="alternativeAsync"/> if <paramref name="condition"/> is <see
+        /// langword="true"/>, otherwise returns <paramref name="text"/>. A delegate is used to avoid unnecessary
+        /// expensive async calls.
+        /// </summary>
+        public static Task<string?> OrIfAsync(
+            this string? text,
+            Func<string?, bool> condition,
+            Func<Task<string?>> alternativeAsync) =>
+            condition(text) ? alternativeAsync() : Task.FromResult(text);
     }
 }
