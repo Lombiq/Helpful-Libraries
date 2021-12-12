@@ -1,0 +1,17 @@
+name: build
+
+on:
+  push:
+    branches: [dev]
+    paths-ignore:
+      - "docs/**"
+      - "readme.md"
+
+  pull_request:
+    branches: [dev]
+
+jobs:
+  call-build-workflow:
+    uses: deanmarcussen/NuGet-Publishing-GitHub-Actions/.github/workflows/build.yml
+      with:
+        project: ./Lombiq.HelpfulLibraries.Targets/Lombiq.HelpfulLibraries.Targets.csproj
