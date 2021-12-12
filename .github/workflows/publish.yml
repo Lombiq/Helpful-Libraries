@@ -11,4 +11,5 @@ jobs:
     with:
       project: ./Lombiq.HelpfulLibraries.Targets/Lombiq.HelpfulLibraries.Targets.csproj
       ref: ${GITHUB_REF}
+    secrets:
       apikey: ${{ secrets.LOMBIQ_CLOUDSMITH_API_KEY }}
