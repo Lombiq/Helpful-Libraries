@@ -10,6 +10,6 @@ jobs:
     uses: deanmarcussen/NuGet-Publishing-GitHub-Actions/.github/workflows/publish.yml@v0.0.1
     with:
       project: ./Lombiq.HelpfulLibraries.Targets/Lombiq.HelpfulLibraries.Targets.csproj
-      ref: ${GITHUB_REF}
+      ref: ${GITHUB_REF_NAME}
     secrets:
       apikey: ${{ secrets.LOMBIQ_CLOUDSMITH_API_KEY }}
