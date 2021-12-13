@@ -13,7 +13,6 @@
     <RootNamespace>Piedone.HelpfulLibraries</RootNamespace>
     <AssemblyName>Piedone.HelpfulLibraries</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
-    <MvcBuildViews>false</MvcBuildViews>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
     <OldToolsVersion>4.0</OldToolsVersion>
@@ -29,6 +28,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
     <CodeAnalysisRuleSet>..\..\..\OrchardBasicCorrectness.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -39,6 +39,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <LangVersion>7.3</LangVersion>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
     <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
@@ -111,7 +112,7 @@
     <ProjectReference Include="$(ModulesRoot)..\..\..\Orchard\Orchard.Framework.csproj">
       <Project>{2D1D92BB-4555-4CBE-8D0E-63563D6CE4C6}</Project>
       <Name>Orchard.Framework</Name>
-      <Private>false</Private>
+      <Private>$(MvcBuildViews)</Private>
     </ProjectReference>
     <ProjectReference Include="$(ModulesRoot)..\..\Modules\Orchard.Caching\Orchard.Caching.csproj">
       <Project>{7528bf74-25c7-4abe-883a-443b4eec4776}</Project>
@@ -120,6 +121,10 @@
     <ProjectReference Include="$(ModulesRoot)..\..\Modules\Orchard.Alias\Orchard.Alias.csproj">
       <Project>{475b6c45-b27c-438b-8966-908b9d6d1077}</Project>
       <Name>Orchard.Alias</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Orchard.Users\Orchard.Users.csproj">
+      <Project>{79AED36E-ABD0-4747-93D3-8722B042454B}</Project>
+      <Name>Orchard.Users</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
@@ -133,7 +138,6 @@
     <Compile Include="Libraries\Contents\IPrefixedEditorManager.cs" />
     <Compile Include="Libraries\Contents\PrefixedEditorManager.cs" />
     <Compile Include="Libraries\Contents\TransientContextPart.cs" />
-    <Compile Include="Libraries\Contents\ShapeOutputGenerator.cs" />
     <Compile Include="Libraries\Contents\StaticallyTypedShapeAlternates.cs" />
     <Compile Include="Libraries\DependencyInjection\DecoratorsModuleBase.cs" />
     <Compile Include="Libraries\Helpers\FileCleanserHelper.cs" />
@@ -264,8 +268,6 @@
     <Compile Include="Libraries\Utilities\DeferredAppDomainRestarter.cs" />
     <Compile Include="Libraries\Utilities\FreezableBase.cs" />
     <Compile Include="Libraries\Serialization\IdSerializer.cs" />
-    <Compile Include="Libraries\Utilities\HqlExpressionFactoryExtensions.cs" />
-    <Compile Include="Libraries\Utilities\HqlQueryExtensions.cs" />
     <Compile Include="Libraries\Utilities\HttpContextPlaceholderAccessor.cs" />
     <Compile Include="Libraries\Utilities\LocalizerDependency.cs" />
     <Compile Include="Libraries\Utilities\OrchardVersion.cs" />
@@ -318,7 +320,7 @@
     -->
   </Target>
   <Target Name="AfterBuildCompiler" Condition="'$(MvcBuildViews)'=='true'">
-    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)\..\$(ProjectName)" />
+    <AspNetCompiler VirtualPath="temp" PhysicalPath="$(ProjectDir)" />
   </Target>
   <!-- Orchard App Host (https://github.com/Lombiq/Orchard-Application-Host) compatibility start. Enabling the usage of a lib folder at a different location. -->
   <ItemGroup>

@@ -1,14 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http.Controllers;
-using Orchard;
+﻿using Orchard;
+using Orchard.ContentManagement;
 using Orchard.Environment.Extensions;
 using Orchard.Security;
 using Orchard.Security.Permissions;
-using Piedone.HelpfulLibraries.Authentication;
+using Orchard.Users.Models;
+using System;
+using System.Web.Http.Controllers;
 
 namespace Piedone.HelpfulLibraries.Authentication
 {
@@ -21,16 +18,10 @@ namespace Piedone.HelpfulLibraries.Authentication
     {
         private readonly string[] _permissionNames;
 
+        public RequireBasicAuthorizationAttribute() { }
 
-        public RequireBasicAuthorizationAttribute()
-        {
-        }
-
-        public RequireBasicAuthorizationAttribute(params string[] permissionNames)
-        {
+        public RequireBasicAuthorizationAttribute(params string[] permissionNames) =>
             _permissionNames = permissionNames;
-        }
-
 
         protected override bool IsAuthorized(HttpActionContext actionContext)
         {
@@ -38,7 +29,8 @@ namespace Piedone.HelpfulLibraries.Authentication
 
             var user = workContext.Resolve<IBasicAuthenticationService>().GetUserForRequest();
 
-            if (user == null) return false;
+            if (user == null || user.As<UserPart>().RegistrationStatus != UserStatus.Approved)
+                return false;
 
             var authorizationService = workContext.Resolve<IAuthorizationService>();
 
@@ -46,7 +38,8 @@ namespace Piedone.HelpfulLibraries.Authentication
 
             foreach (var permission in _permissionNames)
             {
-                if (!authorizationService.TryCheckAccess(new Permission { Name = permission }, user, null)) return false;
+                if (!authorizationService.TryCheckAccess(new Permission { Name = permission }, user, null))
+                    return false;
             }
 
             return true;
