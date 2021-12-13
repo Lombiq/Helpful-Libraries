@@ -26,7 +26,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
         [CommandHelp(AttachContentPartCommandName +
             " /Type:<contentTypeName>" +
             " /Part:<contentPartName>" +
-            "\r\n\t" + "Attaches a content type to a content part.")]
+            "\r\n\t" + "Attaches a content part to a content type.")]
         [OrchardSwitches(nameof(Type) + ", " + nameof(Part))]
         public void AttachContentPart() =>
             _contentDefinitionManager.AlterTypeDefinition(Type, type => type.WithPart(Part));
