@@ -13,5 +13,3 @@ on:
 jobs:
   call-build-workflow:
     uses: deanmarcussen/NuGet-Publishing-GitHub-Actions/.github/workflows/build.yml@v1
-    with:
-      project: ./Lombiq.HelpfulLibraries.Targets/Lombiq.HelpfulLibraries.Targets.csproj
