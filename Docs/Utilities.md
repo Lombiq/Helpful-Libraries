@@ -52,20 +52,6 @@ _cacheService.Trigger("event key");
 // the event will remove all of the cache entries.
 ```
 
-#### HqlQueryExtensions
-```csharp
-// From a Projector IFilterProvider.
-public void ApplyFilter(FilterContext context)
-{
-    IEnumerable<int> ids = ...
-    // Applies the IN() in partitions of given size so the maximal number of IN() arguments isn't an issue.
-    context.Query.WhereIdIn(ids);
-}
-```
-
-#### HqlExpressionFactoryExtensions
-... contains extensions to use such partitioned clauses in a generic way.
-
 #### ShapeDisplayingContextExtensions
 ```csharp
 public class ShapeHider : ShapeDisplayEvents
