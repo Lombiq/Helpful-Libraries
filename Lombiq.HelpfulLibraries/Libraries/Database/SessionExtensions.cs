@@ -37,8 +37,8 @@ namespace YesSql
             Func<(string ParsedQuery, IDbTransaction Transaction), Task<IEnumerable<TRow>>> queryExecutor = null,
             DbTransaction transaction = null)
         {
-            transaction ??= await session.DemandAsync();
-            var query = GetQuery(sql, transaction, session);
+            transaction ??= await session.BeginTransactionAsync();
+            var query = GetQuery(sql, session);
 
             return queryExecutor == null
                 ? await transaction.Connection.QueryAsync<TRow>(query, parameters, transaction)
@@ -60,22 +60,20 @@ namespace YesSql
             object parameters = null,
             DbTransaction transaction = null)
         {
-            transaction ??= await session.DemandAsync();
-            var dialect = TransactionSqlDialectFactory.For(transaction);
+            transaction ??= await session.BeginTransactionAsync();
             var prefix = session.Store.Configuration.TablePrefix;
-            var query = getSqlQuery(transaction, dialect, prefix);
+            var query = getSqlQuery(transaction, prefix);
 
-            return await transaction.Connection.ExecuteAsync(query, parameters, transaction);
+            return await session.CurrentTransaction.Connection.ExecuteAsync(query, parameters, transaction);
         }
 
         private static string GetQuery(
             string sql,
-            DbTransaction transaction,
             ISession session)
         {
             var parserResult = SqlParser.TryParse(
                 sql,
-                TransactionSqlDialectFactory.For(transaction),
+                session.Store.Configuration.SqlDialect,
                 session.Store.Configuration.TablePrefix,
                 parameters: null,
                 out var query,
@@ -101,11 +99,14 @@ namespace YesSql
         /// <returns><see langword="true" /> if the query updated an existing <see cref="Document"/> successfully.</returns>
         public static async Task<bool> UpdateDocumentDirectlyAsync(this ISession session, int documentId, object entity)
         {
-            var transaction = await session.DemandAsync();
-            var dialect = session.Store.Dialect;
+            var transaction = await session.BeginTransactionAsync();
+            var dialect = session.Store.Configuration.SqlDialect;
             var content = session.Store.Configuration.ContentSerializer.Serialize(entity);
 
-            var sql = @$"UPDATE {dialect.QuoteForTableName(session.Store.Configuration.TablePrefix + Store.DocumentTable)}
+            var tableName = session.Store.Configuration.TablePrefix +
+                session.Store.Configuration.TableNameConvention.GetDocumentTable();
+
+            var sql = @$"UPDATE {dialect.QuoteForTableName(tableName)}
                 SET {dialect.QuoteForColumnName("Content")} = @Content
                 WHERE {dialect.QuoteForColumnName("Id")} = @Id";
 
@@ -191,10 +192,6 @@ namespace YesSql
         "Design",
         "CA1032:Implement standard exception constructors",
         Justification = "The exception is used in a very particular single case.")]
-    [SuppressMessage(
-        "Major Code Smell",
-        "S3925:\"ISerializable\" should be implemented correctly",
-        Justification = "There's no need to make this class serializable.")]
     public class RawQueryException : DbException
     {
         public override IDictionary Data { get; }
@@ -206,5 +203,5 @@ namespace YesSql
                 .ToDictionary(messageItem => messageItem.index, messageItem => messageItem.errorMessage);
     }
 
-    public delegate string GetSqlQuery(IDbTransaction transaction, ISqlDialect dialect, string prefix);
+    public delegate string GetSqlQuery(IDbTransaction transaction, string prefix);
 }

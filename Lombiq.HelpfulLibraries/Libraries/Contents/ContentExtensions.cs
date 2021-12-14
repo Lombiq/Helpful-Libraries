@@ -138,5 +138,40 @@ namespace OrchardCore.ContentManagement
             $"DisplayText: {content.ContentItem.DisplayText}, " +
             $"ID: {content.ContentItem.ContentItemId}, " +
             $"Version ID: {content.ContentItem.ContentItemVersionId}";
+
+        /// <summary>
+        /// Returns the most relevant date of the <paramref name="content"/>'s <see cref="ContentItem"/>.
+        /// </summary>
+        /// <returns>
+        /// <para>
+        /// The values are resolved in the following order if available. If all of them are <see langword="null"/> then
+        /// <see cref="DateTime.MinValue"/> is returned.
+        /// </para>
+        /// <list type="bullet">
+        ///     <item>
+        ///         <description><see cref="ContentItem.ModifiedUtc"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <description><see cref="ContentItem.PublishedUtc"/></description>
+        ///     </item>
+        ///     <item>
+        ///         <description><see cref="ContentItem.CreatedUtc"/></description>
+        ///     </item>
+        /// </list>
+        /// </returns>
+        public static DateTime GetDateTimeUtc(this IContent content) =>
+            content.ContentItem.ModifiedUtc ??
+            content.ContentItem.PublishedUtc ??
+            content.ContentItem.CreatedUtc ??
+            DateTime.MinValue;
+
+        /// <summary>
+        /// Indicates whether the <see cref="ContentItem"/> is a newly instantiated one or an already existing one.
+        /// </summary>
+        /// <returns>Returns <see langword="true"/> if the item is new.</returns>
+        public static bool IsNew(this IContent content) =>
+            !content.ContentItem.Latest &&
+            !content.ContentItem.Published &&
+            content.ContentItem.Id == 0;
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Lombiq.HelpfulLibraries.Libraries.Middleware
+namespace Lombiq.HelpfulLibraries.Libraries.Middlewares
 {
     public class DeferredTaskMiddleware
     {

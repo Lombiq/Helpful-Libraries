@@ -1,4 +1,4 @@
-# Middleware Documentation
+# Middlewares Documentation
 
 
 Contains ASP.NET Core middlewares and middleware-related services. 

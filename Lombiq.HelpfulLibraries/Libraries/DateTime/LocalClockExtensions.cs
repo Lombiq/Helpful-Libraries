@@ -1,8 +1,6 @@
 using Lombiq.HelpfulLibraries.Libraries.DateTime;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Localization;
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 
 namespace OrchardCore.Modules
@@ -45,21 +43,18 @@ namespace OrchardCore.Modules
                 () => localClock.ConvertToUtcAsync(dateTimeLocal));
 
         /// <summary>
-        /// Converts a UTC DateTime to local time and formats it with the general date long time ("G") format specifier
-        /// <see href="https://docs.microsoft.com/en-us/dotnet/standard/base-types/standard-date-and-time-format-strings#GeneralDateLongTime"/>.
+        /// Converts a UTC DateTime to local time and formats it to long time format
         /// The <paramref name="dateTimeUtc"/> must be UTC. If the <see cref="DateTime.Kind"/> is something other than
         /// <see cref="DateTimeKind.Utc"/> then it will be coerced without any conversion. If you need conversion use
         /// <see cref="ConvertToUtcAsync"/> first.
         /// </summary>
         public static async Task<string> LocalizeAndFormatAsync(
             this ILocalClock localClock,
-            DateTime? dateTimeUtc,
-            IStringLocalizer stringLocalizer)
+            DateTime? dateTimeUtc)
         {
             if (dateTimeUtc == null) return null;
 
-            var local = await localClock.ConvertToLocalAsync(ForceUtc(dateTimeUtc.Value));
-            return local.DateTime.ToString(stringLocalizer["G"].Value, CultureInfo.InvariantCulture);
+            return ((DateTime?)(await localClock.ConvertToLocalAsync(dateTime: dateTimeUtc.Value)).DateTime).ToString();
         }
 
         private static async Task<T> ExecuteInDifferentTimeZoneAsync<T>(HttpContext httpContext, string timeZoneId, Func<Task<T>> asyncAction)

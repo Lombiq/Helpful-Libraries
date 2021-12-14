@@ -1,4 +1,4 @@
-# RestEase DI helper Documentation
+# RestEase DI helper - Lombiq Helpful Libraries for Orchard Core
 
 
 

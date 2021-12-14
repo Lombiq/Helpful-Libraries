@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using YesSql.Sql;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Database
@@ -16,5 +18,38 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
                 .CreateIndex(
                     $"IDX_{typeof(T).Name}_{DocumentId}",
                     DocumentId));
+
+        /// <summary>
+        /// Alters the table with the same name as the typename of <typeparamref name="TTable"/> to add a database index
+        /// for the given columns with a <c>IDX_tableName_columnNames</c> naming scheme.
+        /// </summary>
+        /// <param name="schemaBuilder">The schema builder.</param>
+        /// <param name="columnNames">The collection of columns the index should apply to.</param>
+        /// <typeparam name="TTable">
+        /// The type with the same name as the database table (e.g. name of an index type).
+        /// </typeparam>
+        /// <returns>The <paramref name="schemaBuilder"/> so it can be chained.</returns>
+        /// <exception cref="ArgumentException">
+        /// It is thrown when the <paramref name="columnNames"/> is null or empty.
+        /// </exception>
+        public static ISchemaBuilder AddDatabaseIndex<TTable>(this ISchemaBuilder schemaBuilder, params string[] columnNames)
+        {
+            if (columnNames?.Any() != true)
+            {
+                throw new ArgumentException("You must provide at least one column name.", nameof(columnNames));
+            }
+
+            if (columnNames.Any(string.IsNullOrWhiteSpace))
+            {
+                throw new ArgumentException(
+                    "The column names shouldn't be null, empty or all whitespace.",
+                    nameof(columnNames));
+            }
+
+            return schemaBuilder.AlterTable(typeof(TTable).Name, table => table
+                .CreateIndex(
+                    $"IDX_{typeof(TTable).Name}_{string.Join("_", columnNames)}",
+                    columnNames));
+        }
     }
 }
