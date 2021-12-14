@@ -13,7 +13,7 @@ Features:
 		Name: Authentication - Helpful Libraries
 		Description: These are various utilities and libraries for helping with user authentication
 		Category: Developer
-		Dependencies: Piedone.HelpfulLibraries, Orchard.Users
+		Dependencies: Piedone.HelpfulLibraries
 	Piedone.HelpfulLibraries.Contents:
 		Name: Contents Libraries - Helpful Libraries
 		Description: These libraries help dealing with content items

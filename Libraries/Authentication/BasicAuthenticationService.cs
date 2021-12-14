@@ -1,11 +1,12 @@
-﻿using Orchard;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using Orchard;
 using Orchard.Environment.Extensions;
-using Orchard.Localization;
 using Orchard.Mvc;
 using Orchard.Security;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Piedone.HelpfulLibraries.Authentication
 {
@@ -80,8 +81,7 @@ namespace Piedone.HelpfulLibraries.Authentication
         {
             var credentials = GetRequestCredentials();
             if (credentials == null) return null;
-
-            return _membershipService.ValidateUser(credentials.UserName, credentials.Password, out var validationErrors);
+            return _membershipService.ValidateUser(credentials.UserName, credentials.Password);
         }
 
         public bool SetAuthenticatedUserForRequest()
