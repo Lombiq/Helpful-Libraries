@@ -19,7 +19,11 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
         Justification = "The name makes it explicit that it's not a security concern.")]
     public class NonSecurityRandomizer
     {
-        private readonly Random _random = new();
+        private readonly Random _random;
+
+        public NonSecurityRandomizer(int seed) => _random = new Random(seed);
+
+        public NonSecurityRandomizer() => _random = new Random();
 
         /// <summary>
         /// Returns a random integer that is at least 0 and lower than <paramref name="below"/>.
