@@ -45,6 +45,8 @@ The module consists of the following independent libraries (all in their own fea
 
 Public APIs are always documented so please always read method comments.
 
+Check out the [`Lombiq.HelpfulLibraries.Samples` project](Lombiq.HelpfulLibraries.Samples) for various examples.
+
 
 ## Contributing and support
 
