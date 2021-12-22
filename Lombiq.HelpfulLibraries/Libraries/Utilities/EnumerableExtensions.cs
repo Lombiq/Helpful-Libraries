@@ -264,8 +264,6 @@ namespace System.Collections.Generic
         public static IEnumerable<(T Left, T Right)> CartesianProduct<T>(
             this ICollection<T> collection1,
             ICollection<T> collection2 = null) =>
-            from left in collection1
-            from right in collection2 ?? collection1
-            select (left, right);
+            collection1.SelectMany(_ => collection2 ?? collection1, (left, right) => (left, right));
     }
 }
