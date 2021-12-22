@@ -9,6 +9,7 @@
 using System.ComponentModel;
 using System.IO;
 using System.Threading.Tasks;
+using Piedone.HelpfulLibraries.Libraries.Helpers;
 
 namespace System.Net
 {
@@ -72,6 +73,9 @@ namespace System.Net
         /// <returns>A Task that contains the downloaded data.</returns>
         public static Task DownloadFileTask(this WebClient webClient, Uri address, string fileName)
         {
+            // File Path Validation
+            var fileNameValidated = FileCleanserHelper.GetSafeFileName(fileName);
+
             // Create the task to be returned
             var tcs = new TaskCompletionSource<object>(address);
             
@@ -83,7 +87,7 @@ namespace System.Net
             // Start the async work
             try
             {
-                webClient.DownloadFileAsync(address, fileName, tcs);
+                webClient.DownloadFileAsync(address, fileNameValidated, tcs);
             }
             catch(Exception exc)
             {
@@ -282,6 +286,9 @@ namespace System.Net
         /// <returns>A Task containing the data in the response from the upload.</returns>
         public static Task<byte[]> UploadFileTask(this WebClient webClient, Uri address, string method, string fileName)
         {
+            // File Path Validation
+            var fileNameValidated = FileCleanserHelper.GetSafeFileName(fileName);
+
             // Create the task to be returned
             var tcs = new TaskCompletionSource<byte[]>(address);
 
@@ -293,7 +300,7 @@ namespace System.Net
             // Start the async work
             try
             {
-                webClient.UploadFileAsync(address, method, fileName, tcs);
+                webClient.UploadFileAsync(address, method, fileNameValidated, tcs);
             }
             catch(Exception exc)
             {
