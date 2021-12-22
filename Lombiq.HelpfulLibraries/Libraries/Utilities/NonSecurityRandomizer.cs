@@ -22,12 +22,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
         private readonly Random _random = new();
 
         /// <summary>
-        /// Returns a random integer that is at least 0 and lower than <paramref name="below"/>.
+        /// Returns a random <see cref="int"/> that is at least 0 and lower than <paramref name="below"/>.
         /// </summary>
         public int GetFromRange(int below) => _random.Next(below);
 
         /// <summary>
-        /// Returns a random <see cref="double"/> between 0 and <see cref="int.MaxValue"/> inclusive.
+        /// Returns a random <see cref="int"/> between 0 and <see cref="int.MaxValue"/> inclusive.
         /// </summary>
         public int Get() => _random.Next();
 
