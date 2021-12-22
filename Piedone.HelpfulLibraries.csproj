@@ -277,7 +277,6 @@
     <None Include="Docs\TasksLibraries.md" />
     <None Include="Docs\Utilities.md" />
     <None Include="Docs\VersionHistory.md" />
-    <None Include="Properties\PublishProfiles\Care.pubxml" />
     <None Include="Readme.md" />
   </ItemGroup>
   <PropertyGroup>
