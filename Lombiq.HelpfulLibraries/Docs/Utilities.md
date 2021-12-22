@@ -20,7 +20,8 @@
 - `RNGCryptoServiceProviderExtensions`: Shortcuts for retrieving cryptographically secure random numbers.
 - `Sha256Helper`: A static helper class with the `ComputeHash` utility function that converts text into [SHA-256](https://en.wikipedia.org/wiki/SHA-256) hash string.
 - `StringExtensions`: Adds common useful extensions to the `string` type. (E.g. `SplitByCommas` and `ContainsLoose`.) 
-- `TaskExtensions`: Adds `Task` scheduling extensions. (E.g. `WithTimeoutAsync`.) 
+- `TaskExtensions`: Adds `Task` scheduling extensions. (E.g. `WithTimeoutAsync()`.) 
+
 - `UserServiceExtensions`: Adds extensions for `IUserService`. (E.g. `GetOrchardUserAsync` retrieves the user by user name or throws an exception if none found.)
 
 Please see the inline documentation of each extension method to learn more.
