@@ -1,4 +1,4 @@
-﻿namespace Microsoft.Extensions.Caching.Memory
+namespace Microsoft.Extensions.Caching.Memory
 {
     public static class MemoryCacheExtensions
     {
