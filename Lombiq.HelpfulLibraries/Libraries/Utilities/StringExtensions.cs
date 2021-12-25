@@ -56,6 +56,36 @@ namespace System
             text.Replace(oldValue, newValue, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
+        /// A shortcut for <c>string.Equals(string, StringComparison.Ordinal)</c>.
+        /// </summary>
+        public static bool EqualsOrdinal(this string text, string? value) =>
+            text.Equals(value, StringComparison.Ordinal);
+
+        /// <summary>
+        /// A shortcut for <c>string.Contains(string, StringComparison.Ordinal)</c>.
+        /// </summary>
+        public static bool ContainsOrdinal(this string text, string value) =>
+            text.Contains(value, StringComparison.Ordinal);
+
+        /// <summary>
+        /// A shortcut for <c>string.StartsWith(string, StringComparison.Ordinal)</c>.
+        /// </summary>
+        public static bool StartsWithOrdinal(this string text, string value) =>
+            text.StartsWith(value, StringComparison.Ordinal);
+
+        /// <summary>
+        /// A shortcut for <c>string.EndsWith(string, StringComparison.Ordinal)</c>.
+        /// </summary>
+        public static bool EndsWithOrdinal(this string text, string value) =>
+            text.EndsWith(value, StringComparison.Ordinal);
+
+        /// <summary>
+        /// A shortcut for <c>string.Replace(string, string, StringComparison.Ordinal)</c>.
+        /// </summary>
+        public static string ReplaceOrdinal(this string text, string oldValue, string? newValue) =>
+            text.Replace(oldValue, newValue, StringComparison.Ordinal);
+
+        /// <summary>
         /// Returns the first string that's not <see langword="null"/> or empty, starting with <paramref name="text"/>
         /// and then the items in <paramref name="alternatives"/> sequentially. Finally <see cref="string.Empty"/> if
         /// none matched the criteria.
