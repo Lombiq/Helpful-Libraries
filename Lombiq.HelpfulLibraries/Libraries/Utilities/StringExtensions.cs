@@ -52,8 +52,8 @@ namespace System
         /// <summary>
         /// A shortcut for <c>string.Replace(string, string, StringComparison.OrdinalIgnoreCase)</c>.
         /// </summary>
-        public static string ReplaceOrdinalIgnoreCase(this string text, string oldValue, string? newValue) =>
-            text.Replace(oldValue, newValue, StringComparison.OrdinalIgnoreCase);
+        public static string ReplaceOrdinalIgnoreCase(this string text, string oldValue, string? newValue = "") =>
+            text.Replace(oldValue, newValue ?? string.Empty, StringComparison.OrdinalIgnoreCase);
 
         /// <summary>
         /// A shortcut for <c>string.Equals(string, StringComparison.Ordinal)</c>.
@@ -82,8 +82,8 @@ namespace System
         /// <summary>
         /// A shortcut for <c>string.Replace(string, string, StringComparison.Ordinal)</c>.
         /// </summary>
-        public static string ReplaceOrdinal(this string text, string oldValue, string? newValue) =>
-            text.Replace(oldValue, newValue, StringComparison.Ordinal);
+        public static string ReplaceOrdinal(this string text, string oldValue, string? newValue = "") =>
+            text.Replace(oldValue, newValue ?? string.Empty, StringComparison.Ordinal);
 
         /// <summary>
         /// Returns the first string that's not <see langword="null"/> or empty, starting with <paramref name="text"/>
