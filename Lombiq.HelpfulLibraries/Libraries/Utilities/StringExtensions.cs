@@ -119,5 +119,58 @@ namespace System
             Func<string?, bool> condition,
             Func<Task<string?>> alternativeAsync) =>
             condition(text) ? alternativeAsync() : Task.FromResult(text);
+
+        /// <summary>
+        /// Splits the text into three pieces similarly to Python's <c>str.partition</c> method.
+        /// </summary>
+        /// <param name="text">The text to partition.</param>
+        /// <param name="separator">The first instance of this text is the separator, if any.</param>
+        /// <param name="ignoreCase">
+        /// If <see langword="true"/> then <see cref="StringComparison.OrdinalIgnoreCase"/> is used, otherwise <see
+        /// cref="StringComparison.Ordinal"/>.
+        /// </param>
+        /// <returns>
+        /// If <paramref name="separator"/> is found, then (textBefore, firstMatch, textAfter) is returned.  Otherwise
+        /// (<paramref name="text"/>, <see langword="null"/>, <see langword="null"/>).
+        /// </returns>
+        public static (string? Left, string? Separator, string? Right) PartitionEnd(
+            this string? text,
+            string separator,
+            bool ignoreCase = false) =>
+            Partition(text, separator, ignoreCase, fromEnd: true);
+
+        /// <summary>
+        /// Splits the text into three pieces similarly to Python's <c>str.rpartition</c> method.
+        /// </summary>
+        /// <param name="text">The text to partition.</param>
+        /// <param name="separator">The last instance of this text is the separator, if any.</param>
+        /// <param name="ignoreCase">
+        /// If <see langword="true"/> then <see cref="StringComparison.OrdinalIgnoreCase"/> is used, otherwise <see
+        /// cref="StringComparison.Ordinal"/>.
+        /// </param>
+        /// <returns>
+        /// If <paramref name="separator"/> is found, then (textBefore, lastMatch, textAfter) is returned.  Otherwise
+        /// (<see langword="null"/>, <see langword="null"/>, <paramref name="text"/>).
+        /// </returns>
+        public static (string? Left, string? Separator, string? Right) Partition(
+            this string? text,
+            string separator,
+            bool ignoreCase = false) =>
+            Partition(text, separator, ignoreCase, fromEnd: false);
+
+        private static (string? Left, string? Separator, string? Right) Partition(
+            string? text,
+            string separator,
+            bool ignoreCase,
+            bool fromEnd)
+        {
+            var stringComparison = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
+            var index = (fromEnd ? text?.LastIndexOf(separator, stringComparison) : text?.IndexOf(separator, stringComparison)) ?? -1;
+
+            if (index < 0) return fromEnd ? (null, null, text) : (text, null, null);
+
+            var end = index + separator.Length;
+            return (text![..index], text[index..end], text[end..]);
+        }
     }
 }
