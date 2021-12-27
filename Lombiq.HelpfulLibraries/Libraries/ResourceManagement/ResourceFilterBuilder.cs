@@ -22,12 +22,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
         }
 
         public ResourceFilter WhenPath(string path) =>
-            When(context => context.Request.Path.Value.ToUpperInvariant() == path.ToUpperInvariant());
+            When(context => context.Request.Path.Value.EqualsOrdinalIgnoreCase(path));
 
         public ResourceFilter WhenHomePage() => WhenPath("/");
 
         public ResourceFilter WhenPathStartsWith(string path) =>
-            When(context => context.Request.Path.Value.ToUpperInvariant().StartsWith(path.ToUpperInvariant(), StringComparison.OrdinalIgnoreCase));
+            When(context => context.Request.Path.Value.StartsWithOrdinalIgnoreCase(path));
 
         public ResourceFilter Always(Action<IResourceManager> execution = null)
         {

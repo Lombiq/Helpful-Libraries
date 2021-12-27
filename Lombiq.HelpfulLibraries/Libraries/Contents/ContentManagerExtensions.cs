@@ -1,4 +1,5 @@
 using OrchardCore.Taxonomies.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -26,7 +27,7 @@ namespace OrchardCore.ContentManagement
             string name) =>
             contentItem == null ? contentManager.NewAsync(name) : contentManager.LoadAsync(contentItem);
 
-        public static async Task<List<ContentItem>> GetTaxonomyTermsAsync(
+        public static async Task<IReadOnlyList<ContentItem>> GetTaxonomyTermsAsync(
             this IContentManager contentManager,
             IContentHandleManager contentHandleManager,
             string taxonomyAlias)
@@ -50,7 +51,7 @@ namespace OrchardCore.ContentManagement
             string alias,
             string termId) =>
             (await contentManager.GetTaxonomyTermsAsync(contentHandleManager, alias))
-            .FirstOrDefault(term => term.ContentItemId == termId)?
+            .FirstOrDefault(term => term.ContentItemId.EqualsOrdinal(termId))?
             .DisplayText;
     }
 }

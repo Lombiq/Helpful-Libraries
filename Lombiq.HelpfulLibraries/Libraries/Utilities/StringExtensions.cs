@@ -167,7 +167,12 @@ namespace System
             var stringComparison = ignoreCase ? StringComparison.OrdinalIgnoreCase : StringComparison.Ordinal;
             var index = (fromEnd ? text?.LastIndexOf(separator, stringComparison) : text?.IndexOf(separator, stringComparison)) ?? -1;
 
-            if (index < 0) return fromEnd ? (null, null, text) : (text, null, null);
+            if (index < 0)
+            {
+                return fromEnd
+                    ? (Left: null, Separator: null, Right: text)
+                    : (Left: text, Separator: null, Right: null);
+            }
 
             var end = index + separator.Length;
             return (text![..index], text[index..end], text[end..]);

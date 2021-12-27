@@ -17,7 +17,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
 
         public static void ThrowIfNotValidContentType(IContent content, string expectedType, string paramName)
         {
-            if (content.ContentItem.ContentType != expectedType)
+            if (!content.ContentItem.ContentType.EqualsOrdinal(expectedType))
             {
 #pragma warning disable S2302 // "nameof" should be used
                 throw new ArgumentException($"Parameter {paramName} is not of the {expectedType} content type.", paramName);

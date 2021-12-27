@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace Microsoft.AspNetCore.Http
 {
@@ -21,7 +22,7 @@ namespace Microsoft.AspNetCore.Http
         /// </summary>
         /// <returns><see langword="true" /> if the current host is localhost.</returns>
         public static bool IsLocalhost(this HttpContext httpContext) =>
-            httpContext.Request.Host.Host == "localhost";
+            httpContext.Request.Host.Host.EqualsOrdinalIgnoreCase("localhost");
 
         /// <summary>
         /// Returns <see langword="true" /> if the current <see cref="IHostEnvironment.EnvironmentName"/> is

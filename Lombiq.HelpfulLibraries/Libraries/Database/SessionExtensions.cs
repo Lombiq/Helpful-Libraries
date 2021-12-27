@@ -133,7 +133,7 @@ namespace YesSql
                     session.Query<ContentItem, ContentItemIndex>(index => index.Latest),
                 PublicationStatus.Deleted =>
                     session.Query<ContentItem, ContentItemIndex>(index => !index.Latest && !index.Published),
-                _ => throw new ArgumentOutOfRangeException(nameof(status), status, null),
+                _ => throw new ArgumentOutOfRangeException(nameof(status), status, message: null),
             };
 
             return string.IsNullOrEmpty(contentType) ? query : query.Where(index => index.ContentType == contentType);
@@ -157,7 +157,7 @@ namespace YesSql
                     session.With<ContentItemIndex>(index => index.Latest),
                 PublicationStatus.Deleted =>
                     session.With<ContentItemIndex>(index => !index.Latest && !index.Published),
-                _ => throw new ArgumentOutOfRangeException(nameof(status), status, null),
+                _ => throw new ArgumentOutOfRangeException(nameof(status), status, message: null),
             };
 
         /// <summary>
@@ -180,7 +180,7 @@ namespace YesSql
                     session.QueryIndex<ContentItemIndex>(index => index.Latest),
                 PublicationStatus.Deleted =>
                     session.QueryIndex<ContentItemIndex>(index => !index.Latest && !index.Published),
-                _ => throw new ArgumentOutOfRangeException(nameof(status), status, null),
+                _ => throw new ArgumentOutOfRangeException(nameof(status), status, message: null),
             };
 
             return string.IsNullOrEmpty(contentType) ? query : query.Where(index => index.ContentType == contentType);

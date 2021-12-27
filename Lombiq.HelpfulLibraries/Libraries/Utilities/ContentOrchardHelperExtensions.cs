@@ -58,7 +58,7 @@ namespace OrchardCore
         {
             var httpContext = orchardHelper.HttpContext;
 
-            if (httpContext.Request.Method == "POST")
+            if (httpContext.Request.Method.EqualsOrdinalIgnoreCase("POST"))
             {
                 var previewContentItemId = httpContext.Request.Form["PreviewContentItemId"];
                 if (!string.IsNullOrEmpty(previewContentItemId))
