@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.Libraries.Mvc;
+using Lombiq.HelpfulLibraries.Libraries.Mvc;
 using Lombiq.HelpfulLibraries.Tests.Controllers;
 using OrchardCore.Environment.Extensions;
 using OrchardCore.Environment.Extensions.Features;
