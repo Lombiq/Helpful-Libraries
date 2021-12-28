@@ -60,14 +60,14 @@ namespace System
         /// </summary>
         [Obsolete("The string equals operator already uses ordinal string comparison.")]
         public static bool EqualsOrdinal(this string text, string? value) =>
-            text.Equals(value, StringComparison.Ordinal);
+            throw new NotSupportedException();
 
         /// <summary>
         /// A shortcut for <c>string.Contains(string, StringComparison.Ordinal)</c>.
         /// </summary>
         [Obsolete("The string.Contains(value) member method already uses ordinal string comparison.")]
         public static bool ContainsOrdinal(this string text, string value) =>
-            text.Contains(value, StringComparison.Ordinal);
+            throw new NotSupportedException();
 
         /// <summary>
         /// A shortcut for <c>string.StartsWith(string, StringComparison.Ordinal)</c>.
@@ -98,7 +98,31 @@ namespace System
         /// </summary>
         [Obsolete("The string.Replace(oldValue, newValue) member method already uses ordinal string comparison.")]
         public static string ReplaceOrdinal(this string text, string oldValue, string? newValue = "") =>
-            text.Replace(oldValue, newValue ?? string.Empty, StringComparison.Ordinal);
+            throw new NotSupportedException();
+
+        /// <summary>
+        /// A shortcut for <c>string.IndexOf(string, StringComparison.Ordinal)</c>.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// It's worth noting that the <see cref="string.IndexOf(string)"/> member method uses <see
+        /// cref="StringComparison.CurrentCulture"/> as the basis of its comparison.
+        /// </para>
+        /// </remarks>
+        public static int IndexOfOrdinal(this string text, string value) =>
+            text.IndexOf(value, StringComparison.Ordinal);
+
+        /// <summary>
+        /// A shortcut for <c>string.LastIndexOf(string, StringComparison.Ordinal)</c>.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// It's worth noting that the <see cref="string.LastIndexOf(string)"/> member method uses <see
+        /// cref="StringComparison.CurrentCulture"/> as the basis of its comparison.
+        /// </para>
+        /// </remarks>
+        public static int LastIndexOfOrdinal(this string text, string value) =>
+            text.LastIndexOf(value, StringComparison.Ordinal);
 
         /// <summary>
         /// Returns the first string that's not <see langword="null"/> or empty, starting with <paramref name="text"/>
