@@ -58,30 +58,45 @@ namespace System
         /// <summary>
         /// A shortcut for <c>string.Equals(string, StringComparison.Ordinal)</c>.
         /// </summary>
+        [Obsolete("The string equals operator already uses ordinal string comparison.")]
         public static bool EqualsOrdinal(this string text, string? value) =>
             text.Equals(value, StringComparison.Ordinal);
 
         /// <summary>
         /// A shortcut for <c>string.Contains(string, StringComparison.Ordinal)</c>.
         /// </summary>
+        [Obsolete("The string.Contains(value) member method already uses ordinal string comparison.")]
         public static bool ContainsOrdinal(this string text, string value) =>
             text.Contains(value, StringComparison.Ordinal);
 
         /// <summary>
         /// A shortcut for <c>string.StartsWith(string, StringComparison.Ordinal)</c>.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// It's worth noting that the <see cref="string.StartsWith(string)"/> member method uses <see
+        /// cref="StringComparison.CurrentCulture"/> as the basis of its comparison.
+        /// </para>
+        /// </remarks>
         public static bool StartsWithOrdinal(this string text, string value) =>
             text.StartsWith(value, StringComparison.Ordinal);
 
         /// <summary>
         /// A shortcut for <c>string.EndsWith(string, StringComparison.Ordinal)</c>.
         /// </summary>
+        /// <remarks>
+        /// <para>
+        /// It's worth noting that the <see cref="string.EndsWith(string)"/> member method uses <see
+        /// cref="StringComparison.CurrentCulture"/> as the basis of its comparison.
+        /// </para>
+        /// </remarks>
         public static bool EndsWithOrdinal(this string text, string value) =>
             text.EndsWith(value, StringComparison.Ordinal);
 
         /// <summary>
         /// A shortcut for <c>string.Replace(string, string, StringComparison.Ordinal)</c>.
         /// </summary>
+        [Obsolete("The string.Replace(oldValue, newValue) member method already uses ordinal string comparison.")]
         public static string ReplaceOrdinal(this string text, string oldValue, string? newValue = "") =>
             text.Replace(oldValue, newValue ?? string.Empty, StringComparison.Ordinal);
 
