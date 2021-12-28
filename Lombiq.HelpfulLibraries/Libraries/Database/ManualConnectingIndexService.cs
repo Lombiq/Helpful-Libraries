@@ -33,7 +33,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
             _type = typeof(T);
             _properties = _type
                 .GetProperties()
-                .Where(property => !property.Name.EqualsOrdinal(nameof(MapIndex.Id)))
+                .Where(property => property.Name != nameof(MapIndex.Id))
                 .ToDictionary(property => property.Name);
 
             _dbAccessor = dbAccessor;

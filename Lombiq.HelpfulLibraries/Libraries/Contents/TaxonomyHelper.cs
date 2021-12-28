@@ -1,6 +1,5 @@
 using OrchardCore.ContentManagement;
 using OrchardCore.Taxonomies.Models;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,7 +19,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
         public async Task<ContentItem> GetTermContentItemByTaxonomyAliasAsync(string alias, string termId) =>
             await _contentHandleManager.GetContentItemIdAsync($"alias:{alias}") is { } contentItemId &&
             await _contentManager.GetAsync(contentItemId) is { } contentItem
-                ? contentItem.As<TaxonomyPart>()?.Terms?.FirstOrDefault(term => term.ContentItemId.EqualsOrdinal(termId))
+                ? contentItem.As<TaxonomyPart>()?.Terms?.FirstOrDefault(term => term.ContentItemId == termId)
                 : null;
     }
 }

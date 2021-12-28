@@ -107,7 +107,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 if (!route.ContainsOrdinalIgnoreCase(placeholder)) continue;
 
                 route = route.ReplaceOrdinalIgnoreCase(placeholder, WebUtility.UrlEncode(value));
-                _arguments.RemoveAll(pair => pair.Key.EqualsOrdinal(name));
+                _arguments.RemoveAll(pair => pair.Key == name);
             }
 
             return route;

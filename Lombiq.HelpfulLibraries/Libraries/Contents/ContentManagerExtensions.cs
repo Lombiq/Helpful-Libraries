@@ -1,5 +1,4 @@
 using OrchardCore.Taxonomies.Models;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -51,7 +50,7 @@ namespace OrchardCore.ContentManagement
             string alias,
             string termId) =>
             (await contentManager.GetTaxonomyTermsAsync(contentHandleManager, alias))
-            .FirstOrDefault(term => term.ContentItemId.EqualsOrdinal(termId))?
+            .FirstOrDefault(term => term.ContentItemId == termId)?
             .DisplayText;
     }
 }

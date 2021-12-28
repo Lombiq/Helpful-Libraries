@@ -1,6 +1,5 @@
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Records;
-using System;
 using System.Linq;
 using System.Threading.Tasks;
 using YesSql;
@@ -26,7 +25,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
                     .ListAsync())
                 .ToList();
 
-            return versions.FindLastIndex(version => version.ContentItemVersionId.EqualsOrdinal(contentItemVersionId)) + 1;
+            return versions.FindLastIndex(version => version.ContentItemVersionId == contentItemVersionId) + 1;
         }
     }
 }
