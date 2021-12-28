@@ -101,6 +101,18 @@ namespace System
             throw new NotSupportedException();
 
         /// <summary>
+        /// A shortcut for <c>string.CompareOrdinal(string, string)</c> static method.
+        /// </summary>
+        /// <remarks>
+        /// <para>
+        /// It's worth noting that the <see cref="string.Compare(string?,string?)"/> static method uses <see
+        /// cref="StringComparison.CurrentCulture"/> as the basis of its comparison.
+        /// </para>
+        /// </remarks>
+        public static int CompareOrdinal(this string strA, string strB) =>
+            string.CompareOrdinal(strA, strB);
+
+        /// <summary>
         /// A shortcut for <c>string.IndexOf(string, StringComparison.Ordinal)</c>.
         /// </summary>
         /// <remarks>
