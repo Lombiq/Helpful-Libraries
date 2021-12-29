@@ -22,7 +22,7 @@ namespace Moq.AutoMock
                     new Lazy<IClock>(mocker.Get<IClock>),
                     new Lazy<IContentHandleManager>(mocker.Get<IContentHandleManager>),
                     new Lazy<IContentManager>(mocker.Get<IContentManager>),
-                    new Lazy<IHttpContextAccessor>(() => mocker.Get<IHttpContextAccessor>(true)),
+                    new Lazy<IHttpContextAccessor>(() => mocker.Get<IHttpContextAccessor>(enablePrivate: true)),
                     new Lazy<ILogger<T>>(mocker.Get<ILogger<T>>),
                     new Lazy<YesSql.ISession>(mocker.Get<YesSql.ISession>),
                     new Lazy<ISiteService>(mocker.Get<ISiteService>),
