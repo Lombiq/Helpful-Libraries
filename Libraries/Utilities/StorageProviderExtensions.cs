@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Orchard.FileSystems.Media;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Orchard.FileSystems.Media;
 
 namespace Piedone.HelpfulLibraries.Utilities
 {

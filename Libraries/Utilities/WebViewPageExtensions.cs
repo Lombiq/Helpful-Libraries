@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Web.Mvc;
-using Orchard;
-using Piedone.HelpfulLibraries.Utilities;
-using System.Web;
+﻿using Orchard;
 using Orchard.Mvc.Spooling;
+using System;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace Piedone.HelpfulLibraries.Utilities
 {
@@ -20,6 +16,7 @@ namespace Piedone.HelpfulLibraries.Utilities
                 workContext.SetState(key, "displayed");
                 return true;
             }
+
             return false;
         }
 
@@ -27,7 +24,6 @@ namespace Piedone.HelpfulLibraries.Utilities
         {
             return new CaptureScope(page);
         }
-
 
         class CaptureScope : IDisposable
         {

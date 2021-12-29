@@ -84,12 +84,11 @@ namespace Piedone.HelpfulLibraries.Utilities
         {
             private readonly Queue<Tuple<SendOrPostCallback, object>> _items =
                 new Queue<Tuple<SendOrPostCallback, object>>();
+
             private readonly AutoResetEvent _workItemsWaiting = new AutoResetEvent(false);
             private bool _done;
 
-
             public Exception InnerException { get; set; }
-
 
             public override void Send(SendOrPostCallback d, object state)
             {
@@ -102,6 +101,7 @@ namespace Piedone.HelpfulLibraries.Utilities
                 {
                     _items.Enqueue(Tuple.Create(d, state));
                 }
+
                 _workItemsWaiting.Set();
             }
 
@@ -122,6 +122,7 @@ namespace Piedone.HelpfulLibraries.Utilities
                             task = _items.Dequeue();
                         }
                     }
+
                     if (task != null)
                     {
                         task.Item1(task.Item2);

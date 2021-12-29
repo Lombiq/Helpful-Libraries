@@ -6,7 +6,7 @@ using Orchard.FileSystems.AppData;
 namespace Piedone.HelpfulLibraries.Utilities
 {
     /// <summary>
-    /// Service for managing ORM mappings
+    /// Service for managing ORM mappings.
     /// </summary>
     public interface IMappingsManager : IDependency
     {
@@ -16,20 +16,17 @@ namespace Piedone.HelpfulLibraries.Utilities
         void Clear();
     }
 
-
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public class MappingsManager : IMappingsManager
     {
         private readonly ShellSettings _shellSettings;
         private readonly IAppDataFolder _appDataFolder;
 
-
         public MappingsManager(ShellSettings shellSettings, IAppDataFolder appDataFolder)
         {
             _shellSettings = shellSettings;
             _appDataFolder = appDataFolder;
         }
-
 
         public void Clear()
         {
