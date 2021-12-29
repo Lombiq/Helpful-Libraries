@@ -1,6 +1,5 @@
 ﻿using Orchard;
 using Orchard.Environment;
-using Orchard.Environment.Extensions;
 using Orchard.Mvc;
 using Piedone.HelpfulLibraries.Libraries.Utilities;
 
@@ -13,7 +12,6 @@ namespace Autofac
      * This could be much better if this is fixed: https://github.com/OrchardCMS/Orchard/issues/4338 as now we need a 
      * stub HttpContext to carry the work context.
      * See also: http://stackoverflow.com/questions/8658946/autofac-lifetimes-and-the-default-provider-within-a-matching-lifetime-scope */
-    [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class ContainerBuilderExtensions
     {
         public static ContainerBuilder BuildBackgroundLifetimeScope(this ContainerBuilder builder)

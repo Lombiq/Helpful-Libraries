@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Orchard.Environment.Extensions;
 
 namespace Piedone.HelpfulLibraries.Utilities
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class UriHelper
     {
         /// <summary>

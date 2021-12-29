@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Web.Mvc;
-using Orchard.Environment.Extensions;
 using Orchard;
 using Piedone.HelpfulLibraries.Utilities;
 using System.Web;
@@ -11,7 +10,6 @@ using Orchard.Mvc.Spooling;
 
 namespace Piedone.HelpfulLibraries.Utilities
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class WebViewPageExtensions
     {
         public static bool WasNotDisplayed(this WebViewPage page, string key)

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Orchard.Environment.Extensions;
 
 namespace System
 {
@@ -8,7 +7,6 @@ namespace System
     /// This class provides useful methods for string usage and manipulation, usually safe to use with empty and <see
     /// langword="null"/> strings.
     /// </summary>
-    [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class StringExtensions
     {
         /// <summary>

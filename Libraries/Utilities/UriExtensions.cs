@@ -1,9 +1,7 @@
 ﻿using System;
-using Orchard.Environment.Extensions;
 
 namespace Piedone.HelpfulLibraries.Utilities
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class UriExtensions
     {
         /// <summary>

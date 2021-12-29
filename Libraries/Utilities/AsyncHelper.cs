@@ -2,12 +2,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Orchard.Environment.Extensions;
 
 namespace Piedone.HelpfulLibraries.Utilities
 {
     // Taken from: http://stackoverflow.com/a/5097066/220230
-    [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class AsyncHelper
     {
         /// <summary>

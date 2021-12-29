@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Orchard.Caching.Services;
-using Orchard.Environment.Extensions;
 
 namespace Piedone.HelpfulLibraries.Utilities
 {
@@ -14,7 +13,6 @@ namespace Piedone.HelpfulLibraries.Utilities
     /// subscribed keys will be removed. You can use this to invalidate multiple subscribed cache entries at once,
     /// without having to keep track of said cache entries.
     /// </summary>
-    [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class CacheServiceMonitor
     {
         private const string KeyChainCacheKey = "Piedone.HelpfulLibraries.Utilities.CacheServiceMonitor.KeyChain.";
