@@ -13,7 +13,6 @@ namespace Piedone.HelpfulLibraries.Libraries.Utilities
     {
         private HttpContextBase _stub = new HttpContextPlaceholder(() => "http://localhost");
 
-
         public HttpContextBase Current()
         {
             return _stub;
