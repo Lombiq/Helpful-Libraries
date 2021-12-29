@@ -218,13 +218,13 @@ namespace Piedone.HelpfulLibraries.Utilities
             var extension = Path.GetExtension(fileName);
 
             if (string.IsNullOrEmpty(extension))
-                throw new ArgumentException("Only file names with extensions can be used!");
+                throw new ArgumentException("Only file names with extensions can be used!", nameof(fileName));
 
-            var extensionWithoutDot = extension.Remove(0, 1).ToLowerInvariant();
+            var extensionWithoutDot = extension.Substring(1).ToLowerInvariant();
 
-            if (MimeTypesDictionary.ContainsKey(extensionWithoutDot)) return MimeTypesDictionary[extensionWithoutDot];
-
-            return "unknown/unknown";
+            return MimeTypesDictionary.TryGetValue(extensionWithoutDot, out var mimeType)
+                ? mimeType
+                : "unknown/unknown";
         }
     }
 }
