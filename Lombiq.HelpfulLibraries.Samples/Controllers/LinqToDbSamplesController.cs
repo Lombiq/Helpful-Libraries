@@ -24,7 +24,7 @@ namespace Lombiq.HelpfulLibraries.Samples.Controllers
                     .GetTable<AutoroutePartIndex>()
                     .Where(index => index.Path.Contains("a", StringComparison.OrdinalIgnoreCase))
                     .OrderByDescending(index => index.Path)
-                    .ToListAsync());
+                    .ToListAsync(HttpContext.RequestAborted));
 
             return Ok(result);
         }
@@ -41,7 +41,7 @@ namespace Lombiq.HelpfulLibraries.Samples.Controllers
                      on contentItemIndex.ContentItemId equals autoroutePartIndex.ContentItemId
                      where autoroutePartIndex.Path.StartsWith("blog/", StringComparison.OrdinalIgnoreCase)
                      select contentItemIndex.DisplayText)
-                    .ToListAsync());
+                    .ToListAsync(HttpContext.RequestAborted));
 
             return Ok(result);
         }

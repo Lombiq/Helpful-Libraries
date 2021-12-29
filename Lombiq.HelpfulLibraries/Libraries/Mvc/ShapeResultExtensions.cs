@@ -1,3 +1,5 @@
+using System;
+
 namespace OrchardCore.DisplayManagement.Views
 {
     /// <summary>
@@ -10,6 +12,6 @@ namespace OrchardCore.DisplayManagement.Views
         /// <paramref name="priority"/> in the order of the tabs.
         /// </summary>
         public static ShapeResult UseTab(this ShapeResult shapeResult, string name, int priority) =>
-            shapeResult.Location($"Parts#{name}: {priority}");
+            shapeResult.Location($"Parts#{name}: {priority.ToTechnicalString()}");
     }
 }
