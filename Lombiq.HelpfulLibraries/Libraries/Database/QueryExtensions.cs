@@ -68,8 +68,8 @@ namespace YesSql
         /// <returns>The desired slices of the resulting <see cref="ContentItem"/>s.</returns>
         public static Task<IEnumerable<ContentItem>> SliceAsync(this IQuery<ContentItem> query, int? skip, int? count)
         {
-            if (skip is not null and > 0) query = query.Skip(skip.Value);
-            if (count is not null and > 0) query = query.Take(count.Value);
+            if (skip > 0) query = query.Skip(skip.Value);
+            if (count > 0) query = query.Take(count.Value);
 
             return query.ListAsync();
         }
