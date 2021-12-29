@@ -13,5 +13,10 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
             string.Join(
                 separator,
                 formattableStrings.Select(formattable => formattable.ToString(CultureInfo.InvariantCulture)));
+
+        public static string ConcatenateConvertible(params IConvertible[] formattables) =>
+            string.Join(
+                string.Empty,
+                formattables.Select(formattable => formattable.ToString(CultureInfo.InvariantCulture)));
     }
 }
