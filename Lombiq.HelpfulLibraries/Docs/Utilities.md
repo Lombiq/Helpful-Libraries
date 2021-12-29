@@ -11,6 +11,7 @@
 - `ExceptionHelpers`: Using these helpers, arguments can be tested without writing `if` statements. There are Orchard Core content-specific helpers as well for example checks if the `ContentItem` has a the given part attached to it).
 - `ExpressionExtensions`: Adds `System.Linq.Expressions`. (E.g. `StripResult` turns a `Func<T1, T2>` expression int an `Action<T1>` one).
 - `HttpContextExtensions`: Some shortcuts for managing cookies.
+- `IoExtensions`: Adds extensions for `String.IO` types. (E.g. `TextWriter.WriteLineInvariant` writes interpolated string in a culture invariant manner.)
 - `JsonHelpers`: JSON syntax can be validated with the `ValidateJsonIfNotNull` helper method.
 - `JsonStringExtensions`: Adds JSON related extensions for the `string` type. (E.g. `JsonHtmlContent` which safely serializes a string for use in `<script>` elements.)
 - `MemoryCacheExtensions`: Adds extensions for `IMemoryCache` manipulation. (E.g. `GetOrNew<T>` type-safely returns the item or creates a new instance.)
