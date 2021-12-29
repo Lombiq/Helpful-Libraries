@@ -34,7 +34,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
             _properties = _type
                 .GetProperties()
                 .Where(property => property.Name != nameof(MapIndex.Id))
-                .ToDictionary(x => x.Name);
+                .ToDictionary(property => property.Name);
 
             _dbAccessor = dbAccessor;
             _logger = logger;
@@ -89,12 +89,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
                 return result;
             }
 
-            if (session != null) return await Run(await session.BeginTransactionAsync(), false, request);
+            if (session != null) return await Run(await session.BeginTransactionAsync(), doCommit: false, request);
 
             await using var connection = _dbAccessor.CreateConnection();
             await connection.OpenAsync();
             await using var transaction = await connection.BeginTransactionAsync();
-            return await Run(transaction, true, request);
+            return await Run(transaction, doCommit: true, request);
         }
     }
 }

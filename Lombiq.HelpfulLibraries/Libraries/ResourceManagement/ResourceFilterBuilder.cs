@@ -27,7 +27,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
         public ResourceFilter WhenHomePage() => WhenPath("/");
 
         public ResourceFilter WhenPathStartsWith(string path) =>
-            When(context => context.Request.Path.Value.StartsWithOrdinalIgnoreCase(path.ToUpperInvariant()));
+            When(context => context.Request.Path.Value.StartsWithOrdinalIgnoreCase(path));
 
         public ResourceFilter Always(Action<IResourceManager> execution = null)
         {
