@@ -3,6 +3,7 @@
 
 ## Extensions
 
+- `CollectionExtensions`: Adds `ICollection<T>` extensions. (eg. `CartesianProduct` for producing all pairs of two collections or `RemoveAll` to filter an existing collection in-place).
 - `ConfigurationExtensions`: Shortcuts for `IConfiguration` operations.
 - `ContentOrchardHelperExtensions`: Extensions for managing content items better via `IOrchardHelper`.
 - `DictionaryExtensions`: Adds `IDictionary<TKey, TValue>` extensions. (eg. `GetMaybe` for safely retrieving an item if it's in the dictionary or returning `default` without throwing an exception).
