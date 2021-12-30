@@ -183,6 +183,16 @@ namespace System
             Regex.Match(input, pattern, options, within ?? TimeSpan.FromSeconds(1));
 
         /// <summary>
+        /// Performs <see cref="Regex.IsMatch(string, string, RegexOptions, TimeSpan)"/> with timeout (default is 1s).
+        /// </summary>
+        public static bool IsMatch(
+            this string input,
+            string pattern,
+            RegexOptions options = RegexOptions.None,
+            TimeSpan? within = null) =>
+            Regex.IsMatch(input, pattern, options, within ?? TimeSpan.FromSeconds(1));
+
+        /// <summary>
         /// Performs <see cref="Regex.Replace(string, string, string, RegexOptions, TimeSpan)"/> with timeout (default is 1s).
         /// </summary>
         public static string RegexReplace(
