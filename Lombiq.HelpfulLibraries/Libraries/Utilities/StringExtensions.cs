@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 #nullable enable
@@ -170,6 +171,50 @@ namespace System
             Func<string?, bool> condition,
             Func<Task<string?>> alternativeAsync) =>
             condition(text) ? alternativeAsync() : Task.FromResult(text);
+
+        /// <summary>
+        /// Performs <see cref="Regex.Match(string, string, RegexOptions, TimeSpan)"/> with timeout (default is 1s).
+        /// </summary>
+        public static Match RegexMatch(
+            this string input,
+            string pattern,
+            RegexOptions options = RegexOptions.None,
+            TimeSpan? within = null) =>
+            Regex.Match(input, pattern, options, within ?? TimeSpan.FromSeconds(1));
+
+        /// <summary>
+        /// Performs <see cref="Regex.IsMatch(string, string, RegexOptions, TimeSpan)"/> with timeout (default is 1s).
+        /// </summary>
+        public static bool RegexIsMatch(
+            this string input,
+            string pattern,
+            RegexOptions options = RegexOptions.None,
+            TimeSpan? within = null) =>
+            Regex.IsMatch(input, pattern, options, within ?? TimeSpan.FromSeconds(1));
+
+        /// <summary>
+        /// Performs <see cref="Regex.Replace(string, string, string, RegexOptions, TimeSpan)"/> with timeout (default
+        /// is 1s).
+        /// </summary>
+        public static string RegexReplace(
+            this string input,
+            string pattern,
+            string replacement,
+            RegexOptions options = RegexOptions.None,
+            TimeSpan? within = null) =>
+            Regex.Replace(input, pattern, replacement, options, within ?? TimeSpan.FromSeconds(1));
+
+        /// <summary>
+        /// Performs <see cref="Regex.Replace(string, string, MatchEvaluator, RegexOptions, TimeSpan)"/> with timeout
+        /// (default is 1s).
+        /// </summary>
+        public static string RegexReplace(
+            this string input,
+            string pattern,
+            MatchEvaluator evaluator,
+            RegexOptions options = RegexOptions.None,
+            TimeSpan? within = null) =>
+            Regex.Replace(input, pattern, evaluator, options, within ?? TimeSpan.FromSeconds(1));
 
         /// <summary>
         /// Splits the text into three pieces similarly to Python's <c>str.partition</c> method.
