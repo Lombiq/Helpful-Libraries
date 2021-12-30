@@ -175,7 +175,7 @@ namespace System
         /// <summary>
         /// Performs <see cref="Regex.Match(string, string, RegexOptions, TimeSpan)"/> with timeout (default is 1s).
         /// </summary>
-        public static Match Match(
+        public static Match RegexMatch(
             this string input,
             string pattern,
             RegexOptions options = RegexOptions.None,
@@ -185,7 +185,7 @@ namespace System
         /// <summary>
         /// Performs <see cref="Regex.IsMatch(string, string, RegexOptions, TimeSpan)"/> with timeout (default is 1s).
         /// </summary>
-        public static bool IsMatch(
+        public static bool RegexIsMatch(
             this string input,
             string pattern,
             RegexOptions options = RegexOptions.None,
