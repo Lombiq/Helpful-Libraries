@@ -21,7 +21,8 @@
 - `OrchardCoreBuilderExtensions`: Shortcuts when initializing Orchard with `OrchardCoreBuilder`, i.e. `AddOrchardCms()`.
 - `RNGCryptoServiceProviderExtensions`: Shortcuts for retrieving cryptographically secure random numbers.
 - `Sha256Helper`: A static helper class with the `ComputeHash` utility function that converts text into [SHA-256](https://en.wikipedia.org/wiki/SHA-256) hash string.
-- `StringExtensions`: Adds common useful extensions to the `string` type. (E.g. `SplitByCommas` and `ContainsLoose`.) 
+- `StringExtensions`: Adds common useful extensions to the `string` type. (E.g. `SplitByCommas` and `ContainsLoose`.)
+- `StringHelper`: A static helper class with utility functions for concatenating and generating strings, particularly in a culture invariant manner.
 - `Union`: A container type which is a union of two different types. Only either of the two types can be set at the same time.
 - `UserServiceExtensions`: Adds extensions for `IUserService`. (E.g. `GetOrchardUserAsync` retrieves the user by user name or throws an exception if none found.)
 
