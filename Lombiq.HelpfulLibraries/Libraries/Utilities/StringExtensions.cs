@@ -193,7 +193,8 @@ namespace System
             Regex.IsMatch(input, pattern, options, within ?? TimeSpan.FromSeconds(1));
 
         /// <summary>
-        /// Performs <see cref="Regex.Replace(string, string, string, RegexOptions, TimeSpan)"/> with timeout (default is 1s).
+        /// Performs <see cref="Regex.Replace(string, string, string, RegexOptions, TimeSpan)"/> with timeout (default
+        /// is 1s).
         /// </summary>
         public static string RegexReplace(
             this string input,
@@ -204,7 +205,8 @@ namespace System
             Regex.Replace(input, pattern, replacement, options, within ?? TimeSpan.FromSeconds(1));
 
         /// <summary>
-        /// Performs <see cref="Regex.Replace(string, string, MatchEvaluator, RegexOptions, TimeSpan)"/> with timeout (default is 1s).
+        /// Performs <see cref="Regex.Replace(string, string, MatchEvaluator, RegexOptions, TimeSpan)"/> with timeout
+        /// (default is 1s).
         /// </summary>
         public static string RegexReplace(
             this string input,
