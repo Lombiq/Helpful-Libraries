@@ -14,7 +14,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
                 separator,
                 formattableStrings.Select(formattable => formattable.ToString(CultureInfo.InvariantCulture)));
 
-        public static string ConcatenateConvertible(params IConvertible[] formattables) =>
+        public static string ConcatenateConvertiblesInvariant(params IConvertible[] formattables) =>
             string.Join(
                 string.Empty,
                 formattables.Select(formattable => formattable.ToString(CultureInfo.InvariantCulture)));
