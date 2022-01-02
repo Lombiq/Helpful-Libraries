@@ -7,7 +7,7 @@ namespace Piedone.HelpfulLibraries.Utilities
     /// Base for classes implementing the interface <see cref="IFreezable"/>.
     /// </summary>
     /// <remarks>
-    /// This is a lightweight appraoch to the Freezable class from WPF.
+    /// This is a lightweight approach to the Freezable class from WPF.
     /// </remarks>
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public abstract class FreezableBase : IFreezable
