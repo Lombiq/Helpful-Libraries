@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Linq;
-using Orchard.Environment.Extensions;
 
 namespace Piedone.HelpfulLibraries.Utilities
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public static class UriHelper
     {
         /// <summary>
@@ -16,7 +14,8 @@ namespace Piedone.HelpfulLibraries.Utilities
             var isProtocolRelative = segments.First().StartsWith("//");
             var joined = string.Join("/", segments.Select(f => f.Trim().Trim('/')));
             if (isProtocolRelative) joined = "//" + joined;
-            if (!string.IsNullOrEmpty(segments.Last()) && segments.Last().Last() == '/' && joined.Last() != '/') return joined + "/";
+            if (!string.IsNullOrEmpty(segments.Last()) && segments.Last().Last() == '/' && joined.Last() != '/')
+                return joined + "/";
             return joined;
         }
 

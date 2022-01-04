@@ -1,13 +1,13 @@
-﻿using System.Data;
-using Orchard.Environment.Extensions;
+﻿using Orchard.Environment.Extensions;
+using System.Data;
 
 namespace Piedone.HelpfulLibraries.Utilities
 {
     /// <summary>
-    /// Base for classes implementing the  interface Freezable
+    /// Base for classes implementing the interface <see cref="IFreezable"/>.
     /// </summary>
     /// <remarks>
-    /// This is a lightweight appraoch to the Freezable class from WPF.
+    /// This is a lightweight approach to the Freezable class from WPF.
     /// </remarks>
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public abstract class FreezableBase : IFreezable

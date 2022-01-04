@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Orchard;
+﻿using Orchard;
 using Orchard.Localization;
 
 namespace Piedone.HelpfulLibraries.Libraries.Utilities
@@ -17,11 +12,9 @@ namespace Piedone.HelpfulLibraries.Libraries.Utilities
         Localizer T { get; }
     }
 
-
     public class LocalizerDependency : ILocalizerDependency
     {
         public Localizer T { get; set; }
-
 
         public LocalizerDependency()
         {
