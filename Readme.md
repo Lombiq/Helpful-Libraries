@@ -24,6 +24,7 @@ The module consists of the following independent libraries (all in their own fea
 - [Method Provider Libraries](Lombiq.HelpfulLibraries/Docs/MethodProviderLibraries.md)
 - [Middlewares](Lombiq.HelpfulLibraries/Docs/Middlewares.md)
 - [MVC Libraries](Lombiq.HelpfulLibraries/Docs/MvcLibraries.md)
+- [Navigation](Lombiq.HelpfulLibraries/Docs/Navigation.md)
 - [Resource Management Libraries](Lombiq.HelpfulLibraries/Docs/ResourceManagementLibraries.md)
 - [User Libraries](Lombiq.HelpfulLibraries/Docs/UserLibraries.md)
 - [Utilities](Lombiq.HelpfulLibraries/Docs/Utilities.md)
