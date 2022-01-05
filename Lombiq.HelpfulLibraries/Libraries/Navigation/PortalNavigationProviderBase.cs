@@ -17,7 +17,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Navigation
         private readonly IAuthorizationService _authorizationService;
         private readonly IHttpContextAccessor _hca;
 
-        public abstract IEnumerable<Permission> RequiredPermissions { get; }
+        public virtual IEnumerable<Permission> RequiredPermissions => Array.Empty<Permission>();
 
         protected IStringLocalizer T { get; }
 
