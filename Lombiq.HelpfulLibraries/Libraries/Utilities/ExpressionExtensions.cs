@@ -1,4 +1,4 @@
-﻿namespace System.Linq.Expressions
+namespace System.Linq.Expressions
 {
     public static class ExpressionExtensions
     {

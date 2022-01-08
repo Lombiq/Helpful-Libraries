@@ -1,4 +1,4 @@
-﻿using OrchardCore.ContentManagement.Display;
+using OrchardCore.ContentManagement.Display;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Contents
 {

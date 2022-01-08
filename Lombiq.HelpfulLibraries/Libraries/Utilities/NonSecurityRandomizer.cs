@@ -19,16 +19,25 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities
         Justification = "The name makes it explicit that it's not a security concern.")]
     public class NonSecurityRandomizer
     {
-        private readonly Random _random = new();
+        private readonly Random _random;
+
+        public NonSecurityRandomizer(int seed) => _random = new Random(seed);
+
+        public NonSecurityRandomizer() => _random = new Random();
 
         /// <summary>
-        /// Returns a random integer that is at least 0 and lower than <paramref name="below"/>.
+        /// Returns a random <see cref="int"/> that is at least 0 and lower than <paramref name="below"/>.
         /// </summary>
         public int GetFromRange(int below) => _random.Next(below);
 
         /// <summary>
-        /// Returns a random integer between 0 and <see cref="int.MaxValue"/> inclusive.
+        /// Returns a random <see cref="int"/> between 0 and <see cref="int.MaxValue"/> inclusive.
         /// </summary>
         public int Get() => _random.Next();
+
+        /// <summary>
+        /// Returns a random <see cref="double"/> between 0 and <see cref="double.MaxValue"/> inclusive.
+        /// </summary>
+        public double GetDouble() => _random.NextDouble();
     }
 }

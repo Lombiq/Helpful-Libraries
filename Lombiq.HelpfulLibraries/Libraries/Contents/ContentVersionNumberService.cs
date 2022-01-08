@@ -1,4 +1,4 @@
-﻿using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Records;
 using System.Linq;
 using System.Threading.Tasks;
