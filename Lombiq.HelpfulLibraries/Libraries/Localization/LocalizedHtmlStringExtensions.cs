@@ -21,10 +21,8 @@ namespace Microsoft.AspNetCore.Mvc.Localization
                     stringWriter.ToString(),
                     new JsonSerializerSettings { StringEscapeHandling = StringEscapeHandling.EscapeHtml }));
             }
-            else
-            {
-                return new HtmlString("null");
-            }
+
+            return new HtmlString("null");
         }
     }
 }

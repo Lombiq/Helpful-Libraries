@@ -1,4 +1,4 @@
-﻿using YesSql.Sql.Schema;
+using YesSql.Sql.Schema;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Database
 {

@@ -35,7 +35,7 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
 
             Documents = Enumerable
                 .Range(0, 10)
-                .Select(n => new TestDocument { Name = NamePrefix + n })
+                .Select(n => new TestDocument { Name = NamePrefix + n.ToTechnicalString() })
                 .ToArray();
 
             if (File.Exists(FileName)) File.Delete(FileName);

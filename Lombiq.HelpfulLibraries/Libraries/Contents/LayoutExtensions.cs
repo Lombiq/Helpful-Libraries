@@ -1,4 +1,4 @@
-﻿using OrchardCore.DisplayManagement;
+using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Layout;
 using System.Threading.Tasks;
 

@@ -1,4 +1,5 @@
 using OrchardCore.ContentManagement;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -110,6 +111,10 @@ namespace System.Collections.Generic
         /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
         /// later in the enumeration overwrites the earlier one.
         /// </summary>
+        [SuppressMessage(
+            "Design",
+            "MA0016:Prefer return collection abstraction instead of implementation",
+            Justification = "This is the point of the method.")]
         public static Dictionary<TKey, TValue> ToDictionaryOverwrite<TIn, TKey, TValue>(
             this IEnumerable<TIn> collection,
             Func<TIn, TKey> keySelector,
@@ -124,6 +129,10 @@ namespace System.Collections.Generic
         /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
         /// later in the enumeration overwrites the earlier one.
         /// </summary>
+        [SuppressMessage(
+            "Design",
+            "MA0016:Prefer return collection abstraction instead of implementation",
+            Justification = "This is the point of the method.")]
         public static Dictionary<TKey, TIn> ToDictionaryOverwrite<TIn, TKey>(
             this IEnumerable<TIn> collection,
             Func<TIn, TKey> keySelector) =>

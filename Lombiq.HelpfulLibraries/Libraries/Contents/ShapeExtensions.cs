@@ -1,4 +1,4 @@
-﻿namespace OrchardCore.DisplayManagement.Implementation
+namespace OrchardCore.DisplayManagement.Implementation
 {
     public static class ShapeExtensions
     {

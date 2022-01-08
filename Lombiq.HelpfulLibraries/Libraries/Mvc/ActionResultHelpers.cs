@@ -31,7 +31,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
 
             var compressedBytes = outStream.ToArray();
 
-            if (!zipFileName.EndsWith(".zip", StringComparison.InvariantCultureIgnoreCase)) zipFileName += ".zip";
+            if (!zipFileName.EndsWithOrdinalIgnoreCase(".zip")) zipFileName += ".zip";
             return new FileContentResult(compressedBytes, Zip) { FileDownloadName = zipFileName };
         }
     }
