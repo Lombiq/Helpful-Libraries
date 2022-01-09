@@ -193,6 +193,12 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
+        /// Returns a string where each item in the <paramref name="strings"/> collection is joined together with a
+        /// single space character as the separator.
+        /// </summary>
+        public static string JoinWords(this IEnumerable<string> strings) => string.Join(" ", strings);
+
+        /// <summary>
         /// Re-flattens <see cref="ILookup{TKey, ContentItem}"/> or <c>GroupBy</c> collections and eliminates duplicates
         /// using <see cref="ContentItem.ContentItemVersionId"/>.
         /// </summary>
