@@ -193,10 +193,14 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
-        /// Returns a string where each item in the <paramref name="strings"/> collection is joined together with a
-        /// single space character as the separator.
+        /// Join strings fluently.
         /// </summary>
-        public static string JoinWords(this IEnumerable<string> strings) => string.Join(" ", strings);
+        /// <param name="values">The <see cref="string"/> values to join.</param>
+        /// <param name="separator">The separator to use between the <paramref name="values"/>, defaults to space.</param>
+        /// <returns>A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/>
+        /// provided.</returns>
+        public static string Join(this IEnumerable<string> values, string separator = " ") =>
+            string.Join(separator, values ?? Enumerable.Empty<string>());
 
         /// <summary>
         /// Re-flattens <see cref="ILookup{TKey, ContentItem}"/> or <c>GroupBy</c> collections and eliminates duplicates
