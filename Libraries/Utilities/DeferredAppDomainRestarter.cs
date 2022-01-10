@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Orchard;
+﻿using Orchard;
 using Orchard.Environment;
 using Orchard.Environment.Configuration;
 using Orchard.Environment.Descriptor;
 using Orchard.Environment.Extensions;
 using Orchard.Environment.State;
 using Orchard.Events;
+using System.Collections.Generic;
 
 namespace Piedone.HelpfulLibraries.Libraries.Utilities
 {
@@ -24,12 +20,10 @@ namespace Piedone.HelpfulLibraries.Libraries.Utilities
         void RestartAppDomainWhenRequestEnds();
     }
 
-
     public interface IDeferredAppDomainRestartHandler : IEventHandler
     {
         void RestartAppDomain();
     }
-
 
     [OrchardFeature("Piedone.HelpfulLibraries.Utilities")]
     public class DeferredAppDomainRestarter : IDeferredAppDomainRestarter, IDeferredAppDomainRestartHandler
