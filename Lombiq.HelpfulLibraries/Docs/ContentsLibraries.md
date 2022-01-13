@@ -14,6 +14,7 @@
 - `ContentManagerExtensions`: Adds extension methods for retrieving, loading or creating content using the `IContentManager`.
 - `LayoutExtensions`: Adds features for adding shapes to the layout via `ILayoutAccessor`.
 - `ContentManagerSessionExtensions`: Uses the `IContentManagerSession` scoped cache around any `ContentItem` query done outside `IContentManager`.
+- `ContentTypeDefinitionBuilderExtensions`: Adds extension methods for configuring the content type defintion via `ContentTypeDefinitionBuilder`.  
 
 
 ## Services
