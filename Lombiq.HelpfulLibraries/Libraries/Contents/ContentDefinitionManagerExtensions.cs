@@ -1,3 +1,5 @@
+using OrchardCore.ContentManagement.Metadata.Builders;
+using System;
 using System.Linq;
 
 namespace OrchardCore.ContentManagement.Metadata
@@ -21,7 +23,19 @@ namespace OrchardCore.ContentManagement.Metadata
             var contentTypePartDefinition = contentTypeDefinition.Parts
                 .FirstOrDefault(part => part.PartDefinition.Name == contentPartName);
 
-            return contentTypePartDefinition.GetSettings<T>();
+            return contentTypePartDefinition == null
+                ? default
+                : contentTypePartDefinition.GetSettings<T>();
         }
+
+        /// <summary>
+        /// Alters the definition of a content part whose technical name is its model's type name. It uses the typed
+        /// wrapper <see cref="ContentPartDefinitionBuilder{TPart}"/> for configuration.
+        /// </summary>
+        public static void AlterPartDefinition<TPart>(
+            this IContentDefinitionManager manager,
+            Action<ContentPartDefinitionBuilder<TPart>> configure)
+            where TPart : ContentPart =>
+            manager.AlterPartDefinition(typeof(TPart).Name, part => configure(part.AsPart<TPart>()));
     }
 }
