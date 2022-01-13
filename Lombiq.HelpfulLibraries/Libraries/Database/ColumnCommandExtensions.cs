@@ -4,6 +4,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
 {
     public static class ColumnCommandExtensions
     {
+        /// <summary>
+        /// Sets the created column length to the commonly used unique ID length which is 26.
+        /// </summary>
         private static IColumnCommand WithCommonUniqueIdLength(this IColumnCommand command) =>
             command.WithLength(26);
 
