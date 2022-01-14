@@ -1,4 +1,5 @@
 ﻿using OrchardCore.ContentManagement.Metadata.Settings;
+using OrchardCore.Title.Models;
 
 namespace OrchardCore.ContentManagement.Metadata.Builders
 {
@@ -25,5 +26,20 @@ namespace OrchardCore.ContentManagement.Metadata.Builders
                 x.Versionable = versionable;
                 x.Securable = securable;
             });
+
+        /// <summary>
+        /// Adds <see cref="TitlePart"/> to the content type.
+        /// </summary>
+        public static ContentTypeDefinitionBuilder WithTitlePart(
+            this ContentTypeDefinitionBuilder builder,
+            bool required = true) =>
+            builder
+                .WithPart(nameof(TitlePart), part =>
+                {
+                    if (required)
+                    {
+                        part.WithSettings(new TitlePartSettings { Options = TitlePartOptions.EditableRequired });
+                    }
+                });
     }
 }
