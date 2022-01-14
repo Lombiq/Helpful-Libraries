@@ -32,10 +32,14 @@ namespace OrchardCore.ContentManagement.Metadata
         /// Alters the definition of a content part whose technical name is its model's type name. It uses the typed
         /// wrapper <see cref="ContentPartDefinitionBuilder{TPart}"/> for configuration.
         /// </summary>
-        public static void AlterPartDefinition<TPart>(
+        public static string AlterPartDefinition<TPart>(
             this IContentDefinitionManager manager,
             Action<ContentPartDefinitionBuilder<TPart>> configure)
-            where TPart : ContentPart =>
-            manager.AlterPartDefinition(typeof(TPart).Name, part => configure(part.AsPart<TPart>()));
+            where TPart : ContentPart
+        {
+            var name = typeof(TPart).Name;
+            manager.AlterPartDefinition(name, part => configure(part.AsPart<TPart>()));
+            return name;
+        }
     }
 }
