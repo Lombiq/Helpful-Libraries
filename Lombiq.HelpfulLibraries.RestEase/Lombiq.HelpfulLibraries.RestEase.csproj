@@ -8,7 +8,7 @@
 
   <PropertyGroup>
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
-    <PackageLicenseFile>..\Licence.md</PackageLicenseFile>
+    <PackageLicenseFile>Licence.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
