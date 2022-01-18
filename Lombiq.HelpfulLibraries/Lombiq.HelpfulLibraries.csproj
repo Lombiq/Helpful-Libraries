@@ -6,12 +6,13 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageReadmeFile>..\Readme.md</PackageReadmeFile>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageLicenseFile>Licence.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="Licence.md" Pack="true" PackagePath="" />
+    <None Include="Readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>

@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <None Include="Licence.md" Pack="true" PackagePath="" />
+    <None Include="Readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>

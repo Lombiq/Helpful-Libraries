@@ -8,6 +8,8 @@ With the help of this project you can write LINQ expressions and run it with an 
 
 You can watch a demo video of the project [here](https://www.youtube.com/watch?v=ldJOdCSsWJo).
 
+For general details about and on using the Helpful Libraries see the [root Readme](../Readme.md).
+
 
 ## Documentation
 
