@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -11,10 +11,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="..\Licence.md" Pack="true" PackagePath="\" Link="Licence.md" />
-  </ItemGroup>
-
-  <ItemGroup>
     <None Remove="Tests\**" />
   </ItemGroup>
 
@@ -23,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Include="..\Licence.md" Link="Licence.md" />
     <None Include="..\Readme.md" Link="Readme.md" />
   </ItemGroup>
 
