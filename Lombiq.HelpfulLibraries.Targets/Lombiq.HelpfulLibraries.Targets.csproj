@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -9,6 +9,10 @@
     <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageLicenseFile>Licence.md</PackageLicenseFile>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Licence.md" Pack="true" PackagePath="" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="../Lombiq.HelpfulLibraries/Lombiq.HelpfulLibraries.csproj" PrivateAssets="none" />
