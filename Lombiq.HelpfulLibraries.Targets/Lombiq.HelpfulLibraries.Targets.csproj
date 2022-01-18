@@ -4,6 +4,11 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageReadmeFile>Readme.md</PackageReadmeFile>
+    <PackageLicenseFile>..\Licence.md</PackageLicenseFile>
+  </PropertyGroup>
   
   <ItemGroup>
     <ProjectReference Include="../Lombiq.HelpfulLibraries/Lombiq.HelpfulLibraries.csproj" PrivateAssets="none" />
