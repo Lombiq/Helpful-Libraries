@@ -9,6 +9,6 @@ jobs:
   call-publish-workflow:
     uses: Lombiq/NuGet-Publishing-GitHub-Actions/.github/workflows/publish.yml@dev
     with:
-      source: "https://nuget.cloudsmith.io/lombiq/open-source-orchard-core-extensions/v3/index.json"
+      source: https://nuget.cloudsmith.io/lombiq/open-source-orchard-core-extensions/v3/index.json
     secrets:
       apikey: ${{ secrets.CLOUDSMITH_NUGET_PUBLISH_API_KEY }}
