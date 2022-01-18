@@ -4,7 +4,7 @@
 
 ## About
 
-With the help of this project you can write LINQ expressions and run it with an `ISession` extension method to query from the DB instead of writing plain SQL queries. Uses the [LINQ to DB project](https://linq2db.github.io/).
+With the help of this project you can write LINQ expressions and run them with a [YesSql](https://github.com/sebastienros/yessql) `ISession` extension method to query from the DB instead of writing plain SQL queries. Uses the [LINQ to DB project](https://linq2db.github.io/).
 
 You can watch a demo video of the project [here](https://www.youtube.com/watch?v=ldJOdCSsWJo).
 

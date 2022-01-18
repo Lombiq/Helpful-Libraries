@@ -6,13 +6,18 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageLicenseFile>Licence.md</PackageLicenseFile>
+    <Title>Targets - Lombiq Helpful Libraries for Orchard Core</Title>
+    <Authors>Lombiq Technologies</Authors>
+    <Description>Targets project which references all Lombiq Helpful Libraries for Orchard Core packages. Use this if you want to reference all packages. See the project website for detailed documentation.</Description>
+    <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities;linq2db;LinqToDB;RestEase</PackageTags>
+    <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.Targets/Readme.md</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="Licence.md" Pack="true" PackagePath="" />
-    <None Include="Readme.md" Pack="true" PackagePath="" />
+    <None Include="Readme.md" />
   </ItemGroup>
   
   <ItemGroup>

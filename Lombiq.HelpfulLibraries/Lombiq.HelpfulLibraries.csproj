@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,25 +6,26 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageReadmeFile>Readme.md</PackageReadmeFile>
     <PackageLicenseFile>Licence.md</PackageLicenseFile>
+    <Title>Lombiq Helpful Libraries for Orchard Core</Title>
+    <Authors>Lombiq Technologies</Authors>
+    <Description>Main project of Lombiq Helpful Libraries, various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules. See the project website for detailed documentation.</Description>
+    <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities</PackageTags>
+    <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries</PackageProjectUrl>
   </PropertyGroup>
 
   <ItemGroup>
     <None Include="Licence.md" Pack="true" PackagePath="" />
-    <None Include="Readme.md" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
     <None Remove="Tests\**" />
+    <None Include="..\Readme.md" Link="Readme.md" />
   </ItemGroup>
 
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\Readme.md" Link="Readme.md" />
   </ItemGroup>
 
   <ItemGroup>
