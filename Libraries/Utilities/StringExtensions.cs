@@ -28,7 +28,7 @@ namespace System
         /// <param name="separator">The separator to use between the <paramref name="values"/>.</param>
         /// <returns>A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/>
         /// provided.</returns>
-        public static string Join(this IEnumerable<string> values, string separator = "") =>
+        public static string Join(this IEnumerable<string> values, string separator = " ") =>
             string.Join(separator, values ?? Enumerable.Empty<string>());
 
         /// <summary>
