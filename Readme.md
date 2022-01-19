@@ -2,6 +2,12 @@
 
 
 
+![Lombiq.HelpfulLibraries NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries?label=Lombiq.HelpfulLibraries)
+![Lombiq.HelpfulLibraries.LinqToDb NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries?label=Lombiq.HelpfulLibraries.LinqToDb)
+![Lombiq.HelpfulLibraries.RestEase NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries?label=Lombiq.HelpfulLibraries.RestEase)
+![Lombiq.HelpfulLibraries.Targets NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries?label=Lombiq.HelpfulLibraries.Targets)
+
+
 ## About
 
 Various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules.
