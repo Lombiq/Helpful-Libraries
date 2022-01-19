@@ -6,13 +6,13 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageLicenseFile>Licence.md</PackageLicenseFile>
     <Title>Lombiq Helpful Libraries for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
     <Description>Main project of Lombiq Helpful Libraries, various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules. See the project website for detailed documentation.</Description>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries</PackageProjectUrl>
+    <PackageLicenseFile>Licence.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>

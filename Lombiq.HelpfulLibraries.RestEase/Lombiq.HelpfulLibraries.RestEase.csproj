@@ -7,15 +7,14 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <PackageLicenseFile>Licence.md</PackageLicenseFile>
     <Title>RestEase dependency injection helper - Lombiq Helpful Libraries for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
     <Description>Adds a typed HTTP client to the service collection using RestEase. See the project website for detailed documentation.</Description>
     <PackageTags>OrchardCore;Lombiq;RestEase</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.RestEase/Readme.md</PackageProjectUrl>
+    <PackageLicenseFile>Licence.md</PackageLicenseFile>
   </PropertyGroup>
-
 
   <ItemGroup>
     <None Include="Licence.md" Pack="true" PackagePath="" />
