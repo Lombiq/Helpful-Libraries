@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -8,6 +8,7 @@
   <PropertyGroup>
     <Title>LINQ to DB - Lombiq Helpful Libraries for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
+    <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
     <Description>With the help of this project you can write LINQ expressions and run them with a YesSql ISession extension method to query from the DB instead of writing plain SQL queries. Uses the LINQ to DB project. See the project website for detailed documentation.</Description>
     <PackageTags>OrchardCore;Lombiq;YesSql;linq2db;LinqToDB</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>

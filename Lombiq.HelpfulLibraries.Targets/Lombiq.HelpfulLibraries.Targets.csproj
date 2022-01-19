@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -8,6 +8,7 @@
   <PropertyGroup>
     <Title>Targets - Lombiq Helpful Libraries for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
+    <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
     <Description>Targets project which references all Lombiq Helpful Libraries for Orchard Core packages. Use this if you want to reference all packages. See the project website for detailed documentation.</Description>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities;linq2db;LinqToDB;RestEase</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
