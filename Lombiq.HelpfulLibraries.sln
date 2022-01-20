@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30114.105
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries", "Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.csproj", "{5F3379C7-ED6B-46AA-B6C3-17CBC2284417}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.LinqToDb", "Lombiq.HelpfulLibraries.LinqToDb\Lombiq.HelpfulLibraries.LinqToDb.csproj", "{5F4C7938-BBC4-4A44-83E1-2F33B7717A76}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.RestEase", "Lombiq.HelpfulLibraries.RestEase\Lombiq.HelpfulLibraries.RestEase.csproj", "{2D7174D1-88E0-4063-8139-C7FCCC9B3326}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.Targets", "Lombiq.HelpfulLibraries.Targets\Lombiq.HelpfulLibraries.Targets.csproj", "{20ED5C16-0021-4CB7-9F53-8B55E7A5FD38}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5F3379C7-ED6B-46AA-B6C3-17CBC2284417}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F3379C7-ED6B-46AA-B6C3-17CBC2284417}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F3379C7-ED6B-46AA-B6C3-17CBC2284417}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F3379C7-ED6B-46AA-B6C3-17CBC2284417}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F4C7938-BBC4-4A44-83E1-2F33B7717A76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F4C7938-BBC4-4A44-83E1-2F33B7717A76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F4C7938-BBC4-4A44-83E1-2F33B7717A76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F4C7938-BBC4-4A44-83E1-2F33B7717A76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D7174D1-88E0-4063-8139-C7FCCC9B3326}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D7174D1-88E0-4063-8139-C7FCCC9B3326}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D7174D1-88E0-4063-8139-C7FCCC9B3326}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D7174D1-88E0-4063-8139-C7FCCC9B3326}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20ED5C16-0021-4CB7-9F53-8B55E7A5FD38}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20ED5C16-0021-4CB7-9F53-8B55E7A5FD38}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20ED5C16-0021-4CB7-9F53-8B55E7A5FD38}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20ED5C16-0021-4CB7-9F53-8B55E7A5FD38}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
