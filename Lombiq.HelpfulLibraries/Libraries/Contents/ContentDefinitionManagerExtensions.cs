@@ -23,7 +23,7 @@ namespace OrchardCore.ContentManagement.Metadata
             var contentTypePartDefinition = contentTypeDefinition.Parts
                 .FirstOrDefault(part => part.PartDefinition.Name == contentPartName);
 
-            return contentTypePartDefinition?.GetSettings<T>() ?? default;
+            return contentTypePartDefinition != null ? contentTypePartDefinition.GetSettings<T>() ?? default : default;
         }
 
         /// <summary>
