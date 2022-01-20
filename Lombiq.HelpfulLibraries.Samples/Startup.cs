@@ -7,7 +7,10 @@ namespace Lombiq.HelpfulLibraries.Samples
 {
     public class Startup : StartupBase
     {
-        public override void ConfigureServices(IServiceCollection services) =>
+        public override void ConfigureServices(IServiceCollection services)
+        {
             services.AddScoped<IDataMigration, BookRecordMigrations>();
+            services.AddScoped<IDataMigration, ExpressionSampleMigration>();
+        }
     }
 }
