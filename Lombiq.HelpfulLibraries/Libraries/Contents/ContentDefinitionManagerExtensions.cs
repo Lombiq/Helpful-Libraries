@@ -17,13 +17,13 @@ namespace OrchardCore.ContentManagement.Metadata
             this IContentDefinitionManager contentDefinitionManager,
             string contentType,
             string contentPartName)
-            where T : new()
+            where T : class, new()
         {
             var contentTypeDefinition = contentDefinitionManager.GetTypeDefinition(contentType);
             var contentTypePartDefinition = contentTypeDefinition.Parts
                 .FirstOrDefault(part => part.PartDefinition.Name == contentPartName);
 
-            return contentTypePartDefinition != null ? contentTypePartDefinition.GetSettings<T>() ?? default : default;
+            return contentTypePartDefinition?.GetSettings<T>();
         }
 
         /// <summary>
