@@ -1,5 +1,6 @@
 ﻿using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
+using System.Security.Policy;
 
 namespace OrchardCore.ContentManagement.Metadata.Builders
 {
@@ -26,6 +27,13 @@ namespace OrchardCore.ContentManagement.Metadata.Builders
                 x.Versionable = versionable;
                 x.Securable = securable;
             });
+
+        /// <summary>
+        /// Resets all content type settings (creatable, listable, etc.) to <see langword="false"/>. Since all of them
+        /// are false by default anyway, the purpose of this method is to signal intention to the reader.
+        /// </summary>
+        public static ContentTypeDefinitionBuilder NoAbilities(this ContentTypeDefinitionBuilder builder) =>
+            builder.SetAbilities();
 
         /// <summary>
         /// Adds <see cref="TitlePart"/> to the content type.
