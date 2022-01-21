@@ -30,11 +30,13 @@ The module consists of the following independent libraries (all in their own fea
 - [Utilities](Lombiq.HelpfulLibraries/Docs/Utilities.md)
 - [RestEase DI helper](Lombiq.HelpfulLibraries.RestEase/Readme.md)
 - [LinqToDb](Lombiq.HelpfulLibraries.LinqToDb/Readme.md)
+- [Targets](Lombiq.HelpfulLibraries.Targets/Readme.md)
 
 Public APIs are always documented so please always read method comments.
 
 Check out the [`Lombiq.HelpfulLibraries.Samples` project](Lombiq.HelpfulLibraries.Samples) for various examples.
 
+Note: The `Lombiq.HelpfulLibraries.sln` exists to provide centralized building of the independent library projects.
 
 ## Contributing and support
 

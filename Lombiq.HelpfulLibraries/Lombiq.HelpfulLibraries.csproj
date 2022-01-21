@@ -23,20 +23,20 @@
     <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.10.56" />
     <PackageReference Include="MimeTypes" Version="2.1.1" />
     <PackageReference Include="Moq.AutoMock" Version="2.3.0" />
-    <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.Alias" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.Taxonomies" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.Navigation.Core" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.Queries" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.Users.Core" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.2.1" />
-    <PackageReference Include="OrchardCore.Infrastructure" Version="1.2.1" />
+    <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Alias" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Taxonomies" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Navigation.Core" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Queries" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Users.Core" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Infrastructure" Version="1.2.2" />
     <PackageReference Include="NodaTime" Version="3.0.9" />
     <PackageReference Include="YesSql.Abstractions" Version="3.0.10" />
   </ItemGroup>
