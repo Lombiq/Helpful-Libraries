@@ -11,6 +11,7 @@
     <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd. - https://lombiq.com</Copyright>
     <Description>Adds a typed HTTP client to the service collection using RestEase. See the project website for detailed documentation.</Description>
+    <PackageIcon>NuGetIcon.png</PackageIcon>
     <PackageTags>OrchardCore;Lombiq;RestEase</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.RestEase/Readme.md</PackageProjectUrl>
@@ -20,6 +21,7 @@
   <ItemGroup>
     <None Include="Licence.md" Pack="true" PackagePath="" />
     <None Include="Readme.md" />
+    <None Include="NuGetIcon.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
 
   <ItemGroup>

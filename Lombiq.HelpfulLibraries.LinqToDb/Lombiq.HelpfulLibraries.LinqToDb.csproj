@@ -11,6 +11,7 @@
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd. - https://lombiq.com</Copyright>
     <Description>With the help of this project you can write LINQ expressions and run them with a YesSql ISession extension method to query from the DB instead of writing plain SQL queries. Uses the LINQ to DB project. See the project website for detailed documentation.</Description>
     <PackageTags>OrchardCore;Lombiq;YesSql;linq2db;LinqToDB</PackageTags>
+    <PackageIcon>NuGetIcon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.LinqToDb/Readme.md</PackageProjectUrl>
     <PackageLicenseFile>Licence.md</PackageLicenseFile>
@@ -19,6 +20,7 @@
   <ItemGroup>
     <None Include="Licence.md" Pack="true" PackagePath="" />
     <None Include="Readme.md" />
+    <None Include="NuGetIcon.png" Pack="true" PackagePath="\"/>
   </ItemGroup>
   
   <ItemGroup>
