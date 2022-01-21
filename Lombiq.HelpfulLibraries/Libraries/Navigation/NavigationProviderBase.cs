@@ -1,5 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.Libraries.Utilities;
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using OrchardCore.Navigation;
 using System;
@@ -36,10 +35,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Navigation
         }
 
         protected virtual void Build(NavigationBuilder builder) =>
-            throw new NotSupportedException(
-                StringHelper.Join(
-                    " ",
-                    $"Override either {nameof(Build)} or {nameof(BuildAsync)}!",
-                    $"Note that {nameof(BuildAsync)} takes precedence in execution."));
+            throw new NotSupportedException(FormattableString.Invariant(
+                $"Override either {nameof(Build)} or {nameof(BuildAsync)}! Note that {nameof(BuildAsync)} takes precedence in execution."));
     }
 }
