@@ -1,6 +1,5 @@
 ﻿using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
-using System.Security.Policy;
 
 namespace OrchardCore.ContentManagement.Metadata.Builders
 {
