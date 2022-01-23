@@ -13,42 +13,7 @@ You can watch a demo video of the project [here](https://www.youtube.com/watch?v
 
 Use the `LinqQueryAsync` ISession extension method for running LINQ syntax-based DB queries. Check out its documentation inline.
 
-### Sample controller
-
-```csharp
-public class LinqToDbSamplesController
-{
-    private readonly ISession _session;
-        
-    public LinqToDbSamplesController(ISession session) => _session = session;
-
-    public async Task<ActionResult> SimpleQuery()
-    {
-        var result = await _session.LinqQueryAsync(
-            accessor => accessor
-                .GetTable<AutoroutePartIndex>()
-                .Where(index => index.Path.Contains("a", StringComparison.OrdinalIgnoreCase))
-                .OrderByDescending(index => index.Path)
-                .ToListAsync());
-
-        return Ok(result);
-    }
-
-    public async Task<ActionResult> JoinQuery()
-    {
-        var result = await _session.LinqQueryAsync(
-            accessor =>
-                (from contentItemIndex in accessor.GetTable<ContentItemIndex>()
-                    join autoroutePartIndex in accessor.GetTable<AutoroutePartIndex>()
-                        on contentItemIndex.ContentItemId equals autoroutePartIndex.ContentItemId
-                    where autoroutePartIndex.Path.StartsWith("tags/", StringComparison.OrdinalIgnoreCase)
-                    select contentItemIndex.DisplayText)
-                .ToListAsync());
-
-        return Ok(result);
-    }
-}
-```
+See [`LinqToDbSamplesController`](../Lombiq.HelpfulLibraries.Samples/Controllers/LinqToDbSamplesController.cs) for an example.
 
 ### Extensions
 

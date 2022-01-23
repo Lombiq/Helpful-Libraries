@@ -26,7 +26,7 @@ namespace OrchardCore.ContentManagement
             string name) =>
             contentItem == null ? contentManager.NewAsync(name) : contentManager.LoadAsync(contentItem);
 
-        public static async Task<List<ContentItem>> GetTaxonomyTermsAsync(
+        public static async Task<IReadOnlyList<ContentItem>> GetTaxonomyTermsAsync(
             this IContentManager contentManager,
             IContentHandleManager contentHandleManager,
             string taxonomyAlias)

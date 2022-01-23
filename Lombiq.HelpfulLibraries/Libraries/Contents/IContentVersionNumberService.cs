@@ -1,4 +1,4 @@
-﻿using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Contents

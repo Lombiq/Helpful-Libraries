@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.Libraries.Mvc;
+using Lombiq.HelpfulLibraries.Libraries.Mvc;
 using Lombiq.HelpfulLibraries.Tests.Controllers;
 using OrchardCore.Environment.Extensions;
 using OrchardCore.Environment.Extensions.Features;
@@ -25,8 +25,8 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Models
             var typeFeatureProvider = new TypeFeatureProvider();
             typeFeatureProvider.TryAdd(typeof(RouteTestController), new FeatureInfo(id, new ExtensionInfo(id)));
 
-            var model = TypedRoute.CreateFromExpression(actionExpression, additional, typeFeatureProvider);
-            model.ToString(tenantName).ShouldBe(expected);
+            var route = TypedRoute.CreateFromExpression(actionExpression, additional, typeFeatureProvider);
+            route.ToString(tenantName).ShouldBe(expected);
         }
 
         public static IEnumerable<object[]> TypedRouteShouldWorkCorrectlyData()
@@ -39,7 +39,7 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Models
             var noTenant = string.Empty;
             var someTenant = "SomeTenant";
 
-            return new[]
+            var tests = new List<object[]>
             {
                 new object[]
                 {
@@ -104,14 +104,31 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Models
                     noMoreArguments,
                     noTenant,
                 },
-                new object[]
+            };
+
+            // Here we test multiple arguments and also overlapping variable names to ensure it doesn't generate
+            // clashing cache keys. If that were the case, the second of the two usages would fail.
+            void AddArgumentsTest(int addDays, string expect)
+            {
+                var date = new DateTime(1997, 8, 29, 2, 14, 0).AddDays(addDays);
+
+                tests.Add(new object[]
                 {
-                    "/Lombiq.HelpfulLibraries.Tests/RouteTest/Arguments?number=9001&fraction=2.71&dateTime=1997-08-29T02%3A14%3A00&text=done",
-                    AsExpression(controller => controller.Arguments(9001, 2.71, new DateTime(1997, 8, 29, 2, 14, 0), "done")),
+                    expect,
+                    AsExpression(controller => controller.Arguments(9001, 2.71, date, "done")),
                     noMoreArguments,
                     noTenant,
-                },
-            };
+                });
+            }
+
+            AddArgumentsTest(
+                0,
+                "/Lombiq.HelpfulLibraries.Tests/RouteTest/Arguments?number=9001&fraction=2.71&dateTime=1997-08-29T02%3A14%3A00&text=done");
+            AddArgumentsTest(
+                1,
+                "/Lombiq.HelpfulLibraries.Tests/RouteTest/Arguments?number=9001&fraction=2.71&dateTime=1997-08-30T02%3A14%3A00&text=done");
+
+            return tests;
         }
     }
 }

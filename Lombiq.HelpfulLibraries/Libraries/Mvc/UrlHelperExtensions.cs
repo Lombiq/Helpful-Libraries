@@ -1,4 +1,4 @@
-﻿using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement;
 using OrchardCore.Mvc.Core.Utilities;
 using OrchardCore.Mvc.Utilities;
 using OrchardCore.Queries.Controllers;
