@@ -39,5 +39,8 @@ namespace OrchardCore.ContentManagement.Metadata
             manager.AlterPartDefinition(name, part => configure(part.AsPart<TPart>()));
             return name;
         }
+
+        public static void AlterTypeDefinitionForTaxonomy(this IContentDefinitionManager manager, string contentType) =>
+            manager.AlterTypeDefinition(contentType, type => type.NoAbilities().WithTitlePart());
     }
 }
