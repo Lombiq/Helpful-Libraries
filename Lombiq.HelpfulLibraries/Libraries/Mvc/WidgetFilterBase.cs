@@ -36,7 +36,6 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
         /// </summary>
         protected virtual bool AdminOnly => false;
 
-
         /// <summary>
         /// Gets a value indicating whether the widget only shows up in routes with no <see cref="AdminAttribute"/>.
         /// </summary>
