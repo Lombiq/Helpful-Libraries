@@ -236,6 +236,14 @@ namespace System
             Partition(text, separator, ignoreCase, fromEnd: true);
 
         /// <summary>
+        /// Splits the text into three pieces before, during and after the provided range.
+        /// </summary>
+        public static (string? Left, string? Separator, string? Right) Partition(this string? text, Range range) =>
+            string.IsNullOrEmpty(text)
+                ? (Left: text, Separator: null, Right: null)
+                : (Left: text[..range.End], Separator: text[range], Right: text[range.End..]);
+
+        /// <summary>
         /// Splits the text into three pieces similarly to Python's <c>str.rpartition</c> method.
         /// </summary>
         /// <param name="text">The text to partition.</param>
