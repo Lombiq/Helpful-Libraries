@@ -300,5 +300,36 @@ namespace System.Collections.Generic
 
             return Iterate(enumerable, predicate);
         }
+
+        /// <summary>
+        /// Returns a copy of <paramref name="rangeCollection"/> without overlapping ranges. It prefers ranges with
+        /// lower starting index and higher length in that order.
+        /// </summary>
+        public static IList<Range> WithoutOverlappingRanges(
+            this IEnumerable<Range> rangeCollection,
+            bool isSortedByStart = false)
+        {
+            var ranges = rangeCollection.ToList();
+
+            if (!isSortedByStart) ranges.Sort((left, right) => left.Start.Value - right.Start.Value);
+
+            for (int currentIndex = 0; currentIndex < ranges.Count - 1; currentIndex++)
+            {
+                var current = ranges[currentIndex];
+                int followingIndex = currentIndex + 1;
+
+                while (followingIndex < ranges.Count && ranges[followingIndex].Start.Value < current.End.Value)
+                {
+                    var following = ranges[followingIndex];
+
+                    ranges.RemoveAt(
+                        current.Start.Value == following.Start.Value && current.End.Value < following.End.Value
+                            ? currentIndex
+                            : followingIndex);
+                }
+            }
+
+            return ranges;
+        }
     }
 }
