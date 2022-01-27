@@ -1,3 +1,5 @@
+using Microsoft.VisualBasic;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -215,6 +217,27 @@ namespace System
             RegexOptions options = RegexOptions.None,
             TimeSpan? within = null) =>
             Regex.Replace(input, pattern, evaluator, options, within ?? TimeSpan.FromSeconds(1));
+
+        /// <summary>
+        /// Similar to <see cref="string.IndexOf(string)"/>, but returns every match. The comparison is ordinal via
+        /// simple character equality checks.
+        /// </summary>
+        public static IEnumerable<int> AllIndexesOf(this string text, string value)
+        {
+            if (string.IsNullOrEmpty(value)) yield break;
+
+            var count = text.Length - value.Length;
+            for (int textIndex = 0; textIndex < count; textIndex++)
+            {
+                var match = true;
+                for (int valueIndex = 0; match && valueIndex < value.Length; valueIndex++)
+                {
+                    if (text[textIndex + valueIndex] != value[valueIndex]) match = false;
+                }
+
+                if (match) yield return textIndex;
+            }
+        }
 
         /// <summary>
         /// Splits the text into three pieces similarly to Python's <c>str.partition</c> method.
