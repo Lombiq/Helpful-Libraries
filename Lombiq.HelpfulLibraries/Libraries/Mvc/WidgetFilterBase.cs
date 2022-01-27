@@ -5,6 +5,7 @@ using OrchardCore.Admin;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Layout;
 using OrchardCore.Security.Permissions;
+using System;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Mvc
@@ -33,7 +34,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
         /// <summary>
         /// Gets a value indicating whether the widget only shows up in routes with <see cref="AdminAttribute"/>.
         /// </summary>
-        protected abstract bool AdminOnly { get; }
+        protected virtual bool AdminOnly => false;
+
+        /// <summary>
+        /// Gets a value indicating whether the widget only shows up in routes with no <see cref="AdminAttribute"/>.
+        /// </summary>
+        protected virtual bool FrontEndOnly => false;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="WidgetFilterBase{T}"/> class. The <paramref
@@ -65,8 +71,16 @@ namespace Lombiq.HelpfulLibraries.Libraries.Mvc
                 return;
             }
 
+            if (AdminOnly && FrontEndOnly)
+            {
+                throw new InvalidOperationException(FormattableString.Invariant(
+                    $"You must not set both {nameof(AdminOnly)} and {nameof(FrontEndOnly)} to true!"));
+            }
+
+            var isAdmin = AdminAttribute.IsApplied(context.HttpContext);
             var user = context.HttpContext?.User;
-            if ((AdminOnly && !AdminAttribute.IsApplied(context.HttpContext)) ||
+            if ((AdminOnly && !isAdmin) ||
+                (FrontEndOnly && isAdmin) ||
                 (_requiredPermission != null && !await _authorizationService.AuthorizeAsync(user, _requiredPermission)))
             {
                 await next();
