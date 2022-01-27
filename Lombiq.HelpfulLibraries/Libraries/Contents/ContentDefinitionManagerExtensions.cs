@@ -1,3 +1,5 @@
+using OrchardCore.ContentManagement.Metadata.Builders;
+using System;
 using System.Linq;
 
 namespace OrchardCore.ContentManagement.Metadata
@@ -15,13 +17,30 @@ namespace OrchardCore.ContentManagement.Metadata
             this IContentDefinitionManager contentDefinitionManager,
             string contentType,
             string contentPartName)
-            where T : new()
+            where T : class, new()
         {
             var contentTypeDefinition = contentDefinitionManager.GetTypeDefinition(contentType);
             var contentTypePartDefinition = contentTypeDefinition.Parts
                 .FirstOrDefault(part => part.PartDefinition.Name == contentPartName);
 
-            return contentTypePartDefinition.GetSettings<T>();
+            return contentTypePartDefinition?.GetSettings<T>();
         }
+
+        /// <summary>
+        /// Alters the definition of a content part whose technical name is its model's type name. It uses the typed
+        /// wrapper <see cref="ContentPartDefinitionBuilder{TPart}"/> for configuration.
+        /// </summary>
+        public static string AlterPartDefinition<TPart>(
+            this IContentDefinitionManager manager,
+            Action<ContentPartDefinitionBuilder<TPart>> configure)
+            where TPart : ContentPart
+        {
+            var name = typeof(TPart).Name;
+            manager.AlterPartDefinition(name, part => configure(part.AsPart<TPart>()));
+            return name;
+        }
+
+        public static void AlterTypeDefinitionForTaxonomy(this IContentDefinitionManager manager, string contentType) =>
+            manager.AlterTypeDefinition(contentType, type => type.NoAbilities().WithTitlePart());
     }
 }
