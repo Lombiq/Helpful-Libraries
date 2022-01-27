@@ -17,10 +17,6 @@
     <PackageLicenseFile>Licence.md</PackageLicenseFile>
   </PropertyGroup>
 
-    <ItemGroup>
-      <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
-    </ItemGroup>
-
   <ItemGroup>
     <None Include="Licence.md" Pack="true" PackagePath="" />
     <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
