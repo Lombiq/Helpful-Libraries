@@ -274,5 +274,31 @@ namespace System.Collections.Generic
                 yield return selector(key, value);
             }
         }
+
+        /// <summary>
+        /// Similar to <see cref="Enumerable.Cast{TResult}"/>, but it checks if the types are correct first, and filters
+        /// out the ones that couldn't be cast. The optional <paramref name="predicate"/> can filter the cast items.
+        /// </summary>
+        public static IEnumerable<T> CastWhere<T>(this IEnumerable enumerable, Func<T, bool> predicate = null)
+        {
+            if (enumerable is IEnumerable<T> alreadyCast)
+            {
+                return predicate == null
+                    ? alreadyCast
+                    : alreadyCast.Where(predicate);
+            }
+
+            static IEnumerable<T> Iterate(IEnumerable enumerable, Func<T, bool> predicate)
+            {
+                foreach (var item in enumerable)
+                {
+                    if (item is not T instance) continue;
+
+                    if (predicate == null || predicate(instance)) yield return instance;
+                }
+            }
+
+            return Iterate(enumerable, predicate);
+        }
     }
 }
