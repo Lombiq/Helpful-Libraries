@@ -30,7 +30,7 @@ function alter-solution() {
     [ -f "$solution_file" ] || panic 1 "Couldn't find the solution '$solution_file' in '$PWD'."
 
     for project_path in $(dotnet sln "$solution_file" list | sed '1,2 D'); do
-        directory=$(dirname "$project_path")
+        directory="$(dirname "$solution_file")/$(dirname "$project_path")"
 
         pushd "$directory" || panic 2 "Couldn't open the project directory '$directory'."
         alter-project "$(basename "$project_path")"
