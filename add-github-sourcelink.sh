@@ -36,11 +36,9 @@ function alter-project()
     dotnet add "$project_file" package Microsoft.SourceLink.GitHub
 }
 
-solutions=()
-
 if [ -f "$1" ]; then
     alter-solution "$1"
-elif for solution in ./*.sln; do solutions+=("$solution"); done; (( ${#solutions[@]} )); then
+elif solutions=(./*.sln); (( ${#solutions[@]} )); then
     for solution in "${solutions[@]}"; do
         alter-solution "$solution"
     done
