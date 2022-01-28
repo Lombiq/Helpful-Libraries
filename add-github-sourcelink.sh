@@ -45,7 +45,16 @@ function alter-project() {
     dotnet add "$project_file" package Microsoft.SourceLink.GitHub
 }
 
-if [ -f "$1" ]; then
+if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
+    echo
+    basename "$0"
+    echo
+    echo "USAGE"
+    echo -e "\tbash $(basename "$0") [solution.sln]\n"
+    echo "solution.sln - Optional argument to provide the path to the solution file. If none are"
+    echo "               provided then the script looks for .sln or if none found then for .??proj"
+    echo "               (i.e. csproj, fsproj, vbproj) in the current working directory."
+elif [ -f "$1" ]; then
     alter-solution "$1"
 elif solutions=(./*.sln) && ((${#solutions[@]})); then
     for solution in "${solutions[@]}"; do
