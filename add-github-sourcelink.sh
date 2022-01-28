@@ -1,5 +1,12 @@
 #!/bin/bash
 
+###############################################################################
+# add-github-sourcelink                                                       #
+###############################################################################
+# Adds the Microsoft.SourceLink.GitHub package to projects in the solution or #
+# the project file. Use it in the git repository's root directory.            #
+###############################################################################
+
 function err() 
 {
     echo "[$(date +'%Y-%m-%dT%H:%M:%S%z')]: $*" >&2
