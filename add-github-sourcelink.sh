@@ -45,5 +45,7 @@ elif for solution in ./*.sln; do solutions+=("$solution"); done; (( ${#solutions
         alter-solution "$solution"
     done
 else
-    alter-project ./*.??proj # Uses the first .Net project file in the current directory.
+    for project in ./*.??proj; do
+        alter-project "$project"
+    done
 fi
