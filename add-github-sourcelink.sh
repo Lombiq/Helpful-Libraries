@@ -56,7 +56,7 @@ if [ "$1" = "-h" ] || [ "$1" = "--help" ]; then
     echo "               (i.e. csproj, fsproj, vbproj) in the current working directory."
 elif [ -f "$1" ]; then
     alter-solution "$1"
-elif solutions=(./*.sln) && ((${#solutions[@]})); then
+elif solutions=(./*.sln) && ((${#solutions[@]})) && [ -f "${solutions[0]}" ]; then
     for solution in "${solutions[@]}"; do
         alter-solution "$solution"
     done
