@@ -7,6 +7,6 @@ on:
 
 jobs:
   call-publish-workflow:
-    uses: Lombiq/GitHub-Actions/.github/workflows/publish.yml@ec2feb451f3dcdbeeba7bc38091f49e83beb09ed
+    uses: Lombiq/GitHub-Actions/.github/workflows/publish.yml@dev
     secrets:
       API_KEY: ${{ secrets.DEFAULT_NUGET_PUBLISH_API_KEY }}
