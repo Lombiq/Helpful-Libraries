@@ -1,4 +1,3 @@
-using Microsoft.VisualBasic;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -124,8 +123,8 @@ namespace System
         /// cref="StringComparison.CurrentCulture"/> as the basis of its comparison.
         /// </para>
         /// </remarks>
-        public static int IndexOfOrdinal(this string text, string value) =>
-            text.IndexOf(value, StringComparison.Ordinal);
+        public static int IndexOfOrdinal(this string text, string value, int startIndex = 0) =>
+            text.IndexOf(value, startIndex, StringComparison.Ordinal);
 
         /// <summary>
         /// A shortcut for <c>string.LastIndexOf(string, StringComparison.Ordinal)</c>.
@@ -264,7 +263,7 @@ namespace System
         public static (string? Left, string? Separator, string? Right) Partition(this string? text, Range range) =>
             string.IsNullOrEmpty(text)
                 ? (Left: text, Separator: null, Right: null)
-                : (Left: text[..range.End], Separator: text[range], Right: text[range.End..]);
+                : (Left: text[..range.Start], Separator: text[range], Right: text[range.End..]);
 
         /// <summary>
         /// Splits the text into three pieces similarly to Python's <c>str.rpartition</c> method.
