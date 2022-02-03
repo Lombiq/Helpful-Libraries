@@ -64,5 +64,14 @@ namespace System
         /// </summary>
         /// <param name="number">The number to count the digits of.</param>
         public static int DigitCount(this int number) => (int)Math.Log10(number) + 1;
+
+        /// <summary>
+        /// Returns a string that right-aligns the digits of the given <see cref="int"/> by padding them with zeros on
+        /// the left, for a specified total length.
+        /// </summary>
+        /// <param name="length">The total number of digits in the resulting string.</param>
+        /// <returns>The string representation of the given <see cref="int"/>, padded with zeros on the left.</returns>
+        public static string PadZeroes(this int number, int length) =>
+            number.ToString("D" + length.ToTechnicalString(), CultureInfo.InvariantCulture);
     }
 }
