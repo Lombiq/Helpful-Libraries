@@ -58,5 +58,11 @@ namespace System
         /// </summary>
         public static int ToTechnicalInt(this string number) =>
             int.TryParse(number, NumberStyles.Any, CultureInfo.InvariantCulture, out var result) ? result : -1;
+
+        /// <summary>
+        /// Returns the number of digits in the given <see cref="int"/>.
+        /// </summary>
+        /// <param name="number">The number to count the digits of.</param>
+        public static int DigitCount(this int number) => (int)Math.Log10(number) + 1;
     }
 }
