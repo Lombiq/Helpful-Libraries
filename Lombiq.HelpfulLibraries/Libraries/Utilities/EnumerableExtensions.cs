@@ -37,6 +37,21 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
+        /// Awaits the tasks sequentially. An alternative to <see cref="Task.WhenAll(IEnumerable{Task})"/> and
+        /// <c>Nito.AsyncEx.TaskExtensions.WhenAll</c> when true multi-threaded asynchronicity is not desirable.
+        /// </summary>
+        /// <param name="source">A collection of items.</param>
+        /// <param name="asyncOperation">An <see langword="async"/> function to call on each item.</param>
+        /// <typeparam name="TItem">The type of the input collection's items.</typeparam>
+        /// <returns>The <see cref="Task"/> that'll complete when all items have completed..</returns>
+        public static async Task AwaitEachAsync<TItem>(
+            this IEnumerable<TItem> source,
+            Func<TItem, Task> asyncOperation)
+        {
+            foreach (var item in source) await asyncOperation(item);
+        }
+
+        /// <summary>
         /// Awaits the tasks sequentially while the action returns <see langword="false"/>.
         /// </summary>
         /// <returns><see langword="true"/> if the <see langword="foreach"/> was never broken.</returns>
