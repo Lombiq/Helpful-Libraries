@@ -43,7 +43,7 @@ namespace System.Collections.Generic
         /// <param name="source">A collection of items.</param>
         /// <param name="asyncOperation">An <see langword="async"/> function to call on each item.</param>
         /// <typeparam name="TItem">The type of the input collection's items.</typeparam>
-        /// <returns>The <see cref="Task"/> that'll complete when all items have completed..</returns>
+        /// <returns>The <see cref="Task"/> that'll complete when all items have completed.</returns>
         public static async Task AwaitEachAsync<TItem>(
             this IEnumerable<TItem> source,
             Func<TItem, Task> asyncOperation)
