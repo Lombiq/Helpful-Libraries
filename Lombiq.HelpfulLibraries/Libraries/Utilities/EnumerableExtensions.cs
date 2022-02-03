@@ -36,13 +36,7 @@ namespace System.Collections.Generic
             return results;
         }
 
-        /// <summary>
-        /// Awaits the tasks sequentially. An alternative to <see cref="Task.WhenAll(IEnumerable{Task})"/> and
-        /// <c>Nito.AsyncEx.TaskExtensions.WhenAll</c> when true multi-threaded asynchronicity is not desirable.
-        /// </summary>
-        /// <param name="source">A collection of items.</param>
-        /// <param name="asyncOperation">An <see langword="async"/> function to call on each item.</param>
-        /// <typeparam name="TItem">The type of the input collection's items.</typeparam>
+        /// <inheritdoc cref="AwaitEachAsync{TItem,TResult}(IEnumerable{TItem},Func{TItem,Task{TResult}})"/>
         /// <returns>The <see cref="Task"/> that'll complete when all items have completed.</returns>
         public static async Task AwaitEachAsync<TItem>(
             this IEnumerable<TItem> source,
