@@ -36,6 +36,15 @@ namespace System.Collections.Generic
             return results;
         }
 
+        /// <inheritdoc cref="AwaitEachAsync{TItem,TResult}(IEnumerable{TItem},Func{TItem,Task{TResult}})"/>
+        /// <returns>The <see cref="Task"/> that'll complete when all items have completed.</returns>
+        public static async Task AwaitEachAsync<TItem>(
+            this IEnumerable<TItem> source,
+            Func<TItem, Task> asyncOperation)
+        {
+            foreach (var item in source) await asyncOperation(item);
+        }
+
         /// <summary>
         /// Awaits the tasks sequentially while the action returns <see langword="false"/>.
         /// </summary>
