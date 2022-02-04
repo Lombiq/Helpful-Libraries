@@ -15,7 +15,7 @@ namespace System.Collections.Generic
         /// <param name="asyncOperation">An <see langword="async"/> function to call on each item.</param>
         /// <typeparam name="TItem">The type of the input collection's items.</typeparam>
         /// <typeparam name="TResult">The type of the output collection's items.</typeparam>
-        /// <returns>When awaited the task contains the results which were added one-by-one.</returns>
+        /// <returns>When awaited the <see cref="Task"/> contains the results which were added one-by-one.</returns>
         public static async Task<IList<TResult>> AwaitEachAsync<TItem, TResult>(
             this IEnumerable<TItem> source,
             Func<TItem, Task<TResult>> asyncOperation)
