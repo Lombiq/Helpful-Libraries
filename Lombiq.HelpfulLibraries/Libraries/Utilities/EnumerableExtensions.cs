@@ -16,7 +16,6 @@ namespace System.Collections.Generic
         /// <typeparam name="TItem">The type of the input collection's items.</typeparam>
         /// <typeparam name="TResult">The type of the output collection's items.</typeparam>
         /// <returns>When awaited, the <see cref="Task"/> that contains the results which were added one-by-one.</returns>
-
         public static async Task<IList<TResult>> AwaitEachAsync<TItem, TResult>(
             this IEnumerable<TItem> source,
             Func<TItem, Task<TResult>> asyncOperation)
