@@ -16,6 +16,7 @@
 - `JsonHelpers`: JSON syntax can be validated with the `ValidateJsonIfNotNull` helper method.
 - `JsonStringExtensions`: Adds JSON related extensions for the `string` type. (E.g. `JsonHtmlContent` which safely serializes a string for use in `<script>` elements.)
 - `MemoryCacheExtensions`: Adds extensions for `IMemoryCache` manipulation. (E.g. `GetOrNew<T>` type-safely returns the item or creates a new instance.)
+- `MulticastDelegateExtensions`: Extensions for `MulticastDelegate`s, e.g. to invoke async delegates in a safe fashion.
 - `NonSecurityRandomizer`: A wrapper around `System.Random` for explicitly not security-related usage-cases.
 - `NumberExtensions`: Adds extensions for primitive numeric types. (E.g. `ToTechnicalString` converts `int` into culture invariant `string`.)
 - `OrchardCoreBuilderExtensions`: Shortcuts when initializing Orchard with `OrchardCoreBuilder`, i.e. `AddOrchardCms()`.
