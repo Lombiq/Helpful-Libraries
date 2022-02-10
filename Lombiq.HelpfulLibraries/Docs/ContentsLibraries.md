@@ -22,4 +22,9 @@
 
 - `IContentVersionNumberService`: Service for getting content version number based on how many different versions of it are in the document database. It has a method for getting the version number of the latest version (`GetLatestVersionNumberAsync`) and another one for a specific content version id (`GetCurrentVersionNumberAsync`).
 
+
+## Models
+
+- `SafeCombinedResult`: A version of `CombinedResult` where the constructor's result list can contain `null`.
+
 Please see the inline documentation of each extension methods learn more.
