@@ -8,7 +8,7 @@
   <PropertyGroup>
     <Title>Lombiq Helpful Libraries for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
-    <Copyright>Copyright © 2011, Lombiq Technologies Ltd. - https://lombiq.com</Copyright>
+    <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
     <Description>Lombiq Helpful Libraries for Orchard Core: Main project of Lombiq Helpful Libraries, various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules. See the project website for detailed documentation.</Description>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities</PackageTags>
     <PackageIcon>NuGetIcon.png</PackageIcon>
