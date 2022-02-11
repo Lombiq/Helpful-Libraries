@@ -11,7 +11,7 @@ namespace OrchardCore.DisplayManagement.Views
         /// Uses <see cref="ShapeResult.Location(string)"/> to set the <paramref name="name"/> of the tab and its
         /// <paramref name="priority"/> in the order of the tabs.
         /// </summary>
-        public static ShapeResult UseTab(this ShapeResult shapeResult, string name, int priority) =>
-            shapeResult.Location($"Parts#{name}: {priority.ToTechnicalString()}");
+        public static ShapeResult UseTab(this ShapeResult shapeResult, string name, int priority, string placement = "Parts") =>
+            shapeResult.Location($"{placement}#{name}: {priority.ToTechnicalString()}");
     }
 }
