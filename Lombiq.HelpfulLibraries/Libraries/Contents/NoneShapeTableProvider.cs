@@ -4,7 +4,6 @@ using Microsoft.Extensions.Localization;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.DisplayManagement.Descriptors;
 using OrchardCore.DisplayManagement.Implementation;
-using OrchardCore.DisplayManagement.Zones;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,7 +45,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
             BindShape(
                 builder,
                 $"{fieldName}_{(isEditor ? "Option" : "DisplayOption")}__{None}",
-                async context =>
+                context =>
                 {
                     var text = context
                         .ServiceProvider
@@ -57,17 +56,17 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
                         ? "selected"
                         : string.Empty;
 
-                    return new HtmlString($"<option value=\"{None}\" {selected}>{text}</option>");
+                    return Task.FromResult<IHtmlContent>(new HtmlString($"<option value=\"{None}\" {selected}>{text}</option>"));
                 });
 
             // Creates a blank template for the actual edit or display shape.
             BindShape(
                 builder,
                 $"{fieldName}_{(isEditor ? "Display" : "Edit")}__{None}",
-                context => Task.FromResult<IHtmlContent>(new HtmlContentBuilder()));
+                _ => Task.FromResult<IHtmlContent>(new HtmlContentBuilder()));
         }
 
-        private static ShapeAlterationBuilder BindShape(
+        private static void BindShape(
             ShapeTableBuilder builder,
             string shapeName,
             Func<DisplayContext, Task<IHtmlContent>> bindingAsync) =>
@@ -75,10 +74,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Contents
                 .Describe(shapeName)
                 .Configure(descriptor =>
                 {
-                    descriptor.Bindings[shapeName] = new ShapeBinding
-                    {
-                        BindingAsync = bindingAsync,
-                    };
+                    descriptor.Bindings[shapeName] = new ShapeBinding { BindingAsync = bindingAsync, };
                 });
     }
 }
