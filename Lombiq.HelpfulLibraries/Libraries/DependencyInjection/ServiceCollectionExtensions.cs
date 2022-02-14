@@ -10,6 +10,7 @@ using OrchardCore.Security.Permissions;
 using System;
 using System.Linq;
 using System.Reflection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
 {
@@ -59,12 +60,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
 
         // This implementation is based on this StackOverflow answer: https://stackoverflow.com/a/45775657/4611736
         public static void AddLazyInjectionSupport(this IServiceCollection services) =>
-            services.AddTransient(typeof(Lazy<>), typeof(Lazier<>));
+            services.TryAddTransient(typeof(Lazy<>), typeof(Lazier<>));
 
         public static void AddOrchardServices(this IServiceCollection services)
         {
             services.AddLazyInjectionSupport();
-            services.AddTransient(typeof(IOrchardServices<>), typeof(OrchardServices<>));
+            services.TryAddTransient(typeof(IOrchardServices<>), typeof(OrchardServices<>));
         }
 
         private class Lazier<T> : Lazy<T>
