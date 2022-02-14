@@ -38,5 +38,18 @@ namespace OrchardCore.ResourceManagement
 
             return definition;
         }
+
+        /// <summary>
+        /// Gets all resource dictionaries of a given <paramref name="resoruceType"/> and collapses them into a lookup
+        /// where the key is the resource name and the values are the dependencies.
+        /// </summary>
+        public static ILookup<string, string> SingleResourceTypeToLookup(
+            this IEnumerable<ResourceManifest> resourceManifest,
+            string resoruceType) =>
+            resourceManifest
+                .SelectMany(manifest => manifest.GetResources(resoruceType))
+                .SelectMany(pair => pair.Value.SelectMany(definition =>
+                    definition.Dependencies.Select(dependency => new { Resource = pair.Key, Dependency = dependency })))
+                .ToLookup(pair => pair.Resource, pair => pair.Dependency);
     }
 }

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -122,8 +123,8 @@ namespace System
         /// cref="StringComparison.CurrentCulture"/> as the basis of its comparison.
         /// </para>
         /// </remarks>
-        public static int IndexOfOrdinal(this string text, string value) =>
-            text.IndexOf(value, StringComparison.Ordinal);
+        public static int IndexOfOrdinal(this string text, string value, int startIndex = 0) =>
+            text.IndexOf(value, startIndex, StringComparison.Ordinal);
 
         /// <summary>
         /// A shortcut for <c>string.LastIndexOf(string, StringComparison.Ordinal)</c>.
@@ -217,6 +218,27 @@ namespace System
             Regex.Replace(input, pattern, evaluator, options, within ?? TimeSpan.FromSeconds(1));
 
         /// <summary>
+        /// Similar to <see cref="string.IndexOf(string)"/>, but returns every match. The comparison is ordinal via
+        /// simple character equality checks.
+        /// </summary>
+        public static IEnumerable<int> AllIndexesOf(this string text, string value)
+        {
+            if (string.IsNullOrEmpty(value)) yield break;
+
+            var count = text.Length - value.Length;
+            for (int textIndex = 0; textIndex < count; textIndex++)
+            {
+                var match = true;
+                for (int valueIndex = 0; match && valueIndex < value.Length; valueIndex++)
+                {
+                    if (text[textIndex + valueIndex] != value[valueIndex]) match = false;
+                }
+
+                if (match) yield return textIndex;
+            }
+        }
+
+        /// <summary>
         /// Splits the text into three pieces similarly to Python's <c>str.partition</c> method.
         /// </summary>
         /// <param name="text">The text to partition.</param>
@@ -234,6 +256,14 @@ namespace System
             string separator,
             bool ignoreCase = false) =>
             Partition(text, separator, ignoreCase, fromEnd: true);
+
+        /// <summary>
+        /// Splits the text into three pieces before, during and after the provided range.
+        /// </summary>
+        public static (string? Left, string? Separator, string? Right) Partition(this string? text, Range range) =>
+            string.IsNullOrEmpty(text)
+                ? (Left: text, Separator: null, Right: null)
+                : (Left: text[..range.Start], Separator: text[range], Right: text[range.End..]);
 
         /// <summary>
         /// Splits the text into three pieces similarly to Python's <c>str.rpartition</c> method.
