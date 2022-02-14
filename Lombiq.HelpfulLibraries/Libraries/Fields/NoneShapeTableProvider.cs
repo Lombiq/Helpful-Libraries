@@ -8,7 +8,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Lombiq.HelpfulLibraries.Libraries.Contents
+namespace Lombiq.HelpfulLibraries.Libraries.Fields
 {
     /// <summary>
     /// This provider creates a "None" editor and display type for every field which can be used to hide the field from
