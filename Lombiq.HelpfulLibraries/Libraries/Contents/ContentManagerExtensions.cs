@@ -39,6 +39,14 @@ namespace OrchardCore.ContentManagement
             return taxonomy?.As<TaxonomyPart>()?.Terms;
         }
 
+        public static async Task<IDictionary<string, string>> GetTaxonomyTermsDisplayTextsAsync(
+            this IContentManager contentManager,
+            string taxonomyId) =>
+            (await contentManager.GetAsync(taxonomyId))
+            .As<TaxonomyPart>()
+            .Terms
+            .ToDictionary(term => term.ContentItemId, term => term.DisplayText);
+
         /// <summary>
         /// Returns the <see cref="ContentItem.DisplayText"/> of a specific term identified by its <paramref
         /// name="termId"/> within a taxonomy identified by its <paramref name="alias"/>. If none are found <see

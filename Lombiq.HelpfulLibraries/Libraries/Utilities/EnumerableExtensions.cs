@@ -283,5 +283,62 @@ namespace System.Collections.Generic
                 yield return selector(key, value);
             }
         }
+
+        /// <summary>
+        /// Similar to <see cref="Enumerable.Cast{TResult}"/>, but it checks if the types are correct first, and filters
+        /// out the ones that couldn't be cast. The optional <paramref name="predicate"/> can filter the cast items.
+        /// </summary>
+        public static IEnumerable<T> CastWhere<T>(this IEnumerable enumerable, Func<T, bool> predicate = null)
+        {
+            if (enumerable is IEnumerable<T> alreadyCast)
+            {
+                return predicate == null
+                    ? alreadyCast
+                    : alreadyCast.Where(predicate);
+            }
+
+            static IEnumerable<T> Iterate(IEnumerable enumerable, Func<T, bool> predicate)
+            {
+                foreach (var item in enumerable)
+                {
+                    if (item is not T instance) continue;
+
+                    if (predicate == null || predicate(instance)) yield return instance;
+                }
+            }
+
+            return Iterate(enumerable, predicate);
+        }
+
+        /// <summary>
+        /// Returns a copy of <paramref name="rangeCollection"/> without overlapping ranges. It prefers ranges with
+        /// lower starting index and higher length in that order.
+        /// </summary>
+        public static IList<Range> WithoutOverlappingRanges(
+            this IEnumerable<Range> rangeCollection,
+            bool isSortedByStart = false)
+        {
+            var ranges = rangeCollection.ToList();
+
+            if (!isSortedByStart) ranges.Sort((left, right) => left.Start.Value - right.Start.Value);
+
+            for (int currentIndex = 0; currentIndex < ranges.Count - 1; currentIndex++)
+            {
+                var current = ranges[currentIndex];
+                int followingIndex = currentIndex + 1;
+
+                while (followingIndex < ranges.Count && ranges[followingIndex].Start.Value < current.End.Value)
+                {
+                    var following = ranges[followingIndex];
+
+                    ranges.RemoveAt(
+                        current.Start.Value == following.Start.Value && current.End.Value < following.End.Value
+                            ? currentIndex
+                            : followingIndex);
+                }
+            }
+
+            return ranges;
+        }
     }
 }

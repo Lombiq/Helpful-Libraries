@@ -26,6 +26,7 @@ The module consists of the following independent libraries (all in their own fea
 - [MVC Libraries](Lombiq.HelpfulLibraries/Docs/MvcLibraries.md)
 - [Navigation](Lombiq.HelpfulLibraries/Docs/Navigation.md)
 - [Resource Management Libraries](Lombiq.HelpfulLibraries/Docs/ResourceManagementLibraries.md)
+- [Settings](Lombiq.HelpfulLibraries/Docs/Settings.md)
 - [User Libraries](Lombiq.HelpfulLibraries/Docs/UserLibraries.md)
 - [Utilities](Lombiq.HelpfulLibraries/Docs/Utilities.md)
 - [RestEase DI helper](Lombiq.HelpfulLibraries.RestEase/Readme.md)
