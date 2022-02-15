@@ -42,7 +42,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         [OrchardSwitches("RoleName, Permission")]
         public async Task RemovePermissionFromRoleAsync()
         {
-            var role = (Role)await _roleManager.FindByNameAsync(_roleManager.NormalizeKey(RoleName));
+            if ((Role)await _roleManager.FindByNameAsync(_roleManager.NormalizeKey(RoleName)) is not { } role) return;
             role.RoleClaims.RemoveAll(claim => claim.ClaimType == ClaimType && claim.ClaimValue == Permission);
             await _roleManager.UpdateAsync(role);
         }
