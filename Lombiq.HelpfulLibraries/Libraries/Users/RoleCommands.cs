@@ -33,5 +33,18 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
             role.RoleClaims.Add(new RoleClaim { ClaimType = ClaimType, ClaimValue = Permission });
             await _roleManager.UpdateAsync(role);
         }
+
+        [CommandName("removePermissionFromRole")]
+        [CommandHelp("removePermissionFromRole " +
+                     "/RoleName:<rolename> " +
+                     "/Permission:<permission> " +
+                     "\r\n\t" + "Removes the permission from the role")]
+        [OrchardSwitches("RoleName, Permission")]
+        public async Task RemovePermissionFromRoleAsync()
+        {
+            var role = (Role)await _roleManager.FindByNameAsync(_roleManager.NormalizeKey(RoleName));
+            role.RoleClaims.RemoveAll(claim => claim.ClaimType == ClaimType && claim.ClaimValue == Permission);
+            await _roleManager.UpdateAsync(role);
+        }
     }
 }
