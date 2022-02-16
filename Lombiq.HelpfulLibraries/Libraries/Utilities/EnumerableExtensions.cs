@@ -15,7 +15,7 @@ namespace System.Collections.Generic
         /// <param name="asyncOperation">An <see langword="async"/> function to call on each item.</param>
         /// <typeparam name="TItem">The type of the input collection's items.</typeparam>
         /// <typeparam name="TResult">The type of the output collection's items.</typeparam>
-        /// <returns>When awaited the task contains the results which were added one-by-one.</returns>
+        /// <returns>When awaited, the <see cref="Task"/> that contains the results which were added one-by-one.</returns>
         public static async Task<IList<TResult>> AwaitEachAsync<TItem, TResult>(
             this IEnumerable<TItem> source,
             Func<TItem, Task<TResult>> asyncOperation)
@@ -34,6 +34,15 @@ namespace System.Collections.Generic
             int index = 0;
             foreach (var item in source) results.Add(await asyncOperation(item, index++));
             return results;
+        }
+
+        /// <inheritdoc cref="AwaitEachAsync{TItem,TResult}(IEnumerable{TItem},Func{TItem,Task{TResult}})"/>
+        /// <returns>The <see cref="Task"/> that'll complete when all items have completed.</returns>
+        public static async Task AwaitEachAsync<TItem>(
+            this IEnumerable<TItem> source,
+            Func<TItem, Task> asyncOperation)
+        {
+            foreach (var item in source) await asyncOperation(item);
         }
 
         /// <summary>
@@ -191,6 +200,16 @@ namespace System.Collections.Generic
                 ? string.Join(separator, filteredStrings)
                 : null;
         }
+
+        /// <summary>
+        /// Join strings fluently.
+        /// </summary>
+        /// <param name="values">The <see cref="string"/> values to join.</param>
+        /// <param name="separator">The separator to use between the <paramref name="values"/>, defaults to space.</param>
+        /// <returns>A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/>
+        /// provided.</returns>
+        public static string Join(this IEnumerable<string> values, string separator = " ") =>
+            string.Join(separator, values ?? Enumerable.Empty<string>());
 
         /// <summary>
         /// Re-flattens <see cref="ILookup{TKey, ContentItem}"/> or <c>GroupBy</c> collections and eliminates duplicates

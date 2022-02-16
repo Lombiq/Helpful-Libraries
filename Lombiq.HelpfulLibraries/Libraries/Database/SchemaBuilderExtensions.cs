@@ -1,5 +1,7 @@
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Reflection;
 using YesSql.Sql;
 
 namespace Lombiq.HelpfulLibraries.Libraries.Database
@@ -51,5 +53,34 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
                     $"IDX_{typeof(TTable).Name}_{string.Join("_", columnNames)}",
                     columnNames));
         }
+
+        public static ISchemaBuilder CreateMapIndexTable<T>(
+            this ISchemaBuilder builder,
+            string collection = null) =>
+            builder.CreateMapIndexTable(
+                typeof(T),
+                table =>
+                {
+                    foreach (var property in typeof(T).GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly))
+                    {
+                        var attributes = property.GetCustomAttributes(inherit: false);
+                        table.Column(property.Name, property.PropertyType, column =>
+                        {
+                            if (attributes.Any(attribute => attribute is UnlimitedLengthAttribute))
+                            {
+                                column.Unlimited();
+                            }
+                            else if (attributes.Any(attribute => attribute is ContentItemIdColumnAttribute))
+                            {
+                                column.WithCommonUniqueIdLength();
+                            }
+                            else if (attributes.FirstOrDefault(attribute => attribute is MaxLengthAttribute) is MaxLengthAttribute max)
+                            {
+                                column.WithLength(max.Length);
+                            }
+                        });
+                    }
+                },
+                collection);
     }
 }

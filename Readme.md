@@ -24,16 +24,19 @@ The module consists of the following independent libraries (all in their own fea
 - [Method Provider Libraries](Lombiq.HelpfulLibraries/Docs/MethodProviderLibraries.md)
 - [Middlewares](Lombiq.HelpfulLibraries/Docs/Middlewares.md)
 - [MVC Libraries](Lombiq.HelpfulLibraries/Docs/MvcLibraries.md)
+- [Navigation](Lombiq.HelpfulLibraries/Docs/Navigation.md)
 - [Resource Management Libraries](Lombiq.HelpfulLibraries/Docs/ResourceManagementLibraries.md)
 - [User Libraries](Lombiq.HelpfulLibraries/Docs/UserLibraries.md)
 - [Utilities](Lombiq.HelpfulLibraries/Docs/Utilities.md)
 - [RestEase DI helper](Lombiq.HelpfulLibraries.RestEase/Readme.md)
 - [LinqToDb](Lombiq.HelpfulLibraries.LinqToDb/Readme.md)
+- [Targets](Lombiq.HelpfulLibraries.Targets/Readme.md)
 
 Public APIs are always documented so please always read method comments.
 
 Check out the [`Lombiq.HelpfulLibraries.Samples` project](Lombiq.HelpfulLibraries.Samples) for various examples.
 
+Note: The `Lombiq.HelpfulLibraries.sln` exists to provide centralized building of the independent library projects.
 
 ## Contributing and support
 

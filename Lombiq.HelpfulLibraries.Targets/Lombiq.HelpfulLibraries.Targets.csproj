@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
+  </PropertyGroup>
+  
+  <ItemGroup>
+    <ProjectReference Include="../Lombiq.HelpfulLibraries/Lombiq.HelpfulLibraries.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../Lombiq.HelpfulLibraries.LinqToDb/Lombiq.HelpfulLibraries.LinqToDb.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../Lombiq.HelpfulLibraries.RestEase/Lombiq.HelpfulLibraries.RestEase.csproj" PrivateAssets="none" />
+  </ItemGroup>
+
+</Project>
