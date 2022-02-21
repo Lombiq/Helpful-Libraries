@@ -5,8 +5,26 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);.git*;node_modules\**;Tests\**</DefaultItemExcludes>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <Title>Lombiq Helpful Libraries for Orchard Core</Title>
+    <Authors>Lombiq Technologies</Authors>
+    <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
+    <Description>Lombiq Helpful Libraries for Orchard Core: Main project of Lombiq Helpful Libraries, various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules. See the project website for detailed documentation.</Description>
+    <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities</PackageTags>
+    <PackageIcon>NuGetIcon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries</PackageProjectUrl>
+    <PackageLicenseFile>Licence.md</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Licence.md" Pack="true" PackagePath="" />
+    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
   <ItemGroup>
     <None Remove="Tests\**" />
+    <None Include="..\Readme.md" Link="Readme.md" />
   </ItemGroup>
 
   <ItemGroup>
@@ -14,13 +32,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\Licence.md" Link="Licence.md" />
-    <None Include="..\Readme.md" Link="Readme.md" />
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Lucene.Net" Version="4.8.0-beta00014" />
-    <PackageReference Include="Microsoft.VisualStudio.Threading" Version="16.10.56" />
     <PackageReference Include="MimeTypes" Version="2.1.1" />
     <PackageReference Include="Moq.AutoMock" Version="2.3.0" />
     <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.2.2" />
