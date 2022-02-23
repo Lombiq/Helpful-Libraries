@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace OrchardCore.Navigation
 {
-    public static class NavigationBuilderExtensions
+    public static class NavigationItemBuilderExtensions
     {
         /// <summary>
         /// Adds a link to the menu item using <see cref="TypedRoute"/>.
