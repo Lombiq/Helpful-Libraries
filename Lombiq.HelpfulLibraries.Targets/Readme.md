@@ -1,4 +1,4 @@
-﻿# Lombiq Helpful Libraries for Orchard Core - Targets
+# Targets - Lombiq Helpful Libraries for Orchard Core
 
 
 
