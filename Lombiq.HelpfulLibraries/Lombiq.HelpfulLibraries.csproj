@@ -37,6 +37,7 @@
     <PackageReference Include="Moq.AutoMock" Version="2.3.0" />
     <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.2.2" />
     <PackageReference Include="OrchardCore.Alias" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Media.Core" Version="1.2.2" />
     <PackageReference Include="OrchardCore.Taxonomies" Version="1.2.2" />
     <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.2.2" />
     <PackageReference Include="OrchardCore.ContentManagement" Version="1.2.2" />
