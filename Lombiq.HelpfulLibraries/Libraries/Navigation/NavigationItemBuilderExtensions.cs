@@ -14,7 +14,7 @@ namespace OrchardCore.Navigation
         /// <summary>
         /// Adds a link to the menu item using <see cref="TypedRoute"/>.
         /// </summary>
-        public static NavigationItemBuilder Action<TContext>(
+        public static NavigationItemBuilder ActionTask<TContext>(
             this NavigationItemBuilder builder,
             HttpContext httpContext,
             Expression<Func<TContext, Task<IActionResult>>> actionExpression,

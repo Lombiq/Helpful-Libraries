@@ -20,7 +20,7 @@ namespace Lombiq.HelpfulLibraries.Samples.Controllers
 
         // A simple query on AutoroutePartIndex.
         // Open this from under /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/SimpleQuery
-        public async Task<ActionResult> SimpleQuery()
+        public async Task<IActionResult> SimpleQuery()
         {
             var result = await _session.LinqQueryAsync(
                 accessor => accessor
@@ -34,7 +34,7 @@ namespace Lombiq.HelpfulLibraries.Samples.Controllers
 
         // A more complex query with an SQL JOIN.
         // Open this from under /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/JoinQuery
-        public async Task<ActionResult> JoinQuery()
+        public async Task<IActionResult> JoinQuery()
         {
             // This will fetch all items under the "blog/" path. If you used the Blog recipe then these will be all blog
             // posts.
@@ -52,7 +52,7 @@ namespace Lombiq.HelpfulLibraries.Samples.Controllers
 
         // CRUD operations. Or rather, it's CUD but you've seen enough read operations above.
         // Open this from under /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/Crud
-        public async Task<ActionResult> Crud()
+        public async Task<IActionResult> Crud()
         {
             var insertedCount = await _session.LinqTableQueryAsync<BookRecord, int>(table => table
                 .InsertAsync(
