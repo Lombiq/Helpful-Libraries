@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="..\Licence.md" Link="Licence.md" />
+    <None Include="..\License.md" Link="License.md" />
     <None Include="..\Readme.md" Link="Readme.md" />
   </ItemGroup>
 
