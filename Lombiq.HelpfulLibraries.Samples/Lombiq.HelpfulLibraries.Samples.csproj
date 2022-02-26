@@ -1,0 +1,33 @@
+<Project Sdk="Microsoft.NET.Sdk.Razor">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <IsPackable>false</IsPackable>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*;node_modules\**;Tests\**</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OrchardCore.ContentFields" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Module.Targets" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.ContentTypes.Abstractions" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.2.2" />
+    <PackageReference Include="OrchardCore.Autoroute" Version="1.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="node_modules\**" />
+    <None Remove="Tests\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.LinqToDb\Lombiq.HelpfulLibraries.LinqToDb.csproj" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.csproj" />
+  </ItemGroup>
+
+</Project>

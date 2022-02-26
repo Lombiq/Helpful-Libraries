@@ -35,7 +35,7 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
 
             Documents = Enumerable
                 .Range(0, 10)
-                .Select(n => new TestDocument { Name = NamePrefix + n })
+                .Select(n => new TestDocument { Name = NamePrefix + n.ToTechnicalString() })
                 .ToArray();
 
             if (File.Exists(FileName)) File.Delete(FileName);
@@ -46,8 +46,9 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
         {
             if (Store == null) await CreateDatabaseAsync();
 
-            using var session = Store.CreateSession();
+            await using var session = Store.CreateSession();
             await action(session);
+            await session.SaveChangesAsync();
         }
 
         public void Dispose()
@@ -59,7 +60,7 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
 
         private async Task CreateDatabaseAsync()
         {
-            Store = (Store)await StoreFactory.CreateAsync(_configuration);
+            Store = (Store)await StoreFactory.CreateAndInitializeAsync(_configuration);
             var dbAccessorMock = new Mock<IDbConnectionAccessor>();
             dbAccessorMock.Setup(x => x.CreateConnection())
                 .Returns(() => _configuration.ConnectionFactory.CreateConnection());
@@ -79,8 +80,7 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
                         schemaBuilder.DropTable(nameof(TestDocumentIndex));
                     }
 
-                    schemaBuilder.CreateMapIndexTable(
-                        nameof(TestDocumentIndex),
+                    schemaBuilder.CreateMapIndexTable<TestDocumentIndex>(
                         table => table.Column<int>(nameof(TestDocumentIndex.Number)));
                     await transaction.CommitAsync();
                 }

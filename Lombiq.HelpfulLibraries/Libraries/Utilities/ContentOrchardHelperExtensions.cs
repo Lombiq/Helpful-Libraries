@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using OrchardCore.DisplayManagement;
 using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace OrchardCore
@@ -67,5 +69,21 @@ namespace OrchardCore
 
             return contentItemGetter();
         }
+
+        /// <inheritdoc cref="HttpContextExtensions.Action{TController}"/>
+        public static string Action<TController>(
+            this IOrchardHelper orchardHelper,
+            Expression<Action<TController>> actionExpression,
+            params (string Key, object Value)[] additionalArguments)
+            where TController : ControllerBase =>
+            orchardHelper.HttpContext.Action(actionExpression, additionalArguments);
+
+        /// <inheritdoc cref="HttpContextExtensions.Action{TController}"/>
+        public static string Action<TController>(
+            this IOrchardHelper orchardHelper,
+            Expression<Func<TController, Task>> taskActionExpression,
+            params (string Key, object Value)[] additionalArguments)
+            where TController : ControllerBase =>
+            orchardHelper.HttpContext.Action(taskActionExpression.StripResult(), additionalArguments);
     }
 }

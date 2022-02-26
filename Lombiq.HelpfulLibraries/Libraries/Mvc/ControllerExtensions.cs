@@ -1,3 +1,6 @@
+using Microsoft.AspNetCore.Mvc.Routing;
+using OrchardCore.ContentManagement;
+
 namespace Microsoft.AspNetCore.Mvc
 {
     public static class ControllerExtensions
@@ -15,5 +18,12 @@ namespace Microsoft.AspNetCore.Mvc
         /// </remarks>
         public static RedirectResult RedirectToLocal(this Controller controller, string redirectUrl) =>
             controller.Redirect(controller.Url.IsLocalUrl(redirectUrl) ? redirectUrl : "~/");
+
+        /// <summary>
+        /// Uses <see cref="Routing.UrlHelperExtensions.DisplayContentItem"/> extension method to redirect to this <see
+        /// cref="ContentItem"/>'s display page.
+        /// </summary>
+        public static RedirectResult RedirectToContentDisplay(this Controller controller, IContent content) =>
+            controller.Redirect(controller.Url.DisplayContentItem(content));
     }
 }

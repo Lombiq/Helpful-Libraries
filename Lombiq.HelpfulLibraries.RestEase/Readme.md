@@ -1,5 +1,8 @@
-# RestEase DI helper - Lombiq Helpful Libraries for Orchard Core
+# RestEase dependency injection helper - Lombiq Helpful Libraries for Orchard Core
 
+
+
+For general details about and on using the Helpful Libraries see the [root Readme](../Readme.md).
 
 
 ## Extensions

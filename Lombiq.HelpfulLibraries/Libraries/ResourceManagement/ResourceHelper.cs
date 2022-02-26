@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.FileProviders;
+using Microsoft.Extensions.FileProviders;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,7 +14,9 @@ namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
         /// </summary>
         public static async Task<string> GetFileAsync(IFileProvider provider, string path)
         {
-            var fileInfo = provider.GetDirectoryContents(string.Empty).SingleOrDefault(x => x.Name == path);
+            var fileInfo = provider
+                .GetDirectoryContents(string.Empty)
+                .SingleOrDefault(directoryFileInfo => directoryFileInfo.Name == path);
             if (fileInfo?.Exists != true) return null;
 
             await using var stream = fileInfo.CreateReadStream();

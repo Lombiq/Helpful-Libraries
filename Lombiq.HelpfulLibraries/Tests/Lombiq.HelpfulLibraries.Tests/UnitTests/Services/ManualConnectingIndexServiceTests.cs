@@ -1,5 +1,6 @@
 using Lombiq.HelpfulLibraries.Tests.Models;
 using Shouldly;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -19,22 +20,24 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
         [Fact]
         public Task IndicesShouldHaveMatchingDocuments() => _fixture.SessionAsync(async session =>
         {
-            var indices = await session.QueryIndex<TestDocumentIndex>().ListAsync();
+            var indices = (await session.QueryIndex<TestDocumentIndex>().ListAsync()).ToList();
+            indices.ShouldNotBeEmpty();
+
             var documents = (await session.Query<TestDocument, TestDocumentIndex>().ListAsync())
                 .ToDictionary(document => document.Name);
-            foreach (var index in indices) documents.ShouldContainKey(NamePrefix + index.Number);
+            foreach (var index in indices) documents.ShouldContainKey(NamePrefix + index.Number.ToTechnicalString());
         });
 
         [Fact]
-        public Task AllIndexShouldRetreiveItsDocument() => _fixture.SessionAsync(async session =>
+        public Task AllIndexShouldRetrieveItsDocument() => _fixture.SessionAsync(async session =>
         {
             // In the example 3's index was intentionally skipped and 6's index was deleted after the fact.
             var numbers = Enumerable.Range(0, 10).Where(i => i is not 3 and not 6).ToList();
-            var query = session.Query<TestDocument, TestDocumentIndex>(x => x.Number.IsIn(numbers));
+            var query = session.Query<TestDocument, TestDocumentIndex>(index => index.Number.IsIn(numbers));
             var list = await query.ListAsync();
             var documents = list.ToList();
             documents.Select(x => x.Name)
-                .ShouldBe(_fixture.Documents.Where((x, i) => i is not 3 and not 6).Select(x => x.Name));
+                .ShouldBe(_fixture.Documents.Where((_, index) => index is not 3 and not 6).Select(x => x.Name));
         });
 
         [Fact]

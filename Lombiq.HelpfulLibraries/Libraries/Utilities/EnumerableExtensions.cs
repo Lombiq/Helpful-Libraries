@@ -1,4 +1,5 @@
 using OrchardCore.ContentManagement;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,7 +15,7 @@ namespace System.Collections.Generic
         /// <param name="asyncOperation">An <see langword="async"/> function to call on each item.</param>
         /// <typeparam name="TItem">The type of the input collection's items.</typeparam>
         /// <typeparam name="TResult">The type of the output collection's items.</typeparam>
-        /// <returns>When awaited the task contains the results which were added one-by-one.</returns>
+        /// <returns>When awaited, the <see cref="Task"/> that contains the results which were added one-by-one.</returns>
         public static async Task<IList<TResult>> AwaitEachAsync<TItem, TResult>(
             this IEnumerable<TItem> source,
             Func<TItem, Task<TResult>> asyncOperation)
@@ -22,6 +23,26 @@ namespace System.Collections.Generic
             var results = new List<TResult>();
             foreach (var item in source) results.Add(await asyncOperation(item));
             return results;
+        }
+
+        /// <inheritdoc cref="AwaitEachAsync{TItem,TResult}(IEnumerable{TItem},Func{TItem,Task{TResult}})"/>
+        public static async Task<IList<TResult>> AwaitEachAsync<TItem, TResult>(
+            this IEnumerable<TItem> source,
+            Func<TItem, int, Task<TResult>> asyncOperation)
+        {
+            var results = new List<TResult>();
+            int index = 0;
+            foreach (var item in source) results.Add(await asyncOperation(item, index++));
+            return results;
+        }
+
+        /// <inheritdoc cref="AwaitEachAsync{TItem,TResult}(IEnumerable{TItem},Func{TItem,Task{TResult}})"/>
+        /// <returns>The <see cref="Task"/> that'll complete when all items have completed.</returns>
+        public static async Task AwaitEachAsync<TItem>(
+            this IEnumerable<TItem> source,
+            Func<TItem, Task> asyncOperation)
+        {
+            foreach (var item in source) await asyncOperation(item);
         }
 
         /// <summary>
@@ -99,6 +120,10 @@ namespace System.Collections.Generic
         /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
         /// later in the enumeration overwrites the earlier one.
         /// </summary>
+        [SuppressMessage(
+            "Design",
+            "MA0016:Prefer return collection abstraction instead of implementation",
+            Justification = "This is the point of the method.")]
         public static Dictionary<TKey, TValue> ToDictionaryOverwrite<TIn, TKey, TValue>(
             this IEnumerable<TIn> collection,
             Func<TIn, TKey> keySelector,
@@ -113,6 +138,10 @@ namespace System.Collections.Generic
         /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
         /// later in the enumeration overwrites the earlier one.
         /// </summary>
+        [SuppressMessage(
+            "Design",
+            "MA0016:Prefer return collection abstraction instead of implementation",
+            Justification = "This is the point of the method.")]
         public static Dictionary<TKey, TIn> ToDictionaryOverwrite<TIn, TKey>(
             this IEnumerable<TIn> collection,
             Func<TIn, TKey> keySelector) =>
@@ -173,6 +202,16 @@ namespace System.Collections.Generic
         }
 
         /// <summary>
+        /// Join strings fluently.
+        /// </summary>
+        /// <param name="values">The <see cref="string"/> values to join.</param>
+        /// <param name="separator">The separator to use between the <paramref name="values"/>, defaults to space.</param>
+        /// <returns>A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/>
+        /// provided.</returns>
+        public static string Join(this IEnumerable<string> values, string separator = " ") =>
+            string.Join(separator, values ?? Enumerable.Empty<string>());
+
+        /// <summary>
         /// Re-flattens <see cref="ILookup{TKey, ContentItem}"/> or <c>GroupBy</c> collections and eliminates duplicates
         /// using <see cref="ContentItem.ContentItemVersionId"/>.
         /// </summary>
@@ -189,5 +228,117 @@ namespace System.Collections.Generic
         public static IEnumerable<ContentItem> GetSingleValues<TKey>(
             this IEnumerable<IGrouping<TKey, ContentItem>> lookup) =>
             lookup.Select(item => item.Single());
+
+        /// <summary>
+        /// A simple conditional enumeration where the items are <see langword="yield"/>ed from the <paramref
+        /// name="collection"/> if the <paramref name="negativePredicate"/> returns <see langword="false"/>.
+        /// </summary>
+        public static IEnumerable<T> WhereNot<T>(this IEnumerable<T> collection, Func<T, bool> negativePredicate)
+        {
+            foreach (var item in collection)
+            {
+                if (!negativePredicate(item))
+                {
+                    yield return item;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Returns <paramref name="collection"/> if it's not <see langword="null"/>, otherwise <see
+        /// cref="Enumerable.Empty{TResult}"/>.
+        /// </summary>
+        public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> collection) =>
+            collection ?? Enumerable.Empty<T>();
+
+        /// <summary>
+        /// Returns <paramref name="array"/> if it's not <see langword="null"/>, otherwise <see
+        /// cref="Array.Empty{TResult}"/>.
+        /// </summary>
+        public static IEnumerable<T> EmptyIfNull<T>(this T[] array) =>
+            array ?? Array.Empty<T>();
+
+        /// <summary>
+        /// Maps the provided collection of pairs using a selector with separate arguments.
+        /// </summary>
+        public static IEnumerable<TResult> Select<TKey, TValue, TResult>(
+            this IEnumerable<KeyValuePair<TKey, TValue>> pairs,
+            Func<TKey, TValue, TResult> selector)
+        {
+            foreach (var (key, value) in pairs)
+            {
+                yield return selector(key, value);
+            }
+        }
+
+        /// <summary>
+        /// Maps the provided collection of pairs using a selector with separate arguments.
+        /// </summary>
+        public static IEnumerable<TResult> Select<TKey, TValue, TResult>(
+            this IEnumerable<(TKey Key, TValue Value)> pairs,
+            Func<TKey, TValue, TResult> selector)
+        {
+            foreach (var (key, value) in pairs)
+            {
+                yield return selector(key, value);
+            }
+        }
+
+        /// <summary>
+        /// Similar to <see cref="Enumerable.Cast{TResult}"/>, but it checks if the types are correct first, and filters
+        /// out the ones that couldn't be cast. The optional <paramref name="predicate"/> can filter the cast items.
+        /// </summary>
+        public static IEnumerable<T> CastWhere<T>(this IEnumerable enumerable, Func<T, bool> predicate = null)
+        {
+            if (enumerable is IEnumerable<T> alreadyCast)
+            {
+                return predicate == null
+                    ? alreadyCast
+                    : alreadyCast.Where(predicate);
+            }
+
+            static IEnumerable<T> Iterate(IEnumerable enumerable, Func<T, bool> predicate)
+            {
+                foreach (var item in enumerable)
+                {
+                    if (item is not T instance) continue;
+
+                    if (predicate == null || predicate(instance)) yield return instance;
+                }
+            }
+
+            return Iterate(enumerable, predicate);
+        }
+
+        /// <summary>
+        /// Returns a copy of <paramref name="rangeCollection"/> without overlapping ranges. It prefers ranges with
+        /// lower starting index and higher length in that order.
+        /// </summary>
+        public static IList<Range> WithoutOverlappingRanges(
+            this IEnumerable<Range> rangeCollection,
+            bool isSortedByStart = false)
+        {
+            var ranges = rangeCollection.ToList();
+
+            if (!isSortedByStart) ranges.Sort((left, right) => left.Start.Value - right.Start.Value);
+
+            for (int currentIndex = 0; currentIndex < ranges.Count - 1; currentIndex++)
+            {
+                var current = ranges[currentIndex];
+                int followingIndex = currentIndex + 1;
+
+                while (followingIndex < ranges.Count && ranges[followingIndex].Start.Value < current.End.Value)
+                {
+                    var following = ranges[followingIndex];
+
+                    ranges.RemoveAt(
+                        current.Start.Value == following.Start.Value && current.End.Value < following.End.Value
+                            ? currentIndex
+                            : followingIndex);
+                }
+            }
+
+            return ranges;
+        }
     }
 }
