@@ -2,7 +2,10 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
+using Newtonsoft.Json;
 using OrchardCore.ContentManagement;
+using OrchardCore.Modules;
 using System;
 using System.Threading.Tasks;
 
@@ -45,6 +48,19 @@ namespace Microsoft.AspNetCore.Mvc
             catch (Exception exception)
             {
                 var context = controller.HttpContext;
+
+                if (exception.IsFatal())
+                {
+                    var logger = context
+                        .RequestServices
+                        .GetService<ILoggerFactory>()
+                        .CreateLogger(controller.GetType());
+                    logger.LogError(
+                        exception,
+                        "An error has occurred while generating a JSON result. (Request Route Values: {0})",
+                        JsonConvert.SerializeObject(context.Request.RouteValues));
+                }
+
                 return controller.Json(context.IsDevelopmentAndLocalhost()
                     ? new { error = exception.Message, data = exception.ToString() }
                     : new
