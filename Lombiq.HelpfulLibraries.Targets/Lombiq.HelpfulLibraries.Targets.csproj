@@ -14,11 +14,11 @@
     <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities;linq2db;LinqToDB;RestEase</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.Targets/Readme.md</PackageProjectUrl>
-    <PackageLicenseFile>Licence.md</PackageLicenseFile>
+    <PackageLicenseFile>License.md</PackageLicenseFile>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Licence.md" Pack="true" PackagePath="" />
+    <None Include="License.md" Pack="true" PackagePath="" />
     <None Include="Readme.md" />
     <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
   </ItemGroup>
