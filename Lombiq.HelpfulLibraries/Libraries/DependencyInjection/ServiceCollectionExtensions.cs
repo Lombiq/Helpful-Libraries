@@ -1,4 +1,8 @@
+using System;
+using System.Linq;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using OrchardCore.Admin;
 using OrchardCore.BackgroundTasks;
 using OrchardCore.Data.Migration;
@@ -7,10 +11,6 @@ using OrchardCore.Modules;
 using OrchardCore.Navigation;
 using OrchardCore.ResourceManagement;
 using OrchardCore.Security.Permissions;
-using System;
-using System.Linq;
-using System.Reflection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
 {
