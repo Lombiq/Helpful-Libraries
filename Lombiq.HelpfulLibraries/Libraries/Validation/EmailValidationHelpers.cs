@@ -10,9 +10,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Validation
         {
             try
             {
-#pragma warning disable S1481
-                var mailAddress = new MailAddress(email);
-#pragma warning restore S1481
+                _ = new MailAddress(email);
 
                 return true;
             }
