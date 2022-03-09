@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Logging;
 using OrchardCore.Environment.Commands;
 using OrchardCore.Security;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
     public class RoleCommands : DefaultCommandHandler
     {
         private readonly RoleManager<IRole> _roleManager;
+        private readonly ILogger<RoleCommands> _logger;
 
         [OrchardSwitch]
         public string RoleName { get; set; }
@@ -17,9 +19,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         [OrchardSwitch]
         public string Permission { get; set; }
 
-        public RoleCommands(RoleManager<IRole> roleManager, IStringLocalizer<RoleCommands> localizer)
-            : base(localizer) =>
+        public RoleCommands(RoleManager<IRole> roleManager, IStringLocalizer<RoleCommands> localizer, ILogger<RoleCommands> logger)
+            : base(localizer)
+        {
             _roleManager = roleManager;
+            _logger = logger;
+        }
 
         [CommandName("addPermissionToRole")]
         [CommandHelp("addPermissionToRole " +
@@ -29,7 +34,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         [OrchardSwitches("RoleName, Permission")]
         public async Task AddPermissionToRoleAsync()
         {
-            var role = (Role)await _roleManager.FindByNameAsync(_roleManager.NormalizeKey(RoleName));
+            if (await LookupRoleByNameAsync() is not { } role) return;
             role.RoleClaims.Add(new RoleClaim { ClaimType = ClaimType, ClaimValue = Permission });
             await _roleManager.UpdateAsync(role);
         }
@@ -42,9 +47,20 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
         [OrchardSwitches("RoleName, Permission")]
         public async Task RemovePermissionFromRoleAsync()
         {
-            if ((Role)await _roleManager.FindByNameAsync(_roleManager.NormalizeKey(RoleName)) is not { } role) return;
+            if (await LookupRoleByNameAsync() is not { } role) return;
             role.RoleClaims.RemoveAll(claim => claim.ClaimType == ClaimType && claim.ClaimValue == Permission);
             await _roleManager.UpdateAsync(role);
+        }
+
+        private async Task<Role> LookupRoleByNameAsync()
+        {
+            if (await _roleManager.FindByNameAsync(_roleManager.NormalizeKey(RoleName)) is Role role)
+            {
+                return role;
+            }
+
+            _logger.LogError("Unable to find role \"{0}\" to add permission \"{1}\" to it.", RoleName, Permission);
+            return null;
         }
     }
 }
