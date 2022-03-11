@@ -57,7 +57,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
                 catch
                 {
                     _logger.LogError(
-                        "Failed to execute the following SQL query:\n{0}\nArguments:\n{1}",
+                        "Failed to execute the following SQL query:\n{Sql}\nArguments:\n{Item}",
                         sql,
                         JsonConvert.SerializeObject(item));
                     throw;

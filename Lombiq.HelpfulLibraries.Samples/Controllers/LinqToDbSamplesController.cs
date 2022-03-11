@@ -25,7 +25,7 @@ namespace Lombiq.HelpfulLibraries.Samples.Controllers
             var result = await _session.LinqQueryAsync(
                 accessor => accessor
                     .GetTable<AutoroutePartIndex>()
-                    .Where(index => index.Path.Contains("a", StringComparison.OrdinalIgnoreCase))
+                    .Where(index => index.Path.Contains('a', StringComparison.OrdinalIgnoreCase))
                     .OrderByDescending(index => index.Path)
                     .ToListAsync(HttpContext.RequestAborted));
 
