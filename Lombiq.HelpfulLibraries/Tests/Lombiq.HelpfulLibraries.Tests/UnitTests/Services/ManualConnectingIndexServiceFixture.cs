@@ -51,12 +51,11 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
             await session.SaveChangesAsync();
         }
 
-        public void Dispose()
-        {
-            Store?.Dispose();
-
-            if (File.Exists(FileName)) File.Delete(FileName);
-        }
+        // We could have a
+        //// if (File.Exists(FileName)) File.Delete(FileName);
+        // here but on .NET 6 despite the disposal the file remains locked. It remaining there after a test execution
+        // doesn't really matter.
+        public void Dispose() => Store?.Dispose();
 
         private async Task CreateDatabaseAsync()
         {
