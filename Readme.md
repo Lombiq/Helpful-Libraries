@@ -2,6 +2,12 @@
 
 
 
+[![Lombiq.HelpfulLibraries NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries?label=Lombiq.HelpfulLibraries)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries/)
+[![Lombiq.HelpfulLibraries.LinqToDb NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.LinqToDb?label=Lombiq.HelpfulLibraries.LinqToDb)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.LinqToDb/)
+[![Lombiq.HelpfulLibraries.RestEase NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.RestEase?label=Lombiq.HelpfulLibraries.RestEase)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.RestEase/)
+[![Lombiq.HelpfulLibraries.Targets NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Targets?label=Lombiq.HelpfulLibraries.Targets)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Targets/)
+
+
 ## About
 
 Various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules.
@@ -26,6 +32,7 @@ The module consists of the following independent libraries (all in their own fea
 - [MVC Libraries](Lombiq.HelpfulLibraries/Docs/MvcLibraries.md)
 - [Navigation](Lombiq.HelpfulLibraries/Docs/Navigation.md)
 - [Resource Management Libraries](Lombiq.HelpfulLibraries/Docs/ResourceManagementLibraries.md)
+- [Settings](Lombiq.HelpfulLibraries/Docs/Settings.md)
 - [User Libraries](Lombiq.HelpfulLibraries/Docs/UserLibraries.md)
 - [Utilities](Lombiq.HelpfulLibraries/Docs/Utilities.md)
 - [RestEase DI helper](Lombiq.HelpfulLibraries.RestEase/Readme.md)

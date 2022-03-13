@@ -4,6 +4,24 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
   </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Targets - Lombiq Helpful Libraries for Orchard Core</Title>
+    <Authors>Lombiq Technologies</Authors>
+    <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
+    <Description>Targets - Lombiq Helpful Libraries for Orchard Core: Targets project which references all Lombiq Helpful Libraries for Orchard Core packages. Use this if you want to reference all packages. See the project website for detailed documentation.</Description>
+    <PackageIcon>NuGetIcon.png</PackageIcon>
+    <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities;linq2db;LinqToDB;RestEase</PackageTags>
+    <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.Targets/Readme.md</PackageProjectUrl>
+    <PackageLicenseFile>License.md</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="License.md" Pack="true" PackagePath="" />
+    <None Include="Readme.md" />
+    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
   
   <ItemGroup>
     <ProjectReference Include="../Lombiq.HelpfulLibraries/Lombiq.HelpfulLibraries.csproj" PrivateAssets="none" />
