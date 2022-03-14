@@ -129,7 +129,7 @@ namespace System.Collections.Generic
             foreach (var item in collection ?? Array.Empty<TIn>())
             {
                 var converted = select(item);
-                if (where?.Invoke(converted) ?? !(converted is null)) yield return converted;
+                if (where?.Invoke(converted) ?? converted is not null) yield return converted;
             }
         }
 

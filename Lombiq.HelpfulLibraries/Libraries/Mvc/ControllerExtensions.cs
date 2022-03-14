@@ -57,7 +57,7 @@ namespace Microsoft.AspNetCore.Mvc
                         .CreateLogger(controller.GetType());
                     logger.LogError(
                         exception,
-                        "An error has occurred while generating a JSON result. (Request Route Values: {0})",
+                        "An error has occurred while generating a JSON result. (Request Route Values: {RouteValues})",
                         JsonConvert.SerializeObject(context.Request.RouteValues));
                 }
 
