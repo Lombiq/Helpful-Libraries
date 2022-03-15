@@ -90,6 +90,23 @@ namespace System.Collections.Generic
             !await AwaitUntilAsync(source, predicate);
 
         /// <summary>
+        /// Filters the given list by an asynchronous condition.
+        /// </summary>
+        /// <returns>Filtered list.</returns>
+        public static async Task<IList<TItem>> WhereAsync<TItem>(
+            this IEnumerable<TItem> source,
+            Func<TItem, Task<bool>> asyncWhereOperation)
+        {
+            var results = new List<TItem>();
+            foreach (var item in source)
+            {
+                if (await asyncWhereOperation(item)) results.Add(item);
+            }
+
+            return results;
+        }
+
+        /// <summary>
         /// Attempts to cast <paramref name="collection"/> into <see cref="List{T}"/>. If that's not possible then
         /// converts it into one. Not to be confused with <see cref="Enumerable.ToList{TSource}"/> that always creates a
         /// separate <see cref="List{T}"/> regardless of source type. This extension is more suitable when the <paramref
