@@ -28,10 +28,10 @@ namespace System.Security.Cryptography
             while (true)
             {
                 randomNumberGenerator.GetBytes(uint32Buffer);
-                uint rand = BitConverter.ToUInt32(uint32Buffer, 0);
+                var rand = BitConverter.ToUInt32(uint32Buffer, 0);
 
                 const long max = 1 + (long)uint.MaxValue;
-                long remainder = max % diff;
+                var remainder = max % diff;
                 if (rand < max - remainder)
                 {
                     return (int)(minValue + (rand % diff));
