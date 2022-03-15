@@ -22,7 +22,7 @@ namespace System.Security.Cryptography
             if (minValue > maxValue) throw new ArgumentOutOfRangeException(nameof(minValue));
             if (minValue == maxValue) return minValue;
 
-            long diff = maxValue - minValue;
+            var diff = (long)maxValue - minValue;
             var uint32Buffer = new byte[4];
 
             while (true)
