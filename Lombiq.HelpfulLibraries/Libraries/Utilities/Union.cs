@@ -17,9 +17,11 @@ public class Union<T1, T2>
     }
 
     public object Either() => LeftIsSet ? Left : Right;
+
     public (T1 Left, T2 Right) ToTuple() => (Left, Right);
 
     public static implicit operator Union<T1, T2>(T1 left) => new(left, default, leftIsSet: true);
+
     public static implicit operator Union<T1, T2>(T2 right) => new(default, right, leftIsSet: false);
 }
 
