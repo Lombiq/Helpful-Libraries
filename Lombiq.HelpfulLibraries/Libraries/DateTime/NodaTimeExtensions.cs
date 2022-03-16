@@ -1,14 +1,13 @@
 using System;
 using System.Globalization;
 
-namespace NodaTime
+namespace NodaTime;
+
+public static class NodaTimeExtensions
 {
-    public static class NodaTimeExtensions
-    {
-        /// <summary>
-        /// Does the same as <see cref="DateTime.ToShortDateString"/> except for <see cref="LocalDate"/>.
-        /// </summary>
-        public static string ToShortDateString(this LocalDate localDate) =>
-            localDate.ToString("d", CultureInfo.InvariantCulture);
-    }
+    /// <summary>
+    /// Does the same as <see cref="DateTime.ToShortDateString"/> except for <see cref="LocalDate"/>.
+    /// </summary>
+    public static string ToShortDateString(this LocalDate localDate) =>
+        localDate.ToString("d", CultureInfo.InvariantCulture);
 }

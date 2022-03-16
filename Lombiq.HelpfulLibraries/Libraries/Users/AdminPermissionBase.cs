@@ -2,26 +2,25 @@ using OrchardCore.Security.Permissions;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Lombiq.HelpfulLibraries.Libraries.Users
+namespace Lombiq.HelpfulLibraries.Libraries.Users;
+
+/// <summary>
+/// A provider that only has <c>Administrator</c> stereotype permissions. Reduces boilerplate.
+/// </summary>
+public abstract class AdminPermissionBase : IPermissionProvider
 {
-    /// <summary>
-    /// A provider that only has <c>Administrator</c> stereotype permissions. Reduces boilerplate.
-    /// </summary>
-    public abstract class AdminPermissionBase : IPermissionProvider
-    {
-        protected abstract IEnumerable<Permission> AdminPermissions { get; }
+    protected abstract IEnumerable<Permission> AdminPermissions { get; }
 
-        public Task<IEnumerable<Permission>> GetPermissionsAsync() =>
-            Task.FromResult(AdminPermissions);
+    public Task<IEnumerable<Permission>> GetPermissionsAsync() =>
+        Task.FromResult(AdminPermissions);
 
-        public IEnumerable<PermissionStereotype> GetDefaultStereotypes() =>
-            new[]
+    public IEnumerable<PermissionStereotype> GetDefaultStereotypes() =>
+        new[]
+        {
+            new PermissionStereotype
             {
-                new PermissionStereotype
-                {
-                    Name = "Administrator",
-                    Permissions = AdminPermissions,
-                },
-            };
-    }
+                Name = "Administrator",
+                Permissions = AdminPermissions,
+            },
+        };
 }

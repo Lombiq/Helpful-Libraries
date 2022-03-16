@@ -15,103 +15,102 @@ using YesSql;
 using YesSql.Provider.Sqlite;
 using YesSql.Sql;
 
-namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services
+namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Services;
+
+public sealed class ManualConnectingIndexServiceFixture : IDisposable
 {
-    public sealed class ManualConnectingIndexServiceFixture : IDisposable
+    private const string NamePrefix = ManualConnectingIndexServiceTests.NamePrefix;
+    private const string FileName = nameof(ManualConnectingIndexServiceTests) + ".db";
+
+    private readonly IConfiguration _configuration;
+
+    public IReadOnlyList<TestDocument> Documents { get; }
+    public IStore Store { get; set; }
+
+    public ManualConnectingIndexServiceFixture()
     {
-        private const string NamePrefix = ManualConnectingIndexServiceTests.NamePrefix;
-        private const string FileName = nameof(ManualConnectingIndexServiceTests) + ".db";
+        _configuration = new Configuration()
+            .UseSqLite($"Data Source={FileName};Cache=Shared", IsolationLevel.ReadUncommitted)
+            .UseDefaultIdGenerator();
 
-        private readonly IConfiguration _configuration;
+        Documents = Enumerable
+            .Range(0, 10)
+            .Select(n => new TestDocument { Name = NamePrefix + n.ToTechnicalString() })
+            .ToArray();
 
-        public IReadOnlyList<TestDocument> Documents { get; }
-        public IStore Store { get; set; }
+        if (File.Exists(FileName)) File.Delete(FileName);
+        CreateDatabaseAsync().Wait();
+    }
 
-        public ManualConnectingIndexServiceFixture()
+    public async Task SessionAsync(Func<ISession, Task> action)
+    {
+        if (Store == null) await CreateDatabaseAsync();
+
+        await using var session = Store.CreateSession();
+        await action(session);
+        await session.SaveChangesAsync();
+    }
+
+    // We could have a
+    //// if (File.Exists(FileName)) File.Delete(FileName);
+    // here but on .NET 6 the file remains locked despite the disposal. It doesn't really matter if it remains there
+    // after a test execution.
+    public void Dispose() => Store?.Dispose();
+
+    private async Task CreateDatabaseAsync()
+    {
+        Store = (Store)await StoreFactory.CreateAndInitializeAsync(_configuration);
+        var dbAccessorMock = new Mock<IDbConnectionAccessor>();
+        dbAccessorMock.Setup(x => x.CreateConnection())
+            .Returns(() => _configuration.ConnectionFactory.CreateConnection());
+        var dbAccessor = dbAccessorMock.Object;
+
+        await using (var connection = dbAccessor.CreateConnection())
         {
-            _configuration = new Configuration()
-                .UseSqLite($"Data Source={FileName};Cache=Shared", IsolationLevel.ReadUncommitted)
-                .UseDefaultIdGenerator();
-
-            Documents = Enumerable
-                .Range(0, 10)
-                .Select(n => new TestDocument { Name = NamePrefix + n.ToTechnicalString() })
-                .ToArray();
-
-            if (File.Exists(FileName)) File.Delete(FileName);
-            CreateDatabaseAsync().Wait();
-        }
-
-        public async Task SessionAsync(Func<ISession, Task> action)
-        {
-            if (Store == null) await CreateDatabaseAsync();
-
-            await using var session = Store.CreateSession();
-            await action(session);
-            await session.SaveChangesAsync();
-        }
-
-        // We could have a
-        //// if (File.Exists(FileName)) File.Delete(FileName);
-        // here but on .NET 6 the file remains locked despite the disposal. It doesn't really matter if it remains there
-        // after a test execution.
-        public void Dispose() => Store?.Dispose();
-
-        private async Task CreateDatabaseAsync()
-        {
-            Store = (Store)await StoreFactory.CreateAndInitializeAsync(_configuration);
-            var dbAccessorMock = new Mock<IDbConnectionAccessor>();
-            dbAccessorMock.Setup(x => x.CreateConnection())
-                .Returns(() => _configuration.ConnectionFactory.CreateConnection());
-            var dbAccessor = dbAccessorMock.Object;
-
-            await using (var connection = dbAccessor.CreateConnection())
+            await connection.OpenAsync();
+            await using (var transaction = await connection.BeginTransactionAsync())
             {
-                await connection.OpenAsync();
-                await using (var transaction = await connection.BeginTransactionAsync())
+                var schemaBuilder = new SchemaBuilder(_configuration, transaction);
+
+                if (transaction.Connection.Query<string>(
+                        $"SELECT name FROM sqlite_master WHERE type='table' AND name='{nameof(TestDocumentIndex)}';")
+                    .FirstOrDefault() != null)
                 {
-                    var schemaBuilder = new SchemaBuilder(_configuration, transaction);
-
-                    if (transaction.Connection.Query<string>(
-                            $"SELECT name FROM sqlite_master WHERE type='table' AND name='{nameof(TestDocumentIndex)}';")
-                        .FirstOrDefault() != null)
-                    {
-                        schemaBuilder.DropTable(nameof(TestDocumentIndex));
-                    }
-
-                    schemaBuilder.CreateMapIndexTable<TestDocumentIndex>(
-                        table => table.Column<int>(nameof(TestDocumentIndex.Number)));
-                    await transaction.CommitAsync();
+                    schemaBuilder.DropTable(nameof(TestDocumentIndex));
                 }
 
-                await connection.CloseAsync();
+                schemaBuilder.CreateMapIndexTable<TestDocumentIndex>(
+                    table => table.Column<int>(nameof(TestDocumentIndex.Number)));
+                await transaction.CommitAsync();
             }
 
-            await SessionAsync(session =>
-            {
-                foreach (var document in Documents) session.Save(document);
-                return Task.CompletedTask;
-            });
-
-            var manualConnectingIndexService = new ManualConnectingIndexService<TestDocumentIndex>(
-                dbAccessor,
-                new NullLogger<ManualConnectingIndexService<TestDocumentIndex>>());
-            for (var i = 0; i < Documents.Count; i++)
-            {
-                if (i == 3) continue;
-
-                var index = new TestDocumentIndex
-                {
-                    Number = int.Parse(
-                        Documents[i].Name.Replace(NamePrefix, string.Empty, StringComparison.InvariantCulture),
-                        CultureInfo.InvariantCulture),
-                };
-
-                await SessionAsync(session => manualConnectingIndexService.AddAsync(index, session, i + 1));
-            }
-
-            await SessionAsync(session =>
-                manualConnectingIndexService.RemoveAsync(nameof(TestDocumentIndex.Number), 6, session));
+            await connection.CloseAsync();
         }
+
+        await SessionAsync(session =>
+        {
+            foreach (var document in Documents) session.Save(document);
+            return Task.CompletedTask;
+        });
+
+        var manualConnectingIndexService = new ManualConnectingIndexService<TestDocumentIndex>(
+            dbAccessor,
+            new NullLogger<ManualConnectingIndexService<TestDocumentIndex>>());
+        for (var i = 0; i < Documents.Count; i++)
+        {
+            if (i == 3) continue;
+
+            var index = new TestDocumentIndex
+            {
+                Number = int.Parse(
+                    Documents[i].Name.Replace(NamePrefix, string.Empty, StringComparison.InvariantCulture),
+                    CultureInfo.InvariantCulture),
+            };
+
+            await SessionAsync(session => manualConnectingIndexService.AddAsync(index, session, i + 1));
+        }
+
+        await SessionAsync(session =>
+            manualConnectingIndexService.RemoveAsync(nameof(TestDocumentIndex.Number), 6, session));
     }
 }
