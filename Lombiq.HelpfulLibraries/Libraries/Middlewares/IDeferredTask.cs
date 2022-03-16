@@ -19,9 +19,9 @@ public interface IDeferredTask
     Task PreProcessAsync(HttpContext context) => Task.CompletedTask;
 
     /// <summary>
-    /// A task executed on the return edge of the middleware pipeline. It is guaranteed that all filters have
-    /// concluded at this point. Most middlewares too, as they typically only do work before passing to the next
-    /// element of the pipeline.
+    /// A task executed on the return edge of the middleware pipeline. It is guaranteed that all filters have concluded
+    /// at this point. Most middlewares too, as they typically only do work before passing to the next element of the
+    /// pipeline.
     /// </summary>
     Task PostProcessAsync(HttpContext context);
 }

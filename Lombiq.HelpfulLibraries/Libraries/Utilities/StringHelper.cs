@@ -10,7 +10,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Utilities;
 public static class StringHelper
 {
     /// <summary>
-    /// Converts <see cref="FormattableString"/> instances into <see cref="CultureInfo.InvariantCulture"/> <see
+    /// Converts <see cref="FormattableString"/> instances into <see cref="CultureInfo.InvariantCulture"/><see
     /// langword="string"/> and then concatenates them.
     /// </summary>
     /// <param name="formattableStrings">You can pass interpolated strings here directly.</param>
@@ -18,7 +18,7 @@ public static class StringHelper
         Join(string.Empty, formattableStrings);
 
     /// <summary>
-    /// Converts <see cref="FormattableString"/> instances into <see cref="CultureInfo.InvariantCulture"/> <see
+    /// Converts <see cref="FormattableString"/> instances into <see cref="CultureInfo.InvariantCulture"/><see
     /// langword="string"/> and then joins them together with <paramref name="separator"/> between them.
     /// </summary>
     /// <param name="separator">The text to insert between the instances.</param>
@@ -30,7 +30,7 @@ public static class StringHelper
 
     /// <summary>
     /// Converts <see cref="IConvertible"/> instances (this includes most primitive types) into <see
-    /// cref="CultureInfo.InvariantCulture"/> <see langword="string"/> and then concatenates them.
+    /// cref="CultureInfo.InvariantCulture"/><see langword="string"/> and then concatenates them.
     /// </summary>
     public static string ConcatenateConvertiblesInvariant(params IConvertible[] convertibles) =>
         string.Join(

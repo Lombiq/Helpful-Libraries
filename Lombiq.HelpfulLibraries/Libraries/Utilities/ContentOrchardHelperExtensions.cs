@@ -48,9 +48,7 @@ public static class ContentOrchardHelperExtensions
     /// Runs a getter delegate to get a content item or loads the item currently viewed via Content Preview.
     /// </summary>
     /// <remarks>
-    /// <para>
-    /// This is useful when supporting preview in a decoupled scenario.
-    /// </para>
+    /// <para>This is useful when supporting preview in a decoupled scenario.</para>
     /// </remarks>
     public static Task<ContentItem> GetContentItemOrPreviewAsync(
         this IOrchardHelper orchardHelper,

@@ -27,8 +27,8 @@ public static class ContentDefinitionManagerExtensions
     }
 
     /// <summary>
-    /// Alters the definition of a content part whose technical name is its model's type name. It uses the typed
-    /// wrapper <see cref="ContentPartDefinitionBuilder{TPart}"/> for configuration.
+    /// Alters the definition of a content part whose technical name is its model's type name. It uses the typed wrapper
+    /// <see cref="ContentPartDefinitionBuilder{TPart}"/> for configuration.
     /// </summary>
     public static string AlterPartDefinition<TPart>(
         this IContentDefinitionManager manager,

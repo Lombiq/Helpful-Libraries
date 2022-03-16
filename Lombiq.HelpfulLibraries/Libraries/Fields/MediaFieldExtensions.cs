@@ -9,22 +9,22 @@ namespace Lombiq.HelpfulLibraries.Libraries.Fields;
 public static class MediaFieldExtensions
 {
     /// <summary>
-    /// Returns a collection of tuples from the provided <paramref name="mediaField"/>. Each contains the path from
-    /// <see cref="MediaField.Paths"/> and the matching alt text from <see cref="MediaField.MediaTexts"/> if there
-    /// is any. If there is none, the path is used as the text. This is identical behavior to the <see
-    /// cref="MediaField"/>'s default display.
+    /// Returns a collection of tuples from the provided <paramref name="mediaField"/>. Each contains the path from <see
+    /// cref="MediaField.Paths"/> and the matching alt text from <see cref="MediaField.MediaTexts"/> if there is any. If
+    /// there is none, the path is used as the text. This is identical behavior to the <see cref="MediaField"/>'s
+    /// default display.
     /// </summary>
     public static IEnumerable<(string Path, string Text)> GetPathsAndAltTexts(this MediaField mediaField) =>
         GetPathsAndAltTexts(mediaField, format: "{0}");
 
     /// <summary>
-    /// Returns a collection of tuples from the provided <paramref name="mediaField"/>. Each contains the path from
-    /// <see cref="MediaField.Paths"/> and the matching alt text from <see cref="MediaField.MediaTexts"/> if there
-    /// is any. If there is none or if it's empty a new text is generated using <paramref name="format"/>.
+    /// Returns a collection of tuples from the provided <paramref name="mediaField"/>. Each contains the path from <see
+    /// cref="MediaField.Paths"/> and the matching alt text from <see cref="MediaField.MediaTexts"/> if there is any. If
+    /// there is none or if it's empty a new text is generated using <paramref name="format"/>.
     /// </summary>
     /// <param name="format">
-    /// When the path doesn't have a matching alt text, this string is used as the format template to generate one.
-    /// The first parameter is the path, the second is just the file name.
+    /// When the path doesn't have a matching alt text, this string is used as the format template to generate one. The
+    /// first parameter is the path, the second is just the file name.
     /// </param>
     public static IEnumerable<(string Path, string Text)> GetPathsAndAltTexts(
         this MediaField mediaField,

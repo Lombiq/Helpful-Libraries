@@ -53,8 +53,8 @@ public static class NumberExtensions
     public static string ToTechnicalString(this ulong number) => number.ToString(CultureInfo.InvariantCulture);
 
     /// <summary>
-    /// Returns the result if the <paramref name="number"/> can be parsed to <see cref="int"/>. Returns -1 if the
-    /// parse failed.
+    /// Returns the result if the <paramref name="number"/> can be parsed to <see cref="int"/>. Returns -1 if the parse
+    /// failed.
     /// </summary>
     public static int ToTechnicalInt(this string number) =>
         int.TryParse(number, NumberStyles.Any, CultureInfo.InvariantCulture, out var result) ? result : -1;
@@ -66,8 +66,8 @@ public static class NumberExtensions
     public static int DigitCount(this int number) => (int)Math.Log10(number) + 1;
 
     /// <summary>
-    /// Returns a <see cref="string"/> that right-aligns the digits of the given <see cref="int"/> by padding them
-    /// with zeros on the left, for a specified total length.
+    /// Returns a <see cref="string"/> that right-aligns the digits of the given <see cref="int"/> by padding them with
+    /// zeros on the left, for a specified total length.
     /// </summary>
     /// <param name="length">The total number of digits in the resulting <see cref="string"/>.</param>
     /// <returns>

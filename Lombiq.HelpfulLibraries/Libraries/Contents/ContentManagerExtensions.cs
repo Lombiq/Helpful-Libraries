@@ -48,9 +48,9 @@ public static class ContentManagerExtensions
         .ToDictionary(term => term.ContentItemId, term => term.DisplayText);
 
     /// <summary>
-    /// Returns the <see cref="ContentItem.DisplayText"/> of a specific term identified by its <paramref
-    /// name="termId"/> within a taxonomy identified by its <paramref name="alias"/>. If none are found <see
-    /// langword="null"/> is returned.
+    /// Returns the <see cref="ContentItem.DisplayText"/> of a specific term identified by its <paramref name="termId"/>
+    /// within a taxonomy identified by its <paramref name="alias"/>. If none are found <see langword="null"/> is
+    /// returned.
     /// </summary>
     public static async Task<string> GetTaxonomyTermDisplayTextAsync(
         this IContentManager contentManager,

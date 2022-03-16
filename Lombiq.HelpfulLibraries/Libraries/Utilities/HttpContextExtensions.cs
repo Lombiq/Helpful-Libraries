@@ -50,8 +50,8 @@ public static class HttpContextExtensions
 
     /// <summary>
     /// Returns a relative URL string to a controller action inside an Orchard Core module. Similar to <see
-    /// cref="Action"/>, but it uses a strongly typed lambda <see cref="Expression"/> to select the
-    /// action and populate the query arguments.
+    /// cref="Action"/>, but it uses a strongly typed lambda <see cref="Expression"/> to select the action and populate
+    /// the query arguments.
     /// </summary>
     public static string Action<TController>(
         this HttpContext httpContext,

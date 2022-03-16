@@ -16,16 +16,16 @@ public static class UrlHelperExtensions
         EditContentItemWithTab(helper, tabIdPart: null, contentItemId);
 
     /// <summary>
-    /// Returns a relative URL for the editor action of <paramref name="content"/> with the tab of
-    /// <paramref name="tabIdPart"/> selected.
+    /// Returns a relative URL for the editor action of <paramref name="content"/> with the tab of <paramref
+    /// name="tabIdPart"/> selected.
     /// </summary>
     /// <param name="tabIdPart">The name of the tab as used in the placement info.</param>
     public static string EditContentItemWithTab(this IUrlHelper helper, string tabIdPart, IContent content) =>
         EditContentItemWithTab(helper, tabIdPart, content.ContentItem.ContentItemId);
 
     /// <summary>
-    /// Returns a relative URL for the editor action of <paramref name="contentItemId"/> with the tab of
-    /// <paramref name="tabIdPart"/> selected.
+    /// Returns a relative URL for the editor action of <paramref name="contentItemId"/> with the tab of <paramref
+    /// name="tabIdPart"/> selected.
     /// </summary>
     /// <param name="tabIdPart">The name of the tab as used in the placement info.</param>
     public static string EditContentItemWithTab(this IUrlHelper helper, string tabIdPart, string contentItemId)

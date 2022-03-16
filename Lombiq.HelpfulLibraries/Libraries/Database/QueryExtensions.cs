@@ -9,8 +9,8 @@ namespace YesSql;
 public static class QueryExtensions
 {
     /// <summary>
-    /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and
-    /// count is <see cref="int.MaxValue"/> then the whole query is listed.
+    /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and count
+    /// is <see cref="int.MaxValue"/> then the whole query is listed.
     /// </summary>
     /// <param name="query">The query to paginate.</param>
     /// <param name="pageIndex">Zero-based index of the desired page.</param>
@@ -28,8 +28,8 @@ public static class QueryExtensions
     }
 
     /// <summary>
-    /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and
-    /// count is <see cref="int.MaxValue"/> then the whole query is listed.
+    /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and count
+    /// is <see cref="int.MaxValue"/> then the whole query is listed.
     /// </summary>
     /// <typeparam name="TPart">
     /// The final results are converted into the <see cref="ContentPart"/> of this type.
@@ -38,8 +38,8 @@ public static class QueryExtensions
     /// <param name="pageIndex">Zero-based index of the desired page.</param>
     /// <param name="count">The page size.</param>
     /// <returns>
-    /// The desired page of the resulting <see cref="ContentItem"/>s converted into the desired ContentPart. Those
-    /// that don't have it are discarded.
+    /// The desired page of the resulting <see cref="ContentItem"/>s converted into the desired ContentPart. Those that
+    /// don't have it are discarded.
     /// </returns>
     public static Task<IEnumerable<TPart>> PaginateAsync<TPart>(
         this IQuery<ContentItem> query,
@@ -49,8 +49,8 @@ public static class QueryExtensions
         PaginateAsync(query, pageIndex, count).ContinueWith(t => t.Result.As<TPart>().Where(part => part != null), TaskScheduler.Default);
 
     /// <summary>
-    /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and
-    /// count is <see cref="int.MaxValue"/> then the whole query is listed.
+    /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and count
+    /// is <see cref="int.MaxValue"/> then the whole query is listed.
     /// </summary>
     public static Task<IEnumerable<TIndex>> PaginateAsync<TIndex>(
         this IQueryIndex<TIndex> query,
@@ -80,8 +80,8 @@ public static class QueryExtensions
     /// <param name="query">The query to be ordered.</param>
     /// <param name="sql">The column name or other expression that may be put in the WHERE clause.</param>
     /// <param name="isAscending">
-    /// If <see langword="true"/>, <see cref="IQuery{T,TIndex}.OrderBy(string)"/> or
-    /// <see cref="IQuery{T,TIndex}.ThenBy(string)"/> is used, otherwise their <c>Descending</c> counterparts.
+    /// If <see langword="true"/>, <see cref="IQuery{T,TIndex}.OrderBy(string)"/> or <see
+    /// cref="IQuery{T,TIndex}.ThenBy(string)"/> is used, otherwise their <c>Descending</c> counterparts.
     /// </param>
     /// <param name="isFirstClause">
     /// If <see langword="true"/>, additional sorting expression is added. If <see langword="false"/> the primary

@@ -107,9 +107,9 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
-    /// Attempts to cast <paramref name="collection"/> into <see cref="List{T}"/>. If that's not possible then
-    /// converts it into one. Not to be confused with <see cref="Enumerable.ToList{TSource}"/> that always creates a
-    /// separate <see cref="List{T}"/> regardless of source type. This extension is more suitable when the <paramref
+    /// Attempts to cast <paramref name="collection"/> into <see cref="List{T}"/>. If that's not possible then converts
+    /// it into one. Not to be confused with <see cref="Enumerable.ToList{TSource}"/> that always creates a separate
+    /// <see cref="List{T}"/> regardless of source type. This extension is more suitable when the <paramref
     /// name="collection"/> is expected to be <see cref="List{T}"/> but has to be stored as <see
     /// cref="IEnumerable{T}"/>.
     /// </summary>
@@ -117,9 +117,9 @@ public static class EnumerableExtensions
         collection is IList<T> list ? list : new List<T>(collection);
 
     /// <summary>
-    /// Transforms the specified <paramref name="collection"/> with the <paramref name="select"/> function and
-    /// returns the items that are not null. Or if the <paramref name="where"/> function is given then those that
-    /// return <see langword="true"/> with it.
+    /// Transforms the specified <paramref name="collection"/> with the <paramref name="select"/> function and returns
+    /// the items that are not null. Or if the <paramref name="where"/> function is given then those that return <see
+    /// langword="true"/> with it.
     /// </summary>
     public static IEnumerable<TOut> SelectWhere<TIn, TOut>(
         this IEnumerable<TIn> collection,
@@ -134,8 +134,8 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
-    /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
-    /// later in the enumeration overwrites the earlier one.
+    /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item later in
+    /// the enumeration overwrites the earlier one.
     /// </summary>
     [SuppressMessage(
         "Design",
@@ -152,8 +152,8 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
-    /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item
-    /// later in the enumeration overwrites the earlier one.
+    /// Returns a dictionary created from the <paramref name="collection"/>. If there are key clashes, the item later in
+    /// the enumeration overwrites the earlier one.
     /// </summary>
     [SuppressMessage(
         "Design",
@@ -169,9 +169,9 @@ public static class EnumerableExtensions
     /// </summary>
     /// <remarks>
     /// <para>
-    /// We use <see cref="Enumerable.FirstOrDefault{TSource}(IEnumerable{TSource})"/>
-    /// to improve compatibility. It returning <see langword="default"/> is theoretically impossible, but some DB
-    /// frameworks require the "or default" after grouping.
+    /// We use <see cref="Enumerable.FirstOrDefault{TSource}(IEnumerable{TSource})"/> to improve compatibility. It
+    /// returning <see langword="default"/> is theoretically impossible, but some DB frameworks require the "or default"
+    /// after grouping.
     /// </para>
     /// </remarks>
     public static IEnumerable<TItem> Unique<TItem, TKey>(
@@ -180,8 +180,8 @@ public static class EnumerableExtensions
         collection.GroupBy(keySelector).Select(group => group.FirstOrDefault());
 
     /// <summary>
-    /// Returns the <paramref name="collection"/> without any duplicate items picking the first of each when sorting
-    /// by <paramref name="orderBySelector"/>.
+    /// Returns the <paramref name="collection"/> without any duplicate items picking the first of each when sorting by
+    /// <paramref name="orderBySelector"/>.
     /// </summary>
     public static IEnumerable<TItem> Unique<TItem, TKey, TOrder>(
         this IEnumerable<TItem> collection,
@@ -192,8 +192,8 @@ public static class EnumerableExtensions
             .Select(group => group.OrderBy(orderBySelector).FirstOrDefault());
 
     /// <summary>
-    /// Returns the <paramref name="collection"/> without any duplicate items picking the last of each when sorting
-    /// by <paramref name="orderBySelector"/>.
+    /// Returns the <paramref name="collection"/> without any duplicate items picking the last of each when sorting by
+    /// <paramref name="orderBySelector"/>.
     /// </summary>
     public static IEnumerable<TItem> UniqueDescending<TItem, TKey, TOrder>(
         this IEnumerable<TItem> collection,
@@ -206,9 +206,7 @@ public static class EnumerableExtensions
     /// <summary>
     /// Returns a string that joins the string collection. It excludes null or empty items if there are any.
     /// </summary>
-    /// <returns>
-    /// The concatenated texts if there are any nonempty, otherwise <see langword="null"/>.
-    /// </returns>
+    /// <returns>The concatenated texts if there are any nonempty, otherwise <see langword="null"/>.</returns>
     public static string JoinNotNullOrEmpty(this IEnumerable<string> strings, string separator = ",")
     {
         var filteredStrings = strings?.Where(text => !string.IsNullOrWhiteSpace(text)).ToList();
@@ -223,8 +221,9 @@ public static class EnumerableExtensions
     /// </summary>
     /// <param name="values">The <see cref="string"/> values to join.</param>
     /// <param name="separator">The separator to use between the <paramref name="values"/>, defaults to space.</param>
-    /// <returns>A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/>
-    /// provided.</returns>
+    /// <returns>
+    /// A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/> provided.
+    /// </returns>
     public static string Join(this IEnumerable<string> values, string separator = " ") =>
         string.Join(separator, values ?? Enumerable.Empty<string>());
 
@@ -247,7 +246,7 @@ public static class EnumerableExtensions
         lookup.Select(item => item.Single());
 
     /// <summary>
-    /// A simple conditional enumeration where the items are <see langword="yield"/>ed from the <paramref
+    /// A simple conditional enumeration where the items are <see langword="yield"/> ed from the <paramref
     /// name="collection"/> if the <paramref name="negativePredicate"/> returns <see langword="false"/>.
     /// </summary>
     public static IEnumerable<T> WhereNot<T>(this IEnumerable<T> collection, Func<T, bool> negativePredicate)
@@ -302,8 +301,8 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
-    /// Similar to <see cref="Enumerable.Cast{TResult}"/>, but it checks if the types are correct first, and filters
-    /// out the ones that couldn't be cast. The optional <paramref name="predicate"/> can filter the cast items.
+    /// Similar to <see cref="Enumerable.Cast{TResult}"/>, but it checks if the types are correct first, and filters out
+    /// the ones that couldn't be cast. The optional <paramref name="predicate"/> can filter the cast items.
     /// </summary>
     public static IEnumerable<T> CastWhere<T>(this IEnumerable enumerable, Func<T, bool> predicate = null)
     {
@@ -328,8 +327,8 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
-    /// Returns a copy of <paramref name="rangeCollection"/> without overlapping ranges. It prefers ranges with
-    /// lower starting index and higher length in that order.
+    /// Returns a copy of <paramref name="rangeCollection"/> without overlapping ranges. It prefers ranges with lower
+    /// starting index and higher length in that order.
     /// </summary>
     public static IList<Range> WithoutOverlappingRanges(
         this IEnumerable<Range> rangeCollection,

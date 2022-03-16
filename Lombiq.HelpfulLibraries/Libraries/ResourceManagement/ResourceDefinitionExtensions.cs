@@ -40,8 +40,8 @@ public static class ResourceManifestExtensions
     }
 
     /// <summary>
-    /// Gets all resource dictionaries of a given <paramref name="resoruceType"/> and collapses them into a lookup
-    /// where the key is the resource name and the values are the dependencies.
+    /// Gets all resource dictionaries of a given <paramref name="resoruceType"/> and collapses them into a lookup where
+    /// the key is the resource name and the values are the dependencies.
     /// </summary>
     public static ILookup<string, string> SingleResourceTypeToLookup(
         this IEnumerable<ResourceManifest> resourceManifest,

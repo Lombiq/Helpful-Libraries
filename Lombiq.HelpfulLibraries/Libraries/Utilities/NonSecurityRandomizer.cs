@@ -4,9 +4,9 @@ using System.Diagnostics.CodeAnalysis;
 namespace Lombiq.HelpfulLibraries.Libraries.Utilities;
 
 /// <summary>
-/// A wrapper around <see cref="Random"/> which emphasizes that it is not for any security critical purpose. By
-/// using this class the user acknowledges that, which means manually disabling the
-/// <see href="https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca5394#when-to-suppress-warnings">
+/// A wrapper around <see cref="Random"/> which emphasizes that it is not for any security critical purpose. By using
+/// this class the user acknowledges that, which means manually disabling the <see
+/// href="https://docs.microsoft.com/en-us/dotnet/fundamentals/code-analysis/quality-rules/ca5394#when-to-suppress-warnings">
 /// CA5394</see> warning is no longer necessary.
 /// </summary>
 [SuppressMessage(

@@ -21,13 +21,9 @@ public static class SessionExtensions
     /// cref="SqlParser"/>.
     /// </summary>
     /// <typeparam name="TRow">Type used to map the returned rows to.</typeparam>
-    /// <param name="sql">
-    /// The raw SQL string. Doesn't need to use table prefixes or care about SQL dialects.
-    /// </param>
+    /// <param name="sql">The raw SQL string. Doesn't need to use table prefixes or care about SQL dialects.</param>
     /// <param name="parameters">Input parameters passed to the query.</param>
-    /// <param name="queryExecutor">
-    /// Delegate to execute a query in a custom way, based on the prepared inputs.
-    /// </param>
+    /// <param name="queryExecutor">Delegate to execute a query in a custom way, based on the prepared inputs.</param>
     /// <param name="transaction">If not <see langword="null"/> it must be an open DB transaction.</param>
     /// <returns>The result set of the query, rows mapped to <typeparamref name="TRow"/>.</returns>
     public static async Task<IEnumerable<TRow>> RawQueryAsync<TRow>(
@@ -46,14 +42,18 @@ public static class SessionExtensions
     }
 
     /// <summary>
-    /// Executes a raw SQL string command that doesn't return data in a database-agnostic way by running it
-    /// through Orchard's <see cref="SqlParser"/>.
+    /// Executes a raw SQL string command that doesn't return data in a database-agnostic way by running it through
+    /// Orchard's <see cref="SqlParser"/>.
     /// </summary>
-    /// <param name="getSqlQuery">The function that generates the raw SQL string given the transaction, dialect and prefix.</param>
+    /// <param name="getSqlQuery">
+    /// The function that generates the raw SQL string given the transaction, dialect and prefix.
+    /// </param>
     /// <param name="parameters">Input parameters passed to the query.</param>
     /// <param name="transaction">If not <see langword="null"/> it must be an open DB transaction.</param>
     /// <returns>The number of rows affected.</returns>
-    /// <remarks><para>This uses unparsed SQL because the parser always expects SELECT.</para></remarks>
+    /// <remarks>
+    /// <para>This uses unparsed SQL because the parser always expects SELECT.</para>
+    /// </remarks>
     public static async Task<int> RawExecuteNonQueryAsync(
         this ISession session,
         GetSqlQuery getSqlQuery,
@@ -90,13 +90,13 @@ public static class SessionExtensions
     }
 
     /// <summary>
-    /// Updates the Content value of a <see cref="Document"/> directly in the Document table. It won't alter the
-    /// <see cref="Document"/>'s version and won't execute index providers either. Should be used for maintenance
-    /// purposes only.
+    /// Updates the Content value of a <see cref="Document"/> directly in the Document table. It won't alter the <see
+    /// cref="Document"/>'s version and won't execute index providers either. Should be used for maintenance purposes
+    /// only.
     /// </summary>
     /// <param name="documentId">ID of the <see cref="Document"/> in the Document table.</param>
     /// <param name="entity">Object that needs to be serialized to the Content field of the Document table.</param>
-    /// <returns><see langword="true" /> if the query updated an existing <see cref="Document"/> successfully.</returns>
+    /// <returns><see langword="true"/> if the query updated an existing <see cref="Document"/> successfully.</returns>
     public static async Task<bool> UpdateDocumentDirectlyAsync(this ISession session, int documentId, object entity)
     {
         var transaction = await session.BeginTransactionAsync();

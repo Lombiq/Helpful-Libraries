@@ -3,8 +3,8 @@ using OrchardCore.ContentManagement.Display;
 namespace Lombiq.HelpfulLibraries.Libraries.Contents;
 
 /// <summary>
-/// Values that can be used with <see cref="IContentItemDisplayManager.BuildDisplayAsync"/> or
-/// <see cref="OrchardRazorHelperExtensions.DisplayAsync"/> to safely select the correct display type.
+/// Values that can be used with <see cref="IContentItemDisplayManager.BuildDisplayAsync"/> or <see
+/// cref="OrchardRazorHelperExtensions.DisplayAsync"/> to safely select the correct display type.
 /// </summary>
 public static class CommonContentDisplayTypes
 {

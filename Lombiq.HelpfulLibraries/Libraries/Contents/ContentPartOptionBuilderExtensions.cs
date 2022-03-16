@@ -7,8 +7,8 @@ namespace OrchardCore.ContentManagement;
 public static class ContentPartOptionBuilderExtensions
 {
     /// <summary>
-    /// Adds an <see cref="IIndexProvider"/> to the service collection while maintaining the call chain for the
-    /// content part builder.
+    /// Adds an <see cref="IIndexProvider"/> to the service collection while maintaining the call chain for the content
+    /// part builder.
     /// </summary>
     public static ContentPartOptionBuilder WithIndex<TIndexProvider>(this ContentPartOptionBuilder builder)
         where TIndexProvider : class, IIndexProvider
@@ -18,8 +18,8 @@ public static class ContentPartOptionBuilderExtensions
     }
 
     /// <summary>
-    /// Adds an <see cref="IDataMigration"/> to the service collection while maintaining the call chain for the
-    /// content part builder.
+    /// Adds an <see cref="IDataMigration"/> to the service collection while maintaining the call chain for the content
+    /// part builder.
     /// </summary>
     public static ContentPartOptionBuilder WithMigration<TMigration>(this ContentPartOptionBuilder builder)
         where TMigration : IDataMigration

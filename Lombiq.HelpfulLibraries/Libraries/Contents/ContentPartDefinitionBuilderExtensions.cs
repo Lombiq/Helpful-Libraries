@@ -1,4 +1,4 @@
-﻿using OrchardCore.ContentManagement.Metadata.Settings;
+using OrchardCore.ContentManagement.Metadata.Settings;
 using System;
 using System.Linq.Expressions;
 
@@ -28,10 +28,10 @@ public class ContentPartDefinitionBuilder<TPart>
     }
 
     /// <summary>
-    /// Creates a field by getting the technical name and field type using a lambda expression rather than relying
-    /// on developer provided strings. This improves the coupling between the part and the field. Also sets the
-    /// display name to the field's technical name by default, but if a more natural name is needed it can be
-    /// overwritten in the <paramref name="configuration"/>.
+    /// Creates a field by getting the technical name and field type using a lambda expression rather than relying on
+    /// developer provided strings. This improves the coupling between the part and the field. Also sets the display
+    /// name to the field's technical name by default, but if a more natural name is needed it can be overwritten in the
+    /// <paramref name="configuration"/>.
     /// </summary>
     /// <param name="fieldPropertySelector">The expression which gets the part and returns its field.</param>
     /// <param name="configuration">Any further configuration, can override the automatic settings.</param>

@@ -5,8 +5,8 @@ namespace Microsoft.AspNetCore.Builder;
 public static class ForwardedHeadersApplicationBuilderExtensions
 {
     /// <summary>
-    /// Forwards proxied headers onto the current request with settings suitable for an app behind Cloudflare and
-    /// hosted in an Azure App Service. Call this from the web app's <c>Startup</c> class.
+    /// Forwards proxied headers onto the current request with settings suitable for an app behind Cloudflare and hosted
+    /// in an Azure App Service. Call this from the web app's <c>Startup</c> class.
     /// </summary>
     /// <remarks>
     /// <para>

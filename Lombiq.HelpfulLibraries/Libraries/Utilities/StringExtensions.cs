@@ -139,9 +139,9 @@ public static class StringExtensions
         text.LastIndexOf(value, StringComparison.Ordinal);
 
     /// <summary>
-    /// Returns the first string that's not <see langword="null"/> or empty, starting with <paramref name="text"/>
-    /// and then the items in <paramref name="alternatives"/> sequentially. Finally <see cref="string.Empty"/> if
-    /// none matched the criteria.
+    /// Returns the first string that's not <see langword="null"/> or empty, starting with <paramref name="text"/> and
+    /// then the items in <paramref name="alternatives"/> sequentially. Finally <see cref="string.Empty"/> if none
+    /// matched the criteria.
     /// </summary>
     public static string OrIfEmpty(this string? text, params string?[] alternatives)
     {
@@ -164,8 +164,8 @@ public static class StringExtensions
 
     /// <summary>
     /// Returns the result of <paramref name="alternativeAsync"/> if <paramref name="condition"/> is <see
-    /// langword="true"/>, otherwise returns <paramref name="text"/>. A delegate is used to avoid unnecessary
-    /// expensive async calls.
+    /// langword="true"/>, otherwise returns <paramref name="text"/>. A delegate is used to avoid unnecessary expensive
+    /// async calls.
     /// </summary>
     public static Task<string?> OrIfAsync(
         this string? text,
@@ -194,8 +194,8 @@ public static class StringExtensions
         Regex.IsMatch(input, pattern, options, within ?? TimeSpan.FromSeconds(1));
 
     /// <summary>
-    /// Performs <see cref="Regex.Replace(string, string, string, RegexOptions, TimeSpan)"/> with timeout (default
-    /// is 1s).
+    /// Performs <see cref="Regex.Replace(string, string, string, RegexOptions, TimeSpan)"/> with timeout (default is
+    /// 1s).
     /// </summary>
     public static string RegexReplace(
         this string input,
@@ -218,8 +218,8 @@ public static class StringExtensions
         Regex.Replace(input, pattern, evaluator, options, within ?? TimeSpan.FromSeconds(1));
 
     /// <summary>
-    /// Similar to <see cref="string.IndexOf(string)"/>, but returns every match. The comparison is ordinal via
-    /// simple character equality checks.
+    /// Similar to <see cref="string.IndexOf(string)"/>, but returns every match. The comparison is ordinal via simple
+    /// character equality checks.
     /// </summary>
     public static IEnumerable<int> AllIndexesOf(this string text, string value)
     {
@@ -248,8 +248,8 @@ public static class StringExtensions
     /// cref="StringComparison.Ordinal"/>.
     /// </param>
     /// <returns>
-    /// If <paramref name="separator"/> is found, then (textBefore, firstMatch, textAfter) is returned.  Otherwise
-    /// (<paramref name="text"/>, <see langword="null"/>, <see langword="null"/>).
+    /// If <paramref name="separator"/> is found, then (textBefore, firstMatch, textAfter) is returned. Otherwise (
+    /// <paramref name="text"/>, <see langword="null"/>, <see langword="null"/>).
     /// </returns>
     public static (string? Left, string? Separator, string? Right) PartitionEnd(
         this string? text,
@@ -275,8 +275,8 @@ public static class StringExtensions
     /// cref="StringComparison.Ordinal"/>.
     /// </param>
     /// <returns>
-    /// If <paramref name="separator"/> is found, then (textBefore, lastMatch, textAfter) is returned.  Otherwise
-    /// (<see langword="null"/>, <see langword="null"/>, <paramref name="text"/>).
+    /// If <paramref name="separator"/> is found, then (textBefore, lastMatch, textAfter) is returned. Otherwise ( <see
+    /// langword="null"/>, <see langword="null"/>, <paramref name="text"/>).
     /// </returns>
     public static (string? Left, string? Separator, string? Right) Partition(
         this string? text,

@@ -91,8 +91,8 @@ public static class ContentExtensions
     }
 
     /// <summary>
-    /// Prevents multiple "latest" versions in case somehow two threads edited the same <see cref="ContentItem"/> at
-    /// the same time. For example this is possible if the update was done through XHR.
+    /// Prevents multiple "latest" versions in case somehow two threads edited the same <see cref="ContentItem"/> at the
+    /// same time. For example this is possible if the update was done through XHR.
     /// </summary>
     /// <param name="content">The desired latest version of the content.</param>
     /// <remarks>
@@ -130,8 +130,8 @@ public static class ContentExtensions
     public static string GetAlias(this IContent content) => content.As<AliasPart>()?.Alias;
 
     /// <summary>
-    /// Provides the most essential data for a <see cref="ContentItem"/> enough to identify it in a text format. Can
-    /// be used as a human-readable text representing the <see cref="ContentItem"/> in a log.
+    /// Provides the most essential data for a <see cref="ContentItem"/> enough to identify it in a text format. Can be
+    /// used as a human-readable text representing the <see cref="ContentItem"/> in a log.
     /// </summary>
     /// <returns>Technical text representing a Content Item.</returns>
     public static string ToTechnicalString(this IContent content) =>
@@ -144,8 +144,8 @@ public static class ContentExtensions
     /// </summary>
     /// <returns>
     /// <para>
-    /// The values are resolved in the following order if available. If all of them are <see langword="null"/> then
-    /// <see cref="DateTime.MinValue"/> is returned.
+    /// The values are resolved in the following order if available. If all of them are <see langword="null"/> then <see
+    /// cref="DateTime.MinValue"/> is returned.
     /// </para>
     /// <list type="bullet">
     ///     <item>

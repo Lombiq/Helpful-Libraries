@@ -26,24 +26,24 @@ public interface ICachingUserManager
     Task<User> GetUserByUserIdAsync(string userId, bool forceUpdate = false);
 
     /// <summary>
-    /// Retrieves <see cref="User"/>s from a transient per-request cache by their username or gets them from the
-    /// store if not yet cached.
+    /// Retrieves <see cref="User"/>s from a transient per-request cache by their username or gets them from the store
+    /// if not yet cached.
     /// </summary>
     /// <param name="username">Username of the <see cref="User"/>.</param>
     /// <returns>Potentially cached <see cref="User"/>.</returns>
     Task<User> GetUserByNameAsync(string username, bool forceUpdate = false);
 
     /// <summary>
-    /// Retrieves <see cref="User"/>s from a transient per-request cache by their email or gets them from the store
-    /// if not yet cached.
+    /// Retrieves <see cref="User"/>s from a transient per-request cache by their email or gets them from the store if
+    /// not yet cached.
     /// </summary>
     /// <param name="email">Email of the <see cref="User"/>.</param>
     /// <returns>Potentially cached <see cref="User"/>.</returns>
     Task<User> GetUserByEmailAsync(string email, bool forceUpdate = false);
 
     /// <summary>
-    /// Retrieves an authenticated <see cref="User"/> from a transient per-request cache or gets them from the
-    /// store if not yet cached.
+    /// Retrieves an authenticated <see cref="User"/> from a transient per-request cache or gets them from the store if
+    /// not yet cached.
     /// </summary>
     /// <param name="claimsPrincipal">
     /// <see cref="ClaimsPrincipal"/> representing the authenticated <see cref="User"/>.
@@ -55,8 +55,8 @@ public interface ICachingUserManager
 public static class CachingUserServiceExtensions
 {
     /// <summary>
-    /// Retrieves <see cref="User"/>s from a transient per-request cache by their username or email or gets them
-    /// from the store if not yet cached.
+    /// Retrieves <see cref="User"/>s from a transient per-request cache by their username or email or gets them from
+    /// the store if not yet cached.
     /// </summary>
     /// <param name="nameOrEmail">Username or email of the <see cref="User"/>.</param>
     /// <returns>Potentially cached <see cref="User"/>.</returns>

@@ -13,8 +13,8 @@ public static class RandomNumberGeneratorExtensions
     /// <returns>A cryptographically random number within the specified range.</returns>
     /// <remarks>
     /// <para>
-    /// Taken from
-    /// <see href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2007/september/net-matters-tales-from-the-cryptorandom"/>.
+    /// Taken from <see
+    /// href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2007/september/net-matters-tales-from-the-cryptorandom"/>.
     /// </para>
     /// </remarks>
     public static int Next(this RandomNumberGenerator randomNumberGenerator, int minValue, int maxValue)

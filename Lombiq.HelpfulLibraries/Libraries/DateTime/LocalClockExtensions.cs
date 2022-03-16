@@ -25,8 +25,7 @@ public static class LocalClockExtensions
             () => localClock.ConvertToLocalAsync(ForceUtc(dateTimeUtc)))).DateTime;
 
     /// <summary>
-    /// Converts the given local date to UTC using the given time-zone by temporarily setting it in the HTTP
-    /// context.
+    /// Converts the given local date to UTC using the given time-zone by temporarily setting it in the HTTP context.
     /// </summary>
     /// <param name="dateTimeLocal">Local date.</param>
     /// <param name="timeZoneId">IANA time-zone ID.</param>
@@ -43,10 +42,9 @@ public static class LocalClockExtensions
             () => localClock.ConvertToUtcAsync(dateTimeLocal));
 
     /// <summary>
-    /// Converts a UTC DateTime to local time and formats it to long time format
-    /// The <paramref name="dateTimeUtc"/> must be UTC. If the <see cref="DateTime.Kind"/> is something other than
-    /// <see cref="DateTimeKind.Utc"/> then it will be coerced without any conversion. If you need conversion use
-    /// <see cref="ConvertToUtcAsync"/> first.
+    /// Converts a UTC DateTime to local time and formats it to long time format The <paramref name="dateTimeUtc"/> must
+    /// be UTC. If the <see cref="DateTime.Kind"/> is something other than <see cref="DateTimeKind.Utc"/> then it will
+    /// be coerced without any conversion. If you need conversion use <see cref="ConvertToUtcAsync"/> first.
     /// </summary>
     public static async Task<string> LocalizeAndFormatAsync(
         this ILocalClock localClock,

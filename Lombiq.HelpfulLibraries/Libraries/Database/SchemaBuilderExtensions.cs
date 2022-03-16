@@ -22,8 +22,8 @@ public static class SchemaBuilderExtensions
                 DocumentId));
 
     /// <summary>
-    /// Alters the table with the same name as the typename of <typeparamref name="TTable"/> to add a database index
-    /// for the given columns with a <c>IDX_tableName_columnNames</c> naming scheme.
+    /// Alters the table with the same name as the typename of <typeparamref name="TTable"/> to add a database index for
+    /// the given columns with a <c>IDX_tableName_columnNames</c> naming scheme.
     /// </summary>
     /// <param name="schemaBuilder">The schema builder.</param>
     /// <param name="columnNames">The collection of columns the index should apply to.</param>

@@ -7,8 +7,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class OrchardCoreBuilderExtensions
 {
     /// <summary>
-    /// Adds database shell configuration usage but only if the necessary connection string configuration is
-    /// available.
+    /// Adds database shell configuration usage but only if the necessary connection string configuration is available.
     /// </summary>
     public static OrchardCoreBuilder AddDatabaseShellsConfigurationIfAvailable(
         this OrchardCoreBuilder builder,
@@ -26,8 +25,8 @@ public static class OrchardCoreBuilderExtensions
     /// Configures SMTP settings (<see cref="SmtpSettings"/>) from the configuration provider.
     /// </summary>
     /// <param name="overrideAdminSettings">
-    /// If set to <see langword="true"/> the settings coming from the configuration provider will override the ones
-    /// set up from the admin UI.
+    /// If set to <see langword="true"/> the settings coming from the configuration provider will override the ones set
+    /// up from the admin UI.
     /// </param>
     public static OrchardCoreBuilder ConfigureSmtpSettings(
         this OrchardCoreBuilder builder,

@@ -24,29 +24,25 @@ public interface IManualConnectingIndexService<in T>
     where T : MapIndex
 {
     /// <summary>
-    /// Adds a new entry to the index that refers to the document with the id in <paramref name="setDocumentId"/>.
-    /// If that's <see langword="null"/> then the <see cref="Document"/> of the <paramref name="item"/>.
+    /// Adds a new entry to the index that refers to the document with the id in <paramref name="setDocumentId"/>. If
+    /// that's <see langword="null"/> then the <see cref="Document"/> of the <paramref name="item"/>.
     /// </summary>
     /// <param name="item">The index object to be recorded.</param>
     /// <param name="setDocumentId">
     /// If not <see langword="null"/>, overrides the index that may be in <paramref name="item"/>. It's also more
-    /// convenient than casting it into <see cref="IIndex"/> to use <see cref="IIndex.AddDocument"/> when the index
-    /// is created just on call.
+    /// convenient than casting it into <see cref="IIndex"/> to use <see cref="IIndex.AddDocument"/> when the index is
+    /// created just on call.
     /// </param>
-    /// <param name="session">
-    /// If not null, its connection and transaction is used instead of creating a new one.
-    /// </param>
+    /// <param name="session">If not null, its connection and transaction is used instead of creating a new one.</param>
     Task AddAsync(T item, ISession session, int? setDocumentId = null);
 
     /// <summary>
-    /// Removes one or more existing indices using a standard SQL query where the given column has the given
-    /// <paramref name="value"/>.
+    /// Removes one or more existing indices using a standard SQL query where the given column has the given <paramref
+    /// name="value"/>.
     /// </summary>
     /// <param name="columnName">The name of the column (i.e. the property name) to check.</param>
     /// <param name="value">The value to select for.</param>
-    /// <param name="session">
-    /// If not null, its connection and transaction is used instead of creating a new one.
-    /// </param>
+    /// <param name="session">If not null, its connection and transaction is used instead of creating a new one.</param>
     Task RemoveAsync(string columnName, object value, ISession session);
 }
 

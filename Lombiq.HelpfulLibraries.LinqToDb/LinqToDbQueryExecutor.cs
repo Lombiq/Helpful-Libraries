@@ -47,8 +47,7 @@ public static class LinqToDbQueryExecutor
     /// <returns>The output of the query.</returns>
     /// <remarks>
     /// <para>
-    /// The API uses a function to execute the query so we can handle disposing <see cref="LinqToDbConnection"/>
-    /// too.
+    /// The API uses a function to execute the query so we can handle disposing <see cref="LinqToDbConnection"/> too.
     /// </para>
     /// </remarks>
     public static async Task<TResult> LinqQueryAsync<TResult>(
@@ -57,8 +56,8 @@ public static class LinqToDbQueryExecutor
     {
         var transaction = await session.BeginTransactionAsync();
 
-        // Instantiating a LinqToDB connection object as it is required to start building the query. Note that it
-        // won't create an actual connection with the database.
+        // Instantiating a LinqToDB connection object as it is required to start building the query. Note that it won't
+        // create an actual connection with the database.
         var dataProvider = DataConnection.GetDataProvider(
             GetDatabaseProviderName(session.Store.Configuration.SqlDialect.Name),
             transaction.Connection.ConnectionString);
@@ -74,10 +73,9 @@ public static class LinqToDbQueryExecutor
     private static string GetDatabaseProviderName(string dbName) =>
         dbName switch
         {
-            // Using explicit string instead of LinqToDB.ProviderName.SqlServer because if the
-            // "System.Data.SqlClient" provider will be used it will cause "Could not load type
-            // System.Data.SqlClient.SqlCommandBuilder" exception.
-            // See: https://github.com/linq2db/linq2db/issues/2191#issuecomment-618450439
+            // Using explicit string instead of LinqToDB.ProviderName.SqlServer because if the "System.Data.SqlClient"
+            // provider will be used it will cause "Could not load type System.Data.SqlClient.SqlCommandBuilder"
+            // exception. See: https://github.com/linq2db/linq2db/issues/2191#issuecomment-618450439.
             "SqlServer" => "Microsoft.Data.SqlClient",
             "Sqlite" => ProviderName.SQLite,
             "MySql" => ProviderName.MySql,

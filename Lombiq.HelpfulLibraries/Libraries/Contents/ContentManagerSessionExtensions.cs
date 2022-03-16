@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 namespace OrchardCore.ContentManagement;
 
 /// <summary>
-/// Uses the <see cref="IContentManagerSession"/> scoped cache around any <see cref="ContentItem"/> query done
-/// outside <see cref="IContentManager"/>, e.g. if it is not a joined query on <see cref="ContentItemIndex"/>.
+/// Uses the <see cref="IContentManagerSession"/> scoped cache around any <see cref="ContentItem"/> query done outside
+/// <see cref="IContentManager"/>, e.g. if it is not a joined query on <see cref="ContentItemIndex"/>.
 /// </summary>
 public static class ContentManagerSessionExtensions
 {

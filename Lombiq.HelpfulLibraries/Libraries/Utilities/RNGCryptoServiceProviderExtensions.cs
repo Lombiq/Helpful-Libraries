@@ -2,6 +2,7 @@ namespace System.Security.Cryptography;
 
 // The extension method should follow the naming of the original class.
 #pragma warning disable S101 // Types should be named in PascalCase
+
 public static class RNGCryptoServiceProviderExtensions
 #pragma warning restore S101 // Types should be named in PascalCase
 {
@@ -16,8 +17,8 @@ public static class RNGCryptoServiceProviderExtensions
     /// <returns>A cryptographically random number within the specified range.</returns>
     /// <remarks>
     /// <para>
-    /// Taken from
-    /// <see href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2007/september/net-matters-tales-from-the-cryptorandom"/>.
+    /// Taken from <see
+    /// href="https://docs.microsoft.com/en-us/archive/msdn-magazine/2007/september/net-matters-tales-from-the-cryptorandom"/>.
     /// </para>
     /// </remarks>
     [Obsolete("Since RNGCryptoServiceProvider is obsolete, use the similar extension on RandomNumberGenerator instead.")]

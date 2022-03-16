@@ -20,8 +20,7 @@ public static class ControllerExtensions
     /// <returns>Redirect action result.</returns>
     /// <remarks>
     /// <para>
-    /// Could be part of Orchard but <see href="https://github.com/OrchardCMS/OrchardCore/issues/2830">it
-    /// won't</see>.
+    /// Could be part of Orchard but <see href="https://github.com/OrchardCMS/OrchardCore/issues/2830">it won't</see>.
     /// </para>
     /// </remarks>
     public static RedirectResult RedirectToLocal(this Controller controller, string redirectUrl) =>
@@ -35,9 +34,9 @@ public static class ControllerExtensions
         controller.Redirect(controller.Url.DisplayContentItem(content));
 
     /// <summary>
-    /// Similar to <c>controller.Json(data)</c>, but catches any exception in the <paramref name="dataFactory"/> and
-    /// if one happens returns a JSON with the <c>error</c> property. If run from a local dev machine the
-    /// <c>data</c> property is also filled with the exception string.
+    /// Similar to <c>controller.Json(data)</c>, but catches any exception in the <paramref name="dataFactory"/> and if
+    /// one happens returns a JSON with the <c>error</c> property. If run from a local dev machine the <c>data</c>
+    /// property is also filled with the exception string.
     /// </summary>
     public static async Task<JsonResult> SafeJsonAsync<T>(this Controller controller, Func<Task<T>> dataFactory)
     {

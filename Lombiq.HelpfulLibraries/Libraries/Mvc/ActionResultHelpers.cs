@@ -12,7 +12,9 @@ public static class ActionResultHelpers
     /// <summary>
     /// Compresses the <paramref name="files"/> into a zip archive ready to be served by a controller.
     /// </summary>
-    /// <param name="files">The file collection where key is the zip entry file name and value is the data stream.</param>
+    /// <param name="files">
+    /// The file collection where key is the zip entry file name and value is the data stream.
+    /// </param>
     /// <param name="zipFileName">The filename of the archive, can be with or without the ".zip" at the end.</param>
     public static FileResult ZipFile(IDictionary<string, Stream> files, string zipFileName)
     {
