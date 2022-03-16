@@ -9,6 +9,7 @@ namespace Lombiq.HelpfulLibraries.Tests.Controllers;
 public class RouteTestController : Controller
 {
     public IActionResult Foo() => Content(string.Empty);
+
     public IActionResult Bar() => Content(string.Empty);
 
     [Admin]

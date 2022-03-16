@@ -18,8 +18,8 @@ public class LinqToDbSamplesController : Controller
 
     public LinqToDbSamplesController(ISession session) => _session = session;
 
-    // A simple query on AutoroutePartIndex.
-    // Open this from under /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/SimpleQuery
+    // A simple query on AutoroutePartIndex. Open this from under
+    // /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/SimpleQuery
     public async Task<ActionResult> SimpleQuery()
     {
         var result = await _session.LinqQueryAsync(
@@ -32,8 +32,8 @@ public class LinqToDbSamplesController : Controller
         return Ok(result);
     }
 
-    // A more complex query with an SQL JOIN.
-    // Open this from under /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/JoinQuery
+    // A more complex query with an SQL JOIN. Open this from under
+    // /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/JoinQuery
     public async Task<ActionResult> JoinQuery()
     {
         // This will fetch all items under the "blog/" path. If you used the Blog recipe then these will be all blog
@@ -50,8 +50,8 @@ public class LinqToDbSamplesController : Controller
         return Ok(result);
     }
 
-    // CRUD operations. Or rather, it's CUD but you've seen enough read operations above.
-    // Open this from under /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/Crud
+    // CRUD operations. Or rather, it's CUD but you've seen enough read operations above. Open this from under
+    // /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/Crud
     public async Task<ActionResult> Crud()
     {
         var insertedCount = await _session.LinqTableQueryAsync<BookRecord, int>(table => table
