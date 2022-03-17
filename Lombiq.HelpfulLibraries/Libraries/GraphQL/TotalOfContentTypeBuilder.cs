@@ -8,36 +8,35 @@ using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentManagement.Records;
 using YesSql;
 
-namespace Lombiq.HelpfulLibraries.Libraries.GraphQL
+namespace Lombiq.HelpfulLibraries.Libraries.GraphQL;
+
+/// <summary>
+/// Adds a "totalOfContentType" field to each top level <see cref="ContentItem"/> type node.
+/// </summary>
+public class TotalOfContentTypeBuilder : IContentTypeBuilder
 {
-    /// <summary>
-    /// Adds a "totalOfContentType" field to each top level <see cref="ContentItem"/> type node.
-    /// </summary>
-    public class TotalOfContentTypeBuilder : IContentTypeBuilder
+    private readonly IStringLocalizer<TotalOfContentTypeBuilder> S;
+
+    public TotalOfContentTypeBuilder(IStringLocalizer<TotalOfContentTypeBuilder> stringLocalizer) =>
+        S = stringLocalizer;
+
+    public void Build(FieldType contentQuery, ContentTypeDefinition contentTypeDefinition, ContentItemType contentItemType)
     {
-        private readonly IStringLocalizer<TotalOfContentTypeBuilder> S;
+        var name = contentTypeDefinition.Name;
 
-        public TotalOfContentTypeBuilder(IStringLocalizer<TotalOfContentTypeBuilder> stringLocalizer) =>
-            S = stringLocalizer;
+        var builder = contentItemType.Field<IntGraphType, int>()
+            .Name("totalOfContentType")
+            .Description(S["Gets the total count of all published content items with the type {0}.", name]);
 
-        public void Build(FieldType contentQuery, ContentTypeDefinition contentTypeDefinition, ContentItemType contentItemType)
+        builder.ResolveAsync(async context =>
         {
-            var name = contentTypeDefinition.Name;
-
-            var builder = contentItemType.Field<IntGraphType, int>()
-                .Name("totalOfContentType")
-                .Description(S["Gets the total count of all published content items with the type {0}.", name]);
-
-            builder.ResolveAsync(async context =>
-            {
-                var serviceProvider = context.ResolveServiceProvider();
-                var session = serviceProvider.GetService<ISession>();
-                return await session.QueryIndex<ContentItemIndex>(index =>
-                    index.Published &&
-                    index.Latest &&
-                    index.ContentType == name)
-                    .CountAsync();
-            });
-        }
+            var serviceProvider = context.ResolveServiceProvider();
+            var session = serviceProvider.GetService<ISession>();
+            return await session.QueryIndex<ContentItemIndex>(index =>
+                index.Published &&
+                index.Latest &&
+                index.ContentType == name)
+                .CountAsync();
+        });
     }
 }

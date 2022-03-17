@@ -1,7 +1,6 @@
-namespace Lombiq.HelpfulLibraries.Tests.Models
+namespace Lombiq.HelpfulLibraries.Tests.Models;
+
+public class TestDocument
 {
-    public class TestDocument
-    {
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }
