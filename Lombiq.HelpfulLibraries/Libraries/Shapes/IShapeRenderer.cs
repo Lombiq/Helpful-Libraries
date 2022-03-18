@@ -1,16 +1,15 @@
-﻿using System.Threading.Tasks;
 using OrchardCore.DisplayManagement;
+using System.Threading.Tasks;
 
-namespace Lombiq.HelpfulLibraries.Libraries.Shapes
+namespace Lombiq.HelpfulLibraries.Libraries.Shapes;
+
+/// <summary>
+/// Renders shapes to <c>string</c>.
+/// </summary>
+public interface IShapeRenderer
 {
     /// <summary>
-    /// Renders shapes to <c>string</c>.
+    /// Renders shapes to <see langword="string"/>.
     /// </summary>
-    public interface IShapeRenderer
-    {
-        /// <summary>
-        /// Renders shapes to <see langword="string"/>.
-        /// </summary>
-        Task<string> RenderAsync(IShape shape);
-    }
+    Task<string> RenderAsync(IShape shape);
 }
