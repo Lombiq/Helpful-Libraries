@@ -11,7 +11,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users;
 public class RoleCommands : DefaultCommandHandler
 {
     private readonly RoleManager<IRole> _roleManager;
-        private readonly ILogger<RoleCommands> _logger;
+    private readonly ILogger<RoleCommands> _logger;
 
     [OrchardSwitch]
     public string RoleName { get; set; }
@@ -21,10 +21,10 @@ public class RoleCommands : DefaultCommandHandler
 
     public RoleCommands(RoleManager<IRole> roleManager, IStringLocalizer<RoleCommands> localizer, ILogger<RoleCommands> logger)
         : base(localizer)
-        {
+    {
         _roleManager = roleManager;
-            _logger = logger;
-        }
+        _logger = logger;
+    }
 
     [CommandName("addPermissionToRole")]
     [CommandHelp("addPermissionToRole " +
@@ -59,7 +59,7 @@ public class RoleCommands : DefaultCommandHandler
             return role;
         }
 
-        _logger.LogError("Unable to find role \"{0}\" to add permission \"{1}\" to it.", RoleName, Permission);
+        _logger.LogError("Unable to find role \"{RoleName}\" to add permission \"{Permission}\" to it.", RoleName, Permission);
         return null;
     }
 }
