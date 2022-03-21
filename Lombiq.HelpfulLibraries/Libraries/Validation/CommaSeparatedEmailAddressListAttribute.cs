@@ -1,29 +1,28 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Lombiq.HelpfulLibraries.Libraries.Validation
+namespace Lombiq.HelpfulLibraries.Libraries.Validation;
+
+[AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
+public sealed class CommaSeparatedEmailAddressListAttribute : DataTypeAttribute
 {
-    [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter)]
-    public sealed class CommaSeparatedEmailAddressListAttribute : DataTypeAttribute
+    public CommaSeparatedEmailAddressListAttribute()
+        : base(DataType.Text)
     {
-        public CommaSeparatedEmailAddressListAttribute()
-            : base(DataType.Text)
+    }
+
+    public override bool IsValid(object value)
+    {
+        if (value == null)
         {
+            return true;
         }
 
-        public override bool IsValid(object value)
+        if (value is not string valueAsString)
         {
-            if (value == null)
-            {
-                return true;
-            }
-
-            if (value is not string valueAsString)
-            {
-                return false;
-            }
-
-            return EmailValidationHelpers.IsValidCommaSeparatedEmailAddressList(valueAsString);
+            return false;
         }
+
+        return EmailValidationHelpers.IsValidCommaSeparatedEmailAddressList(valueAsString);
     }
 }

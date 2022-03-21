@@ -3,37 +3,36 @@ using OrchardCore.ResourceManagement;
 using System;
 using System.Collections.Generic;
 
-namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
+namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement;
+
+public class ResourceFilterBuilder
 {
-    public class ResourceFilterBuilder
+    public IList<ResourceFilter> ResourceFilters { get; private set; } = new List<ResourceFilter>();
+
+    public ResourceFilter When(Func<HttpContext, bool> filter)
     {
-        public IList<ResourceFilter> ResourceFilters { get; private set; } = new List<ResourceFilter>();
-
-        public ResourceFilter When(Func<HttpContext, bool> filter)
+        var resourceFilter = new ResourceFilter
         {
-            var resourceFilter = new ResourceFilter
-            {
-                Filter = filter,
-            };
+            Filter = filter,
+        };
 
-            ResourceFilters.Add(resourceFilter);
+        ResourceFilters.Add(resourceFilter);
 
-            return resourceFilter;
-        }
+        return resourceFilter;
+    }
 
-        public ResourceFilter WhenPath(string path) =>
-            When(context => context.Request.Path.Value.EqualsOrdinalIgnoreCase(path));
+    public ResourceFilter WhenPath(string path) =>
+        When(context => context.Request.Path.Value.EqualsOrdinalIgnoreCase(path));
 
-        public ResourceFilter WhenHomePage() => WhenPath("/");
+    public ResourceFilter WhenHomePage() => WhenPath("/");
 
-        public ResourceFilter WhenPathStartsWith(string path) =>
-            When(context => context.Request.Path.Value.StartsWithOrdinalIgnoreCase(path));
+    public ResourceFilter WhenPathStartsWith(string path) =>
+        When(context => context.Request.Path.Value.StartsWithOrdinalIgnoreCase(path));
 
-        public ResourceFilter Always(Action<IResourceManager> execution = null)
-        {
-            var filter = When(_ => true);
-            filter.Execution = execution;
-            return filter;
-        }
+    public ResourceFilter Always(Action<IResourceManager> execution = null)
+    {
+        var filter = When(_ => true);
+        filter.Execution = execution;
+        return filter;
     }
 }

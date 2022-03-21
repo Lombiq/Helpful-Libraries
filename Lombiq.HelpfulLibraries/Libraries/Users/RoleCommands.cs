@@ -6,61 +6,60 @@ using OrchardCore.Security;
 using System.Threading.Tasks;
 using static OrchardCore.Security.Permissions.Permission;
 
-namespace Lombiq.HelpfulLibraries.Libraries.Users
+namespace Lombiq.HelpfulLibraries.Libraries.Users;
+
+public class RoleCommands : DefaultCommandHandler
 {
-    public class RoleCommands : DefaultCommandHandler
-    {
-        private readonly RoleManager<IRole> _roleManager;
+    private readonly RoleManager<IRole> _roleManager;
         private readonly ILogger<RoleCommands> _logger;
 
-        [OrchardSwitch]
-        public string RoleName { get; set; }
+    [OrchardSwitch]
+    public string RoleName { get; set; }
 
-        [OrchardSwitch]
-        public string Permission { get; set; }
+    [OrchardSwitch]
+    public string Permission { get; set; }
 
-        public RoleCommands(RoleManager<IRole> roleManager, IStringLocalizer<RoleCommands> localizer, ILogger<RoleCommands> logger)
-            : base(localizer)
+    public RoleCommands(RoleManager<IRole> roleManager, IStringLocalizer<RoleCommands> localizer, ILogger<RoleCommands> logger)
+        : base(localizer)
         {
-            _roleManager = roleManager;
+        _roleManager = roleManager;
             _logger = logger;
         }
 
-        [CommandName("addPermissionToRole")]
-        [CommandHelp("addPermissionToRole " +
-            "/RoleName:<rolename> " +
-            "/Permission:<permission> " +
-            "\r\n\t" + "Adds the permission to the role")]
-        [OrchardSwitches("RoleName, Permission")]
-        public async Task AddPermissionToRoleAsync()
+    [CommandName("addPermissionToRole")]
+    [CommandHelp("addPermissionToRole " +
+        "/RoleName:<rolename> " +
+        "/Permission:<permission> " +
+        "\r\n\t" + "Adds the permission to the role")]
+    [OrchardSwitches("RoleName, Permission")]
+    public async Task AddPermissionToRoleAsync()
+    {
+        if (await LookupRoleByNameAsync() is not { } role) return;
+        role.RoleClaims.Add(new RoleClaim { ClaimType = ClaimType, ClaimValue = Permission });
+        await _roleManager.UpdateAsync(role);
+    }
+
+    [CommandName("removePermissionFromRole")]
+    [CommandHelp("removePermissionFromRole " +
+                 "/RoleName:<rolename> " +
+                 "/Permission:<permission> " +
+                 "\r\n\t" + "Removes the permission from the role")]
+    [OrchardSwitches("RoleName, Permission")]
+    public async Task RemovePermissionFromRoleAsync()
+    {
+        if (await LookupRoleByNameAsync() is not { } role) return;
+        role.RoleClaims.RemoveAll(claim => claim.ClaimType == ClaimType && claim.ClaimValue == Permission);
+        await _roleManager.UpdateAsync(role);
+    }
+
+    private async Task<Role> LookupRoleByNameAsync()
+    {
+        if (await _roleManager.FindByNameAsync(_roleManager.NormalizeKey(RoleName)) is Role role)
         {
-            if (await LookupRoleByNameAsync() is not { } role) return;
-            role.RoleClaims.Add(new RoleClaim { ClaimType = ClaimType, ClaimValue = Permission });
-            await _roleManager.UpdateAsync(role);
+            return role;
         }
 
-        [CommandName("removePermissionFromRole")]
-        [CommandHelp("removePermissionFromRole " +
-                     "/RoleName:<rolename> " +
-                     "/Permission:<permission> " +
-                     "\r\n\t" + "Removes the permission from the role")]
-        [OrchardSwitches("RoleName, Permission")]
-        public async Task RemovePermissionFromRoleAsync()
-        {
-            if (await LookupRoleByNameAsync() is not { } role) return;
-            role.RoleClaims.RemoveAll(claim => claim.ClaimType == ClaimType && claim.ClaimValue == Permission);
-            await _roleManager.UpdateAsync(role);
-        }
-
-        private async Task<Role> LookupRoleByNameAsync()
-        {
-            if (await _roleManager.FindByNameAsync(_roleManager.NormalizeKey(RoleName)) is Role role)
-            {
-                return role;
-            }
-
-            _logger.LogError("Unable to find role \"{0}\" to add permission \"{1}\" to it.", RoleName, Permission);
-            return null;
-        }
+        _logger.LogError("Unable to find role \"{0}\" to add permission \"{1}\" to it.", RoleName, Permission);
+        return null;
     }
 }

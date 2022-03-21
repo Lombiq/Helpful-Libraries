@@ -12,50 +12,49 @@ using System;
 using System.Diagnostics.CodeAnalysis;
 using ISession = YesSql.ISession;
 
-namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection
-{
-    public class OrchardServices<T> : IOrchardServices<T>
-    {
-        public Lazy<IAuthorizationService> AuthorizationService { get; }
-        public Lazy<IClock> Clock { get; }
-        public Lazy<IContentHandleManager> ContentHandleManager { get; }
-        public Lazy<IContentManager> ContentManager { get; }
-        public Lazy<IHttpContextAccessor> HttpContextAccessor { get; }
-        public Lazy<ILogger<T>> Logger { get; }
-        public Lazy<ISession> Session { get; }
-        public Lazy<ISiteService> SiteService { get; }
-        public Lazy<IStringLocalizer<T>> StringLocalizer { get; }
-        public Lazy<IHtmlLocalizer<T>> HtmlLocalizer { get; }
-        public Lazy<UserManager<IUser>> UserManager { get; }
+namespace Lombiq.HelpfulLibraries.Libraries.DependencyInjection;
 
-        [SuppressMessage(
-            "Major Code Smell",
-            "S107:Methods should not have too many parameters",
-            Justification = "These are the most common Orchard services.")]
-        public OrchardServices(
-            Lazy<IAuthorizationService> authorizationService,
-            Lazy<IClock> clock,
-            Lazy<IContentHandleManager> contentHandleManager,
-            Lazy<IContentManager> contentManager,
-            Lazy<IHttpContextAccessor> httpContextAccessor,
-            Lazy<ILogger<T>> logger,
-            Lazy<ISession> session,
-            Lazy<ISiteService> siteService,
-            Lazy<IStringLocalizer<T>> stringLocalizer,
-            Lazy<IHtmlLocalizer<T>> htmlLocalizer,
-            Lazy<UserManager<IUser>> userManager)
-        {
-            AuthorizationService = authorizationService;
-            Clock = clock;
-            ContentHandleManager = contentHandleManager;
-            ContentManager = contentManager;
-            HttpContextAccessor = httpContextAccessor;
-            Logger = logger;
-            Session = session;
-            SiteService = siteService;
-            StringLocalizer = stringLocalizer;
-            HtmlLocalizer = htmlLocalizer;
-            UserManager = userManager;
-        }
+public class OrchardServices<T> : IOrchardServices<T>
+{
+    public Lazy<IAuthorizationService> AuthorizationService { get; }
+    public Lazy<IClock> Clock { get; }
+    public Lazy<IContentHandleManager> ContentHandleManager { get; }
+    public Lazy<IContentManager> ContentManager { get; }
+    public Lazy<IHttpContextAccessor> HttpContextAccessor { get; }
+    public Lazy<ILogger<T>> Logger { get; }
+    public Lazy<ISession> Session { get; }
+    public Lazy<ISiteService> SiteService { get; }
+    public Lazy<IStringLocalizer<T>> StringLocalizer { get; }
+    public Lazy<IHtmlLocalizer<T>> HtmlLocalizer { get; }
+    public Lazy<UserManager<IUser>> UserManager { get; }
+
+    [SuppressMessage(
+        "Major Code Smell",
+        "S107:Methods should not have too many parameters",
+        Justification = "These are the most common Orchard services.")]
+    public OrchardServices(
+        Lazy<IAuthorizationService> authorizationService,
+        Lazy<IClock> clock,
+        Lazy<IContentHandleManager> contentHandleManager,
+        Lazy<IContentManager> contentManager,
+        Lazy<IHttpContextAccessor> httpContextAccessor,
+        Lazy<ILogger<T>> logger,
+        Lazy<ISession> session,
+        Lazy<ISiteService> siteService,
+        Lazy<IStringLocalizer<T>> stringLocalizer,
+        Lazy<IHtmlLocalizer<T>> htmlLocalizer,
+        Lazy<UserManager<IUser>> userManager)
+    {
+        AuthorizationService = authorizationService;
+        Clock = clock;
+        ContentHandleManager = contentHandleManager;
+        ContentManager = contentManager;
+        HttpContextAccessor = httpContextAccessor;
+        Logger = logger;
+        Session = session;
+        SiteService = siteService;
+        StringLocalizer = stringLocalizer;
+        HtmlLocalizer = htmlLocalizer;
+        UserManager = userManager;
     }
 }

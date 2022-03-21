@@ -1,9 +1,8 @@
 using YesSql.Indexes;
 
-namespace Lombiq.HelpfulLibraries.Tests.Models
+namespace Lombiq.HelpfulLibraries.Tests.Models;
+
+public class TestDocumentIndex : MapIndex
 {
-    public class TestDocumentIndex : MapIndex
-    {
-        public int Number { get; set; }
-    }
+    public int Number { get; set; }
 }
