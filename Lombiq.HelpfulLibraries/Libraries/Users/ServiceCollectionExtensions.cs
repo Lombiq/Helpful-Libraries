@@ -1,10 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
-namespace Lombiq.HelpfulLibraries.Libraries.Users
+namespace Lombiq.HelpfulLibraries.Libraries.Users;
+
+public static class ServiceCollectionExtensions
 {
-    public static class ServiceCollectionExtensions
-    {
-        public static IServiceCollection AddCachingUserServer(this IServiceCollection services) =>
-            services.AddScoped<ICachingUserManager, CachingUserManager>();
-    }
+    public static void AddCachingUserServer(this IServiceCollection services) =>
+        services.TryAddScoped<ICachingUserManager, CachingUserManager>();
 }

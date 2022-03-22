@@ -5,41 +5,40 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement
+namespace Lombiq.HelpfulLibraries.Libraries.ResourceManagement;
+
+public class ResourceFilterMiddleware
 {
-    public class ResourceFilterMiddleware
+    private readonly RequestDelegate _next;
+
+    public ResourceFilterMiddleware(RequestDelegate next) => _next = next;
+
+    public Task InvokeAsync(HttpContext context)
     {
-        private readonly RequestDelegate _next;
+        var resourceFilterProviders = context.RequestServices.GetService<IEnumerable<IResourceFilterProvider>>();
 
-        public ResourceFilterMiddleware(RequestDelegate next) => _next = next;
-
-        public Task InvokeAsync(HttpContext context)
+        if (resourceFilterProviders?.Any() == true)
         {
-            var resourceFilterProviders = context.RequestServices.GetService<IEnumerable<IResourceFilterProvider>>();
+            var builder = new ResourceFilterBuilder();
 
-            if (resourceFilterProviders?.Any() == true)
+            foreach (var provider in resourceFilterProviders)
             {
-                var builder = new ResourceFilterBuilder();
-
-                foreach (var provider in resourceFilterProviders)
-                {
-                    provider.AddResourceFilter(builder);
-                }
-
-                var activeFilters = builder.ResourceFilters.Where(filter => filter.Filter(context));
-
-                if (activeFilters.Any())
-                {
-                    var resourceManager = context.RequestServices.GetService<IResourceManager>();
-
-                    foreach (var filter in activeFilters)
-                    {
-                        filter.Execution(resourceManager);
-                    }
-                }
+                provider.AddResourceFilter(builder);
             }
 
-            return _next(context);
+            var activeFilters = builder.ResourceFilters.Where(filter => filter.Filter(context));
+
+            if (activeFilters.Any())
+            {
+                var resourceManager = context.RequestServices.GetService<IResourceManager>();
+
+                foreach (var filter in activeFilters)
+                {
+                    filter.Execution(resourceManager);
+                }
+            }
         }
+
+        return _next(context);
     }
 }
