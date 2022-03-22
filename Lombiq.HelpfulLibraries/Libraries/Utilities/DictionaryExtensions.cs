@@ -138,23 +138,23 @@ public static class DictionaryExtensions
         {
             dictionary.Add(key, value);
         }
+    }
 
-        /// <summary>
-        /// Adds a new item to the list identified by a key in the dictionary. If the item is already part of the list
-        /// then it won't add it again.
-        /// </summary>
-        /// <param name="key">Key identifying the list in the dictionary.</param>
-        /// <param name="value">Value to add to the list.</param>
-        /// <typeparam name="TKey">Type of the key in the dictionary.</typeparam>
-        /// <typeparam name="TValue">Type of the values in the list in the dictionary.</typeparam>
-        public static void AddToList<TKey, TValue>(
-            this IDictionary<TKey, IEnumerable<TValue>> dictionary,
-            TKey key,
-            TValue value)
-        {
-            var list = dictionary.GetMaybe(key) ?? Enumerable.Empty<TValue>();
-            list = list.Union(new[] { value });
-            dictionary[key] = list;
-        }
+    /// <summary>
+    /// Adds a new item to the list identified by a key in the dictionary. If the item is already part of the list
+    /// then it won't add it again.
+    /// </summary>
+    /// <param name="key">Key identifying the list in the dictionary.</param>
+    /// <param name="value">Value to add to the list.</param>
+    /// <typeparam name="TKey">Type of the key in the dictionary.</typeparam>
+    /// <typeparam name="TValue">Type of the values in the list in the dictionary.</typeparam>
+    public static void AddToList<TKey, TValue>(
+        this IDictionary<TKey, IEnumerable<TValue>> dictionary,
+        TKey key,
+        TValue value)
+    {
+        var list = dictionary.GetMaybe(key) ?? Enumerable.Empty<TValue>();
+        list = list.Union(new[] { value });
+        dictionary[key] = list;
     }
 }
