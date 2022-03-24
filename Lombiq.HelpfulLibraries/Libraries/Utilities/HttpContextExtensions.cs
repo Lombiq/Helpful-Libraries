@@ -6,6 +6,7 @@ using OrchardCore.Environment.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Http;
 
@@ -66,4 +67,14 @@ public static class HttpContextExtensions
             provider);
         return route.ToString(httpContext);
     }
+
+    /// <summary>
+    /// Same as <see cref="Action{TController}"/>, but for <see cref="Task{IActionResult}"/> returning actions.
+    /// </summary>
+    public static string ActionTask<TController>(
+        this HttpContext httpContext,
+        Expression<Func<TController, Task>> taskActionExpression,
+        params (string Key, object Value)[] additionalArguments)
+        where TController : ControllerBase =>
+        httpContext.Action(taskActionExpression.StripResult(), additionalArguments);
 }
