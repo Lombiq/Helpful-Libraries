@@ -72,8 +72,5 @@ public class NoneShapeTableProvider : IShapeTableProvider
         Func<DisplayContext, Task<IHtmlContent>> bindingAsync) =>
         builder
             .Describe(shapeName)
-            .Configure(descriptor =>
-            {
-                descriptor.Bindings[shapeName] = new ShapeBinding { BindingAsync = bindingAsync, };
-            });
+            .Configure(descriptor => descriptor.Bindings[shapeName] = new ShapeBinding { BindingAsync = bindingAsync, });
 }
