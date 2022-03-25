@@ -68,7 +68,7 @@ public static class ContentOrchardHelperExtensions
         return contentItemGetter();
     }
 
-    /// <inheritdoc cref="HttpContextExtensions.Action{TController}"/>
+    /// <inheritdoc cref="ContentHttpContextExtensions.Action{TController}"/>
     public static string Action<TController>(
         this IOrchardHelper orchardHelper,
         Expression<Action<TController>> actionExpression,
@@ -76,7 +76,7 @@ public static class ContentOrchardHelperExtensions
         where TController : ControllerBase =>
         orchardHelper.HttpContext.Action(actionExpression, additionalArguments);
 
-    /// <inheritdoc cref="HttpContextExtensions.Action{TController}"/>
+    /// <inheritdoc cref="ContentHttpContextExtensions.Action{TController}"/>
     public static string Action<TController>(
         this IOrchardHelper orchardHelper,
         Expression<Func<TController, Task>> taskActionExpression,

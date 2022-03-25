@@ -25,6 +25,7 @@
   
   <ItemGroup>
     <ProjectReference Include="../Lombiq.HelpfulLibraries/Lombiq.HelpfulLibraries.csproj" PrivateAssets="none" />
+    <ProjectReference Include="../Lombiq.HelpfulLibraries.AspNetCore/Lombiq.HelpfulLibraries.AspNetCore.csproj" PrivateAssets="none" />
     <ProjectReference Include="../Lombiq.HelpfulLibraries.LinqToDb/Lombiq.HelpfulLibraries.LinqToDb.csproj" PrivateAssets="none" />
     <ProjectReference Include="../Lombiq.HelpfulLibraries.RestEase/Lombiq.HelpfulLibraries.RestEase.csproj" PrivateAssets="none" />
   </ItemGroup>

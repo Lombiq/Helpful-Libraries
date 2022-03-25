@@ -5,7 +5,7 @@ using System.IO;
 using System.IO.Compression;
 using static System.Net.Mime.MediaTypeNames.Application;
 
-namespace Lombiq.HelpfulLibraries.Libraries.Mvc;
+namespace Lombiq.HelpfulLibraries.AspNetCore.Mvc;
 
 public static class ActionResultHelpers
 {
@@ -36,4 +36,7 @@ public static class ActionResultHelpers
         if (!zipFileName.EndsWithOrdinalIgnoreCase(".zip")) zipFileName += ".zip";
         return new FileContentResult(compressedBytes, Zip) { FileDownloadName = zipFileName };
     }
+
+    private static bool EndsWithOrdinalIgnoreCase(this string text, string value) =>
+        text.EndsWith(value, StringComparison.OrdinalIgnoreCase);
 }

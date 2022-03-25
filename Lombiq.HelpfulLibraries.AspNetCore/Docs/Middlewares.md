@@ -1,4 +1,4 @@
-# Middlewares Documentation
+# Lombiq Helpful Libraries - ASP.NET Core Libraries - Middlewares for Orchard Core
 
 
 Contains ASP.NET Core middlewares and middleware-related services. 
@@ -10,6 +10,3 @@ Implement the `IDeferredTask` interface if you want to create a service that exe
 Also use the `app.UseDeferredTasks()` extension method to enable the necessary `DeferredTaskMiddleware`. You only have to do that once.
 
 Note that deferred tasks won't execute on calls that aren't part of the middleware pipeline, such as deployment and setup tasks in Orchard Core. You can use the `IDeferredTask.IsScheduled` property to check if you can expect the deferred task to execute in the current scope. 
-
-
-Please see the inline documentation of each type or extension method to learn more.

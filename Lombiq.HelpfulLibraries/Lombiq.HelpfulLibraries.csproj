@@ -48,4 +48,8 @@
     <PackageReference Include="YesSql.Abstractions" Version="3.0.12" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.AspNetCore\Lombiq.HelpfulLibraries.AspNetCore.csproj" />
+  </ItemGroup>
+
 </Project>
