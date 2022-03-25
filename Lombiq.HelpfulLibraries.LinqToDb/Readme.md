@@ -1,4 +1,4 @@
-# LINQ to DB - Lombiq Helpful Libraries for Orchard Core
+# Lombiq Helpful Libraries - LINQ to DB for Orchard Core
 
 
 

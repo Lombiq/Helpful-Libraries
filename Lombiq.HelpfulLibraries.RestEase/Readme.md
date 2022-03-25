@@ -1,4 +1,4 @@
-# RestEase dependency injection helper - Lombiq Helpful Libraries for Orchard Core
+# Lombiq Helpful Libraries - RestEase dependency injection helper for Orchard Core
 
 
 

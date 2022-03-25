@@ -6,10 +6,10 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <Title>LINQ to DB - Lombiq Helpful Libraries for Orchard Core</Title>
+    <Title>Lombiq Helpful Libraries - LINQ to DB for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-    <Description>LINQ to DB - Lombiq Helpful Libraries for Orchard Core: With the help of this project you can write LINQ expressions and run them with a YesSql ISession extension method to query from the DB instead of writing plain SQL queries. Uses the LINQ to DB project. See the project website for detailed documentation.</Description>
+    <Description>Lombiq Helpful Libraries - LINQ to DB for Orchard Core: With the help of this project you can write LINQ expressions and run them with a YesSql ISession extension method to query from the DB instead of writing plain SQL queries. Uses the LINQ to DB project. See the project website for detailed documentation.</Description>
     <PackageTags>OrchardCore;Lombiq;YesSql;linq2db;LinqToDB</PackageTags>
     <PackageIcon>NuGetIcon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
