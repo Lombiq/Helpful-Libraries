@@ -1,4 +1,5 @@
 using OrchardCore.DisplayManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -16,12 +17,26 @@ public static class ShapeExtensions
         var result = new T();
 
         var shapeProperties = shape.GetType().GetProperties().ToDictionary(property => property.Name);
-        foreach (var property in typeof(T).GetProperties())
+        foreach (var property in typeof(T).GetProperties().Where(property => property.CanWrite))
         {
-            if ((shape.Properties.GetMaybe(property.Name) ?? shapeProperties.GetMaybe(property.Name)?.GetValue(shape)) is { } value)
+            if ((shape.Properties.GetMaybe(property.Name) ?? shapeProperties.GetMaybe(property.Name)?.GetValue(shape))
+                is not { } value)
             {
-                property.SetValue(result, value);
+                continue;
             }
+
+            if (!property.PropertyType.IsInstanceOfType(value))
+            {
+                value = property.PropertyType == typeof(string)
+                    ? value.ToString()
+                    : throw new ArgumentException(
+                        $"Type mismatch while attempting to convert the shape into \"{typeof(T).FullName}\". The " +
+                        $"property \"{property.Name}\" expects type \"{property.PropertyType.FullName}\", but the " +
+                        $"received value is \"{value.GetType().FullName}\".",
+                        nameof(shape));
+            }
+
+            property.SetValue(result, value);
         }
 
         return result;
