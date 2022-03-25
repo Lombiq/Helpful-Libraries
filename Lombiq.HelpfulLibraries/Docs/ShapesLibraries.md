@@ -9,4 +9,5 @@
 ## Extensions
 
 - `ServiceCollectionExtensions`: The `AddShapeRenderer` method adds the `ShapeRenderer` to the service collection.
-- `ShapeExtensions`: The `shape.As<T>()` method converts the into the provided type (basically duck typing) so you can restore the type you used e.g. in the driver.
+- `ShapeExtensions`: The `shape.As<T>()` method converts the shape into the provided type (basically duck typing) so you can restore the type you used e.g. in the driver.
+
