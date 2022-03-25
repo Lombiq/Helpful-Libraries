@@ -10,4 +10,4 @@ Adds extension methods to `HttpContext` objects that can be used to fetch locali
 
 Adds extension methods to `LocalizedHtmlString` objects to make view localization more convenient. 
 
-Please see the inline documentation of each piece of the API to learn more..
+Please see the inline documentation of each piece of the API to learn more.

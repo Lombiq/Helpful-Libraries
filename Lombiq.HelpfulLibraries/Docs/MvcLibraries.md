@@ -1,7 +1,7 @@
 # MVC Libraries Documentation
 
 
-Please see the inline documentation of each piece of the API to learn more..
+Please see the inline documentation of each piece of the API to learn more.
 
 ## `Controller` extensions
 

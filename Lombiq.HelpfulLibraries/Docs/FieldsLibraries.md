@@ -13,4 +13,4 @@ Extensions and services working with or related to Orchard Core's `ContentField`
 - `NoneShapeTableProvider`: A shape table provider that adds a "None" option to every field's display and editor. This renders an empty shape. 
 
 
-Please see the inline documentation of each piece of the API to learn more..
+Please see the inline documentation of each piece of the API to learn more.
