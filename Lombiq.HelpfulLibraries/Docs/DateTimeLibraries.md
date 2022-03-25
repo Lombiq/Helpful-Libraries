@@ -16,4 +16,4 @@ You can get the unix timestamp of the current time using the `GetUnixTimeMillise
 
 Makes it possible to set or get IANA time-zone IDs in the HTTP context.
 
-Please see the inline documentation of each extension methods learn more.
+Please see the inline documentation of each piece of the API to learn more..
