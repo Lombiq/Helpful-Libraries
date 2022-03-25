@@ -70,7 +70,6 @@ public static class HttpContextExtensions
 
     /// <summary>
     /// Same as <see cref="Action{TController}"/>, but for actions returning a <see cref="Task{IActionResult}"/>.
-
     /// </summary>
     public static string ActionTask<TController>(
         this HttpContext httpContext,
