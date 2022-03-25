@@ -2,7 +2,7 @@
 
 
 
-[![Lombiq.HelpfulLibraries NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries?label=Lombiq.HelpfulLibraries)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries/)
+[![Lombiq.HelpfulLibraries.AspNetCore NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.AspNetCore?label=Lombiq.HelpfulLibraries.AspNetCore)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.AspNetCore/)
 [![Lombiq.HelpfulLibraries.LinqToDb NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.LinqToDb?label=Lombiq.HelpfulLibraries.LinqToDb)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.LinqToDb/)
 [![Lombiq.HelpfulLibraries.RestEase NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.RestEase?label=Lombiq.HelpfulLibraries.RestEase)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.RestEase/)
 [![Lombiq.HelpfulLibraries.Targets NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Targets?label=Lombiq.HelpfulLibraries.Targets)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Targets/)
