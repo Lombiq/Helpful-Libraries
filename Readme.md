@@ -19,7 +19,7 @@ Note that this project has an Orchard 1 version in the [dev-orchard-1 branch](ht
 
 ## Documentation
 
-Helpful Libraries consists of the following independent libraries (all in their own projects/packages):
+Helpful Libraries consists of the following independent libraries (all in their own projects/packages). Use the one specific to your use-case, or all at once by depending on `Lombiq.HelpfulLibraries`.
 
 - [ASP.NET Core Libraries](Lombiq.HelpfulLibraries.AspNetCore/Readme.md)
 
