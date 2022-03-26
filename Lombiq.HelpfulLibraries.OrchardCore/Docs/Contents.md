@@ -5,6 +5,7 @@
 ## Constants
 
 - `CommonContentDisplayTypes`: Has constants for values that can be used with `IContentItemDisplayManager.BuildDisplayAsync` or `OrchardRazorHelperExtensions.DisplayAsync` to safely select the correct display type.
+- `CommonStereotypes`: Constants for commonly used content stereotypes.
 
 
 ## Extensions
