@@ -14,7 +14,7 @@ To use it, override the `AdminPermissions` read-only abstract property with a co
 
 ## `ICachingUserManager`
 
-Retrieves `User`s from a transient per-request cache or gets them from the store if not yet cached. This is an abstraction over the `UserManager<IUser>` using its methods to retrieve the `User` from the database but caches them after the first time. Can improve performance if the `User` is retrieved multiple times per request.
+Retrieves `User`s from a non-persistent, per-request cache or gets them from the store if not yet cached. This is an abstraction over the `UserManager<IUser>` using its methods to retrieve the `User` from the database but caches them after the first time. Can improve performance if the `User` is retrieved multiple times per request.
 
 ## `RoleCommands`
 
