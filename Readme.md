@@ -6,6 +6,7 @@
 [![Lombiq.HelpfulLibraries.Common NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Common?label=Lombiq.HelpfulLibraries.Common)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Common/)
 [![Lombiq.HelpfulLibraries.LinqToDb NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.LinqToDb?label=Lombiq.HelpfulLibraries.LinqToDb)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.LinqToDb/)
 [![Lombiq.HelpfulLibraries.OrchardCore NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.OrchardCore?label=Lombiq.HelpfulLibraries.OrchardCore)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.OrchardCore/)
+[![Lombiq.HelpfulLibraries.OrchardCore.Testing NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.OrchardCore.Testing?label=Lombiq.HelpfulLibraries.OrchardCore.Testing)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.OrchardCore.Testing/)
 [![Lombiq.HelpfulLibraries.RestEase NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.RestEase?label=Lombiq.HelpfulLibraries.RestEase)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.RestEase/)
 
 
