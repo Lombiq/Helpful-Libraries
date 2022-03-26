@@ -166,7 +166,7 @@ public class TypedRoute
         {
             null => null,
             string text => text,
-            System.DateTime date => date.ToString("s", CultureInfo.InvariantCulture),
+            DateTime date => date.ToString("s", CultureInfo.InvariantCulture),
             byte or sbyte or short or ushort or int or uint or long or ulong or float or double or decimal =>
                 string.Format(CultureInfo.InvariantCulture, "{0}", value),
             _ => JsonConvert.SerializeObject(value),
