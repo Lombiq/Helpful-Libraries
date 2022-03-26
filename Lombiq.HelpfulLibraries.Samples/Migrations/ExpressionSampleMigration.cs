@@ -36,7 +36,7 @@ public class ExpressionSampleMigration : DataMigration
             .SetAbilities(
                 creatable: true,
                 listable: true)
-            .WithTitlePart(required: true)
+            .WithTitlePart()
             .WithPart(
                 // The new generic AlterPartDefinition overload returns the type name, so you can create a part
                 // definition "in-line".
