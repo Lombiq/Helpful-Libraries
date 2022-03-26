@@ -15,6 +15,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.Orc
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.Common", "Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj", "{28D8FE01-5D8B-43EE-8B7A-927D3D3DC627}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.OrchardCore.Testing", "Lombiq.HelpfulLibraries.OrchardCore.Testing\Lombiq.HelpfulLibraries.OrchardCore.Testing.csproj", "{F87DC121-2ADD-458D-9E01-BC0032860188}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{28D8FE01-5D8B-43EE-8B7A-927D3D3DC627}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{28D8FE01-5D8B-43EE-8B7A-927D3D3DC627}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{28D8FE01-5D8B-43EE-8B7A-927D3D3DC627}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F87DC121-2ADD-458D-9E01-BC0032860188}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F87DC121-2ADD-458D-9E01-BC0032860188}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F87DC121-2ADD-458D-9E01-BC0032860188}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F87DC121-2ADD-458D-9E01-BC0032860188}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
