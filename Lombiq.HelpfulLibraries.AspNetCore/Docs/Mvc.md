@@ -8,4 +8,3 @@
     - `DevelopmentAndLocalhostOnlyAttribute`: Enforces the Development environment as well as localhost.
 - `Controller` extensions: Adds extension methods to `Controller` objects like `.RedirectToLocal(redirectUrl)`.
 - `ResultExecutingContextExtensions` to get some shortcuts to usual context operations in `IAsyncResultFilter`s.
-- 
