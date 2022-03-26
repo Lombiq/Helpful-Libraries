@@ -28,22 +28,6 @@ Helpful Libraries consists of the following independent libraries (all in their 
 - [Orchard Core Libraries](Lombiq.HelpfulLibraries.OrchardCore/Readme.md)
 - [RestEase Libraries for Orchard Core](Lombiq.HelpfulLibraries.RestEase/Readme.md)
 
-To be factored out:
-- [Contents Libraries](Lombiq.HelpfulLibraries/Docs/ContentsLibraries.md)
-- [Database Libraries](Lombiq.HelpfulLibraries/Docs/DatabaseLibraries.md)
-- [DateTime Libraries](Lombiq.HelpfulLibraries/Docs/DateTimeLibraries.md)
-- [Dependency Injection Libraries](Lombiq.HelpfulLibraries/Docs/DependencyInjectionLibraries.md)
-- [Method Provider Libraries](Lombiq.HelpfulLibraries/Docs/MethodProviderLibraries.md)
-- [Shapes Libraries](Lombiq.HelpfulLibraries/Docs/ShapesLibraries.md)
-- [Validation Libraries](Lombiq.HelpfulLibraries/Docs/ValidationLibraries.md)
-- [MVC Libraries](Lombiq.HelpfulLibraries/Docs/MvcLibraries.md)
-- [Navigation](Lombiq.HelpfulLibraries/Docs/Navigation.md)
-- [Resource Management Libraries](Lombiq.HelpfulLibraries/Docs/ResourceManagementLibraries.md)
-- [Settings](Lombiq.HelpfulLibraries/Docs/Settings.md)
-- [User Libraries](Lombiq.HelpfulLibraries/Docs/UserLibraries.md)
-- [Utilities](Lombiq.HelpfulLibraries/Docs/Utilities.md)
-
-
 Public APIs are always documented so please always read method comments.
 
 Check out the [`Lombiq.HelpfulLibraries.Samples` project](Lombiq.HelpfulLibraries.Samples) for various examples in the form of an Orchard Core module.

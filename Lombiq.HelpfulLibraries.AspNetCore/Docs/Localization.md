@@ -1,4 +1,4 @@
-# Lombiq Helpful Libraries - ASP.NET Core Libraries - Localization for Orchard Core
+# Lombiq Helpful Libraries - ASP.NET Core Libraries - Localization
 
 
 

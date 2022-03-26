@@ -1,5 +1,5 @@
 using Dapper;
-using Lombiq.HelpfulLibraries.Libraries.Database;
+using Lombiq.HelpfulLibraries.OrchardCore.Data;
 using Lombiq.HelpfulLibraries.Tests.Models;
 using Microsoft.Extensions.Logging.Abstractions;
 using Moq;

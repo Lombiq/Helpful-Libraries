@@ -36,7 +36,4 @@ public static class ActionResultHelpers
         if (!zipFileName.EndsWithOrdinalIgnoreCase(".zip")) zipFileName += ".zip";
         return new FileContentResult(compressedBytes, Zip) { FileDownloadName = zipFileName };
     }
-
-    private static bool EndsWithOrdinalIgnoreCase(this string text, string value) =>
-        text.EndsWith(value, StringComparison.OrdinalIgnoreCase);
 }

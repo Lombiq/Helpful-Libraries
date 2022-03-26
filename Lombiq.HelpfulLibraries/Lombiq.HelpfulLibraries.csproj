@@ -28,27 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="MimeTypes" Version="2.3.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Moq.AutoMock" Version="3.3.0" />
-    <PackageReference Include="OrchardCore.Alias" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Media.Core" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Taxonomies" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Queries" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Users.Core" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Title" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Infrastructure" Version="1.3.0" />
-    <PackageReference Include="NodaTime" Version="3.0.9" />
-    <PackageReference Include="YesSql.Abstractions" Version="3.0.12" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.AspNetCore\Lombiq.HelpfulLibraries.AspNetCore.csproj" PrivateAssets="none" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj" PrivateAssets="none" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.OrchardCore\Lombiq.HelpfulLibraries.OrchardCore.csproj" PrivateAssets="none" />

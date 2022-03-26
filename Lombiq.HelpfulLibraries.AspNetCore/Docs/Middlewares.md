@@ -1,4 +1,4 @@
-# Lombiq Helpful Libraries - ASP.NET Core Libraries - Middlewares for Orchard Core
+# Lombiq Helpful Libraries - ASP.NET Core Libraries - Middlewares
 
 
 Contains ASP.NET Core middlewares and middleware-related services. 
