@@ -3,6 +3,7 @@
 
 
 [![Lombiq.HelpfulLibraries.AspNetCore NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.AspNetCore?label=Lombiq.HelpfulLibraries.AspNetCore)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.AspNetCore/)
+[![Lombiq.HelpfulLibraries.Common NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Common?label=Lombiq.HelpfulLibraries.Common)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Common/)
 [![Lombiq.HelpfulLibraries.LinqToDb NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.LinqToDb?label=Lombiq.HelpfulLibraries.LinqToDb)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.LinqToDb/)
 [![Lombiq.HelpfulLibraries.RestEase NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.RestEase?label=Lombiq.HelpfulLibraries.RestEase)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.RestEase/)
 [![Lombiq.HelpfulLibraries.Targets NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Targets?label=Lombiq.HelpfulLibraries.Targets)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Targets/)
