@@ -13,6 +13,7 @@ For general details about and on using the Helpful Libraries see the [root Readm
 
 - [Contents](Docs/Contents.md)
 - [Data](Docs/Data.md)
+- [DateTime](Docs/DateTime.md)
 - [Dependency Injection](Docs/DependencyInjection.md)
 - [Environment](Docs/Environment.md)
 - [Fields](Docs/Fields.md)
