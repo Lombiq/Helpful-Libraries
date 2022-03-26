@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.Res
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.AspNetCore", "Lombiq.HelpfulLibraries.AspNetCore\Lombiq.HelpfulLibraries.AspNetCore.csproj", "{5E5E1E2F-8096-4B91-809B-5F86A3E8ADCA}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.OrchardCore", "Lombiq.HelpfulLibraries.OrchardCore\Lombiq.HelpfulLibraries.OrchardCore.csproj", "{741E56D8-C42C-4506-841E-DD2245B2E631}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{5E5E1E2F-8096-4B91-809B-5F86A3E8ADCA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5E5E1E2F-8096-4B91-809B-5F86A3E8ADCA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5E5E1E2F-8096-4B91-809B-5F86A3E8ADCA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{741E56D8-C42C-4506-841E-DD2245B2E631}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{741E56D8-C42C-4506-841E-DD2245B2E631}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{741E56D8-C42C-4506-841E-DD2245B2E631}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{741E56D8-C42C-4506-841E-DD2245B2E631}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
