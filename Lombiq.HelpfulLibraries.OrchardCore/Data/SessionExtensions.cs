@@ -192,6 +192,10 @@ public static class SessionExtensions
     "Design",
     "CA1032:Implement standard exception constructors",
     Justification = "The exception is used in a very particular single case.")]
+[SuppressMessage(
+    "Major Code Smell",
+    "S3925:\"ISerializable\" should be implemented correctly",
+    Justification = "The exception is used in a very particular single case.")]
 public class RawQueryException : DbException
 {
     public override IDictionary Data { get; }
