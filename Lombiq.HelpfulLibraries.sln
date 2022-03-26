@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.Asp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.OrchardCore", "Lombiq.HelpfulLibraries.OrchardCore\Lombiq.HelpfulLibraries.OrchardCore.csproj", "{741E56D8-C42C-4506-841E-DD2245B2E631}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.Common", "Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj", "{28D8FE01-5D8B-43EE-8B7A-927D3D3DC627}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{741E56D8-C42C-4506-841E-DD2245B2E631}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{741E56D8-C42C-4506-841E-DD2245B2E631}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{741E56D8-C42C-4506-841E-DD2245B2E631}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28D8FE01-5D8B-43EE-8B7A-927D3D3DC627}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28D8FE01-5D8B-43EE-8B7A-927D3D3DC627}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28D8FE01-5D8B-43EE-8B7A-927D3D3DC627}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28D8FE01-5D8B-43EE-8B7A-927D3D3DC627}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
