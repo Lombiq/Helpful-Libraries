@@ -51,6 +51,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.AspNetCore\Lombiq.HelpfulLibraries.AspNetCore.csproj" PrivateAssets="none" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj" PrivateAssets="none" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.OrchardCore\Lombiq.HelpfulLibraries.OrchardCore.csproj" PrivateAssets="none" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.LinqToDb\Lombiq.HelpfulLibraries.LinqToDb.csproj" PrivateAssets="none" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.RestEase\Lombiq.HelpfulLibraries.RestEase.csproj" PrivateAssets="none" />
   </ItemGroup>
