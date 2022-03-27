@@ -1,3 +1,4 @@
+using System;
 using System.Globalization;
 using System.Security.Cryptography;
 using System.Text;
@@ -6,6 +7,8 @@ namespace Lombiq.HelpfulLibraries.Common.Utilities;
 
 public static class Sha256Helper
 {
+    private static readonly Lazy<string> EmptyLazy = new(() => ComputeHash(string.Empty));
+
     /// <summary>
     /// Calculates the SHA-256 strong (cryptographic) hash from the specified <paramref name="text"/> string.
     /// </summary>
@@ -25,4 +28,6 @@ public static class Sha256Helper
 
         return stringBuilder.ToString();
     }
+
+    public static string Empty() => EmptyLazy.Value;
 }
