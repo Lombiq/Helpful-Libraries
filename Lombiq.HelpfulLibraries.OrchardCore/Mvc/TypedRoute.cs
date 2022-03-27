@@ -113,13 +113,13 @@ public class TypedRoute
         return route;
     }
 
-        public static implicit operator RouteValueDictionary(TypedRoute route) =>
-            new(route._arguments)
-            {
-                ["area"] = route._area,
-                ["controller"] = route._controller,
-                ["action"] = route._action,
-            };
+    public static implicit operator RouteValueDictionary(TypedRoute route) =>
+        new(route._arguments)
+        {
+            ["area"] = route._area,
+            ["controller"] = route._controller,
+            ["action"] = route._action,
+        };
 
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> actionExpression,
