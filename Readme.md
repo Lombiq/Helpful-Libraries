@@ -1,16 +1,18 @@
-# Lombiq Helpful Libraries for Orchard Core
+# Lombiq Helpful Libraries
 
 
 
-[![Lombiq.HelpfulLibraries NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries?label=Lombiq.HelpfulLibraries)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries/)
+[![Lombiq.HelpfulLibraries.AspNetCore NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.AspNetCore?label=Lombiq.HelpfulLibraries.AspNetCore)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.AspNetCore/)
+[![Lombiq.HelpfulLibraries.Common NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Common?label=Lombiq.HelpfulLibraries.Common)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Common/)
 [![Lombiq.HelpfulLibraries.LinqToDb NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.LinqToDb?label=Lombiq.HelpfulLibraries.LinqToDb)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.LinqToDb/)
+[![Lombiq.HelpfulLibraries.OrchardCore NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.OrchardCore?label=Lombiq.HelpfulLibraries.OrchardCore)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.OrchardCore/)
+[![Lombiq.HelpfulLibraries.OrchardCore.Testing NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.OrchardCore.Testing?label=Lombiq.HelpfulLibraries.OrchardCore.Testing)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.OrchardCore.Testing/)
 [![Lombiq.HelpfulLibraries.RestEase NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.RestEase?label=Lombiq.HelpfulLibraries.RestEase)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.RestEase/)
-[![Lombiq.HelpfulLibraries.Targets NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Targets?label=Lombiq.HelpfulLibraries.Targets)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Targets/)
 
 
 ## About
 
-Various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules.
+Various useful libraries that can be handy when developing for .NET, ASP.NET Core, and [Orchard Core](https://orchardcore.net/), to be used from your own projects.
 
 Do you want to quickly try out this project and see it in action? Check it out in our [Open-Source Orchard Core Extensions](https://github.com/Lombiq/Open-Source-Orchard-Core-Extensions) full Orchard Core solution and also see our other useful Orchard Core-related open-source projects!
 
@@ -19,33 +21,19 @@ Note that this project has an Orchard 1 version in the [dev-orchard-1 branch](ht
 
 ## Documentation
 
-The module consists of the following independent libraries (all in their own features):
+Helpful Libraries consists of the following independent libraries (all in their own projects/packages). Use the one specific to your use-case, or all at once by depending on `Lombiq.HelpfulLibraries`.
 
-- [ASP.NET Core Libraries](Lombiq.HelpfulLibraries/Docs/AspNetCoreLibraries.md)
-- [Contents Libraries](Lombiq.HelpfulLibraries/Docs/ContentsLibraries.md)
-- [Database Libraries](Lombiq.HelpfulLibraries/Docs/DatabaseLibraries.md)
-- [DateTime Libraries](Lombiq.HelpfulLibraries/Docs/DateTimeLibraries.md)
-- [Dependency Injection Libraries](Lombiq.HelpfulLibraries/Docs/DependencyInjectionLibraries.md)
-- [Localization Libraries](Lombiq.HelpfulLibraries/Docs/LocalizationLibraries.md)
-- [Method Provider Libraries](Lombiq.HelpfulLibraries/Docs/MethodProviderLibraries.md)
-- [Shapes Libraries](Lombiq.HelpfulLibraries/Docs/ShapesLibraries.md)
-- [Validation Libraries](Lombiq.HelpfulLibraries/Docs/ValidationLibraries.md)
-- [Middlewares](Lombiq.HelpfulLibraries/Docs/Middlewares.md)
-- [MVC Libraries](Lombiq.HelpfulLibraries/Docs/MvcLibraries.md)
-- [Navigation](Lombiq.HelpfulLibraries/Docs/Navigation.md)
-- [Resource Management Libraries](Lombiq.HelpfulLibraries/Docs/ResourceManagementLibraries.md)
-- [Settings](Lombiq.HelpfulLibraries/Docs/Settings.md)
-- [User Libraries](Lombiq.HelpfulLibraries/Docs/UserLibraries.md)
-- [Utilities](Lombiq.HelpfulLibraries/Docs/Utilities.md)
-- [RestEase DI helper](Lombiq.HelpfulLibraries.RestEase/Readme.md)
-- [LinqToDb](Lombiq.HelpfulLibraries.LinqToDb/Readme.md)
-- [Targets](Lombiq.HelpfulLibraries.Targets/Readme.md)
+- [ASP.NET Core Libraries](Lombiq.HelpfulLibraries.AspNetCore/Readme.md)
+- [Common Libraries](Lombiq.HelpfulLibraries.Common/Readme.md)
+- [LINQ to DB Libraries for Orchard Core](Lombiq.HelpfulLibraries.LinqToDb/Readme.md)
+- [Orchard Core Libraries](Lombiq.HelpfulLibraries.OrchardCore/Readme.md)
+- [RestEase Libraries for Orchard Core](Lombiq.HelpfulLibraries.RestEase/Readme.md)
 
 Public APIs are always documented so please always read method comments.
 
-Check out the [`Lombiq.HelpfulLibraries.Samples` project](Lombiq.HelpfulLibraries.Samples) for various examples.
+Check out the [`Lombiq.HelpfulLibraries.Samples` project](Lombiq.HelpfulLibraries.Samples) for various examples in the form of an Orchard Core module.
 
-Note: The `Lombiq.HelpfulLibraries.sln` exists to provide centralized building of the independent library projects.
+Note: The `Lombiq.HelpfulLibraries.sln` file exists to provide centralized building of the independent library projects but otherwise you don't need to use it.
 
 ## Contributing and support
 
