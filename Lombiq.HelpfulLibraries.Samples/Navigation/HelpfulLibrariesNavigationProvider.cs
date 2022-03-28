@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.Libraries.Navigation;
+﻿using Lombiq.HelpfulLibraries.OrchardCore.Navigation;
 using Lombiq.HelpfulLibraries.Samples.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
