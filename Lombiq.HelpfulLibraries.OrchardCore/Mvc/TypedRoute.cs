@@ -117,8 +117,8 @@ public class TypedRoute
         new(route._arguments)
         {
             ["area"] = route._area,
-            ["controller"] = route._controller,
-            ["action"] = route._action,
+            ["controller"] = route._controller.ControllerName(),
+            ["action"] = route._action.Name,
         };
 
     public static TypedRoute CreateFromExpression<TController>(
