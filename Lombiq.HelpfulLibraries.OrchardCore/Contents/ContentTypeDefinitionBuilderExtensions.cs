@@ -7,24 +7,25 @@ public static class ContentTypeDefinitionBuilderExtensions
 {
     /// <summary>
     /// Merges all <see langword="bool"/> content type settings; the same ones you have checkboxes for in the admin
-    /// dashboard's content type editor in the same order. All values have a default false value, so you can set any
-    /// combination using parameter names in a way that signals intentionality (ie. if you explicitly want to deny an
-    /// ability or you just don't care) which is useful clarification for later updates in the migration.
+    /// dashboard's content type editor in the same order. All values have a default <see langword="null"/> value, which
+    /// means they don't get altered. If you use this in itself they are left as the default <see langword="false"/>. So
+    /// you can set any combination using parameter names in a way that signals intentionality (if you explicitly  want
+    /// to deny an ability or you just don't care). Useful clarification for later updates in the migration.
     /// </summary>
     public static ContentTypeDefinitionBuilder SetAbilities(
         this ContentTypeDefinitionBuilder builder,
-        bool creatable = false,
-        bool listable = false,
-        bool draftable = false,
-        bool versionable = false,
-        bool securable = false) =>
+        bool? creatable = null,
+        bool? listable = null,
+        bool? draftable = null,
+        bool? versionable = null,
+        bool? securable = null) =>
         builder.MergeSettings<ContentTypeSettings>(x =>
         {
-            x.Creatable = creatable;
-            x.Listable = listable;
-            x.Draftable = draftable;
-            x.Versionable = versionable;
-            x.Securable = securable;
+            x.Creatable = creatable ?? x.Creatable;
+            x.Listable = listable ?? x.Listable;
+            x.Draftable = draftable ?? x.Draftable;
+            x.Versionable = versionable ?? x.Versionable;
+            x.Securable = securable ?? x.Securable;
         });
 
     /// <summary>
