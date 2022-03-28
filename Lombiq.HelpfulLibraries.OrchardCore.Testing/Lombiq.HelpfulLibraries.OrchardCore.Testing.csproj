@@ -1,0 +1,38 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Lombiq Helpful Libraries - Testing Libraries for Orchard Core</Title>
+    <Authors>Lombiq Technologies</Authors>
+    <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
+    <Description>Lombiq Helpful Libraries - Testing Libraries for Orchard Core: Various useful libraries that can be handy when writing unit and integration tests for Orchard Core apps. See the project website for detailed documentation.</Description>
+    <PackageTags>OrchardCore;Lombiq;AspNetCore;Moq;xUnit;UnitTesting;Testing</PackageTags>
+    <PackageIcon>NuGetIcon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.Testing/Readme.md</PackageProjectUrl>
+    <PackageLicenseFile>License.md</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="License.md" Pack="true" PackagePath="" />
+    <None Include="Readme.md" />
+    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Moq.AutoMock" Version="3.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.OrchardCore\Lombiq.HelpfulLibraries.OrchardCore.csproj" />
+  </ItemGroup>
+
+</Project>

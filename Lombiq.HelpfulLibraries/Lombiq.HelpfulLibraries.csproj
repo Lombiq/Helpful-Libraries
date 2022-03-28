@@ -1,16 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
-    <DefaultItemExcludes>$(DefaultItemExcludes);.git*;node_modules\**;Tests\**</DefaultItemExcludes>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
   </PropertyGroup>
 
   <PropertyGroup>
-    <Title>Lombiq Helpful Libraries for Orchard Core</Title>
+    <Title>Lombiq Helpful Libraries</Title>
     <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-    <Description>Lombiq Helpful Libraries for Orchard Core: Main project of Lombiq Helpful Libraries, various libraries that can be handy when developing for Orchard Core CMS, to be used from your own Orchard modules. See the project website for detailed documentation.</Description>
-    <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities</PackageTags>
+    <Description>Lombiq Helpful Libraries: Various useful libraries that can be handy when developing for .NET, ASP.NET Core, and Orchard Core, to be used from your own projects. This package references all Helpful Libraries libraries, but you can use only the ones specific for your use-case, see the dependencies. See the project website for detailed documentation.</Description>
+    <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities;LinqToDB;RestEase</PackageTags>
     <PackageIcon>NuGetIcon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries</PackageProjectUrl>
@@ -23,39 +23,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Tests\**" />
     <None Include="..\Readme.md" Link="Readme.md" />
   </ItemGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="Lucene.Net" Version="4.8.0-beta00014" />
-    <PackageReference Include="MimeTypes" Version="2.3.0">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
-    </PackageReference>
-    <PackageReference Include="Moq.AutoMock" Version="3.3.0" />
-    <PackageReference Include="OrchardCore.Admin.Abstractions" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Alias" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Media.Core" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Taxonomies" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Data.Abstractions" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.ContentManagement.Display" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Navigation.Core" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Queries" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.ResourceManagement.Abstractions" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Users.Core" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Title" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.3.0" />
-    <PackageReference Include="OrchardCore.Infrastructure" Version="1.3.0" />
-    <PackageReference Include="NodaTime" Version="3.0.9" />
-    <PackageReference Include="YesSql.Abstractions" Version="3.0.12" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.AspNetCore\Lombiq.HelpfulLibraries.AspNetCore.csproj" PrivateAssets="none" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj" PrivateAssets="none" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.OrchardCore\Lombiq.HelpfulLibraries.OrchardCore.csproj" PrivateAssets="none" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.LinqToDb\Lombiq.HelpfulLibraries.LinqToDb.csproj" PrivateAssets="none" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.RestEase\Lombiq.HelpfulLibraries.RestEase.csproj" PrivateAssets="none" />
   </ItemGroup>
 
 </Project>
