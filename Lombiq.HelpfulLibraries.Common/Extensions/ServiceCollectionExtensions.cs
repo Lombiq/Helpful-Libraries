@@ -17,10 +17,7 @@ public static class ServiceCollectionExtensions
             .Where(service => service.ServiceType?.FullName == serviceFullName)
             .ToList();
 
-        foreach (var service in servicesToRemove)
-        {
-            services.Remove(service);
-        }
+        servicesToRemove.ForEach(service => services.Remove(service));
 
         return services;
     }
