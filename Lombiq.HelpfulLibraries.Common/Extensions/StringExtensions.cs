@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -253,12 +252,6 @@ public static class StringExtensions
     /// </remarks>
     public static string ToSnakeCase(this string input) =>
         string.Concat(input.Select((character, index) => index > 0 && char.IsUpper(character) ? "_" + character : character.ToString()));
-
-    /// <summary>
-    /// Returns <see langword="true"/> if the value is <see langword="true"/> or <c>True</c>.
-    /// </summary>
-    [SuppressMessage("Minor Code Smell", "S4225:Extension methods should not extend \"object\"", Justification = "No.")]
-    public static bool IsTrueString(this object value) => value?.ToString() == bool.TrueString;
 
     /// <summary>
     /// Splits the text into three pieces similarly to Python's <c>str.partition</c> method.
