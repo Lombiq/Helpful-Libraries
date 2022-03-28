@@ -9,8 +9,8 @@ public static class ContentTypeDefinitionBuilderExtensions
     /// Merges all <see langword="bool"/> content type settings; the same ones you have checkboxes for in the admin
     /// dashboard's content type editor in the same order. All values have a default <see langword="null"/> value, which
     /// means they don't get altered. If you use this in itself they are left as the default <see langword="false"/>. So
-    /// you can set any combination using parameter names in a way that signals intentionality (ie. if you explicitly
-    /// want to deny an ability or you just don't care). Useful clarification for later updates in the migration.
+    /// you can set any combination using parameter names in a way that signals intentionality (if you explicitly  want
+    /// to deny an ability or you just don't care). Useful clarification for later updates in the migration.
     /// </summary>
     public static ContentTypeDefinitionBuilder SetAbilities(
         this ContentTypeDefinitionBuilder builder,
