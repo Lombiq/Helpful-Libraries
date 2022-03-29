@@ -1,3 +1,4 @@
+using OrchardCore.Autoroute.Models;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
 
@@ -49,4 +50,19 @@ public static class ContentTypeDefinitionBuilderExtensions
                     part.WithSettings(new TitlePartSettings { Options = TitlePartOptions.EditableRequired });
                 }
             });
+
+    /// <summary>
+    /// Adds <see cref="AutoroutePart"/> to the content type and sets the Pattern accordingly.
+    /// </summary>
+    public static ContentTypeDefinitionBuilder WithContentTypeAutoroute(
+        this ContentTypeDefinitionBuilder builder,
+        string contentType) =>
+        builder
+            .WithPart(nameof(AutoroutePart), part => part
+                .WithSettings(new AutoroutePartSettings
+                {
+                    Pattern = $"{contentType}s/" + "{{ ContentItem.ContentItemId | slugify }}",
+                    AllowUpdatePath = true,
+                    ManageContainedItemRoutes = true,
+                }));
 }
