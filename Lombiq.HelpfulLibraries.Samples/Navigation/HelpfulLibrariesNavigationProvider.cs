@@ -8,13 +8,12 @@ namespace Lombiq.HelpfulLibraries.Samples.Navigation;
 
 public class HelpfulLibrariesNavigationProvider : MainMenuNavigationProviderBase
 {
-    private readonly IHttpContextAccessor _hca;
-
     public HelpfulLibrariesNavigationProvider(
         IHttpContextAccessor hca,
         IStringLocalizer<HelpfulLibrariesNavigationProvider> stringLocalizer)
-        : base(hca, stringLocalizer) =>
-        _hca = hca;
+        : base(hca, stringLocalizer)
+    {
+    }
 
     protected override void Build(NavigationBuilder builder)
     {
