@@ -8,7 +8,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Navigation;
 
 public abstract class NavigationProviderBase : INavigationProvider
 {
-    private readonly IHttpContextAccessor _hca;
+    protected readonly IHttpContextAccessor _hca;
 
     protected abstract string NavigationName { get; }
     protected virtual bool RequireAuthentication => false;
