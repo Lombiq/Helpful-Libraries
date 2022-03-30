@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -237,6 +238,20 @@ public static class StringExtensions
             if (match) yield return textIndex;
         }
     }
+
+    /// <summary>
+    /// Turns a camelCase or PascalCase token into snake_Case.
+    /// </summary>
+    /// <param name="input">The input in camelCase or PascalCase.</param>
+    /// <returns>
+    /// The input converted to snake_Case. It doesn't alter case so you can call either ToUpper or ToLower without any
+    /// additional penalties.
+    /// </returns>
+    /// <remarks>
+    /// <para><see href="https://stackoverflow.com/a/18781533"/>.</para>
+    /// </remarks>
+    public static string ToSnakeCase(this string input) =>
+        string.Concat(input.Select((character, index) => index > 0 && char.IsUpper(character) ? "_" + character : character.ToString()));
 
     /// <summary>
     /// Splits the text into three pieces similarly to Python's <c>str.partition</c> method.
