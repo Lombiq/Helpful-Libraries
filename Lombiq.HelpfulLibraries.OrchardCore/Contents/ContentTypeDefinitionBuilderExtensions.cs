@@ -52,7 +52,8 @@ public static class ContentTypeDefinitionBuilderExtensions
             });
 
     /// <summary>
-    /// Adds <see cref="AutoroutePart"/> to the content type and sets the Pattern accordingly.
+    /// Adds <see cref="AutoroutePart"/> to the content type and sets the <see cref="AutoroutePartSettings.Pattern"/>
+    /// accordingly.
     /// </summary>
     public static ContentTypeDefinitionBuilder WithContentTypeAutoroute(
         this ContentTypeDefinitionBuilder builder,
