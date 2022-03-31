@@ -1,0 +1,51 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Title>Lombiq Helpful Libraries - Orchard Core Libraries</Title>
+    <Authors>Lombiq Technologies</Authors>
+    <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
+    <Description>Lombiq Helpful Libraries - Orchard Core Libraries: Various useful libraries that can be handy when developing for Orchard Core, to be used from your own projects. See the project website for detailed documentation.</Description>
+    <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;GraphQL;Liquid;DateTime;DependencyInjection</PackageTags>
+    <PackageIcon>NuGetIcon.png</PackageIcon>
+    <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.OrchardCore/Readme.md</PackageProjectUrl>
+    <PackageLicenseFile>License.md</PackageLicenseFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="License.md" Pack="true" PackagePath="" />
+    <None Include="Readme.md" />
+    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OrchardCore.Alias" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.Autoroute" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.Media.Core" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.Taxonomies" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.Queries" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.Users.Core" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.Title" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.Infrastructure" Version="1.3.0" />
+    <PackageReference Include="NodaTime" Version="3.0.9" />
+    <PackageReference Include="YesSql.Abstractions" Version="3.0.12" />
+    <!-- Necessary so tag helpers will work in the projects depending on this. -->
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.ResourceManagement" Version="1.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.AspNetCore\Lombiq.HelpfulLibraries.AspNetCore.csproj" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj" />
+  </ItemGroup>
+
+</Project>

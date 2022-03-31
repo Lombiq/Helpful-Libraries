@@ -1,16 +1,15 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
-    <RootNamespace>Lombiq.HelpfulLibraries.RestEase</RootNamespace>
   </PropertyGroup>
 
   <PropertyGroup>
-    <Title>RestEase dependency injection helper - Lombiq Helpful Libraries for Orchard Core</Title>
+    <Title>Lombiq Helpful Libraries - RestEase Libraries for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-    <Description>RestEase dependency injection helper - Lombiq Helpful Libraries for Orchard Core: Adds a typed HTTP client to the service collection using RestEase. See the project website for detailed documentation.</Description>
+    <Description>Lombiq Helpful Libraries - RestEase Libraries for Orchard Core for Orchard Core: Adds a typed HTTP client to the service collection using RestEase, for dependency injection. See the project website for detailed documentation.</Description>
     <PackageIcon>NuGetIcon.png</PackageIcon>
     <PackageTags>OrchardCore;Lombiq;RestEase</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
@@ -25,10 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" Version="6.0.0" />
     <PackageReference Include="RestEase" Version="1.5.5" />
     <PackageReference Include="RestEase.SourceGenerator" Version="1.5.5">
       <PrivateAssets>all</PrivateAssets>
