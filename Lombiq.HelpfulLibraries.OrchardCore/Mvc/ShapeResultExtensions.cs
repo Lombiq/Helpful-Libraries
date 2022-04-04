@@ -28,18 +28,26 @@ public static class ShapeResultExtensions
         shapeResult.RenderWhen(() => Task.FromResult(condition));
 
     /// <summary>
-    /// Sets the <see cref="ShapeResult"/>'s location to a local zone (unless you start <paramref name="zoneName"/> with
-    /// <c>/</c>) with optional sorting information.
+    /// Sets the <see cref="ShapeResult"/>'s location to a local zone with optional sorting information.
     /// </summary>
-    public static ShapeResult PlaceInZone(this ShapeResult shapeResult, string zoneName, double? priority) =>
+    public static ShapeResult PlaceInZone(this ShapeResult shapeResult, string zoneName, double? priority = null) =>
         shapeResult.Location(priority is { } number
             ? FormattableString.Invariant($"{zoneName}:{number}")
             : zoneName);
 
     /// <summary>
+    /// Sets the <see cref="ShapeResult"/>'s location to a global layout zone with optional sorting information.
+    /// </summary>
+    public static ShapeResult PlaceInGlobalZone(
+        this ShapeResult shapeResult,
+        string globalZone,
+        double? priority = null) =>
+        shapeResult.PlaceInZone("/" + globalZone, priority);
+
+    /// <summary>
     /// Sets the <see cref="ShapeResult"/>'s location to <see cref="CommonLocationNames.Content"/> with optional sorting
     /// information.
     /// </summary>
-    public static ShapeResult PlaceInContent(this ShapeResult shapeResult, double? priority) =>
+    public static ShapeResult PlaceInContent(this ShapeResult shapeResult, double? priority = null) =>
         shapeResult.PlaceInZone(CommonLocationNames.Content, priority);
 }
