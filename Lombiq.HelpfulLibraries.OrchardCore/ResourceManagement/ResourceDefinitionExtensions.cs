@@ -33,8 +33,7 @@ public static class ResourceManifestExtensions
 
         Add(newDependencies);
         var unique = definition.Dependencies.ToHashSet();
-        definition.Dependencies.Clear();
-        definition.Dependencies.AddRange(unique);
+        definition.Dependencies.SetItems(unique);
 
         return definition;
     }
