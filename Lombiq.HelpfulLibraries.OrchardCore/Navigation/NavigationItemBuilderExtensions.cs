@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Localization;
 using OrchardCore.Environment.Extensions;
 using OrchardCore.Navigation;
 using System;
@@ -41,4 +42,10 @@ public static class NavigationItemBuilderExtensions
 
         return builder.Action(route);
     }
+
+    /// <summary>
+    /// Adds a menu item that behaves like a separator (horizontal line) in MenuWidget.
+    /// </summary>
+    public static NavigationBuilder AddSeparator(this NavigationBuilder builder, IStringLocalizer localizer) =>
+        builder.Add(localizer["---"], subMenu => subMenu.Url("#").AddClass("disabled menuWidget__link_title"));
 }
