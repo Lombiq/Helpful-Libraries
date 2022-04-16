@@ -37,4 +37,13 @@ public static class CollectionExtensions
             }
         }
     }
+
+    /// <summary>
+    /// Clears the collection and then adds the values from <paramref name="newValues"/> instead.
+    /// </summary>
+    public static void SetItems<T>(this ICollection<T> collection, IEnumerable<T> newValues)
+    {
+        collection.Clear();
+        collection.AddRange(newValues);
+    }
 }
