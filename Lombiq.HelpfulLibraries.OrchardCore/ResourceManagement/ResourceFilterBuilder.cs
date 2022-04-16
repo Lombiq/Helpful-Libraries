@@ -58,10 +58,13 @@ public class ResourceFilterBuilder
 
         return When(async context =>
         {
-            var routeValues = context.Request.RouteValues;
-            if (routeValues.GetMaybe("controller")?.ToString() != "Content" ||
-                routeValues.GetMaybe("action")?.ToString() != "Display" ||
-                routeValues.GetMaybe("contentItemId")?.ToString() is not { } contentItemId)
+            var routeValues = context
+                .Request
+                .RouteValues
+                .ToDictionary(pair => pair.Key, pair => pair.Value?.ToString(), StringComparer.OrdinalIgnoreCase);
+
+            if (routeValues.GetMaybe("action") != "Display" ||
+                routeValues.GetMaybe("contentItemId") is not { } contentItemId)
             {
                 return false;
             }
