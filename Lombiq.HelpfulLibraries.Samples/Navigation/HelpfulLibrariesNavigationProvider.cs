@@ -20,7 +20,7 @@ public class HelpfulLibrariesNavigationProvider : MainMenuNavigationProviderBase
         var context = _hca.HttpContext;
         builder
             .Add(T["Helpful Libraries"], builder => builder
-                .Add(T["LINQ to DB"], subMenu => subMenu.Url("#").AddClass("disabled menuWidget__link_title"))
+                .AddLabel(T["LINQ to DB"])
                 .Add(T["Simple Query"], subMenu => subMenu
                     .ActionTask<LinqToDbSamplesController>(context, controller => controller.SimpleQuery()))
                 .Add(T["Join Query"], subMenu => subMenu

@@ -44,8 +44,14 @@ public static class NavigationItemBuilderExtensions
     }
 
     /// <summary>
-    /// Adds a menu item that behaves like a separator (horizontal line) in MenuWidget.
+    /// Adds a menu item that behaves like a separator (horizontal line) in the MenuWidget.
     /// </summary>
     public static NavigationBuilder AddSeparator(this NavigationBuilder builder, IStringLocalizer localizer) =>
-        builder.Add(localizer["---"], subMenu => subMenu.Url("#").AddClass("disabled menuWidget__link_title"));
+        builder.AddLabel(localizer["---"]);
+
+    /// <summary>
+    /// Adds a menu item that has no link and "disabled" class in the MenuWidget.
+    /// </summary>
+    public static NavigationBuilder AddLabel(this NavigationBuilder builder, LocalizedString label) =>
+        builder.Add(label, subMenu => subMenu.Url("#").AddClass("disabled menuWidget__link_title"));
 }
