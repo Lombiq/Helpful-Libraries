@@ -8,7 +8,7 @@ public static class EnumerableExtensions
 {
     /// <summary>
     /// Executes <paramref name="action"/> on every item of the <paramref name="source"/>. This eliminates the need for
-    /// <c>if (source.Any()) { foreach (var item in source) { ... } }</c> type constructs which cause multiple
+    /// code like <c>if (source.Any()) { beforeFirst(); foreach (var item in source) { ... } }</c> which cause multiple
     /// enumeration unless first converted into an <see cref="ICollection{T}"/> (which takes additional allocations).
     /// </summary>
     /// <param name="source">The collection to traverse with single enumeration.</param>
