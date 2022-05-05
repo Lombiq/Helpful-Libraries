@@ -20,13 +20,14 @@ public class HelpfulLibrariesNavigationProvider : MainMenuNavigationProviderBase
         var context = _hca.HttpContext;
         builder
             .Add(T["Helpful Libraries"], builder => builder
-                .Add(T["LINQ to DB"], itemBuilder => itemBuilder
-                    .Add(T["Simple Query"], subMenu => subMenu
-                        .ActionTask<LinqToDbSamplesController>(context, controller => controller.SimpleQuery()))
-                    .Add(T["Join Query"], subMenu => subMenu
-                        .ActionTask<LinqToDbSamplesController>(context, controller => controller.JoinQuery()))
-                    .Add(T["CRUD"], subMenu => subMenu
-                        .ActionTask<LinqToDbSamplesController>(context, controller => controller.Crud())))
+                .AddLabel(T["LINQ to DB"])
+                .Add(T["Simple Query"], subMenu => subMenu
+                    .ActionTask<LinqToDbSamplesController>(context, controller => controller.SimpleQuery()))
+                .Add(T["Join Query"], subMenu => subMenu
+                    .ActionTask<LinqToDbSamplesController>(context, controller => controller.JoinQuery()))
+                .Add(T["CRUD"], subMenu => subMenu
+                    .ActionTask<LinqToDbSamplesController>(context, controller => controller.Crud()))
+                .Add(T["---"], subMenu => subMenu.Url("#"))
                 .Add(T["Typed Route"], itemBuilder => itemBuilder
                     .Action<TypedRouteController>(context, controller => controller.Index())));
     }

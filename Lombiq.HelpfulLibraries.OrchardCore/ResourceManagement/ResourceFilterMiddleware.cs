@@ -13,32 +13,31 @@ public class ResourceFilterMiddleware
 
     public ResourceFilterMiddleware(RequestDelegate next) => _next = next;
 
-    public Task InvokeAsync(HttpContext context)
+    public async Task InvokeAsync(HttpContext context)
     {
-        var resourceFilterProviders = context.RequestServices.GetService<IEnumerable<IResourceFilterProvider>>();
+        var builder = new ResourceFilterBuilder();
+        var anyProviders = context
+            .RequestServices
+            .GetService<IEnumerable<IResourceFilterProvider>>()
+            .ForEach(provider => provider.AddResourceFilter(builder));
 
-        if (resourceFilterProviders?.Any() == true)
+        if (anyProviders)
         {
-            var builder = new ResourceFilterBuilder();
+            IResourceManager resourceManager = null;
 
-            foreach (var provider in resourceFilterProviders)
-            {
-                provider.AddResourceFilter(builder);
-            }
+            var activeFilters = await builder
+                .ResourceFilters
+                .Where(filter => filter.Filter != null || filter.FilterAsync != null)
+                .WhereAsync(
+                    filter => filter.Filter != null
+                        ? Task.FromResult(filter.Filter(context))
+                        : filter.FilterAsync(context));
 
-            var activeFilters = builder.ResourceFilters.Where(filter => filter.Filter(context));
-
-            if (activeFilters.Any())
-            {
-                var resourceManager = context.RequestServices.GetService<IResourceManager>();
-
-                foreach (var filter in activeFilters)
-                {
-                    filter.Execution(resourceManager);
-                }
-            }
+            activeFilters.ForEach(
+                filter => filter.Execution(resourceManager),
+                _ => resourceManager = context.RequestServices.GetService<IResourceManager>());
         }
 
-        return _next(context);
+        await _next(context);
     }
 }
