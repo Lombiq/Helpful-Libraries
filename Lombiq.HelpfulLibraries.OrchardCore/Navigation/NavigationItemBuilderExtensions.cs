@@ -50,14 +50,14 @@ public static class NavigationItemBuilderExtensions
         builder.AddLabel(localizer["---"]);
 
     /// <summary>
-    /// Adds a menu item that has no link and the "menuWidget__link_label" class in the MenuWidget.
+    /// Adds a menu item that has no link and the "disabled" and "menuWidget__link_label" classes in the MenuWidget.
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Themes derived from Lombiq.BaseTheme also make this item non-clickable, otherwise by default clicking on it will
-    /// simply close the current menu with no effect.
+    /// The "disabled" class is necessary so Bootstrap won't mark it as "active" on the home page. This also greys out
+    /// the text by default. Themes derived from Lombiq.BaseTheme automatically remove this effect.
     /// </para>
     /// </remarks>
     public static NavigationBuilder AddLabel(this NavigationBuilder builder, LocalizedString label) =>
-        builder.Add(label, subMenu => subMenu.Url("#").AddClass("menuWidget__link_label"));
+        builder.Add(label, subMenu => subMenu.Url("#").AddClass("disabled menuWidget__link_label"));
 }
