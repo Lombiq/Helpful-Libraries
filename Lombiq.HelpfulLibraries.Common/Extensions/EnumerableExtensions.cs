@@ -7,6 +7,31 @@ namespace System.Collections.Generic;
 public static class EnumerableExtensions
 {
     /// <summary>
+    /// Executes <paramref name="action"/> on every item of the <paramref name="source"/>. This eliminates the need for
+    /// code like <c>if (source.Any()) { beforeFirst(); foreach (var item in source) { ... } }</c> which cause multiple
+    /// enumeration unless first converted into an <see cref="ICollection{T}"/> (which takes additional allocations).
+    /// </summary>
+    /// <param name="source">The collection to traverse with single enumeration.</param>
+    /// <param name="action">The action to perform on each item of <paramref name="source"/>.</param>
+    /// <param name="beforeFirst">The action to perform before the first item's <paramref name="action"/>.</param>
+    /// <typeparam name="T">The type of the items in <paramref name="source"/>.</typeparam>
+    /// <returns><see langword="true"/> if the <paramref name="source"/> had at least one item.</returns>
+    public static bool ForEach<T>(this IEnumerable<T> source, Action<T> action, Action<T> beforeFirst = null)
+    {
+        bool any = false;
+
+        foreach (var item in source)
+        {
+            if (!any && beforeFirst != null) beforeFirst(item);
+            any = true;
+
+            action(item);
+        }
+
+        return any;
+    }
+
+    /// <summary>
     /// Awaits the tasks sequentially. An alternative to <see cref="Task.WhenAll(IEnumerable{Task})"/> and
     /// <c>Nito.AsyncEx.TaskExtensions.WhenAll</c> when true multi-threaded asynchronicity is not desirable.
     /// </summary>
