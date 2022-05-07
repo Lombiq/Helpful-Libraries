@@ -11,11 +11,14 @@ public static class ExceptionExtensions
     /// </summary>
     public static bool IsFatal(this Exception ex) => ex is OutOfMemoryException or SecurityException or SEHException;
 
-    public static IEnumerable<string> GetAllMessages(this Exception exception)
+    /// <summary>
+    /// Aggregates the non-empty exception messages for <paramref name="exception"/> and all of its inner exceptions.
+    /// </summary>
+    public static ICollection<string> GetAllMessages(this Exception exception)
     {
         var messages = new List<string>();
 
-        static void Iterate(IList<string> messages, Exception current)
+        static void Iterate(ICollection<string> messages, Exception current)
         {
             if (!string.IsNullOrWhiteSpace(current.Message)) messages.Add(current.Message);
 
