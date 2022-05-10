@@ -1,20 +1,25 @@
 ﻿using CliWrap;
 using CliWrap.Buffered;
+using Lombiq.HelpfulLibraries.Cli.Helpers;
 using System.Globalization;
 
-namespace Lombiq.HelpfulLibraries.Cli.Helpers;
+namespace Lombiq.HelpfulLibraries.Cli;
 
-public static class DotnetCli
+public class CliProgram
 {
-    private static readonly string _dotnetExecutable = "dotnet" + OperatingSystemHelper.GetExecutableExtension();
+    public static CliProgram DotNet { get; } = new("dotnet" + OperatingSystemHelper.GetExecutableExtension());
+
+    private readonly string _command;
+
+    public CliProgram(string command) => _command = command + OperatingSystemHelper.GetExecutableExtension();
 
     /// <summary>
-    /// Calls the <c>dotnet</c> command with the provided arguments. If the process doesn't succeed or outputs to the
-    /// standard error stream then an exception is thrown.
+    /// Calls the command giver to the constructor with the provided arguments. If the process doesn't succeed or
+    /// outputs to the standard error stream then an exception is thrown.
     /// </summary>
     /// <param name="arguments">
-    /// The arguments passed to <c>dotnet</c>. If an item is not <see langword="string"/>, then it's converted using
-    /// <see cref="CultureInfo.InvariantCulture"/> formatter.
+    /// The arguments passed to the command. If an item is not <see langword="string"/>, then it's converted using <see
+    /// cref="CultureInfo.InvariantCulture"/> formatter.
     /// </param>
     /// <param name="additionalExceptionText">
     /// Text in the second line of the exception message after the standard "... command failed with the output below."
@@ -24,18 +29,18 @@ public static class DotnetCli
     /// <exception cref="InvalidOperationException">
     /// <para>Thrown if the command fails or outputs to the error stream. The format is like this:</para>
     /// <code>
-    /// The dotnet {arguments} command failed with the output below.
+    /// The {command} {arguments} command failed with the output below.
     /// {additional exception text}
     /// {standard error output}
     /// </code>
     /// </exception>
-    public static async Task CommandAsync(
+    public async Task CommandAsync(
         ICollection<object> arguments,
         string additionalExceptionText,
         CancellationToken token)
     {
         var result = await CliWrap.Cli
-            .Wrap(_dotnetExecutable)
+            .Wrap(_command)
             .WithArguments(arguments.Select(argument => argument is IConvertible convertible
                 ? convertible.ToString(CultureInfo.InvariantCulture)
                 : argument.ToString()))
@@ -52,7 +57,7 @@ public static class DotnetCli
 
             var lines = new[]
             {
-                $"The dotnet {argumentsString} command failed with the output below.",
+                $"The {_command} {argumentsString} command failed with the output below.",
                 additionalExceptionText,
                 result.StandardError,
             };
@@ -67,9 +72,9 @@ public static class DotnetCli
     /// </summary>
     /// <param name="token">Passed into the CliWrap <see cref="Command"/>.</param>
     /// <param name="arguments">
-    /// The arguments passed to <c>dotnet</c>. If an item is not <see langword="string"/>, then it's converted using
-    /// <see cref="CultureInfo.InvariantCulture"/> formatter.
+    /// The arguments passed to the command. If an item is not <see langword="string"/>, then it's converted using <see
+    /// cref="CultureInfo.InvariantCulture"/> formatter.
     /// </param>
-    public static Task CommandAsync(CancellationToken token, params object[] arguments) =>
+    public Task CommandAsync(CancellationToken token, params object[] arguments) =>
         CommandAsync(arguments, additionalExceptionText: null, token);
 }

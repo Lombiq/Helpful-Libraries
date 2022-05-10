@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 
 namespace Lombiq.HelpfulLibraries.Cli.Helpers;
 
-public static class CliHelper
+public static class CliWrapHelper
 {
     /// <summary>
     /// Returns an executable's full path by looking up its command name. Uses the <c>which</c> command in Unix and
