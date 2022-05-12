@@ -13,6 +13,13 @@ public class CliProgram
 
     public CliProgram(string command) => _command = command + OperatingSystemHelper.GetExecutableExtension();
 
+    public Command GetCommand(ICollection<object> arguments) =>
+        CliWrap.Cli
+            .Wrap(_command)
+            .WithArguments(arguments.Select(argument => argument is IConvertible convertible
+                ? convertible.ToString(CultureInfo.InvariantCulture)
+                : argument.ToString()));
+
     /// <summary>
     /// Calls the command giver to the constructor with the provided arguments. If the process doesn't succeed or
     /// outputs to the standard error stream then an exception is thrown.
@@ -39,11 +46,7 @@ public class CliProgram
         string additionalExceptionText,
         CancellationToken token)
     {
-        var result = await CliWrap.Cli
-            .Wrap(_command)
-            .WithArguments(arguments.Select(argument => argument is IConvertible convertible
-                ? convertible.ToString(CultureInfo.InvariantCulture)
-                : argument.ToString()))
+        var result = await GetCommand(arguments)
             .WithValidation(CommandResultValidation.None)
             .ExecuteBufferedAsync(token);
 
@@ -59,6 +62,7 @@ public class CliProgram
             {
                 $"The {_command} {argumentsString} command failed with the output below.",
                 additionalExceptionText,
+                result.StandardOutput,
                 result.StandardError,
             };
 
