@@ -7,7 +7,7 @@ namespace Lombiq.HelpfulLibraries.Cli;
 
 public class CliProgram
 {
-    public static CliProgram DotNet { get; } = new("dotnet" + OperatingSystemHelper.GetExecutableExtension());
+    public static CliProgram DotNet { get; } = new("dotnet");
 
     private readonly string _command;
 
