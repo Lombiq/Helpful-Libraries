@@ -1,4 +1,4 @@
-﻿using CliWrap;
+using CliWrap;
 using CliWrap.Buffered;
 using Lombiq.HelpfulLibraries.Cli.Helpers;
 using System.Globalization;
@@ -71,8 +71,8 @@ public class CliProgram
     }
 
     /// <summary>
-    /// Shortcut for <see cref="CommandAsync(System.Collections.Generic.ICollection{object},string,System.Threading.CancellationToken)"/>
-    /// if there is no additional exception message.
+    /// Shortcut for <see cref="CommandAsync(ICollection{object},string,CancellationToken)"/> if there is no additional
+    /// exception message.
     /// </summary>
     /// <param name="token">Passed into the CliWrap <see cref="Command"/>.</param>
     /// <param name="arguments">
