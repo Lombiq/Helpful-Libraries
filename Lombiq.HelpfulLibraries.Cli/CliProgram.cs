@@ -21,7 +21,7 @@ public class CliProgram
                 : argument.ToString()));
 
     /// <summary>
-    /// Calls the command giver to the constructor with the provided arguments. If the process doesn't succeed or
+    /// Calls the command specified in the constructor with the provided arguments. If the process doesn't succeed or
     /// outputs to the standard error stream then an exception is thrown.
     /// </summary>
     /// <param name="arguments">
