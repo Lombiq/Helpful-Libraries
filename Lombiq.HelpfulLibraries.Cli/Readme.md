@@ -11,12 +11,9 @@ For general details about and on using the Helpful Libraries see the [root Readm
 
 ## Documentation
 
-- [`CliHelper`](Helpers/CliHelper.cs)
-  - `WhichAsync`: Gets the absolute path of an executable that you can call directly form CLI (in `$PATH` on Unix-like systems or in `%PATH%` on Windows).
-  - `StreamAsync`: Executes a program and then calls the provided handler on every command line event.
+- [`CliWrapHelper`](Helpers/CliWrapHelper.cs): Makes it easier to call CliWrap with the same command.
+- [`OperatingSystemHelper`](Helpers/OperatingSystemHelper.cs): Gets OS-specific information like the file extension of executable files.
 
 ### Extensions
 
-You can write custom SQL syntax extensions and functions as you can see it in *[Extensions/CustomSqlExtensions.cs](Extensions/CustomSqlExtensions.cs)*.
-
-For more examples check out [this article](http://blog.linq2db.com/2016/06/how-to-teach-linq-to-db-convert-custom.html).
+- [`CommandExtensions`](Extensions/CommandExtensions.cs): Contains extension methods for CliWrap's `Command` type. For example: `ExecuteDotNetApplicationAsync` for launching .Net server apps that say "Application started. Press Ctrl+C to shut down.".
