@@ -11,7 +11,11 @@ For general details about and on using the Helpful Libraries see the [root Readm
 
 ## Documentation
 
-- [`CliWrapHelper`](Helpers/CliWrapHelper.cs): Makes it easier to call CliWrap with the same command.
+- [`CliProgram`](CliProgram.cs): Makes it easier to call CliWrap with the same command.
+
+### Helpers
+
+- [`CliWrapHelper`](Helpers/CliWrapHelper.cs): Specialized tasks using CliWrap, such as `WhichAsync` that helps locate the full path of a program that's inside the user's PATH environment variable. 
 - [`OperatingSystemHelper`](Helpers/OperatingSystemHelper.cs): Gets OS-specific information like the file extension of executable files.
 
 ### Extensions

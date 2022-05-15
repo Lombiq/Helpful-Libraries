@@ -41,7 +41,7 @@ public class CliProgram
     /// {standard error output}
     /// </code>
     /// </exception>
-    public async Task CommandAsync(
+    public async Task ExecuteAsync(
         ICollection<object> arguments,
         string additionalExceptionText,
         CancellationToken token)
@@ -71,14 +71,15 @@ public class CliProgram
     }
 
     /// <summary>
-    /// Shortcut for <see cref="CommandAsync(ICollection{object},string,CancellationToken)"/> if there is no additional
-    /// exception message.
+    /// Shortcut for <see
+    /// cref="ExecuteAsync(System.Collections.Generic.ICollection{object},string,System.Threading.CancellationToken)"/>
+    /// if there is no additional exception message.
     /// </summary>
     /// <param name="token">Passed into the CliWrap <see cref="Command"/>.</param>
     /// <param name="arguments">
     /// The arguments passed to the command. If an item is not <see langword="string"/>, then it's converted using <see
     /// cref="CultureInfo.InvariantCulture"/> formatter.
     /// </param>
-    public Task CommandAsync(CancellationToken token, params object[] arguments) =>
-        CommandAsync(arguments, additionalExceptionText: null, token);
+    public Task ExecuteAsync(CancellationToken token, params object[] arguments) =>
+        ExecuteAsync(arguments, additionalExceptionText: null, token);
 }
