@@ -1,9 +1,9 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-    <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <ImplicitUsings>enable</ImplicitUsings>
-    </PropertyGroup>
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
 
   <PropertyGroup>
     <Title>Lombiq Helpful Libraries - Command Line Libraries</Title>
@@ -16,13 +16,19 @@
     <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.Cli/Readme.md</PackageProjectUrl>
     <PackageLicenseFile>License.md</PackageLicenseFile>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <None Include="License.md" Pack="true" PackagePath=""/>
+    <None Include="Readme.md"/>
+    <None Include="NuGetIcon.png" Pack="true" PackagePath=""/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <PackageReference Include="CliWrap" Version="3.4.4" />
-    </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="CliWrap" Version="3.4.4"/>
+  </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj" />
-    </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj"/>
+  </ItemGroup>
 
 </Project>
