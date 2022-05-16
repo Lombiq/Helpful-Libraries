@@ -20,4 +20,4 @@ For general details about and on using the Helpful Libraries see the [root Readm
 
 ### Extensions
 
-- [`CommandExtensions`](Extensions/CommandExtensions.cs): Contains extension methods for CliWrap's `Command` type. For example: `ExecuteDotNetApplicationAsync` for launching .Net server apps that say "Application started. Press Ctrl+C to shut down.".
+- [`CommandExtensions`](Extensions/CommandExtensions.cs): Contains extension methods for CliWrap's `Command` type. For example: `ExecuteDotNetApplicationAsync` for launching .NET server apps that say "Application started. Press Ctrl+C to shut down.".

@@ -6,7 +6,7 @@ namespace CliWrap;
 public static class CommandExtensions
 {
     /// <summary>
-    /// Executes a <see cref="Command"/> as a <c>dotnet</c> command that starts a long-running application, and  waits
+    /// Executes a <see cref="Command"/> as a <c>dotnet</c> command that starts a long-running application, and waits
     /// for the app to be started.
     /// </summary>
     public static async Task ExecuteDotNetApplicationAsync(
