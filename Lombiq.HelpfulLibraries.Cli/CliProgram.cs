@@ -72,7 +72,7 @@ public class CliProgram
 
     /// <summary>
     /// Shortcut for <see
-    /// cref="ExecuteAsync(System.Collections.Generic.ICollection{object},string,System.Threading.CancellationToken)"/>
+    /// cref="ExecuteAsync(ICollection{object},string,CancellationToken)"/>
     /// if there is no additional exception message.
     /// </summary>
     /// <param name="token">Passed into the CliWrap <see cref="Command"/>.</param>
