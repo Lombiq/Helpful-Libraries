@@ -1,7 +1,6 @@
 using Dapper;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using OrchardCore.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
@@ -18,16 +17,13 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
     {
         private readonly Type _type;
         private readonly Dictionary<string, PropertyInfo> _properties;
-        private readonly IDbConnectionAccessor _dbAccessor;
-        private readonly ILogger _logger;
+        private readonly ILogger<ManualConnectingIndexService<T>> _logger;
         private readonly string _keys;
 
         private string _documentIdKey;
         private string _columns;
-        private string _tablePrefix;
 
         public ManualConnectingIndexService(
-            IDbConnectionAccessor dbAccessor,
             ILogger<ManualConnectingIndexService<T>> logger)
         {
             _type = typeof(T);
@@ -36,13 +32,12 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
                 .Where(property => property.Name != nameof(MapIndex.Id))
                 .ToDictionary(property => property.Name);
 
-            _dbAccessor = dbAccessor;
             _logger = logger;
             _keys = string.Join(", ", _properties.Keys.Select(key => "@" + key));
         }
 
         public Task AddAsync(T item, ISession session, int? setDocumentId = null) =>
-            RunTransactionAsync(session, async (connection, transaction, dialect, name) =>
+            RunTransactionAsync(session, async (connection, dialect, name) =>
             {
                 _documentIdKey ??= dialect.QuoteForColumnName("DocumentId");
                 _columns ??= string.Join(", ", _properties.Keys.Select(dialect.QuoteForColumnName));
@@ -52,7 +47,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
 
                 try
                 {
-                    return await connection.ExecuteAsync(sql, item, transaction);
+                    return await connection.ExecuteAsync(sql, item);
                 }
                 catch
                 {
@@ -65,36 +60,21 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
             });
 
         public Task RemoveAsync(string columnName, object value, ISession session) =>
-            RunTransactionAsync(session, (connection, transaction, dialect, name) =>
+            RunTransactionAsync(session, (connection, dialect, name) =>
             connection.ExecuteAsync(
                 $"DELETE FROM {name} WHERE {dialect.QuoteForColumnName(columnName)} = @value",
-                new { value },
-                transaction));
+                new { value }));
 
         private async Task<TOut> RunTransactionAsync<TOut>(
             ISession session,
-            Func<DbConnection, DbTransaction, ISqlDialect, string, Task<TOut>> request)
+            Func<DbConnection, ISqlDialect, string, Task<TOut>> request)
         {
-            async Task<TOut> Run(
-                DbTransaction transaction,
-                bool doCommit,
-                Func<DbConnection, DbTransaction, ISqlDialect, string, Task<TOut>> request)
-            {
-                _tablePrefix ??= session?.Store.Configuration.TablePrefix;
-                var dialect = session?.Store.Configuration.SqlDialect;
-                var quotedTableName = dialect?.QuoteForTableName(_tablePrefix + _type.Name);
+            var prefix = session.Store.Configuration.TablePrefix;
+            var dialect = session.Store.Configuration.SqlDialect;
+            var quotedTableName = dialect.QuoteForTableName(prefix + _type.Name);
 
-                var result = await request(transaction.Connection, transaction, dialect, quotedTableName);
-                if (doCommit) await transaction.CommitAsync();
-                return result;
-            }
-
-            if (session != null) return await Run(await session.BeginTransactionAsync(), doCommit: false, request);
-
-            await using var connection = _dbAccessor.CreateConnection();
-            await connection.OpenAsync();
-            await using var transaction = await connection.BeginTransactionAsync();
-            return await Run(transaction, doCommit: true, request);
+            var connection = await session.CreateConnectionAsync();
+            return await request(connection, dialect, quotedTableName);
         }
     }
 }

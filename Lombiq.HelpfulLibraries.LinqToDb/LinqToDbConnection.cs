@@ -9,6 +9,10 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
     {
         private readonly string _tablePrefix;
 
+        public LinqToDbConnection(IDataProvider dataProvider, IDbConnection connection, string tablePrefix)
+            : base(dataProvider, connection) =>
+            _tablePrefix = tablePrefix;
+
         public LinqToDbConnection(IDataProvider dataProvider, IDbTransaction dbTransaction, string tablePrefix)
             : base(dataProvider, dbTransaction) =>
                 _tablePrefix = tablePrefix;
