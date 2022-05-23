@@ -9,7 +9,7 @@
     <Title>Lombiq Helpful Libraries - ASP.NET Core Libraries</Title>
     <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-    <Description>Lombiq Helpful Libraries - ASP.NET Core Libraries: See the project website for detailed documentation.</Description>
+    <Description>Lombiq Helpful Libraries - ASP.NET Core Libraries: Some useful extensions and other helpers for ASP.NET Core. See the project website for detailed documentation.</Description>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;</PackageTags>
     <PackageIcon>NuGetIcon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
