@@ -42,6 +42,16 @@ namespace System
             values?.Where(s => !string.IsNullOrEmpty(s)).Join(separator);
 
         /// <summary>
+        /// Join strings fluently.
+        /// </summary>
+        /// <param name="values">The <see cref="string"/> values to join.</param>
+        /// <param name="separator">The separator to use between the <paramref name="values"/>.</param>
+        /// <returns>A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/>
+        /// provided.</returns>
+        public static string JoinTrimmedNonEmpty(this IEnumerable<string> values, string separator = " ") =>
+            values?.Select(s => s?.Trim()).JoinNonEmpty(separator);
+
+        /// <summary>
         /// A convenience method for easier access to <see cref="string.Split(string[],StringSplitOptions)"/>.
         /// </summary>
         /// <param name="value">The string value to split.</param>
