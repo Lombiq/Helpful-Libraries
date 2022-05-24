@@ -16,7 +16,7 @@
     <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.Cli/Readme.md</PackageProjectUrl>
     <PackageLicenseFile>License.md</PackageLicenseFile>
   </PropertyGroup>
-  
+
   <ItemGroup>
     <None Include="License.md" Pack="true" PackagePath=""/>
     <None Include="Readme.md"/>
