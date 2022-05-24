@@ -25,8 +25,8 @@ public class CliProgram
     /// outputs to the standard error stream then an exception is thrown.
     /// </summary>
     /// <param name="arguments">
-    /// The arguments passed to the command. If an item is not <see langword="string"/>, then it's converted using <see
-    /// cref="CultureInfo.InvariantCulture"/> formatter.
+    /// The arguments passed to the command. If an item is not a <see langword="string"/>, then it's converted using the
+    /// <see cref="CultureInfo.InvariantCulture"/> formatter.
     /// </param>
     /// <param name="additionalExceptionText">
     /// Text in the second line of the exception message after the standard "... command failed with the output below."
@@ -52,11 +52,11 @@ public class CliProgram
 
         if (result.ExitCode != 0 || !string.IsNullOrEmpty(result.StandardError))
         {
-            var argumentsString = string.Join(
-                separator: " ",
-                arguments.Select(argument => argument is string argumentString && argumentString.Contains(' ')
+            var argumentsString = arguments
+                .Select(argument => argument is string argumentString && argumentString.Contains(' ')
                     ? $"\"{argument}\""
-                    : argument));
+                    : argument.ToString())
+                .Join();
 
             var lines = new[]
             {
@@ -66,7 +66,7 @@ public class CliProgram
                 result.StandardError,
             };
 
-            throw new InvalidOperationException(string.Join(Environment.NewLine, lines.Where(line => line != null)));
+            throw new InvalidOperationException(lines.JoinNotNullOrEmpty(Environment.NewLine));
         }
     }
 
@@ -76,8 +76,8 @@ public class CliProgram
     /// </summary>
     /// <param name="token">Passed into the CliWrap <see cref="Command"/>.</param>
     /// <param name="arguments">
-    /// The arguments passed to the command. If an item is not <see langword="string"/>, then it's converted using <see
-    /// cref="CultureInfo.InvariantCulture"/> formatter.
+    /// The arguments passed to the command. If an item is not a <see langword="string"/>, then it's converted using the
+    /// <see cref="CultureInfo.InvariantCulture"/> formatter.
     /// </param>
     public Task ExecuteAsync(CancellationToken token, params object[] arguments) =>
         ExecuteAsync(arguments, additionalExceptionText: null, token);
