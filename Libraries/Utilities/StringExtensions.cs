@@ -56,6 +56,6 @@ namespace System
             this string value,
             string separator,
             StringSplitOptions stringSplitOptions = StringSplitOptions.None) =>
-            value?.Split(new[] { separator }, stringSplitOptions) ?? Array.Empty<string>();
+            value?.Split(new[] { separator }, stringSplitOptions) ?? new string[] { };
     }
 }
