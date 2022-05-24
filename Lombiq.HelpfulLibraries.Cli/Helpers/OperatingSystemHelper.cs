@@ -1,3 +1,5 @@
+using System;
+
 namespace Lombiq.HelpfulLibraries.Cli.Helpers;
 
 /// <summary>
