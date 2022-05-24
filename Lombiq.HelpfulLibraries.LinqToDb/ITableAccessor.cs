@@ -14,4 +14,13 @@ public interface ITableAccessor
     /// <returns>Linq2db table for query building purposes.</returns>
     ITable<T> GetTable<T>()
         where T : class;
+
+    /// <summary>
+    /// Returns a table for query building purposes.
+    /// </summary>
+    /// <typeparam name="T">Type of the object representing the table in the database.</typeparam>
+    /// <param name="collectionName">Name of the collection.</param>
+    /// <returns>Linq2db table for query building purposes.</returns>
+    ITable<T> GetTable<T>(string collectionName)
+        where T : class;
 }
