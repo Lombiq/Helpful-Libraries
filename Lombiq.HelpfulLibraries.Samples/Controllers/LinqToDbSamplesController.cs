@@ -24,6 +24,7 @@ public class LinqToDbSamplesController : Controller
     {
         var result = await _session.LinqQueryAsync(
             accessor => accessor
+                // GetTable method optionally receives a collection name.
                 .GetTable<AutoroutePartIndex>()
                 .Where(index => index.Path.Contains('a', StringComparison.OrdinalIgnoreCase))
                 .OrderByDescending(index => index.Path)
@@ -54,6 +55,7 @@ public class LinqToDbSamplesController : Controller
     // /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/Crud
     public async Task<IActionResult> Crud()
     {
+        // LinqTableQueryAsync method optionally receives a collection name.
         var insertedCount = await _session.LinqTableQueryAsync<BookRecord, int>(table => table
             .InsertAsync(
                 () => new BookRecord
