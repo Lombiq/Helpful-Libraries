@@ -34,6 +34,7 @@
     <PackageReference Include="OrchardCore.Queries" Version="1.3.0" />
     <PackageReference Include="OrchardCore.Users.Core" Version="1.3.0" />
     <PackageReference Include="OrchardCore.Title" Version="1.3.0" />
+    <PackageReference Include="OrchardCore.Themes" Version="1.3.0" />
     <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.3.0" />
     <PackageReference Include="OrchardCore.Infrastructure" Version="1.3.0" />
     <PackageReference Include="NodaTime" Version="3.0.9" />
