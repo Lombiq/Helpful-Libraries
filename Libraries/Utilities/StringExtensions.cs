@@ -24,12 +24,8 @@ namespace System
         /// <summary>
         /// Join strings fluently.
         /// </summary>
-        /// <param name="values">
-        /// The <see cref="string"/> values to join.
-        /// </param>
-        /// <param name="separator">
-        /// The separator to use between the <paramref name="values"/>.
-        /// </param>
+        /// <param name="values">The <see cref="string"/> values to join.</param>
+        /// <param name="separator">The separator to use between the <paramref name="values"/>.</param>
         /// <returns>
         /// A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/> provided.
         /// </returns>
@@ -39,12 +35,8 @@ namespace System
         /// <summary>
         /// Join strings fluently.
         /// </summary>
-        /// <param name="values">
-        /// The <see cref="string"/> values to join.
-        /// </param>
-        /// <param name="separator">
-        /// The separator to use between the <paramref name="values"/>.
-        /// </param>
+        /// <param name="values">The <see cref="string"/> values to join.</param>
+        /// <param name="separator">The separator to use between the <paramref name="values"/>.</param>
         /// <returns>
         /// A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/> provided.
         /// </returns>
@@ -54,12 +46,8 @@ namespace System
         /// <summary>
         /// Join strings fluently after trimming them and removing empty instances.
         /// </summary>
-        /// <param name="values">
-        /// The <see cref="string"/> values to join.
-        /// </param>
-        /// <param name="separator">
-        /// The separator to use between the <paramref name="values"/>.
-        /// </param>
+        /// <param name="values">The <see cref="string"/> values to join.</param>
+        /// <param name="separator">The separator to use between the <paramref name="values"/>.</param>
         /// <returns>
         /// A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/> provided.
         /// </returns>
@@ -69,12 +57,8 @@ namespace System
         /// <summary>
         /// A convenience method for easier access to <see cref="string.Split(string[],StringSplitOptions)"/>.
         /// </summary>
-        /// <param name="value">
-        /// The string value to split.
-        /// </param>
-        /// <param name="separator">
-        /// The separator string to split by.
-        /// </param>
+        /// <param name="value">The string value to split.</param>
+        /// <param name="separator">The separator string to split by.</param>
         /// <param name="stringSplitOptions">
         /// The <see cref="StringSplitOptions"/> to use; by default equal to <see cref="StringSplitOptions.None"/>.
         /// </param>
@@ -85,7 +69,7 @@ namespace System
             this string value,
             string separator,
             StringSplitOptions stringSplitOptions = StringSplitOptions.None) =>
-            // Array.Empty<string>() introduced in .NET 4.6, so we have to stick to new string[0] { } here.
-            value?.Split(new[] { separator }, stringSplitOptions) ?? new string[0] { };
+            // Array.Empty<string>() introduced in .NET 4.6, so we have to stick to new string[0] here.
+            value?.Split(new[] { separator }, stringSplitOptions) ?? new string[0];
     }
 }
