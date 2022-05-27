@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using OrchardCore.ResourceManagement;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
@@ -11,27 +12,14 @@ public class ResourceFilter
     public Func<HttpContext, Task<bool>> FilterAsync { get; set; }
     public Action<IResourceManager> Execution { get; set; }
 
-    public ResourceFilter Execute(Action<IResourceManager> action)
-    {
-        Execution = action;
-        return this;
-    }
+    public void Execute(Action<IResourceManager> action) => Execution = action;
 
-    public ResourceFilter RegisterStylesheet(string resource)
-    {
-        Execute(resourceManager => resourceManager.RegisterResource("stylesheet", resource));
-        return this;
-    }
+    public void RegisterStylesheet(params string[] resources) =>
+        Execute(resourceManager => resources.ForEach(resource => resourceManager.RegisterResource("stylesheet", resource)));
 
-    public ResourceFilter RegisterFootScript(string resource)
-    {
-        Execute(resourceManager => resourceManager.RegisterResource("script", resource).AtFoot());
-        return this;
-    }
+    public void RegisterFootScript(params string[] resources) =>
+        Execute(resourceManager => resources.ForEach(resource => resourceManager.RegisterResource("script", resource).AtFoot()));
 
-    public ResourceFilter RegisterHeadScript(string resource)
-    {
-        Execute(resourceManager => resourceManager.RegisterResource("script", resource).AtHead());
-        return this;
-    }
+    public void RegisterHeadScript(params string[] resources) =>
+        Execute(resourceManager => resources.ForEach(resource => resourceManager.RegisterResource("script", resource).AtHead()));
 }
