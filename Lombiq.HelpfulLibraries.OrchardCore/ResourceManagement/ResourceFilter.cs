@@ -11,14 +11,27 @@ public class ResourceFilter
     public Func<HttpContext, Task<bool>> FilterAsync { get; set; }
     public Action<IResourceManager> Execution { get; set; }
 
-    public void Execute(Action<IResourceManager> action) => Execution = action;
+    public ResourceFilter Execute(Action<IResourceManager> action)
+    {
+        Execution = action;
+        return this;
+    }
 
-    public void RegisterStylesheet(string resource) =>
+    public ResourceFilter RegisterStylesheet(string resource)
+    {
         Execute(resourceManager => resourceManager.RegisterResource("stylesheet", resource));
+        return this;
+    }
 
-    public void RegisterFootScript(string resource) =>
+    public ResourceFilter RegisterFootScript(string resource)
+    {
         Execute(resourceManager => resourceManager.RegisterResource("script", resource).AtFoot());
+        return this;
+    }
 
-    public void RegisterHeadScript(string resource) =>
+    public ResourceFilter RegisterHeadScript(string resource)
+    {
         Execute(resourceManager => resourceManager.RegisterResource("script", resource).AtHead());
+        return this;
+    }
 }
