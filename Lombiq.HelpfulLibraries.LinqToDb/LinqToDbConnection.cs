@@ -25,6 +25,10 @@ public class LinqToDbConnection : DataConnection, ITableAccessor
         return table.TableName(tableName);
     }
 
+    public new ITable<T> GetTable<T>()
+        where T : class
+            => GetPrefixedTable<T>();
+
     public ITable<T> GetTable<T>(string collectionName = null)
         where T : class
             => GetPrefixedTable<T>(collectionName);
