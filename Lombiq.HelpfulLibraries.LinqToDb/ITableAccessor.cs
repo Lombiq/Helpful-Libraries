@@ -23,6 +23,10 @@ public interface ITableAccessor
     /// Name of the YesSql collection that includes logically related objects. It is technically a prefix to the
     /// affected tables in the database.
     /// </param>
+    /// <remarks>
+    /// The reason for overloading the GetTable method instead of adding <paramref name="collectionName"/>
+    /// as an optional parameter is all the source code must be refactored where referenced.
+    /// </remarks>
     /// <returns>Linq2db table for query building purposes.</returns>
     ITable<T> GetTable<T>(string collectionName)
         where T : class;
