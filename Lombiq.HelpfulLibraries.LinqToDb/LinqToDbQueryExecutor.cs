@@ -63,12 +63,22 @@ namespace Lombiq.HelpfulLibraries.LinqToDb
                 GetDatabaseProviderName(session.Store.Configuration.SqlDialect.Name),
                 connection.ConnectionString);
 
-            await using var linqToDbConnection = new LinqToDbConnection(
-                dataProvider,
-                connection,
-                session.Store.Configuration.TablePrefix);
-
-            return await query(linqToDbConnection);
+            if (session.CurrentTransaction == null)
+            {
+                await using var linqToDbConnection = new LinqToDbConnection(
+                    dataProvider,
+                    connection,
+                    session.Store.Configuration.TablePrefix);
+                return await query(linqToDbConnection);
+            }
+            else
+            {
+                await using var linqToDbConnection = new LinqToDbConnection(
+                    dataProvider,
+                    session.CurrentTransaction,
+                    session.Store.Configuration.TablePrefix);
+                return await query(linqToDbConnection);
+            }
         }
 
         private static string GetDatabaseProviderName(string dbName) =>

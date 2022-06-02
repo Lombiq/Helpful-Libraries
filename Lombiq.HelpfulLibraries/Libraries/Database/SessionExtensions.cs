@@ -32,7 +32,7 @@ namespace YesSql
         {
             var query = GetQuery(sql, session);
 
-            return session.Connection().QueryAsync<TRow>(query, parameters);
+            return session.QueryAsync<TRow>(query, parameters);
         }
 
         /// <summary>
@@ -51,7 +51,7 @@ namespace YesSql
         {
             var query = GetQuery(sql, session);
 
-            return session.Connection().QueryFirstAsync<T>(query, parameters);
+            return session.QueryFirstAsync<T>(query, parameters);
         }
 
         /// <summary>
@@ -71,7 +71,7 @@ namespace YesSql
 
             var query = getSqlQuery(prefix);
 
-            return session.Connection().ExecuteAsync(query, parameters);
+            return session.ExecuteAsync(query, parameters);
         }
 
         private static string GetQuery(

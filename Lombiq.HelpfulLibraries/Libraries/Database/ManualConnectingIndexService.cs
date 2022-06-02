@@ -37,7 +37,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
         }
 
         public Task AddAsync(T item, ISession session, int? setDocumentId = null) =>
-            RunTransactionAsync(session, async (connection, dialect, name) =>
+            RunTransactionAsync(session, async (dialect, name) =>
             {
                 _documentIdKey ??= dialect.QuoteForColumnName("DocumentId");
                 _columns ??= string.Join(", ", _properties.Keys.Select(dialect.QuoteForColumnName));
@@ -47,7 +47,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
 
                 try
                 {
-                    return await connection.ExecuteAsync(sql, item);
+                    return session.ExecuteAsync(sql, item);
                 }
                 catch
                 {
@@ -60,21 +60,20 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
             });
 
         public Task RemoveAsync(string columnName, object value, ISession session) =>
-            RunTransactionAsync(session, (connection, dialect, name) =>
-            connection.ExecuteAsync(
+            RunTransactionAsync(session, (dialect, name) =>
+            session.ExecuteAsync(
                 $"DELETE FROM {name} WHERE {dialect.QuoteForColumnName(columnName)} = @value",
                 new { value }));
 
-        private async Task<TOut> RunTransactionAsync<TOut>(
+        private Task<TOut> RunTransactionAsync<TOut>(
             ISession session,
-            Func<DbConnection, ISqlDialect, string, Task<TOut>> request)
+            Func<ISqlDialect, string, Task<TOut>> request)
         {
             var prefix = session.Store.Configuration.TablePrefix;
             var dialect = session.Store.Configuration.SqlDialect;
             var quotedTableName = dialect.QuoteForTableName(prefix + _type.Name);
 
-            var connection = await session.CreateConnectionAsync();
-            return await request(connection, dialect, quotedTableName);
+            return request(dialect, quotedTableName);
         }
     }
 }
