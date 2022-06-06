@@ -23,13 +23,10 @@ jobs:
         .Synopsis
         Fails the current step with the provided message. Same as "core.setFailed()" from the official toolkit 
         (https://github.com/actions/toolkit).
-
-        .EXAMPLE
-        Set-Failed "Invalid something."
         #>
-        function Set-Failed($message)
+        function Set-Failed([Parameter(Mandatory=$true)] [string] $Message)
         {
-            echo "::error::$message"
+            echo "::error::$Message"
             exit 1
         }
         "@
