@@ -1,0 +1,39 @@
+name: Verify Pull Request
+
+on:
+  pull_request:
+
+env:
+  PULL_REQUEST_TITLE: ${{ github.event.pull_request.title }}
+
+defaults:
+  run:
+    shell: pwsh
+
+jobs:
+  parent-pull-request-exists:
+    runs-on: ubuntu-latest
+    name: Parent PR Exists
+    steps:
+    - name: Current PR Title Includes  Issue Code
+      run: |
+        if (-not ($Env:PULL_REQUEST_TITLE -match '^\s*\w+-\d+\s*:'))
+        {
+            Write-Error 'The pull request is not in the right format. Please start with the issue code followed by a colon e.g. "PROJ-123: My PR Title".'
+            exit 1
+        }
+
+    - name: Search Parent Repository for Matching PR
+      run: |
+        $issueCode = $Env:PULL_REQUEST_TITLE -replace '^\s*(\w+-\d+)\s*:.*$', '$1'
+
+        $url = 'https://api.github.com/repos/Lombiq/Open-Source-Orchard-Core-Extensions/pulls?state=open&per_page=100'
+        $titles = curl -H 'Accept: application/vnd.github.v3+json' $url | ConvertFrom-Json | % { $_.title }
+
+        $lookFor = "${issueCode}:"
+        $pullRequestExits = ($titles | % { $_ -and $_.Contains($lookFor) }) -contains $True
+        if (-not $pullRequestExits)
+        {
+            Write-Error "Couldn't find an Open-Source-Orchard-Core-Extensions pull request whose title starts with `"$lookFor`"."
+            exit 2
+        }
