@@ -11,47 +11,5 @@ defaults:
     shell: pwsh
 
 jobs:
-  parent-pull-request-exists:
-    runs-on: ubuntu-latest
-    name: Parent PR Exists
-    steps:
-    # Set-Failed does the s
-    - name: Add Scripts
-      run: |
-        $code = @'
-        <#
-        .Synopsis
-        Fails the current step with the provided message. Same as "core.setFailed()" from the official toolkit
-        (https://github.com/actions/toolkit).
-        #>
-        function Set-Failed([Parameter(Mandatory=$True)] [string] $Message)
-        {
-            echo "::error::$Message"
-            exit 1
-        }
-        '@
-
-        $ProfileDirectory = [System.IO.Path]::GetDirectoryName($Profile)
-        [System.IO.Directory]::CreateDirectory($ProfileDirectory)
-
-        echo $code >> $Profile
-    - name: Current PR Title Includes  Issue Code
-      run: |
-        if (-not ($Env:PULL_REQUEST_TITLE -match '^\s*\w+-\d+\s*:'))
-        {
-            Set-Failed 'The pull request is not in the right format. Please start with the issue code followed by a colon e.g. "PROJ-123: My PR Title".'
-        }
-
-    - name: Search Parent Repository for Matching PR
-      run: |
-        $issueCode = $Env:PULL_REQUEST_TITLE -replace '^\s*(\w+-\d+)\s*:.*$', '$1'
-
-        $url = 'https://api.github.com/repos/Lombiq/Open-Source-Orchard-Core-Extensions/pulls?state=open&per_page=100'
-        $titles = curl -H 'Accept: application/vnd.github.v3+json' $url | ConvertFrom-Json | % { $_.title }
-
-        $lookFor = "${issueCode}:"
-        $pullRequestExits = ($titles | % { $_ -and $_.Contains($lookFor) }) -contains $True
-        if (-not $pullRequestExits)
-        {
-            Set-Failed "Couldn't find an Open-Source-Orchard-Core-Extensions pull request whose title starts with `"$lookFor`"."
-        }
+  call-verify-workflow:
+    uses: Lombiq/GitHub-Actions/.github/workflows/verify.yml@issue/OSOE-131
