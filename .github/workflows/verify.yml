@@ -34,6 +34,9 @@ jobs:
         }
         "@
 
+        $ProfileDirectory = [System.IO.Path]::GetDirectoryName($Profile)
+        [System.IO.Directory]::CreateDirectory($ProfileDirectory)
+
         echo $code >> $Profile
     - name: Current PR Title Includes  Issue Code
       run: |
