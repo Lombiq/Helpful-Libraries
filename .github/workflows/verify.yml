@@ -19,7 +19,7 @@ jobs:
       run: |
         if (-not ($Env:PULL_REQUEST_TITLE -match '^\s*\w+-\d+\s*:'))
         {
-            Write-Error 'The pull request is not in the right format. Please start with the issue code followed by a colon e.g. "PROJ-123: My PR Title".'
+            echo '::error::The pull request is not in the right format. Please start with the issue code followed by a colon e.g. "PROJ-123: My PR Title".'
             exit 1
         }
 
@@ -34,6 +34,6 @@ jobs:
         $pullRequestExits = ($titles | % { $_ -and $_.Contains($lookFor) }) -contains $True
         if (-not $pullRequestExits)
         {
-            Write-Error "Couldn't find an Open-Source-Orchard-Core-Extensions pull request whose title starts with `"$lookFor`"."
+            echo "::error::Couldn't find an Open-Source-Orchard-Core-Extensions pull request whose title starts with `"$lookFor`"."
             exit 2
         }
