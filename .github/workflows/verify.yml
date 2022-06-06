@@ -18,18 +18,18 @@ jobs:
     # Set-Failed does the s
     - name: Add Scripts
       run: |
-        $code = @"
+        $code = @'
         <#
         .Synopsis
         Fails the current step with the provided message. Same as "core.setFailed()" from the official toolkit 
         (https://github.com/actions/toolkit).
         #>
-        function Set-Failed([Parameter(Mandatory=$true)] [string] $Message)
+        function Set-Failed([Parameter(Mandatory=$True)] [string] $Message)
         {
             echo "::error::$Message"
             exit 1
         }
-        "@
+        '@
 
         $ProfileDirectory = [System.IO.Path]::GetDirectoryName($Profile)
         [System.IO.Directory]::CreateDirectory($ProfileDirectory)
