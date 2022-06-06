@@ -15,12 +15,31 @@ jobs:
     runs-on: ubuntu-latest
     name: Parent PR Exists
     steps:
+    # Set-Failed does the s
+    - name: Add Scripts
+      run: |
+        $code = @"
+        <#
+        .Synopsis
+        Fails the current step with the provided message. Same as "core.setFailed()" from the official toolkit 
+        (https://github.com/actions/toolkit).
+
+        .EXAMPLE
+        Set-Failed "Invalid something."
+        #>
+        function Set-Failed($message)
+        {
+            echo "::error::$message"
+            exit 1
+        }
+        "@
+
+        echo $code >> $Profile
     - name: Current PR Title Includes  Issue Code
       run: |
         if (-not ($Env:PULL_REQUEST_TITLE -match '^\s*\w+-\d+\s*:'))
         {
-            echo '::error::The pull request is not in the right format. Please start with the issue code followed by a colon e.g. "PROJ-123: My PR Title".'
-            exit 1
+            Set-Failed 'The pull request is not in the right format. Please start with the issue code followed by a colon e.g. "PROJ-123: My PR Title".'
         }
 
     - name: Search Parent Repository for Matching PR
@@ -34,6 +53,5 @@ jobs:
         $pullRequestExits = ($titles | % { $_ -and $_.Contains($lookFor) }) -contains $True
         if (-not $pullRequestExits)
         {
-            echo "::error::Couldn't find an Open-Source-Orchard-Core-Extensions pull request whose title starts with `"$lookFor`"."
-            exit 2
+            Set-Failed "Couldn't find an Open-Source-Orchard-Core-Extensions pull request whose title starts with `"$lookFor`"."
         }
