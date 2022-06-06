@@ -9,7 +9,7 @@ env:
 defaults:
   run:
     shell: pwsh
-dummy_commit:
+
 jobs:
   parent-pull-request-exists:
     runs-on: ubuntu-latest
