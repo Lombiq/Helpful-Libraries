@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Identity;
 using OrchardCore.Users;
 using OrchardCore.Users.Models;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Security.Claims;
@@ -12,10 +13,10 @@ namespace Lombiq.HelpfulLibraries.Libraries.Users
 {
     public class CachingUserManager : ICachingUserManager
     {
-        private readonly Dictionary<string, User> _userByNameCache = new();
-        private readonly Dictionary<string, User> _userByEmailCache = new();
-        private readonly Dictionary<string, User> _userByIdCache = new();
-        private readonly Dictionary<string, User> _userByUserIdCache = new();
+        private readonly ConcurrentDictionary<string, User> _userByNameCache = new(1, 100);
+        private readonly ConcurrentDictionary<string, User> _userByEmailCache = new(1, 100);
+        private readonly ConcurrentDictionary<string, User> _userByIdCache = new(1, 100);
+        private readonly ConcurrentDictionary<string, User> _userByUserIdCache = new(1, 100);
 
         private readonly Lazy<UserManager<IUser>> _userManagerLazy;
         private readonly Lazy<ISession> _sessionLazy;
