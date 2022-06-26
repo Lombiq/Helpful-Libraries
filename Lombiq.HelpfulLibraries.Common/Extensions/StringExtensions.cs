@@ -179,8 +179,7 @@ public static class StringExtensions
     /// null strings are filtered out.
     /// </summary>
     public static string JoinNotNullOrEmpty(this string[] strings, string separator = "") =>
-        string
-            .Join(separator, strings.Where(item => !string.IsNullOrEmpty(item)));
+        string.Join(separator, strings.Where(item => !string.IsNullOrEmpty(item)));
 
     /// <summary>
     /// Performs <see cref="Regex.Match(string, string, RegexOptions, TimeSpan)"/> with timeout (default is 1s).
