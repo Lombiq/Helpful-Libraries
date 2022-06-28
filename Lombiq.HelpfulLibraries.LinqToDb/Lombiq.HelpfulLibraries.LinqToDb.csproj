@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net6.0</TargetFramework>
     <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
   </PropertyGroup>
 
@@ -22,7 +22,7 @@
     <None Include="Readme.md" />
     <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
   </ItemGroup>
-  
+
   <ItemGroup>
     <FrameworkReference Include="Microsoft.AspNetCore.App" />
   </ItemGroup>

@@ -37,7 +37,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
         }
 
         public Task AddAsync(T item, ISession session, int? setDocumentId = null) =>
-            RunTransactionAsync(session, async (dialect, name) =>
+            Task.FromResult(RunTransactionAsync(session, (dialect, name) =>
             {
                 _documentIdKey ??= dialect.QuoteForColumnName("DocumentId");
                 _columns ??= string.Join(", ", _properties.Keys.Select(dialect.QuoteForColumnName));
@@ -47,7 +47,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
 
                 try
                 {
-                    return session.ExecuteAsync(sql, item);
+                    return Task.FromResult(session.ExecuteAsync(sql, item));
                 }
                 catch
                 {
@@ -57,7 +57,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
                         JsonConvert.SerializeObject(item));
                     throw;
                 }
-            });
+            }));
 
         public Task RemoveAsync(string columnName, object value, ISession session) =>
             RunTransactionAsync(session, (dialect, name) =>
