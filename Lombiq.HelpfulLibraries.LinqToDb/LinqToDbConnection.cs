@@ -29,7 +29,7 @@ public class LinqToDbConnection : DataConnection, ITableAccessor
         where T : class
             => GetPrefixedTable<T>();
 
-    public ITable<T> GetTable<T>(string collectionName = null)
+    public ITable<T> GetTable<T>(string collectionName)
         where T : class
             => GetPrefixedTable<T>(collectionName);
 }
