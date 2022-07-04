@@ -24,8 +24,11 @@ public interface ITableAccessor
     /// affected tables in the database.
     /// </param>
     /// <remarks>
-    /// The reason for overloading the GetTable method instead of adding <paramref name="collectionName"/>
-    /// as an optional parameter is all the source code must be refactored where referenced.
+    /// <para>
+    /// The reason for overloading the GetTable method instead of adding <paramref name="collectionName"/> as an
+    /// optional parameter is that otherwise we'd get an "error CS0854: An expression tree may not contain a call or
+    /// invocation that uses optional arguments".
+    /// </para>
     /// </remarks>
     /// <returns>Linq2db table for query building purposes.</returns>
     ITable<T> GetTable<T>(string collectionName)
