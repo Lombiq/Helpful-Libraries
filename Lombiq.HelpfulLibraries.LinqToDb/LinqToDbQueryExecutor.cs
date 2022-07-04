@@ -31,12 +31,17 @@ public static class LinqToDbQueryExecutor
     /// <typeparam name="TResult">The type of results to return.</typeparam>
     /// <param name="session">A YesSql session whose connection is used instead of creating a new one.</param>
     /// <param name="query">The <see cref="IQueryable"/> which will be run as a DB query.</param>
+    /// <param name="collectionName">
+    /// Name of the YesSql collection that includes logically related objects. It is technically a prefix of the names
+    /// of the affected tables in the database.
+    /// </param>
     /// <returns>The output of the query.</returns>
     public static Task<TResult> LinqTableQueryAsync<TTable, TResult>(
         this ISession session,
-        Func<ITable<TTable>, Task<TResult>> query)
+        Func<ITable<TTable>, Task<TResult>> query,
+        string collectionName = null)
         where TTable : class =>
-        session.LinqQueryAsync(accessor => query(accessor.GetTable<TTable>()));
+        session.LinqQueryAsync(accessor => query(accessor.GetTable<TTable>(collectionName)));
 
     /// <summary>
     /// Run LINQ syntax-based DB queries on the current DB connection with LINQ to DB.
