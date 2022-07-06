@@ -15,7 +15,8 @@ For general details about and on using the Helpful Libraries see the [root Readm
 
 ### Helpers
 
-- [`CliWrapHelper`](Helpers/CliWrapHelper.cs): Specialized tasks using CliWrap, such as `WhichAsync` that helps locate the full path of a program that's inside the user's PATH environment variable. 
+- [`CliWrapHelper`](Helpers/CliWrapHelper.cs): Specialized tasks using CliWrap, such as `WhichAsync` that helps locate the full path of a program that's inside the user's PATH environment variable.
+- [`DotnetBuildHelper`](Helpers/DotnetBuildHelper.cs): Contains a method for executing static code analysis, use to test for false-negatives in analyzer projects.
 - [`OperatingSystemHelper`](Helpers/OperatingSystemHelper.cs): Gets OS-specific information like the file extension of executable files.
 
 ### Extensions
