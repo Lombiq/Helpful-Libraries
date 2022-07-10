@@ -14,8 +14,12 @@ public static class DotnetBuildHelper
     /// </summary>
     /// <param name="solutionPath">The path to the sln file.</param>
     /// <param name="additionalArguments">Further command line arguments.</param>
-    /// <remarks><para>See https://github.com/Lombiq/.NET-Analyzers/blob/dev/Docs/UsingAnalyzersDuringCommandLineBuilds.md#net-code-style-analysis
-    /// for more information.</para></remarks>
+    /// <remarks>
+    /// <para>
+    /// See https://github.com/Lombiq/.NET-Analyzers/blob/dev/Docs/UsingAnalyzersDuringCommandLineBuilds.md#net-code-style-analysis
+    /// for more information.
+    /// </para>
+    /// </remarks>
     public static Task ExecuteStaticCodeAnalysisAsync(string solutionPath, params string[] additionalArguments)
     {
         var relativeSolutionPath = Path.Combine("..", "..", "..", "..", "TestSolutions", solutionPath);
