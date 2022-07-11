@@ -12,7 +12,7 @@ public static class DotnetBuildHelper
     /// --consoleLoggerParameters:NoSummary --verbosity:quiet -p:TreatWarningsAsErrors=true
     /// -p:RunAnalyzersDuringBuild=true</c> To dynamically run static code analysis.
     /// </summary>
-    /// <param name="solutionPath">The path to the sln file.</param>
+    /// <param name="relativeSolutionPath">The path to the sln file.</param>
     /// <param name="additionalArguments">Further command line arguments.</param>
     /// <remarks>
     /// <para>
@@ -20,10 +20,8 @@ public static class DotnetBuildHelper
     /// for more information.
     /// </para>
     /// </remarks>
-    public static Task ExecuteStaticCodeAnalysisAsync(string solutionPath, params string[] additionalArguments)
+    public static Task ExecuteStaticCodeAnalysisAsync(string relativeSolutionPath, params string[] additionalArguments)
     {
-        var relativeSolutionPath = Path.Combine("..", "..", "..", "..", "TestSolutions", solutionPath);
-
         var arguments = new List<object>
         {
             "build",
