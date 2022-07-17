@@ -1,7 +1,5 @@
 # Lombiq Helpful Libraries - LINQ to DB Libraries for Orchard Core
 
-
-
 ## About
 
 With the help of this project you can write LINQ expressions and run them with a [YesSql](https://github.com/sebastienros/yessql) `ISession` extension method to query from the DB instead of writing plain SQL queries. Uses the [LINQ to DB project](https://linq2db.github.io/).
@@ -9,7 +7,6 @@ With the help of this project you can write LINQ expressions and run them with a
 You can watch a demo video of the project [here](https://www.youtube.com/watch?v=ldJOdCSsWJo).
 
 For general details about and on using the Helpful Libraries see the [root Readme](../Readme.md).
-
 
 ## Documentation
 

@@ -1,7 +1,5 @@
 # Lombiq Helpful Libraries - Common Libraries - Utilities
 
-
-
 - `ExceptionHelpers`: Using these helpers, arguments can be tested without writing `if` statements.
 - `FileSystemHelper`: Some shortcuts for file system operations.
 - `JsonHelpers`: JSON syntax can be validated with the `ValidateJsonIfNotNull` helper method.

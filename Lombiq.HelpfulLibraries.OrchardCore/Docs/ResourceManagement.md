@@ -1,7 +1,5 @@
 # Lombiq Helpful Libraries - Orchard Core Libraries - Resource Management for Orchard Core
 
-
-
 ## Resource Filter
 
 Makes it possible to include resources automatically based on the current context. E.g. inject home page styling only when the home page is being loaded.
@@ -32,7 +30,7 @@ public class ResourceFilters : IResourceFilterProvider
 }
 ```
 
-## Extensions:
+## Extensions
 
 - `ApplicationBuilderExtensions`: Shortcut extensions for application setup, e.g.: `UseResourceFilters` (see above)
 - `ResourceManifestExtensions`: Extensions for building the resource manifest, e.g.: `SetDependenciesRecursively` helps registering multi-level dependencies.

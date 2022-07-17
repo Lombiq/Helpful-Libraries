@@ -1,7 +1,5 @@
 # Lombiq Helpful Libraries - Orchard Core Libraries - Users for Orchard Core
 
-
-
 ## `AdminPermissionBase`
 
 A provider that only has *Administrator* stereotype permissions. Reduces boilerplate.
@@ -18,4 +16,4 @@ Retrieves `User`s from a non-persistent, per-request cache or gets them from the
 
 ## `RoleCommands`
 
-Adds the `addPermissionToRole /RoleName:<rolename> /Permission:<permission>` command so you can easily assign permissions in the recipes. 
+Adds the `addPermissionToRole /RoleName:<rolename> /Permission:<permission>` command so you can easily assign permissions in the recipes.

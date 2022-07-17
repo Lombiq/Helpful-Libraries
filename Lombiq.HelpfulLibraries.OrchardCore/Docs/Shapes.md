@@ -1,7 +1,5 @@
 # Lombiq Helpful Libraries - Orchard Core Libraries - Shapes for Orchard Core
 
-
-
 ## Extensions
 
 - `LayoutExtensions`: Adds features for adding shapes to the layout via `ILayoutAccessor`.

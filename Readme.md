@@ -1,7 +1,5 @@
 # Lombiq Helpful Libraries
 
-
-
 [![Lombiq.HelpfulLibraries NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries?label=Lombiq.HelpfulLibraries)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries/)
 [![Lombiq.HelpfulLibraries.AspNetCore NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.AspNetCore?label=Lombiq.HelpfulLibraries.AspNetCore)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.AspNetCore/)
 [![Lombiq.HelpfulLibraries.Cli NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Cli?label=Lombiq.HelpfulLibraries.Cli)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Cli/)
@@ -11,7 +9,6 @@
 [![Lombiq.HelpfulLibraries.OrchardCore.Testing NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.OrchardCore.Testing?label=Lombiq.HelpfulLibraries.OrchardCore.Testing)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.OrchardCore.Testing/)
 [![Lombiq.HelpfulLibraries.RestEase NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.RestEase?label=Lombiq.HelpfulLibraries.RestEase)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.RestEase/)
 
-
 ## About
 
 Various useful libraries that can be handy when developing for .NET, ASP.NET Core, and [Orchard Core](https://orchardcore.net/), to be used from your own projects.
@@ -19,7 +16,6 @@ Various useful libraries that can be handy when developing for .NET, ASP.NET Cor
 Do you want to quickly try out this project and see it in action? Check it out in our [Open-Source Orchard Core Extensions](https://github.com/Lombiq/Open-Source-Orchard-Core-Extensions) full Orchard Core solution and also see our other useful Orchard Core-related open-source projects!
 
 Note that this project has an Orchard 1 version in the [dev-orchard-1 branch](https://github.com/Lombiq/Helpful-Libraries/tree/dev-orchard-1).
-
 
 ## Documentation
 
