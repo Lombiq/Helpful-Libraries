@@ -2,7 +2,7 @@
 
 ## `AdminPermissionBase`
 
-A provider that only has *Administrator* stereotype permissions. Reduces boilerplate.
+A provider that only has _Administrator_ stereotype permissions. Reduces boilerplate.
 
 To use it, override the `AdminPermissions` read-only abstract property with a collection of admin permissions. This base class implements the `GetPermissionsAsync` and `GetDefaultStereotypes` methods with the derived permission collection.
 

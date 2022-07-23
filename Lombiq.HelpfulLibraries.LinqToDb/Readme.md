@@ -16,6 +16,6 @@ See [`LinqToDbSamplesController`](../Lombiq.HelpfulLibraries.Samples/Controllers
 
 ### Extensions
 
-You can write custom SQL syntax extensions and functions as you can see it in *[Extensions/CustomSqlExtensions.cs](Extensions/CustomSqlExtensions.cs)*.
+You can write custom SQL syntax extensions and functions as you can see it in _[Extensions/CustomSqlExtensions.cs](Extensions/CustomSqlExtensions.cs)_.
 
 For more examples check out [this article](http://blog.linq2db.com/2016/06/how-to-teach-linq-to-db-convert-custom.html).
