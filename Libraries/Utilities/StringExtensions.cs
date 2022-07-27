@@ -40,7 +40,7 @@ namespace System
         /// <returns>
         /// A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/> provided.
         /// </returns>
-        public static string JoinNonEmpty(this IEnumerable<string> values, string separator = "") =>
+        public static string JoinNonEmpty(this IEnumerable<string> values, string separator = " ") =>
             values?.Where(s => !string.IsNullOrEmpty(s)).Join(separator);
 
         /// <summary>
