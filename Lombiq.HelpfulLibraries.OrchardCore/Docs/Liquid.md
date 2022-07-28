@@ -1,8 +1,6 @@
 # Lombiq Helpful Libraries - Orchard Core Libraries - Liquid for Orchard Core
 
-
 Contains supplementary extensions and services for using Liquid in Orchard Core.
-
 
 ## The `ILiquidPropertyRegistrar` service interface
 
@@ -10,7 +8,6 @@ Implement this to define Liquid properties that rely on other services and async
 
 Note: Use `services.RegisterLiquidPropertyAccessor<TImplementation>(propertyName)` instead of `services.AddScoped`. That's handled by the extension.
 
-
 ## Extensions
 
-- `LiquidServiceCollectionExtensions`: Used for registering related services, like `RegisterLiquidPropertyAccessor` to register new properties. 
+- `LiquidServiceCollectionExtensions`: Used for registering related services, like `RegisterLiquidPropertyAccessor` to register new properties.

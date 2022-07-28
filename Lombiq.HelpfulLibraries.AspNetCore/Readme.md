@@ -1,13 +1,10 @@
 # Lombiq Helpful Libraries - ASP.NET Core Libraries
 
-
-
 ## About
 
 Some useful extensions and other helpers for ASP.NET Core.
 
 For general details about and on using the Helpful Libraries see the [root Readme](../Readme.md).
-
 
 ## Documentation
 
