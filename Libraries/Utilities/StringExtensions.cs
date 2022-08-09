@@ -33,12 +33,13 @@ namespace System
             string.Join(separator, values ?? Enumerable.Empty<string>());
 
         /// <summary>
-        /// Join strings fluently.
+        /// Join non-null, non-empty strings fluently.
         /// </summary>
         /// <param name="values">The <see cref="string"/> values to join.</param>
         /// <param name="separator">The separator to use between the <paramref name="values"/>.</param>
         /// <returns>
-        /// A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/> provided.
+        /// A new <see cref="string"/> that concatenates all non-null, non-empty values with the <paramref
+        /// name="separator"/> provided.
         /// </returns>
         public static string JoinNonEmpty(this IEnumerable<string> values, string separator = " ") =>
             values?.Where(s => !string.IsNullOrEmpty(s)).Join(separator);
@@ -49,7 +50,8 @@ namespace System
         /// <param name="values">The <see cref="string"/> values to join.</param>
         /// <param name="separator">The separator to use between the <paramref name="values"/>.</param>
         /// <returns>
-        /// A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/> provided.
+        /// A new <see cref="string"/> that concatenates all whitespace-trimmed, non-null, non-empty values with the
+        /// <paramref name="separator"/> provided.
         /// </returns>
         public static string JoinTrimmedNonEmpty(this IEnumerable<string> values, string separator = " ") =>
             values?.Select(s => s?.Trim()).JoinNonEmpty(separator);
