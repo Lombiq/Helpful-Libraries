@@ -1,7 +1,7 @@
 using LinqToDB;
 using LinqToDB.Data;
 using LinqToDB.DataProvider;
-using System.Data;
+using System.Data.Common;
 
 namespace Lombiq.HelpfulLibraries.LinqToDb;
 
@@ -9,14 +9,14 @@ public class LinqToDbConnection : DataConnection, ITableAccessor
 {
     private readonly string _tablePrefix;
 
-    public LinqToDbConnection(IDataProvider dataProvider, IDbTransaction dbTransaction, string tablePrefix)
+    public LinqToDbConnection(IDataProvider dataProvider, DbTransaction dbTransaction, string tablePrefix)
         : base(dataProvider, dbTransaction) =>
             _tablePrefix = tablePrefix;
 
     public ITable<T> GetPrefixedTable<T>(string collectionName = null)
         where T : class
     {
-        var table = base.GetTable<T>();
+        var table = DataExtensions.GetTable<T>(this);
 
         var tableName = string.IsNullOrEmpty(collectionName)
             ? _tablePrefix + table.TableName
@@ -25,7 +25,7 @@ public class LinqToDbConnection : DataConnection, ITableAccessor
         return table.TableName(tableName);
     }
 
-    public new ITable<T> GetTable<T>()
+    public ITable<T> GetTable<T>()
         where T : class
             => GetPrefixedTable<T>();
 
