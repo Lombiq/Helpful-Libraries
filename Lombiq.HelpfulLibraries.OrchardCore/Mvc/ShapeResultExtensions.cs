@@ -1,5 +1,5 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
-using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace OrchardCore.DisplayManagement.Views;
@@ -18,7 +18,7 @@ public static class ShapeResultExtensions
         string name,
         double priority,
         string placement = CommonLocationNames.Parts) =>
-        shapeResult.Location(FormattableString.Invariant($"{placement}#{name}:{priority}"));
+        shapeResult.Location(string.Create(CultureInfo.InvariantCulture, $"{placement}#{name}:{priority}"));
 
     /// <summary>
     /// The shape will only be rendered if <paramref name="condition"/> is <see langword="true"/>. This is a shortcut
@@ -32,8 +32,7 @@ public static class ShapeResultExtensions
     /// </summary>
     public static ShapeResult PlaceInZone(this ShapeResult shapeResult, string zoneName, double? priority = null) =>
         shapeResult.Location(priority is { } number
-            ? FormattableString.Invariant($"{zoneName}:{number}")
-            : zoneName);
+            ? string.Create(CultureInfo.InvariantCulture, $"{zoneName}:{number}") : zoneName);
 
     /// <summary>
     /// Sets the <see cref="ShapeResult"/>'s location to a global layout zone with optional sorting information.

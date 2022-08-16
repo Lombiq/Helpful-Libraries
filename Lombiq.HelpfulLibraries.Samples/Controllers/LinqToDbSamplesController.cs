@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using OrchardCore.ContentManagement.Records;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using YesSql;
@@ -74,7 +75,6 @@ public class LinqToDbSamplesController : Controller
             .Where(record => record.Author == "Jules Verne")
             .DeleteAsync(HttpContext.RequestAborted));
 
-        return Ok(FormattableString.Invariant(
-            $"Inserted: {insertedCount}, modified: {modifiedCount}, deleted: {deletedCount}."));
+        return Ok(string.Create(CultureInfo.InvariantCulture, $"Inserted: {insertedCount}, modified: {modifiedCount}, deleted: {deletedCount}."));
     }
 }
