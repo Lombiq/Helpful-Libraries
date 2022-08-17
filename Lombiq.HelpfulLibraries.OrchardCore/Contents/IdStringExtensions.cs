@@ -1,6 +1,4 @@
-using System;
-
-namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
+namespace System;
 
 public static class IdStringExtensions
 {
