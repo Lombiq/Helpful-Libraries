@@ -75,6 +75,8 @@ public class LinqToDbSamplesController : Controller
             .Where(record => record.Author == "Jules Verne")
             .DeleteAsync(HttpContext.RequestAborted));
 
-        return Ok(string.Create(CultureInfo.InvariantCulture, $"Inserted: {insertedCount}, modified: {modifiedCount}, deleted: {deletedCount}."));
+        return Ok(string.Create(
+            CultureInfo.InvariantCulture,
+            $"Inserted: {insertedCount}, modified: {modifiedCount}, deleted: {deletedCount}."));
     }
 }
