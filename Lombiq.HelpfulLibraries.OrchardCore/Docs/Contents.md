@@ -13,8 +13,9 @@
 - `ContentOrchardHelperExtensions`: Extensions for managing content items better via `IOrchardHelper`.
 - `ContentManagerExtensions`: Adds extension methods for retrieving, loading or creating content using the `IContentManager`.
 - `ContentManagerSessionExtensions`: Uses the `IContentManagerSession` scoped cache around any `ContentItem` query done outside `IContentManager`.
-- `ContentTypeDefinitionBuilderExtensions`: Adds extension methods for configuring the content type definition via `ContentTypeDefinitionBuilder`.  
-- `ContentPartDefinitionBuilderExtensions`: Adds extension methods for configuring the content part definition via `ContentPartDefinitionBuilder`.  
+- `ContentTypeDefinitionBuilderExtensions`: Adds extension methods for configuring the content type definition via `ContentTypeDefinitionBuilder`.
+- `ContentPartDefinitionBuilderExtensions`: Adds extension methods for configuring the content part definition via `ContentPartDefinitionBuilder`.
+- `IdStringExtensions`: Adds extension methods relating to content item ID generation.
 
 ## Helpers
 
