@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="linq2db" Version="3.6.0" />
+    <PackageReference Include="linq2db" Version="4.1.1" />
     <PackageReference Include="OrchardCore.Data.YesSql" Version="1.4.0" />
   </ItemGroup>
 </Project>
