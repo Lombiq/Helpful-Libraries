@@ -17,17 +17,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="License.md" Pack="true" PackagePath=""/>
-    <None Include="Readme.md"/>
-    <None Include="NuGetIcon.png" Pack="true" PackagePath=""/>
+    <None Include="License.md" Pack="true" PackagePath="" />
+    <None Include="Readme.md" />
+    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CliWrap" Version="3.4.4"/>
+    <PackageReference Include="CliWrap" Version="3.4.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj"/>
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj" />
   </ItemGroup>
 
 </Project>

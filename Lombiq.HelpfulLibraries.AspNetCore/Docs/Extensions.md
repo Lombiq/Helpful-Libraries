@@ -1,7 +1,5 @@
 # Lombiq Helpful Libraries - ASP.NET Core Libraries - Extensions
 
-
-
 - `CookieHttpContextExtensions`: Provides shortcuts for some cookie-related operations.
 - `DateTimeHttpContextExtensions`: Makes it possible to set or get IANA time-zone IDs in the HTTP context.
 - `EnvironmentHttpContextExtensions`: Provides shortcuts to determine information about the current hosting environment, like whether the app is running in Development mode.

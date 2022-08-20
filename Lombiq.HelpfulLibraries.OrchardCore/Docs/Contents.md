@@ -1,12 +1,9 @@
 # Lombiq Helpful Libraries - Orchard Core Libraries - Contents for Orchard Core
 
-
-
 ## Constants
 
 - `CommonContentDisplayTypes`: Has constants for values that can be used with `IContentItemDisplayManager.BuildDisplayAsync` or `OrchardRazorHelperExtensions.DisplayAsync` to safely select the correct display type.
 - `CommonStereotypes`: Constants for commonly used content stereotypes.
-
 
 ## Extensions
 
@@ -16,14 +13,13 @@
 - `ContentOrchardHelperExtensions`: Extensions for managing content items better via `IOrchardHelper`.
 - `ContentManagerExtensions`: Adds extension methods for retrieving, loading or creating content using the `IContentManager`.
 - `ContentManagerSessionExtensions`: Uses the `IContentManagerSession` scoped cache around any `ContentItem` query done outside `IContentManager`.
-- `ContentTypeDefinitionBuilderExtensions`: Adds extension methods for configuring the content type definition via `ContentTypeDefinitionBuilder`.  
-- `ContentPartDefinitionBuilderExtensions`: Adds extension methods for configuring the content part definition via `ContentPartDefinitionBuilder`.  
-
+- `ContentTypeDefinitionBuilderExtensions`: Adds extension methods for configuring the content type definition via `ContentTypeDefinitionBuilder`.
+- `ContentPartDefinitionBuilderExtensions`: Adds extension methods for configuring the content part definition via `ContentPartDefinitionBuilder`.
+- `IdStringExtensions`: Adds extension methods relating to content item ID generation.
 
 ## Helpers
 
 - `ContentExceptionHelpers`: Using these helpers, arguments can be tested without writing `if` statements, for example to check if the `ContentItem` has a the given part attached to it.
-
 
 ## Services
 
