@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Lombiq.HelpfulLibraries.AspNetCore.Mvc;
 
-public sealed class FromQueryAsJsonAttribute : ModelBinderAttribute
+public sealed class FromJsonQueryStringAttribute : ModelBinderAttribute
 {
-    public FromQueryAsJsonAttribute()
+    public FromJsonQueryStringAttribute()
     {
         BinderType = typeof(JsonModelBinder);
         BindingSource = BindingSource.Query;
