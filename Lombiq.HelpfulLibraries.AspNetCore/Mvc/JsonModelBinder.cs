@@ -30,6 +30,11 @@ public class JsonModelBinder : IModelBinder
                 bindingContext.ModelType,
                 new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
+            if (parsed is null)
+            {
+                return Task.CompletedTask;
+            }
+
             _validator.Validate(
                 bindingContext.ActionContext,
                 validationState: bindingContext.ValidationState,
