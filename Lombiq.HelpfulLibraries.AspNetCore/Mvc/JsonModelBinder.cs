@@ -1,3 +1,4 @@
+// Orginal source code: https://abdus.dev/posts/aspnetcore-model-binding-json-query-params/.
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 using Microsoft.Extensions.Logging;
@@ -7,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.AspNetCore.Mvc;
 
-// Orginal source code: https://abdus.dev/posts/aspnetcore-model-binding-json-query-params/.
 public class JsonModelBinder : IModelBinder
 {
     private readonly ILogger<JsonModelBinder> _logger;
