@@ -260,6 +260,7 @@
     <Content Include="Views\Empty.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Docs\AuthenticationLibraries.md" />
     <None Include="Docs\ContentsLibraries.md" />
     <None Include="Docs\DependencyInjectionLibraries.md" />
