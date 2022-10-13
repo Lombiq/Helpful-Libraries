@@ -29,6 +29,9 @@ public class HelpfulLibrariesNavigationProvider : MainMenuNavigationProviderBase
                     .ActionTask<LinqToDbSamplesController>(context, controller => controller.Crud()))
                 .Add(T["---"], subMenu => subMenu.Url("#"))
                 .Add(T["Typed Route"], itemBuilder => itemBuilder
-                    .Action<TypedRouteController>(context, controller => controller.Index())));
+                    .Action<TypedRouteController>(context, controller => controller.Index()))
+                .Add(T["---"], subMenu => subMenu.Url("#"))
+                .Add(T["JSON API Error Handling"], itemBuilder => itemBuilder
+                    .Action<ErrorController>(context, controller => controller.Json())));
     }
 }

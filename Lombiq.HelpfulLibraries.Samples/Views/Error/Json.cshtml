@@ -1,0 +1,52 @@
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@{
+    const string method = $"{nameof(Controller)}.{nameof(OrchardControllerExtensions.SafeJsonAsync)}()";
+}
+
+<h2>@T["JSON API Error Handling Sample"]</h2>
+
+<p>@T["Click the below buttons to demonstrate the behavior of the <code>{0}</code> extension method.", method]</p>
+
+<div><button id="error" class="mb-3 btn btn-danger">Synchronous Error</button></div>
+<div><button id="error-await" class="mb-3 btn btn-danger">Asynchronous Error</button></div>
+<div><button id="success" class="mb-3 btn btn-success">Asynchronous Error</button></div>
+
+<p>@T["Was the last API request successful?"] <span id="status"></span></p>
+<pre id="output"></pre>
+
+<script asp-name="jQuery" at="Head"></script>
+<script at="Foot" depends-on="jQuery">
+function setStatus($status, value) {
+    $status.attr('class', value === null ? 'status-wait' : 'status-ready');
+
+    switch (value) {
+        case true: $status.text(@T["Yes"].Json()); break;
+        case false: $status.text(@T["No"].Json()); break;
+        default: $status.text(''); break;
+    }
+}
+
+function onClick($, $status, $output, $button, url) {
+    $button.click(function() {
+        setStatus($status, null);
+
+        $
+            .post(url)
+            .then(function (result) {
+                setStatus($status, result.error === undefined);
+                $output.text(JSON.stringify(result, undefined, 2));
+            });
+
+        return false;
+    });
+}
+
+jQuery(function ($) {
+    const $status = $('#status');
+    const $output = $('#output');
+
+    onClick($, $status, $output, $('#error'), @(Orchard.Action<ErrorController>(controller => controller.JsonError()).JsonHtmlContent()));
+    onClick($, $status, $output, $('#error-await'), @(Orchard.Action<ErrorController>(controller => controller.JsonErrorWithAwait()).JsonHtmlContent()));
+    onClick($, $status, $output, $('#success'), @(Orchard.Action<ErrorController>(controller => controller.JsonSuccess()).JsonHtmlContent()));
+});
+</script>
