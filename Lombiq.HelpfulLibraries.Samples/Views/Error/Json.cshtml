@@ -14,6 +14,8 @@
 <p>@T["Was the last API request successful?"] <span id="status"></span></p>
 <pre id="output"></pre>
 
+<small>@T["Note that the output only contains the precise exception info in local developer execution. Otherwise it says \"An error has occurred while trying to process your request.\"."]</small>
+
 <script asp-name="jQuery" at="Head"></script>
 <script at="Foot" depends-on="jQuery">
 function setStatus($status, value) {
