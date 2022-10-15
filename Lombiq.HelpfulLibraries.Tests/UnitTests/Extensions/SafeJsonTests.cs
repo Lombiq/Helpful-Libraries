@@ -1,7 +1,6 @@
 ﻿using Lombiq.Tests.Integration.Controllers;
 using Lombiq.Tests.Integration.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Moq.AutoMock;
 using Shouldly;
@@ -17,6 +16,8 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Extensions;
 
 public class SafeJsonTests
 {
+    private const string ExceptionText = "Intentional Exception";
+
     [Fact]
     public async Task ExceptionShouldBeLogged()
     {
@@ -33,10 +34,10 @@ public class SafeJsonTests
     {
         var (_, failure, failureAsync, success) = await SetupAsync();
 
-        failure["error"].ShouldBe("Intentional failure.");
+        failure["error"].ShouldBe(ExceptionText);
         failure["data"].StartsWithOrdinal("System.InvalidOperationException:").ShouldBeTrue();
 
-        failureAsync["error"].ShouldBe("Intentional failure.");
+        failureAsync["error"].ShouldBe(ExceptionText);
         failureAsync["data"].StartsWithOrdinal("System.InvalidOperationException:").ShouldBeTrue();
 
         success["foo"].ShouldBe("bar");
@@ -48,7 +49,10 @@ public class SafeJsonTests
     public async Task JsonResultsShouldMatchExpectationsInProduction()
     {
         var (_, failure, failureAsync, success) = await SetupAsync(controller =>
-            controller.Environment = Environments.Production);
+        {
+            controller.UseProductionEnvironment();
+            controller.SetRequestUri(new Uri("https://example.com/foo"));
+        });
 
         failure["error"].ShouldBe("An error has occurred while trying to process your request.");
         failure.ShouldNotContainKey("data");
@@ -71,14 +75,14 @@ public class SafeJsonTests
         using var controller = new AutoMockerController(mocker);
         setupController?.Invoke(controller);
 
-        var failure = await SafeJsonToDictionaryAsync(controller, () => throw new InvalidOperationException("Intentional Exception"));
+        var failure = await SafeJsonToDictionaryAsync(controller, () => throw new InvalidOperationException(ExceptionText));
 
         var failureAsync = await SafeJsonToDictionaryAsync(
             controller,
             async () =>
                 {
                     await Task.Delay(1, CancellationToken.None);
-                    throw new InvalidOperationException("Intentional Exception");
+                    throw new InvalidOperationException(ExceptionText);
                 });
 
         var success = await SafeJsonToDictionaryAsync(
