@@ -40,7 +40,7 @@ public class SafeJsonTests
         failureAsync["data"].StartsWithOrdinal("System.InvalidOperationException:").ShouldBeTrue();
 
         success["foo"].ShouldBe("bar");
-        success["this"].ShouldBe("true");
+        success["this"].ShouldBe(bool.TrueString);
         success["that"].ShouldBe("10");
     }
 
@@ -57,7 +57,7 @@ public class SafeJsonTests
         failure.ShouldNotContainKey("data");
 
         success["foo"].ShouldBe("bar");
-        success["this"].ShouldBe("true");
+        success["this"].ShouldBe(bool.TrueString);
         success["that"].ShouldBe("10");
     }
 
@@ -108,7 +108,7 @@ public class SafeJsonTests
 
         return JsonSerializer.Deserialize<Dictionary<string, object>>(
             JsonSerializer.Serialize(result.Value, serializeOptions))!
-            .ToDictionary(pair => pair.Key, pair => JsonSerializer.Serialize(pair.Value));
+            .ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
     }
 
     private record TestResults(
