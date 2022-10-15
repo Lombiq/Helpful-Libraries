@@ -37,7 +37,7 @@
     <PackageReference Include="OrchardCore.Themes" Version="1.4.0" />
     <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.4.0" />
     <PackageReference Include="OrchardCore.Infrastructure" Version="1.4.0" />
-    <PackageReference Include="NodaTime" Version="3.1.2" />
+    <PackageReference Include="NodaTime" Version="3.1.4" />
     <PackageReference Include="YesSql.Abstractions" Version="3.0.12" />
     <!-- Necessary so tag helpers will work in the projects depending on this. -->
     <PackageReference Include="OrchardCore.DisplayManagement" Version="1.4.0" />
