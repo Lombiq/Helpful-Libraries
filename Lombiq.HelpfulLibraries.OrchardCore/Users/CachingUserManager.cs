@@ -36,7 +36,7 @@ public class CachingUserManager : ICachingUserManager
             id,
             () => int.TryParse(id, NumberStyles.Integer, CultureInfo.InvariantCulture, out var documentId)
                 ? _sessionLazy.Value.GetAsync<User>(documentId)
-                : null,
+                : Task.FromResult<User>(null),
             _userByIdCache);
 
     public Task<User> GetUserByUserIdAsync(string userId, bool forceUpdate = false) =>
