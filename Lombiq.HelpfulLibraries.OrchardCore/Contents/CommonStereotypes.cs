@@ -5,7 +5,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 /// </summary>
 public static class CommonStereotypes
 {
-    public const string Cotent = nameof(Cotent);
+    public const string Content = nameof(Content);
     public const string MenuItem = nameof(MenuItem);
     public const string Widget = nameof(Widget);
 }
