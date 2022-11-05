@@ -82,7 +82,8 @@ public class ManualConnectingIndexService<T> : IManualConnectingIndexService<T>
         {
             _tablePrefix ??= session?.Store.Configuration.TablePrefix;
             var dialect = session?.Store.Configuration.SqlDialect;
-            var quotedTableName = dialect?.QuoteForTableName(_tablePrefix + _type.Name);
+            var schema = session?.Store.Configuration.Schema;
+            var quotedTableName = dialect?.QuoteForTableName(_tablePrefix + _type.Name, schema);
 
             var result = await request(transaction.Connection, transaction, dialect, quotedTableName);
             if (doCommit) await transaction.CommitAsync();

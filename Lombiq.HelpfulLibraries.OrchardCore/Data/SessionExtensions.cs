@@ -73,6 +73,7 @@ public static class SessionExtensions
     {
         var parserResult = SqlParser.TryParse(
             sql,
+            session.Store.Configuration.Schema,
             session.Store.Configuration.SqlDialect,
             session.Store.Configuration.TablePrefix,
             parameters: null,
@@ -101,12 +102,13 @@ public static class SessionExtensions
     {
         var transaction = await session.BeginTransactionAsync();
         var dialect = session.Store.Configuration.SqlDialect;
+        var schema = session.Store.Configuration.Schema;
         var content = session.Store.Configuration.ContentSerializer.Serialize(entity);
 
         var tableName = session.Store.Configuration.TablePrefix +
             session.Store.Configuration.TableNameConvention.GetDocumentTable();
 
-        var sql = @$"UPDATE {dialect.QuoteForTableName(tableName)}
+        var sql = @$"UPDATE {dialect.QuoteForTableName(tableName, schema)}
                 SET {dialect.QuoteForColumnName("Content")} = @Content
                 WHERE {dialect.QuoteForColumnName("Id")} = @Id";
 
