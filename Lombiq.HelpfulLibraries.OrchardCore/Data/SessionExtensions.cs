@@ -102,13 +102,12 @@ public static class SessionExtensions
     {
         var transaction = await session.BeginTransactionAsync();
         var dialect = session.Store.Configuration.SqlDialect;
-        var schema = session.Store.Configuration.Schema;
         var content = session.Store.Configuration.ContentSerializer.Serialize(entity);
 
         var tableName = session.Store.Configuration.TablePrefix +
             session.Store.Configuration.TableNameConvention.GetDocumentTable();
 
-        var sql = @$"UPDATE {dialect.QuoteForTableName(tableName, schema)}
+        var sql = @$"UPDATE {dialect.QuoteForTableName(tableName, session.Store.Configuration.Schema)}
                 SET {dialect.QuoteForColumnName("Content")} = @Content
                 WHERE {dialect.QuoteForColumnName("Id")} = @Id";
 
