@@ -19,7 +19,6 @@ public class MarkdownDisplayService : IMarkdownDisplayService
         _htmlSanitizerService = htmlSanitizerService;
         _markdownService = markdownService;
         _shortcodeService = shortcodeService;
-
     }
 
     public async Task<string> ToHtmlAsync(
@@ -41,6 +40,5 @@ public class MarkdownDisplayService : IMarkdownDisplayService
         return sanitizeHtml
             ? _htmlSanitizerService.Sanitize(html ?? string.Empty)
             : html;
-
     }
 }
