@@ -41,7 +41,7 @@ public class ManualConnectingIndexServiceTests : IClassFixture<ManualConnectingI
     });
 
     [Fact]
-    public Task MissingOrDeletedIndexShouldNotRetreiveAnyDocument() => _fixture.SessionAsync(async session =>
+    public Task MissingOrDeletedIndexShouldNotRetrieveAnyDocument() => _fixture.SessionAsync(async session =>
     {
         var numbers = new[] { 3, 6 };
         var documents = (await session.Query<TestDocument, TestDocumentIndex>(x => x.Number.IsIn(numbers)).ListAsync()).ToList();
