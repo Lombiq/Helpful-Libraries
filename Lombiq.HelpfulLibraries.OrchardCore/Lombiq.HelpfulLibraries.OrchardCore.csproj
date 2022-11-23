@@ -26,6 +26,7 @@
   <ItemGroup>
     <PackageReference Include="OrchardCore.Alias" Version="1.5.0" />
     <PackageReference Include="OrchardCore.Autoroute" Version="1.5.0" />
+    <PackageReference Include="OrchardCore.Markdown" Version="1.5.0" />
     <PackageReference Include="OrchardCore.Media.Core" Version="1.5.0" />
     <PackageReference Include="OrchardCore.Taxonomies" Version="1.5.0" />
     <PackageReference Include="OrchardCore.ContentManagement" Version="1.5.0" />
@@ -48,5 +49,7 @@
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.AspNetCore\Lombiq.HelpfulLibraries.AspNetCore.csproj" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj" />
   </ItemGroup>
+
+</Project>
 
 </Project>
