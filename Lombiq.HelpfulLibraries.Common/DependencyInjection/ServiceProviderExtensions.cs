@@ -5,7 +5,7 @@ namespace System;
 public static class ServiceProviderExtensions
 {
     /// <summary>
-    /// Returns a <see cref="Lazy{T}"/> accessor for the service so you can access services with a shorter lifecyle in
+    /// Returns a <see cref="Lazy{T}"/> accessor for the service so you can access services with a shorter lifecycle in
     /// your service implementation without storing a service provider which is an anti-pattern.
     /// </summary>
     /// <typeparam name="T">The type of the required service.</typeparam>
