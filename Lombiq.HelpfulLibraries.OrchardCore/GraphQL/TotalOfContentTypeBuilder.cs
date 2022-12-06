@@ -1,7 +1,6 @@
 using GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using OrchardCore.Apis.GraphQL;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.GraphQL.Queries.Types;
 using OrchardCore.ContentManagement.Metadata.Models;
@@ -30,7 +29,7 @@ public class TotalOfContentTypeBuilder : IContentTypeBuilder
 
         builder.ResolveAsync(async context =>
         {
-            var serviceProvider = context.ResolveServiceProvider();
+            var serviceProvider = context.RequestServices;
             var session = serviceProvider.GetService<ISession>();
             return await session.QueryIndex<ContentItemIndex>(index =>
                 index.Published &&
