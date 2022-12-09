@@ -2,6 +2,7 @@ using LinqToDB;
 using Lombiq.HelpfulLibraries.LinqToDb;
 using Lombiq.HelpfulLibraries.Samples.Models;
 using Microsoft.AspNetCore.Mvc;
+using OrchardCore.Autoroute.Core.Indexes;
 using OrchardCore.ContentManagement.Records;
 using System;
 using System.Collections.Generic;
