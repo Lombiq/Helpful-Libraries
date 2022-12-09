@@ -7,6 +7,9 @@ namespace Lombiq.HelpfulLibraries.Common.Utilities;
 
 public static class CultureHelpers
 {
+    /// <summary>
+    /// Gets all available <see cref="Country"/> objects and orders them by <see cref="Country.DisplayText"/>.
+    /// </summary>
     public static IEnumerable<Country> GetCountries() =>
         CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(culture =>
             {
@@ -20,6 +23,9 @@ public static class CultureHelpers
             .Distinct()
             .OrderBy(country => country.DisplayText);
 
+    /// <summary>
+    /// Gets all available <see cref="Language"/> objects.
+    /// </summary>
     public static IEnumerable<Language> GetLanguages() =>
         CultureInfo
             .GetCultures(CultureTypes.AllCultures & ~CultureTypes.NeutralCultures)

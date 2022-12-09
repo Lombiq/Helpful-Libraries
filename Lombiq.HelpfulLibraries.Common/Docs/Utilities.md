@@ -1,5 +1,6 @@
 # Lombiq Helpful Libraries - Common Libraries - Utilities
 
+- `CultureHelpers`: A static helper class with utility functions for retrieving available countries and languages.
 - `ExceptionHelpers`: Using these helpers, arguments can be tested without writing `if` statements.
 - `FileSystemHelper`: Some shortcuts for file system operations.
 - `JsonHelpers`: JSON syntax can be validated with the `ValidateJsonIfNotNull` helper method.
