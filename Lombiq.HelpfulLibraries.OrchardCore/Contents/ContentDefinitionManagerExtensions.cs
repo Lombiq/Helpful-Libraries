@@ -40,6 +40,9 @@ public static class ContentDefinitionManagerExtensions
         return name;
     }
 
+    /// <summary>
+    /// Resets all content type settings to <see langword="false"/> and adds <c>TitlePart</c> to the content type.
+    /// </summary>
     public static void AlterTypeDefinitionForTaxonomy(this IContentDefinitionManager manager, string contentType) =>
         manager.AlterTypeDefinition(contentType, type => type.NoAbilities().WithTitlePart());
 }

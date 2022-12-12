@@ -10,16 +10,18 @@
 - `ContentDefinitionManagerExtensions`: Adds extension methods to easily fetch settings objects from `ContentTypePartDefinition` objects.
 - `ContentEnumerableExtensions`: Adds an extension for selecting parts in a collection of contents.
 - `ContentExtensions`: Adds `ContentItem` manipulating extension methods to `IContent` objects, the same ones as it is available for the `ContentItem` objects (e.g. `.As<T>()` or `.Weld<T>()`).
+- `ContentHttpContextExtensions`: Adds `IContent` session related extension methods to `HttpContext`.
 - `ContentOrchardHelperExtensions`: Extensions for managing content items better via `IOrchardHelper`.
-- `ContentManagerExtensions`: Adds extension methods for retrieving, loading or creating content using the `IContentManager`.
+- `ContentManagerExtensions`: Adds extension methods for retrieving, loading or creating content using the `IContentManager` interface.
 - `ContentManagerSessionExtensions`: Uses the `IContentManagerSession` scoped cache around any `ContentItem` query done outside `IContentManager`.
 - `ContentTypeDefinitionBuilderExtensions`: Adds extension methods for configuring the content type definition via `ContentTypeDefinitionBuilder`.
 - `ContentPartDefinitionBuilderExtensions`: Adds extension methods for configuring the content part definition via `ContentPartDefinitionBuilder`.
+- `ContentVersionNumberServiceExtensions`: Adds extension methods for retrieving `IContent` version numbers to `IContentVersionNumberService`.
 - `IdStringExtensions`: Adds extension methods relating to content item ID generation.
 
 ## Helpers
 
-- `ContentExceptionHelpers`: Using these helpers, arguments can be tested without writing `if` statements, for example to check if the `ContentItem` has a the given part attached to it.
+- `ContentExceptionHelpers`: Using these helpers, arguments can be tested without writing `if` statements, for example to check if the `ContentItem` has the given part attached to it.
 
 ## Services
 

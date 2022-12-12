@@ -7,25 +7,50 @@ namespace OrchardCore.ContentManagement;
 
 public static class ContentManagerExtensions
 {
+    /// <summary>
+    /// Gets the published content item with the specified <paramref name="id"/> and returns it as the provided
+    /// <typeparamref name="T"/> <see cref="ContentPart"/>.
+    /// </summary>
     public static async Task<T> GetAsync<T>(this IContentManager contentManager, string id)
         where T : ContentPart
         => (await contentManager.GetAsync(id))?.As<T>();
 
+    /// <summary>
+    /// Gets the published content item with the specified <paramref name="id"/> and version, and returns it as the
+    /// provided <typeparamref name="T"/> <see cref="ContentPart"/>.
+    /// </summary>
+    /// <param name="id">The ID of the content item to retrieve.</param>
+    /// <param name="versionOptions">The version data of the content item to retrieve.</param>
     public static async Task<T> GetAsync<T>(this IContentManager contentManager, string id, VersionOptions versionOptions)
         where T : ContentPart
         => (await contentManager.GetAsync(id, versionOptions))?.As<T>();
 
+    /// <summary>
+    /// Persists the given <paramref name="contentItem"/> with a new version if it does not yet exist, or updates it
+    /// without a new version if it already exists.
+    /// </summary>
     public static Task CreateOrUpdateAsync(this IContentManager contentManager, ContentItem contentItem) =>
         contentItem.Id == 0
             ? contentManager.CreateAsync(contentItem, VersionOptions.Published)
             : contentManager.UpdateAsync(contentItem);
 
+    /// <summary>
+    /// Creates a new content item with the specified <paramref name="name"/> as the content type if the provided
+    /// <paramref name="contentItem"/> is <see langword="null"/>, otherwise loads the provided content item.
+    /// </summary>
+    /// <param name="contentItem">The content item to load.</param>
+    /// <param name="name">The type of the newly created content item.</param>
+    /// <returns>The newly created or loaded content item.</returns>
     public static Task<ContentItem> NewOrLoadAsync(
         this IContentManager contentManager,
         ContentItem contentItem,
         string name) =>
         contentItem == null ? contentManager.NewAsync(name) : contentManager.LoadAsync(contentItem);
 
+    /// <summary>
+    /// Retrieves the terms of a taxonomy content item with the alias provided in <paramref name="taxonomyAlias"/>.
+    /// </summary>
+    /// <returns>A read-only list containing the terms of the taxonomy content item.</returns>
     public static async Task<IReadOnlyList<ContentItem>> GetTaxonomyTermsAsync(
         this IContentManager contentManager,
         IContentHandleManager contentHandleManager,
@@ -39,6 +64,11 @@ public static class ContentManagerExtensions
         return taxonomy?.As<TaxonomyPart>()?.Terms;
     }
 
+    /// <summary>
+    /// Retrieves the display texts of the terms belonging to a taxonomy content item that is identified by the
+    /// provided <paramref name="taxonomyId"/>.
+    /// </summary>
+    /// <returns>A dictionary where the keys contain each term's ID and the values contain each term's display text.</returns>
     public static async Task<IDictionary<string, string>> GetTaxonomyTermsDisplayTextsAsync(
         this IContentManager contentManager,
         string taxonomyId) =>

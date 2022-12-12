@@ -5,6 +5,13 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 
 public static class ContentExceptionHelpers
 {
+    /// <summary>
+    /// Throws <see cref="ArgumentException"/> if the given <paramref name="content"/>'s <c>ContentType</c> does not
+    /// match <paramref name="expectedType"/>.
+    /// </summary>
+    /// <param name="content">The content whose <c>ContentType</c> is to be checked.</param>
+    /// <param name="expectedType">The expected content type.</param>
+    /// <param name="paramName">The name of the parameter to be shown in the exception.</param>
     public static void ThrowIfNotValidContentType(IContent content, string expectedType, string paramName)
     {
         if (content.ContentItem.ContentType != expectedType)
@@ -15,6 +22,12 @@ public static class ContentExceptionHelpers
         }
     }
 
+    /// <summary>
+    /// Throws <see cref="ArgumentException"/> if the given <paramref name="content"/> has no element of the specified
+    /// type.
+    /// </summary>
+    /// <param name="content">The content whose elements are to be checked.</param>
+    /// <param name="paramName">The name of the parameter to be shown in the exception.</param>
     public static void ThrowIfHasNoElement<TElement>(IContent content, string paramName)
         where TElement : ContentElement
     {
