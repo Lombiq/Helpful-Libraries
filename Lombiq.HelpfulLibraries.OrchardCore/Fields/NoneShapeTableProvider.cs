@@ -23,6 +23,10 @@ public class NoneShapeTableProvider : IShapeTableProvider
     public NoneShapeTableProvider(IContentDefinitionManager contentDefinitionManager) =>
         _contentDefinitionManager = contentDefinitionManager;
 
+    /// <summary>
+    /// Adds a "None" option to every field's display and editor and enders an empty shape.
+    /// </summary>
+    /// <param name="builder"></param>
     public void Discover(ShapeTableBuilder builder)
     {
         var allFieldNames = _contentDefinitionManager

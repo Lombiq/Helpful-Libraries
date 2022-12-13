@@ -7,7 +7,7 @@ using YesSql.Indexes;
 namespace Lombiq.HelpfulLibraries.OrchardCore.GraphQL;
 
 /// <summary>
-/// Eliminates boilerplate for IIndexAliasProvider for indexes with a name ending with <c>PartIndex</c>.
+/// Eliminates boilerplate for <see cref="IIndexAliasProvider"/> for indexes with a name ending with <c>PartIndex</c>.
 /// </summary>
 /// <typeparam name="TIndex">A content part index with a name ending with <c>PartIndex</c>.</typeparam>
 public class PartIndexAliasProvider<TIndex> : IIndexAliasProvider
@@ -26,5 +26,8 @@ public class PartIndexAliasProvider<TIndex> : IIndexAliasProvider
         },
     };
 
+    /// <summary>
+    /// Gets indexes with a name ending in <c>PartIndex</c>.
+    /// </summary>
     public IEnumerable<IndexAlias> GetAliases() => _aliases;
 }

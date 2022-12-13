@@ -9,6 +9,9 @@ namespace Microsoft.Extensions.DependencyInjection;
 
 public static class LiquidServiceCollectionExtensions
 {
+    /// <summary>
+    /// Allows registering a new Liquid property with the provided <paramref name="name"/>.
+    /// </summary>
     public static void RegisterLiquidPropertyAccessor<TService>(this IServiceCollection services, string name)
         where TService : class, ILiquidPropertyRegistrar
     {

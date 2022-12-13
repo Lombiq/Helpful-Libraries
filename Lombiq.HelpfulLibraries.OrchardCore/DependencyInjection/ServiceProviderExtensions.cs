@@ -20,6 +20,9 @@ public static class ServiceProviderExtensions
         await shellScope.UsingAsync(asyncAction);
     }
 
+    /// <summary>
+    /// Executes <paramref name="asyncAction"/> in the specified shell's scope and returns the resulting object.
+    /// </summary>
     public static async Task<T> GetWithShellScopeAsync<T>(
         this IServiceProvider serviceProvider,
         Func<ShellScope, Task<T>> asyncFunc,

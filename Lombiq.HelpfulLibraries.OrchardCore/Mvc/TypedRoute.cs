@@ -70,6 +70,15 @@ public class TypedRoute
                 : $"{_area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
     }
 
+    /// <summary>
+    /// This class provides a strongly typed way to generate local URLs for Orchard Core MVC actions. 
+    /// It uses lambda expressions to select the action and provide arguments. Use `TypedRoute.CreateFromExpression<TClass>(...).ToString()` or the provided `OrchardHelper.Action()` and `HttpContext.Action()` extensions.
+    /// </summary>
+
+    /// <summary>
+    /// Creates a local URL based on the <paramref name="httpContext"/> and the names of the <c>action</c> and the
+    /// <c>controller</c>.
+    /// </summary>
     public string ToString(HttpContext httpContext)
     {
         var linkGenerator = httpContext.RequestServices.GetRequiredService<LinkGenerator>();
@@ -121,6 +130,12 @@ public class TypedRoute
             ["action"] = route._action.Name,
         };
 
+    /// <summary>
+    /// Creates and returns a new <see cref="TypedRoute"/> using the provided <paramref name="actionExpression"/>,
+    /// also adding it to the cache.
+    /// </summary>
+    /// <param name="action">The action expression to use for the process.</param>
+    /// <param name="additionalArguments">Additional arguments to add to the key in the cache.</param>
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> actionExpression,
         IEnumerable<(string Key, object Value)> additionalArguments,
@@ -131,6 +146,12 @@ public class TypedRoute
             additionalArguments.Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
             typeFeatureProvider);
 
+    /// <summary>
+    /// Creates and returns a new <see cref="TypedRoute"/> using the provided <paramref name="action"/> expression,
+    /// also adding it to the cache.
+    /// </summary>
+    /// <param name="action">The action expression to use for the process.</param>
+    /// <param name="additionalArguments">Additional arguments to add to the key in the cache.</param>
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> action,
         IEnumerable<KeyValuePair<string, string>> additionalArguments,
