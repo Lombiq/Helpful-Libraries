@@ -36,15 +36,15 @@ public class ManualConnectingIndexServiceTests : IClassFixture<ManualConnectingI
         var query = session.Query<TestDocument, TestDocumentIndex>(index => index.Number.IsIn(numbers));
         var list = await query.ListAsync();
         var documents = list.ToList();
-        documents.Select(x => x.Name)
-            .ShouldBe(_fixture.Documents.Where((_, index) => index is not 3 and not 6).Select(x => x.Name));
+        documents.Select(document => document.Name)
+            .ShouldBe(_fixture.Documents.Where((_, index) => index is not 3 and not 6).Select(document => document.Name));
     });
 
     [Fact]
     public Task MissingOrDeletedIndexShouldNotRetrieveAnyDocument() => _fixture.SessionAsync(async session =>
     {
         var numbers = new[] { 3, 6 };
-        var documents = (await session.Query<TestDocument, TestDocumentIndex>(x => x.Number.IsIn(numbers)).ListAsync()).ToList();
+        var documents = (await session.Query<TestDocument, TestDocumentIndex>(index => index.Number.IsIn(numbers)).ListAsync()).ToList();
         documents.ShouldBeEmpty();
     });
 }
