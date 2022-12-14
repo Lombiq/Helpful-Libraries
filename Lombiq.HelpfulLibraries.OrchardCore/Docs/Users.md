@@ -8,6 +8,7 @@ To use it, override the `AdminPermissions` read-only abstract property with a co
 
 ## Extensions
 
+- `ServiceCollectionExtensions`: Allows adding `CachingUserManager` to the service collection via `AddCachingUserServer()`.
 - `UserServiceExtensions`: Adds extensions for `IUserService`. (E.g. `GetOrchardUserAsync` retrieves the user by user name or throws an exception if none found.)
 
 ## `ICachingUserManager`
