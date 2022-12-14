@@ -24,7 +24,7 @@ public static class ContentExceptionHelpers
 
     /// <summary>
     /// Throws <see cref="ArgumentException"/> if the given <paramref name="content"/> has no element of the specified
-    /// type.
+    /// <typeparamref name="TElement"/> type.
     /// </summary>
     /// <param name="content">The content whose elements are to be checked.</param>
     /// <param name="paramName">The name of the parameter to be shown in the exception.</param>

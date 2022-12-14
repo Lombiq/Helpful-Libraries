@@ -71,8 +71,8 @@ public class TypedRoute
     }
 
     /// <summary>
-    /// Creates a local URL based on the <paramref name="httpContext"/> and the names of the <c>action</c> and the
-    /// <c>controller</c>.
+    /// Creates a local URL based on the given <paramref name="httpContext"/> and the names of the <c>action</c> and
+    /// the <c>controller</c>.
     /// </summary>
     public string ToString(HttpContext httpContext)
     {
@@ -101,8 +101,8 @@ public class TypedRoute
     }
 
     /// <summary>
-    /// Creates a local URL on a tenant using the provided <paramref name="tenantName"/>. If 
-    /// <paramref name="tenantName"/> is empty or <c>Default</c>, creates a local URL using a prefix, the current
+    /// Creates a local URL on a tenant using the provided <paramref name="tenantName"/>. If
+    /// <paramref name="tenantName"/> is empty or "<c>Default</c>", creates a local URL using a prefix, the current
     /// route, and other arguments.
     /// </summary>
     public string ToString(string tenantName) =>

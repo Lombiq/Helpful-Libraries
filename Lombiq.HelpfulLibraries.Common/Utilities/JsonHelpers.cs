@@ -8,8 +8,11 @@ namespace Lombiq.HelpfulLibraries.Common.Utilities;
 public static class JsonHelpers
 {
     /// <summary>
-    /// Attempts to validate a string that contains JSON by parsing it and returns <see langword="false"/> if unsuccessful.
+    /// Attempts to validate a string that contains JSON by parsing it.
     /// </summary>
+    /// <returns>
+    /// <see langword="true"/> if string is empty or parsing was successful, <see langword="false"/> otherwise.
+    /// </returns>
     public static bool ValidateJsonIfNotNull(string json)
     {
         if (!string.IsNullOrEmpty(json))

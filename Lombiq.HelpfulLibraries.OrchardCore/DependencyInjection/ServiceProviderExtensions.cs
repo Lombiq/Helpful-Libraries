@@ -21,7 +21,7 @@ public static class ServiceProviderExtensions
     }
 
     /// <summary>
-    /// Executes <paramref name="asyncAction"/> in the specified shell's scope and returns the resulting object.
+    /// Executes <paramref name="asyncFunc"/> in the specified shell's scope and returns the resulting object.
     /// </summary>
     public static async Task<T> GetWithShellScopeAsync<T>(
         this IServiceProvider serviceProvider,

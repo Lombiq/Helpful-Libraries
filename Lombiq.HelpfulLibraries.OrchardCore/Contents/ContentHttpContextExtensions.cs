@@ -18,8 +18,8 @@ public static class ContentHttpContextExtensions
     /// Within the request, sets the specified <paramref name="content"/> object's data in dictionary format using the
     /// provided <paramref name="data"/> object.
     /// </summary>
-    /// <param name="content">The content to be used as the key in the key value pair</param>
-    /// <param name="data">The data to set as the value of the key value pair.</param>
+    /// <param name="content">The content to be used as the key in the key value pair.</param>
+    /// <param name="data">The data to set as the value in the key value pair.</param>
     public static void SetContentSessionData(this HttpContext httpContext, IContent content, object data) =>
         httpContext.Items[GetContentSessionDataKey(content)] = data;
 
@@ -37,8 +37,11 @@ public static class ContentHttpContextExtensions
     }
 
     /// <summary>
-    /// Returns <see langword="true"/> if the request contains the specified <paramref name="content"/>'s data key.
+    /// Determines whether the request contains the specified <paramref name="content"/>'s data key.
     /// </summary>
+    /// <returns>
+    /// <see langword="true"/> if the request contains the data key, <see langword="false"/> otherwise.
+    /// </returns>
     public static bool ContainsContentSessionData(this HttpContext httpContext, IContent content) =>
         httpContext.Items.ContainsKey(GetContentSessionDataKey(content));
 

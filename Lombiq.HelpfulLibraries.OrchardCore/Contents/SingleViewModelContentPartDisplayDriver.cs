@@ -26,7 +26,8 @@ public abstract class SingleViewModelContentPartDisplayDriver<TPart, TViewModel>
         UpdatePartEditorContext context);
 
     /// <summary>
-    /// Attempts to perform the update activity and adds model state errors if necessary, then redirects to the Edit view.
+    /// Attempts to perform the update activity and adds model state errors if necessary, then redirects to the Edit
+    /// view.
     /// </summary>
     public override async Task<IDisplayResult> UpdateAsync(
         TPart part,

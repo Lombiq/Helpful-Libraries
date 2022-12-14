@@ -31,7 +31,7 @@ public class ResourceFilterBuilder
     }
 
     /// <summary>
-    /// Asynchronously adds the provided <paramref name="filterAsync"/> to the list of <c>ResourceFilters</c>.
+    /// Adds the provided asynchronous filter specified in <paramref name="filterAsync"/> to the list of <c>ResourceFilters</c>.
     /// </summary>
     public ResourceFilter When(Func<HttpContext, Task<bool>> filterAsync)
     {
@@ -102,7 +102,7 @@ public class ResourceFilterBuilder
     }
 
     /// <summary>
-    /// Adds a filter that always matches to the list of <c>ResourceFilters</c>.
+    /// Adds an always matching filter to the list of <c>ResourceFilters</c>.
     /// </summary>
     public ResourceFilter Always(Action<IResourceManager> execution = null)
     {

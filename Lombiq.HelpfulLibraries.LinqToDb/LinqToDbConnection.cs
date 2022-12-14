@@ -14,7 +14,8 @@ public class LinqToDbConnection : DataConnection, ITableAccessor
             _tablePrefix = tablePrefix;
 
     /// <summary>
-    /// Overrides table name with a prefixed table name.
+    /// Overrides table name with a prefixed table name, optionally using the provided
+    /// <paramref name="collectionName"/>.
     /// </summary>
     public ITable<T> GetPrefixedTable<T>(string collectionName = null)
         where T : class

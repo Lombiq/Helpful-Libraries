@@ -16,6 +16,7 @@ public static class EnumExtensions
     /// <summary>
     /// Attempts to retrieve an <see cref="Enum"/> object's <see cref="DisplayAttribute.Name"/> value.
     /// </summary>
+    /// <returns>The display attribute's name if found, otherwise an empty string.</returns>
     public static string GetDisplayNameAttribute(this Enum enumValue) =>
         enumValue == null
             ? string.Empty

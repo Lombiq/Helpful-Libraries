@@ -26,7 +26,7 @@ public static class ContentManagerExtensions
         => (await contentManager.GetAsync(id, versionOptions))?.As<T>();
 
     /// <summary>
-    /// Persists the given <paramref name="contentItem"/> with a new version if it does not yet exist, or updates it
+    /// Persists the given <paramref name="contentItem"/> with a new version if it does not exist yet, or updates it
     /// without a new version if it already exists.
     /// </summary>
     public static Task CreateOrUpdateAsync(this IContentManager contentManager, ContentItem contentItem) =>
@@ -68,7 +68,9 @@ public static class ContentManagerExtensions
     /// Retrieves the display texts of the terms belonging to a taxonomy content item that is identified by the
     /// provided <paramref name="taxonomyId"/>.
     /// </summary>
-    /// <returns>A dictionary where the keys contain each term's ID and the values contain each term's display text.</returns>
+    /// <returns>
+    /// A dictionary where the keys contain each term's ID and the values contain each term's display text.
+    /// </returns>
     public static async Task<IDictionary<string, string>> GetTaxonomyTermsDisplayTextsAsync(
         this IContentManager contentManager,
         string taxonomyId) =>

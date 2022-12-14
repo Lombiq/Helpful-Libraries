@@ -9,7 +9,9 @@ public static class UserServiceExtensions
     /// <summary>
     /// Retrieves an Orchard user by <paramref name="userName"/> or throws an exception if none were found.
     /// </summary>
-    /// <exception cref="ArgumentException">Thrown if the given user name identifies a non-Orchard user.</exception>
+    /// <exception cref="ArgumentException">
+    /// Thrown if the given <paramref name="userName"/> identifies a non-Orchard user.
+    /// </exception>
     public static async Task<User> GetOrchardUserAsync(this IUserService userService, string userName)
     {
         var user = await userService.GetUserAsync(userName);
