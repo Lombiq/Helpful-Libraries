@@ -15,7 +15,7 @@ public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder ro
 }
 ```
 
-To add resource filters the `IResourceFilterProvider` interface needs to be implemented and the registration needs to be added to the service collection as well.
+To add resource filters, the `IResourceFilterProvider` interface needs to be implemented and the registration needs to be added to the service collection as well.
 
 Example:
 
@@ -32,6 +32,7 @@ public class ResourceFilters : IResourceFilterProvider
 
 ## Extensions
 
-- `ApplicationBuilderExtensions`: Shortcut extensions for application setup, e.g.: `UseResourceFilters` (see above)
+- `ApplicationBuilderExtensions`: Shortcut extensions for application setup, e.g.: `UseResourceFilters` (see above).
+- `ResourceFilterProviderExtensions`: Extension methods for the `IResourceFilterProvider`interface.
 - `ResourceManifestExtensions`: Extensions for building the resource manifest, e.g.: `SetDependenciesRecursively` helps registering multi-level dependencies.
 - `ResourceManagerExtensions`: Extensions for resource usage, e.g.: `RegisterStyle` registers a stylesheet resource by name without having to use the "stylesheet" literal which is error-prone.

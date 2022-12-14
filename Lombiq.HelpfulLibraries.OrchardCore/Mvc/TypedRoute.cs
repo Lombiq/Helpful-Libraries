@@ -71,11 +71,6 @@ public class TypedRoute
     }
 
     /// <summary>
-    /// This class provides a strongly typed way to generate local URLs for Orchard Core MVC actions. 
-    /// It uses lambda expressions to select the action and provide arguments. Use `TypedRoute.CreateFromExpression<TClass>(...).ToString()` or the provided `OrchardHelper.Action()` and `HttpContext.Action()` extensions.
-    /// </summary>
-
-    /// <summary>
     /// Creates a local URL based on the <paramref name="httpContext"/> and the names of the <c>action</c> and the
     /// <c>controller</c>.
     /// </summary>
@@ -91,6 +86,9 @@ public class TypedRoute
             arguments);
     }
 
+    /// <summary>
+    /// Creates a local URL using a prefix, the current route, and other arguments.
+    /// </summary>
     public override string ToString()
     {
         var prefix = _isAdminLazy.Value ? "/Admin/" : "/";
@@ -102,6 +100,11 @@ public class TypedRoute
         return prefix + route + arguments;
     }
 
+    /// <summary>
+    /// Creates a local URL on a tenant using the provided <paramref name="tenantName"/>. If 
+    /// <paramref name="tenantName"/> is empty or <c>Default</c>, creates a local URL using a prefix, the current
+    /// route, and other arguments.
+    /// </summary>
     public string ToString(string tenantName) =>
         string.IsNullOrWhiteSpace(tenantName) || tenantName.EqualsOrdinalIgnoreCase("Default")
             ? ToString()
@@ -134,7 +137,7 @@ public class TypedRoute
     /// Creates and returns a new <see cref="TypedRoute"/> using the provided <paramref name="actionExpression"/>,
     /// also adding it to the cache.
     /// </summary>
-    /// <param name="action">The action expression to use for the process.</param>
+    /// <param name="actionExpression">The action expression to use for the process.</param>
     /// <param name="additionalArguments">Additional arguments to add to the key in the cache.</param>
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> actionExpression,
