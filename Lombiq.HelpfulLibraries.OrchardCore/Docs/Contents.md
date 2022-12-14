@@ -2,14 +2,14 @@
 
 ## Constants
 
-- `CommonContentDisplayTypes`: Has constants for values that can be used with `IContentItemDisplayManager.BuildDisplayAsync` or `OrchardRazorHelperExtensions.DisplayAsync` to safely select the correct display type.
+- `CommonContentDisplayTypes`: Has constants for values that can be used with `IContentItemDisplayManager.BuildDisplayAsync()` or `OrchardRazorHelperExtensions.DisplayAsync()` to safely select the correct display type.
 - `CommonStereotypes`: Constants for commonly used content stereotypes.
 
 ## Extensions
 
 - `ContentDefinitionManagerExtensions`: Adds extension methods to easily fetch settings objects from `ContentTypePartDefinition` objects.
 - `ContentEnumerableExtensions`: Adds an extension for selecting parts in a collection of contents.
-- `ContentExtensions`: Adds `ContentItem` manipulating extension methods to `IContent` objects, the same ones as it is available for the `ContentItem` objects (e.g. `.As<T>()` or `.Weld<T>()`).
+- `ContentExtensions`: Adds `ContentItem` manipulating extension methods to `IContent` objects, the same ones that are available for the `ContentItem` objects (e.g. `.As<T>()` or `.Weld<T>()`).
 - `ContentHttpContextExtensions`: Adds `IContent` session related extension methods to `HttpContext`.
 - `ContentOrchardHelperExtensions`: Extensions for managing content items better via `IOrchardHelper`.
 - `ContentManagerExtensions`: Adds extension methods for retrieving, loading or creating content using the `IContentManager` interface.
@@ -25,5 +25,5 @@
 
 ## Services
 
-- `IContentVersionNumberService`: Service for getting content version number based on how many different versions of it are in the document database. It has a method for getting the version number of the latest version (`GetLatestVersionNumberAsync`) and another one for a specific content version id (`GetCurrentVersionNumberAsync`).
+- `IContentVersionNumberService`: Service for getting content version number based on how many different versions of it are in the document database. It has a method for getting the version number of the latest version (`GetLatestVersionNumberAsync()`) and another one for a specific content version ID (`GetCurrentVersionNumberAsync()`).
 - `ITaxonomyHelper`: Taxonomy-related helper methods.

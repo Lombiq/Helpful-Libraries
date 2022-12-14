@@ -10,4 +10,4 @@ Note: Use `services.RegisterLiquidPropertyAccessor<TImplementation>(propertyName
 
 ## Extensions
 
-- `LiquidServiceCollectionExtensions`: Used for registering related services, like `RegisterLiquidPropertyAccessor` to register new properties.
+- `LiquidServiceCollectionExtensions`: Used for registering related services, like `RegisterLiquidPropertyAccessor()` to register new properties.

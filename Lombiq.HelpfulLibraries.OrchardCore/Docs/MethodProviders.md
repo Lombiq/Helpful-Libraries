@@ -6,4 +6,4 @@
 
 ## User methods
 
-- `getUserIdByUserName`: Returns the Orchard Core user ID by its username.
+- `getUserIdByUserName`: Returns the Orchard Core user ID by its user name.
