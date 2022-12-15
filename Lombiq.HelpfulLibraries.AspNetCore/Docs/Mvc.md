@@ -5,5 +5,5 @@
   - `DevelopmentOnlyAttribute`: Enforces the Development environment on controllers.
   - `DevelopmentAndLocalhostOnlyAttribute`: Enforces the Development environment as well as localhost.
   - `FromJsonQueryStringAttribute`: Specifies that a parameter or property should be bound as a JSON string, using the request query string.
-- `Controller` extensions: Adds extension methods to `Controller` objects like `.RedirectToLocal(redirectUrl)`.
+- `Controller` extensions: Adds extension methods to `Controller` objects like `RedirectToLocal(redirectUrl)`.
 - `ResultExecutingContextExtensions` to get some shortcuts to usual context operations in `IAsyncResultFilter`s.
