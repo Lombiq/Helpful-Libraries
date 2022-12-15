@@ -16,7 +16,7 @@ public class ResourceFilterBuilder
     public IList<ResourceFilter> ResourceFilters { get; private set; } = new List<ResourceFilter>();
 
     /// <summary>
-    /// Adds the provided <paramref name="filter"/> to the list of <c>ResourceFilters</c>.
+    /// Adds the provided <paramref name="filter"/> to the list of <see cref="ResourceFilters"/>.
     /// </summary>
     public ResourceFilter When(Func<HttpContext, bool> filter)
     {
@@ -31,7 +31,8 @@ public class ResourceFilterBuilder
     }
 
     /// <summary>
-    /// Adds the provided asynchronous filter specified in <paramref name="filterAsync"/> to the list of <c>ResourceFilters</c>.
+    /// Adds the provided asynchronous filter specified in <paramref name="filterAsync"/> to the list of
+    /// <see cref="ResourceFilters"/>.
     /// </summary>
     public ResourceFilter When(Func<HttpContext, Task<bool>> filterAsync)
     {
@@ -46,26 +47,26 @@ public class ResourceFilterBuilder
     }
 
     /// <summary>
-    /// Adds a filter that matches the given <paramref name="path"/> to the list of <c>ResourceFilters</c>.
+    /// Adds a filter that matches the given <paramref name="path"/> to the list of <see cref="ResourceFilters"/>.
     /// </summary>
     public ResourceFilter WhenPath(string path) =>
         When(context => context.Request.Path.Value?.EqualsOrdinalIgnoreCase(path) == true);
 
     /// <summary>
-    /// Adds a filter that matches the path of the homepage (<c>"/"</c>) to the list of <c>ResourceFilters</c>.
+    /// Adds a filter that matches the path of the homepage (<c>"/"</c>) to the list of <see cref="ResourceFilters"/>.
     /// </summary>
     public ResourceFilter WhenHomePage() => WhenPath("/");
 
     /// <summary>
     /// Adds a filter that matches the beginning of the request's path with the given <paramref name="path"/> to the
-    /// list of <c>ResourceFilters</c>.
+    /// list of <see cref="ResourceFilters"/>.
     /// </summary>
     public ResourceFilter WhenPathStartsWith(string path) =>
         When(context => context.Request.Path.Value?.StartsWithOrdinalIgnoreCase(path) == true);
 
     /// <summary>
     /// Adds a filter that matches any of the provided <paramref name="contentTypes"/> to the list of
-    /// <c>ResourceFilters</c>.
+    /// <see cref="ResourceFilters"/>.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown when <paramref name="contentTypes"/> has no provided items.
@@ -102,7 +103,7 @@ public class ResourceFilterBuilder
     }
 
     /// <summary>
-    /// Adds an always matching filter to the list of <c>ResourceFilters</c>.
+    /// Adds an always matching filter to the list of <see cref="ResourceFilters"/>.
     /// </summary>
     public ResourceFilter Always(Action<IResourceManager> execution = null)
     {
