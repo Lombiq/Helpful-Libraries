@@ -6,10 +6,10 @@ namespace Lombiq.HelpfulLibraries.Common.DependencyInjection;
 
 public static class ServiceCollectionExtensions
 {
-    // This implementation is based on this StackOverflow answer: https://stackoverflow.com/a/45775657/4611736
     /// <summary>
     /// Enables lazy dependency injection.
     /// </summary>
+    // This implementation is based on this StackOverflow answer: https://stackoverflow.com/a/45775657/4611736
     public static void AddLazyInjectionSupport(this IServiceCollection services) =>
         services.TryAddTransient(typeof(Lazy<>), typeof(Lazier<>));
 
