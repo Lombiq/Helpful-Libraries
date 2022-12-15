@@ -137,8 +137,8 @@ public class TypedRoute
     /// Creates and returns a new <see cref="TypedRoute"/> using the provided <paramref name="actionExpression"/>,
     /// also adding it to the cache.
     /// </summary>
-    /// <param name="actionExpression">The action expression to use for the process.</param>
-    /// <param name="additionalArguments">Additional arguments to add to the key in the cache.</param>
+    /// <param name="actionExpression">The action expression whose arguments are used for the process.</param>
+    /// <param name="additionalArguments">Additional arguments to add to the route and the key in the cache.</param>
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> actionExpression,
         IEnumerable<(string Key, object Value)> additionalArguments,
@@ -153,8 +153,8 @@ public class TypedRoute
     /// Creates and returns a new <see cref="TypedRoute"/> using the provided <paramref name="action"/> expression,
     /// also adding it to the cache.
     /// </summary>
-    /// <param name="action">The action expression to use for the process.</param>
-    /// <param name="additionalArguments">Additional arguments to add to the key in the cache.</param>
+    /// <param name="action">The action expression whose arguments are used for the process.</param>
+    /// <param name="additionalArguments">Additional arguments to add to the route and the key in the cache.</param>
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> action,
         IEnumerable<KeyValuePair<string, string>> additionalArguments,

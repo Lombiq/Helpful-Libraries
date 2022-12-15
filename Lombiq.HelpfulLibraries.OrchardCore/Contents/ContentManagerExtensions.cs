@@ -36,7 +36,8 @@ public static class ContentManagerExtensions
 
     /// <summary>
     /// Creates a new content item with the specified <paramref name="name"/> as the content type if the provided
-    /// <paramref name="contentItem"/> is <see langword="null"/>, otherwise loads the provided content item.
+    /// <paramref name="contentItem"/> is <see langword="null"/>, otherwise loads the provided
+    /// <paramref name="contentItem"/>.
     /// </summary>
     /// <param name="contentItem">The content item to load.</param>
     /// <param name="name">The type of the newly created content item.</param>
@@ -69,7 +70,7 @@ public static class ContentManagerExtensions
     /// provided <paramref name="taxonomyId"/>.
     /// </summary>
     /// <returns>
-    /// A dictionary where the keys contain each term's ID and the values contain each term's display text.
+    /// A dictionary where the keys contain the IDs of terms and the values contain the display texts of terms.
     /// </returns>
     public static async Task<IDictionary<string, string>> GetTaxonomyTermsDisplayTextsAsync(
         this IContentManager contentManager,

@@ -22,7 +22,7 @@ public class TotalOfContentTypeBuilder : IContentTypeBuilder
     /// <summary>
     /// Adds the <c>totalOfContentType</c> integer field to the given content item type.
     /// </summary>
-    /// <param name="contentTypeDefinition">The content type to operate on.</param>
+    /// <param name="contentTypeDefinition">The content type to query for and operate on.</param>
     /// <param name="contentItemType">
     /// The content item type to be extended with the <c>totalOfContentType</c> integer field.
     /// </param>
