@@ -37,9 +37,6 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
             .Range(0, 10)
             .Select(n => new TestDocument { Name = NamePrefix + n.ToTechnicalString() })
             .ToArray();
-
-        if (File.Exists(FileName)) File.Delete(FileName);
-        CreateDatabaseAsync().Wait();
     }
 
     public async Task SessionAsync(Func<ISession, Task> action)
@@ -59,6 +56,8 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
 
     private async Task CreateDatabaseAsync()
     {
+        if (File.Exists(FileName)) File.Delete(FileName);
+
         Store = (Store)await StoreFactory.CreateAndInitializeAsync(_configuration);
         var dbAccessorMock = new Mock<IDbConnectionAccessor>();
         dbAccessorMock.Setup(x => x.CreateConnection())
