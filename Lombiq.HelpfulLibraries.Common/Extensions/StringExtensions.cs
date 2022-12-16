@@ -63,11 +63,14 @@ public static class StringExtensions
         .Union(Path.GetInvalidPathChars())
         .ToArray());
 
-    public static string MakeFileSystemFriendly(this string text) =>
-        string
-            .Join("_", text.Split(_invalidPathCharacters.Value))
-            .Replace('.', '_')
-            .Replace(' ', '-');
+    public static string MakeFileSystemFriendly(this string text, bool noSpaceOrDot = true)
+    {
+        var sanitized = string.Join("_", text.Split(_invalidPathCharacters.Value));
+
+        return noSpaceOrDot
+            ? sanitized.Replace('.', '_').Replace(' ', '-')
+            : sanitized;
+    }
 
     /// <summary>
     /// Returns an array by splitting the input along commas and stripping empty entries.
