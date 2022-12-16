@@ -7,7 +7,9 @@ namespace System;
 public static class EnumExtensions
 {
     /// <summary>
-    /// Raises a standardized exception on the default arm of a <see langword="switch"/>.
+    /// Throws an <see cref="InvalidOperationException"/> using the provided <typeparamref name="T"/> <see cref="Enum"/>
+    /// to indicate that it is unknown. Can be used to raise a standardized exception on the default arm of a
+    /// <see langword="switch"/>.
     /// </summary>
     public static InvalidOperationException UnknownEnumException<T>(this T other)
         where T : Enum =>

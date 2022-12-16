@@ -5,7 +5,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 public static class ApplicationBuilderExtensions
 {
     /// <summary>
-    /// Activates the resource filter middleware.
+    /// Activates <see cref="ResourceFilterMiddleware"/>.
     /// </summary>
     public static void UseResourceFilters(this IApplicationBuilder app) => app.UseMiddleware<ResourceFilterMiddleware>();
 }

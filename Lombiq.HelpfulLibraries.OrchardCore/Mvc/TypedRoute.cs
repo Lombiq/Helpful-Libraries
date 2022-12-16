@@ -71,8 +71,8 @@ public class TypedRoute
     }
 
     /// <summary>
-    /// Creates a local URL based on the given <paramref name="httpContext"/> and the names of the <c>action</c> and
-    /// the <c>controller</c>.
+    /// Creates a relative URL based on the given <paramref name="httpContext"/>, the area, and the names of the
+    /// <c>action</c> and the <c>controller</c>.
     /// </summary>
     public string ToString(HttpContext httpContext)
     {

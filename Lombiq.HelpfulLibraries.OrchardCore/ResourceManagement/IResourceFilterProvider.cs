@@ -16,7 +16,7 @@ public interface IResourceFilterProvider
 public static class ResourceFilterProviderExtensions
 {
     /// <summary>
-    /// Gets the required themes from the provider.
+    /// Gets the themes required by the <see cref="ResourceFilterThemeRequirementAttribute"/> from the provider.
     /// </summary>
     public static IEnumerable<string> GetRequiredThemes(this IResourceFilterProvider provider) =>
         ResourceFilterThemeRequirementAttribute.GetRequirementsByType(provider.GetType());
