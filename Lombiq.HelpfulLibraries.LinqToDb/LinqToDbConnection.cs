@@ -14,7 +14,7 @@ public class LinqToDbConnection : DataConnection, ITableAccessor
             _tablePrefix = tablePrefix;
 
     /// <summary>
-    /// Overrides <see cref="ITable{T}.TableName"/> of the table-like queryable source provided in
+    /// Overrides <see cref="ITable{T}.TableName"/> of the table-like queriable source provided in
     /// <typeparamref name="T"/> for the current query with a prefixed table name that optionally includes the specified
     /// <paramref name="collectionName"/>.
     /// </summary>
