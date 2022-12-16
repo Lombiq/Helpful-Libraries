@@ -21,6 +21,13 @@ public interface IMarkdownDisplayService
 
 public static class MarkdownDisplayServiceExtensions
 {
+    /// <summary>
+    /// Using <see cref="IMarkdownDisplayService"/>, converts Markdown to HTML, processes shortcodes, and optionally
+    /// sanitizes the HTML.
+    /// </summary>
+    /// <param name="markdown">The Markdown string to sanitize.</param>
+    /// <param name="settings">The settings that determine whether the HTML should be sanitized.</param>
+    /// <returns>The converted HTML string.</returns>
     public static Task<string> ToHtmlAsync(
         IMarkdownDisplayService service,
         string markdown,

@@ -10,7 +10,7 @@ For general details about and on using the Helpful Libraries see the [root Readm
 
 ## Documentation
 
-Use the `LinqQueryAsync` ISession extension method for running LINQ syntax-based DB queries. Check out its documentation inline.
+Use the `LinqQueryAsync()` `ISession` extension method for running LINQ syntax-based DB queries. Check out its documentation inline.
 
 See [`LinqToDbSamplesController`](../Lombiq.HelpfulLibraries.Samples/Controllers/LinqToDbSamplesController.cs) for an example.
 

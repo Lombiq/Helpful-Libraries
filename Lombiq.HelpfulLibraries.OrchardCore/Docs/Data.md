@@ -2,8 +2,9 @@
 
 ## Extensions
 
+- `ManualConnectingIndexServiceExtensions`: Adds `IManualConnectingIndexService` extension methods for removing indices by specifying document ID or content.
 - `SessionExtensions`: Shortcut to execute a query from a raw SQL string.
-- `QueryExtensions`: Adds `IQuery` manipulating extension methods to YesSql queries. (eg. `PaginateAsync` for breaking the result into pages).
+- `QueryExtensions`: Adds `IQuery` manipulating extension methods to YesSql queries. For example, `PaginateAsync()` for breaking the result into pages.
 - `SchemaBuilderExtensions`: Adds shortcut extension method for `SchemaBuilder`.
 - `SqlDialectExtensions`: Adds extensions to check the type of SQL language used.
 

@@ -54,6 +54,9 @@ public static class SchemaBuilderExtensions
                 columnNames));
     }
 
+    /// <summary>
+    /// Creates a Map Index table with the provided index type of <typeparamref name="T"/>.
+    /// </summary>
     public static ISchemaBuilder CreateMapIndexTable<T>(
         this ISchemaBuilder builder,
         string collection = null) =>

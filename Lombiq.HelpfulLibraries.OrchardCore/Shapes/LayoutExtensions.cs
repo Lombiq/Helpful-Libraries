@@ -21,6 +21,9 @@ public static class LayoutExtensions
         if (zone != null) await zone.AddAsync(shape, position);
     }
 
+    /// <summary>
+    /// Adds the specified <paramref name="shape"/> to the <c>SideMenu</c> zone.
+    /// </summary>
     public static Task AddShapeToSideMenuAsync(this ILayoutAccessor layoutAccessor, IShape shape) =>
         AddShapeToZoneAsync(layoutAccessor, "SideMenu", shape);
 }

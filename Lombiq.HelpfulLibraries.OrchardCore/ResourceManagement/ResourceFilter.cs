@@ -14,12 +14,21 @@ public class ResourceFilter
 
     public void Execute(Action<IResourceManager> action) => Execution = action;
 
+    /// <summary>
+    /// Registers the provided <c>stylesheet</c> <paramref name="resources"/>.
+    /// </summary>
     public void RegisterStylesheet(params string[] resources) =>
         Execute(resourceManager => resources.ForEach(resource => resourceManager.RegisterResource("stylesheet", resource)));
 
+    /// <summary>
+    /// Registers the provided <c>script</c> <paramref name="resources"/> at the foot of the page.
+    /// </summary>
     public void RegisterFootScript(params string[] resources) =>
         Execute(resourceManager => resources.ForEach(resource => resourceManager.RegisterResource("script", resource).AtFoot()));
 
+    /// <summary>
+    /// Registers the provided <c>script</c> <paramref name="resources"/> at the head of the page.
+    /// </summary>
     public void RegisterHeadScript(params string[] resources) =>
         Execute(resourceManager => resources.ForEach(resource => resourceManager.RegisterResource("script", resource).AtHead()));
 }

@@ -2,11 +2,10 @@
 
 ## Extensions and helpers
 
-- `Controller` extensions: Adds extension methods to `Controller` objects like `.RedirectToContentDisplay(content)`.
-
-- `ResultExecutingContextExtensions` to get some shortcuts to usual context operations in `IAsyncResultFilter`s.
-- `ShapeResultExtensions`: Adds extensions methods generating placement strings on your shape description, such as `UseTab`.
-- `UrlHelperExtensions`: Adds extension methods to the `@Url` helper, such as `EditContentItemWithTab`.
+- `OrchardControllerExtensions`: Adds extension methods like `RedirectToContentDisplay(content)` to `Controller` objects.
+- `ResultExecutingContextExtensions`: contains shortcuts for common context operations in `IAsyncResultFilter`s.
+- `ShapeResultExtensions`: Adds extensions methods generating placement strings on your shape description, such as `UseTab()`.
+- `UrlHelperExtensions`: Adds extension methods to the `@Url` helper, such as `EditContentItemWithTab()`.
 
 ## `TypedRoute`
 

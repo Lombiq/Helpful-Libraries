@@ -12,9 +12,9 @@ For general details about and on using the Helpful Libraries see the [root Readm
 
 ### Helpers
 
-- [`CliWrapHelper`](Helpers/CliWrapHelper.cs): Specialized tasks using CliWrap, such as `WhichAsync` that helps locate the full path of a program that's inside the user's PATH environment variable.
+- [`CliWrapHelper`](Helpers/CliWrapHelper.cs): Specialized tasks using CliWrap, such as `WhichAsync()`, that help locate the full path of a program that's inside the user's PATH environment variable.
 - [`OperatingSystemHelper`](Helpers/OperatingSystemHelper.cs): Gets OS-specific information like the file extension of executable files.
 
 ### Extensions
 
-- [`CommandExtensions`](Extensions/CommandExtensions.cs): Contains extension methods for CliWrap's `Command` type. For example: `ExecuteDotNetApplicationAsync` for launching .NET server apps that say "Application started. Press Ctrl+C to shut down.".
+- [`CommandExtensions`](Extensions/CommandExtensions.cs): Contains extension methods for CliWrap's `Command` type. For example, `ExecuteDotNetApplicationAsync()` for launching .NET server apps that say "Application started. Press Ctrl+C to shut down.".

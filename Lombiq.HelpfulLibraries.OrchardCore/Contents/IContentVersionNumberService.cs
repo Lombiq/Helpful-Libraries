@@ -21,11 +21,17 @@ public interface IContentVersionNumberService
 
 public static class ContentVersionNumberServiceExtensions
 {
+    /// <summary>
+    /// Returns the largest version number for the provided <paramref name="content"/>.
+    /// </summary>
     public static Task<int> GetLatestVersionNumberAsync(
         this IContentVersionNumberService service,
         IContent content) =>
         service.GetLatestVersionNumberAsync(content?.ContentItem?.ContentItemId);
 
+    /// <summary>
+    /// Returns the current version number of the given <paramref name="content"/>.
+    /// </summary>
     public static Task<int> GetCurrentVersionNumberAsync(
         this IContentVersionNumberService service,
         IContent content) =>

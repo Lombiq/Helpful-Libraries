@@ -22,6 +22,10 @@ public abstract class NavigationProviderBase : INavigationProvider
         T = stringLocalizer;
     }
 
+    /// <summary>
+    /// Builds navigation if the provided <paramref name="name"/> matches <see cref="NavigationName"/> and if the user
+    /// is authenticated.
+    /// </summary>
     public Task BuildNavigationAsync(string name, NavigationBuilder builder) =>
         name.EqualsOrdinalIgnoreCase(NavigationName) &&
         (!RequireAuthentication || _hca.HttpContext?.User?.Identity?.IsAuthenticated == true)

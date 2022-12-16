@@ -2,10 +2,10 @@
 
 ## About
 
-Adds a typed HTTP client to the service collection using RestEase, for dependency injection.
+Adds a typed HTTP client to the service collection for dependency injection using RestEase.
 
 For general details about and on using the Helpful Libraries see the [root Readme](../Readme.md).
 
 ## Extensions
 
-- `AddRestEaseHttpClient` Adds a typed HTTP client to the service collection using RestEase, for dependency injection.
+- `AddRestEaseHttpClient`: Adds a typed HTTP client to the service collection for dependency injection using RestEase.
