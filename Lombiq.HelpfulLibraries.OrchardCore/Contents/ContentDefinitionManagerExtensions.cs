@@ -41,7 +41,7 @@ public static class ContentDefinitionManagerExtensions
     }
 
     /// <summary>
-    /// Prepares a <paramref name="contentType"/> to be used as a taxonomy by resetting all content type settings to
+    /// Prepares a <paramref name="contentType"/> to be used as a Taxonomy by resetting all content type settings to
     /// <see langword="false"/> and adding <c>TitlePart</c>.
     /// </summary>
     public static void AlterTypeDefinitionForTaxonomy(this IContentDefinitionManager manager, string contentType) =>
