@@ -10,7 +10,7 @@ public static class CultureHelpers
     public static IEnumerable<Country> GetCountries() =>
         CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(culture =>
             {
-                var regionInfo = new RegionInfo(culture.LCID);
+                var regionInfo = new RegionInfo(culture.LCID); // #spell-check-ignore-line
                 return new Country
                 {
                     TwoLetterIsoCode = regionInfo.TwoLetterISORegionName,
