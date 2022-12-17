@@ -1,6 +1,4 @@
-﻿# Lombiq Helpful Libraries for Orchard Core - Samples
-
-
+# Lombiq Helpful Libraries for Orchard Core - Samples
 
 Example Orchard Core module that makes use of Lombiq Helpful Libraries.
 

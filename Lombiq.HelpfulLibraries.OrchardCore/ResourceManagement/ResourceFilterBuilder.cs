@@ -15,6 +15,9 @@ public class ResourceFilterBuilder
 {
     public IList<ResourceFilter> ResourceFilters { get; private set; } = new List<ResourceFilter>();
 
+    /// <summary>
+    /// Adds the provided <paramref name="filter"/> to the list of <see cref="ResourceFilters"/>.
+    /// </summary>
     public ResourceFilter When(Func<HttpContext, bool> filter)
     {
         var resourceFilter = new ResourceFilter
@@ -27,6 +30,10 @@ public class ResourceFilterBuilder
         return resourceFilter;
     }
 
+    /// <summary>
+    /// Adds the provided asynchronous filter specified in <paramref name="filterAsync"/> to the list of
+    /// <see cref="ResourceFilters"/>.
+    /// </summary>
     public ResourceFilter When(Func<HttpContext, Task<bool>> filterAsync)
     {
         var resourceFilter = new ResourceFilter
@@ -39,14 +46,31 @@ public class ResourceFilterBuilder
         return resourceFilter;
     }
 
+    /// <summary>
+    /// Adds a filter that matches the given <paramref name="path"/> to the list of <see cref="ResourceFilters"/>.
+    /// </summary>
     public ResourceFilter WhenPath(string path) =>
         When(context => context.Request.Path.Value?.EqualsOrdinalIgnoreCase(path) == true);
 
+    /// <summary>
+    /// Adds a filter that matches the path of the homepage (<c>"/"</c>) to the list of <see cref="ResourceFilters"/>.
+    /// </summary>
     public ResourceFilter WhenHomePage() => WhenPath("/");
 
+    /// <summary>
+    /// Adds a filter that matches the beginning of the request's path with the given <paramref name="path"/> to the
+    /// list of <see cref="ResourceFilters"/>.
+    /// </summary>
     public ResourceFilter WhenPathStartsWith(string path) =>
         When(context => context.Request.Path.Value?.StartsWithOrdinalIgnoreCase(path) == true);
 
+    /// <summary>
+    /// Adds a filter that matches any of the provided <paramref name="contentTypes"/> to the list of
+    /// <see cref="ResourceFilters"/>.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Thrown when <paramref name="contentTypes"/> has no provided items.
+    /// </exception>
     public ResourceFilter WhenContentType(params string[] contentTypes)
     {
         if (!contentTypes.Any())
@@ -78,6 +102,9 @@ public class ResourceFilterBuilder
         });
     }
 
+    /// <summary>
+    /// Adds an always matching filter to the list of <see cref="ResourceFilters"/>.
+    /// </summary>
     public ResourceFilter Always(Action<IResourceManager> execution = null)
     {
         var filter = When(_ => true);

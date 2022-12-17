@@ -11,8 +11,8 @@ public class Startup : StartupBase
 {
     public override void ConfigureServices(IServiceCollection services)
     {
-        services.AddScoped<IDataMigration, BookRecordMigrations>();
-        services.AddScoped<IDataMigration, ExpressionSampleMigration>();
+        services.AddDataMigration<BookRecordMigrations>();
+        services.AddDataMigration<ExpressionSampleMigration>();
         services.AddScoped<INavigationProvider, HelpfulLibrariesNavigationProvider>();
     }
 }

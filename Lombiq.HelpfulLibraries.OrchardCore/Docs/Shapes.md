@@ -1,10 +1,9 @@
 # Lombiq Helpful Libraries - Orchard Core Libraries - Shapes for Orchard Core
 
-
-
 ## Extensions
 
 - `LayoutExtensions`: Adds features for adding shapes to the layout via `ILayoutAccessor`.
+- `ServiceCollectionExtensions`: Allows adding `ShapeRenderer` to the service collection via `AddShapeRenderer()`.
 - `ShapeExtensions`: Some shortcuts for managing shapes.
 
 ## Shape rendering

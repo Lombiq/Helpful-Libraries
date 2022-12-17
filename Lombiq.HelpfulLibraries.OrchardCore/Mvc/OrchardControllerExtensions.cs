@@ -34,17 +34,14 @@ public static class OrchardControllerExtensions
         {
             var context = controller.HttpContext;
 
-            if (exception.IsFatal())
-            {
-                var logger = context
-                    .RequestServices
-                    .GetService<ILoggerFactory>()
-                    .CreateLogger(controller.GetType());
-                logger.LogError(
-                    exception,
-                    "An error has occurred while generating a JSON result. (Request Route Values: {RouteValues})",
-                    JsonConvert.SerializeObject(context.Request.RouteValues));
-            }
+            var logger = context
+                .RequestServices
+                .GetRequiredService<ILoggerFactory>()
+                .CreateLogger(controller.GetType());
+            logger.LogError(
+                exception,
+                "An error has occurred while generating a JSON result. (Request Route Values: {RouteValues})",
+                JsonConvert.SerializeObject(context.Request.RouteValues));
 
             return controller.Json(context.IsDevelopmentAndLocalhost()
                 ? new { error = exception.Message, data = exception.ToString() }

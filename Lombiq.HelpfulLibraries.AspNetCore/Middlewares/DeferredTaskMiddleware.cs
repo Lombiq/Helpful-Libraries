@@ -29,6 +29,9 @@ public class DeferredTaskMiddleware
 
 public static class DeferredTaskApplicationBuilderExtensions
 {
+    /// <summary>
+    /// Enables <see cref="DeferredTaskMiddleware"/>.
+    /// </summary>
     public static void UseDeferredTasks(this IApplicationBuilder app) =>
         app.UseMiddleware<DeferredTaskMiddleware>();
 }
