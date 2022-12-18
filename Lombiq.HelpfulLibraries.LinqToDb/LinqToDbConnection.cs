@@ -13,6 +13,12 @@ public class LinqToDbConnection : DataConnection, ITableAccessor
         : base(dataProvider, dbTransaction) =>
             _tablePrefix = tablePrefix;
 
+    /// <summary>
+    /// For the current query, overrides <see cref="ITable{T}.TableName"/> of the table-like source
+    /// <typeparamref name="T"/> used in the query with a prefixed table name that optionally includes the specified
+    /// <paramref name="collectionName"/>.
+    /// </summary>
+    /// <returns>The original table-like object but with a prefixed table name.</returns>
     public ITable<T> GetPrefixedTable<T>(string collectionName = null)
         where T : class
     {

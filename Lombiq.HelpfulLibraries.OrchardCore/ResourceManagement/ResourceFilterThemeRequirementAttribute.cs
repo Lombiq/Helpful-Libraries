@@ -11,6 +11,9 @@ public sealed class ResourceFilterThemeRequirementAttribute : Attribute
 
     public ResourceFilterThemeRequirementAttribute(string theme) => Theme = theme;
 
+    /// <summary>
+    /// Retrieves the required themes by <paramref name="type"/>.
+    /// </summary>
     public static IEnumerable<string> GetRequirementsByType(Type type) =>
         type
             .GetCustomAttributes<ResourceFilterThemeRequirementAttribute>(inherit: false)

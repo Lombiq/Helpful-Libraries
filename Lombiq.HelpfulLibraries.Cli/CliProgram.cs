@@ -18,6 +18,9 @@ public class CliProgram
 
     public CliProgram(string command) => _command = command + OperatingSystemHelper.GetExecutableExtension();
 
+    /// <summary>
+    /// Creates a <see cref="Command"/> object based on the passed <paramref name="arguments"/>.
+    /// </summary>
     public Command GetCommand(IEnumerable<object> arguments) =>
         CliWrap.Cli
             .Wrap(_command)

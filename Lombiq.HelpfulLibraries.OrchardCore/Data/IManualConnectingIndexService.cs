@@ -48,6 +48,10 @@ public interface IManualConnectingIndexService<in T>
 
 public static class ManualConnectingIndexServiceExtensions
 {
+    /// <summary>
+    /// Removes the indices with the provided <paramref name="documentId"/> from the document table.
+    /// </summary>
+    /// <typeparam name="T">The index to operate on.</typeparam>
     public static Task RemoveByIndexAsync<T>(
         this IManualConnectingIndexService<T> service,
         int documentId,
@@ -55,6 +59,10 @@ public static class ManualConnectingIndexServiceExtensions
         where T : MapIndex =>
         service.RemoveAsync("DocumentId", documentId, session);
 
+    /// <summary>
+    /// Removes the indices with the provided <paramref name="content"/>'s ID from the document table.
+    /// </summary>
+    /// <typeparam name="T">The index to operate on.</typeparam>
     public static Task RemoveByContentAsync<T>(
         this IManualConnectingIndexService<T> service,
         IContent content,
