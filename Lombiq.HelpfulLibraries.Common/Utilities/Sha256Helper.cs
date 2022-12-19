@@ -16,6 +16,10 @@ public static class Sha256Helper
     /// <returns>The hexadecimal string representation of the SHA-256 hash.</returns>
     public static string ComputeHash(string text)
     {
+        // Eliminate OS-specific differences caused by CRLF vs LF line endings, so we get the same hash on Windows and
+        // Unix-like operating systems.
+        text = text.Replace("\r\n", "\n");
+
         using var sha256 = SHA256.Create();
         var hashedIdBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
 
