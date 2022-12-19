@@ -63,6 +63,14 @@ public static class StringExtensions
         .Union(Path.GetInvalidPathChars())
         .ToArray());
 
+    /// <summary>
+    /// Strips unsafe characters from the provided <paramref name="text"/> so it's safe to be used as a file name in
+    /// Windows, Linux, and other Unix-like operating systems.
+    /// </summary>
+    /// <param name="text">The string to be stripped.</param>
+    /// <param name="noSpaceOrDot">
+    /// If <see langword="true"/> space characters are replaced with dashes and dots with underscores too.
+    /// </param>
     public static string MakeFileSystemFriendly(this string text, bool noSpaceOrDot = true)
     {
         var sanitized = string.Join("_", text.Split(_invalidPathCharacters.Value));
