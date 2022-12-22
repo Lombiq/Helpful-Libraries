@@ -20,6 +20,7 @@
     <UpgradeBackupLocation />
     <TargetFrameworkProfile />
     <UseGlobalApplicationHostFile />
+    <ReferencePath>$(SolutionDir)\Website\bin\;$(SolutionDir)\Website\Modules\Orchard.Alias\bin;$(SolutionDir)\Website\Modules\Orchard.Caching\bin;$(SolutionDir)\Website\Modules\Orchard.Users\bin;</ReferencePath>
     <UseIISExpress>true</UseIISExpress>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
