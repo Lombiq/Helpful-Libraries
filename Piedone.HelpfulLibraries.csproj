@@ -12,7 +12,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Piedone.HelpfulLibraries</RootNamespace>
     <AssemblyName>Piedone.HelpfulLibraries</AssemblyName>
-    <TargetFrameworkVersion>v4.6.2</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <LangVersion>7.3</LangVersion>
     <FileUpgradeFlags>
     </FileUpgradeFlags>
@@ -267,6 +267,7 @@
     <Content Include="Views\Empty.cshtml" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="Docs\AuthenticationLibraries.md" />
     <None Include="Docs\ContentsLibraries.md" />
     <None Include="Docs\DependencyInjectionLibraries.md" />
@@ -277,7 +278,6 @@
     <None Include="Docs\TasksLibraries.md" />
     <None Include="Docs\Utilities.md" />
     <None Include="Docs\VersionHistory.md" />
-    <None Include="Properties\PublishProfiles\Custom.pubxml" />
     <None Include="Readme.md" />
   </ItemGroup>
   <PropertyGroup>
@@ -341,7 +341,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>0</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:63060/</IISUrl>
+          <IISUrl>http://localhost:9433/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>
