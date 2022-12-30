@@ -26,20 +26,35 @@ namespace System
         /// </summary>
         /// <param name="values">The <see cref="string"/> values to join.</param>
         /// <param name="separator">The separator to use between the <paramref name="values"/>.</param>
-        /// <returns>A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/>
-        /// provided.</returns>
-        public static string Join(this IEnumerable<string> values, string separator = "") =>
+        /// <returns>
+        /// A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/> provided.
+        /// </returns>
+        public static string Join(this IEnumerable<string> values, string separator = " ") =>
             string.Join(separator, values ?? Enumerable.Empty<string>());
 
         /// <summary>
-        /// Join strings fluently.
+        /// Join non-null, non-empty strings fluently.
         /// </summary>
         /// <param name="values">The <see cref="string"/> values to join.</param>
         /// <param name="separator">The separator to use between the <paramref name="values"/>.</param>
-        /// <returns>A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/>
-        /// provided.</returns>
-        public static string JoinNonEmpty(this IEnumerable<string> values, string separator = "") =>
+        /// <returns>
+        /// A new <see cref="string"/> that concatenates all non-null, non-empty values with the <paramref
+        /// name="separator"/> provided.
+        /// </returns>
+        public static string JoinNonEmpty(this IEnumerable<string> values, string separator = " ") =>
             values?.Where(s => !string.IsNullOrEmpty(s)).Join(separator);
+
+        /// <summary>
+        /// Join strings fluently after trimming them and removing empty instances.
+        /// </summary>
+        /// <param name="values">The <see cref="string"/> values to join.</param>
+        /// <param name="separator">The separator to use between the <paramref name="values"/>.</param>
+        /// <returns>
+        /// A new <see cref="string"/> that concatenates all whitespace-trimmed, non-null, non-empty values with the
+        /// <paramref name="separator"/> provided.
+        /// </returns>
+        public static string JoinTrimmedNonEmpty(this IEnumerable<string> values, string separator = " ") =>
+            values?.Select(s => s?.Trim()).JoinNonEmpty(separator);
 
         /// <summary>
         /// A convenience method for easier access to <see cref="string.Split(string[],StringSplitOptions)"/>.
@@ -56,6 +71,7 @@ namespace System
             this string value,
             string separator,
             StringSplitOptions stringSplitOptions = StringSplitOptions.None) =>
-            value?.Split(new[] { separator }, stringSplitOptions) ?? Array.Empty<string>();
+            // Array.Empty<string>() introduced in .NET 4.6, so we have to stick to new string[0] here.
+            value?.Split(new[] { separator }, stringSplitOptions) ?? new string[0];
     }
 }
