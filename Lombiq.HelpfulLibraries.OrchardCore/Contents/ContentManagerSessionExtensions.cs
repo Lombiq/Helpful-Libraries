@@ -81,8 +81,9 @@ public static class ContentManagerSessionExtensions
     {
         List<ContentItem> contentItems = null;
         List<ContentItem> storedItems = null;
+        var contentItemIdsArray = contentItemIds.ToImmutableArray();
 
-        foreach (var contentItemId in contentItemIds)
+        foreach (var contentItemId in contentItemIdsArray)
         {
             // If the published version is already stored, we can return it.
             if (contentManagerSession.RecallPublishedItemId(contentItemId, out var contentItem))
@@ -94,8 +95,8 @@ public static class ContentManagerSessionExtensions
 
         // Only query the ids not already stored.
         var itemIdsToQuery = storedItems != null
-            ? contentItemIds.Except(storedItems.Select(x => x.ContentItemId))
-            : contentItemIds;
+            ? contentItemIdsArray.Except(storedItems.Select(x => x.ContentItemId))
+            : contentItemIdsArray;
 
         if (itemIdsToQuery.Any())
         {
@@ -126,7 +127,6 @@ public static class ContentManagerSessionExtensions
             return Enumerable.Empty<ContentItem>();
         }
 
-        var contentItemIdsArray = contentItemIds.ToImmutableArray();
-        return contentItems.OrderBy(c => contentItemIdsArray.IndexOf(c.ContentItemId));
+        return contentItems.OrderBy(contentItems => contentItemIdsArray.IndexOf(contentItems.ContentItemId));
     }
 }

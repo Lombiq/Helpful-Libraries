@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.AspNetCore.Middlewares;
@@ -15,7 +16,9 @@ public class DeferredTaskMiddleware
         HttpContext context,
         IEnumerable<IDeferredTask> deferredTasks)
     {
-        foreach (var deferredTask in deferredTasks)
+        var deferredTasksList = deferredTasks.ToList();
+
+        foreach (var deferredTask in deferredTasksList)
         {
             deferredTask.IsScheduled = true;
             await deferredTask.PreProcessAsync(context);
@@ -23,7 +26,7 @@ public class DeferredTaskMiddleware
 
         await _next(context);
 
-        foreach (var deferredTask in deferredTasks) await deferredTask.PostProcessAsync(context);
+        foreach (var deferredTask in deferredTasksList) await deferredTask.PostProcessAsync(context);
     }
 }
 
