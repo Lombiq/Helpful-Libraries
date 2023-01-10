@@ -17,7 +17,6 @@ public static class LiquidServiceCollectionExtensions
     {
         services.AddScoped<ILiquidPropertyRegistrar, TService>();
         services.Configure<TemplateOptions>(options =>
-        {
             options
                 .MemberAccessStrategy
                 .Register<LiquidContentAccessor, LiquidPropertyAccessor>(name, (_, context) =>
@@ -35,7 +34,6 @@ public static class LiquidServiceCollectionExtensions
                             ? new ObjectValue(result)
                             : NilValue.Instance;
                     });
-                });
-        });
+                }));
     }
 }
