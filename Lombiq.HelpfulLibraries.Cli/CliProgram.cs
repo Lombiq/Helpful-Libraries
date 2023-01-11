@@ -89,4 +89,35 @@ public class CliProgram
     /// </param>
     public Task ExecuteAsync(CancellationToken token, params object[] arguments) =>
         ExecuteAsync(arguments, additionalExceptionText: null, token);
+
+    public async Task<string> ExecuteAndGetOutputAsync(
+        ICollection<object> arguments,
+        string additionalExceptionText,
+        CancellationToken token)
+    {
+        var result = await GetCommand(arguments)
+            .WithValidation(CommandResultValidation.None)
+            .ExecuteBufferedAsync(token);
+
+        if (result.ExitCode != 0 || !string.IsNullOrEmpty(result.StandardError))
+        {
+            var argumentsString = arguments
+                .Select(argument => argument is string argumentString && argumentString.Contains(' ')
+                    ? $"\"{argument}\""
+                    : argument.ToString())
+                .Join();
+
+            var lines = new[]
+            {
+                $"The {_command} {argumentsString} command failed with the output below.",
+                additionalExceptionText,
+                result.StandardOutput,
+                result.StandardError,
+            };
+
+            throw new InvalidOperationException(lines.JoinNotNullOrEmpty(Environment.NewLine));
+        }
+
+        return result.StandardOutput;
+    }
 }
