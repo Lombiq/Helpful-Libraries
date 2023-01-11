@@ -83,7 +83,7 @@ public class CliProgram
     /// text. If it's <see langword="null"/>, then the line is omitted.
     /// </param>
     /// <param name="token">Passed into the CliWrap <see cref="Command"/>.</param>
-    /// <returns>The standard output as a string</returns>
+    /// <returns>The standard output as a string.</returns>
     /// <exception cref="InvalidOperationException">
     /// <para>Thrown if the command fails or outputs to the error stream. The format is like this:</para>
     /// <code>
