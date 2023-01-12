@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.AspNetCore.Middlewares;
@@ -16,7 +15,7 @@ public class DeferredTaskMiddleware
         HttpContext context,
         IEnumerable<IDeferredTask> deferredTasks)
     {
-        var deferredTasksList = deferredTasks.ToList();
+        var deferredTasksList = deferredTasks.AsList();
 
         foreach (var deferredTask in deferredTasksList)
         {
