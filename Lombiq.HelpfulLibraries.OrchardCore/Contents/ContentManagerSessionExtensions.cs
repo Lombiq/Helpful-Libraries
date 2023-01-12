@@ -1,7 +1,6 @@
 using OrchardCore.ContentManagement.Records;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -81,9 +80,9 @@ public static class ContentManagerSessionExtensions
     {
         List<ContentItem> contentItems = null;
         List<ContentItem> storedItems = null;
-        var contentItemIdsArray = contentItemIds.ToImmutableArray();
+        var contentItemIdsList = contentItemIds.AsList();
 
-        foreach (var contentItemId in contentItemIdsArray)
+        foreach (var contentItemId in contentItemIdsList)
         {
             // If the published version is already stored, we can return it.
             if (contentManagerSession.RecallPublishedItemId(contentItemId, out var contentItem))
@@ -95,8 +94,8 @@ public static class ContentManagerSessionExtensions
 
         // Only query the ids not already stored.
         var itemIdsToQuery = storedItems != null
-            ? contentItemIdsArray.Except(storedItems.Select(x => x.ContentItemId))
-            : contentItemIdsArray;
+            ? contentItemIdsList.Except(storedItems.Select(x => x.ContentItemId))
+            : contentItemIdsList;
 
         if (itemIdsToQuery.Any())
         {
@@ -127,6 +126,6 @@ public static class ContentManagerSessionExtensions
             return Enumerable.Empty<ContentItem>();
         }
 
-        return contentItems.OrderBy(contentItems => contentItemIdsArray.IndexOf(contentItems.ContentItemId));
+        return contentItems.OrderBy(contentItems => contentItemIdsList.IndexOf(contentItems.ContentItemId));
     }
 }
