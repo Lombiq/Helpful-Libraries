@@ -54,10 +54,66 @@ public class CliProgram
         string additionalExceptionText,
         CancellationToken token)
     {
-        var result = await GetCommand(arguments)
+        var result = await GetResultAsync(arguments, token);
+        ThrowOnError(result, arguments, additionalExceptionText);
+    }
+
+    /// <summary>
+    /// Shortcut for <see cref="ExecuteAsync(ICollection{object},string,CancellationToken)"/> if there is no additional
+    /// exception message.
+    /// </summary>
+    /// <param name="token">Passed into the CliWrap <see cref="Command"/>.</param>
+    /// <param name="arguments">
+    /// The arguments passed to the command. If an item is not a <see langword="string"/>, then it's converted using the
+    /// <see cref="CultureInfo.InvariantCulture"/> formatter.
+    /// </param>
+    public Task ExecuteAsync(CancellationToken token, params object[] arguments) =>
+        ExecuteAsync(arguments, additionalExceptionText: null, token);
+
+    /// <summary>
+    /// Calls the command specified in the constructor with the provided arguments, and returns the standard output as a
+    /// string. If the process doesn't succeed or outputs to the standard error stream then an exception is thrown.
+    /// </summary>
+    /// <param name="arguments">
+    /// The arguments passed to the command. If an item is not a <see langword="string"/>, then it's converted using the
+    /// <see cref="CultureInfo.InvariantCulture"/> formatter.
+    /// </param>
+    /// <param name="additionalExceptionText">
+    /// Text in the second line of the exception message after the standard "... command failed with the output below."
+    /// text. If it's <see langword="null"/>, then the line is omitted.
+    /// </param>
+    /// <param name="token">Passed into the CliWrap <see cref="Command"/>.</param>
+    /// <returns>The standard output as a string.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// <para>Thrown if the command fails or outputs to the error stream. The format is like this:</para>
+    /// <code>
+    /// The {command} {arguments} command failed with the output below.
+    /// {additional exception text}
+    /// {standard error output}
+    /// </code>
+    /// </exception>
+    public async Task<string> ExecuteAndGetOutputAsync(
+        ICollection<object> arguments,
+        string additionalExceptionText,
+        CancellationToken token)
+    {
+        var result = await GetResultAsync(arguments, token);
+
+        ThrowOnError(result, arguments, additionalExceptionText);
+
+        return result.StandardOutput;
+    }
+
+    private async Task<BufferedCommandResult> GetResultAsync(ICollection<object> arguments, CancellationToken token) =>
+        await GetCommand(arguments)
             .WithValidation(CommandResultValidation.None)
             .ExecuteBufferedAsync(token);
 
+    private void ThrowOnError(
+        BufferedCommandResult result,
+        ICollection<object> arguments,
+        string additionalExceptionText)
+    {
         if (result.ExitCode != 0 || !string.IsNullOrEmpty(result.StandardError))
         {
             var argumentsString = arguments
@@ -77,16 +133,4 @@ public class CliProgram
             throw new InvalidOperationException(lines.JoinNotNullOrEmpty(Environment.NewLine));
         }
     }
-
-    /// <summary>
-    /// Shortcut for <see cref="ExecuteAsync(ICollection{object},string,CancellationToken)"/> if there is no additional
-    /// exception message.
-    /// </summary>
-    /// <param name="token">Passed into the CliWrap <see cref="Command"/>.</param>
-    /// <param name="arguments">
-    /// The arguments passed to the command. If an item is not a <see langword="string"/>, then it's converted using the
-    /// <see cref="CultureInfo.InvariantCulture"/> formatter.
-    /// </param>
-    public Task ExecuteAsync(CancellationToken token, params object[] arguments) =>
-        ExecuteAsync(arguments, additionalExceptionText: null, token);
 }
