@@ -80,6 +80,7 @@ namespace YesSql
         {
             var parserResult = SqlParser.TryParse(
                 sql,
+                session.Store.Configuration.Schema,
                 session.Store.Configuration.SqlDialect,
                 session.Store.Configuration.TablePrefix,
                 parameters: null,
@@ -106,13 +107,14 @@ namespace YesSql
         /// <returns><see langword="true" /> if the query updated an existing <see cref="Document"/> successfully.</returns>
         public static Task UpdateDocumentDirectlyAsync(this ISession session, int documentId, object entity)
         {
+            var schema = session.Store.Configuration.Schema;
             var dialect = session.Store.Configuration.SqlDialect;
             var content = session.Store.Configuration.ContentSerializer.Serialize(entity);
 
             var tableName = session.Store.Configuration.TablePrefix +
                 session.Store.Configuration.TableNameConvention.GetDocumentTable();
 
-            var sql = @$"UPDATE {dialect.QuoteForTableName(tableName)}
+            var sql = @$"UPDATE {dialect.QuoteForTableName(tableName, schema)}
                 SET {dialect.QuoteForColumnName("Content")} = @Content
                 WHERE {dialect.QuoteForColumnName("Id")} = @Id";
 

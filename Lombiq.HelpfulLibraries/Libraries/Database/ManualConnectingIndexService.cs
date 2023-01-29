@@ -69,9 +69,10 @@ namespace Lombiq.HelpfulLibraries.Libraries.Database
             ISession session,
             Func<ISqlDialect, string, Task<TOut>> request)
         {
+            var schema = session.Store.Configuration.Schema;
             var prefix = session.Store.Configuration.TablePrefix;
             var dialect = session.Store.Configuration.SqlDialect;
-            var quotedTableName = dialect.QuoteForTableName(prefix + _type.Name);
+            var quotedTableName = dialect.QuoteForTableName(prefix + _type.Name, schema);
 
             return request(dialect, quotedTableName);
         }

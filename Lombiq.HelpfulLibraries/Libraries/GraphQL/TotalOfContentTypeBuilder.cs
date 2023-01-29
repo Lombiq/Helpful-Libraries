@@ -30,7 +30,7 @@ namespace Lombiq.HelpfulLibraries.Libraries.GraphQL
 
             builder.ResolveAsync(async context =>
             {
-                var serviceProvider = context.ResolveServiceProvider();
+                var serviceProvider = context.RequestServices;
                 var session = serviceProvider.GetService<ISession>();
                 return await session.QueryIndex<ContentItemIndex>(index =>
                     index.Published &&
