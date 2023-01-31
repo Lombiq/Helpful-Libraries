@@ -6,4 +6,4 @@ on:
 jobs:
   call-validate-workflow:
     name: Call validate workflow
-    uses: Lombiq/GitHub-Actions/.github/workflows/validate-submodule-pull-request.yml@issue/OSOE-485
+    uses: Lombiq/GitHub-Actions/.github/workflows/validate-pull-request.yml@issue/OSOE-485
