@@ -4,5 +4,6 @@ on:
   pull_request:
 
 jobs:
-  validate-pull-request:
-    uses: Lombiq/GitHub-Actions/.github/workflows/validate-pull-request.yml@dev
+  call-validate-workflow:
+    name: Call validate workflow
+    uses: Lombiq/GitHub-Actions/.github/workflows/validate-submodule-pull-request.yml@dev
