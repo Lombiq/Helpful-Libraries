@@ -1,9 +1,0 @@
-name: Validate Pull Request
-
-on:
-  pull_request:
-
-jobs:
-  call-validate-workflow:
-    name: Call validate workflow
-    uses: Lombiq/GitHub-Actions/.github/workflows/validate-pull-request.yml@issue/OSOE-485

@@ -6,8 +6,8 @@ on:
       - v*
 
 jobs:
-  call-publish-workflow:
+  publish_nuget:
     name: Call publish workflow
-    uses: Lombiq/GitHub-Actions/.github/workflows/publish-nuget.yml@issue/OSOE-485
+    uses: Lombiq/GitHub-Actions/.github/workflows/publish-nuget.yml@dev
     secrets:
       API_KEY: ${{ secrets.DEFAULT_NUGET_PUBLISH_API_KEY }}
