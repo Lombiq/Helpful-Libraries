@@ -17,4 +17,4 @@ Retrieves `User`s from a non-persistent, per-request cache, or gets them from th
 
 ## `RoleCommands`
 
-Adds the `addPermissionToRole /RoleName:<rolename> /Permission:<permission>` command so you can easily assign permissions in the recipes.
+Adds the `addPermissionToRole /RoleName:<RoleName> /Permission:<PermissionName>` command so you can easily assign permissions in the recipes.
