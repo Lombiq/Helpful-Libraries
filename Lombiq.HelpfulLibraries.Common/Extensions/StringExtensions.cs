@@ -359,7 +359,7 @@ public static class StringExtensions
             : (Left: text[..range.Start], Separator: text[range], Right: text[range.End..]);
 
     /// <summary>
-    /// Splits the text into three pieces similarly to Python's <c>str.rpartition</c> method.
+    /// Splits the text into three pieces similarly to Python's <c>str.rpartition</c> method #spell-check-ignore-line.
     /// </summary>
     /// <param name="text">The text to partition.</param>
     /// <param name="separator">The last instance of this text is the separator, if any.</param>
