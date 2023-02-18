@@ -47,10 +47,17 @@ public class ContentPartDefinitionBuilder<TPart>
             name,
             field =>
             {
-                field = field.WithDisplayName(name).OfType(typeof(TField).Name);
+                field = field.MergeSettings<ContentPartFieldSettings>(
+                    settings =>
+                    {
+                        if (string.IsNullOrEmpty(settings.DisplayName))
+                        {
+                            settings.DisplayName = name;
+                        }
+                    })
+                    .OfType(typeof(TField).Name);
                 configuration?.Invoke(field);
             });
-
         return this;
     }
 }
