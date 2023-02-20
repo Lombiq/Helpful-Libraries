@@ -15,7 +15,9 @@ public class DeferredTaskMiddleware
         HttpContext context,
         IEnumerable<IDeferredTask> deferredTasks)
     {
-        foreach (var deferredTask in deferredTasks)
+        var deferredTasksList = deferredTasks.AsList();
+
+        foreach (var deferredTask in deferredTasksList)
         {
             deferredTask.IsScheduled = true;
             await deferredTask.PreProcessAsync(context);
@@ -23,7 +25,7 @@ public class DeferredTaskMiddleware
 
         await _next(context);
 
-        foreach (var deferredTask in deferredTasks) await deferredTask.PostProcessAsync(context);
+        foreach (var deferredTask in deferredTasksList) await deferredTask.PostProcessAsync(context);
     }
 }
 
