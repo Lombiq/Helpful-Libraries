@@ -50,7 +50,7 @@ public class ResourceFilterBuilder
     /// Adds a filter that matches the given <paramref name="path"/> to the list of <see cref="ResourceFilters"/>.
     /// </summary>
     public ResourceFilter WhenPath(string path) =>
-        When(context => context.Request.Path.Value?.EqualsOrdinalIgnoreCase(path) == true);
+        When(context => context.Request.Path.Value?.Trim('/').EqualsOrdinalIgnoreCase(path.Trim('/')) == true);
 
     /// <summary>
     /// Adds a filter that matches the path of the homepage (<c>"/"</c>) to the list of <see cref="ResourceFilters"/>.
