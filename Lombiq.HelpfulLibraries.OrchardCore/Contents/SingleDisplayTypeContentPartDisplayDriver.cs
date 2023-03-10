@@ -1,7 +1,6 @@
 ﻿using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
-using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Views;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
@@ -19,17 +18,20 @@ public abstract class SingleDisplayTypeContentPartDisplayDriver<TPart> : Content
     protected virtual string Position => null;
 
     public override IDisplayResult Display(TPart part, BuildPartDisplayContext context) =>
-        Initialize<object>(GetDisplayShapeType(context), viewModel =>
+        Initialize<ViewModel>(GetDisplayShapeType(context), viewModel =>
             {
-                var shape = (IShape)viewModel;
-                shape.Properties[nameof(part.Content)] = part.Content;
-                shape.Properties[nameof(part.ContentItem)] = part.ContentItem;
-                shape.Properties["Part"] = part;
-                shape.Properties[typeof(TPart).Name] = part;
+                viewModel.Content = part.Content;
+                viewModel.ContentItem = part.ContentItem;
+                viewModel.Part = part;
             })
-            .Location(
-                DisplayType,
-                Position == null ? Location : $"{Location}:{Position}");
+            .Location(DisplayType, Position == null ? Location : $"{Location}:{Position}");
+
+    public class ViewModel
+    {
+        public dynamic Content { get; set; }
+        public ContentItem ContentItem { get; set; }
+        public ContentPart Part { get; set; }
+    }
 }
 
 public class DetailOnlyContentPartDisplayDriver<TPart> : SingleDisplayTypeContentPartDisplayDriver<TPart>
