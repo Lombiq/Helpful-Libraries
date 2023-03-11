@@ -72,7 +72,12 @@ public abstract class SingleDisplayTypeContentPartDisplayDriver<TPart> : Content
             return this;
         }
 
-        public async Task ApplyAsync(BuildDisplayContext context)
+        public Task ApplyAsync(BuildDisplayContext context) =>
+            context.DisplayType == _displayType ? ApplyInnerAsync(context) : Task.CompletedTask;
+
+        public Task ApplyAsync(BuildEditorContext context) => Task.CompletedTask;
+
+        public async Task ApplyInnerAsync(BuildDisplayContext context)
         {
             var contentTypePartDefinition = _buildPartDisplayContext.TypePartDefinition;
             var contentType = _contentPart.ContentItem.ContentType;
@@ -142,8 +147,6 @@ public abstract class SingleDisplayTypeContentPartDisplayDriver<TPart> : Content
                 .GetSetMethod(nonPublic: true)!
                 .Invoke(context, new object[] { shapeResult.Shape });
         }
-
-        public Task ApplyAsync(BuildEditorContext context) => Task.CompletedTask;
     }
 }
 
