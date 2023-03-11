@@ -1,4 +1,6 @@
+using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Microsoft.Extensions.DependencyInjection;
+using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.Data.Migration;
 using YesSql.Indexes;
 
@@ -37,4 +39,10 @@ public static class ContentPartOptionBuilderExtensions
         where TMigration : IDataMigration
         where TIndexProvider : class, IIndexProvider =>
         builder.WithMigration<TMigration>().WithIndex<TIndexProvider>();
+
+    /// <summary>
+    /// Registers <see cref="DetailOnlyContentPartDisplayDriver{TPart}"/> as the part's display driver.
+    /// </summary>
+    public static ContentPartOptionBuilder UseDetailOnlyDriver(this ContentPartOptionBuilder builder) =>
+        builder.ForDisplayMode(typeof(DetailOnlyContentPartDisplayDriver<>).MakeGenericType(builder.ContentPartType));
 }
