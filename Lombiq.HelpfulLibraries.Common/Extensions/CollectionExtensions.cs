@@ -29,15 +29,7 @@ public static class CollectionExtensions
     /// </summary>
     public static void RemoveAll<T>(this ICollection<T> collection, Func<T, bool> predicate = null)
     {
-        var itemsToRemove = new List<T>();
-
-        foreach (var item in collection)
-        {
-            if (predicate == null || predicate(item))
-            {
-                itemsToRemove.Add(item);
-            }
-        }
+        var itemsToRemove = collection.Where(item => predicate == null || predicate(item)).ToList();
 
         foreach (var item in itemsToRemove)
         {
