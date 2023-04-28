@@ -1,6 +1,7 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
+using OrchardCore.Data;
 using OrchardCore.Data.Migration;
 using OrchardCore.DisplayManagement.Descriptors;
 using System;
@@ -17,7 +18,7 @@ public static class ContentPartOptionBuilderExtensions
     public static ContentPartOptionBuilder WithIndex<TIndexProvider>(this ContentPartOptionBuilder builder)
         where TIndexProvider : class, IIndexProvider
     {
-        builder.Services.AddSingleton<IIndexProvider, TIndexProvider>();
+        builder.Services.AddIndexProvider<TIndexProvider>();
         return builder;
     }
 
