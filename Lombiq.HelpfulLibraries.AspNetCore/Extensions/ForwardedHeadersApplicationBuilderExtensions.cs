@@ -10,8 +10,9 @@ public static class ForwardedHeadersApplicationBuilderExtensions
     /// </summary>
     /// <remarks>
     /// <para>
-    /// Uses and configures <see cref="ForwardedHeadersExtensions.UseForwardedHeaders(IApplicationBuilder,
-    /// ForwardedHeadersOptions)"/> under the hood.
+    /// Uses and configures <see
+    /// cref="ForwardedHeadersExtensions.UseForwardedHeaders(IApplicationBuilder, ForwardedHeadersOptions)"/> under the
+    /// hood.
     /// </para>
     /// <para>
     /// Use this instead of the Reverse Proxy Configuration feature when the host header is forwarded too. Otherwise
