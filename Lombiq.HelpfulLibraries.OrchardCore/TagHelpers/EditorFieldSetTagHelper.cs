@@ -51,17 +51,20 @@ public class EditorFieldSetTagHelper : TagHelper
 
         var label = _htmlGenerator.GenerateLabel(ViewContext, For.ModelExplorer, For.Name, Label.Html(), htmlAttributes: null);
 
-        var input = _htmlGenerator.GenerateTextBox(
-            ViewContext,
-            For.ModelExplorer,
-            For.Name,
-            For.Model,
-            For.ModelExplorer.Metadata.EditFormatString,
-            new { @class = "form-control", type = InputType });
-
         if (isCheckbox)
         {
-            input.Attributes["class"] = "custom-control-input";
+            var input = _htmlGenerator.GenerateCheckBox(
+                ViewContext,
+                For.ModelExplorer,
+                For.Name,
+                For.Model switch
+                {
+                    null => null,
+                    bool value => value,
+                    _ => bool.TryParse(For.Model.ToString(), out var parsedValue) ? parsedValue : null,
+                },
+                new { @class = "custom-control-input" });
+
             label.Attributes["class"] = "custom-control-label";
 
             AppendContent(output, input);
@@ -70,6 +73,14 @@ public class EditorFieldSetTagHelper : TagHelper
         }
         else
         {
+            var input = _htmlGenerator.GenerateTextBox(
+                ViewContext,
+                For.ModelExplorer,
+                For.Name,
+                For.Model,
+                For.ModelExplorer.Metadata.EditFormatString,
+                new { @class = "form-control", type = InputType });
+
             AppendContent(output, label);
             AppendContent(output, input);
         }
