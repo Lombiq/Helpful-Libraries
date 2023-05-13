@@ -11,10 +11,10 @@ using System.Threading.Tasks;
 namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 
 public abstract class JsonSectionDisplayDriver<TSection> : SectionDisplayDriver<ISite, TSection>
-    where TSection : new()
+    where TSection : class, new()
 {
     protected abstract string GroupId { get; }
-    protected virtual Permission Permission { get; }
+    protected virtual Permission Permission => null;
     protected virtual string ShapeType => $"{typeof(TSection).Name}_Edit";
     protected virtual string Location => "Content:1";
 
@@ -62,21 +62,23 @@ public abstract class JsonSectionDisplayDriver<TSection> : SectionDisplayDriver<
 
     private static bool TryParseJson(string json, out TSection result)
     {
+        result = null;
+
         try
         {
+            if (string.IsNullOrEmpty(json)) return false;
+
             result = JsonConvert.DeserializeObject<TSection>(json);
             return true;
         }
         catch
         {
-            result = default;
             return false;
         }
     }
-
-    public class JsonViewModel
-    {
-        public string Json { get; set; }
-    }
 }
 
+public class JsonViewModel
+{
+    public string Json { get; set; }
+}
