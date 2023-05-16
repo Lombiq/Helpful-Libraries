@@ -19,14 +19,14 @@ public static class LocalizedHtmlStringExtensions
             : new HtmlString("null");
 
     /// <summary>
-    /// Returns a raw HTML string that's not encoded.
+    /// Returns a raw HTML string representation of the <paramref name="htmlContent"/>.
     /// </summary>
-    public static string Html(this IHtmlContent htmlString)
+    public static string Html(this IHtmlContent htmlContent)
     {
-        if (htmlString == null) return null;
+        if (htmlContent == null) return null;
 
         using var stringWriter = new StringWriter();
-        htmlString.WriteTo(stringWriter, HtmlEncoder.Default);
+        htmlContent.WriteTo(stringWriter, HtmlEncoder.Default);
         return stringWriter.ToString();
     }
 }
