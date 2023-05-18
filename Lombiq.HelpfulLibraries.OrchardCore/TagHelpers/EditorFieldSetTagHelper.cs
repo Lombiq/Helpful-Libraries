@@ -29,6 +29,9 @@ public class EditorFieldSetTagHelper : TagHelper
     [HtmlAttributeName("type")]
     public string InputType { get; set; } = "text";
 
+    [HtmlAttributeName("required")]
+    public bool IsRequired { get; set; }
+
     public EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) =>
         _htmlGenerator = htmlGenerator;
 
@@ -49,7 +52,12 @@ public class EditorFieldSetTagHelper : TagHelper
 
         if (isCheckbox) output.Content.AppendHtml("<div class=\"custom-control custom-checkbox\">");
 
-        var label = _htmlGenerator.GenerateLabel(ViewContext, For.ModelExplorer, For.Name, Label.Html(), htmlAttributes: null);
+        var label = _htmlGenerator.GenerateLabel(
+            ViewContext,
+            For.ModelExplorer,
+            For.Name,
+            Label.Html().Trim() + (IsRequired ? " *" : string.Empty),
+            htmlAttributes: null);
 
         if (isCheckbox)
         {
@@ -80,6 +88,11 @@ public class EditorFieldSetTagHelper : TagHelper
                 For.Model,
                 For.ModelExplorer.Metadata.EditFormatString,
                 new { @class = "form-control", type = InputType });
+
+            if (IsRequired)
+            {
+                input.Attributes.Add("required", "required");
+            }
 
             AppendContent(output, label);
             AppendContent(output, input);
