@@ -73,6 +73,11 @@ public class EditorFieldSetTagHelper : TagHelper
                 },
                 new { @class = "custom-control-input" });
 
+            if (IsRequired)
+            {
+                input.Attributes.Add("required", "required");
+            }
+
             label.Attributes["class"] = "custom-control-label";
 
             AppendContent(output, input);
