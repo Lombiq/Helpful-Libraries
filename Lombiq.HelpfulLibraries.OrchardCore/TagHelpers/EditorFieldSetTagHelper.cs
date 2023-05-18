@@ -42,7 +42,7 @@ public class EditorFieldSetTagHelper : TagHelper
         }
         else
         {
-            output.Attributes.Add("class", "form-group mb-3");
+            output.Attributes.Add("class", "form-group mb-3 col-xl-6");
         }
 
         var isCheckbox = InputType.EqualsOrdinalIgnoreCase("checkbox");
