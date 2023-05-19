@@ -22,4 +22,5 @@ For general details about and on using the Helpful Libraries see the [root Readm
 - [ResourceManagement](Docs/ResourceManagement.md)
 - [Settings](Docs/Settings.md)
 - [Shapes](Docs/Shapes.md)
+- [TagHelpers](Docs/TagHelpers.md)
 - [Users](Docs/Users.md)
