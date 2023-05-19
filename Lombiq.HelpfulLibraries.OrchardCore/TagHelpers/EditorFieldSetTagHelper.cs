@@ -4,6 +4,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.TagHelpers;
@@ -48,6 +50,7 @@ public class EditorFieldSetTagHelper : TagHelper
             output.Attributes.Add("class", "form-group mb-3 col-xl-6");
         }
 
+        var isRequired = IsRequired || HasRequiredAttribute(For);
         var isCheckbox = InputType.EqualsOrdinalIgnoreCase("checkbox");
 
         if (isCheckbox) output.Content.AppendHtml("<div class=\"custom-control custom-checkbox\">");
@@ -56,7 +59,7 @@ public class EditorFieldSetTagHelper : TagHelper
             ViewContext,
             For.ModelExplorer,
             For.Name,
-            Label.Html().Trim() + (IsRequired ? " *" : string.Empty),
+            Label.Html().Trim() + (isRequired ? " *" : string.Empty),
             htmlAttributes: null);
 
         if (isCheckbox)
@@ -73,7 +76,7 @@ public class EditorFieldSetTagHelper : TagHelper
                 },
                 new { @class = "custom-control-input" });
 
-            if (IsRequired)
+            if (isRequired)
             {
                 input.Attributes.Add("required", "required");
             }
@@ -94,7 +97,7 @@ public class EditorFieldSetTagHelper : TagHelper
                 For.ModelExplorer.Metadata.EditFormatString,
                 new { @class = "form-control", type = InputType });
 
-            if (IsRequired)
+            if (isRequired)
             {
                 input.Attributes.Add("required", "required");
             }
@@ -123,4 +126,12 @@ public class EditorFieldSetTagHelper : TagHelper
     {
         if (content != null) output.Content.AppendHtml(content.Html());
     }
+
+    private static bool HasRequiredAttribute(ModelExpression modelExpression) =>
+        modelExpression
+            .Metadata
+            .ContainerType
+            .GetProperty(modelExpression.Name)
+            .GetCustomAttributes(typeof(RequiredAttribute), inherit: false)
+            .FirstOrDefault() is RequiredAttribute;
 }
