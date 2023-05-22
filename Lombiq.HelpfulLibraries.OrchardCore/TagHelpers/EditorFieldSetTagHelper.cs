@@ -13,6 +13,8 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.TagHelpers;
 [HtmlTargetElement("fieldset", Attributes = "asp-for")]
 public class EditorFieldSetTagHelper : TagHelper
 {
+    private const string Class = "class";
+
     private readonly IHtmlGenerator _htmlGenerator;
 
     [HtmlAttributeNotBound]
@@ -39,22 +41,38 @@ public class EditorFieldSetTagHelper : TagHelper
 
     public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        if (output.Attributes.TryGetAttribute("class", out var classAttribute))
+        if (output.Attributes.TryGetAttribute(Class, out var classAttribute))
         {
             var newValue = $"{classAttribute.Value} form-group";
             output.Attributes.Remove(classAttribute);
-            output.Attributes.Add("class", newValue);
+            output.Attributes.Add(Class, newValue);
         }
         else
         {
-            output.Attributes.Add("class", "form-group mb-3 col-xl-6");
+            output.Attributes.Add(Class, "form-group mb-3 col-xl-6");
         }
 
-        var isRequired = IsRequired || HasRequiredAttribute(For);
-        var isCheckbox = InputType.EqualsOrdinalIgnoreCase("checkbox");
+        AppendInputAndLabel(
+            output,
+            InputType.EqualsOrdinalIgnoreCase("checkbox"),
+            IsRequired || HasRequiredAttribute(For));
 
-        if (isCheckbox) output.Content.AppendHtml("<div class=\"custom-control custom-checkbox\">");
+        var tagBuilder = _htmlGenerator.GenerateValidationMessage(
+            ViewContext,
+            For.ModelExplorer,
+            For.Name,
+            message: null,
+            tag: "span",
+            htmlAttributes: null);
+        AppendContent(output, tagBuilder);
 
+        AppendContent(output, Hint);
+
+        return Task.CompletedTask;
+    }
+
+    private void AppendInputAndLabel(TagHelperOutput output, bool isCheckbox, bool isRequired)
+    {
         var label = _htmlGenerator.GenerateLabel(
             ViewContext,
             For.ModelExplorer,
@@ -76,16 +94,15 @@ public class EditorFieldSetTagHelper : TagHelper
                 },
                 new { @class = "custom-control-input" });
 
-            if (isRequired)
-            {
-                input.Attributes.Add("required", "required");
-            }
+            if (isRequired) MakeRequired(input);
 
-            label.Attributes["class"] = "custom-control-label";
+            label.Attributes[Class] = "custom-control-label";
 
+            output.Content.AppendHtml("<div class=\"custom-control custom-checkbox\">");
             AppendContent(output, input);
             output.Content.AppendHtml("&nbsp;");
             AppendContent(output, label);
+            output.Content.AppendHtml("</div>");
         }
         else
         {
@@ -95,31 +112,17 @@ public class EditorFieldSetTagHelper : TagHelper
                 For.Name,
                 For.Model,
                 For.ModelExplorer.Metadata.EditFormatString,
-                new { @class = "form-control", type = InputType });
+                new
+                {
+                    @class = "form-control",
+                    type = InputType,
+                });
 
-            if (isRequired)
-            {
-                input.Attributes.Add("required", "required");
-            }
+            if (isRequired) MakeRequired(input);
 
             AppendContent(output, label);
             AppendContent(output, input);
         }
-
-        if (InputType.EqualsOrdinalIgnoreCase("checkbox")) output.Content.AppendHtml("</div>");
-
-        var tagBuilder = _htmlGenerator.GenerateValidationMessage(
-            ViewContext,
-            For.ModelExplorer,
-            For.Name,
-            message: null,
-            tag: "span",
-            htmlAttributes: null);
-        AppendContent(output, tagBuilder);
-
-        AppendContent(output, Hint);
-
-        return Task.CompletedTask;
     }
 
     private static void AppendContent(TagHelperOutput output, IHtmlContent content)
@@ -130,8 +133,10 @@ public class EditorFieldSetTagHelper : TagHelper
     private static bool HasRequiredAttribute(ModelExpression modelExpression) =>
         modelExpression
             .Metadata
-            .ContainerType
-            .GetProperty(modelExpression.Name)
+            .ContainerType?
+            .GetProperty(modelExpression.Name)?
             .GetCustomAttributes(typeof(RequiredAttribute), inherit: false)
             .FirstOrDefault() is RequiredAttribute;
+
+    private static void MakeRequired(TagBuilder tagBuilder) => tagBuilder.Attributes.Add("required", "required");
 }
