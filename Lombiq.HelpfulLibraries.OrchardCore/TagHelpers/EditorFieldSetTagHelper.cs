@@ -112,7 +112,11 @@ public class EditorFieldSetTagHelper : TagHelper
                 For.Name,
                 For.Model,
                 For.ModelExplorer.Metadata.EditFormatString,
-                new { @class = "form-control", type = InputType });
+                new
+                {
+                    @class = "form-control",
+                    type = InputType,
+                });
 
             if (isRequired) MakeRequired(input);
 
