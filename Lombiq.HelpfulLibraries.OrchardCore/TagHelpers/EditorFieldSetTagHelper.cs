@@ -13,6 +13,8 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.TagHelpers;
 [HtmlTargetElement("fieldset", Attributes = "asp-for")]
 public class EditorFieldSetTagHelper : TagHelper
 {
+    private const string Class = "class";
+
     private readonly IHtmlGenerator _htmlGenerator;
 
     [HtmlAttributeNotBound]
@@ -39,15 +41,15 @@ public class EditorFieldSetTagHelper : TagHelper
 
     public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
-        if (output.Attributes.TryGetAttribute("class", out var classAttribute))
+        if (output.Attributes.TryGetAttribute(Class, out var classAttribute))
         {
             var newValue = $"{classAttribute.Value} form-group";
             output.Attributes.Remove(classAttribute);
-            output.Attributes.Add("class", newValue);
+            output.Attributes.Add(Class, newValue);
         }
         else
         {
-            output.Attributes.Add("class", "form-group mb-3 col-xl-6");
+            output.Attributes.Add(Class, "form-group mb-3 col-xl-6");
         }
 
         var isRequired = IsRequired || HasRequiredAttribute(For);
@@ -81,7 +83,7 @@ public class EditorFieldSetTagHelper : TagHelper
                 input.Attributes.Add("required", "required");
             }
 
-            label.Attributes["class"] = "custom-control-label";
+            label.Attributes[Class] = "custom-control-label";
 
             AppendContent(output, input);
             output.Content.AppendHtml("&nbsp;");
@@ -130,8 +132,8 @@ public class EditorFieldSetTagHelper : TagHelper
     private static bool HasRequiredAttribute(ModelExpression modelExpression) =>
         modelExpression
             .Metadata
-            .ContainerType
-            .GetProperty(modelExpression.Name)
+            .ContainerType?
+            .GetProperty(modelExpression.Name)?
             .GetCustomAttributes(typeof(RequiredAttribute), inherit: false)
             .FirstOrDefault() is RequiredAttribute;
 }
