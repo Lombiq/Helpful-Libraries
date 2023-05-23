@@ -52,10 +52,7 @@ public class EditorFieldSetTagHelper : TagHelper
             output.Attributes.Add(Class, "form-group mb-3 col-xl-6");
         }
 
-        AppendInputAndLabel(
-            output,
-            InputType.EqualsOrdinalIgnoreCase("checkbox"),
-            IsRequired || HasRequiredAttribute(For));
+        AppendInputAndLabel(output, IsRequired || HasRequiredAttribute(For));
 
         var tagBuilder = _htmlGenerator.GenerateValidationMessage(
             ViewContext,
@@ -71,7 +68,7 @@ public class EditorFieldSetTagHelper : TagHelper
         return Task.CompletedTask;
     }
 
-    private void AppendInputAndLabel(TagHelperOutput output, bool isCheckbox, bool isRequired)
+    private void AppendInputAndLabel(TagHelperOutput output, bool isRequired)
     {
         var label = _htmlGenerator.GenerateLabel(
             ViewContext,
@@ -80,9 +77,9 @@ public class EditorFieldSetTagHelper : TagHelper
             Label.Html().Trim() + (isRequired ? " *" : string.Empty),
             htmlAttributes: null);
 
-        if (isCheckbox)
+        if (InputType.EqualsOrdinalIgnoreCase("checkbox"))
         {
-            var input = _htmlGenerator.GenerateCheckBox(
+            var checkbox = _htmlGenerator.GenerateCheckBox(
                 ViewContext,
                 For.ModelExplorer,
                 For.Name,
@@ -94,35 +91,35 @@ public class EditorFieldSetTagHelper : TagHelper
                 },
                 new { @class = "custom-control-input" });
 
-            if (isRequired) MakeRequired(input);
+            if (isRequired) MakeRequired(checkbox);
 
             label.Attributes[Class] = "custom-control-label";
 
             output.Content.AppendHtml("<div class=\"custom-control custom-checkbox\">");
-            AppendContent(output, input);
+            AppendContent(output, checkbox);
             output.Content.AppendHtml("&nbsp;");
             AppendContent(output, label);
             output.Content.AppendHtml("</div>");
-        }
-        else
-        {
-            var input = _htmlGenerator.GenerateTextBox(
-                ViewContext,
-                For.ModelExplorer,
-                For.Name,
-                For.Model,
-                For.ModelExplorer.Metadata.EditFormatString,
-                new
-                {
-                    @class = "form-control",
-                    type = InputType,
-                });
 
-            if (isRequired) MakeRequired(input);
-
-            AppendContent(output, label);
-            AppendContent(output, input);
+            return;
         }
+
+        var input = _htmlGenerator.GenerateTextBox(
+            ViewContext,
+            For.ModelExplorer,
+            For.Name,
+            For.Model,
+            For.ModelExplorer.Metadata.EditFormatString,
+            new
+            {
+                @class = "form-control",
+                type = InputType,
+            });
+
+        if (isRequired) MakeRequired(input);
+
+        AppendContent(output, label);
+        AppendContent(output, input);
     }
 
     private static void AppendContent(TagHelperOutput output, IHtmlContent content)
