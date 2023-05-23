@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -35,6 +36,9 @@ public class EditorFieldSetTagHelper : TagHelper
 
     [HtmlAttributeName("required")]
     public bool IsRequired { get; set; }
+
+    [HtmlAttributeName("options")]
+    public IEnumerable<SelectListItem> Options { get; set; }
 
     public EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) =>
         _htmlGenerator = htmlGenerator;
@@ -70,11 +74,12 @@ public class EditorFieldSetTagHelper : TagHelper
 
     private void AppendInputAndLabel(TagHelperOutput output, bool isRequired)
     {
+        var labelText = Label.Html().Trim();
         var label = _htmlGenerator.GenerateLabel(
             ViewContext,
             For.ModelExplorer,
             For.Name,
-            Label.Html().Trim() + (isRequired ? " *" : string.Empty),
+            labelText + (isRequired ? " *" : string.Empty),
             htmlAttributes: null);
 
         if (InputType.EqualsOrdinalIgnoreCase("checkbox"))
@@ -104,17 +109,31 @@ public class EditorFieldSetTagHelper : TagHelper
             return;
         }
 
-        var input = _htmlGenerator.GenerateTextBox(
-            ViewContext,
-            For.ModelExplorer,
-            For.Name,
-            For.Model,
-            For.ModelExplorer.Metadata.EditFormatString,
-            new
-            {
-                @class = "form-control",
-                type = InputType,
-            });
+        var inputType = InputType;
+        if (Options != null) inputType = "select";
+
+        var input = inputType switch
+        {
+            "select" => _htmlGenerator.GenerateSelect(
+                ViewContext,
+                For.ModelExplorer,
+                labelText,
+                For.Name,
+                Options,
+                allowMultiple: false,
+                new { @class = "form-select" }),
+            _ => _htmlGenerator.GenerateTextBox(
+                ViewContext,
+                For.ModelExplorer,
+                For.Name,
+                For.Model,
+                For.ModelExplorer.Metadata.EditFormatString,
+                new
+                {
+                    @class = "form-control",
+                    type = InputType,
+                }),
+        };
 
         if (isRequired) MakeRequired(input);
 
