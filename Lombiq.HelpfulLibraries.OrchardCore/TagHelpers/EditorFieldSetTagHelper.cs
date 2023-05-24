@@ -45,15 +45,17 @@ public class EditorFieldSetTagHelper : TagHelper
 
     public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
+        const string fieldsetClasses = "form-group mb-3 col-xl-6";
+
         if (output.Attributes.TryGetAttribute(Class, out var classAttribute))
         {
-            var newValue = $"{classAttribute.Value} form-group";
+            var newValue = $"{classAttribute.Value} {fieldsetClasses}";
             output.Attributes.Remove(classAttribute);
             output.Attributes.Add(Class, newValue);
         }
         else
         {
-            output.Attributes.Add(Class, "form-group mb-3 col-xl-6");
+            output.Attributes.Add(Class, fieldsetClasses);
         }
 
         AppendInputAndLabel(output, IsRequired || HasRequiredAttribute(For));
