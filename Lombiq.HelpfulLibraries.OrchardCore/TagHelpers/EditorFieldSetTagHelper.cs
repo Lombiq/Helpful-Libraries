@@ -74,12 +74,11 @@ public class EditorFieldSetTagHelper : TagHelper
 
     private void AppendInputAndLabel(TagHelperOutput output, bool isRequired)
     {
-        var labelText = Label.Html().Trim();
         var label = _htmlGenerator.GenerateLabel(
             ViewContext,
             For.ModelExplorer,
             For.Name,
-            labelText + (isRequired ? " *" : string.Empty),
+            Label.Html().Trim() + (isRequired ? " *" : string.Empty),
             htmlAttributes: null);
 
         if (InputType.EqualsOrdinalIgnoreCase("checkbox"))
@@ -117,7 +116,7 @@ public class EditorFieldSetTagHelper : TagHelper
             "select" => _htmlGenerator.GenerateSelect(
                 ViewContext,
                 For.ModelExplorer,
-                labelText,
+                string.Empty,
                 For.Name,
                 Options,
                 allowMultiple: false,
