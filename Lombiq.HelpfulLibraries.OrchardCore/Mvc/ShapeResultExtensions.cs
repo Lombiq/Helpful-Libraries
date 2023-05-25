@@ -53,7 +53,7 @@ public static class ShapeResultExtensions
 
     public static IShape AddAlternate(this IShape shape, params string[] suffixes)
     {
-        shape.Metadata.Alternates.Add($"{shape.Metadata.Name}-{string.Join("-", suffixes)}");
+        shape.Metadata.Alternates.Add($"{shape.Metadata.Name}__{string.Join("__", suffixes)}");
         return shape;
     }
 }
