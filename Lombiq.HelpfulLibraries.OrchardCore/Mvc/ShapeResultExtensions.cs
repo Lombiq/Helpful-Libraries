@@ -50,4 +50,10 @@ public static class ShapeResultExtensions
     /// </summary>
     public static ShapeResult PlaceInContent(this ShapeResult shapeResult, double? priority = null) =>
         shapeResult.PlaceInZone(CommonLocationNames.Content, priority);
+
+    public static IShape AddAlternate(this IShape shape, params string[] suffixes)
+    {
+        shape.Metadata.Alternates.Add($"{shape.Metadata.Name}-{string.Join("-", suffixes)}");
+        return shape;
+    }
 }
