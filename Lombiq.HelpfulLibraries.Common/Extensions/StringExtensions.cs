@@ -318,6 +318,68 @@ public static class StringExtensions
     }
 
     /// <summary>
+    /// Remove <paramref name="prefix"/> from the given string, optionally as many times as it appears there.
+    /// </summary>
+    /// <param name="value">The string to shorten.</param>
+    /// <param name="prefix">The string to remove from the start of the given string.</param>
+    /// <param name="stringComparison">
+    /// The <see cref="StringComparison"/> value to use to compare <paramref name="prefix"/> against the start of
+    /// the given string.
+    /// </param>
+    /// <param name="recursive">
+    /// Indicates whether to remove all instances of <paramref name="prefix"/> from the start of the given string.
+    /// </param>
+    /// <returns>A new string that is guaranteed not to start with <paramref name="prefix"/>.</returns>
+    public static string TrimStart(
+        this string value,
+        string prefix,
+        StringComparison stringComparison = StringComparison.Ordinal,
+        bool recursive = false)
+    {
+        if (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(prefix)) return value;
+
+        while (value.StartsWith(prefix, stringComparison))
+        {
+            value = value[prefix.Length..];
+
+            if (!recursive) return value;
+        }
+
+        return value;
+    }
+
+    /// <summary>
+    /// Remove <paramref name="suffix"/> from the given string, optionally as many times as it appears there.
+    /// </summary>
+    /// <param name="value">The string to shorten.</param>
+    /// <param name="suffix">The string to remove from the end of the given string.</param>
+    /// <param name="stringComparison">
+    /// The <see cref="StringComparison"/> value to use to compare <paramref name="suffix"/> against the end of
+    /// the given string.
+    /// </param>
+    /// <param name="recursive">
+    /// Indicates whether to remove all instances of <paramref name="suffix"/> from the end of the given string.
+    /// </param>
+    /// <returns>A new string that is guaranteed not to end with <paramref name="suffix"/>.</returns>
+    public static string TrimEnd(
+        this string value,
+        string suffix,
+        StringComparison stringComparison = StringComparison.Ordinal,
+        bool recursive = false)
+    {
+        if (string.IsNullOrEmpty(value) || string.IsNullOrEmpty(suffix)) return value;
+
+        while (value.EndsWith(suffix, stringComparison))
+        {
+            value = value[..^suffix.Length];
+
+            if (!recursive) return value;
+        }
+
+        return value;
+    }
+
+    /// <summary>
     /// Turns a camelCase or PascalCase token into snake_Case.
     /// </summary>
     /// <param name="input">The input in camelCase or PascalCase.</param>
