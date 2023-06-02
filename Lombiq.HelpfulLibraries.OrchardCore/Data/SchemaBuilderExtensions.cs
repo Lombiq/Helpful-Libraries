@@ -50,7 +50,7 @@ public static class SchemaBuilderExtensions
 
         return schemaBuilder.AlterTable(typeof(TTable).Name, table => table
             .CreateIndex(
-                $"IDX_{typeof(TTable).Name}_{string.Join("_", columnNames)}",
+                $"IDX_{typeof(TTable).Name}_{string.Join('_', columnNames)}",
                 columnNames));
     }
 

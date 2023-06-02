@@ -94,7 +94,7 @@ public class TypedRoute
         var prefix = _isAdminLazy.Value ? "/Admin/" : "/";
         var route = _routeLazy.Value;
         var arguments = _arguments.Any()
-            ? "?" + string.Join("&", _arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
+            ? "?" + string.Join('&', _arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
             : string.Empty;
 
         return prefix + route + arguments;
@@ -183,7 +183,7 @@ public class TypedRoute
             separator: '|',
             typeof(TController),
             operation.Method,
-            string.Join(",", arguments.Select(pair => $"{pair.Key}={pair.Value}")));
+            string.Join(',', arguments.Select(pair => $"{pair.Key}={pair.Value}")));
 
         return _cache.GetOrAdd(
             key,
