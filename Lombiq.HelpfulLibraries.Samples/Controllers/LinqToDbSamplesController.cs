@@ -6,6 +6,7 @@ using OrchardCore.Autoroute.Core.Indexes;
 using OrchardCore.ContentManagement.Records;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using YesSql;
@@ -75,7 +76,8 @@ public class LinqToDbSamplesController : Controller
             .Where(record => record.Author == "Jules Verne")
             .DeleteAsync(HttpContext.RequestAborted));
 
-        return Ok(FormattableString.Invariant(
+        return Ok(string.Create(
+            CultureInfo.InvariantCulture,
             $"Inserted: {insertedCount}, modified: {modifiedCount}, deleted: {deletedCount}."));
     }
 }

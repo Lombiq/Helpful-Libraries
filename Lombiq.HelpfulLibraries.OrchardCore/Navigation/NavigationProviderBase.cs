@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using OrchardCore.Navigation;
 using System;
+using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Navigation;
@@ -39,6 +40,7 @@ public abstract class NavigationProviderBase : INavigationProvider
     }
 
     protected virtual void Build(NavigationBuilder builder) =>
-        throw new NotSupportedException(FormattableString.Invariant(
+        throw new NotSupportedException(string.Create(
+            CultureInfo.InvariantCulture,
             $"Override either {nameof(Build)} or {nameof(BuildAsync)}! Note that {nameof(BuildAsync)} takes precedence in execution."));
 }
