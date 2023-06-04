@@ -77,7 +77,7 @@ public static class SchemaBuilderExtensions
                         {
                             column.WithCommonUniqueIdLength();
                         }
-                        else if (attributes.FirstOrDefault(attribute => attribute is MaxLengthAttribute) is MaxLengthAttribute max)
+                        else if (Array.Find(attributes, attribute => attribute is MaxLengthAttribute) is MaxLengthAttribute max)
                         {
                             column.WithLength(max.Length);
                         }

@@ -45,7 +45,7 @@ public class TypedRoute
         _action = action;
 
         _arguments = arguments is List<KeyValuePair<string, string>> list ? list : arguments.ToList();
-        var areaPair = _arguments.FirstOrDefault(pair => pair.Key.EqualsOrdinalIgnoreCase("area"));
+        var areaPair = _arguments.Find(pair => pair.Key.EqualsOrdinalIgnoreCase("area"));
         if (areaPair.Value is { } areaArgumentValue)
         {
             _area = areaArgumentValue;
