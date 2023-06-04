@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using System.Net.Mail;
 
 namespace Lombiq.HelpfulLibraries.Common.Validation;
@@ -37,5 +36,5 @@ public static class EmailValidationHelpers
     /// <see langword="false"/> otherwise.
     /// </returns>
     public static bool IsValidCommaSeparatedEmailAddressList(string emailAddresses) =>
-        emailAddresses.SplitByCommas().All(IsValidEmailAddress);
+        Array.TrueForAll(emailAddresses.SplitByCommas(), IsValidEmailAddress);
 }
