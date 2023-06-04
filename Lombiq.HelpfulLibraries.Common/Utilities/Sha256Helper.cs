@@ -16,8 +16,7 @@ public static class Sha256Helper
     /// <returns>The hexadecimal string representation of the SHA-256 hash.</returns>
     public static string ComputeHash(string text)
     {
-        using var sha256 = SHA256.Create();
-        var hashedIdBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(text));
+        var hashedIdBytes = SHA256.HashData(Encoding.UTF8.GetBytes(text));
 
         var stringBuilder = new StringBuilder();
 
