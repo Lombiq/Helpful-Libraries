@@ -1,4 +1,5 @@
 using LinqToDB;
+using Lombiq.HelpfulLibraries.Common.Utilities;
 using Lombiq.HelpfulLibraries.LinqToDb;
 using Lombiq.HelpfulLibraries.Samples.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -6,7 +7,6 @@ using OrchardCore.Autoroute.Core.Indexes;
 using OrchardCore.ContentManagement.Records;
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using YesSql;
@@ -76,8 +76,7 @@ public class LinqToDbSamplesController : Controller
             .Where(record => record.Author == "Jules Verne")
             .DeleteAsync(HttpContext.RequestAborted));
 
-        return Ok(string.Create(
-            CultureInfo.InvariantCulture,
+        return Ok(StringHelper.CreateInvariant(
             $"Inserted: {insertedCount}, modified: {modifiedCount}, deleted: {deletedCount}."));
     }
 }

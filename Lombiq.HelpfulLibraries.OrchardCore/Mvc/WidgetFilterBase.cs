@@ -1,3 +1,4 @@
+using Lombiq.HelpfulLibraries.Common.Utilities;
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -6,7 +7,6 @@ using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Layout;
 using OrchardCore.Security.Permissions;
 using System;
-using System.Globalization;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Mvc;
@@ -74,8 +74,7 @@ public abstract class WidgetFilterBase<TViewModel> : IAsyncResultFilter
 
         if (AdminOnly && FrontEndOnly)
         {
-            throw new InvalidOperationException(string.Create(
-                CultureInfo.InvariantCulture,
+            throw new InvalidOperationException(StringHelper.CreateInvariant(
                 $"You must not set both {nameof(AdminOnly)} and {nameof(FrontEndOnly)} to true!"));
         }
 

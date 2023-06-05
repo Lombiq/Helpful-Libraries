@@ -1,6 +1,7 @@
 using System;
 using System.Globalization;
 using System.Linq;
+using System.Runtime.CompilerServices;
 
 namespace Lombiq.HelpfulLibraries.Common.Utilities;
 
@@ -36,4 +37,11 @@ public static class StringHelper
         string.Join(
             string.Empty,
             convertibles.Select(formattable => formattable.ToString(CultureInfo.InvariantCulture)));
+
+    /// <summary>
+    /// Creates a <see langword="string"/> from an interpolated string with the invariant culture. This affects culture-
+    /// sensitive formatting of interpolated values.
+    /// </summary>
+    public static string CreateInvariant(this DefaultInterpolatedStringHandler value) =>
+        string.Create(CultureInfo.InvariantCulture, ref value);
 }
