@@ -41,7 +41,7 @@ public static class SchemaBuilderExtensions
             throw new ArgumentException("You must provide at least one column name.", nameof(columnNames));
         }
 
-        if (Array.Exists(columnNames, string.IsNullOrWhiteSpace))
+        if (columnNames.Exist(string.IsNullOrWhiteSpace))
         {
             throw new ArgumentException(
                 "The column names shouldn't be null, empty or all whitespace.",
@@ -69,15 +69,15 @@ public static class SchemaBuilderExtensions
                     var attributes = property.GetCustomAttributes(inherit: false);
                     table.Column(property.Name, property.PropertyType, column =>
                     {
-                        if (Array.Exists(attributes, attribute => attribute is UnlimitedLengthAttribute))
+                        if (attributes.Exist(attribute => attribute is UnlimitedLengthAttribute))
                         {
                             column.Unlimited();
                         }
-                        else if (Array.Exists(attributes, attribute => attribute is ContentItemIdColumnAttribute))
+                        else if (attributes.Exist(attribute => attribute is ContentItemIdColumnAttribute))
                         {
                             column.WithCommonUniqueIdLength();
                         }
-                        else if (Array.Find(attributes, attribute => attribute is MaxLengthAttribute) is MaxLengthAttribute max)
+                        else if (attributes.Find(attribute => attribute is MaxLengthAttribute) is MaxLengthAttribute max)
                         {
                             column.WithLength(max.Length);
                         }

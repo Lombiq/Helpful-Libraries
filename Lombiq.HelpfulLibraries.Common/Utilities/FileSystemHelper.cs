@@ -23,5 +23,5 @@ public static class FileSystemHelper
     /// Returns <see langword="true"/> if all items in <paramref name="paths"/> exist according to <see
     /// cref="File.Exists"/>.
     /// </summary>
-    public static bool AllExist(params string[] paths) => Array.TrueForAll(paths, File.Exists);
+    public static bool AllExist(params string[] paths) => paths.TrueForAll(File.Exists);
 }

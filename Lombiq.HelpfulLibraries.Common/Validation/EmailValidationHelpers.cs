@@ -36,5 +36,5 @@ public static class EmailValidationHelpers
     /// <see langword="false"/> otherwise.
     /// </returns>
     public static bool IsValidCommaSeparatedEmailAddressList(string emailAddresses) =>
-        Array.TrueForAll(emailAddresses.SplitByCommas(), IsValidEmailAddress);
+        emailAddresses.SplitByCommas().TrueForAll(IsValidEmailAddress);
 }
