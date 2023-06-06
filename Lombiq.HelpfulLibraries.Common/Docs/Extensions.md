@@ -16,4 +16,3 @@
 - `RandomNumberGeneratorExtensions`: Shortcuts for retrieving cryptographically secure random numbers.
 - `ServiceCollectionExtensions`: Shortcuts to remove implementations from an `IServiceCollection` instance.
 - `StringExtensions`: Adds common useful extensions to the `string` type, such as `SplitByCommas()` and `ContainsLoose()`.
-- `TimeSpanExtensions`: Adds common useful `TimeSpan` extensions, like `ToTechnicalString()` for culture invariant string conversion.
