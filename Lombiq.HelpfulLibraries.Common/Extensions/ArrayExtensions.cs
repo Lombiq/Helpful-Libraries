@@ -11,7 +11,7 @@ public static class ArrayExtensions
     /// it's better to use this instead of the general `Any()` extension method.
     /// </para>
     /// </remarks>
-    public static bool Exist<T>(this T[] array, Predicate<T> match) => Array.Exists(array, match);
+    public static bool Exists<T>(this T[] array, Predicate<T> match) => Array.Exists(array, match);
 
     /// <summary>
     /// A fluid alternative to <see cref="Array.Find{T}(T[], Predicate{T})"/>.
