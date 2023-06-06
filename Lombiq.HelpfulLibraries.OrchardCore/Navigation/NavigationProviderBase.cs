@@ -1,3 +1,4 @@
+using Lombiq.HelpfulLibraries.Common.Utilities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
 using OrchardCore.Navigation;
@@ -39,6 +40,6 @@ public abstract class NavigationProviderBase : INavigationProvider
     }
 
     protected virtual void Build(NavigationBuilder builder) =>
-        throw new NotSupportedException(FormattableString.Invariant(
+        throw new NotSupportedException(StringHelper.CreateInvariant(
             $"Override either {nameof(Build)} or {nameof(BuildAsync)}! Note that {nameof(BuildAsync)} takes precedence in execution."));
 }
