@@ -42,7 +42,6 @@
     <!-- Necessary so tag helpers will work in the projects depending on this. -->
     <PackageReference Include="OrchardCore.DisplayManagement" Version="1.6.0" />
     <PackageReference Include="OrchardCore.ResourceManagement" Version="1.6.0" />
-    <!-- Some change -->
   </ItemGroup>
 
   <ItemGroup>
