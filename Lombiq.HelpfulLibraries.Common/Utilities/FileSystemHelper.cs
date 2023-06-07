@@ -1,5 +1,5 @@
+using System;
 using System.IO;
-using System.Linq;
 
 namespace Lombiq.HelpfulLibraries.Common.Utilities;
 
@@ -23,5 +23,5 @@ public static class FileSystemHelper
     /// Returns <see langword="true"/> if all items in <paramref name="paths"/> exist according to <see
     /// cref="File.Exists"/>.
     /// </summary>
-    public static bool AllExist(params string[] paths) => paths.All(File.Exists);
+    public static bool AllExist(params string[] paths) => paths.TrueForAll(File.Exists);
 }

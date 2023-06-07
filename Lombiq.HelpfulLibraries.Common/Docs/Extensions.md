@@ -1,5 +1,6 @@
 # Lombiq Helpful Libraries - Common Libraries - Extensions
 
+- `ArrayExtensions`: Adds useful extensions to arrays. For example, `Exists()` is a fluid alternative to `Array.Exists()`.
 - `CollectionExtensions`: Adds `ICollection<T>` extensions. For example, `CartesianProduct()` for producing all pairs of two collections, or `RemoveAll()` to filter an existing collection in-place.
 - `ConfigurationExtensions`: Shortcuts for `IConfiguration` operations.
 - `DictionaryExtensions`: Adds `IDictionary<TKey, TValue>` extensions. For example, `GetMaybe()` for safely retrieving an item if it's in the dictionary or returning `default` without throwing an exception.

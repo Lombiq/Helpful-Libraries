@@ -1,4 +1,4 @@
-﻿using Lombiq.Tests.Integration.Controllers;
+using Lombiq.Tests.Integration.Controllers;
 using Lombiq.Tests.Integration.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -115,7 +115,7 @@ public class SafeJsonTests
             .ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
     }
 
-    private record TestResults(
+    private sealed record TestResults(
         ListLoggerProvider LoggerProvider,
         Dictionary<string, string> Failure,
         Dictionary<string, string> FailureAsync,

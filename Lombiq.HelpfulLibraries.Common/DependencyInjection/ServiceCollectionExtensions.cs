@@ -17,6 +17,6 @@ public static class ServiceCollectionExtensions
         where T : class
     {
         public Lazier(IServiceProvider provider)
-            : base(() => provider.GetRequiredService<T>()) { }
+            : base(provider.GetRequiredService<T>) { }
     }
 }
