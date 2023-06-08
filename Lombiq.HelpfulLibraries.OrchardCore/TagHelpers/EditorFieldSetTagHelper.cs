@@ -113,17 +113,19 @@ public class EditorFieldSetTagHelper : TagHelper
         var inputType = InputType;
         if (Options != null) inputType = "select";
 
-        var input = inputType switch
-        {
-            "select" => _htmlGenerator.GenerateSelect(
+        var input = inputType == "select"
+            ? _htmlGenerator.GenerateSelect(
                 ViewContext,
                 For.ModelExplorer,
                 string.Empty,
                 For.Name,
                 Options,
                 allowMultiple: false,
-                new { @class = "form-select" }),
-            _ => _htmlGenerator.GenerateTextBox(
+                new
+                {
+                    @class = "form-select",
+                })
+            : _htmlGenerator.GenerateTextBox(
                 ViewContext,
                 For.ModelExplorer,
                 For.Name,
@@ -133,8 +135,7 @@ public class EditorFieldSetTagHelper : TagHelper
                 {
                     @class = "form-control",
                     type = InputType,
-                }),
-        };
+                });
 
         if (isRequired) MakeRequired(input);
 
