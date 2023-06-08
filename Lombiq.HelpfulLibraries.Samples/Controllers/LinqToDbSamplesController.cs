@@ -1,4 +1,5 @@
 using LinqToDB;
+using Lombiq.HelpfulLibraries.Common.Utilities;
 using Lombiq.HelpfulLibraries.LinqToDb;
 using Lombiq.HelpfulLibraries.Samples.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -75,7 +76,7 @@ public class LinqToDbSamplesController : Controller
             .Where(record => record.Author == "Jules Verne")
             .DeleteAsync(HttpContext.RequestAborted));
 
-        return Ok(FormattableString.Invariant(
+        return Ok(StringHelper.CreateInvariant(
             $"Inserted: {insertedCount}, modified: {modifiedCount}, deleted: {deletedCount}."));
     }
 }

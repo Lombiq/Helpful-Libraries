@@ -73,7 +73,7 @@ public static class StringExtensions
     /// </param>
     public static string MakeFileSystemFriendly(this string text, bool noSpaceOrDot = true)
     {
-        var sanitized = string.Join("_", text.Split(_invalidPathCharacters.Value));
+        var sanitized = string.Join('_', text.Split(_invalidPathCharacters.Value));
 
         return noSpaceOrDot
             ? sanitized.Replace('.', '_').Replace(' ', '-')

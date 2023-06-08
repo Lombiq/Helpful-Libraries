@@ -1,5 +1,4 @@
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Reflection;
 
 namespace System;
@@ -23,8 +22,7 @@ public static class EnumExtensions
         enumValue == null
             ? string.Empty
             : enumValue.GetType()
-                .GetMember(enumValue.ToString())
-                .First()
+                .GetMember(enumValue.ToString())[0]
                 .GetCustomAttribute<DisplayAttribute>()?
                 .Name;
 }
