@@ -10,7 +10,7 @@
     <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
     <Description>Lombiq Helpful Libraries: Various useful libraries that can be handy when developing for .NET, ASP.NET Core, and Orchard Core, to be used from your own projects. This package references all Helpful Libraries libraries, but you can use only the ones specific for your use-case, see the dependencies. See the project website for detailed documentation.</Description>
-    <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities;LinqToDB;RestEase</PackageTags>
+    <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities;LinqToDB</PackageTags>
     <PackageIcon>NuGetIcon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries</PackageProjectUrl>
@@ -31,7 +31,6 @@
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj" PrivateAssets="none" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.OrchardCore\Lombiq.HelpfulLibraries.OrchardCore.csproj" PrivateAssets="none" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.LinqToDb\Lombiq.HelpfulLibraries.LinqToDb.csproj" PrivateAssets="none" />
-    <ProjectReference Include="..\Lombiq.HelpfulLibraries.RestEase\Lombiq.HelpfulLibraries.RestEase.csproj" PrivateAssets="none" />
   </ItemGroup>
 
 </Project>
