@@ -11,16 +11,23 @@ public static class CultureHelpers
     /// Gets all available <see cref="Country"/> objects and orders them by <see cref="Country.DisplayText"/>.
     /// </summary>
     public static IEnumerable<Country> GetCountries() =>
-        CultureInfo.GetCultures(CultureTypes.SpecificCultures).Select(culture =>
+        CultureInfo
+            .GetCultures(CultureTypes.SpecificCultures)
+            .Select(culture =>
             {
-                var regionInfo = new RegionInfo(culture.LCID); // #spell-check-ignore-line
-                return new Country
-                {
-                    TwoLetterIsoCode = regionInfo.TwoLetterISORegionName,
-                    DisplayText = regionInfo.EnglishName,
-                };
+                // #spell-check-disable
+                // This sometimes throws "CultureNotFoundException: Culture is not supported." exception on Linux, or
+                // "ArgumentException: Customized cultures cannot be passed by LCID, only by name." on Windows.
+                try { return new RegionInfo(culture.LCID); }
+                catch { return null; }
             })
+            .Where(region => region is { TwoLetterISORegionName.Length: 2 } && !string.IsNullOrEmpty(region.EnglishName))
             .Distinct()
+            .Select(regionInfo => new Country
+            {
+                TwoLetterIsoCode = regionInfo.TwoLetterISORegionName,
+                DisplayText = regionInfo.EnglishName,
+            })
             .OrderBy(country => country.DisplayText);
 
     /// <summary>
