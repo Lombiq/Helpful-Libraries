@@ -15,10 +15,9 @@ public static class CultureHelpers
             .GetCultures(CultureTypes.SpecificCultures)
             .Select(culture =>
             {
-                // #spell-check-disable
                 // This sometimes throws "CultureNotFoundException: Culture is not supported." exception on Linux, or
-                // "ArgumentException: Customized cultures cannot be passed by LCID, only by name." on Windows.
-                try { return new RegionInfo(culture.LCID); }
+                // "ArgumentException: Customized cultures cannot be passed by ID, only by name." on Windows.
+                try { return new RegionInfo(culture.LCID); } // #spell-check-ignore-line
                 catch { return null; }
             })
             .Where(region => region is { TwoLetterISORegionName.Length: 2 } && !string.IsNullOrEmpty(region.EnglishName))
