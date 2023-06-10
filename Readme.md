@@ -12,15 +12,15 @@ Note that this project has an Orchard 1 version in the [dev-orchard-1 branch](ht
 
 ## Documentation
 
-Helpful Libraries consists of the following independent libraries (all in their own projects/packages). Use the one specific to your use-case, or all at once by depending on `Lombiq.HelpfulLibraries`.
+Helpful Libraries consists of the following independent libraries (all in their own projects/packages). Use the one specific to your use-case, or most of them at once by depending on `Lombiq.HelpfulLibraries`.
 
 - [ASP.NET Core Libraries](Lombiq.HelpfulLibraries.AspNetCore/Readme.md)
 - [Command Line Libraries](Lombiq.HelpfulLibraries.Cli/Readme.md)
 - [Common Libraries](Lombiq.HelpfulLibraries.Common/Readme.md)
 - [LINQ to DB Libraries for Orchard Core](Lombiq.HelpfulLibraries.LinqToDb/Readme.md)
 - [Orchard Core Libraries](Lombiq.HelpfulLibraries.OrchardCore/Readme.md)
-- [RestEase Libraries for Orchard Core](Lombiq.HelpfulLibraries.RestEase/Readme.md)
-- [Refit Libraries for Orchard Core](Lombiq.HelpfulLibraries.Refit/Readme.md)
+- [RestEase Libraries for Orchard Core](Lombiq.HelpfulLibraries.RestEase/Readme.md) (Not included in `Lombiq.HelpfulLibraries`, we suggest the Refit libraries instead.)
+- [Refit Libraries for Orchard Core](Lombiq.HelpfulLibraries.Refit/Readme.md) (Not included in `Lombiq.HelpfulLibraries`.)
 
 Public APIs are always documented so please always read method comments.
 
