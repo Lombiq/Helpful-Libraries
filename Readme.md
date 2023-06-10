@@ -20,6 +20,7 @@ Helpful Libraries consists of the following independent libraries (all in their 
 - [LINQ to DB Libraries for Orchard Core](Lombiq.HelpfulLibraries.LinqToDb/Readme.md)
 - [Orchard Core Libraries](Lombiq.HelpfulLibraries.OrchardCore/Readme.md)
 - [RestEase Libraries for Orchard Core](Lombiq.HelpfulLibraries.RestEase/Readme.md)
+- [Refit Libraries for Orchard Core](Lombiq.HelpfulLibraries.Refit/Readme.md)
 
 Public APIs are always documented so please always read method comments.
 
