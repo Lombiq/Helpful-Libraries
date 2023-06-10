@@ -8,4 +8,4 @@ For general details about and on using the Helpful Libraries see the [root Readm
 
 ## Helpers
 
-- `RefitHelper`: Adds shortcuts for creating Refit API clients from interfaces. (e.g. `RefitHelper.WithNewtonsoft<T>()`)
+- `RefitHelper`: Adds shortcuts for creating Refit API clients from interfaces. (e.g. `RefitHelper.WithNewtonsoftJson<T>()`)
