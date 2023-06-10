@@ -9,7 +9,7 @@
     <Title>Lombiq Helpful Libraries - Refit Libraries for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-    <Description>Lombiq Helpful Libraries - Refit Libraries for Orchard Core for Orchard Core: Adds helpers for working with Refit. See the project website for detailed documentation.</Description>
+    <Description>Lombiq Helpful Libraries - Refit Libraries for Orchard Core: Adds helpers for working with the Refit RESTful API consumer library. See the project website for detailed documentation.</Description>
     <PackageIcon>NuGetIcon.png</PackageIcon>
     <PackageTags>OrchardCore;Lombiq;Refit</PackageTags>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
