@@ -41,7 +41,7 @@ public static class SchemaBuilderExtensions
             throw new ArgumentException("You must provide at least one column name.", nameof(columnNames));
         }
 
-        if (columnNames.Any(string.IsNullOrWhiteSpace))
+        if (columnNames.Exists(string.IsNullOrWhiteSpace))
         {
             throw new ArgumentException(
                 "The column names shouldn't be null, empty or all whitespace.",
@@ -50,7 +50,7 @@ public static class SchemaBuilderExtensions
 
         return schemaBuilder.AlterTable(typeof(TTable).Name, table => table
             .CreateIndex(
-                $"IDX_{typeof(TTable).Name}_{string.Join("_", columnNames)}",
+                $"IDX_{typeof(TTable).Name}_{string.Join('_', columnNames)}",
                 columnNames));
     }
 
@@ -69,15 +69,15 @@ public static class SchemaBuilderExtensions
                     var attributes = property.GetCustomAttributes(inherit: false);
                     table.Column(property.Name, property.PropertyType, column =>
                     {
-                        if (attributes.Any(attribute => attribute is UnlimitedLengthAttribute))
+                        if (attributes.Exists(attribute => attribute is UnlimitedLengthAttribute))
                         {
                             column.Unlimited();
                         }
-                        else if (attributes.Any(attribute => attribute is ContentItemIdColumnAttribute))
+                        else if (attributes.Exists(attribute => attribute is ContentItemIdColumnAttribute))
                         {
                             column.WithCommonUniqueIdLength();
                         }
-                        else if (attributes.FirstOrDefault(attribute => attribute is MaxLengthAttribute) is MaxLengthAttribute max)
+                        else if (attributes.Find(attribute => attribute is MaxLengthAttribute) is MaxLengthAttribute max)
                         {
                             column.WithLength(max.Length);
                         }

@@ -61,7 +61,7 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
         Store = (Store)await StoreFactory.CreateAndInitializeAsync(_configuration);
         var dbAccessorMock = new Mock<IDbConnectionAccessor>();
         dbAccessorMock.Setup(x => x.CreateConnection())
-            .Returns(() => _configuration.ConnectionFactory.CreateConnection());
+            .Returns(_configuration.ConnectionFactory.CreateConnection);
         var dbAccessor = dbAccessorMock.Object;
 
         await using (var connection = dbAccessor.CreateConnection())
