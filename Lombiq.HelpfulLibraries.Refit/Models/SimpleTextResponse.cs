@@ -11,6 +11,8 @@ public class SimpleTextResponse
     public IReadOnlyDictionary<string, string> Headers { get; }
     public bool IsOk { get; }
 
+    public string Location => Headers.TryGetValue(nameof(Location), out var value) ? value : null;
+
     public SimpleTextResponse(IApiResponse<string> response)
     {
         Content = response.Content;
