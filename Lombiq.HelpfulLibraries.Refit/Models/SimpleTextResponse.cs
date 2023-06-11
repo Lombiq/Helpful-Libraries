@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Refit;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
-using Refit;
 
 namespace Lombiq.HelpfulLibraries.Refit.Models;
 
@@ -20,10 +20,12 @@ public class SimpleTextResponse
         IsOk = response.StatusCode == HttpStatusCode.OK;
     }
 
-    public static SimpleTextResponse ConvertAndDisposeApiResponse(ApiResponse<string> response) {
+    public static SimpleTextResponse ConvertAndDisposeApiResponse(ApiResponse<string> response)
+    {
         if (response == null) return null;
 
-        using (response) {
+        using (response)
+        {
             return new SimpleTextResponse(response);
         }
     }
