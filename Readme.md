@@ -1,6 +1,6 @@
 # Lombiq Helpful Libraries
 
-[![Lombiq.HelpfulLibraries NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries?label=Lombiq.HelpfulLibraries)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries/) [![Lombiq.HelpfulLibraries.AspNetCore NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.AspNetCore?label=Lombiq.HelpfulLibraries.AspNetCore)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.AspNetCore/) [![Lombiq.HelpfulLibraries.Cli NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Cli?label=Lombiq.HelpfulLibraries.Cli)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Cli/) [![Lombiq.HelpfulLibraries.Common NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Common?label=Lombiq.HelpfulLibraries.Common)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Common/) [![Lombiq.HelpfulLibraries.LinqToDb NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.LinqToDb?label=Lombiq.HelpfulLibraries.LinqToDb)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.LinqToDb/) [![Lombiq.HelpfulLibraries.OrchardCore NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.OrchardCore?label=Lombiq.HelpfulLibraries.OrchardCore)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.OrchardCore/) [![Lombiq.HelpfulLibraries.OrchardCore.Testing NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.OrchardCore.Testing?label=Lombiq.HelpfulLibraries.OrchardCore.Testing)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.OrchardCore.Testing/) [![Lombiq.HelpfulLibraries.RestEase NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.RestEase?label=Lombiq.HelpfulLibraries.RestEase)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.RestEase/)
+[![Lombiq.HelpfulLibraries NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries?label=Lombiq.HelpfulLibraries)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries/) [![Lombiq.HelpfulLibraries.AspNetCore NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.AspNetCore?label=Lombiq.HelpfulLibraries.AspNetCore)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.AspNetCore/) [![Lombiq.HelpfulLibraries.Cli NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Cli?label=Lombiq.HelpfulLibraries.Cli)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Cli/) [![Lombiq.HelpfulLibraries.Common NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Common?label=Lombiq.HelpfulLibraries.Common)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Common/) [![Lombiq.HelpfulLibraries.LinqToDb NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.LinqToDb?label=Lombiq.HelpfulLibraries.LinqToDb)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.LinqToDb/) [![Lombiq.HelpfulLibraries.OrchardCore NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.OrchardCore?label=Lombiq.HelpfulLibraries.OrchardCore)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.OrchardCore/) [![Lombiq.HelpfulLibraries.OrchardCore.Testing NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.OrchardCore.Testing?label=Lombiq.HelpfulLibraries.OrchardCore.Testing)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.OrchardCore.Testing/) [![Lombiq.HelpfulLibraries.Refit NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.Refit?label=Lombiq.HelpfulLibraries.Refit)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.Refit/) [![Lombiq.HelpfulLibraries.RestEase NuGet](https://img.shields.io/nuget/v/Lombiq.HelpfulLibraries.RestEase?label=Lombiq.HelpfulLibraries.RestEase)](https://www.nuget.org/packages/Lombiq.HelpfulLibraries.RestEase/)
 
 ## About
 
@@ -12,14 +12,15 @@ Note that this project has an Orchard 1 version in the [dev-orchard-1 branch](ht
 
 ## Documentation
 
-Helpful Libraries consists of the following independent libraries (all in their own projects/packages). Use the one specific to your use-case, or all at once by depending on `Lombiq.HelpfulLibraries`.
+Helpful Libraries consists of the following independent libraries (all in their own projects/packages). Use the one specific to your use-case, or most of them at once by depending on `Lombiq.HelpfulLibraries`.
 
 - [ASP.NET Core Libraries](Lombiq.HelpfulLibraries.AspNetCore/Readme.md)
 - [Command Line Libraries](Lombiq.HelpfulLibraries.Cli/Readme.md)
 - [Common Libraries](Lombiq.HelpfulLibraries.Common/Readme.md)
 - [LINQ to DB Libraries for Orchard Core](Lombiq.HelpfulLibraries.LinqToDb/Readme.md)
 - [Orchard Core Libraries](Lombiq.HelpfulLibraries.OrchardCore/Readme.md)
-- [RestEase Libraries for Orchard Core](Lombiq.HelpfulLibraries.RestEase/Readme.md)
+- [RestEase Libraries for Orchard Core](Lombiq.HelpfulLibraries.RestEase/Readme.md) (Not included in `Lombiq.HelpfulLibraries`, we suggest the Refit libraries instead.)
+- [Refit Libraries for Orchard Core](Lombiq.HelpfulLibraries.Refit/Readme.md)
 
 Public APIs are always documented so please always read method comments.
 
