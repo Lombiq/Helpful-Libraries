@@ -11,6 +11,7 @@ using OrchardCore.Settings;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -32,6 +33,10 @@ public class PerTenantShapeTableManager : IShapeTableManager
     private readonly ILogger _logger;
     private readonly ISiteService _siteService;
 
+    [SuppressMessage(
+        "Major Code Smell",
+        "S107:Methods should not have too many parameters",
+        Justification = "All of these are necessary for shape table management.")]
     public PerTenantShapeTableManager(
         IHostEnvironment hostingEnvironment,
         IEnumerable<IShapeTableProvider> bindingStrategies,
