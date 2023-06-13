@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
 using OrchardCore.DisplayManagement.Entities;
 using OrchardCore.DisplayManagement.Handlers;
@@ -10,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 
-public abstract class JsonSectionDisplayDriver<TSection> : SectionDisplayDriver<ISite, TSection>
+public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : SectionDisplayDriver<ISite, TSection>
     where TSection : class, new()
 {
     protected abstract string GroupId { get; }
@@ -31,16 +32,20 @@ public abstract class JsonSectionDisplayDriver<TSection> : SectionDisplayDriver<
 
     public override async Task<IDisplayResult> EditAsync(TSection section, BuildEditorContext context) =>
         await AuthorizeAsync()
-            ? Initialize<JsonViewModel>(
+            ? Initialize<JsonViewModel<TAdditionalData>>(
                     ShapeType,
-                    settings => settings.Json = JsonConvert.SerializeObject(section))
+                    async settings =>
+                    {
+                        settings.Json = JsonConvert.SerializeObject(section);
+                        settings.AdditionalData = await GetAdditionalDataAsync(section, context);
+                    })
                 .Location(Location)
                 .OnGroup(GroupId)
             : null;
 
     public override async Task<IDisplayResult> UpdateAsync(TSection section, BuildEditorContext context)
     {
-        var viewModel = new JsonViewModel();
+        var viewModel = new JsonViewModel<TAdditionalData>();
 
         if (context.GroupId == GroupId &&
             await AuthorizeAsync() &&
@@ -54,6 +59,9 @@ public abstract class JsonSectionDisplayDriver<TSection> : SectionDisplayDriver<
     }
 
     protected abstract Task UpdateAsync(TSection section, BuildEditorContext context, TSection viewModel);
+
+    protected virtual Task<TAdditionalData> GetAdditionalDataAsync(TSection section, BuildEditorContext context) =>
+        Task.FromResult<TAdditionalData>(default);
 
     private Task<bool> AuthorizeAsync() =>
         Permission == null
@@ -78,7 +86,10 @@ public abstract class JsonSectionDisplayDriver<TSection> : SectionDisplayDriver<
     }
 }
 
-public class JsonViewModel
+public class JsonViewModel<TAdditionalData>
 {
     public string Json { get; set; }
+
+    [BindNever]
+    public TAdditionalData AdditionalData { get; internal set; }
 }
