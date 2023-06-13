@@ -2,7 +2,7 @@
 
 ## About
 
-Adds helpers for working with [Refit](https://github.com/reactiveui/refit).
+Adds helpers for working with the [Refit](https://github.com/reactiveui/refit) RESTful API consumer library.
 
 For general details about and on using the Helpful Libraries see the [root Readme](../Readme.md).
 
