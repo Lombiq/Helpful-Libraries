@@ -127,7 +127,7 @@ public class PerTenantShapeTableManager : IShapeTableManager
     private static void BuildDescriptors(
         IShapeTableProvider bindingStrategy,
         IEnumerable<ShapeAlteration> builtAlterations,
-        Dictionary<string, FeatureShapeDescriptor> shapeDescriptors)
+        IDictionary<string, FeatureShapeDescriptor> shapeDescriptors)
     {
         var alterationSets = builtAlterations.GroupBy(a => a.Feature.Id + a.ShapeType);
 
@@ -137,20 +137,13 @@ public class PerTenantShapeTableManager : IShapeTableManager
             var feature = firstAlteration.Feature;
             var shapeType = firstAlteration.ShapeType;
 
-#pragma warning disable CA1308
-            var key = $"{bindingStrategy.GetType().Name}{feature.Id}{shapeType.ToLowerInvariant()}";
-#pragma warning restore CA1308
+            var key = $"{bindingStrategy.GetType().Name}{feature.Id}{shapeType}".ToUpperInvariant();
 
             if (!shapeDescriptors.ContainsKey(key))
             {
-                shapeDescriptors[key] = alterations
-                    .Aggregate(
-                        new FeatureShapeDescriptor(feature, shapeType),
-                        (descriptor, alteration) =>
-                        {
-                            alteration.Alter(descriptor);
-                            return descriptor;
-                        });
+                shapeDescriptors[key] = alterations.AggregateSeed(
+                    new FeatureShapeDescriptor(feature, shapeType),
+                    (descriptor, alteration) => alteration.Alter(descriptor));
             }
         }
     }
