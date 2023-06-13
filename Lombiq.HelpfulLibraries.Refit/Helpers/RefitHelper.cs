@@ -1,4 +1,4 @@
-﻿using Refit;
+using Refit;
 using System;
 using System.Net.Http;
 
@@ -17,7 +17,7 @@ public static class RefitHelper
     public static T WithNewtonsoftJson<T>(string hostUrl, Action<RefitSettings> configure = null) =>
         WithNewtonsoftJson<T>(new Uri(hostUrl), configure);
 
-    /// <inheritdoc cref="WithNewtonsoftJson{T}(string,System.Action{RefitSettings})"/>
+    /// <inheritdoc cref="WithNewtonsoftJson{T}(string,Action{RefitSettings})"/>
     public static T WithNewtonsoftJson<T>(Uri hostUrl, Action<RefitSettings> configure = null) =>
         RestService.For<T>(hostUrl.AbsoluteUri, CreateSettingsWithNewtonsoftJson(configure));
 
