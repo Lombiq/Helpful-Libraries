@@ -10,6 +10,7 @@
 - `ExpressionExtensions`: Adds `System.Linq.Expressions`. For example, `StripResult()` turns a `Func<T1, T2>` expression into an `Action<T1>` one.
 - `HttpContextExtensions`: Some shortcuts for managing cookies.
 - `IoExtensions`: Adds extensions for `String.IO` types. For example, `TextWriter.WriteLineInvariant()` writes interpolated string in a culture invariant manner.
+- `JsonExtensions`: Adds extensions for `Newtonsoft.Json.Linq` types. For example, `JObject.TryParse<T>(out var result)` attempts to convert the JSON object into a C# object.
 - `MemoryCacheExtensions`: Adds extensions for `IMemoryCache` manipulation. For example, `GetOrNew<T>()` type-safely returns the item or creates a new instance.
 - `MulticastDelegateExtensions`: Extensions for `MulticastDelegate`s, e.g. to invoke async delegates in a safe fashion.
 - `NumberExtensions`: Adds extensions for primitive numeric types. For example, `ToTechnicalString()` converts `int` into culture invariant `string`.

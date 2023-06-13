@@ -157,4 +157,12 @@ public static class DictionaryExtensions
         list = list.Union(new[] { value });
         dictionary[key] = list;
     }
+
+    /// <summary>
+    /// Converts the provided <paramref name="dictionary"/> into read-only. If the instance implements <see
+    /// cref="IReadOnlyDictionary{TKey,TValue}"/> then the input is cast, otherwise copied into a new <see
+    /// cref="Dictionary{TKey,TValue}"/> object.
+    /// </summary>
+    public static IReadOnlyDictionary<TKey, TValue> ToReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) =>
+        dictionary as IReadOnlyDictionary<TKey, TValue> ?? new Dictionary<TKey, TValue>(dictionary);
 }
