@@ -19,6 +19,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.Orc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.Cli", "Lombiq.HelpfulLibraries.Cli\Lombiq.HelpfulLibraries.Cli.csproj", "{E4434D6F-7C4F-4CBD-AAA3-B57809DFF571}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.Refit", "Lombiq.HelpfulLibraries.Refit\Lombiq.HelpfulLibraries.Refit.csproj", "{5DC1A3D5-0626-4258-95C6-7E5CA5495A80}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -57,6 +59,10 @@ Global
 		{E4434D6F-7C4F-4CBD-AAA3-B57809DFF571}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E4434D6F-7C4F-4CBD-AAA3-B57809DFF571}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E4434D6F-7C4F-4CBD-AAA3-B57809DFF571}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5DC1A3D5-0626-4258-95C6-7E5CA5495A80}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5DC1A3D5-0626-4258-95C6-7E5CA5495A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5DC1A3D5-0626-4258-95C6-7E5CA5495A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5DC1A3D5-0626-4258-95C6-7E5CA5495A80}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
