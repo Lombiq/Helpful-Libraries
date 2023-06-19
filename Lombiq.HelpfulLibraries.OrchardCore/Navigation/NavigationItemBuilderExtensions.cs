@@ -60,4 +60,7 @@ public static class NavigationItemBuilderExtensions
     /// </remarks>
     public static NavigationBuilder AddLabel(this NavigationBuilder builder, LocalizedString label) =>
         builder.Add(label, subMenu => subMenu.Url("#").AddClass("disabled menuWidget__link_label"));
+
+    public static NavigationItemBuilder SiteSettings(this NavigationItemBuilder builder, string groupId) =>
+        builder.Action("Index", "Admin", new { area = "OrchardCore.Settings", groupId });
 }
