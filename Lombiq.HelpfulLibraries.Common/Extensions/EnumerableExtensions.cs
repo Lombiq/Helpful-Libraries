@@ -7,6 +7,29 @@ namespace System.Collections.Generic;
 public static class EnumerableExtensions
 {
     /// <summary>
+    /// Same as <see cref="Enumerable.Aggregate{TSource}"/>, but keeps the same <paramref name="seed"/> so the <paramref
+    /// name="action"/> doesn't have to return anything.
+    /// </summary>
+    /// <param name="source">The collection to traverse.</param>
+    /// <param name="seed">The object to pass to <paramref name="action"/> during enumeration.</param>
+    /// <param name="action">The action called on each item of <paramref name="source"/>.</param>
+    /// <typeparam name="TSource">The type of the items in <paramref name="source"/>.</typeparam>
+    /// <typeparam name="TAccumulate">The type of the <paramref name="seed"/>.</typeparam>
+    /// <returns>The instance passed to <paramref name="seed"/>.</returns>
+    public static TAccumulate AggregateSeed<TSource, TAccumulate>(
+        this IEnumerable<TSource> source,
+        TAccumulate seed,
+        Action<TAccumulate, TSource> action)
+        where TAccumulate : class =>
+        source.Aggregate(
+            seed,
+            (seed, item) =>
+            {
+                action(seed, item);
+                return seed;
+            });
+
+    /// <summary>
     /// Executes <paramref name="action"/> on every item of the <paramref name="source"/>. This eliminates the need for
     /// code like <c>if (source.Any()) { beforeFirst(); foreach (var item in source) { ... } }</c> which cause multiple
     /// enumeration unless first converted into an <see cref="ICollection{T}"/> (which takes additional allocations).
