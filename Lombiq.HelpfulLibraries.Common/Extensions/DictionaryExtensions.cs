@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -165,4 +166,55 @@ public static class DictionaryExtensions
     /// </summary>
     public static IReadOnlyDictionary<TKey, TValue> ToReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) =>
         dictionary as IReadOnlyDictionary<TKey, TValue> ?? new Dictionary<TKey, TValue>(dictionary);
+
+    /// <summary>
+    /// Creates a new dictionary based on <paramref name="dictionary"/> by taking each entry's value, and if it's not
+    /// <see langword="null"/> and has at least one not <see langword="null"/> item then that item is added under the
+    /// same key.
+    /// </summary>
+    [SuppressMessage(
+        "Design",
+        "MA0016:Prefer returning collection abstraction instead of implementation",
+        Justification = "Better compatibility.")]
+    public static Dictionary<TKey, TValue> WithFirstValues<TKey, TValue, TValues>(
+        this IEnumerable<KeyValuePair<TKey, TValues>> dictionary)
+        where TValues : IEnumerable<TValue>
+    {
+        var result = new Dictionary<TKey, TValue>();
+
+        foreach (var (key, values) in dictionary)
+        {
+            if (values != null && values.FirstOrDefault() is { } value)
+            {
+                result[key] = value;
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Creates a new dictionary based on <paramref name="dictionary"/> where each value is a new instance of
+    /// <typeparamref name="TValues"/> which is an <see cref="IList{T}"/> of <typeparamref name="TValue"/>. If the value
+    /// is not <see langword="null"/> then it's added to the list.
+    /// </summary>
+    [SuppressMessage(
+        "Design",
+        "MA0016:Prefer returning collection abstraction instead of implementation",
+        Justification = "Better compatibility.")]
+    public static Dictionary<TKey, TValues> ToListValuedDictionary<TKey, TValue, TValues>(
+        this IEnumerable<KeyValuePair<TKey, TValue>> dictionary)
+        where TValues : IList<TValue>, new()
+    {
+        var result = new Dictionary<TKey, TValues>();
+
+        foreach (var (key, value) in dictionary)
+        {
+            var list = new TValues();
+            if (value != null) list.Add(value);
+            result[key] = list;
+        }
+
+        return result;
+    }
 }
