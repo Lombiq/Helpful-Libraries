@@ -177,16 +177,27 @@ public static class DictionaryExtensions
         "MA0016:Prefer returning collection abstraction instead of implementation",
         Justification = "Better compatibility.")]
     public static Dictionary<TKey, TValue> WithFirstValues<TKey, TValue, TValues>(
-        this IEnumerable<KeyValuePair<TKey, TValues>> dictionary)
+        this IEnumerable<KeyValuePair<TKey, TValues>> dictionary,
+        Func<TValues, TValue> select = null)
         where TValues : IEnumerable<TValue>
     {
         var result = new Dictionary<TKey, TValue>();
 
         foreach (var (key, values) in dictionary)
         {
-            if (values != null && values.FirstOrDefault() is { } value)
+            if (select == null)
             {
-                result[key] = value;
+                if (values != null && values.FirstOrDefault() is { } value)
+                {
+                    result[key] = value;
+                }
+            }
+            else
+            {
+                if (select(values) is { } value)
+                {
+                    result[key] = value;
+                }
             }
         }
 
@@ -203,13 +214,20 @@ public static class DictionaryExtensions
         "MA0016:Prefer returning collection abstraction instead of implementation",
         Justification = "Better compatibility.")]
     public static Dictionary<TKey, TValues> ToListValuedDictionary<TKey, TValue, TValues>(
-        this IEnumerable<KeyValuePair<TKey, TValue>> dictionary)
+        this IEnumerable<KeyValuePair<TKey, TValue>> dictionary,
+        Func<TValue, TValues> select = null)
         where TValues : IList<TValue>, new()
     {
         var result = new Dictionary<TKey, TValues>();
 
         foreach (var (key, value) in dictionary)
         {
+            if (select != null)
+            {
+                result[key] = select(value);
+                continue;
+            }
+
             var list = new TValues();
             if (value != null) list.Add(value);
             result[key] = list;
