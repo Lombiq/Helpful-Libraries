@@ -1,11 +1,8 @@
-﻿using Fluid;
-using Fluid.Values;
-using Microsoft.AspNetCore.Html;
+﻿using Fluid.Values;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Implementation;
+using OrchardCore.DisplayManagement.Liquid;
 using System;
-using System.IO;
-using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Liquid;
@@ -39,10 +36,6 @@ public class LiquidContentDisplayService : ILiquidContentDisplayService
     public async ValueTask<FluidValue> DisplayShapeAsync(IShape shape)
     {
         var content = await _displayHelper.ShapeExecuteAsync(shape);
-
-        await using var stringWriter = new StringWriter();
-        content.WriteTo(stringWriter, HtmlEncoder.Default);
-
-        return FluidValue.Create(new HtmlString(stringWriter.ToString()), TemplateOptions.Default);
+        return new HtmlContentValue(content);
     }
 }
