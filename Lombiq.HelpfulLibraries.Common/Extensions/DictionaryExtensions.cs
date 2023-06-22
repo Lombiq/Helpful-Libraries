@@ -235,4 +235,32 @@ public static class DictionaryExtensions
 
         return result;
     }
+
+    /// <summary>
+    /// Creates a new string keyed dictionary where the key is compared in a case-insensitive manner.
+    /// </summary>
+    public static IDictionary<string, TValue> ToDictionaryIgnoreCase<TValue>(
+        this IEnumerable<KeyValuePair<string, TValue>> source) =>
+        new Dictionary<string, TValue>(source, StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Creates a new string keyed dictionary where the key is compared in a case-insensitive manner.
+    /// </summary>
+    public static IDictionary<string, TSource> ToDictionaryIgnoreCase<TSource>(
+        this IEnumerable<TSource> source,
+        Func<TSource, string> keySelector) =>
+        new Dictionary<string, TSource>(
+            source.Select(item => new KeyValuePair<string, TSource>(keySelector(item), item)),
+            StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Creates a new string keyed dictionary where the key is compared in a case-insensitive manner.
+    /// </summary>
+    public static IDictionary<string, TValue> ToDictionaryIgnoreCase<TSource, TValue>(
+        this IEnumerable<TSource> source,
+        Func<TSource, string> keySelector,
+        Func<TSource, TValue> valueSelector) =>
+        new Dictionary<string, TValue>(
+            source.Select(item => new KeyValuePair<string, TValue>(keySelector(item), valueSelector(item))),
+            StringComparer.OrdinalIgnoreCase);
 }
