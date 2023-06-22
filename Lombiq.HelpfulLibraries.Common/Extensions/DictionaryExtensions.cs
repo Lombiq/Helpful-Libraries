@@ -187,7 +187,7 @@ public static class DictionaryExtensions
         {
             if (select == null)
             {
-                if (values != null && values.FirstOrDefault() is { } value)
+                if (values is not null && values.FirstOrDefault() is { } value)
                 {
                     result[key] = value;
                 }
@@ -229,7 +229,7 @@ public static class DictionaryExtensions
             }
 
             var list = new TValues();
-            if (value != null) list.Add(value);
+            if (value is not null) list.Add(value);
             result[key] = list;
         }
 
