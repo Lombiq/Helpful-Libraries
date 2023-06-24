@@ -66,12 +66,35 @@ public class ResourceFilterBuilder
 
     /// <summary>
     /// Adds a filter that matches any of the provided <paramref name="contentTypes"/> to the list of
-    /// <see cref="ResourceFilters"/>.
+    /// <see cref="ResourceFilters"/> and it is currently Display display mode.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown when <paramref name="contentTypes"/> has no provided items.
     /// </exception>
-    public ResourceFilter WhenContentType(params string[] contentTypes)
+    public ResourceFilter WhenContentType(params string[] contentTypes) => 
+        WhenContentTypeInner("Display", contentTypes);
+
+    /// <summary>
+    /// Adds a filter that matches any of the provided <paramref name="contentTypes"/> to the list of
+    /// <see cref="ResourceFilters"/> and it is currently Edit display mode.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Thrown when <paramref name="contentTypes"/> has no provided items.
+    /// </exception>
+    public ResourceFilter WhenContentTypeEditor(params string[] contentTypes) =>
+        WhenContentTypeInner("Edit", contentTypes);
+
+    /// <summary>
+    /// Adds an always matching filter to the list of <see cref="ResourceFilters"/>.
+    /// </summary>
+    public ResourceFilter Always(Action<IResourceManager> execution = null)
+    {
+        var filter = When(_ => true);
+        filter.Execution = execution;
+        return filter;
+    }
+
+    private ResourceFilter WhenContentTypeInner(string displayType, params string[] contentTypes)
     {
         if (!contentTypes.Any())
         {
@@ -87,7 +110,7 @@ public class ResourceFilterBuilder
                 .RouteValues
                 .ToDictionary(pair => pair.Key, pair => pair.Value?.ToString(), StringComparer.OrdinalIgnoreCase);
 
-            if (routeValues.GetMaybe("action") != "Display" ||
+            if (routeValues.GetMaybe("action") != displayType ||
                 routeValues.GetMaybe("contentItemId") is not { } contentItemId)
             {
                 return false;
@@ -98,17 +121,8 @@ public class ResourceFilterBuilder
                 .Where(index => index.ContentItemId == contentItemId)
                 .FirstOrDefaultAsync();
             return contentItemIndex?.ContentType is { } contentType &&
-                   contentTypes.Contains(contentType, StringComparer.OrdinalIgnoreCase);
+                contentTypes.Contains(contentType, StringComparer.OrdinalIgnoreCase);
         });
     }
 
-    /// <summary>
-    /// Adds an always matching filter to the list of <see cref="ResourceFilters"/>.
-    /// </summary>
-    public ResourceFilter Always(Action<IResourceManager> execution = null)
-    {
-        var filter = When(_ => true);
-        filter.Execution = execution;
-        return filter;
-    }
 }
