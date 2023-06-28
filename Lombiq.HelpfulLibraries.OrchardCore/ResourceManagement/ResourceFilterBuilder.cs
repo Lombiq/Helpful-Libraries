@@ -71,7 +71,7 @@ public class ResourceFilterBuilder
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown when <paramref name="contentTypes"/> has no provided items.
     /// </exception>
-    public ResourceFilter WhenContentType(params string[] contentTypes) => 
+    public ResourceFilter WhenContentType(params string[] contentTypes) =>
         WhenContentTypeInner("Display", contentTypes);
 
     /// <summary>
@@ -124,5 +124,4 @@ public class ResourceFilterBuilder
                 contentTypes.Contains(contentType, StringComparer.OrdinalIgnoreCase);
         });
     }
-
 }
