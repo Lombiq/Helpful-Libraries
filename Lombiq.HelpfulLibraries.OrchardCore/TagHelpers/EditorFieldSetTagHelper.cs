@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.TagHelpers;
 
-[HtmlTargetElement("fieldset", Attributes = "asp-for")]
+[HtmlTargetElement("fieldset", Attributes = "asp-for,label")]
 public class EditorFieldSetTagHelper : TagHelper
 {
     private const string Class = "class";
