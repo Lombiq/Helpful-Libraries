@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -165,4 +166,101 @@ public static class DictionaryExtensions
     /// </summary>
     public static IReadOnlyDictionary<TKey, TValue> ToReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) =>
         dictionary as IReadOnlyDictionary<TKey, TValue> ?? new Dictionary<TKey, TValue>(dictionary);
+
+    /// <summary>
+    /// Creates a new dictionary based on <paramref name="dictionary"/> by taking each entry's value, and if it's not
+    /// <see langword="null"/> and has at least one not <see langword="null"/> item then that item is added under the
+    /// same key.
+    /// </summary>
+    [SuppressMessage(
+        "Design",
+        "MA0016:Prefer returning collection abstraction instead of implementation",
+        Justification = "Better compatibility.")]
+    public static Dictionary<TKey, TValue> WithFirstValues<TKey, TValue, TValues>(
+        this IEnumerable<KeyValuePair<TKey, TValues>> dictionary,
+        Func<TValues, TValue> select = null)
+        where TValues : IEnumerable<TValue>
+    {
+        var result = new Dictionary<TKey, TValue>();
+
+        foreach (var (key, values) in dictionary)
+        {
+            if (select == null)
+            {
+                if (values is not null && values.FirstOrDefault() is { } value)
+                {
+                    result[key] = value;
+                }
+            }
+            else
+            {
+                if (select(values) is { } value)
+                {
+                    result[key] = value;
+                }
+            }
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Creates a new dictionary based on <paramref name="dictionary"/> where each value is a new instance of
+    /// <typeparamref name="TValues"/> which is an <see cref="IList{T}"/> of <typeparamref name="TValue"/>. If the value
+    /// is not <see langword="null"/> then it's added to the list.
+    /// </summary>
+    [SuppressMessage(
+        "Design",
+        "MA0016:Prefer returning collection abstraction instead of implementation",
+        Justification = "Better compatibility.")]
+    public static Dictionary<TKey, TValues> ToListValuedDictionary<TKey, TValue, TValues>(
+        this IEnumerable<KeyValuePair<TKey, TValue>> dictionary,
+        Func<TValue, TValues> select = null)
+        where TValues : IList<TValue>, new()
+    {
+        var result = new Dictionary<TKey, TValues>();
+
+        foreach (var (key, value) in dictionary)
+        {
+            if (select != null)
+            {
+                result[key] = select(value);
+                continue;
+            }
+
+            var list = new TValues();
+            if (value is not null) list.Add(value);
+            result[key] = list;
+        }
+
+        return result;
+    }
+
+    /// <summary>
+    /// Creates a new string keyed dictionary where the key is compared in a case-insensitive manner.
+    /// </summary>
+    public static IDictionary<string, TValue> ToDictionaryIgnoreCase<TValue>(
+        this IEnumerable<KeyValuePair<string, TValue>> source) =>
+        new Dictionary<string, TValue>(source, StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Creates a new string keyed dictionary where the key is compared in a case-insensitive manner.
+    /// </summary>
+    public static IDictionary<string, TSource> ToDictionaryIgnoreCase<TSource>(
+        this IEnumerable<TSource> source,
+        Func<TSource, string> keySelector) =>
+        new Dictionary<string, TSource>(
+            source.Select(item => new KeyValuePair<string, TSource>(keySelector(item), item)),
+            StringComparer.OrdinalIgnoreCase);
+
+    /// <summary>
+    /// Creates a new string keyed dictionary where the key is compared in a case-insensitive manner.
+    /// </summary>
+    public static IDictionary<string, TValue> ToDictionaryIgnoreCase<TSource, TValue>(
+        this IEnumerable<TSource> source,
+        Func<TSource, string> keySelector,
+        Func<TSource, TValue> valueSelector) =>
+        new Dictionary<string, TValue>(
+            source.Select(item => new KeyValuePair<string, TValue>(keySelector(item), valueSelector(item))),
+            StringComparer.OrdinalIgnoreCase);
 }
