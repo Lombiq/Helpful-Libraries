@@ -37,6 +37,9 @@ public class EditorFieldSetTagHelper : TagHelper
     [HtmlAttributeName("required")]
     public bool IsRequired { get; set; }
 
+    [HtmlAttributeName("readonly")]
+    public bool IsReadOnly { get; set; }
+
     [HtmlAttributeName("options")]
     public IEnumerable<SelectListItem> Options { get; set; }
 
@@ -83,8 +86,13 @@ public class EditorFieldSetTagHelper : TagHelper
             Label.Html().Trim() + (isRequired ? " *" : string.Empty),
             htmlAttributes: null);
 
+        var attributes = new Dictionary<string, object>();
+        if (IsReadOnly) attributes["readonly"] = "readonly";
+        if (isRequired) attributes["required"] = "required";
+
         if (InputType.EqualsOrdinalIgnoreCase("checkbox"))
         {
+            attributes["class"] = "custom-control-input";
             var checkbox = _htmlGenerator.GenerateCheckBox(
                 ViewContext,
                 For.ModelExplorer,
@@ -95,9 +103,7 @@ public class EditorFieldSetTagHelper : TagHelper
                     bool value => value,
                     _ => bool.TryParse(For.Model.ToString(), out var parsedValue) ? parsedValue : null,
                 },
-                new { @class = "custom-control-input" });
-
-            if (isRequired) MakeRequired(checkbox);
+                attributes);
 
             label.Attributes[Class] = "custom-control-label";
 
@@ -113,6 +119,13 @@ public class EditorFieldSetTagHelper : TagHelper
         var inputType = InputType;
         if (Options != null) inputType = "select";
 
+        attributes["class"] = "form-select";
+        if (inputType != "select")
+        {
+            attributes["class"] = "form-control";
+            attributes["type"] = InputType;
+        }
+
         var input = inputType == "select"
             ? _htmlGenerator.GenerateSelect(
                 ViewContext,
@@ -121,23 +134,14 @@ public class EditorFieldSetTagHelper : TagHelper
                 For.Name,
                 Options,
                 allowMultiple: false,
-                new
-                {
-                    @class = "form-select",
-                })
+                attributes)
             : _htmlGenerator.GenerateTextBox(
                 ViewContext,
                 For.ModelExplorer,
                 For.Name,
                 For.Model,
                 For.ModelExplorer.Metadata.EditFormatString,
-                new
-                {
-                    @class = "form-control",
-                    type = InputType,
-                });
-
-        if (isRequired) MakeRequired(input);
+                attributes);
 
         AppendContent(output, label);
         AppendContent(output, input);
@@ -155,6 +159,4 @@ public class EditorFieldSetTagHelper : TagHelper
             .GetProperty(modelExpression.Name)?
             .GetCustomAttributes(typeof(RequiredAttribute), inherit: false)
             .FirstOrDefault() is RequiredAttribute;
-
-    private static void MakeRequired(TagBuilder tagBuilder) => tagBuilder.Attributes.Add("required", "required");
 }
