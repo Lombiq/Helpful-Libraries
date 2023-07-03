@@ -69,8 +69,6 @@ public class EditorFieldSetTagHelper : TagHelper
             htmlAttributes: null);
         AppendContent(output, tagBuilder);
 
-        AppendContent(output, Hint);
-
         return Task.CompletedTask;
     }
 
@@ -95,16 +93,17 @@ public class EditorFieldSetTagHelper : TagHelper
                     bool value => value,
                     _ => bool.TryParse(For.Model.ToString(), out var parsedValue) ? parsedValue : null,
                 },
-                new { @class = "custom-control-input" });
+                new { @class = "form-check-input" });
 
             if (isRequired) MakeRequired(checkbox);
 
-            label.Attributes[Class] = "custom-control-label";
+            label.Attributes[Class] = "form-check-label";
 
-            output.Content.AppendHtml("<div class=\"custom-control custom-checkbox\">");
+            output.Content.AppendHtml("<div class=\"form-check\">");
             AppendContent(output, checkbox);
             output.Content.AppendHtml("&nbsp;");
             AppendContent(output, label);
+            AddHint(output, "dashed");
             output.Content.AppendHtml("</div>");
 
             return;
@@ -141,6 +140,15 @@ public class EditorFieldSetTagHelper : TagHelper
 
         AppendContent(output, label);
         AppendContent(output, input);
+        AddHint(output);
+    }
+
+    private void AddHint(TagHelperOutput output, string additionalClasses = "")
+    {
+        if (Hint == null) return;
+
+        // The space at the beginning is intentional for the case of dashed hints. 
+        output.Content.AppendHtml($" <span class=\"hint {additionalClasses}\">{Hint.Html()}</div>");
     }
 
     private static void AppendContent(TagHelperOutput output, IHtmlContent content)
