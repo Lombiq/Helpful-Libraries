@@ -11,8 +11,11 @@ public class ResourceFilter
     public Func<HttpContext, bool> Filter { get; set; }
     public Func<HttpContext, Task<bool>> FilterAsync { get; set; }
     public Action<IResourceManager> Execution { get; set; }
+    public Func<IResourceManager, Task> ExecutionAsync { get; set; }
 
     public void Execute(Action<IResourceManager> action) => Execution = action;
+
+    public void ExecuteTask(Func<IResourceManager, Task> actionAsync) => ExecutionAsync = actionAsync;
 
     /// <summary>
     /// Registers the provided <c>stylesheet</c> <paramref name="resources"/>.
