@@ -148,7 +148,7 @@ public class EditorFieldSetTagHelper : TagHelper
         if (Hint == null) return;
 
         // The space at the beginning is intentional for the case of dashed hints. 
-        output.Content.AppendHtml($" <span class=\"hint {additionalClasses}\">{Hint.Html()}</div>");
+        output.Content.AppendHtml($" <span class=\"hint {additionalClasses}\">{Hint.Html()}</span>");
     }
 
     private static void AppendContent(TagHelperOutput output, IHtmlContent content)
