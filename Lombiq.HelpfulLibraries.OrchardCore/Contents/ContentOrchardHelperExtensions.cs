@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
-using OrchardCore.DisplayManagement;
 using System;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -19,13 +19,8 @@ public static class ContentOrchardHelperExtensions
         this IOrchardHelper orchardHelper,
         ContentItem contentItem)
     {
-        var urlHelperFactory = orchardHelper.HttpContext.RequestServices.GetService<IUrlHelperFactory>();
-        var viewContextAccessor = orchardHelper.HttpContext.RequestServices.GetService<ViewContextAccessor>();
-        var contentManager = orchardHelper.HttpContext.RequestServices.GetService<IContentManager>();
-
-        var urlHelper = urlHelperFactory.GetUrlHelper(viewContextAccessor.ViewContext);
-        var metadata = await contentManager.PopulateAspectAsync<ContentItemMetadata>(contentItem);
-        return urlHelper.Action(metadata.EditorRouteValues["action"].ToString(), metadata.EditorRouteValues);
+        var urlHelper = orchardHelper.GetUrlHelper();
+        return urlHelper.EditContentItem(contentItem.ContentItemId);
     }
 
     /// <summary>
@@ -35,13 +30,8 @@ public static class ContentOrchardHelperExtensions
         this IOrchardHelper orchardHelper,
         ContentItem contentItem)
     {
-        var urlHelperFactory = orchardHelper.HttpContext.RequestServices.GetService<IUrlHelperFactory>();
-        var viewContextAccessor = orchardHelper.HttpContext.RequestServices.GetService<ViewContextAccessor>();
-        var contentManager = orchardHelper.HttpContext.RequestServices.GetService<IContentManager>();
-
-        var urlHelper = urlHelperFactory.GetUrlHelper(viewContextAccessor.ViewContext);
-        var metadata = await contentManager.PopulateAspectAsync<ContentItemMetadata>(contentItem);
-        return urlHelper.Action(metadata.DisplayRouteValues["action"].ToString(), metadata.DisplayRouteValues);
+        var urlHelper = orchardHelper.GetUrlHelper();
+        return urlHelper.DisplayContentItem(contentItem);
     }
 
     /// <summary>
@@ -83,4 +73,13 @@ public static class ContentOrchardHelperExtensions
         params (string Key, object Value)[] additionalArguments)
         where TController : ControllerBase =>
         orchardHelper.HttpContext.Action(taskActionExpression.StripResult(), additionalArguments);
+
+    private static IUrlHelper GetUrlHelper(this IOrchardHelper orchardHelper)
+    {
+        var serviceProvider = orchardHelper.HttpContext.RequestServices;
+        var urlHelperFactory = serviceProvider.GetService<IUrlHelperFactory>();
+        var actionContext = serviceProvider.GetService<IActionContextAccessor>()?.ActionContext;
+
+        return urlHelperFactory.GetUrlHelper(actionContext);
+    }
 }
