@@ -31,7 +31,7 @@ public abstract class RecipeMigrationsBase : DataMigration
 
     protected async Task<int> ExecuteAsync(int version)
     {
-        var baseName = BaseName ?? throw new InvalidOperationException("Failed to ge");
+        var baseName = BaseName ?? throw new InvalidOperationException("Failed to get the current assembly's feature ID.");
         var recipeName = $"UpdateFrom{version.ToTechnicalString()}";
         await _recipeMigrator.ExecuteAsync($"{baseName}.{recipeName}.recipe.json", this);
         return version + 1;

@@ -56,7 +56,7 @@ public class ResourceFilterMiddleware
 
             foreach (var filter in activeFilters)
             {
-                resourceManager ??= context.RequestServices.GetService<IResourceManager>();
+                resourceManager ??= context.RequestServices.GetRequiredService<IResourceManager>();
 
                 if (filter.ExecutionAsync != null)
                 {
