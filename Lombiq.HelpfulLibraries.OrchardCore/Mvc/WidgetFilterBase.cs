@@ -82,13 +82,13 @@ public abstract class WidgetFilterBase<TViewModel> : IAsyncResultFilter
         var user = context.HttpContext?.User;
         if ((AdminOnly && !isAdmin) ||
             (FrontEndOnly && isAdmin) ||
-            (_requiredPermission != null && !await _authorizationService.AuthorizeAsync(user, _requiredPermission)))
+            (_requiredPermission != null && !await _authorizationService.AuthorizeAsync(user, _requiredPermission)) ||
+            await GetViewModelAsync() is not { } viewModel)
         {
             await next();
             return;
         }
 
-        var viewModel = await GetViewModelAsync();
         await _layoutAccessor.AddShapeToZoneAsync(ZoneName, await _shapeFactory.CreateAsync(ViewName, viewModel));
 
         await next();

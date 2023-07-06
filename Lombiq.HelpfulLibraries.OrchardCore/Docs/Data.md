@@ -11,3 +11,8 @@
 ## Services
 
 - `IManualConnectingIndexService<in T>`: A service for managing a `MapIndex` without an automatic provider. The index refers to documents of `T` type and they can be added or removed via the service's methods only.
+
+## Migrations
+
+- `IndexDataMigration<TIndex>`: A base class for index migrations that handles a single index table.
+- `RecipeMigrationsBase`: A base class for recipe migrations that automatically calls the `{module-or-theme-id}.UpdateFrom0.recipe.json` recipe on creation and makes it easier to call update recipes in a similar format.

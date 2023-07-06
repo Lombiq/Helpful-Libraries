@@ -38,7 +38,8 @@ public class ResourceFilterMiddleware
 
         var builder = new ResourceFilterBuilder();
         var anyProviders = providers
-            .Where(providerInfo => providerInfo.ThemeRequirements.Exists(themes.Contains))
+            .Where(providerInfo => !providerInfo.ThemeRequirements.Any() ||
+                                   providerInfo.ThemeRequirements.Exists(themes.Contains))
             .ForEach(providerInfo => providerInfo.Provider.AddResourceFilter(builder));
 
         if (anyProviders)
@@ -53,9 +54,18 @@ public class ResourceFilterMiddleware
                         ? Task.FromResult(filter.Filter(context))
                         : filter.FilterAsync(context));
 
-            activeFilters.ForEach(
-                filter => filter.Execution(resourceManager),
-                _ => resourceManager = context.RequestServices.GetService<IResourceManager>());
+            foreach (var filter in activeFilters)
+            {
+                resourceManager ??= context.RequestServices.GetRequiredService<IResourceManager>();
+
+                if (filter.ExecutionAsync != null)
+                {
+                    await filter.ExecutionAsync(resourceManager);
+                    continue;
+                }
+
+                filter.Execution(resourceManager);
+            }
         }
 
         await _next(context);
