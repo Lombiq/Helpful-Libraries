@@ -92,7 +92,7 @@ public class EditorFieldSetTagHelper : TagHelper
 
         if (InputType.EqualsOrdinalIgnoreCase("checkbox"))
         {
-            attributes["class"] = "custom-control-input";
+            attributes[Class] = "custom-control-input";
             var checkbox = _htmlGenerator.GenerateCheckBox(
                 ViewContext,
                 For.ModelExplorer,
@@ -119,10 +119,10 @@ public class EditorFieldSetTagHelper : TagHelper
         var inputType = InputType;
         if (Options != null) inputType = "select";
 
-        attributes["class"] = "form-select";
+        attributes[Class] = "form-select";
         if (inputType != "select")
         {
-            attributes["class"] = "form-control";
+            attributes[Class] = "form-control";
             attributes["type"] = InputType;
         }
 
