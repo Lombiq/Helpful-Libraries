@@ -13,8 +13,8 @@ namespace Microsoft.AspNetCore.Mvc;
 public static class OrchardControllerExtensions
 {
     /// <summary>
-    /// Uses <see cref="Routing.UrlHelperExtensions.DisplayContentItem"/> extension method to redirect to this <see
-    /// cref="ContentItem"/>'s display page.
+    /// Uses <see cref="Routing.UrlHelperExtensions.DisplayContentItem(Microsoft.AspNetCore.Mvc.IUrlHelper,OrchardCore.ContentManagement.IContent)"/>
+    /// extension method to redirect to this <see cref="ContentItem"/>'s display page.
     /// </summary>
     public static RedirectResult RedirectToContentDisplay(this Controller controller, IContent content) =>
         controller.Redirect(controller.Url.DisplayContentItem(content));

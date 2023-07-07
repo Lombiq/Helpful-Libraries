@@ -24,10 +24,17 @@ public static class ContentOrchardHelperExtensions
     /// Gets the given content item's edit URL.
     /// </summary>
     [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
-    public static string GetItemEditUrl(this IOrchardHelper orchardHelper, ContentItem contentItem)
+    public static string GetItemEditUrl(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        orchardHelper.GetItemEditUrl(contentItem.ContentItemId);
+
+    /// <summary>
+    /// Gets the given content item's edit URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static string GetItemEditUrl(this IOrchardHelper orchardHelper, string contentItemId)
     {
         var urlHelper = orchardHelper.GetUrlHelper();
-        return urlHelper.EditContentItem(contentItem.ContentItemId);
+        return urlHelper.EditContentItem(contentItemId);
     }
 
     /// <summary>
@@ -41,10 +48,17 @@ public static class ContentOrchardHelperExtensions
     /// Gets the given content item's display URL.
     /// </summary>
     [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
-    public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, ContentItem contentItem)
+    public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        orchardHelper.GetItemDisplayUrl(contentItem.ContentItemId);
+
+    /// <summary>
+    /// Gets the given content item's display URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, string contentItemId)
     {
         var urlHelper = orchardHelper.GetUrlHelper();
-        return urlHelper.DisplayContentItem(contentItem);
+        return urlHelper.DisplayContentItem(contentItemId);
     }
 
     /// <summary>
