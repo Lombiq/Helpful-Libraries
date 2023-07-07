@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -15,9 +16,15 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's edit URL.
     /// </summary>
-    public static async Task<string> GetItemEditUrlAsync(
-        this IOrchardHelper orchardHelper,
-        ContentItem contentItem)
+    [Obsolete($"Use {nameof(GetItemEditUrl)} instead as this method does not need to be async.")]
+    public static Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        Task.FromResult(orchardHelper.GetItemEditUrl(contentItem));
+
+    /// <summary>
+    /// Gets the given content item's edit URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static string GetItemEditUrl(this IOrchardHelper orchardHelper, ContentItem contentItem)
     {
         var urlHelper = orchardHelper.GetUrlHelper();
         return urlHelper.EditContentItem(contentItem.ContentItemId);
@@ -26,9 +33,15 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's display URL.
     /// </summary>
-    public static async Task<string> GetItemDisplayUrlAsync(
-        this IOrchardHelper orchardHelper,
-        ContentItem contentItem)
+    [Obsolete($"Use {nameof(GetItemDisplayUrl)} instead as this method does not need to be async.")]
+    public static Task<string> GetItemDisplayUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        Task.FromResult(orchardHelper.GetItemDisplayUrl(contentItem));
+
+    /// <summary>
+    /// Gets the given content item's display URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, ContentItem contentItem)
     {
         var urlHelper = orchardHelper.GetUrlHelper();
         return urlHelper.DisplayContentItem(contentItem);
