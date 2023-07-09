@@ -85,8 +85,8 @@ public class EditorFieldSetTagHelper : TagHelper
             htmlAttributes: null);
 
         var attributes = new Dictionary<string, object>();
-        if (IsReadOnly) attributes["readonly"] = "readonly";
-        if (isRequired) attributes["required"] = "required";
+        AddBoolAttribute(attributes, IsReadOnly, "readonly");
+        AddBoolAttribute(attributes, isRequired, "required");
 
         if (InputType.EqualsOrdinalIgnoreCase("checkbox"))
         {
@@ -168,5 +168,11 @@ public class EditorFieldSetTagHelper : TagHelper
             .GetCustomAttributes(typeof(RequiredAttribute), inherit: false)
             .FirstOrDefault() is RequiredAttribute;
 
-    private static void MakeRequired(TagBuilder tagBuilder) => tagBuilder.Attributes.Add("required", "required");
+    private static void AddBoolAttribute(IDictionary<string, object> attributes, bool value, string attributeName)
+    {
+        if (value)
+        {
+            attributes[attributeName] = attributeName;
+        }
+    }
 }
