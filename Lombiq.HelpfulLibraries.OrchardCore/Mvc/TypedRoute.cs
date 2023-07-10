@@ -91,7 +91,9 @@ public class TypedRoute
     /// </summary>
     public override string ToString()
     {
-        var prefix = _isAdminLazy.Value ? "/Admin/" : "/";
+        var isAdminWithoutRoute = _isAdminLazy.Value && _action.GetCustomAttribute(typeof(RouteAttribute)) == null;
+
+        var prefix = isAdminWithoutRoute ? "/Admin/" : "/";
         var route = _routeLazy.Value;
         var arguments = _arguments.Any()
             ? "?" + string.Join('&', _arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
