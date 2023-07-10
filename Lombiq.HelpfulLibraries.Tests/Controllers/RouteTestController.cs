@@ -18,6 +18,10 @@ public class RouteTestController : Controller
     [Route("I/Am/Routed")]
     public IActionResult Route() => Content(string.Empty);
 
+    [Admin]
+    [Route("I/Am/Routed/Admin")]
+    public IActionResult AdminRoute() => Content(string.Empty);
+
     [Route("content/{id}")]
     public IActionResult RouteSubstitution(int id) => Content(string.Empty);
 
