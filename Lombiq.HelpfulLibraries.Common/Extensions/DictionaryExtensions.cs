@@ -142,6 +142,25 @@ public static class DictionaryExtensions
     }
 
     /// <summary>
+    /// Adds a collection of <paramref name="values"/> to the dictionary by generating a key for each item using the
+    /// <paramref name="keySelector"/>. If the selector's result in <see langword="null"/> that value is not added.
+    /// </summary>
+    public static void AddRange<TKey, TValue>(
+        this IDictionary<TKey, TValue> dictionary,
+        IEnumerable<TValue> values,
+        Func<TValue, TKey> keySelector)
+    {
+        if (values == null) return;
+        foreach (var value in values)
+        {
+            if (keySelector(value) is { } key)
+            {
+                dictionary[key] = value;
+            }
+        }
+    }
+
+    /// <summary>
     /// Adds a new item to the list identified by a key in the dictionary. If the item is already part of the list
     /// then it won't add it again.
     /// </summary>

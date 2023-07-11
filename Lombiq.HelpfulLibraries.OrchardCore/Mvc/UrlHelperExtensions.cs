@@ -47,12 +47,18 @@ public static class UrlHelperExtensions
     /// Returns a relative URL for the <see cref="ContentItem"/> display page for the given <paramref name="content"/>.
     /// </summary>
     public static string DisplayContentItem(this IUrlHelper helper, IContent content) =>
+        helper.DisplayContentItem(content.ContentItem.ContentItemId);
+
+    /// <summary>
+    /// Returns a relative URL for the <see cref="ContentItem"/> display page for the given <paramref name="contentItemId"/>.
+    /// </summary>
+    public static string DisplayContentItem(this IUrlHelper helper, string contentItemId) =>
         helper.Action(
             "Display",
             "Item",
             new
             {
                 area = OrchardCoreContentsArea,
-                content.ContentItem.ContentItemId,
+                contentItemId,
             });
 }
