@@ -92,6 +92,13 @@ public class TypedRouteTests
             },
             new object[]
             {
+                "/I/Am/Routed/Admin",
+                AsExpression(controller => controller.AdminRoute()),
+                noMoreArguments,
+                noTenant,
+            },
+            new object[]
+            {
                 "/I/Am/Routed?wat=is+this",
                 AsExpression(controller => controller.Route()),
                 new (string Name, object Value)[] { ("wat", "is this") },
