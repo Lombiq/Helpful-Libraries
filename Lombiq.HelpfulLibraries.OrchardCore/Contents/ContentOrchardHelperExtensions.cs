@@ -1,10 +1,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
-using OrchardCore.DisplayManagement;
 using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 
@@ -15,33 +16,49 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's edit URL.
     /// </summary>
-    public static async Task<string> GetItemEditUrlAsync(
-        this IOrchardHelper orchardHelper,
-        ContentItem contentItem)
-    {
-        var urlHelperFactory = orchardHelper.HttpContext.RequestServices.GetService<IUrlHelperFactory>();
-        var viewContextAccessor = orchardHelper.HttpContext.RequestServices.GetService<ViewContextAccessor>();
-        var contentManager = orchardHelper.HttpContext.RequestServices.GetService<IContentManager>();
+    [Obsolete($"Use {nameof(GetItemEditUrl)} instead as this method does not need to be async.")]
+    public static Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        Task.FromResult(orchardHelper.GetItemEditUrl(contentItem));
 
-        var urlHelper = urlHelperFactory.GetUrlHelper(viewContextAccessor.ViewContext);
-        var metadata = await contentManager.PopulateAspectAsync<ContentItemMetadata>(contentItem);
-        return urlHelper.Action(metadata.EditorRouteValues["action"].ToString(), metadata.EditorRouteValues);
+    /// <summary>
+    /// Gets the given content item's edit URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static string GetItemEditUrl(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        orchardHelper.GetItemEditUrl(contentItem.ContentItemId);
+
+    /// <summary>
+    /// Gets the given content item's edit URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static string GetItemEditUrl(this IOrchardHelper orchardHelper, string contentItemId)
+    {
+        var urlHelper = orchardHelper.GetUrlHelper();
+        return urlHelper.EditContentItem(contentItemId);
     }
 
     /// <summary>
     /// Gets the given content item's display URL.
     /// </summary>
-    public static async Task<string> GetItemDisplayUrlAsync(
-        this IOrchardHelper orchardHelper,
-        ContentItem contentItem)
-    {
-        var urlHelperFactory = orchardHelper.HttpContext.RequestServices.GetService<IUrlHelperFactory>();
-        var viewContextAccessor = orchardHelper.HttpContext.RequestServices.GetService<ViewContextAccessor>();
-        var contentManager = orchardHelper.HttpContext.RequestServices.GetService<IContentManager>();
+    [Obsolete($"Use {nameof(GetItemDisplayUrl)} instead as this method does not need to be async.")]
+    public static Task<string> GetItemDisplayUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        Task.FromResult(orchardHelper.GetItemDisplayUrl(contentItem));
 
-        var urlHelper = urlHelperFactory.GetUrlHelper(viewContextAccessor.ViewContext);
-        var metadata = await contentManager.PopulateAspectAsync<ContentItemMetadata>(contentItem);
-        return urlHelper.Action(metadata.DisplayRouteValues["action"].ToString(), metadata.DisplayRouteValues);
+    /// <summary>
+    /// Gets the given content item's display URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        orchardHelper.GetItemDisplayUrl(contentItem.ContentItemId);
+
+    /// <summary>
+    /// Gets the given content item's display URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, string contentItemId)
+    {
+        var urlHelper = orchardHelper.GetUrlHelper();
+        return urlHelper.DisplayContentItem(contentItemId);
     }
 
     /// <summary>
@@ -83,4 +100,13 @@ public static class ContentOrchardHelperExtensions
         params (string Key, object Value)[] additionalArguments)
         where TController : ControllerBase =>
         orchardHelper.HttpContext.Action(taskActionExpression.StripResult(), additionalArguments);
+
+    private static IUrlHelper GetUrlHelper(this IOrchardHelper orchardHelper)
+    {
+        var serviceProvider = orchardHelper.HttpContext.RequestServices;
+        var urlHelperFactory = serviceProvider.GetService<IUrlHelperFactory>();
+        var actionContext = serviceProvider.GetService<IActionContextAccessor>()?.ActionContext;
+
+        return urlHelperFactory.GetUrlHelper(actionContext);
+    }
 }
