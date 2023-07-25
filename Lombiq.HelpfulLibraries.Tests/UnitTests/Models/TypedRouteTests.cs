@@ -1,5 +1,6 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Lombiq.HelpfulLibraries.Tests.Controllers;
+using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Environment.Extensions;
 using OrchardCore.Environment.Extensions.Features;
 using Shouldly;
@@ -20,13 +21,23 @@ public class TypedRouteTests
         (string Name, object Value)[] additional,
         string tenantName)
     {
-        const string id = "Lombiq.HelpfulLibraries.Tests";
-
-        var typeFeatureProvider = new TypeFeatureProvider();
-        typeFeatureProvider.TryAdd(typeof(RouteTestController), new FeatureInfo(id, new ExtensionInfo(id)));
-
-        var route = TypedRoute.CreateFromExpression(actionExpression, additional, typeFeatureProvider);
+        var route = TypedRoute.CreateFromExpression(
+            actionExpression,
+            additional,
+            CreateServiceProvider());
         route.ToString(tenantName).ShouldBe(expected);
+    }
+
+    private static IServiceProvider CreateServiceProvider()
+    {
+        var services = new ServiceCollection();
+
+        const string feature = "Lombiq.HelpfulLibraries.Tests";
+        var typeFeatureProvider = new TypeFeatureProvider();
+        typeFeatureProvider.TryAdd(typeof(RouteTestController), new FeatureInfo(feature, new ExtensionInfo(feature)));
+        services.AddSingleton<ITypeFeatureProvider>(typeFeatureProvider);
+
+        return services.BuildServiceProvider();
     }
 
     public static IEnumerable<object[]> TypedRouteShouldWorkCorrectlyData()

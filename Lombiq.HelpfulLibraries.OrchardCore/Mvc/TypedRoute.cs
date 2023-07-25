@@ -30,10 +30,10 @@ public class TypedRoute
     private readonly Lazy<bool> _isAdminLazy;
     private readonly Lazy<string> _routeLazy;
 
-    public TypedRoute(
+    private TypedRoute(
         MethodInfo action,
         IEnumerable<KeyValuePair<string, string>> arguments,
-        ITypeFeatureProvider typeFeatureProvider = null)
+        IServiceProvider serviceProvider = null)
     {
         if (action?.DeclaringType is not { } controller)
         {
@@ -53,6 +53,7 @@ public class TypedRoute
         }
         else
         {
+            var typeFeatureProvider = serviceProvider?.GetService<ITypeFeatureProvider>();
             _area = typeFeatureProvider?.GetFeatureForDependency(controller).Extension.Id ??
                     controller.Assembly.GetCustomAttribute<ModuleNameAttribute>()?.Name ??
                     controller.Assembly.GetCustomAttribute<ModuleMarkerAttribute>()?.Name ??
@@ -144,12 +145,12 @@ public class TypedRoute
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> actionExpression,
         IEnumerable<(string Key, object Value)> additionalArguments,
-        ITypeFeatureProvider typeFeatureProvider = null)
+        IServiceProvider serviceProvider = null)
         where TController : ControllerBase =>
         CreateFromExpression(
             actionExpression,
             additionalArguments.Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
-            typeFeatureProvider);
+            serviceProvider);
 
     /// <summary>
     /// Creates and returns a new <see cref="TypedRoute"/> using the provided <paramref name="action"/> expression,
@@ -160,7 +161,7 @@ public class TypedRoute
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> action,
         IEnumerable<KeyValuePair<string, string>> additionalArguments,
-        ITypeFeatureProvider typeFeatureProvider = null)
+        IServiceProvider serviceProvider = null)
         where TController : ControllerBase
     {
         Expression actionExpression = action;
@@ -192,7 +193,7 @@ public class TypedRoute
             _ => new TypedRoute(
                 operation.Method,
                 arguments,
-                typeFeatureProvider));
+                serviceProvider));
     }
 
     private static string ValueToString(object value) =>

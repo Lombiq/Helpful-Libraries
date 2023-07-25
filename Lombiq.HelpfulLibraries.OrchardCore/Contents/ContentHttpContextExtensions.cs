@@ -62,11 +62,10 @@ public static class ContentHttpContextExtensions
         params (string Key, object Value)[] additionalArguments)
         where TController : ControllerBase
     {
-        var provider = httpContext.RequestServices.GetService<ITypeFeatureProvider>();
         var route = TypedRoute.CreateFromExpression(
             actionExpression,
             additionalArguments,
-            provider);
+            httpContext.RequestServices);
         return route.ToString(httpContext);
     }
 

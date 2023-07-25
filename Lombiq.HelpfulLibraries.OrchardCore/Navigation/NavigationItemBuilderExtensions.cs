@@ -34,11 +34,10 @@ public static class NavigationItemBuilderExtensions
         params (string Key, object Value)[] additionalArguments)
         where TContext : ControllerBase
     {
-        var provider = httpContext.RequestServices.GetService<ITypeFeatureProvider>();
         var route = TypedRoute.CreateFromExpression(
             actionExpression,
             additionalArguments,
-            provider);
+            httpContext.RequestServices);
 
         return builder.Action(route);
     }
