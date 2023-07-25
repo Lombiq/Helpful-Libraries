@@ -50,6 +50,8 @@ public class TypedRouteTests
         typeFeatureProvider.TryAdd(typeof(RouteTestController), new FeatureInfo(feature, new ExtensionInfo(feature)));
         services.AddSingleton<ITypeFeatureProvider>(typeFeatureProvider);
 
+        services.AddMemoryCache();
+
         configure?.Invoke(services);
 
         return services.BuildServiceProvider();

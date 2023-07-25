@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
@@ -183,9 +184,19 @@ public class TypedRoute
 
         var key = string.Join(
             separator: '|',
-            typeof(TController),
+            typeof(TController).FullName,
             operation.Method,
             string.Join(',', arguments.Select(pair => $"{pair.Key}={pair.Value}")));
+
+        if (serviceProvider?.GetService<IMemoryCache>() is { } cache)
+        {
+            return cache.GetOrCreate(
+                key,
+                _ => new TypedRoute(
+                    operation.Method,
+                    arguments,
+                    serviceProvider));
+        }
 
         return _cache.GetOrAdd(
             key,
