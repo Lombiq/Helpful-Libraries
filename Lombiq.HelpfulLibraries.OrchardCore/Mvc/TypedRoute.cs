@@ -164,7 +164,7 @@ public class TypedRoute
     /// <param name="additionalArguments">Additional arguments to add to the route and the key in the cache.</param>
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> action,
-        IEnumerable<KeyValuePair<string, string>> additionalArguments,
+        IEnumerable<KeyValuePair<string, string>> additionalArguments = null,
         IServiceProvider serviceProvider = null)
         where TController : ControllerBase
     {
@@ -183,7 +183,7 @@ public class TypedRoute
                 methodParameters[index].Name,
                 ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke())))
             .Where(pair => pair.Value != null)
-            .Concat(additionalArguments)
+            .Concat(additionalArguments ?? Enumerable.Empty<KeyValuePair<string, string>>())
             .ToList();
 
         var key = string.Join(
