@@ -1,9 +1,7 @@
 ﻿using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using OrchardCore.Environment.Extensions;
 using OrchardCore.Navigation;
 using System;
 using System.Linq.Expressions;
