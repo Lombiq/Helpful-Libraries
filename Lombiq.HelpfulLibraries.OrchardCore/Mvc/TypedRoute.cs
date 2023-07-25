@@ -28,9 +28,8 @@ public class TypedRoute
     private readonly MethodInfo _action;
     private readonly List<KeyValuePair<string, string>> _arguments;
 
-    private readonly Lazy<bool> _isAdminLazy;
-    private readonly Lazy<string> _routeLazy;
-    private readonly Lazy<string> _adminPrefixLazy;
+    private readonly string _prefix = "/";
+    private readonly string _route;
 
     private TypedRoute(
         MethodInfo action,
@@ -64,15 +63,15 @@ public class TypedRoute
                         "you sure this controller belongs to an Orchard Core module?");
         }
 
-        _isAdminLazy = new Lazy<bool>(() =>
-            controller.GetCustomAttribute<AdminAttribute>() != null ||
-            action.GetCustomAttribute<AdminAttribute>() != null);
-        _routeLazy = new Lazy<string>(() =>
-            action.GetCustomAttribute<RouteAttribute>()?.Template is { } route && !string.IsNullOrWhiteSpace(route)
-                ? GetRoute(route)
-                : $"{_area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
-        _adminPrefixLazy = new Lazy<string>(() =>
-            (serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions()).AdminUrlPrefix);
+        var isAdmin = controller.GetCustomAttribute<AdminAttribute>() != null || action.GetCustomAttribute<AdminAttribute>() != null;
+        if (isAdmin && action.GetCustomAttribute(typeof(RouteAttribute)) == null)
+        {
+            _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions()).AdminUrlPrefix}/";
+        }
+
+        _route = action.GetCustomAttribute<RouteAttribute>()?.Template is { } route && !string.IsNullOrWhiteSpace(route)
+            ? GetRoute(route)
+            : $"{_area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}";
     }
 
     /// <summary>
@@ -96,15 +95,11 @@ public class TypedRoute
     /// </summary>
     public override string ToString()
     {
-        var isAdminWithoutRoute = _isAdminLazy.Value && _action.GetCustomAttribute(typeof(RouteAttribute)) == null;
-
-        var prefix = isAdminWithoutRoute ? $"/{_adminPrefixLazy.Value}/" : "/";
-        var route = _routeLazy.Value;
         var arguments = _arguments.Any()
             ? "?" + string.Join('&', _arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
             : string.Empty;
 
-        return prefix + route + arguments;
+        return _prefix + _route + arguments;
     }
 
     /// <summary>
