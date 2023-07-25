@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using OrchardCore.Admin;
 using OrchardCore.Environment.Extensions;
@@ -29,6 +30,7 @@ public class TypedRoute
 
     private readonly Lazy<bool> _isAdminLazy;
     private readonly Lazy<string> _routeLazy;
+    private readonly Lazy<string> _adminPrefixLazy;
 
     private TypedRoute(
         MethodInfo action,
@@ -69,6 +71,8 @@ public class TypedRoute
             action.GetCustomAttribute<RouteAttribute>()?.Template is { } route && !string.IsNullOrWhiteSpace(route)
                 ? GetRoute(route)
                 : $"{_area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
+        _adminPrefixLazy = new Lazy<string>(() =>
+            (serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions()).AdminUrlPrefix);
     }
 
     /// <summary>
@@ -94,7 +98,7 @@ public class TypedRoute
     {
         var isAdminWithoutRoute = _isAdminLazy.Value && _action.GetCustomAttribute(typeof(RouteAttribute)) == null;
 
-        var prefix = isAdminWithoutRoute ? "/Admin/" : "/";
+        var prefix = isAdminWithoutRoute ? $"/{_adminPrefixLazy.Value}/" : "/";
         var route = _routeLazy.Value;
         var arguments = _arguments.Any()
             ? "?" + string.Join('&', _arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
