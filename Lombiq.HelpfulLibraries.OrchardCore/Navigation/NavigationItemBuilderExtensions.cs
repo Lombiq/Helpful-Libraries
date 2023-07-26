@@ -1,9 +1,7 @@
 ﻿using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
-using OrchardCore.Environment.Extensions;
 using OrchardCore.Navigation;
 using System;
 using System.Linq.Expressions;
@@ -34,11 +32,10 @@ public static class NavigationItemBuilderExtensions
         params (string Key, object Value)[] additionalArguments)
         where TContext : ControllerBase
     {
-        var provider = httpContext.RequestServices.GetService<ITypeFeatureProvider>();
         var route = TypedRoute.CreateFromExpression(
             actionExpression,
             additionalArguments,
-            provider);
+            httpContext.RequestServices);
 
         return builder.Action(route);
     }

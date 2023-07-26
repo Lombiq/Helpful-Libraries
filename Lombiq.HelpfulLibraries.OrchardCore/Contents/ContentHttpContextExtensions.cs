@@ -1,8 +1,6 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
-using OrchardCore.Environment.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -62,11 +60,10 @@ public static class ContentHttpContextExtensions
         params (string Key, object Value)[] additionalArguments)
         where TController : ControllerBase
     {
-        var provider = httpContext.RequestServices.GetService<ITypeFeatureProvider>();
         var route = TypedRoute.CreateFromExpression(
             actionExpression,
             additionalArguments,
-            provider);
+            httpContext.RequestServices);
         return route.ToString(httpContext);
     }
 

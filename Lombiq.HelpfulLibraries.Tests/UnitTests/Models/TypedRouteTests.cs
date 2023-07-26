@@ -1,5 +1,7 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Lombiq.HelpfulLibraries.Tests.Controllers;
+using Microsoft.Extensions.DependencyInjection;
+using OrchardCore.Admin;
 using OrchardCore.Environment.Extensions;
 using OrchardCore.Environment.Extensions.Features;
 using Shouldly;
@@ -20,21 +22,47 @@ public class TypedRouteTests
         (string Name, object Value)[] additional,
         string tenantName)
     {
-        const string id = "Lombiq.HelpfulLibraries.Tests";
-
-        var typeFeatureProvider = new TypeFeatureProvider();
-        typeFeatureProvider.TryAdd(typeof(RouteTestController), new FeatureInfo(id, new ExtensionInfo(id)));
-
-        var route = TypedRoute.CreateFromExpression(actionExpression, additional, typeFeatureProvider);
+        var route = TypedRoute.CreateFromExpression(
+            actionExpression,
+            additional,
+            CreateServiceProvider());
         route.ToString(tenantName).ShouldBe(expected);
     }
 
+    [Fact]
+    public void CustomizedAdminPrefixShouldBeUsed()
+    {
+        const string expected = "/CustomAdmin/Lombiq.HelpfulLibraries.Tests/RouteTest/Baz";
+
+        var route = TypedRoute.CreateFromExpression(
+            AsExpression(controller => controller.Baz()),
+            serviceProvider: CreateServiceProvider(services => services
+                .Configure<AdminOptions>(options => options.AdminUrlPrefix = " /CustomAdmin /")));
+        route.ToString(tenantName: string.Empty).ShouldBe(expected);
+    }
+
+    private static IServiceProvider CreateServiceProvider(Action<ServiceCollection> configure = null)
+    {
+        var services = new ServiceCollection();
+
+        const string feature = "Lombiq.HelpfulLibraries.Tests";
+        var typeFeatureProvider = new TypeFeatureProvider();
+        typeFeatureProvider.TryAdd(typeof(RouteTestController), new FeatureInfo(feature, new ExtensionInfo(feature)));
+        services.AddSingleton<ITypeFeatureProvider>(typeFeatureProvider);
+
+        services.AddMemoryCache();
+
+        configure?.Invoke(services);
+
+        return services.BuildServiceProvider();
+    }
+
+    private static Expression<Action<RouteTestController>> AsExpression(
+        Expression<Action<RouteTestController>> expression) =>
+        expression;
+
     public static IEnumerable<object[]> TypedRouteShouldWorkCorrectlyData()
     {
-        static Expression<Action<RouteTestController>> AsExpression(
-            Expression<Action<RouteTestController>> expression) =>
-            expression;
-
         var noMoreArguments = Array.Empty<(string Name, object Value)>();
         var noTenant = string.Empty;
         var someTenant = "SomeTenant";

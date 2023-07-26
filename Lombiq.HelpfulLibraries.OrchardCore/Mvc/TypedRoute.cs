@@ -1,7 +1,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using OrchardCore.Admin;
 using OrchardCore.Environment.Extensions;
@@ -27,13 +29,13 @@ public class TypedRoute
     private readonly MethodInfo _action;
     private readonly List<KeyValuePair<string, string>> _arguments;
 
-    private readonly Lazy<bool> _isAdminLazy;
-    private readonly Lazy<string> _routeLazy;
+    private readonly string _prefix = "/";
+    private readonly string _route;
 
-    public TypedRoute(
+    private TypedRoute(
         MethodInfo action,
         IEnumerable<KeyValuePair<string, string>> arguments,
-        ITypeFeatureProvider typeFeatureProvider = null)
+        IServiceProvider serviceProvider = null)
     {
         if (action?.DeclaringType is not { } controller)
         {
@@ -53,6 +55,7 @@ public class TypedRoute
         }
         else
         {
+            var typeFeatureProvider = serviceProvider?.GetService<ITypeFeatureProvider>();
             _area = typeFeatureProvider?.GetFeatureForDependency(controller).Extension.Id ??
                     controller.Assembly.GetCustomAttribute<ModuleNameAttribute>()?.Name ??
                     controller.Assembly.GetCustomAttribute<ModuleMarkerAttribute>()?.Name ??
@@ -61,13 +64,15 @@ public class TypedRoute
                         "you sure this controller belongs to an Orchard Core module?");
         }
 
-        _isAdminLazy = new Lazy<bool>(() =>
-            controller.GetCustomAttribute<AdminAttribute>() != null ||
-            action.GetCustomAttribute<AdminAttribute>() != null);
-        _routeLazy = new Lazy<string>(() =>
-            action.GetCustomAttribute<RouteAttribute>()?.Template is { } route && !string.IsNullOrWhiteSpace(route)
-                ? GetRoute(route)
-                : $"{_area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}");
+        var isAdmin = controller.GetCustomAttribute<AdminAttribute>() != null || action.GetCustomAttribute<AdminAttribute>() != null;
+        if (isAdmin && action.GetCustomAttribute(typeof(RouteAttribute)) == null)
+        {
+            _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions()).AdminUrlPrefix}/";
+        }
+
+        _route = action.GetCustomAttribute<RouteAttribute>()?.Template is { } route && !string.IsNullOrWhiteSpace(route)
+            ? GetRoute(route)
+            : $"{_area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}";
     }
 
     /// <summary>
@@ -91,15 +96,11 @@ public class TypedRoute
     /// </summary>
     public override string ToString()
     {
-        var isAdminWithoutRoute = _isAdminLazy.Value && _action.GetCustomAttribute(typeof(RouteAttribute)) == null;
-
-        var prefix = isAdminWithoutRoute ? "/Admin/" : "/";
-        var route = _routeLazy.Value;
         var arguments = _arguments.Any()
             ? "?" + string.Join('&', _arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
             : string.Empty;
 
-        return prefix + route + arguments;
+        return _prefix + _route + arguments;
     }
 
     /// <summary>
@@ -144,12 +145,12 @@ public class TypedRoute
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> actionExpression,
         IEnumerable<(string Key, object Value)> additionalArguments,
-        ITypeFeatureProvider typeFeatureProvider = null)
+        IServiceProvider serviceProvider = null)
         where TController : ControllerBase =>
         CreateFromExpression(
             actionExpression,
             additionalArguments.Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
-            typeFeatureProvider);
+            serviceProvider);
 
     /// <summary>
     /// Creates and returns a new <see cref="TypedRoute"/> using the provided <paramref name="action"/> expression,
@@ -159,8 +160,8 @@ public class TypedRoute
     /// <param name="additionalArguments">Additional arguments to add to the route and the key in the cache.</param>
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> action,
-        IEnumerable<KeyValuePair<string, string>> additionalArguments,
-        ITypeFeatureProvider typeFeatureProvider = null)
+        IEnumerable<KeyValuePair<string, string>> additionalArguments = null,
+        IServiceProvider serviceProvider = null)
         where TController : ControllerBase
     {
         Expression actionExpression = action;
@@ -178,21 +179,31 @@ public class TypedRoute
                 methodParameters[index].Name,
                 ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke())))
             .Where(pair => pair.Value != null)
-            .Concat(additionalArguments)
+            .Concat(additionalArguments ?? Enumerable.Empty<KeyValuePair<string, string>>())
             .ToList();
 
         var key = string.Join(
             separator: '|',
-            typeof(TController),
+            typeof(TController).FullName,
             operation.Method,
             string.Join(',', arguments.Select(pair => $"{pair.Key}={pair.Value}")));
+
+        if (serviceProvider?.GetService<IMemoryCache>() is { } cache)
+        {
+            return cache.GetOrCreate(
+                key,
+                _ => new TypedRoute(
+                    operation.Method,
+                    arguments,
+                    serviceProvider));
+        }
 
         return _cache.GetOrAdd(
             key,
             _ => new TypedRoute(
                 operation.Method,
                 arguments,
-                typeFeatureProvider));
+                serviceProvider));
     }
 
     private static string ValueToString(object value) =>
