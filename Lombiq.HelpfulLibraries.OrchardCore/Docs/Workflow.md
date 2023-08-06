@@ -6,4 +6,4 @@
 
 ## Activities
 
-- `SimpleEventActivity`:  A base class for a simple workflow event that only has a `Done` result.
+- `SimpleEventActivity`: A base class for a simple workflow event that only has a `Done` result.
