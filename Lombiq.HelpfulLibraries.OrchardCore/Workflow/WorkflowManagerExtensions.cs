@@ -1,0 +1,49 @@
+﻿using OrchardCore.ContentManagement;
+using OrchardCore.Workflows.Activities;
+using OrchardCore.Workflows.Services;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Lombiq.HelpfulLibraries.OrchardCore.Workflow;
+
+public static class WorkflowManagerExtensions
+{
+    /// <summary>
+    /// Triggers an event by passing <paramref name="content"/>'s <see cref="ContentItem"/>.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of the activity to trigger. This will only work when it's the same as the event's type name which is
+    /// customary in most events and enforced in <see cref="SimpleEventActivity"/> events.
+    /// </typeparam>
+    public static Task TriggerContentItemEventAsync<T>(this IWorkflowManager workflowManager, IContent content)
+        where T : EventActivity
+    {
+        var contentItem = content.ContentItem;
+        return workflowManager.TriggerEventAsync(
+            typeof(T).Name,
+            contentItem,
+            $"{contentItem.ContentType}-{contentItem.ContentItemId}");
+    }
+
+    /// <inheritdoc cref="TriggerContentItemEventAsync{T}(IWorkflowManager, IContent)"/>
+    /// <remarks><para>Executes on the first item of <paramref name="workflowManagers"/> if any.</para></remarks>
+    public static Task TriggerContentItemEventAsync<T>(this IEnumerable<IWorkflowManager> workflowManagers, IContent content)
+        where T : EventActivity =>
+        workflowManagers.FirstOrDefault() is { } manager
+            ? manager.TriggerContentItemEventAsync<T>(content)
+            : Task.CompletedTask;
+
+    /// <summary>
+    /// Triggers the <see cref="IEvent"/> identified by <paramref name="name"/>.
+    /// </summary>
+    /// <remarks><para>Executes on the first item of <paramref name="workflowManagers"/> if any.</para></remarks>
+    public static Task TriggerEventAsync(
+        this IEnumerable<IWorkflowManager> workflowManagers,
+        string name,
+        object input = null,
+        string correlationId = null) =>
+        workflowManagers.FirstOrDefault() is { } workflowManager
+            ? workflowManager.TriggerEventAsync(name, input, correlationId)
+            : Task.CompletedTask;
+}
