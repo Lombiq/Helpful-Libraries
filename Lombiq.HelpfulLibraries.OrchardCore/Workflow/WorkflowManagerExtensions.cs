@@ -17,7 +17,7 @@ public static class WorkflowManagerExtensions
     /// customary in most events and enforced in <see cref="SimpleEventActivity"/> events.
     /// </typeparam>
     public static Task TriggerContentItemEventAsync<T>(this IWorkflowManager workflowManager, IContent content)
-        where T : EventActivity
+        where T : IEvent
     {
         var contentItem = content.ContentItem;
         return workflowManager.TriggerEventAsync(
@@ -29,7 +29,7 @@ public static class WorkflowManagerExtensions
     /// <inheritdoc cref="TriggerContentItemEventAsync{T}(IWorkflowManager, IContent)"/>
     /// <remarks><para>Executes on the first item of <paramref name="workflowManagers"/> if any.</para></remarks>
     public static Task TriggerContentItemEventAsync<T>(this IEnumerable<IWorkflowManager> workflowManagers, IContent content)
-        where T : EventActivity =>
+        where T : IEvent =>
         workflowManagers.FirstOrDefault() is { } manager
             ? manager.TriggerContentItemEventAsync<T>(content)
             : Task.CompletedTask;
@@ -46,4 +46,14 @@ public static class WorkflowManagerExtensions
         workflowManagers.FirstOrDefault() is { } workflowManager
             ? workflowManager.TriggerEventAsync(name, input, correlationId)
             : Task.CompletedTask;
+
+    /// <summary>
+    /// Triggers the <see cref="IEvent"/> identified by <typeparamref name="T"/>.
+    /// </summary>
+    /// <remarks><para>Executes on the first item of <paramref name="workflowManagers"/> if any.</para></remarks>
+    public static Task TriggerEventAsync<T>(
+        this IEnumerable<IWorkflowManager> workflowManagers,
+        object input = null,
+        string correlationId = null) =>
+        workflowManagers.TriggerEventAsync(typeof(T).Name, input, correlationId);
 }
