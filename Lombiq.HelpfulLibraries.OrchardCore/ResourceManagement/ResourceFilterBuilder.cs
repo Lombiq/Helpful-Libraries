@@ -47,16 +47,10 @@ public class ResourceFilterBuilder
     }
 
     /// <summary>
-    /// Adds a filter that matches the given <paramref name="path"/> to the list of <see cref="ResourceFilters"/>.
-    /// </summary>
-    public ResourceFilter WhenPath(string path) =>
-        When(context => context.Request.Path.Value?.Trim('/').EqualsOrdinalIgnoreCase(path.Trim('/')) == true);
-
-    /// <summary>
     /// Adds a filter that matches any of the provided <paramref name="paths"/> to the list of
     /// <see cref="ResourceFilters"/>.
     /// </summary>
-    public ResourceFilter WhenPaths(params string[] paths)
+    public ResourceFilter WhenPath(params string[] paths)
     {
         var trimmedPaths = paths.Select(path => path.Trim('/'));
         return When(context =>
