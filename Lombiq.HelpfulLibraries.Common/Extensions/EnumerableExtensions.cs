@@ -385,4 +385,23 @@ public static class EnumerableExtensions
 
         return ranges;
     }
+
+    /// <summary>
+    /// If the <paramref name="enumerable"/> is not empty, invokes the <paramref name="actionAsync"/> on the first item.
+    /// </summary>
+    public static Task InvokeFirstOrCompletedAsync<T>(this IEnumerable<T> enumerable, Func<T, Task> actionAsync) =>
+        enumerable.FirstOrDefault() is { } item
+            ? actionAsync(item)
+            : Task.CompletedTask;
+
+    /// <summary>
+    /// If the <paramref name="enumerable"/> is not empty, invokes the <paramref name="funcAsync"/> on the first item
+    /// and returns its result, otherwise returns <see langword="default"/> for <typeparamref name="TResult"/>.
+    /// </summary>
+    public static Task<TResult> InvokeFirstOrDefaultAsync<TItem, TResult>(
+        this IEnumerable<TItem> enumerable,
+        Func<TItem, Task<TResult>> funcAsync) =>
+        enumerable.FirstOrDefault() is { } item
+            ? funcAsync(item)
+            : Task.FromResult(default(TResult));
 }

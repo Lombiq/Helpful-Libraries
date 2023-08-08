@@ -30,9 +30,7 @@ public static class WorkflowManagerExtensions
     /// <remarks><para>Executes on the first item of <paramref name="workflowManagers"/> if any.</para></remarks>
     public static Task TriggerContentItemEventAsync<T>(this IEnumerable<IWorkflowManager> workflowManagers, IContent content)
         where T : IEvent =>
-        workflowManagers.FirstOrDefault() is { } manager
-            ? manager.TriggerContentItemEventAsync<T>(content)
-            : Task.CompletedTask;
+        workflowManagers.InvokeFirstOrCompletedAsync(manager => manager.TriggerContentItemEventAsync<T>(content));
 
     /// <summary>
     /// Triggers the <see cref="IEvent"/> identified by <paramref name="name"/>.
@@ -43,9 +41,17 @@ public static class WorkflowManagerExtensions
         string name,
         object input = null,
         string correlationId = null) =>
-        workflowManagers.FirstOrDefault() is { } workflowManager
-            ? workflowManager.TriggerEventAsync(name, input, correlationId)
-            : Task.CompletedTask;
+        workflowManagers.InvokeFirstOrCompletedAsync(manager => manager.TriggerEventAsync(name, input, correlationId));
+
+    /// <summary>
+    /// Triggers the <see cref="IEvent"/> identified by <typeparamref name="T"/>.
+    /// </summary>
+    public static Task TriggerEventAsync<T>(
+        this IWorkflowManager workflowManager,
+        object input = null,
+        string correlationId = null)
+        where T : IEvent =>
+        workflowManager.TriggerEventAsync(typeof(T).Name, input, correlationId);
 
     /// <summary>
     /// Triggers the <see cref="IEvent"/> identified by <typeparamref name="T"/>.
@@ -54,6 +60,7 @@ public static class WorkflowManagerExtensions
     public static Task TriggerEventAsync<T>(
         this IEnumerable<IWorkflowManager> workflowManagers,
         object input = null,
-        string correlationId = null) =>
+        string correlationId = null)
+        where T : IEvent =>
         workflowManagers.TriggerEventAsync(typeof(T).Name, input, correlationId);
 }
