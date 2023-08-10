@@ -7,6 +7,10 @@ using OrchardCore.Workflows.Helpers;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Workflow;
 
+/// <summary>
+/// A base class for a simple workflow event driver that only displays a title, description and optional icon in a
+/// conventional format.
+/// </summary>
 public abstract class SimpleEventActivityDisplayDriverBase<TActivity> : DisplayDriver<IActivity, TActivity>
     where TActivity : class, IActivity
 {

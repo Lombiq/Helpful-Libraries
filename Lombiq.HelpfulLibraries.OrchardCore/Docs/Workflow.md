@@ -6,4 +6,5 @@
 
 ## Activities
 
-- `SimpleEventActivity`: A base class for a simple workflow event that only has a `Done` result.
+- `SimpleEventActivityBase`: A base class for a simple workflow event that only has a `Done` result.
+- `SimpleEventActivityDisplayDriverBase`: A base class for a simple workflow event driver that only displays a title, description and optional icon in a conventional format.
