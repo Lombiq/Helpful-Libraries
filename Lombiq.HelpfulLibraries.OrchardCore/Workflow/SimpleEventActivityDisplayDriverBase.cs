@@ -27,15 +27,18 @@ public abstract class SimpleEventActivityDisplayDriverBase<TActivity> : DisplayD
             this.RawHtml(ThumbnailHtml(model)).Location(CommonContentDisplayTypes.Thumbnail, CommonLocationNames.Content),
             this.RawHtml(DesignHtml(model)).Location(CommonContentDisplayTypes.Design, CommonLocationNames.Content));
 
-    private string ThumbnailHtml(TActivity model)
-    {
-        var title = ((IHtmlContent)Title) ?? new HtmlContentString(model.DisplayText);
-        return $"<h4 class=\"card-title\">{IconHtml}{title.Html()}</h4><p>{Description.Html()}</p>";
-    }
+    private string ThumbnailHtml(TActivity model) =>
+        $"<h4 class=\"card-title\">{IconHtml}{GetTitle(model)}</h4><p>{Description?.Html()}</p>";
 
-    private string DesignHtml(TActivity model)
+    private string DesignHtml(TActivity model) =>
+        $"<header><h4>{IconHtml}{GetTitle(model)}</h4></header>";
+
+    private string GetTitle(TActivity model)
     {
-        var title = model.GetTitleOrDefault(() => Title);
-        return $"<header><h4>{IconHtml}{title.Html()}</h4></header>";
+        var title = model.GetTitleOrDefault(() => Title).Html();
+
+        return string.IsNullOrWhiteSpace(title)
+            ? new HtmlContentString(model.DisplayText).Html()
+            : title;
     }
 }
