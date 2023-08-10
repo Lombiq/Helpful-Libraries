@@ -7,8 +7,8 @@ using OrchardCore.Workflows.Helpers;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Workflow;
 
-public abstract class SimpleEventActivityDisplayDriver<TActivity> : DisplayDriver<IActivity, TActivity>
-    where TActivity : SimpleEventActivity
+public abstract class SimpleEventActivityDisplayDriverBase<TActivity> : DisplayDriver<IActivity, TActivity>
+    where TActivity : class, IActivity
 {
     public abstract string IconClass { get; }
     public abstract LocalizedHtmlString Title { get; }

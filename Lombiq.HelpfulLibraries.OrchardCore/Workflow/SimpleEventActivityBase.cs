@@ -9,7 +9,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Workflow;
 /// <summary>
 /// A base class for a simple workflow event that only has a <c>Done</c> result.
 /// </summary>
-public abstract class SimpleEventActivity : EventActivity
+public abstract class SimpleEventActivityBase : EventActivity
 {
     protected readonly IStringLocalizer T;
 
@@ -18,7 +18,7 @@ public abstract class SimpleEventActivity : EventActivity
     public abstract override LocalizedString DisplayText { get; }
     public abstract override LocalizedString Category { get; }
 
-    protected SimpleEventActivity(IStringLocalizer stringLocalizer) =>
+    protected SimpleEventActivityBase(IStringLocalizer stringLocalizer) =>
         T = stringLocalizer;
 
     public override IEnumerable<Outcome> GetPossibleOutcomes(

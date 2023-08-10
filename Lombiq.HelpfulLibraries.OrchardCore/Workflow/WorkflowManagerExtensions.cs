@@ -13,7 +13,7 @@ public static class WorkflowManagerExtensions
     /// </summary>
     /// <typeparam name="T">
     /// The type of the activity to trigger. This will only work when it's the same as the event's type name which is
-    /// customary in most events and enforced in <see cref="SimpleEventActivity"/> events.
+    /// customary in most events and enforced in <see cref="SimpleEventActivityBase"/> events.
     /// </typeparam>
     public static Task TriggerContentItemEventAsync<T>(this IWorkflowManager workflowManager, IContent content)
         where T : IEvent
