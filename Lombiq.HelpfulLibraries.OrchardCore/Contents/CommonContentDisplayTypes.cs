@@ -12,4 +12,5 @@ public static class CommonContentDisplayTypes
     public const string Summary = nameof(Summary);
     public const string SummaryAdmin = nameof(SummaryAdmin);
     public const string Thumbnail = nameof(Thumbnail);
+    public const string Design = nameof(Design);
 }
