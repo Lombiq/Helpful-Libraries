@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using Orchard.Environment.Extensions;
+using Orchard.Logging;
 using Piedone.HelpfulLibraries.DependencyInjection;
 
 namespace Piedone.HelpfulLibraries.Tasks.Locking
@@ -10,10 +11,13 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
     {
         private readonly IResolve<IDistributedLock> _lockResolve;
 
+        public ILogger Logger { get; set; }
+
 
         public DistributedLockManager(IResolve<IDistributedLock> lockResolve)
         {
             _lockResolve = lockResolve;
+            Logger = NullLogger.Instance;
         }
 
 
@@ -25,11 +29,15 @@ namespace Piedone.HelpfulLibraries.Tasks.Locking
             var distributedLock = _lockResolve.Value;
             bool acquired;
 
+            Logger.Debug("Trying to acquire lock \"{0}\" with the lock type {1}.", name, distributedLock.GetType().FullName);
+
             while (!(acquired = distributedLock.TryAcquire(name)) && waitedMilliseconds < millisecondsTimeout)
             {
                 Thread.Sleep(waitMilliseconds);
                 waitedMilliseconds += waitMilliseconds;
             }
+
+            Logger.Debug("Lock \"{0}\" acquire state: {1}.", name, acquired);
 
             if (acquired) return distributedLock;
             else return null;
