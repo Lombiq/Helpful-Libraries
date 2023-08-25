@@ -51,6 +51,6 @@ public class LocalizedHtmlStringConverter : JsonConverter<LocalizedHtmlString>
             return new LocalizedHtmlString(name, value, isResourceNotFound == true);
         }
 
-        throw new InvalidOperationException($"Can't parse token \"{token}\". It should be object or string");
+        throw new InvalidOperationException($"Can't parse token \"{token}\". It should be an object or a string");
     }
 }
