@@ -15,7 +15,7 @@ namespace Piedone.HelpfulLibraries.Libraries.Tasks.Locking
     public class ObjectLockHolder : IObjectLockHolder
     {
         private readonly object _dictionaryLock = new object();
-        private ConcurrentDictionary<string, bool> _locks = new ConcurrentDictionary<string, bool>();
+        private readonly ConcurrentDictionary<string, bool> _locks = new ConcurrentDictionary<string, bool>();
 
 
         public bool TryAcquire(string name)
