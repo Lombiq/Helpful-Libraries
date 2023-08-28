@@ -46,12 +46,17 @@ Features:
 		Dependencies: Piedone.HelpfulLibraries, Piedone.HelpfulLibraries.DependencyInjection
 	Piedone.HelpfulLibraries.Tasks.Locking:
 		Name: Tasks Libraries: Locking - Helpful Libraries
-		Description: Distributed locking services with file-based locking
+		Description: Distributed locking services foundations with a local default implementation.
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries.Tasks
 	Piedone.HelpfulLibraries.Tasks.Locking.Database:
 		Name: Tasks Libraries: Database Locking - Helpful Libraries
 		Description: Distributed locking services with database-based locking
+		Category: Developer
+		Dependencies: Piedone.HelpfulLibraries.Tasks.Locking
+	Piedone.HelpfulLibraries.Tasks.Locking.File:
+		Name: Tasks Libraries: File Locking - Helpful Libraries
+		Description: Distributed locking services with Media file-based locking
 		Category: Developer
 		Dependencies: Piedone.HelpfulLibraries.Tasks.Locking
 	Piedone.HelpfulLibraries.Tasks.Jobs:

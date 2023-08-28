@@ -253,6 +253,8 @@
     <Compile Include="Libraries\Tasks\Locking\FileLock.cs" />
     <Compile Include="Libraries\Tasks\Locking\DistributedLockManager.cs" />
     <Compile Include="Libraries\Tasks\Locking\LockRecordCleaner.cs" />
+    <Compile Include="Libraries\Tasks\Locking\ObjectLock.cs" />
+    <Compile Include="Libraries\Tasks\Locking\ObjectLockHolder.cs" />
     <Compile Include="Libraries\Tasks\ScheduledTaskManagerExtensions.cs" />
     <Compile Include="Libraries\Tasks\WellKnownConstants.cs" />
     <Compile Include="Libraries\Authentication\AuthenticationServiceExtensions.cs" />
