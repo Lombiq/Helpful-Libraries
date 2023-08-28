@@ -26,6 +26,7 @@
   <ItemGroup>
     <PackageReference Include="OrchardCore.Alias" Version="1.6.0" />
     <PackageReference Include="OrchardCore.Autoroute" Version="1.6.0" />
+    <PackageReference Include="OrchardCore.Html" Version="1.6.0" />
     <PackageReference Include="OrchardCore.Markdown" Version="1.6.0" />
     <PackageReference Include="OrchardCore.Media.Core" Version="1.6.0" />
     <PackageReference Include="OrchardCore.Taxonomies" Version="1.6.0" />
@@ -42,6 +43,7 @@
     <!-- Necessary so tag helpers will work in the projects depending on this. -->
     <PackageReference Include="OrchardCore.DisplayManagement" Version="1.6.0" />
     <PackageReference Include="OrchardCore.ResourceManagement" Version="1.6.0" />
+    <PackageReference Include="OrchardCore.Workflows.Abstractions" Version="1.6.0" />
   </ItemGroup>
 
   <ItemGroup>
