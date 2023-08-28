@@ -124,7 +124,7 @@ public class PerTenantShapeTableManager : IShapeTableManager
             _logger.LogInformation("Done building shape table");
         }
 
-        _memoryCache.Set(shapeTableCacheKey, shapeTable, new MemoryCacheEntryOptions { Priority = CacheItemPriority.NeverRemove });
+        _memoryCache.Set(shapeTableCacheKey, shapeTable, new MemoryCacheEntryOptions { Priority = CacheItemPriority.Low });
 
         return shapeTable;
     }
