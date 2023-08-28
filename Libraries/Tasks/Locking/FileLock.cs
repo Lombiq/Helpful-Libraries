@@ -1,12 +1,12 @@
 ﻿using System;
 using System.IO;
 using Orchard.Environment.Extensions;
-using Orchard.FileSystems.Media;
 using Orchard.Exceptions;
+using Orchard.FileSystems.Media;
 
 namespace Piedone.HelpfulLibraries.Tasks.Locking
 {
-    [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Locking")]
+    [OrchardFeature("Piedone.HelpfulLibraries.Tasks.Locking.File")]
     public class FileLock : IDistributedLock
     {
         private readonly IStorageProvider _storageProvider;
