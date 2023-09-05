@@ -1,7 +1,9 @@
 ﻿using OrchardCore.ContentManagement;
 using OrchardCore.Workflows.Activities;
+using OrchardCore.Workflows.Models;
 using OrchardCore.Workflows.Services;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Workflow;
@@ -62,4 +64,26 @@ public static class WorkflowManagerExtensions
         string correlationId = null)
         where T : IEvent =>
         workflowManagers.TriggerEventAsync(typeof(T).Name, input, correlationId);
+
+    /// <summary>
+    /// Triggers the <see cref="IEvent"/> identified by <typeparamref name="T"/> and returns the resulting contexts.
+    /// </summary>
+    public static async Task<IList<WorkflowExecutionContext>> TriggerEventAndGetContextsAsync<T>(
+        this IWorkflowManager workflowManager,
+        IWorkflowTypeStore workflowTypeStore,
+        IDictionary<string, object> values)
+        where T : IEvent
+    {
+        var name = typeof(T).Name;
+        var workflowTypesToStart = await workflowTypeStore.GetByStartActivityAsync(name);
+
+        var contexts = new List<WorkflowExecutionContext>();
+        foreach (var workflowType in workflowTypesToStart)
+        {
+            var startActivity = workflowType.Activities.First(activity => activity.IsStart && activity.Name == name);
+            contexts.Add(await workflowManager.StartWorkflowAsync(workflowType, startActivity, values));
+        }
+
+        return contexts;
+    }
 }
