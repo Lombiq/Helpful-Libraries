@@ -54,7 +54,7 @@ public static class ManualConnectingIndexServiceExtensions
     /// <typeparam name="T">The index to operate on.</typeparam>
     public static Task RemoveByIndexAsync<T>(
         this IManualConnectingIndexService<T> service,
-        int documentId,
+        long documentId,
         ISession session)
         where T : MapIndex =>
         service.RemoveAsync("DocumentId", documentId, session);
