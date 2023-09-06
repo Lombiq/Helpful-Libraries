@@ -34,7 +34,7 @@ public interface IManualConnectingIndexService<in T>
     /// created just on call.
     /// </param>
     /// <param name="session">If not null, its connection and transaction is used instead of creating a new one.</param>
-    Task AddAsync(T item, ISession session, int? setDocumentId = null);
+    Task AddAsync(T item, ISession session, long? setDocumentId = null);
 
     /// <summary>
     /// Removes one or more existing indices using a standard SQL query where the given column has the given <paramref
