@@ -1,4 +1,5 @@
 ﻿using Lombiq.HelpfulLibraries.OrchardCore.Contents;
+using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Localization;
 using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Html;
@@ -15,9 +16,9 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Workflow;
 public abstract class SimpleEventActivityDisplayDriverBase<TActivity> : DisplayDriver<IActivity, TActivity>
     where TActivity : class, IActivity
 {
-    public virtual string IconClass { get; }
-    public virtual LocalizedHtmlString Title { get; }
-    public abstract LocalizedHtmlString Description { get; }
+    public virtual string IconClass => null;
+    public virtual LocalizedHtmlString Title => null;
+    public virtual IHtmlContent Description => null;
 
     private string IconHtml => string.IsNullOrEmpty(IconClass) ? string.Empty : $"<i class=\"fa {IconClass}\"></i>";
 
