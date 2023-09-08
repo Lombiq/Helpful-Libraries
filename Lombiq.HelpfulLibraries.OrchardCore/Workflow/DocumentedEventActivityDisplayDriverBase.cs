@@ -7,6 +7,7 @@ using OrchardCore.Workflows.Activities;
 using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -47,19 +48,27 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity> : SimpleEventAc
 
     private ValueTask NotifyAsync(LocalizedString title, IDictionary<string, string> content)
     {
-        var layoutBuilder = new StringBuilder("<strong>{0}</strong><dl>");
+        var layoutBuilder = new StringBuilder(
+            "{0}<table class=\"table\"><thead><tr><th scope=\"col\">{1}</th><th scope=\"col\">{2}</th></tr></thead><tbody>");
 
-        var arguments = new List<object>(capacity: 1 + (2 * content.Count)) { title.Value };
+        var arguments = new List<object>(capacity: 3 + (2 * content.Count))
+        {
+            title.Value,
+            T["Name"].Value,
+            T["Type"].Value,
+        };
 
         foreach (var (name, schema) in content)
         {
             var index = arguments.Count;
-            layoutBuilder.Append("<dt>{").Append(index).Append("}</dt><dd><code>{").Append(index + 1).Append("}</code></dd>");
+            layoutBuilder.Append(
+                CultureInfo.InvariantCulture,
+                $"<tr><td>{{{index}}}</td><td><code>{{{index + 1}}}</code></td></tr>");
             arguments.Add(name);
             arguments.Add(schema);
         }
 
-        var layout = layoutBuilder.Append("</dl>").ToString();
+        var layout = layoutBuilder.Append("</table>").ToString();
         return _notifier.InformationAsync(new LocalizedHtmlString(
             layout,
             layout,
