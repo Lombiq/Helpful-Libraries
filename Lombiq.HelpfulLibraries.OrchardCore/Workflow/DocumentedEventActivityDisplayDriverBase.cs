@@ -43,7 +43,7 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity> : SimpleEventAc
             await NotifyAsync(T["The expected outputs are:"], ExpectedOutputs);
         }
 
-        return null;
+        return null; // We don't display any shapes, just the notifications above.
     }
 
     private ValueTask NotifyAsync(LocalizedString title, IDictionary<string, string> content)
