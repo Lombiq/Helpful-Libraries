@@ -40,20 +40,6 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's display URL.
     /// </summary>
-    [Obsolete($"Use {nameof(GetItemDisplayUrl)} instead as this method does not need to be async.")]
-    public static Task<string> GetItemDisplayUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
-        Task.FromResult(orchardHelper.GetItemDisplayUrl(contentItem));
-
-    /// <summary>
-    /// Gets the given content item's display URL.
-    /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
-    public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
-        orchardHelper.GetItemDisplayUrl(contentItem?.ContentItemId);
-
-    /// <summary>
-    /// Gets the given content item's display URL.
-    /// </summary>
     [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
     public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, string contentItemId)
     {

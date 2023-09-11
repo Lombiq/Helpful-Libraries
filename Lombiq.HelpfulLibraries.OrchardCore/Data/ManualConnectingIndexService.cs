@@ -41,7 +41,7 @@ public class ManualConnectingIndexService<T> : IManualConnectingIndexService<T>
         _keys = string.Join(", ", _properties.Keys.Select(key => "@" + key));
     }
 
-    public Task AddAsync(T item, ISession session, int? setDocumentId = null) =>
+    public Task AddAsync(T item, ISession session, long? setDocumentId = null) =>
         RunTransactionAsync(session, async (connection, transaction, dialect, name) =>
         {
             _documentIdKey ??= dialect.QuoteForColumnName("DocumentId");
