@@ -34,7 +34,7 @@ public interface IManualConnectingIndexService<in T>
     /// created just on call.
     /// </param>
     /// <param name="session">If not null, its connection and transaction is used instead of creating a new one.</param>
-    Task AddAsync(T item, ISession session, int? setDocumentId = null);
+    Task AddAsync(T item, ISession session, long? setDocumentId = null);
 
     /// <summary>
     /// Removes one or more existing indices using a standard SQL query where the given column has the given <paramref
@@ -54,7 +54,7 @@ public static class ManualConnectingIndexServiceExtensions
     /// <typeparam name="T">The index to operate on.</typeparam>
     public static Task RemoveByIndexAsync<T>(
         this IManualConnectingIndexService<T> service,
-        int documentId,
+        long documentId,
         ISession session)
         where T : MapIndex =>
         service.RemoveAsync("DocumentId", documentId, session);
