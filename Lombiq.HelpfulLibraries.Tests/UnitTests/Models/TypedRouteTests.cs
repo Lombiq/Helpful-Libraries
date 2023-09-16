@@ -145,7 +145,7 @@ public class TypedRouteTests
         // cache keys. If that were the case, the second of the two usages would fail.
         void AddArgumentsTest(int addDays, string expect)
         {
-            var date = new DateTime(1997, 8, 29, 2, 14, 0).AddDays(addDays);
+            var date = new DateTime(1997, 8, 29, 2, 14, 0, DateTimeKind.Utc).AddDays(addDays);
 
             tests.Add(new object[]
             {
