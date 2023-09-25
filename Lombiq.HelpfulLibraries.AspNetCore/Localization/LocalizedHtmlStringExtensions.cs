@@ -42,7 +42,7 @@ public static class LocalizedHtmlStringExtensions
 
         var builder = new StringBuilder(first.Html());
         foreach (var content in other) builder.Append(content.Html());
-        var html = builder.ToString();
+        var html = builder.ToString().Replace("{", "{{").Replace("}", "}}");
 
         return new LocalizedHtmlString(html, html);
     }

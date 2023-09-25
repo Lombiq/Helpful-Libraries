@@ -41,7 +41,7 @@ public class ManualConnectingIndexService<T> : IManualConnectingIndexService<T>
         _keys = string.Join(", ", _properties.Keys.Select(key => "@" + key));
     }
 
-    public Task AddAsync(T item, ISession session, int? setDocumentId = null) =>
+    public Task AddAsync(T item, ISession session, long? setDocumentId = null) =>
         RunTransactionAsync(session, async (connection, transaction, dialect, name) =>
         {
             _documentIdKey ??= dialect.QuoteForColumnName("DocumentId");
@@ -84,7 +84,7 @@ public class ManualConnectingIndexService<T> : IManualConnectingIndexService<T>
             var dialect = session?.Store.Configuration.SqlDialect;
             var quotedTableName = dialect?.QuoteForTableName(
                 _tablePrefix + _type.Name,
-                session?.Store.Configuration.Schema);
+                session.Store.Configuration.Schema);
 
             var result = await request(transaction.Connection, transaction, dialect, quotedTableName);
             if (doCommit) await transaction.CommitAsync();
