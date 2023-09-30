@@ -102,15 +102,24 @@ public class PerTenantShapeTableManager : IShapeTableManager
             enabledAndOrderedFeatureIds.Add(_hostingEnvironment.ApplicationName);
         }
 
+        // Create a Dictionary for faster lookup operations.
+        var featureIdIndexLookup = enabledAndOrderedFeatureIds
+            .Select((id, index) => new { id, index })
+            .ToDictionary(item => item.id, item => item.index);
+
+        var concurrentShapeDescriptors = new ConcurrentDictionary<string, FeatureShapeDescriptor>(shapeDescriptors);
+
         var descriptors = shapeDescriptors
-            .Where(sd => enabledAndOrderedFeatureIds.Contains(sd.Value.Feature.Id))
-            .Where(sd => IsModuleOrRequestedTheme(sd.Value.Feature, themeId))
-            .OrderBy(sd => enabledAndOrderedFeatureIds.IndexOf(sd.Value.Feature.Id))
-            .GroupBy(sd => sd.Value.ShapeType, StringComparer.OrdinalIgnoreCase)
+            // Filtering using the dictionary for O(1) lookup instead of O(n) in a list.
+            .Where(shapeDescriptor => featureIdIndexLookup.ContainsKey(shapeDescriptor.Value.Feature.Id &&
+            IsModuleOrRequestedTheme(shapeDescriptor.Value.Feature, themeId))
+            // Using the dictionary for O(1) index retrieval instead of O(n) in a list.
+            .OrderBy(shapeDescriptor => featureIdIndexLookup[shapeDescriptor.Value.Feature.Id])
+            .GroupBy(shapeDescriptor => shapeDescriptor.Value.ShapeType, StringComparer.OrdinalIgnoreCase)
             .Select(group => new ShapeDescriptorIndex(
                 shapeType: group.Key,
                 alterationKeys: group.Select(kv => kv.Key),
-                descriptors: new ConcurrentDictionary<string, FeatureShapeDescriptor>(shapeDescriptors)
+                descriptors: concurrentShapeDescriptors
             ))
             .ToList();
 
