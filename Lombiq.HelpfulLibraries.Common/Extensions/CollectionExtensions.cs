@@ -42,6 +42,10 @@ public static class CollectionExtensions
     /// </summary>
     public static void SetItems<T>(this ICollection<T> collection, IEnumerable<T> newValues)
     {
+        // If the two variables point to the same object, nothing should be done. Otherwise this would clear the
+        // collection and then add nothing to it.
+        if (Equals(collection, newValues)) return;
+
         collection.Clear();
         collection.AddRange(newValues);
     }

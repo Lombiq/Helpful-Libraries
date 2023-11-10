@@ -5,6 +5,7 @@
 - `OrchardControllerExtensions`: Adds extension methods like `RedirectToContentDisplay(content)` to `Controller` objects.
 - `ResultExecutingContextExtensions`: contains shortcuts for common context operations in `IAsyncResultFilter`s.
 - `ShapeResultExtensions`: Adds extensions methods generating placement strings on your shape description, such as `UseTab()`.
+- `UpdateModelExtensions`: Adds extension methods for working with the `IUpdateModel` such as `GetModelErrors()`.
 - `UrlHelperExtensions`: Adds extension methods to the `@Url` helper, such as `EditContentItemWithTab()`.
 
 ## `TypedRoute`
