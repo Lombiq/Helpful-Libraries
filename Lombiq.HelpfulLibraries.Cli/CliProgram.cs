@@ -21,6 +21,12 @@ public class CliProgram
     /// <summary>
     /// Creates a <see cref="Command"/> object based on the passed <paramref name="arguments"/>.
     /// </summary>
+    public Command GetCommand(params object[] arguments) =>
+        GetCommand(arguments.ToList());
+
+    /// <summary>
+    /// Creates a <see cref="Command"/> object based on the passed <paramref name="arguments"/>.
+    /// </summary>
     public Command GetCommand(IEnumerable<object> arguments) =>
         CliWrap.Cli
             .Wrap(_command)
