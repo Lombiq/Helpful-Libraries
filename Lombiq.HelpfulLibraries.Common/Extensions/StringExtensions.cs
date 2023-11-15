@@ -130,14 +130,15 @@ public static class StringExtensions
         text.Replace(oldValue, newValue ?? string.Empty, StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
-    /// A shortcut for <c>string.Equals(string, StringComparison.Ordinal)</c>.
+    /// Use simple <see cref="string"/> equality check with <c>=</c> instead, since it already uses ordinal string
+    /// comparison.
     /// </summary>
     [Obsolete("The string equals operator already uses ordinal string comparison.")]
     public static bool EqualsOrdinal(this string text, string? value) =>
         throw new NotSupportedException();
 
     /// <summary>
-    /// A shortcut for <c>string.Contains(string, StringComparison.Ordinal)</c>.
+    /// Use <c>string.Contains(string)</c> instead, since it already uses ordinal string comparison..
     /// </summary>
     [Obsolete("The string.Contains(value) member method already uses ordinal string comparison.")]
     public static bool ContainsOrdinal(this string text, string value) =>
@@ -168,7 +169,7 @@ public static class StringExtensions
         text.EndsWith(value, StringComparison.Ordinal);
 
     /// <summary>
-    /// A shortcut for <c>string.Replace(string, string, StringComparison.Ordinal)</c>.
+    /// Use <c>string.Replace(string, string) instead, since it already uses ordinal string comparison.</c>.
     /// </summary>
     [Obsolete("The string.Replace(oldValue, newValue) member method already uses ordinal string comparison.")]
     public static string ReplaceOrdinal(this string text, string oldValue, string? newValue = "") =>
