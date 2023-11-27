@@ -1,3 +1,4 @@
+using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using OrchardCore.Autoroute.Models;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
@@ -66,4 +67,18 @@ public static class ContentTypeDefinitionBuilderExtensions
                     AllowUpdatePath = true,
                     ManageContainedItemRoutes = true,
                 }));
+
+    /// <summary>
+    /// Sets the type's <see cref="ContentTypeSettings.Stereotype"/> to <see cref="CommonStereotypes.Widget"/>.
+    /// accordingly.
+    /// </summary>
+    public static ContentTypeDefinitionBuilder AsWidget(this ContentTypeDefinitionBuilder builder) =>
+        builder.Stereotype(CommonStereotypes.Widget);
+
+    /// <summary>
+    /// Sets the type's <see cref="ContentTypeSettings.Stereotype"/> to <see cref="CommonStereotypes.CustomSettings"/>.
+    /// accordingly.
+    /// </summary>
+    public static ContentTypeDefinitionBuilder AsCustomSettings(this ContentTypeDefinitionBuilder builder) =>
+        builder.Stereotype(CommonStereotypes.CustomSettings);
 }

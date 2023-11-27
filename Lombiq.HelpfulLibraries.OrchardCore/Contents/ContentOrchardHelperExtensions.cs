@@ -87,11 +87,15 @@ public static class ContentOrchardHelperExtensions
         where TController : ControllerBase =>
         orchardHelper.HttpContext.Action(taskActionExpression.StripResult(), additionalArguments);
 
-    private static IUrlHelper GetUrlHelper(this IOrchardHelper orchardHelper)
+    /// <summary>
+    /// Constructs a new <see cref="IUrlHelper"/> instance using the current <see cref="IOrchardHelper.HttpContext"/>.
+    /// </summary>
+    public static IUrlHelper GetUrlHelper(this IOrchardHelper orchardHelper)
     {
         var serviceProvider = orchardHelper.HttpContext.RequestServices;
         var urlHelperFactory = serviceProvider.GetService<IUrlHelperFactory>();
-        var actionContext = serviceProvider.GetService<IActionContextAccessor>()?.ActionContext;
+        var actionContext = serviceProvider.GetService<IActionContextAccessor>()?.ActionContext ??
+            throw new InvalidOperationException("Couldn't access the action context.");
 
         return urlHelperFactory.GetUrlHelper(actionContext);
     }
