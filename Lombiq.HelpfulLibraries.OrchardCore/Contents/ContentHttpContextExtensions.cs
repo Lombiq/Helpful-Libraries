@@ -76,4 +76,19 @@ public static class ContentHttpContextExtensions
         params (string Key, object Value)[] additionalArguments)
         where TController : ControllerBase =>
         httpContext.Action(taskActionExpression.StripResult(), additionalArguments);
+
+    /// <summary>
+    /// Returns the <see cref="ContentItem.ContentItemId"/> route value that's used e.g. in content display pages.
+    /// </summary>
+    public static string GetContentItemIdRouteValue(this HttpContext httpContext) =>
+        httpContext?.Request.RouteValues.GetMaybe(nameof(ContentItem.ContentItemId))?.ToString();
+
+    public static bool IsAction(this HttpContext httpContext, string area, string controller, string action) =>
+        httpContext?.Request.RouteValues is { } routeValues &&
+        routeValues.GetMaybe(nameof(area))?.ToString() == area &&
+        routeValues.GetMaybe(nameof(controller))?.ToString() == controller &&
+        routeValues.GetMaybe(nameof(action))?.ToString() == action;
+
+    public static bool IsContentDisplay(this HttpContext httpContext) =>
+        httpContext.IsAction("OrchardCore.Contents", "Item", "Display");
 }
