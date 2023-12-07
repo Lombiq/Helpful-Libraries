@@ -21,6 +21,12 @@ public class CliProgram
     /// <summary>
     /// Creates a <see cref="Command"/> object based on the passed <paramref name="arguments"/>.
     /// </summary>
+    public Command GetCommand(params object[] arguments) =>
+        GetCommand(arguments.ToList());
+
+    /// <summary>
+    /// Creates a <see cref="Command"/> object based on the passed <paramref name="arguments"/>.
+    /// </summary>
     public Command GetCommand(IEnumerable<object> arguments) =>
         CliWrap.Cli
             .Wrap(_command)
@@ -69,6 +75,27 @@ public class CliProgram
     /// </param>
     public Task ExecuteAsync(CancellationToken token, params object[] arguments) =>
         ExecuteAsync(arguments, additionalExceptionText: null, token);
+
+    /// <summary>
+    /// Calls the command specified in the constructor with the provided arguments, and returns the standard output as a
+    /// string. If the process doesn't succeed or outputs to the standard error stream then an exception is thrown.
+    /// </summary>
+    /// <param name="token">Passed into the CliWrap <see cref="Command"/>.</param>
+    /// <param name="arguments">
+    /// The arguments passed to the command. If an item is not a <see langword="string"/>, then it's converted using the
+    /// <see cref="CultureInfo.InvariantCulture"/> formatter.
+    /// </param>
+    /// <returns>The standard output as a string.</returns>
+    /// <exception cref="InvalidOperationException">
+    /// <para>Thrown if the command fails or outputs to the error stream. The format is like this:</para>
+    /// <code>
+    /// The {command} {arguments} command failed with the output below.
+    /// {additional exception text}
+    /// {standard error output}
+    /// </code>
+    /// </exception>
+    public Task<string> ExecuteAndGetOutputAsync(CancellationToken token, params object[] arguments) =>
+        ExecuteAndGetOutputAsync(arguments, additionalExceptionText: null, token);
 
     /// <summary>
     /// Calls the command specified in the constructor with the provided arguments, and returns the standard output as a
