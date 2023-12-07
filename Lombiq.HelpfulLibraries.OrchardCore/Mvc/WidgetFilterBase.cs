@@ -93,7 +93,11 @@ public abstract class WidgetFilterBase<TViewModel> : IAsyncResultFilter
             return;
         }
 
-        await _layoutAccessor.AddShapeToZoneAsync(ZoneName, await _shapeFactory.CreateAsync(ViewName, viewModel));
+        await _layoutAccessor.AddShapeToZoneAsync(
+            ZoneName,
+            ViewName == null && viewModel is IShape shape
+                ? shape
+                : await _shapeFactory.CreateAsync(ViewName, viewModel));
 
         await next();
     }
