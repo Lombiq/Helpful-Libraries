@@ -40,14 +40,18 @@ public static class ResourceManifestExtensions
 
     /// <summary>
     /// Gets all resource dictionaries of a given <paramref name="resourceType"/> and collapses them into a lookup where
-    /// the key is the resource name and the values are the dependencies.
+    /// the key is the resource name and the values are the dependencies. Resource definitions with no dependencies are
+    /// skipped.
     /// </summary>
     public static ILookup<string, string> SingleResourceTypeToLookup(
         this IEnumerable<ResourceManifest> resourceManifest,
         string resourceType) =>
         resourceManifest
             .SelectMany(manifest => manifest.GetResources(resourceType))
-            .SelectMany(pair => pair.Value.SelectMany(definition =>
-                definition.Dependencies.Select(dependency => new { Resource = pair.Key, Dependency = dependency })))
+            .Where(pair => pair.Value != null)
+            .SelectMany(pair => pair.Value
+                .SelectWhere(definition => definition?.Dependencies, dependencies => dependencies?.Any() == true)
+                .SelectMany(dependencies => dependencies
+                    .Select(dependency => new { Resource = pair.Key, Dependency = dependency })))
             .ToLookup(pair => pair.Resource, pair => pair.Dependency);
 }
