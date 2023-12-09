@@ -81,7 +81,7 @@ public static class ContentHttpContextExtensions
     /// <summary>
     /// Returns the text of the MVC route value identified by <paramref name="name"/> (case-insensitive).
     /// </summary>
-    public static string GetRouteValue(this HttpContext httpContext, string name) =>
+    public static string GetRouteValueString(this HttpContext httpContext, string name) =>
         httpContext?.Request.RouteValues.GetMaybe(name)?.ToString();
 
     /// <summary>
@@ -105,8 +105,8 @@ public static class ContentHttpContextExtensions
     /// </summary>
     public static Task<ContentItem> GetContentItemAsnyc(this HttpContext httpContext)
     {
-        var id = httpContext.GetRouteValue(nameof(ContentItem.ContentItemId));
-        if (string.IsNullOrWhiteSpace(id)) id = httpContext.GetRouteValue("id");
+        var id = httpContext.GetRouteValueString(nameof(ContentItem.ContentItemId));
+        if (string.IsNullOrWhiteSpace(id)) id = httpContext.GetRouteValueString("id");
         if (string.IsNullOrWhiteSpace(id)) return Task.FromResult<ContentItem>(null);
 
         var contentManager = httpContext.RequestServices.GetRequiredService<IContentManager>();
