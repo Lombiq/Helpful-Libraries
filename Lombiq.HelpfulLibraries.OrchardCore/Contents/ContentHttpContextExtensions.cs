@@ -103,13 +103,13 @@ public static class ContentHttpContextExtensions
     /// <summary>
     /// Gets the content item from the database by the ID in the <c>contentItemId</c> or <c>id</c> route values.
     /// </summary>
-    public static Task<ContentItem> GetContentItemAsnyc(this HttpContext httpContext)
+    public static Task<ContentItem> GetContentItemAsync(this HttpContext httpContext, string jsonPath = null)
     {
         var id = httpContext.GetRouteValueString(nameof(ContentItem.ContentItemId));
         if (string.IsNullOrWhiteSpace(id)) id = httpContext.GetRouteValueString("id");
         if (string.IsNullOrWhiteSpace(id)) return Task.FromResult<ContentItem>(null);
 
         var contentManager = httpContext.RequestServices.GetRequiredService<IContentManager>();
-        return contentManager.GetAsync(id);
+        return contentManager.GetAsync(id, jsonPath);
     }
 }
