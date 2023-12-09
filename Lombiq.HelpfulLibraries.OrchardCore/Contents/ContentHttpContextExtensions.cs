@@ -1,5 +1,6 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using System;
 using System.Collections.Generic;
@@ -78,10 +79,10 @@ public static class ContentHttpContextExtensions
         httpContext.Action(taskActionExpression.StripResult(), additionalArguments);
 
     /// <summary>
-    /// Returns the <see cref="ContentItem.ContentItemId"/> route value that's used e.g. in content display pages.
+    /// Returns the text of the MVC route value identified by <paramref name="name"/> (case-insensitive).
     /// </summary>
-    public static string GetContentItemIdRouteValue(this HttpContext httpContext) =>
-        httpContext?.Request.RouteValues.GetMaybe(nameof(ContentItem.ContentItemId))?.ToString();
+    public static string GetRouteValue(this HttpContext httpContext, string name) =>
+        httpContext?.Request.RouteValues.GetMaybe(name)?.ToString();
 
     /// <summary>
     /// Returns a value indicating whether the current MVC route matches the provided <paramref name="area"/>, <paramref
@@ -98,4 +99,17 @@ public static class ContentHttpContextExtensions
     /// </summary>
     public static bool IsContentDisplay(this HttpContext httpContext) =>
         httpContext.IsAction("OrchardCore.Contents", "Item", "Display");
+
+    /// <summary>
+    /// Gets the content item from the database by the ID in the <c>contentItemId</c> or <c>id</c> route values.
+    /// </summary>
+    public static Task<ContentItem> GetContentItemAsnyc(this HttpContext httpContext)
+    {
+        var id = httpContext.GetRouteValue(nameof(ContentItem.ContentItemId));
+        if (string.IsNullOrWhiteSpace(id)) id = httpContext.GetRouteValue("id");
+        if (string.IsNullOrWhiteSpace(id)) return Task.FromResult<ContentItem>(null);
+
+        var contentManager = httpContext.RequestServices.GetRequiredService<IContentManager>();
+        return contentManager.GetAsync(id);
+    }
 }
