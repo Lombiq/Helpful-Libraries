@@ -83,12 +83,19 @@ public static class ContentHttpContextExtensions
     public static string GetContentItemIdRouteValue(this HttpContext httpContext) =>
         httpContext?.Request.RouteValues.GetMaybe(nameof(ContentItem.ContentItemId))?.ToString();
 
+    /// <summary>
+    /// Returns a value indicating whether the current MVC route matches the provided <paramref name="area"/>, <paramref
+    /// name="controller"/> and  <paramref name="action"/>.
+    /// </summary>
     public static bool IsAction(this HttpContext httpContext, string area, string controller, string action) =>
         httpContext?.Request.RouteValues is { } routeValues &&
         routeValues.GetMaybe(nameof(area))?.ToString() == area &&
         routeValues.GetMaybe(nameof(controller))?.ToString() == controller &&
         routeValues.GetMaybe(nameof(action))?.ToString() == action;
 
+    /// <summary>
+    /// Returns a value indicating whether the current page is a content item display action.
+    /// </summary>
     public static bool IsContentDisplay(this HttpContext httpContext) =>
         httpContext.IsAction("OrchardCore.Contents", "Item", "Display");
 }
