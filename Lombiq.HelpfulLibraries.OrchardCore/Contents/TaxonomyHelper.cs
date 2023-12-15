@@ -40,7 +40,7 @@ public class TaxonomyHelper : ITaxonomyHelper
         if (includeSelf) results.Add(contentItem);
 
         var partTerms = contentItem.As<TaxonomyPart>()?.Terms ?? Enumerable.Empty<ContentItem>();
-        var itemTerms = (contentItem.Content.Terms as JObject)?.ToObject<List<ContentItem>>() ?? Enumerable.Empty<ContentItem>();
+        var itemTerms = (contentItem.Content.Terms as JArray)?.ToObject<List<ContentItem>>() ?? Enumerable.Empty<ContentItem>();
         foreach (var child in partTerms.Concat(itemTerms))
         {
             results.AddRange(GetAllChildren(child, includeSelf: true));
