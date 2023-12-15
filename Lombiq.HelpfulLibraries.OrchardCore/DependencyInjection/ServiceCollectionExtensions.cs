@@ -24,5 +24,4 @@ public static class ServiceCollectionExtensions
     public static void AddAsyncResultFilter<TFilter>(this IServiceCollection services)
         where TFilter : IAsyncResultFilter =>
         services.Configure<MvcOptions>(options => options.Filters.Add(typeof(TFilter)));
-
 }
