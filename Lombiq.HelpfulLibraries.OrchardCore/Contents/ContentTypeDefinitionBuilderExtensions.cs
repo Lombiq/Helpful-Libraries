@@ -2,6 +2,7 @@ using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using OrchardCore.Autoroute.Models;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Title.Models;
+using System;
 
 namespace OrchardCore.ContentManagement.Metadata.Builders;
 
@@ -81,4 +82,11 @@ public static class ContentTypeDefinitionBuilderExtensions
     /// </summary>
     public static ContentTypeDefinitionBuilder AsCustomSettings(this ContentTypeDefinitionBuilder builder) =>
         builder.Stereotype(CommonStereotypes.CustomSettings);
+
+    /// <summary>
+    /// Sets the type's editor using an <see cref="Enum"/> parameter.
+    /// </summary>
+    public static ContentTypeDefinitionBuilder WithEditor(this ContentTypeDefinitionBuilder builder, Enum editor) =>
+        builder.MergeSettings<ContentTypePartSettings>(x => x.Editor = editor.ToString());
+
 }
