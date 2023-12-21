@@ -16,9 +16,7 @@ public static class ContentPartDefinitionBuilderExtensions
     /// <summary>
     /// Sets the editor for a ContentField using an <see cref="Enum"/> parameter.
     /// </summary>
-    public static ContentPartFieldDefinitionBuilder WithEditor(
-        this ContentPartFieldDefinitionBuilder builder,
-        Enum editor) =>
+    public static ContentPartFieldDefinitionBuilder WithEditor(this ContentPartFieldDefinitionBuilder builder, Enum editor) =>
         builder.MergeSettings<ContentPartFieldSettings>(x => x.Editor = editor.ToString());
 }
 
@@ -68,25 +66,4 @@ public class ContentPartDefinitionBuilder<TPart>
             });
         return this;
     }
-}
-
-public enum TextFieldEditors
-{
-    CodeMirror,
-    Color,
-    Email,
-    IconPicker,
-    Monaco,
-    PredefinedList,
-    Tel,
-    TextArea,
-    Url,
-}
-
-public enum HtmlFieldEditors
-{
-    Monaco,
-    Multiline,
-    Trumbowyg,
-    Wysiwyg,
 }
