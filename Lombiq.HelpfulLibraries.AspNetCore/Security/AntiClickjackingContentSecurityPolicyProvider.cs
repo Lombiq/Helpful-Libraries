@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Http;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
@@ -8,7 +9,7 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 
 public class AntiClickjackingContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
-    public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies)
+    public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
         securityPolicies[FrameAncestors] = Self;
 

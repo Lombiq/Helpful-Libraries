@@ -36,7 +36,7 @@ public static class ApplicationBuilderExtensions
 
             foreach (var provider in context.RequestServices.GetService<IEnumerable<IContentSecurityPolicyProvider>>())
             {
-                await provider.UpdateAsync(securityPolicies);
+                await provider.UpdateAsync(securityPolicies, context);
             }
 
             var policy = string.Join("; ", securityPolicies.Select((key, value) => $"{key} {value}"));
