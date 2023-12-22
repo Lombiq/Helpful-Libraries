@@ -20,10 +20,16 @@ public static class ApplicationBuilderExtensions
         {
             var securityPolicies = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
-                // Default value enforcing a same origin policy for all resources.
+                // Default values enforcing a same origin policy for all resources.
+                [BaseUri] = Self,
                 [DefaultSrc] = Self,
+                [FrameSrc] = Self,
+                [ScriptSrc] = Self,
+                [StyleSrc] = Self,
                 // Needed for SVG images using "data:image/svg+xml,..." data URLs.
                 [ImgSrc] = $"{Self} {Data}",
+                // Modern sites shouldn't need <object>, <embed>, and <applet> elements.
+                [ObjectSrc] = None,
             };
 
             // Orchard Core setup will fail without 'unsafe-inline'. Additionally, it's almost guaranteed that some page
