@@ -1,6 +1,4 @@
 using Lombiq.HelpfulLibraries.Common.DependencyInjection;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
 
