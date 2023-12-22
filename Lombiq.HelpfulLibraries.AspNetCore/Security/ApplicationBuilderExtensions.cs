@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
+using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
 
 namespace Microsoft.AspNetCore.Builder;
 
@@ -12,19 +13,25 @@ public static class ApplicationBuilderExtensions
     /// Adds a middleware that supplies <c>Content-Security-Policy</c> header. It may be further expanded by registering
     /// services that implement <see cref="IContentSecurityPolicyProvider"/>.
     /// </summary>
-    /// <param name="allowInline">If <see langword="true"/> inline scripts are permitted by including the </param>
-    public static IApplicationBuilder UseContentSecurityPolicyHeader(this IApplicationBuilder app, bool allowInline = true) =>
+    /// <param name="allowInline">If <see langword="true"/> then inline scripts and styles are permitted.</param>
+    public static IApplicationBuilder UseContentSecurityPolicyHeader(this IApplicationBuilder app, bool allowInline) =>
         app.Use(async (context, next) =>
         {
             var securityPolicies = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 // Default value enforcing a same origin policy for all resources.
-                [DefaultSrc] = CommonValues.Self,
+                [DefaultSrc] = Self,
                 // Needed for SVG images using "data:image/svg+xml,..." data URLs.
-                [ImgSrc] = $"{CommonValues.Self} {CommonValues.Data}",
+                [ImgSrc] = $"{Self} {Data}",
             };
 
-            if (allowInline) securityPolicies[ScriptSrc] = CommonValues.UnsafeInline;
+            // Orchard Core setup will fail without 'unsafe-inline'. Additionally, it's almost guaranteed that some page
+            // will contain non-precompiled Vue.js code from built-in OC features and that requires 'unsafe-eval'.
+            if (allowInline)
+            {
+                securityPolicies[ScriptSrc] = $"{Self} {UnsafeInline} {UnsafeEval}";
+                securityPolicies[StyleSrc] = $"{Self} {UnsafeInline}";
+            }
 
             foreach (var provider in context.RequestServices.GetService<IEnumerable<IContentSecurityPolicyProvider>>())
             {

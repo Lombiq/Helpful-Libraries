@@ -29,6 +29,7 @@ public static class ContentSecurityPolicyDirectives
         public const string Self = "'self'";
         public const string None = "'none'";
         public const string UnsafeInline = "'unsafe-inline'";
+        public const string UnsafeEval = "'unsafe-eval'";
 
         // These values represent allowed protocol schemes.
         public const string Https = "https:";
