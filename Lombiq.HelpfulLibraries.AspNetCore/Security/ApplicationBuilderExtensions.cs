@@ -8,13 +8,23 @@ namespace Microsoft.AspNetCore.Builder;
 
 public static class ApplicationBuilderExtensions
 {
-    public static IApplicationBuilder AddContentSecurityPolicyHeader(this IApplicationBuilder app) =>
+    /// <summary>
+    /// Adds a middleware that supplies <c>Content-Security-Policy</c> header. It may be further expanded by registering
+    /// services that implement <see cref="IContentSecurityPolicyProvider"/>.
+    /// </summary>
+    /// <param name="allowInline">If <see langword="true"/> inline scripts are permitted by including the </param>
+    public static IApplicationBuilder UseContentSecurityPolicyHeader(this IApplicationBuilder app, bool allowInline = true) =>
         app.Use(async (context, next) =>
         {
             var securityPolicies = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
+                // Default value enforcing a same origin policy for all resources.
                 [DefaultSrc] = CommonValues.Self,
+                // Needed for SVG images using "data:image/svg+xml,..." data URLs.
+                [ImgSrc] = $"{CommonValues.Self} {CommonValues.Data}",
             };
+
+            if (allowInline) securityPolicies[ScriptSrc] = CommonValues.UnsafeInline;
 
             foreach (var provider in context.RequestServices.GetService<IEnumerable<IContentSecurityPolicyProvider>>())
             {

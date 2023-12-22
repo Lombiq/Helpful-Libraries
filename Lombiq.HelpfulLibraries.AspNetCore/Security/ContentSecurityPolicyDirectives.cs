@@ -25,8 +25,13 @@ public static class ContentSecurityPolicyDirectives
 
     public class CommonValues
     {
+        // These values represent special words so they must be surrounded with apostrophes.
         public const string Self = "'self'";
         public const string None = "'none'";
-        public const string Https = "https:"; // This value intentionally doesn't contain apostrophes.
+        public const string UnsafeInline = "'unsafe-inline'";
+
+        // These values represent allowed protocol schemes.
+        public const string Https = "https:";
+        public const string Data = "data:";
     }
 }

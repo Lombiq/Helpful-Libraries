@@ -6,7 +6,7 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 
 /// <summary>
 /// A service for updating the dictionary that will be turned into the <c>Content-Security-Policy</c> header value by
-/// <see cref="ApplicationBuilderExtensions.AddContentSecurityPolicyHeader"/>.
+/// <see cref="ApplicationBuilderExtensions.UseContentSecurityPolicyHeader"/>.
 /// </summary>
 public interface IContentSecurityPolicyProvider
 {
