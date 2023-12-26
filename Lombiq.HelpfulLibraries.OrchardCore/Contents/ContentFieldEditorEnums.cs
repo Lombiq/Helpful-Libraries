@@ -25,6 +25,6 @@ public static class ContentFieldEditorEnums
 
     public enum TaxonomyFieldEditors
     {
-        Tags
+        Tags,
     }
 }
