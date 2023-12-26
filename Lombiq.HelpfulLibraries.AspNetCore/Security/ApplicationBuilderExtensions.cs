@@ -26,6 +26,7 @@ public static class ApplicationBuilderExtensions
                 [FrameSrc] = Self,
                 [ScriptSrc] = Self,
                 [StyleSrc] = Self,
+                [FormAction] = Self,
                 // Needed for SVG images using "data:image/svg+xml,..." data URLs.
                 [ImgSrc] = $"{Self} {Data}",
                 // Modern sites shouldn't need <object>, <embed>, and <applet> elements.
