@@ -1,5 +1,6 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using System;
 using System.Collections.Generic;
@@ -76,4 +77,39 @@ public static class ContentHttpContextExtensions
         params (string Key, object Value)[] additionalArguments)
         where TController : ControllerBase =>
         httpContext.Action(taskActionExpression.StripResult(), additionalArguments);
+
+    /// <summary>
+    /// Returns the text of the MVC route value identified by <paramref name="name"/> (case-insensitive).
+    /// </summary>
+    public static string GetRouteValueString(this HttpContext httpContext, string name) =>
+        httpContext?.Request.RouteValues.GetMaybe(name)?.ToString();
+
+    /// <summary>
+    /// Returns a value indicating whether the current MVC route matches the provided <paramref name="area"/>, <paramref
+    /// name="controller"/> and  <paramref name="action"/>.
+    /// </summary>
+    public static bool IsAction(this HttpContext httpContext, string area, string controller, string action) =>
+        httpContext?.Request.RouteValues is { } routeValues &&
+        routeValues.GetMaybe(nameof(area))?.ToString() == area &&
+        routeValues.GetMaybe(nameof(controller))?.ToString() == controller &&
+        routeValues.GetMaybe(nameof(action))?.ToString() == action;
+
+    /// <summary>
+    /// Returns a value indicating whether the current page is a content item display action.
+    /// </summary>
+    public static bool IsContentDisplay(this HttpContext httpContext) =>
+        httpContext.IsAction("OrchardCore.Contents", "Item", "Display");
+
+    /// <summary>
+    /// Gets the content item from the database by the ID in the <c>contentItemId</c> or <c>id</c> route values.
+    /// </summary>
+    public static Task<ContentItem> GetContentItemAsync(this HttpContext httpContext, string jsonPath = null)
+    {
+        var id = httpContext.GetRouteValueString(nameof(ContentItem.ContentItemId));
+        if (string.IsNullOrWhiteSpace(id)) id = httpContext.GetRouteValueString("id");
+        if (string.IsNullOrWhiteSpace(id)) return Task.FromResult<ContentItem>(null);
+
+        var contentManager = httpContext.RequestServices.GetRequiredService<IContentManager>();
+        return contentManager.GetAsync(id, jsonPath);
+    }
 }
