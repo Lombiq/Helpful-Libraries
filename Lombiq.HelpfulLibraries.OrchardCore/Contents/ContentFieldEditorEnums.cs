@@ -15,11 +15,16 @@ public static class ContentFieldEditorEnums
         Url,
     }
 
-    public enum HtmlEditors
+    public enum HtmlFieldEditors
     {
         Monaco,
         Multiline,
         Trumbowyg,
         Wysiwyg,
+    }
+
+    public enum TaxonomyFieldEditors
+    {
+        Tags
     }
 }
