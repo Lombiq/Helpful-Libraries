@@ -62,7 +62,11 @@ public abstract class WidgetFilterBase<TViewModel> : IAsyncResultFilter
     /// <summary>
     /// Returns the object used as the view-model and passed to the widget shape.
     /// </summary>
-    protected abstract Task<TViewModel> GetViewModelAsync();
+    protected virtual Task<TViewModel> GetViewModelAsync() =>
+        throw new NotSupportedException($"Please override either overloads of \"{nameof(GetViewModelAsync)}\"!");
+
+    protected virtual Task<TViewModel> GetViewModelAsync(ResultExecutingContext context) =>
+        GetViewModelAsync();
 
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
@@ -83,13 +87,17 @@ public abstract class WidgetFilterBase<TViewModel> : IAsyncResultFilter
         if ((AdminOnly && !isAdmin) ||
             (FrontEndOnly && isAdmin) ||
             (_requiredPermission != null && !await _authorizationService.AuthorizeAsync(user, _requiredPermission)) ||
-            await GetViewModelAsync() is not { } viewModel)
+            await GetViewModelAsync(context) is not { } viewModel)
         {
             await next();
             return;
         }
 
-        await _layoutAccessor.AddShapeToZoneAsync(ZoneName, await _shapeFactory.CreateAsync(ViewName, viewModel));
+        await _layoutAccessor.AddShapeToZoneAsync(
+            ZoneName,
+            ViewName == null && viewModel is IShape shape
+                ? shape
+                : await _shapeFactory.CreateAsync(ViewName, viewModel));
 
         await next();
     }
