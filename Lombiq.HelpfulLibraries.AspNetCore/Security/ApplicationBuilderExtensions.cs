@@ -51,4 +51,22 @@ public static class ApplicationBuilderExtensions
 
             await next();
         });
+
+    /// <summary>
+    /// Adds a middleware that sets the <c>X-Content-Type-Options</c> header to <c>nosniff</c>.
+    /// </summary>
+    /// <remarks><para>
+    /// The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of
+    /// Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response
+    /// body to be interpreted and displayed as a content type other than the declared content type. Current (early
+    /// 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing
+    /// MIME-sniffing.
+    /// </para></remarks>
+    public static IApplicationBuilder UseContentTypeOptionsHeader(this IApplicationBuilder app) =>
+        app.Use(async (context, next) =>
+        {
+            context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+
+            await next();
+        });
 }
