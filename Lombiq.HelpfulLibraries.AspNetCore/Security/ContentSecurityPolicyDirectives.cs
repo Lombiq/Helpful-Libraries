@@ -23,7 +23,7 @@ public static class ContentSecurityPolicyDirectives
     public const string ScriptSrc = "script-src";
     public const string StyleSrc = "style-src";
 
-    public class CommonValues
+    public static class CommonValues
     {
         // These values represent special words so they must be surrounded with apostrophes.
         public const string Self = "'self'";
