@@ -11,8 +11,8 @@ namespace Microsoft.AspNetCore.Builder;
 public static class ApplicationBuilderExtensions
 {
     /// <summary>
-    /// Adds a middleware that supplies <c>Content-Security-Policy</c> header. It may be further expanded by registering
-    /// services that implement <see cref="IContentSecurityPolicyProvider"/>.
+    /// Adds a middleware that supplies the <c>Content-Security-Policy</c> header. It may be further expanded by
+    /// registering services that implement <see cref="IContentSecurityPolicyProvider"/>.
     /// </summary>
     /// <param name="allowInline">If <see langword="true"/> then inline scripts and styles are permitted.</param>
     public static IApplicationBuilder UseContentSecurityPolicyHeader(this IApplicationBuilder app, bool allowInline) =>
