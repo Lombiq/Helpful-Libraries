@@ -21,7 +21,7 @@ public static class ContentFieldEditorEnums
     public enum MarkdownFieldEditors
     {
         TextArea,
-        Wysiwyg
+        Wysiwyg,
     }
 
     [Description("Editor options for TaxonomyFields.")]
