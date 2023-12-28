@@ -2,6 +2,25 @@
 
 public static class ContentFieldEditorEnums
 {
+    public enum HtmlFieldEditors
+    {
+        Monaco,
+        Multiline,
+        Trumbowyg,
+        Wysiwyg,
+    }
+
+    public enum MarkdownFieldEditors
+    {
+        TextArea,
+        Wysiwyg
+    }
+
+    public enum TaxonomyFieldEditors
+    {
+        Tags,
+    }
+
     public enum TextFieldEditors
     {
         CodeMirror,
@@ -13,18 +32,5 @@ public static class ContentFieldEditorEnums
         Tel,
         TextArea,
         Url,
-    }
-
-    public enum HtmlFieldEditors
-    {
-        Monaco,
-        Multiline,
-        Trumbowyg,
-        Wysiwyg,
-    }
-
-    public enum TaxonomyFieldEditors
-    {
-        Tags,
     }
 }
