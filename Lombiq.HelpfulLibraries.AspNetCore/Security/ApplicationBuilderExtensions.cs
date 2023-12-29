@@ -2,7 +2,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
-
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
 
@@ -31,6 +30,8 @@ public static class ApplicationBuilderExtensions
                 [ImgSrc] = $"{Self} {Data}",
                 // Modern sites shouldn't need <object>, <embed>, and <applet> elements.
                 [ObjectSrc] = None,
+                // Necessary to prevent clickjacking (https://developer.mozilla.org/en-US/docs/Glossary/Clickjacking).
+                [FrameAncestors] = Self,
             };
 
             // Orchard Core setup will fail without 'unsafe-inline'. Additionally, it's almost guaranteed that some page
@@ -41,6 +42,9 @@ public static class ApplicationBuilderExtensions
                 securityPolicies[StyleSrc] = $"{Self} {UnsafeInline}";
             }
 
+            // The thought behind this provider model is that if you need something else than the default, you should
+            // add a provider that only applies the additional directive on screens where it's actually needed. This way
+            // we  maintain minimal permissions. If you need additional
             foreach (var provider in context.RequestServices.GetService<IEnumerable<IContentSecurityPolicyProvider>>())
             {
                 await provider.UpdateAsync(securityPolicies, context);

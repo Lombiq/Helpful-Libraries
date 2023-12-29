@@ -23,11 +23,6 @@ public static class SecurityOrchardCoreBuilderExtensions
     /// <list type="bullet">
     ///     <item>
     ///         <description>
-    ///             Add <see cref="AntiClickjackingContentSecurityPolicyProvider"/> to prevent clickjacking.
-    ///         </description>
-    ///     </item>
-    ///     <item>
-    ///         <description>
     ///             Add <see cref="CdnContentSecurityPolicyProvider"/> to permit using script and style resources from
     ///             some common CDNs.
     ///         </description>
@@ -64,7 +59,6 @@ public static class SecurityOrchardCoreBuilderExtensions
     {
         builder.ApplicationServices.AddInlineStartup(
             services => services
-                .AddContentSecurityPolicyProvider<AntiClickjackingContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             app => app
