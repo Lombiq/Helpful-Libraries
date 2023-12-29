@@ -1,6 +1,10 @@
 using Lombiq.HelpfulLibraries.Common.DependencyInjection;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using OrchardCore.Modules;
+using System;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 
@@ -15,4 +19,26 @@ public static class ServiceCollectionExtensions
         services.AddLazyInjectionSupport();
         services.TryAddTransient(typeof(IOrchardServices<>), typeof(OrchardServices<>));
     }
+
+    /// <summary>
+    /// Creates a new <see cref="InlineStartup"/> instance using the provided parameters, and adds it to the service
+    /// collection.
+    /// </summary>
+    public static IServiceCollection AddInlineStartup(
+        this IServiceCollection services,
+        Action<IServiceCollection> configureServices,
+        Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider> configure,
+        int order = 0) =>
+        services.AddSingleton<IStartup>(new InlineStartup(configureServices, configure, order));
+
+    /// <summary>
+    /// Creates a new <see cref="InlineStartup"/> instance using the provided parameters, and adds it to the service
+    /// collection.
+    /// </summary>
+    public static IServiceCollection AddInlineStartup(
+        this IServiceCollection services,
+        Action<IServiceCollection> configureServices,
+        Action<IApplicationBuilder> configure,
+        int order = 0) =>
+        services.AddSingleton<IStartup>(new InlineStartup(configureServices, configure, order));
 }

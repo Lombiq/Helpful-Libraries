@@ -1,4 +1,5 @@
 ﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
+using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -37,11 +38,26 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///             don't leak error information.
     ///         </description>
     ///     </item>
+    ///     <item>
+    ///         <description>
+    ///            Adds a middleware that supplies the <c>Content-Security-Policy</c> header.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///             Adds a middleware that supplies the <c>X-Content-Type-Options: nosniff</c> header.
+    ///         </description>
+    ///     </item>
     /// </list>
     /// </remarks>
     public static OrchardCoreBuilder ConfigureSecurityDefaults(this OrchardCoreBuilder builder)
     {
-        builder.ApplicationServices.AddAntiClickjackingContentSecurityPolicyProvider();
+        builder.ApplicationServices.AddInlineStartup(
+            services => services.AddAntiClickjackingContentSecurityPolicyProvider(),
+            app => app
+                .UseContentSecurityPolicyHeader(allowInline: true)
+                .UseContentTypeOptionsHeader(),
+            order: 99);
         return builder
             .ConfigureAntiForgeryAlwaysSecure()
             .AddTenantFeatures("OrchardCore.Diagnostics");

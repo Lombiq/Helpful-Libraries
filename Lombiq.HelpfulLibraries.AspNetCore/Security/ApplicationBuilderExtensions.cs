@@ -65,7 +65,12 @@ public static class ApplicationBuilderExtensions
     public static IApplicationBuilder UseContentTypeOptionsHeader(this IApplicationBuilder app) =>
         app.Use(async (context, next) =>
         {
-            context.Response.Headers.Add("X-Content-Type-Options", "nosniff");
+            const string key = "X-Content-Type-Options";
+
+            if (!context.Response.Headers.ContainsKey(key))
+            {
+                context.Response.Headers.Add(key, "nosniff");
+            }
 
             await next();
         });
