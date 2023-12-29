@@ -11,8 +11,8 @@ namespace Microsoft.AspNetCore.Builder;
 public static class ApplicationBuilderExtensions
 {
     /// <summary>
-    /// Adds a middleware that supplies <c>Content-Security-Policy</c> header. It may be further expanded by registering
-    /// services that implement <see cref="IContentSecurityPolicyProvider"/>.
+    /// Adds a middleware that supplies the <c>Content-Security-Policy</c> header. It may be further expanded by
+    /// registering services that implement <see cref="IContentSecurityPolicyProvider"/>.
     /// </summary>
     /// <param name="allowInline">If <see langword="true"/> then inline scripts and styles are permitted.</param>
     public static IApplicationBuilder UseContentSecurityPolicyHeader(this IApplicationBuilder app, bool allowInline) =>
@@ -58,9 +58,9 @@ public static class ApplicationBuilderExtensions
     /// <remarks><para>
     /// The Anti-MIME-Sniffing header X-Content-Type-Options was not set to 'nosniff'. This allows older versions of
     /// Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response
-    /// body to be interpreted and displayed as a content type other than the declared content type. Current (early
-    /// 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than performing
-    /// MIME-sniffing.
+    /// body to be interpreted and displayed as a content type other than the declared content type. Current (younger
+    /// than early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than
+    /// performing MIME-sniffing.
     /// </para></remarks>
     public static IApplicationBuilder UseContentTypeOptionsHeader(this IApplicationBuilder app) =>
         app.Use(async (context, next) =>
