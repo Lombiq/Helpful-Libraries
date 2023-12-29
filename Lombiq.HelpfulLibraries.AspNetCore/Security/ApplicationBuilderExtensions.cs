@@ -62,7 +62,7 @@ public static class ApplicationBuilderExtensions
     /// than early 2014) and legacy versions of Firefox will use the declared content type (if one is set), rather than
     /// performing MIME-sniffing.
     /// </para></remarks>
-    public static IApplicationBuilder UseContentTypeOptionsHeader(this IApplicationBuilder app) =>
+    public static IApplicationBuilder UseNosniffContentTypeOptionsHeader(this IApplicationBuilder app) =>
         app.Use(async (context, next) =>
         {
             const string key = "X-Content-Type-Options";

@@ -56,7 +56,7 @@ public static class SecurityOrchardCoreBuilderExtensions
             services => services.AddAntiClickjackingContentSecurityPolicyProvider(),
             app => app
                 .UseContentSecurityPolicyHeader(allowInline: true)
-                .UseContentTypeOptionsHeader(),
+                .UseNosniffContentTypeOptionsHeader(),
             order: 99);
         return builder
             .ConfigureAntiForgeryAlwaysSecure()
