@@ -28,6 +28,12 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///     </item>
     ///     <item>
     ///         <description>
+    ///             Add <see cref="CdnContentSecurityPolicyProvider"/> to permit using script and style resources from
+    ///             some common CDNs.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
     ///             Make the session token's cookie always secure.
     ///         </description>
     ///     </item>
@@ -59,6 +65,7 @@ public static class SecurityOrchardCoreBuilderExtensions
         builder.ApplicationServices.AddInlineStartup(
             services => services
                 .AddContentSecurityPolicyProvider<AntiClickjackingContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             app => app
                 .UseContentSecurityPolicyHeader(allowInline: true)
