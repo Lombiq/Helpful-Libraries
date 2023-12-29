@@ -22,6 +22,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     public static ICollection<Uri> PermittedStyleSources { get; set; } = new[]
     {
         new Uri("https://fonts.googleapis.com/css"),
+        new Uri("https://fonts.gstatic.com/"),
         new Uri("https://cdn.jsdelivr.net/npm"),
     };
 
