@@ -18,8 +18,11 @@ public static class SecurityOrchardCoreBuilderExtensions
     /// Provides some default security configuration for Orchard Core. Use it in conjunction with <see
     /// cref="SecurityApplicationBuilderExtensions.UseSecurityDefaults"/>.
     /// </summary>
-    public static OrchardCoreBuilder ConfigureSecurityDefaults(this OrchardCoreBuilder builder) => builder
-        .ConfigureServices(services => services.AddAntiClickjackingContentSecurityPolicyProvider())
-        .ConfigureAntiForgeryAlwaysSecure()
-        .AddTenantFeatures("OrchardCore.Diagnostics");
+    public static OrchardCoreBuilder ConfigureSecurityDefaults(this OrchardCoreBuilder builder)
+    {
+        builder.ApplicationServices.AddAntiClickjackingContentSecurityPolicyProvider();
+        return builder
+            .ConfigureAntiForgeryAlwaysSecure()
+            .AddTenantFeatures("OrchardCore.Diagnostics");
+    }
 }
