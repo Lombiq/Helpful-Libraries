@@ -17,8 +17,7 @@ public static class SecurityOrchardCoreBuilderExtensions
             services.Configure<AntiforgeryOptions>(options => options.Cookie.SecurePolicy = CookieSecurePolicy.Always));
 
     /// <summary>
-    /// Provides some default security configuration for Orchard Core. Use it in conjunction with <see
-    /// cref="SecurityApplicationBuilderExtensions.UseSecurityDefaults"/>.
+    /// Provides some default security configuration for Orchard Core.
     /// </summary>
     /// <remarks>
     /// <list type="bullet">
