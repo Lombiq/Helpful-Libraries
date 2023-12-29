@@ -7,6 +7,10 @@ using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDi
 
 namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 
+/// <summary>
+/// A content security policy directive provider that sets the <see cref="FrameAncestors"/> directive to <see
+/// cref="Self"/>, to prevent <a href="https://developer.mozilla.org/en-US/docs/Glossary/Clickjacking">clickjacking</a>.
+/// </summary>
 public class AntiClickjackingContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)

@@ -28,7 +28,12 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///     </item>
     ///     <item>
     ///         <description>
-    ///             Call <see cref="ConfigureAntiForgeryAlwaysSecure"/> to make the anti-forgery token secure.
+    ///             Make the session token's cookie always secure.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///             Make the anti-forgery token's cookie always secure.
     ///         </description>
     ///     </item>
     ///     <item>
@@ -52,7 +57,9 @@ public static class SecurityOrchardCoreBuilderExtensions
     public static OrchardCoreBuilder ConfigureSecurityDefaults(this OrchardCoreBuilder builder)
     {
         builder.ApplicationServices.AddInlineStartup(
-            services => services.AddAntiClickjackingContentSecurityPolicyProvider(),
+            services => services
+                .AddContentSecurityPolicyProvider<AntiClickjackingContentSecurityPolicyProvider>()
+                .ConfigureSessionCookieAlwaysSecure(),
             app => app
                 .UseContentSecurityPolicyHeader(allowInline: true)
                 .UseNosniffContentTypeOptionsHeader(),

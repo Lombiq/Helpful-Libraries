@@ -15,12 +15,6 @@ public static class ServiceCollectionExtensions
         services.AddScoped<IContentSecurityPolicyProvider, TProvider>();
 
     /// <summary>
-    /// Registers <see cref="AntiClickjackingContentSecurityPolicyProvider"/>.
-    /// </summary>
-    public static IServiceCollection AddAntiClickjackingContentSecurityPolicyProvider(this IServiceCollection services) =>
-        services.AddContentSecurityPolicyProvider<AntiClickjackingContentSecurityPolicyProvider>();
-
-    /// <summary>
     /// Configures the session cookie to be always secure. With this configuration the token won't work in an HTTP
     /// environment so make sure that HTTPS redirection is enabled.
     /// </summary>
