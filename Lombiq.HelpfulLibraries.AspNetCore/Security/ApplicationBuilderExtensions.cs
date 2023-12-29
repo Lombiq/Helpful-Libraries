@@ -17,6 +17,14 @@ public static class ApplicationBuilderExtensions
     public static IApplicationBuilder UseContentSecurityPolicyHeader(this IApplicationBuilder app, bool allowInline) =>
         app.Use(async (context, next) =>
         {
+            const string key = "Content-Security-Policy";
+
+            if (context.Response.Headers.ContainsKey(key))
+            {
+                await next();
+                return;
+            }
+
             var securityPolicies = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 // Default values enforcing a same origin policy for all resources.
@@ -51,7 +59,7 @@ public static class ApplicationBuilderExtensions
             }
 
             var policy = string.Join("; ", securityPolicies.Select((key, value) => $"{key} {value}"));
-            context.Response.Headers.Add("Content-Security-Policy", policy);
+            context.Response.Headers.Add(key, policy);
 
             await next();
         });
