@@ -58,7 +58,10 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///     </item>
     /// </list>
     /// </remarks>
-    public static OrchardCoreBuilder ConfigureSecurityDefaults(this OrchardCoreBuilder builder)
+    public static OrchardCoreBuilder ConfigureSecurityDefaults(
+        this OrchardCoreBuilder builder,
+        bool allowInlineScript = true,
+        bool allowInlineStyle = false)
     {
         builder.ApplicationServices.AddInlineStartup(
             services => services
@@ -74,7 +77,7 @@ public static class SecurityOrchardCoreBuilderExtensions
                 if (shellSettings?.State == TenantState.Uninitialized) return;
 
                 app
-                    .UseContentSecurityPolicyHeader(allowInline: true)
+                    .UseContentSecurityPolicyHeader(allowInlineScript, allowInlineStyle)
                     .UseNosniffContentTypeOptionsHeader();
             },
             order: 99);

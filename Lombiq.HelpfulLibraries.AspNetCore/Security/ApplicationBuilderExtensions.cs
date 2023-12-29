@@ -13,8 +13,18 @@ public static class ApplicationBuilderExtensions
     /// Adds a middleware that supplies the <c>Content-Security-Policy</c> header. It may be further expanded by
     /// registering services that implement <see cref="IContentSecurityPolicyProvider"/>.
     /// </summary>
-    /// <param name="allowInline">If <see langword="true"/> then inline scripts and styles are permitted.</param>
-    public static IApplicationBuilder UseContentSecurityPolicyHeader(this IApplicationBuilder app, bool allowInline) =>
+    /// <param name="allowInlineScript">
+    /// If <see langword="true"/> then inline scripts are permitted. When using Orchard Core a lot of front end shapes
+    /// use inline script blocks making this a required setting.
+    /// </param>
+    /// <param name="allowInlineStyle">
+    /// If <see langword="true"/> then inline styles are permitted. Note that even if your site has no embedded style
+    /// blocks and no style attributes, some Javascript libraries may still create some from code.
+    /// </param>
+    public static IApplicationBuilder UseContentSecurityPolicyHeader(
+        this IApplicationBuilder app,
+        bool allowInlineScript,
+        bool allowInlineStyle) =>
         app.Use(async (context, next) =>
         {
             const string key = "Content-Security-Policy";
@@ -42,13 +52,8 @@ public static class ApplicationBuilderExtensions
                 [FrameAncestors] = Self,
             };
 
-            // Orchard Core setup will fail without 'unsafe-inline'. Additionally, it's almost guaranteed that some page
-            // will contain non-precompiled Vue.js code from built-in OC features and that requires 'unsafe-eval'.
-            if (allowInline)
-            {
-                securityPolicies[ScriptSrc] = $"{Self} {UnsafeInline} {UnsafeEval}";
-                securityPolicies[StyleSrc] = $"{Self} {UnsafeInline}";
-            }
+            if (allowInlineScript) securityPolicies[ScriptSrc] = $"{Self} {UnsafeInline}";
+            if (allowInlineStyle) securityPolicies[StyleSrc] = $"{Self} {UnsafeInline}";
 
             // The thought behind this provider model is that if you need something else than the default, you should
             // add a provider that only applies the additional directive on screens where it's actually needed. This way
