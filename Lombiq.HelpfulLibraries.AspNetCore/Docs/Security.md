@@ -8,4 +8,4 @@
 - `IContentSecurityPolicyProvider`: Interface for services that update the dictionary that will be turned into the `Content-Security-Policy` header value.
 - `ServiceCollectionExtensions`: Extensions methods for `IServiceCollection`, e.g. `AddContentSecurityPolicyProvider()` is a shortcut to register `IContentSecurityPolicyProvider` in dependency injection.
 
-There is a similar section for security extensions related to Orchard Core [here](../../Lombiq.HelpfulLibraries.OrchardCore/Docs/Security.md). 
+There is a similar section for security extensions related to Orchard Core [here](../../Lombiq.HelpfulLibraries.OrchardCore/Docs/Security.md).
