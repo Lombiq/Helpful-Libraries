@@ -3,6 +3,9 @@ using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using OrchardCore.Environment.Shell;
+using OrchardCore.Environment.Shell.Models;
+using System.Linq;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -61,9 +64,19 @@ public static class SecurityOrchardCoreBuilderExtensions
             services => services
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
-            app => app
-                .UseContentSecurityPolicyHeader(allowInline: true)
-                .UseNosniffContentTypeOptionsHeader(),
+            (app, _, serviceProvider) =>
+            {
+                // Don't add any middlewares if the site is in setup mode.
+                var shellSettings = serviceProvider
+                    .GetRequiredService<IShellHost>()
+                    .GetAllSettings()
+                    .FirstOrDefault(settings => settings.Name == "Default");
+                if (shellSettings?.State == TenantState.Uninitialized) return;
+
+                app
+                    .UseContentSecurityPolicyHeader(allowInline: true)
+                    .UseNosniffContentTypeOptionsHeader();
+            },
             order: 99);
         return builder
             .ConfigureAntiForgeryAlwaysSecure()
