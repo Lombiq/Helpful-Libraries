@@ -17,7 +17,7 @@ public static class ContentFieldEditorEnums
         Wysiwyg,
     }
 
-    [Description("Editor options for MarkdownFields. Wysiwyg editor can be used for MarkdownBodyParts aswell.")]
+    [Description("Editor options for MarkdownFields. Wysiwyg editor can be used for MarkdownBodyParts as well.")]
     public enum MarkdownFieldEditors
     {
         TextArea,
