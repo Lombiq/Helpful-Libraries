@@ -14,6 +14,8 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 /// </summary>
 public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
+    // These may be amended during program setup.
+#pragma warning disable CA2227 // CA2227: Change 'PermittedStyleSources' to be read-only by removing the property setter
     /// <summary>
     /// Gets or sets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="StyleSrc"/> directive.
     /// </summary>
@@ -30,6 +32,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     {
         new Uri("https://cdn.jsdelivr.net/npm"),
     };
+#pragma warning restore CA2227 // CA2227: Change 'PermittedStyleSources' to be read-only by removing the property setter
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
