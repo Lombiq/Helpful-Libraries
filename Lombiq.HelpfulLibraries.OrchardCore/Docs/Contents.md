@@ -10,6 +10,7 @@
 - `ContentDefinitionManagerExtensions`: Adds extension methods to easily fetch settings objects from `ContentTypePartDefinition` objects.
 - `ContentEnumerableExtensions`: Adds an extension for selecting parts in a collection of contents.
 - `ContentExtensions`: Adds `ContentItem` manipulating extension methods to `IContent` objects, including the same ones that are available for the `ContentItem` objects (e.g. `As<T>()` or `Weld<T>()`).
+- `ContentFieldEditorEnums`: Adds enums with the name of ContentField editors.
 - `ContentHttpContextExtensions`: Adds `IContent` session related extension methods to `HttpContext`.
 - `ContentOrchardHelperExtensions`: Extensions for managing content items better via `IOrchardHelper`.
 - `ContentManagerExtensions`: Adds extension methods for retrieving, loading or creating content using the `IContentManager` interface.
