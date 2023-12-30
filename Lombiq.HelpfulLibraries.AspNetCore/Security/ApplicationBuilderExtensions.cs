@@ -15,7 +15,8 @@ public static class ApplicationBuilderExtensions
     /// </summary>
     /// <param name="allowInlineScript">
     /// If <see langword="true"/> then inline scripts are permitted. When using Orchard Core a lot of front end shapes
-    /// use inline script blocks making this a required setting.
+    /// use inline script blocks without a nonce (see https://github.com/OrchardCMS/OrchardCore/issues/13389) making
+    /// this a required setting.
     /// </param>
     /// <param name="allowInlineStyle">
     /// If <see langword="true"/> then inline styles are permitted. Note that even if your site has no embedded style
