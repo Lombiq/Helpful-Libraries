@@ -56,6 +56,8 @@ public static class ApplicationBuilderExtensions
             if (allowInlineScript) securityPolicies[ScriptSrc] = $"{Self} {UnsafeInline}";
             if (allowInlineStyle) securityPolicies[StyleSrc] = $"{Self} {UnsafeInline}";
 
+            await next();
+
             // The thought behind this provider model is that if you need something else than the default, you should
             // add a provider that only applies the additional directive on screens where it's actually needed. This way
             // we  maintain minimal permissions. If you need additional
@@ -66,8 +68,6 @@ public static class ApplicationBuilderExtensions
 
             var policy = string.Join("; ", securityPolicies.Select((key, value) => $"{key} {value}"));
             context.Response.Headers.Add(key, policy);
-
-            await next();
         });
 
     /// <summary>
