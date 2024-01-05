@@ -2,6 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
 
@@ -22,10 +23,16 @@ public static class ApplicationBuilderExtensions
     /// If <see langword="true"/> then inline styles are permitted. Note that even if your site has no embedded style
     /// blocks and no style attributes, some Javascript libraries may still create some from code.
     /// </param>
+    /// <param name="isDeferred">
+    /// If <see langword="true"/> then the <see cref="IContentSecurityPolicyProvider"/> providers are evaluated on the
+    /// return end of the pipeline. This incurs some cost because the response body has to be cached, otherwise the
+    /// headers won't be editable by that point.
+    /// </param>
     public static IApplicationBuilder UseContentSecurityPolicyHeader(
         this IApplicationBuilder app,
         bool allowInlineScript,
-        bool allowInlineStyle) =>
+        bool allowInlineStyle,
+        bool isDeferred) =>
         app.Use(async (context, next) =>
         {
             const string key = "Content-Security-Policy";
@@ -56,18 +63,21 @@ public static class ApplicationBuilderExtensions
             if (allowInlineScript) securityPolicies[ScriptSrc] = $"{Self} {UnsafeInline}";
             if (allowInlineStyle) securityPolicies[StyleSrc] = $"{Self} {UnsafeInline}";
 
-            await next();
-
-            // The thought behind this provider model is that if you need something else than the default, you should
-            // add a provider that only applies the additional directive on screens where it's actually needed. This way
-            // we  maintain minimal permissions. If you need additional
-            foreach (var provider in context.RequestServices.GetService<IEnumerable<IContentSecurityPolicyProvider>>())
+            context.Response.OnStarting(async () =>
             {
-                await provider.UpdateAsync(securityPolicies, context);
-            }
+                // The thought behind this provider model is that if you need something else than the default, you should
+                // add a provider that only applies the additional directive on screens where it's actually needed. This way
+                // we  maintain minimal permissions. If you need additional
+                foreach (var provider in context.RequestServices.GetService<IEnumerable<IContentSecurityPolicyProvider>>())
+                {
+                    await provider.UpdateAsync(securityPolicies, context);
+                }
 
-            var policy = string.Join("; ", securityPolicies.Select((key, value) => $"{key} {value}"));
-            context.Response.Headers.Add(key, policy);
+                var policy = string.Join("; ", securityPolicies.Select((key, value) => $"{key} {value}"));
+                context.Response.Headers.Add(key, policy);
+            });
+
+            await next();
         });
 
     /// <summary>
