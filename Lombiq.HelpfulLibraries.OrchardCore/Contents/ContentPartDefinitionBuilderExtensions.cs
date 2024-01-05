@@ -12,6 +12,12 @@ public static class ContentPartDefinitionBuilderExtensions
     public static ContentPartDefinitionBuilder<TPart> AsPart<TPart>(this ContentPartDefinitionBuilder builder)
         where TPart : ContentPart =>
         new(builder);
+
+    /// <summary>
+    /// Sets the editor for a ContentField using an <see cref="Enum"/> parameter.
+    /// </summary>
+    public static ContentPartFieldDefinitionBuilder WithEditor(this ContentPartFieldDefinitionBuilder builder, Enum editor) =>
+        builder.MergeSettings<ContentPartFieldSettings>(x => x.Editor = editor.ToString());
 }
 
 public class ContentPartDefinitionBuilder<TPart>
