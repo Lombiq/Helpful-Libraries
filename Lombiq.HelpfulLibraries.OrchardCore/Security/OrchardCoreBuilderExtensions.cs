@@ -66,6 +66,7 @@ public static class SecurityOrchardCoreBuilderExtensions
         builder.ApplicationServices.AddInlineStartup(
             services => services
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<VueContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             (app, _, serviceProvider) =>
             {
