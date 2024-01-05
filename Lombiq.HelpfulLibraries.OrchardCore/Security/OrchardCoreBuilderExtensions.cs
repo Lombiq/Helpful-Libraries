@@ -78,7 +78,7 @@ public static class SecurityOrchardCoreBuilderExtensions
                 if (shellSettings?.State == TenantState.Uninitialized) return;
 
                 app
-                    .UseContentSecurityPolicyHeader(allowInlineScript, allowInlineStyle, false)
+                    .UseContentSecurityPolicyHeader(allowInlineScript, allowInlineStyle)
                     .UseNosniffContentTypeOptionsHeader();
             },
             order: 99);

@@ -23,16 +23,10 @@ public static class ApplicationBuilderExtensions
     /// If <see langword="true"/> then inline styles are permitted. Note that even if your site has no embedded style
     /// blocks and no style attributes, some Javascript libraries may still create some from code.
     /// </param>
-    /// <param name="isDeferred">
-    /// If <see langword="true"/> then the <see cref="IContentSecurityPolicyProvider"/> providers are evaluated on the
-    /// return end of the pipeline. This incurs some cost because the response body has to be cached, otherwise the
-    /// headers won't be editable by that point.
-    /// </param>
     public static IApplicationBuilder UseContentSecurityPolicyHeader(
         this IApplicationBuilder app,
         bool allowInlineScript,
-        bool allowInlineStyle,
-        bool isDeferred) =>
+        bool allowInlineStyle) =>
         app.Use(async (context, next) =>
         {
             const string key = "Content-Security-Policy";
