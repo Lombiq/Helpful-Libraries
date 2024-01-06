@@ -19,7 +19,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// <summary>
     /// Gets or sets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="StyleSrc"/> directive.
     /// </summary>
-    public static ICollection<Uri> PermittedStyleSources { get; set; } = new[]
+    public static IReadOnlyCollection<Uri> PermittedStyleSources { get; } = new[]
     {
         new Uri("https://fonts.googleapis.com/css"),
         new Uri("https://fonts.gstatic.com/"),
@@ -29,7 +29,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// <summary>
     /// Gets or sets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="ScriptSrc"/> directive.
     /// </summary>
-    public static ICollection<Uri> PermittedScriptSources { get; set; } = new[]
+    public static IReadOnlyCollection<Uri> PermittedScriptSources { get; } = new[]
     {
         new Uri("https://cdn.jsdelivr.net/npm"),
     };
