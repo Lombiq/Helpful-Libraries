@@ -61,7 +61,7 @@ public static class ApplicationBuilderExtensions
                 // The thought behind this provider model is that if you need something else than the default, you should
                 // add a provider that only applies the additional directive on screens where it's actually needed. This way
                 // we  maintain minimal permissions. If you need additional
-                foreach (var provider in context.RequestServices.GetService<IEnumerable<IContentSecurityPolicyProvider>>())
+                foreach (var provider in context.RequestServices.GetServices<IContentSecurityPolicyProvider>())
                 {
                     await provider.UpdateAsync(securityPolicies, context);
                 }
