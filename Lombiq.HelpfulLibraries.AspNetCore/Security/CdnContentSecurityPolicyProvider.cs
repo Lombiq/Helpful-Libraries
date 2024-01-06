@@ -17,7 +17,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     // These may be amended during program setup.
 #pragma warning disable CA2227 // CA2227: Change 'PermittedStyleSources' to be read-only by removing the property setter
     /// <summary>
-    /// Gets or sets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="StyleSrc"/> directive.
+    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="StyleSrc"/> directive.
     /// </summary>
     public static IReadOnlyCollection<Uri> PermittedStyleSources { get; } = new[]
     {
@@ -27,7 +27,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     };
 
     /// <summary>
-    /// Gets or sets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="ScriptSrc"/> directive.
+    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="ScriptSrc"/> directive.
     /// </summary>
     public static IReadOnlyCollection<Uri> PermittedScriptSources { get; } = new[]
     {
@@ -39,14 +39,20 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     {
         if (PermittedStyleSources.Any())
         {
-            securityPolicies[StyleSrc] = string.Join(' ', securityPolicies[StyleSrc].Split(' ').Union(PermittedStyleSources.Select(uri => uri.Host)).Distinct());
+            securityPolicies[StyleSrc] = MergeValues(securityPolicies[StyleSrc], PermittedStyleSources);
         }
 
         if (PermittedScriptSources.Any())
         {
-            securityPolicies[ScriptSrc] = string.Join(' ', securityPolicies[ScriptSrc].Split(' ').Union(PermittedScriptSources.Select(uri => uri.Host)).Distinct());
+            securityPolicies[ScriptSrc] = MergeValues(securityPolicies[ScriptSrc], PermittedScriptSources);
         }
 
         return ValueTask.CompletedTask;
     }
+
+    private static string MergeValues(string directiveValue, IEnumerable<Uri> sources) =>
+        string.Join(' ', directiveValue
+            .Split(' ')
+            .Union(sources.Select(uri => uri.Host))
+            .Distinct());
 }
