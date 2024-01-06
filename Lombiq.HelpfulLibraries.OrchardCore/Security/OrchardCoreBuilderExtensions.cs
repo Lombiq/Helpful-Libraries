@@ -74,7 +74,7 @@ public static class SecurityOrchardCoreBuilderExtensions
                 var shellSettings = serviceProvider
                     .GetRequiredService<IShellHost>()
                     .GetAllSettings()
-                    .FirstOrDefault(settings => settings.Name == "Default");
+                    .FirstOrDefault(settings => settings.Name == ShellSettings.DefaultShellName);
                 if (shellSettings?.State == TenantState.Uninitialized) return;
 
                 app
