@@ -39,12 +39,12 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     {
         if (PermittedStyleSources.Any())
         {
-            securityPolicies[StyleSrc] += " " + string.Join(' ', PermittedStyleSources.Select(uri => uri.Host));
+            securityPolicies[StyleSrc] = string.Join(' ', securityPolicies[StyleSrc].Split(' ').Union(PermittedStyleSources.Select(uri => uri.Host)).Distinct());
         }
 
         if (PermittedScriptSources.Any())
         {
-            securityPolicies[ScriptSrc] += " " + string.Join(' ', PermittedScriptSources.Select(uri => uri.Host));
+            securityPolicies[ScriptSrc] = string.Join(' ', securityPolicies[ScriptSrc].Split(' ').Union(PermittedScriptSources.Select(uri => uri.Host)).Distinct());
         }
 
         return ValueTask.CompletedTask;
