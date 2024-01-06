@@ -45,25 +45,29 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     {
         if (PermittedStyleSources.Any())
         {
-            securityPolicies[StyleSrc] = MergeValues(securityPolicies[StyleSrc], PermittedStyleSources);
+            MergeValues(securityPolicies, StyleSrc, PermittedStyleSources);
         }
 
         if (PermittedScriptSources.Any())
         {
-            securityPolicies[ScriptSrc] = MergeValues(securityPolicies[ScriptSrc], PermittedScriptSources);
+            MergeValues(securityPolicies, ScriptSrc, PermittedScriptSources);
         }
 
         if (PermittedFontSources.Any())
         {
-            securityPolicies[FontSrc] = MergeValues(securityPolicies[FontSrc], PermittedFontSources);
+            MergeValues(securityPolicies, FontSrc, PermittedFontSources);
         }
 
         return ValueTask.CompletedTask;
     }
 
-    private static string MergeValues(string directiveValue, IEnumerable<Uri> sources) =>
-        string.Join(' ', directiveValue
+    private static void MergeValues(IDictionary<string, string> policies, string key, IEnumerable<Uri> sources)
+    {
+        var directiveValue = policies.GetMaybe(key) ?? policies.GetMaybe(DefaultSrc) ?? string.Empty;
+
+        policies[key] = string.Join(' ', directiveValue
             .Split(' ')
             .Union(sources.Select(uri => uri.Host))
             .Distinct());
+    }
 }
