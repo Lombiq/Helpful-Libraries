@@ -81,7 +81,7 @@ public static class SecurityOrchardCoreBuilderExtensions
                     .UseContentSecurityPolicyHeader(allowInlineScript, allowInlineStyle)
                     .UseNosniffContentTypeOptionsHeader();
             },
-            order: 99);
+            order: 99); // Makes this service load fairly late. This should make the setup detection more accurate.
         return builder
             .ConfigureAntiForgeryAlwaysSecure()
             .AddTenantFeatures("OrchardCore.Diagnostics");
