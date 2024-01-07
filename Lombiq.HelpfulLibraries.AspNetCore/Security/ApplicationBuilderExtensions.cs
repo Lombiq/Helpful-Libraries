@@ -58,8 +58,8 @@ public static class ApplicationBuilderExtensions
 
             context.Response.OnStarting(async () =>
             {
-                // No need to do content security policy on the "Not Found" page or on non-HTML responses.
-                if (context.Response.StatusCode == 404 || !context.Response.ContentType?.ContainsOrdinalIgnoreCase("text/html") == true) return;
+                // No need to do content security policy on non-HTML responses.
+                if (!context.Response.ContentType?.ContainsOrdinalIgnoreCase("text/html") == true) return;
 
                 // The thought behind this provider model is that if you need something else than the default, you should
                 // add a provider that only applies the additional directive on screens where it's actually needed. This way
