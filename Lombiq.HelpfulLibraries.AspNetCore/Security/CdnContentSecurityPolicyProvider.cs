@@ -44,19 +44,30 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
+        var any = false;
+
         if (PermittedStyleSources.Any())
         {
+            any = true;
             MergeValues(securityPolicies, StyleSrc, PermittedStyleSources);
         }
 
         if (PermittedScriptSources.Any())
         {
+            any = true;
             MergeValues(securityPolicies, ScriptSrc, PermittedScriptSources);
         }
 
         if (PermittedFontSources.Any())
         {
+            any = true;
             MergeValues(securityPolicies, FontSrc, PermittedFontSources);
+        }
+
+        if (any)
+        {
+            var allPermittedSources = PermittedStyleSources.Concat(PermittedScriptSources).Concat(PermittedFontSources);
+            MergeValues(securityPolicies, ConnectSrc, allPermittedSources);
         }
 
         return ValueTask.CompletedTask;
