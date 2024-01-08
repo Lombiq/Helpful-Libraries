@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -17,29 +18,29 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// <summary>
     /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="StyleSrc"/> directive.
     /// </summary>
-    public static IReadOnlyCollection<Uri> PermittedStyleSources { get; } = new[]
+    public static ConcurrentBag<Uri> PermittedStyleSources { get; } = new(new[]
     {
         new Uri("https://fonts.googleapis.com/css"),
         new Uri("https://fonts.gstatic.com/"),
         new Uri("https://cdn.jsdelivr.net/npm"),
-    };
+    });
 
     /// <summary>
     /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="ScriptSrc"/> directive.
     /// </summary>
-    public static IReadOnlyCollection<Uri> PermittedScriptSources { get; } = new[]
+    public static ConcurrentBag<Uri> PermittedScriptSources { get; } = new(new[]
     {
         new Uri("https://cdn.jsdelivr.net/npm"),
-    };
+    });
 
     /// <summary>
     /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="FontSrc"/> directive.
     /// </summary>
-    public static IReadOnlyCollection<Uri> PermittedFontSources { get; } = new[]
+    public static ConcurrentBag<Uri> PermittedFontSources { get; } = new(new[]
     {
         new Uri("https://fonts.googleapis.com/"),
         new Uri("https://fonts.gstatic.com/"),
-    };
+    });
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
