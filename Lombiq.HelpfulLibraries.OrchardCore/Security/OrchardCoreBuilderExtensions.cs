@@ -79,7 +79,8 @@ public static class SecurityOrchardCoreBuilderExtensions
 
                 app
                     .UseContentSecurityPolicyHeader(allowInlineScript, allowInlineStyle)
-                    .UseNosniffContentTypeOptionsHeader();
+                    .UseNosniffContentTypeOptionsHeader()
+                    .UseStrictAndSecureCookies();
             },
             order: 99); // Makes this service load fairly late. This should make the setup detection more accurate.
         return builder
