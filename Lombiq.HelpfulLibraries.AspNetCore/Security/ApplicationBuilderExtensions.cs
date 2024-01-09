@@ -4,7 +4,6 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
@@ -73,7 +72,7 @@ public static class ApplicationBuilderExtensions
                     await provider.UpdateAsync(securityPolicies, context);
                 }
 
-                var policy = string.Join("; ", securityPolicies.Select((key, value) => $"{key} {value}"));
+                var policy = string.Join("; ", EnumerableExtensions.Select(securityPolicies, (key, value) => $"{key} {value}"));
                 context.Response.Headers.Add(key, policy);
             });
 
@@ -107,14 +106,24 @@ public static class ApplicationBuilderExtensions
     /// Adds a middleware that checks all <c>Set-Cookie</c> headers and replaces any with a version containing
     /// <c>Secure</c> and <c>SameSite=Strict</c> modifiers if they were missing.
     /// </summary>
-    public static IApplicationBuilder UseStrictAndSecureCookies(this IApplicationBuilder app) =>
-        app.Use((context, next) =>
+    public static IApplicationBuilder UseStrictAndSecureCookies(this IApplicationBuilder app)
+    {
+        static void UpdateIfMissing(ref string cookie, ref bool changed, string test, string append)
+        {
+            if (!cookie.ContainsOrdinalIgnoreCase(test))
+            {
+                cookie += append;
+                changed = true;
+            }
+        }
+
+        return app.Use((context, next) =>
         {
             const string setCookieHeader = "Set-Cookie";
             context.Response.OnStarting(() =>
             {
                 var setCookie = context.Response.Headers[setCookieHeader];
-                if (!Enumerable.Any()) return Task.CompletedTask;
+                if (!setCookie.Any()) return Task.CompletedTask;
 
                 var newCookies = new List<string>(capacity: setCookie.Count);
                 var changed = false;
@@ -123,17 +132,8 @@ public static class ApplicationBuilderExtensions
                 {
                     var newCookie = cookie;
 
-                    if (!newCookie.ContainsOrdinalIgnoreCase("SameSite"))
-                    {
-                        newCookie += "; SameSite=Strict";
-                        changed = true;
-                    }
-
-                    if (!cookie.ContainsOrdinalIgnoreCase("Secure"))
-                    {
-                        newCookie += "; Secure";
-                        changed = true;
-                    }
+                    UpdateIfMissing(ref newCookie, ref changed, "SameSite", "; SameSite=Strict");
+                    UpdateIfMissing(ref newCookie, ref changed, "Secure", "; Secure");
 
                     newCookies.Add(newCookie);
                 }
@@ -148,4 +148,5 @@ public static class ApplicationBuilderExtensions
 
             return next();
         });
+    }
 }
