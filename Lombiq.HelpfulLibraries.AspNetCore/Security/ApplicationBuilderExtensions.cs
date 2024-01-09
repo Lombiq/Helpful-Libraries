@@ -1,7 +1,10 @@
 ﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Net;
+using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
 
@@ -97,5 +100,52 @@ public static class ApplicationBuilderExtensions
             }
 
             await next();
+        });
+
+    /// <summary>
+    /// Adds a middleware that checks all <c>Set-Cookie</c> headers and replaces any with a version containing
+    /// <c>Secure</c> and <c>SameSite=Strict</c> modifiers if they were missing.
+    /// cref="Cookie.Secure"/> and <see cref="Cookie."/>
+    /// </summary>
+    public static IApplicationBuilder UseStrictAndSecureCookies(this IApplicationBuilder app) =>
+        app.Use((context, next) =>
+        {
+            const string setCookieHeader = "Set-Cookie";
+            context.Response.OnStarting(() =>
+            {
+                var setCookie = context.Response.Headers[setCookieHeader];
+                if (!setCookie.Any()) return Task.CompletedTask;
+
+                var newCookies = new List<string>(capacity: setCookie.Count);
+                var changed = false;
+
+                foreach (var cookie in setCookie.WhereNot(string.IsNullOrWhiteSpace))
+                {
+                    var newCookie = cookie;
+
+                    if (!newCookie.ContainsOrdinalIgnoreCase("SameSite"))
+                    {
+                        newCookie += "; SameSite=Strict";
+                        changed = true;
+                    }
+
+                    if (!cookie.ContainsOrdinalIgnoreCase("Secure"))
+                    {
+                        newCookie += "; Secure";
+                        changed = true;
+                    }
+
+                    newCookies.Add(newCookie);
+                }
+
+                if (changed)
+                {
+                    context.Response.Headers[setCookieHeader] = new StringValues(newCookies.ToArray());
+                }
+
+                return Task.CompletedTask;
+            });
+
+            return next();
         });
 }
