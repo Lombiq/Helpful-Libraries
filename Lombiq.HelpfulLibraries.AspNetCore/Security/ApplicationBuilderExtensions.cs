@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
@@ -105,7 +106,6 @@ public static class ApplicationBuilderExtensions
     /// <summary>
     /// Adds a middleware that checks all <c>Set-Cookie</c> headers and replaces any with a version containing
     /// <c>Secure</c> and <c>SameSite=Strict</c> modifiers if they were missing.
-    /// cref="Cookie.Secure"/> and <see cref="Cookie."/>
     /// </summary>
     public static IApplicationBuilder UseStrictAndSecureCookies(this IApplicationBuilder app) =>
         app.Use((context, next) =>
@@ -114,7 +114,7 @@ public static class ApplicationBuilderExtensions
             context.Response.OnStarting(() =>
             {
                 var setCookie = context.Response.Headers[setCookieHeader];
-                if (!setCookie.Any()) return Task.CompletedTask;
+                if (!Enumerable.Any()) return Task.CompletedTask;
 
                 var newCookies = new List<string>(capacity: setCookie.Count);
                 var changed = false;
