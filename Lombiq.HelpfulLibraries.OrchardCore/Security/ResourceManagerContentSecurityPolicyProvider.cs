@@ -21,7 +21,7 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
     protected abstract IReadOnlyCollection<string> DirectiveNameChain { get; }
     protected abstract string DirectiveValue { get; }
 
-    private string DirectiveName => DirectiveNameChain.First();
+    protected string DirectiveName => DirectiveNameChain.First();
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
