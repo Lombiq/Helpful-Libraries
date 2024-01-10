@@ -26,19 +26,26 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
         var resourceManager = context.RequestServices.GetRequiredService<IResourceManager>();
+        var resourceExists = resourceManager
+            .GetRequiredResources(ResourceType)
+            .Any(script => script.Resource.Name == ResourceName);
 
-        if (resourceManager.GetRequiredResources(ResourceType).Any(script => script.Resource.Name == ResourceName))
+        if (resourceExists)
         {
             securityPolicies[DirectiveName] = IContentSecurityPolicyProvider
                 .GetDirective(securityPolicies, DirectiveNameChain.ToArray())
                 .MergeWordSets(DirectiveValue);
-
-            return ThenUpdateAsync(securityPolicies, context);
         }
 
-        return ValueTask.CompletedTask;
+        return ThenUpdateAsync(securityPolicies, context, resourceExists);
     }
 
-    protected virtual ValueTask ThenUpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context) =>
+    /// <summary>
+    /// When overridden, this may be used for additional updates related to the resource in <see cref="ResourceName"/>.
+    /// </summary>
+    protected virtual ValueTask ThenUpdateAsync(
+        IDictionary<string, string> securityPolicies,
+        HttpContext context,
+        bool resourceExists) =>
         ValueTask.CompletedTask;
 }
