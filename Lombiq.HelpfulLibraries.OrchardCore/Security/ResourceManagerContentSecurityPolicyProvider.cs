@@ -32,8 +32,13 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
             securityPolicies[DirectiveName] = IContentSecurityPolicyProvider
                 .GetDirective(securityPolicies, DirectiveNameChain.ToArray())
                 .MergeWordSets(DirectiveValue);
+
+            return ThenUpdateAsync(securityPolicies, context);
         }
 
         return ValueTask.CompletedTask;
     }
+
+    protected ValueTask ThenUpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context) =>
+        ValueTask.CompletedTask;
 }
