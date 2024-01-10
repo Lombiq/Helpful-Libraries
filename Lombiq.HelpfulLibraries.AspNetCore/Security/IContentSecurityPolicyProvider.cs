@@ -19,8 +19,19 @@ public interface IContentSecurityPolicyProvider
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context);
 
     /// <summary>
-    /// Returns the directive called <paramref name="name"/> or <see cref="DefaultSrc"/> or an empty string.
+    /// Returns the first non-empty directive from the <paramref name="names"/> or <see cref="DefaultSrc"/> or an empty
+    /// string.
     /// </summary>
-    public static string GetDirective(IDictionary<string, string> securityPolicies, string name) =>
-        securityPolicies.GetMaybe(name) ?? securityPolicies.GetMaybe(DefaultSrc) ?? string.Empty;
+    public static string GetDirective(IDictionary<string, string> securityPolicies, params string[] names)
+    {
+        foreach (var name in names)
+        {
+            if (securityPolicies.TryGetValue(name, out var value) && !string.IsNullOrWhiteSpace(value))
+            {
+                return value;
+            }
+        }
+
+        return securityPolicies.GetMaybe(DefaultSrc) ?? string.Empty;
+    }
 }

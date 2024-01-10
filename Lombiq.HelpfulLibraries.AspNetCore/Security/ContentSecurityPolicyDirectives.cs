@@ -22,6 +22,7 @@ public static class ContentSecurityPolicyDirectives
     public const string Sandbox = "sandbox";
     public const string ScriptSrc = "script-src";
     public const string StyleSrc = "style-src";
+    public const string WorkerSrc = "worker-src";
 
     public static class CommonValues
     {
@@ -34,5 +35,6 @@ public static class ContentSecurityPolicyDirectives
         // These values represent allowed protocol schemes.
         public const string Https = "https:";
         public const string Data = "data:";
+        public const string Blob = "blob:";
     }
 }
