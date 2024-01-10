@@ -107,6 +107,10 @@ public static class ApplicationBuilderExtensions
     /// Adds a middleware that checks all <c>Set-Cookie</c> headers and replaces any with a version containing
     /// <c>Secure</c> and <c>SameSite=Strict</c> modifiers if they were missing.
     /// </summary>
+    /// <remarks><para>
+    /// With this all cookies will only work in a secure context, so you should have some way to automatically redirect
+    /// any HTTP request to HTTPS.
+    /// </para></remarks>
     public static IApplicationBuilder UseStrictAndSecureCookies(this IApplicationBuilder app)
     {
         static void UpdateIfMissing(ref string cookie, ref bool changed, string test, string append)
