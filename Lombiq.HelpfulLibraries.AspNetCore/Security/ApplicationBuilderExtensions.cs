@@ -70,7 +70,7 @@ public static class ApplicationBuilderExtensions
                 }
 
                 var policy = string.Join("; ", securityPolicies.Select((key, value) => $"{key} {value}"));
-                context.Response.Headers.Add(key, policy);
+                context.Response.Headers[key] = policy;
             });
 
             await next();
