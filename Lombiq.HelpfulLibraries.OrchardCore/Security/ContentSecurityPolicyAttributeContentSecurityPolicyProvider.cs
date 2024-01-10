@@ -53,12 +53,15 @@ public class ContentSecurityPolicyAttribute : Attribute
     }
 }
 
+/// <summary>
+/// Updates the content security policy based on <see cref="ContentSecurityPolicyAttribute"/> applied to the MVC action.
+/// </summary>
 public class ContentSecurityPolicyAttributeContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
-        if (context.RequestServices.GetService<IActionContextAccessor>() is { ActionContext: { } actionContext } &&
-            actionContext.ActionDescriptor is ControllerActionDescriptor actionDescriptor)
+        if (context.RequestServices.GetService<IActionContextAccessor>() is
+            { ActionContext.ActionDescriptor: ControllerActionDescriptor actionDescriptor })
         {
             foreach (var attribute in actionDescriptor.MethodInfo.GetCustomAttributes<ContentSecurityPolicyAttribute>())
             {
