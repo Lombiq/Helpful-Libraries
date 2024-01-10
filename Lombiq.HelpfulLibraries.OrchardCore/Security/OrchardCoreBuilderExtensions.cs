@@ -67,6 +67,7 @@ public static class SecurityOrchardCoreBuilderExtensions
             services => services
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<VueContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<ScriptUnsafeEvalAttributeContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             (app, _, serviceProvider) =>
             {

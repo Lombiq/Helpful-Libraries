@@ -397,4 +397,11 @@ public static class StringExtensions
         var end = index + separator.Length;
         return (text![..index], text[index..end], text[end..]);
     }
+
+    public static string MergeWordSets(this string words, params string[] otherWords) =>
+        string.Join(
+            separator: ' ',
+            $"{words} {string.Join(separator: ' ', otherWords)}"
+                .Split(' ', StringSplitOptions.RemoveEmptyEntries)
+                .Distinct());
 }

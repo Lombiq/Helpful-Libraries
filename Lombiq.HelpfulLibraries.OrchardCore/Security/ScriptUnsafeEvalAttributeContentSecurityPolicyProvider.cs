@@ -1,9 +1,11 @@
 ﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
-using OrchardCore.ResourceManagement;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
@@ -11,20 +13,21 @@ using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDi
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Enable the <see cref="UnsafeEval"/> value for the <see cref="ScriptSrc"/> directive. This is necessary to evaluate
-/// dynamic (not precompiled) templates. These are extensively used in stock Orchard Core. Also in many third party
-/// modules where the DOM HTML template may contain Razor generated content.
+/// Indicates that the action's view should have the <c>script-src: unsafe-eval</c> content security policy directive.
 /// </summary>
-public class VueContentSecurityPolicyProvider : IContentSecurityPolicyProvider
+[AttributeUsage(AttributeTargets.Method)]
+public class ScriptUnsafeEvalAttribute : Attribute
 {
-    private readonly IResourceManager _resourceManager;
+}
 
-    public VueContentSecurityPolicyProvider(IResourceManager resourceManager) =>
-        _resourceManager = resourceManager;
 
+public class ScriptUnsafeEvalAttributeContentSecurityPolicyProvider : IContentSecurityPolicyProvider
+{
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
-        if (_resourceManager.GetRequiredResources("script").Any(script => script.Resource.Name == "vuejs"))
+        if (context.RequestServices.GetService<IActionContextAccessor>() is { ActionContext: { } actionContext } &&
+            actionContext.ActionDescriptor is ControllerActionDescriptor actionDescriptor &&
+            actionDescriptor.MethodInfo.GetCustomAttributes<ScriptUnsafeEvalAttribute>().Any())
         {
             securityPolicies[ScriptSrc] = IContentSecurityPolicyProvider
                 .GetDirective(securityPolicies, ScriptSrc)
