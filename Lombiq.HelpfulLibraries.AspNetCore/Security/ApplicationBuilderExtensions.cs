@@ -4,6 +4,7 @@ using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mime;
 using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
@@ -62,7 +63,7 @@ public static class ApplicationBuilderExtensions
             context.Response.OnStarting(async () =>
             {
                 // No need to do content security policy on non-HTML responses.
-                if (context.Response.ContentType?.ContainsOrdinalIgnoreCase("text/html") != true) return;
+                if (context.Response.ContentType?.ContainsOrdinalIgnoreCase(MediaTypeNames.Text.Html) != true) return;
 
                 // The thought behind this provider model is that if you need something else than the default, you should
                 // add a provider that only applies the additional directive on screens where it's actually needed. This way
@@ -72,7 +73,7 @@ public static class ApplicationBuilderExtensions
                     await provider.UpdateAsync(securityPolicies, context);
                 }
 
-                var policy = string.Join("; ", EnumerableExtensions.Select(securityPolicies, (key, value) => $"{key} {value}"));
+                var policy = string.Join("; ", securityPolicies.Select(pair => $"{pair.Key} {pair.Value}"));
                 context.Response.Headers[key] = policy;
             });
 
