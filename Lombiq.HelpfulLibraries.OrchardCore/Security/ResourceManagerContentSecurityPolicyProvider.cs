@@ -39,6 +39,6 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
         return ValueTask.CompletedTask;
     }
 
-    protected ValueTask ThenUpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context) =>
+    protected virtual ValueTask ThenUpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context) =>
         ValueTask.CompletedTask;
 }
