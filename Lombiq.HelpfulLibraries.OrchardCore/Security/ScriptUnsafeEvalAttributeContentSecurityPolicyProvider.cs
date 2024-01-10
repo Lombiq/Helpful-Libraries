@@ -16,10 +16,9 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// Indicates that the action's view should have the <c>script-src: unsafe-eval</c> content security policy directive.
 /// </summary>
 [AttributeUsage(AttributeTargets.Method)]
-public class ScriptUnsafeEvalAttribute : Attribute
+public sealed class ScriptUnsafeEvalAttribute : Attribute
 {
 }
-
 
 public class ScriptUnsafeEvalAttributeContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
