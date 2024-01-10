@@ -1,4 +1,5 @@
-﻿using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
+﻿using System.Collections.Generic;
+using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,6 @@ public class VueContentSecurityPolicyProvider : ResourceManagerContentSecurityPo
 {
     protected override string ResourceType => "script";
     protected override string ResourceName => "vuejs";
-    protected override string[] DirectiveNameChain { get; } = { ScriptSrc };
+    protected override IReadOnlyCollection<string> DirectiveNameChain { get; } = new[] { ScriptSrc };
     protected override string DirectiveValue => UnsafeEval;
 }

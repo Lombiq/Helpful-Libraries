@@ -18,10 +18,10 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
 {
     protected abstract string ResourceType { get; }
     protected abstract string ResourceName { get; }
-    protected abstract string[] DirectiveNameChain { get; }
+    protected abstract IReadOnlyCollection<string> DirectiveNameChain { get; }
     protected abstract string DirectiveValue { get; }
 
-    private string DirectiveName => DirectiveNameChain[0];
+    private string DirectiveName => DirectiveNameChain.First();
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
@@ -30,7 +30,7 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
         if (resourceManager.GetRequiredResources(ResourceType).Any(script => script.Resource.Name == ResourceName))
         {
             securityPolicies[DirectiveName] = IContentSecurityPolicyProvider
-                .GetDirective(securityPolicies, DirectiveNameChain)
+                .GetDirective(securityPolicies, DirectiveNameChain.ToArray())
                 .MergeWordSets(DirectiveValue);
         }
 
