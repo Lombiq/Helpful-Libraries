@@ -84,6 +84,7 @@ public static class SecurityOrchardCoreBuilderExtensions
                     .UseStrictAndSecureCookies();
             },
             order: 99); // Makes this service load fairly late. This should make the setup detection more accurate.
+         
         return builder
             .ConfigureAntiForgeryAlwaysSecure()
             .AddTenantFeatures("OrchardCore.Diagnostics");
