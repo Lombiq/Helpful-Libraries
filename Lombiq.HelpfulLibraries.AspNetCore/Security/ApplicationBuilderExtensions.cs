@@ -89,7 +89,7 @@ public static class ApplicationBuilderExtensions
     /// Internet Explorer and Chrome to perform MIME-sniffing on the response body, potentially causing the response
     /// body to be interpreted  and displayed as a content type other than the declared content type. Current (early
     /// 2014) and legacy versions  of Firefox will use the declared content type (if one is set), rather than performing
-    /// MIME-sniffing." As written in <a href="https://www.zaproxy.org/docs/alerts/10021/">the documentation</a>.
+    /// MIME-sniffing." As written in <see href="https://www.zaproxy.org/docs/alerts/10021/">the documentation</see>.
     /// </para></remarks>
     public static IApplicationBuilder UseNosniffContentTypeOptionsHeader(this IApplicationBuilder app) =>
         app.Use(async (context, next) =>
