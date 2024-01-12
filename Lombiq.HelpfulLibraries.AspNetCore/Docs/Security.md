@@ -9,3 +9,5 @@
 - `ServiceCollectionExtensions`: Extensions methods for `IServiceCollection`, e.g. `AddContentSecurityPolicyProvider()` is a shortcut to register `IContentSecurityPolicyProvider` in dependency injection.
 
 There is a similar section for security extensions related to Orchard Core [here](../../Lombiq.HelpfulLibraries.OrchardCore/Docs/Security.md).
+
+These extensions provide additional security and can resolve issues reported by the [ZAP security scanner](https://github.com/Lombiq/UI-Testing-Toolbox/blob/dev/Lombiq.Tests.UI/Docs/SecurityScanning.md).
