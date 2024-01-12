@@ -403,6 +403,10 @@ public static class StringExtensions
     /// union of space separated word lists. For example it's used to build the values of individual directives in the
     /// <c>Content-Security-Policy</c> HTTP header.
     /// </summary>
+    /// <example>
+    /// Given the words "script-src 'self'" and otherWords containing "script-src example.com", the result would be
+    /// "script-src 'self' example.com".
+    /// </example>
     public static string MergeWordSets(this string words, params string[] otherWords) =>
         string.Join(
             separator: ' ',
