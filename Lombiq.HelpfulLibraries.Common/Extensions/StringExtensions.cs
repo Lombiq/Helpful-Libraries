@@ -398,6 +398,11 @@ public static class StringExtensions
         return (text![..index], text[index..end], text[end..]);
     }
 
+    /// <summary>
+    /// Combines all provided parameters into a single string and eliminates duplicates. This can be used to get the
+    /// union of space separated word lists. For example it's used to build the values of individual directives in the
+    /// <c>Content-Security-Policy</c> HTTP header.
+    /// </summary>
     public static string MergeWordSets(this string words, params string[] otherWords) =>
         string.Join(
             separator: ' ',
