@@ -3,6 +3,7 @@ using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.StaticFiles;
 using OrchardCore.Environment.Shell;
 using OrchardCore.Environment.Shell.Models;
 using System.Linq;
@@ -61,7 +62,26 @@ public static class SecurityOrchardCoreBuilderExtensions
     public static OrchardCoreBuilder ConfigureSecurityDefaults(
         this OrchardCoreBuilder builder,
         bool allowInlineScript = true,
-        bool allowInlineStyle = false)
+        bool allowInlineStyle = false) =>
+        builder.ConfigureSecurityDefaultsInner(allowInlineScript, allowInlineStyle, useStaticFiles: false);
+
+    /// <summary>
+    /// The same as <see cref="ConfigureSecurityDefaults"/>, but also registers the <see cref="StaticFileMiddleware"/>
+    /// at the end of the chain. It's important to not do this earlier (e.g. with <c>app.UseStaticFiles()</c> because
+    /// it short-circuits the call chain when delivering static files so later middlewares are not executed and so the
+    /// <c>X-Content-Type-Options: nosniff</c> header doesn't get applied to those files.
+    /// </summary>
+    public static OrchardCoreBuilder ConfigureSecurityDefaultsWithStaticFiles(
+        this OrchardCoreBuilder builder,
+        bool allowInlineScript = true,
+        bool allowInlineStyle = false) =>
+        builder.ConfigureSecurityDefaultsInner(allowInlineScript, allowInlineStyle, useStaticFiles: true);
+
+    private static OrchardCoreBuilder ConfigureSecurityDefaultsInner(
+        this OrchardCoreBuilder builder,
+        bool allowInlineScript,
+        bool allowInlineStyle,
+        bool useStaticFiles)
     {
         builder.ApplicationServices.AddInlineStartup(
             services => services
@@ -82,6 +102,8 @@ public static class SecurityOrchardCoreBuilderExtensions
                     .UseContentSecurityPolicyHeader(allowInlineScript, allowInlineStyle)
                     .UseNosniffContentTypeOptionsHeader()
                     .UseStrictAndSecureCookies();
+
+                if (useStaticFiles) app.UseStaticFiles();
             },
             order: 99); // Makes this service load fairly late. This should make the setup detection more accurate.
 
