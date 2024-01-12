@@ -65,9 +65,10 @@ public static class ApplicationBuilderExtensions
                 // No need to do content security policy on non-HTML responses.
                 if (context.Response.ContentType?.ContainsOrdinalIgnoreCase(MediaTypeNames.Text.Html) != true) return;
 
-                // The thought behind this provider model is that if you need something else than the default, you should
-                // add a provider that only applies the additional directive on screens where it's actually needed. This way
-                // we  maintain minimal permissions. If you need additional
+                // The thought behind this provider model is that if you need something else than the default, you
+                // should add a provider that only applies the additional directive on screens where it's actually
+                // needed. This way we maintain minimal permissions. Also if you need additional permissions for a
+                // specific action you can use the [ContentSecurityPolicyAttribute(value, name, parentName)] attribute.
                 foreach (var provider in context.RequestServices.GetServices<IContentSecurityPolicyProvider>())
                 {
                     await provider.UpdateAsync(securityPolicies, context);
