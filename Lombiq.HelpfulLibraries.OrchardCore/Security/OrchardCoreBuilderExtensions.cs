@@ -24,6 +24,7 @@ public static class SecurityOrchardCoreBuilderExtensions
     /// Provides some default security configuration for Orchard Core.
     /// </summary>
     /// <remarks>
+    /// <para>This extension method configures the application as listed below.</para>
     /// <list type="bullet">
     ///     <item>
     ///         <description>
@@ -58,6 +59,11 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///         </description>
     ///     </item>
     /// </list>
+    /// <para>
+    /// If you also need static file support, consider using <see cref="ConfigureSecurityDefaultsWithStaticFiles"/>
+    /// instead. Alternatively, make sure to put the <c>app.UseStaticFiles()</c> call at the very end of your app
+    /// configuration chain so it won't short-circuit prematurely and miss adding security headers to your static files.
+    /// </para>
     /// </remarks>
     public static OrchardCoreBuilder ConfigureSecurityDefaults(
         this OrchardCoreBuilder builder,
@@ -67,9 +73,9 @@ public static class SecurityOrchardCoreBuilderExtensions
 
     /// <summary>
     /// The same as <see cref="ConfigureSecurityDefaults"/>, but also registers the <see cref="StaticFileMiddleware"/>
-    /// at the end of the chain. It's important to not do this earlier (e.g. with <c>app.UseStaticFiles()</c> because
-    /// it short-circuits the call chain when delivering static files so later middlewares are not executed and so the
-    /// <c>X-Content-Type-Options: nosniff</c> header doesn't get applied to those files.
+    /// at the end of the chain, so <c>app.UseStaticFiles()</c> should not be called when this is used. This is helpful
+    /// because <see cref="StaticFileMiddleware"/> short-circuits the call chain when delivering static files, so later
+    /// middlewares are not executed (e.g. the <c>X-Content-Type-Options: nosniff</c> header wouldn't be added).
     /// </summary>
     public static OrchardCoreBuilder ConfigureSecurityDefaultsWithStaticFiles(
         this OrchardCoreBuilder builder,
