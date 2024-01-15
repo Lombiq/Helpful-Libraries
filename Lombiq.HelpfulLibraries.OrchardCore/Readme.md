@@ -20,6 +20,7 @@ For general details about and on using the Helpful Libraries see the [root Readm
 - [Mvc](Docs/Mvc.md)
 - [Navigation](Docs/Navigation.md)
 - [ResourceManagement](Docs/ResourceManagement.md)
+- [Security](Docs/Security.md)
 - [Settings](Docs/Settings.md)
 - [Shapes](Docs/Shapes.md)
 - [TagHelpers](Docs/TagHelpers.md)
