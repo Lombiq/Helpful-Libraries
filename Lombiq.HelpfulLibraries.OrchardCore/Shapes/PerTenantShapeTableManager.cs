@@ -84,7 +84,7 @@ public class PerTenantShapeTableManager : IShapeTableManager
             var strategyFeature = _typeFeatureProvider.GetFeatureForDependency(bindingStrategy.GetType());
 
             var builder = new ShapeTableBuilder(strategyFeature, excludedFeatures);
-            bindingStrategy.Discover(builder);
+            await bindingStrategy.DiscoverAsync(builder);
             var builtAlterations = builder.BuildAlterations();
 
             BuildDescriptors(bindingStrategy, builtAlterations, shapeDescriptors);

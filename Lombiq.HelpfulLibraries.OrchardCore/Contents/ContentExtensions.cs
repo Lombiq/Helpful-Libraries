@@ -118,7 +118,7 @@ public static class ContentExtensions
         {
             toRemove.Published = false;
             toRemove.Latest = false;
-            session.Save(toRemove);
+            await session.SaveAsync(toRemove);
         }
     }
 

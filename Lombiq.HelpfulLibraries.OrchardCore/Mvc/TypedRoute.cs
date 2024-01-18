@@ -7,6 +7,7 @@ using Microsoft.Extensions.Options;
 using Newtonsoft.Json;
 using OrchardCore.Admin;
 using OrchardCore.Environment.Extensions;
+using OrchardCore.Modules;
 using OrchardCore.Modules.Manifest;
 using OrchardCore.Mvc.Core.Utilities;
 using System;

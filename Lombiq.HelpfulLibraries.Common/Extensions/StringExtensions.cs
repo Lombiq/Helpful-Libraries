@@ -100,12 +100,6 @@ public static class StringExtensions
         text != null && toFind != null && text.Contains(toFind, StringComparison.InvariantCultureIgnoreCase);
 
     /// <summary>
-    /// A shortcut for <c>string.Equals(string, StringComparison.OrdinalIgnoreCase)</c>.
-    /// </summary>
-    public static bool EqualsOrdinalIgnoreCase(this string text, string? value) =>
-        text.Equals(value, StringComparison.OrdinalIgnoreCase);
-
-    /// <summary>
     /// A shortcut for <c>string.Contains(string, StringComparison.OrdinalIgnoreCase)</c>.
     /// </summary>
     public static bool ContainsOrdinalIgnoreCase(this string text, string value) =>
