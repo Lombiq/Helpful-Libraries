@@ -5,13 +5,12 @@ using System.Data.Common;
 
 namespace Lombiq.HelpfulLibraries.LinqToDb;
 
-public class LinqToDbConnection : DataConnection, ITableAccessor
+public class LinqToDbConnection(
+    IDataProvider dataProvider,
+    DbTransaction dbTransaction,
+    string tablePrefix) : DataConnection(dataProvider, dbTransaction), ITableAccessor
 {
-    private readonly string _tablePrefix;
-
-    public LinqToDbConnection(IDataProvider dataProvider, DbTransaction dbTransaction, string tablePrefix)
-        : base(dataProvider, dbTransaction) =>
-            _tablePrefix = tablePrefix;
+    private readonly string _tablePrefix = tablePrefix;
 
     /// <summary>
     /// For the current query, overrides <see cref="ITable{T}.TableName"/> of the table-like source
