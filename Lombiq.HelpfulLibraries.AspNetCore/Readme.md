@@ -14,3 +14,4 @@ Please see the inline documentation of each piece of the API to learn more.
 - [Localization](Docs/Localization.md)
 - [Middlewares](Docs/Middlewares.md)
 - [MVC](Docs/Mvc.md)
+- [Security](Docs/Security.md)
