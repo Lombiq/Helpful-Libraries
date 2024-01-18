@@ -130,7 +130,7 @@ public static class ApplicationBuilderExtensions
             context.Response.OnStarting(() =>
             {
                 var setCookie = context.Response.Headers[setCookieHeader];
-                if (!setCookie.Any()) return Task.CompletedTask;
+                if (setCookie.Count == 0) return Task.CompletedTask;
 
                 var newCookies = new List<string>(capacity: setCookie.Count);
                 var changed = false;
