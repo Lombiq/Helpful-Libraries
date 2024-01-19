@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Localization;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.Extensions.Localization;
 using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Notify;
@@ -6,7 +6,6 @@ using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Workflows.Activities;
 using System.Collections.Generic;
 using System.Collections.Immutable;
-using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -73,11 +72,10 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity> : SimpleEventAc
             layout,
             layout,
             isResourceNotFound: false,
-            arguments.ToArray()));
+            [.. arguments]));
     }
 }
 
-[SuppressMessage("Minor Code Smell", "S2094:Classes should not be empty", Justification = "Used for shared localization.")]
 public class DocumentedEventActivityDisplayDriver
 {
 }

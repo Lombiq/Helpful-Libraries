@@ -301,7 +301,7 @@ public static class EnumerableExtensions
     /// cref="Array.Empty{TResult}"/>.
     /// </summary>
     public static IEnumerable<T> EmptyIfNull<T>(this T[] array) =>
-        array ?? Array.Empty<T>();
+        array ?? [];
 
     /// <summary>
     /// Maps the provided collection of pairs using a selector with separate arguments.

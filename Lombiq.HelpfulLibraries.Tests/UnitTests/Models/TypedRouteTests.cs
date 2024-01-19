@@ -147,13 +147,13 @@ public class TypedRouteTests
         {
             var date = new DateTime(1997, 8, 29, 2, 14, 0, DateTimeKind.Utc).AddDays(addDays);
 
-            tests.Add(new object[]
-            {
+            tests.Add(
+            [
                 expect,
                 AsExpression(controller => controller.Arguments(9001, 2.71, date, "done")),
                 noMoreArguments,
                 noTenant,
-            });
+            ]);
         }
 
         AddArgumentsTest(

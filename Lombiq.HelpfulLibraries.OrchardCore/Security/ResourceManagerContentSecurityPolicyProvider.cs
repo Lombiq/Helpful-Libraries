@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
+using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
 using OrchardCore.ResourceManagement;
 using System;
@@ -33,7 +33,7 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
         if (resourceExists)
         {
             securityPolicies[DirectiveName] = IContentSecurityPolicyProvider
-                .GetDirective(securityPolicies, DirectiveNameChain.ToArray())
+                .GetDirective(securityPolicies, [.. DirectiveNameChain])
                 .MergeWordSets(DirectiveValue);
         }
 
