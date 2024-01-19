@@ -12,9 +12,7 @@ namespace Lombiq.HelpfulLibraries.LinqToDb;
 public static class LinqToDbQueryExecutor
 {
     // We have no control over where these fields are declared.
-#pragma warning disable CA1810 // Initialize reference type static fields inline
     static LinqToDbQueryExecutor()
-#pragma warning restore CA1810 // Initialize reference type static fields inline
     {
         // Generate aliases for final projection.
         Sql.GenerateFinalAliases = true;
