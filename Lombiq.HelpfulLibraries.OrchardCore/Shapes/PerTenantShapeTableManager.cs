@@ -26,11 +26,6 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Shapes;
         "Major Code Smell",
         "S107:Methods should not have too many parameters",
         Justification = "All of these are necessary for shape table management.")]
-/// <summary>
-/// An altered version of <see cref="DefaultShapeTableManager"/> where the shape table is cached per tenant and per
-/// theme instead of just per theme. Also the shape descriptor collection is cached per tenant instead of being a static
-/// dictionary.
-/// </summary>
 public class PerTenantShapeTableManager(
     IHostEnvironment hostingEnvironment,
     IEnumerable<IShapeTableProvider> bindingStrategies,

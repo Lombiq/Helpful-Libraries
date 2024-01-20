@@ -1,6 +1,5 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using YesSql.Sql;
@@ -37,7 +36,7 @@ public static class SchemaBuilderExtensions
     /// </exception>
     public static Task AddDatabaseIndexAsync<TTable>(this ISchemaBuilder schemaBuilder, params string[] columnNames)
     {
-        if (columnNames?.Any() != true)
+        if (columnNames?.Length != 0)
         {
             throw new ArgumentException("You must provide at least one column name.", nameof(columnNames));
         }

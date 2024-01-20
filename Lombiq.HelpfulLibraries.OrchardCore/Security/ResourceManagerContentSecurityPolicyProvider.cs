@@ -32,9 +32,12 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
 
         if (resourceExists)
         {
+#pragma warning disable S3878 // Arrays should not be created for params parameters
+            // False positive see: https://github.com/SonarSource/sonar-dotnet/issues/8510
             securityPolicies[DirectiveName] = IContentSecurityPolicyProvider
                 .GetDirective(securityPolicies, [.. DirectiveNameChain])
                 .MergeWordSets(DirectiveValue);
+#pragma warning restore S3878 // Arrays should not be created for params parameters
         }
 
         return ThenUpdateAsync(securityPolicies, context, resourceExists);
