@@ -17,6 +17,11 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Extensions;
 public class SafeJsonTests
 {
     private const string ExceptionText = "Intentional Exception";
+    // The JsonResult in ASP.NET Core uses camelCase outputs so we have to replicate that.
+    private static readonly JsonSerializerOptions JsonSerializerOptions = new()
+    {
+        PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
+    };
 
     [Fact]
     public async Task ExceptionShouldBeLogged()
@@ -107,11 +112,8 @@ public class SafeJsonTests
     {
         var result = await controller.SafeJsonAsync(factory);
 
-        // The JsonResult in ASP.NET Core uses camelCase outputs so we have to replicate that.
-        var serializeOptions = new JsonSerializerOptions { PropertyNamingPolicy = JsonNamingPolicy.CamelCase };
-
         return JsonSerializer.Deserialize<Dictionary<string, object>>(
-            JsonSerializer.Serialize(result.Value, serializeOptions))!
+            JsonSerializer.Serialize(result.Value, JsonSerializerOptions))!
             .ToDictionary(pair => pair.Key, pair => pair.Value.ToString());
     }
 
