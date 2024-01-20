@@ -22,11 +22,15 @@ public class TypedRouteTests
         (string Name, object Value)[] additional,
         string tenantName)
     {
+        var serviceProvider = CreateServiceProvider();
+
         var route = TypedRoute.CreateFromExpression(
             actionExpression,
             additional,
-            CreateServiceProvider());
+            serviceProvider);
         route.ToString(tenantName).ShouldBe(expected);
+
+        serviceProvider.Dispose();
     }
 
     [Fact]
@@ -34,14 +38,17 @@ public class TypedRouteTests
     {
         const string expected = "/CustomAdmin/Lombiq.HelpfulLibraries.Tests/RouteTest/Baz";
 
+        var serviceProvider = CreateServiceProvider(services => services
+                .Configure<AdminOptions>(options => options.AdminUrlPrefix = " /CustomAdmin /"));
+
         var route = TypedRoute.CreateFromExpression(
             AsExpression(controller => controller.Baz()),
-            serviceProvider: CreateServiceProvider(services => services
-                .Configure<AdminOptions>(options => options.AdminUrlPrefix = " /CustomAdmin /")));
+            serviceProvider: serviceProvider);
         route.ToString(tenantName: string.Empty).ShouldBe(expected);
+        serviceProvider.Dispose();
     }
 
-    private static IServiceProvider CreateServiceProvider(Action<ServiceCollection> configure = null)
+    private static ServiceProvider CreateServiceProvider(Action<ServiceCollection> configure = null)
     {
         var services = new ServiceCollection();
 

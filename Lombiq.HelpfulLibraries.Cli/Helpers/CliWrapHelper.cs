@@ -19,7 +19,7 @@ public static class CliWrapHelper
     /// <param name="name">The application name you can invoke directly in the command line.</param>
     public static async Task<IEnumerable<FileInfo>> WhichAsync(string name)
     {
-        var appName = RuntimeInformation.IsOSPlatform(OSPlatform.Windows) ? "where" : "which";
+        var appName = OperatingSystem.IsOSPlatform(nameof(OSPlatform.Windows)) ? "where" : "which";
         var result = await CliWrap.Cli.Wrap(appName)
             .WithArguments(name)
             .WithValidation(CommandResultValidation.None)
@@ -46,7 +46,7 @@ public static class CliWrapHelper
         Func<Command, Command> configureCommand = null)
     {
         var command = CliWrap.Cli.Wrap(program);
-        if (arguments?.Any() == true) command = command.WithArguments(arguments);
+        if (arguments?.Count != 0) command = command.WithArguments(arguments);
         if (configureCommand != null) command = configureCommand(command);
 
         await foreach (var commandEvent in command.ListenAsync()) handler(commandEvent);

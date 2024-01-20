@@ -71,8 +71,8 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
             {
                 var schemaBuilder = new SchemaBuilder(_configuration, transaction);
 
-                if (transaction.Connection.Query<string>(
-                        $"SELECT name FROM sqlite_master WHERE type='table' AND name='{nameof(TestDocumentIndex)}';")
+                if ((await transaction.Connection.QueryAsync<string>(
+                        $"SELECT name FROM sqlite_master WHERE type='table' AND name='{nameof(TestDocumentIndex)}';"))
                     .FirstOrDefault() != null)
                 {
                     await schemaBuilder.DropTableAsync(nameof(TestDocumentIndex));

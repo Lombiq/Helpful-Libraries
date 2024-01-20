@@ -10,6 +10,8 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Mvc;
 
 public class JsonModelBinder(ILogger<JsonModelBinder> logger, IObjectModelValidator validator) : IModelBinder
 {
+    private static readonly JsonSerializerOptions SerializeOptions = new(JsonSerializerDefaults.Web);
+
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
         var value = bindingContext.ValueProvider.GetValue(bindingContext.FieldName).FirstValue;
@@ -19,7 +21,7 @@ public class JsonModelBinder(ILogger<JsonModelBinder> logger, IObjectModelValida
             var parsed = value is null ? null : JsonSerializer.Deserialize(
                 value,
                 bindingContext.ModelType,
-                new JsonSerializerOptions(JsonSerializerDefaults.Web));
+                SerializeOptions);
 
             if (parsed is null)
             {
