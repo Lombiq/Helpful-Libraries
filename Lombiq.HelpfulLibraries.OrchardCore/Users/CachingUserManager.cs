@@ -10,32 +10,21 @@ using YesSql;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Users;
 
-public class CachingUserManager : ICachingUserManager
+public class CachingUserManager(
+    Lazy<UserManager<IUser>> userManagerLazy,
+    Lazy<ISession> sessionLazy) : ICachingUserManager
 {
-    private readonly Dictionary<string, User> _userByNameCache = new();
-    private readonly Dictionary<string, User> _userByEmailCache = new();
-    private readonly Dictionary<string, User> _userByIdCache = new();
-    private readonly Dictionary<string, User> _userByUserIdCache = new();
-
-    private readonly Lazy<UserManager<IUser>> _userManagerLazy;
-    private readonly Lazy<ISession> _sessionLazy;
-
-    // Injecting UserManager<IUser> lazily to avoid StackOverflowException when injecting ICachingUserManager to
-    // ContentHandlers.
-    public CachingUserManager(
-        Lazy<UserManager<IUser>> userManagerLazy,
-        Lazy<ISession> sessionLazy)
-    {
-        _userManagerLazy = userManagerLazy;
-        _sessionLazy = sessionLazy;
-    }
+    private readonly Dictionary<string, User> _userByNameCache = [];
+    private readonly Dictionary<string, User> _userByEmailCache = [];
+    private readonly Dictionary<string, User> _userByIdCache = [];
+    private readonly Dictionary<string, User> _userByUserIdCache = [];
 
     public Task<User> GetUserByIdAsync(string id, bool forceUpdate = false) =>
         GetUserAsync(
             forceUpdate,
             id,
             () => int.TryParse(id, NumberStyles.Integer, CultureInfo.InvariantCulture, out var documentId)
-                ? _sessionLazy.Value.GetAsync<User>(documentId)
+                ? sessionLazy.Value.GetAsync<User>(documentId)
                 : Task.FromResult<User>(null),
             _userByIdCache);
 
@@ -43,21 +32,21 @@ public class CachingUserManager : ICachingUserManager
         GetUserAsync(
             forceUpdate,
             userId,
-            async () => await _userManagerLazy.Value.FindByIdAsync(userId) as User,
+            async () => await userManagerLazy.Value.FindByIdAsync(userId) as User,
             _userByUserIdCache);
 
     public Task<User> GetUserByNameAsync(string username, bool forceUpdate = false) =>
         GetUserAsync(
             forceUpdate,
             username,
-            async () => await _userManagerLazy.Value.FindByNameAsync(username) as User,
+            async () => await userManagerLazy.Value.FindByNameAsync(username) as User,
             _userByNameCache);
 
     public Task<User> GetUserByEmailAsync(string email, bool forceUpdate = false) =>
         GetUserAsync(
             forceUpdate,
             email,
-            async () => await _userManagerLazy.Value.FindByEmailAsync(email) as User,
+            async () => await userManagerLazy.Value.FindByEmailAsync(email) as User,
             _userByEmailCache);
 
     public async Task<User> GetUserByClaimsPrincipalAsync(ClaimsPrincipal claimsPrincipal, bool forceUpdate = false) =>
@@ -65,7 +54,7 @@ public class CachingUserManager : ICachingUserManager
             ? await GetUserAsync(
                 forceUpdate,
                 claimsPrincipal.Identity.Name,
-                async () => await _userManagerLazy.Value.GetUserAsync(claimsPrincipal) as User,
+                async () => await userManagerLazy.Value.GetUserAsync(claimsPrincipal) as User,
                 _userByNameCache)
             : null;
 

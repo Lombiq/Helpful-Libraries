@@ -14,14 +14,11 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Fields;
 /// This provider creates a "None" editor and display type for every field which can be used to hide the field from
 /// being editable or displayable respectively.
 /// </summary>
-public class NoneShapeTableProvider : IShapeTableProvider
+public class NoneShapeTableProvider(IContentDefinitionManager contentDefinitionManager) : IShapeTableProvider
 {
     public const string None = nameof(None);
 
-    private readonly IContentDefinitionManager _contentDefinitionManager;
-
-    public NoneShapeTableProvider(IContentDefinitionManager contentDefinitionManager) =>
-        _contentDefinitionManager = contentDefinitionManager;
+    private readonly IContentDefinitionManager _contentDefinitionManager = contentDefinitionManager;
 
     public void Discover(ShapeTableBuilder builder)
     {

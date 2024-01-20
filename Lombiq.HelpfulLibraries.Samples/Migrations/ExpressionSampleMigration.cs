@@ -15,15 +15,10 @@ namespace Lombiq.HelpfulLibraries.Samples.Migrations;
 
 // Here we demonstrate a more tightly coupled way of declaring parts and fields. We won't do anything with the part and
 // index so they can be a local classes. This way it's easier to see the whole thing in context too.
-public class ExpressionSampleMigration : DataMigration
+public class ExpressionSampleMigration(IContentDefinitionManager contentDefinitionManager) : DataMigration
 {
     // The content type
     private const string ExpressionContent = nameof(ExpressionContent);
-
-    private readonly IContentDefinitionManager _contentDefinitionManager;
-
-    public ExpressionSampleMigration(IContentDefinitionManager contentDefinitionManager)
-        => _contentDefinitionManager = contentDefinitionManager;
 
     [SuppressMessage(
         "StyleCop.CSharp.ReadabilityRules",
@@ -31,7 +26,7 @@ public class ExpressionSampleMigration : DataMigration
         Justification = "Needed for commenting first arguments.")]
     public async Task<int> CreateAsync()
     {
-        await _contentDefinitionManager.AlterTypeDefinitionAsync(ExpressionContent, async type => type
+        await contentDefinitionManager.AlterTypeDefinitionAsync(ExpressionContent, async type => type
             // The point of using SetAbilities instead of individual extensions is that this way you can be explicit
             // about whether you want to refuse some feature or you don't care. This improves maintainability.
             .SetAbilities(
@@ -41,7 +36,7 @@ public class ExpressionSampleMigration : DataMigration
             .WithPart(
                 // The new generic AlterPartDefinition overload returns the type name, so you can create a part
                 // definition "in-line".
-                await _contentDefinitionManager.AlterPartDefinitionAsync<ExpressionPart>(partBuilder => partBuilder
+                await contentDefinitionManager.AlterPartDefinitionAsync<ExpressionPart>(partBuilder => partBuilder
                     // Even when you don't configure anything you get the correct "OfType" and the property name as
                     // display name by default.
                     .WithField(part => part.SomeText)

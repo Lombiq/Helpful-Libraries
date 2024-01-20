@@ -10,13 +10,11 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.Cli;
 
-public class CliProgram
+public class CliProgram(string command)
 {
     public static CliProgram DotNet { get; } = new("dotnet");
 
-    private readonly string _command;
-
-    public CliProgram(string command) => _command = command + OperatingSystemHelper.GetExecutableExtension();
+    private readonly string _command = command + OperatingSystemHelper.GetExecutableExtension();
 
     /// <summary>
     /// Creates a <see cref="Command"/> object based on the passed <paramref name="arguments"/>.

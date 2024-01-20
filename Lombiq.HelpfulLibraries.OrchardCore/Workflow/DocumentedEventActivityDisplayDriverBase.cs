@@ -13,33 +13,26 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Workflow;
 
-public class DocumentedEventActivityDisplayDriverBase<TActivity> : SimpleEventActivityDisplayDriverBase<TActivity>
+public class DocumentedEventActivityDisplayDriverBase<TActivity>(
+    INotifier notifier,
+    IStringLocalizer<DocumentedEventActivityDisplayDriver> baseLocalizer) : SimpleEventActivityDisplayDriverBase<TActivity>
     where TActivity : class, IActivity
 {
-    protected readonly INotifier _notifier;
-    private readonly IStringLocalizer<DocumentedEventActivityDisplayDriver> T;
+    protected readonly INotifier _notifier = notifier;
 
     public virtual IDictionary<string, string> AvailableInputs => ImmutableDictionary<string, string>.Empty;
     public virtual IDictionary<string, string> ExpectedOutputs => ImmutableDictionary<string, string>.Empty;
-
-    public DocumentedEventActivityDisplayDriverBase(
-        INotifier notifier,
-        IStringLocalizer<DocumentedEventActivityDisplayDriver> baseLocalizer)
-    {
-        _notifier = notifier;
-        T = baseLocalizer;
-    }
 
     public override async Task<IDisplayResult> EditAsync(TActivity model, BuildEditorContext context)
     {
         if (AvailableInputs?.Any() == true)
         {
-            await NotifyAsync(T["The available inputs are:"], AvailableInputs);
+            await NotifyAsync(baseLocalizer["The available inputs are:"], AvailableInputs);
         }
 
         if (ExpectedOutputs?.Any() == true)
         {
-            await NotifyAsync(T["The expected outputs are:"], ExpectedOutputs);
+            await NotifyAsync(baseLocalizer["The expected outputs are:"], ExpectedOutputs);
         }
 
         return null; // We don't display any shapes, just the notifications above.
@@ -53,8 +46,8 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity> : SimpleEventAc
         var arguments = new List<object>(capacity: 3 + (2 * content.Count))
         {
             title.Value,
-            T["Name"].Value,
-            T["Type"].Value,
+            baseLocalizer["Name"].Value,
+            baseLocalizer["Type"].Value,
         };
 
         foreach (var (name, schema) in content)
@@ -72,7 +65,7 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity> : SimpleEventAc
             layout,
             layout,
             isResourceNotFound: false,
-            [.. arguments]));
+            arguments));
     }
 }
 

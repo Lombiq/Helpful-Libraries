@@ -13,10 +13,8 @@ public static class ServiceCollectionExtensions
     public static void AddLazyInjectionSupport(this IServiceCollection services) =>
         services.TryAddTransient(typeof(Lazy<>), typeof(Lazier<>));
 
-    private sealed class Lazier<T> : Lazy<T>
+    private sealed class Lazier<T>(IServiceProvider provider) : Lazy<T>(provider.GetRequiredService<T>)
         where T : class
     {
-        public Lazier(IServiceProvider provider)
-            : base(provider.GetRequiredService<T>) { }
     }
 }

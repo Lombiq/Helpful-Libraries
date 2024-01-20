@@ -20,12 +20,10 @@ public static class ContentPartDefinitionBuilderExtensions
         builder.MergeSettings<ContentPartFieldSettings>(x => x.Editor = editor.ToString());
 }
 
-public class ContentPartDefinitionBuilder<TPart>
+public class ContentPartDefinitionBuilder<TPart>(ContentPartDefinitionBuilder builder)
     where TPart : ContentPart
 {
-    public ContentPartDefinitionBuilder Builder { get; private set; }
-
-    public ContentPartDefinitionBuilder(ContentPartDefinitionBuilder builder) => Builder = builder;
+    public ContentPartDefinitionBuilder Builder { get; private set; } = builder;
 
     public ContentPartDefinitionBuilder<TPart> Configure(Action<ContentPartDefinitionBuilder> configureAction)
     {

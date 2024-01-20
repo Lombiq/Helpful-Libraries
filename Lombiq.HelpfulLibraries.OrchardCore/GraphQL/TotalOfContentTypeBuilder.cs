@@ -12,12 +12,9 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.GraphQL;
 /// <summary>
 /// Adds a "totalOfContentType" field to each top level <see cref="ContentItem"/> type node.
 /// </summary>
-public class TotalOfContentTypeBuilder : IContentTypeBuilder
+public class TotalOfContentTypeBuilder(IStringLocalizer<TotalOfContentTypeBuilder> stringLocalizer) : IContentTypeBuilder
 {
-    private readonly IStringLocalizer<TotalOfContentTypeBuilder> S;
-
-    public TotalOfContentTypeBuilder(IStringLocalizer<TotalOfContentTypeBuilder> stringLocalizer) =>
-        S = stringLocalizer;
+    private readonly IStringLocalizer<TotalOfContentTypeBuilder> S = stringLocalizer;
 
     /// <summary>
     /// Adds the <c>totalOfContentType</c> integer field to the given content item type.

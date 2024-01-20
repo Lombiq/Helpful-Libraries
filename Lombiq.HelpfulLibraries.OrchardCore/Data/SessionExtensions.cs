@@ -193,13 +193,9 @@ public static class SessionExtensions
     "Design",
     "CA1032:Implement standard exception constructors",
     Justification = "The exception is used in a very particular single case.")]
-public class RawQueryException : DbException
+public class RawQueryException(string message, IEnumerable<string> errorMessages) : DbException(message)
 {
-    public override IDictionary Data { get; }
-
-    public RawQueryException(string message, IEnumerable<string> errorMessages)
-        : base(message) =>
-        Data = errorMessages
+    public override IDictionary Data { get; } = errorMessages
             .Select((errorMessage, index) => (errorMessage, index))
             .ToDictionary(messageItem => messageItem.index, messageItem => messageItem.errorMessage);
 }

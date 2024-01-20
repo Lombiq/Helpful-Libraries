@@ -10,13 +10,9 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Middlewares;
 /// A middleware that looks for the "culture" query string argument or cookie and uses it to initialize a <see
 /// cref="CultureScope"/>.
 /// </summary>
-public class CookieCultureScopeMiddleware
+public class CookieCultureScopeMiddleware(RequestDelegate next)
 {
     public const string CultureKeyName = "culture";
-
-    private readonly RequestDelegate _next;
-
-    public CookieCultureScopeMiddleware(RequestDelegate next) => _next = next;
 
     public async Task InvokeAsync(HttpContext context)
     {
@@ -31,7 +27,7 @@ public class CookieCultureScopeMiddleware
         using var scope = CultureScope.Create(culture, culture, ignoreSystemSettings: true);
         context.SetCookieForever(CultureKeyName, culture);
 
-        await _next(context);
+        await next(context);
     }
 
     private static bool TryGetCultureInfo(HttpContext context, out string culture)

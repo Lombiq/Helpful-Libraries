@@ -27,11 +27,7 @@ public static class ActionResultHelpers
                 var entry = archive.CreateEntry(fileName, CompressionLevel.Optimal);
                 using var entryStream = entry.Open();
                 fileStream.CopyTo(entryStream);
-
-                // False positive.
-#pragma warning disable S3966 // Objects should not be disposed more than once.
                 fileStream.Dispose();
-#pragma warning restore S3966 // Objects should not be disposed more than once.
             }
         }
 

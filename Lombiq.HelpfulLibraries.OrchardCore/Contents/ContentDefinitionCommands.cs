@@ -5,23 +5,17 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 
-public class ContentDefinitionCommands : DefaultCommandHandler
+public class ContentDefinitionCommands(
+    IStringLocalizer<ContentDefinitionCommands> localizer,
+    IContentDefinitionManager contentDefinitionManager) : DefaultCommandHandler(localizer)
 {
     private const string AttachContentPartCommandName = "attachContentPart";
-
-    private readonly IContentDefinitionManager _contentDefinitionManager;
 
     [OrchardSwitch]
     public string Type { get; set; }
 
     [OrchardSwitch]
     public string Part { get; set; }
-
-    public ContentDefinitionCommands(
-        IStringLocalizer<ContentDefinitionCommands> localizer,
-        IContentDefinitionManager contentDefinitionManager)
-        : base(localizer) =>
-        _contentDefinitionManager = contentDefinitionManager;
 
     [CommandName(AttachContentPartCommandName)]
     [CommandHelp(AttachContentPartCommandName +
@@ -30,5 +24,5 @@ public class ContentDefinitionCommands : DefaultCommandHandler
         "\r\n\t" + "Attaches a content part to a content type.")]
     [OrchardSwitches(nameof(Type) + ", " + nameof(Part))]
     public Task AttachContentPartAsync() =>
-         _contentDefinitionManager.AlterTypeDefinitionAsync(Type, type => type.WithPart(Part));
+         contentDefinitionManager.AlterTypeDefinitionAsync(Type, type => type.WithPart(Part));
 }

@@ -7,16 +7,10 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 
-public class TaxonomyHelper : ITaxonomyHelper
+public class TaxonomyHelper(IContentHandleManager contentHandleManager, IContentManager contentManager) : ITaxonomyHelper
 {
-    private readonly IContentHandleManager _contentHandleManager;
-    private readonly IContentManager _contentManager;
-
-    public TaxonomyHelper(IContentHandleManager contentHandleManager, IContentManager contentManager)
-    {
-        _contentHandleManager = contentHandleManager;
-        _contentManager = contentManager;
-    }
+    private readonly IContentHandleManager _contentHandleManager = contentHandleManager;
+    private readonly IContentManager _contentManager = contentManager;
 
     public async Task<ContentItem> GetTermContentItemByTaxonomyAliasAsync(string alias, string termId) =>
         await _contentHandleManager.GetContentItemIdAsync($"alias:{alias}") is { } contentItemId &&

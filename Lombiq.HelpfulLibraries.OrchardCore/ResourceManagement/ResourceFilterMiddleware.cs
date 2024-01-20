@@ -10,12 +10,8 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
-public class ResourceFilterMiddleware
+public class ResourceFilterMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public ResourceFilterMiddleware(RequestDelegate next) => _next = next;
-
     public async Task InvokeAsync(HttpContext context)
     {
         var providers = context
@@ -25,7 +21,7 @@ public class ResourceFilterMiddleware
             .ToList();
 
         IList<string> themes =
-            providers.Exists(providerInfo => providerInfo.ThemeRequirements.Any())
+            providers.Exists(providerInfo => providerInfo.ThemeRequirements.Count != 0)
                 ? new[]
                     {
                         await context.RequestServices.GetRequiredService<ISiteThemeService>().GetSiteThemeAsync(),
@@ -68,6 +64,6 @@ public class ResourceFilterMiddleware
             }
         }
 
-        await _next(context);
+        await next(context);
     }
 }

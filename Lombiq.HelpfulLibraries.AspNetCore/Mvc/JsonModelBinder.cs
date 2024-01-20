@@ -8,17 +8,8 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.AspNetCore.Mvc;
 
-public class JsonModelBinder : IModelBinder
+public class JsonModelBinder(ILogger<JsonModelBinder> logger, IObjectModelValidator validator) : IModelBinder
 {
-    private readonly ILogger<JsonModelBinder> _logger;
-    private readonly IObjectModelValidator _validator;
-
-    public JsonModelBinder(ILogger<JsonModelBinder> logger, IObjectModelValidator validator)
-    {
-        _logger = logger;
-        _validator = validator;
-    }
-
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
         var value = bindingContext.ValueProvider.GetValue(bindingContext.FieldName).FirstValue;
@@ -35,7 +26,7 @@ public class JsonModelBinder : IModelBinder
                 return Task.CompletedTask;
             }
 
-            _validator.Validate(
+            validator.Validate(
                 bindingContext.ActionContext,
                 validationState: bindingContext.ValidationState,
                 prefix: string.Empty,
@@ -45,7 +36,7 @@ public class JsonModelBinder : IModelBinder
         }
         catch (JsonException jsonException)
         {
-            _logger.LogError(jsonException, "Failed to bind parameter '{FieldName}'", bindingContext.FieldName);
+            logger.LogError(jsonException, "Failed to bind parameter '{FieldName}'", bindingContext.FieldName);
             bindingContext.ActionContext.ModelState.TryAddModelError(
                 key: jsonException.Path,
                 exception: jsonException,
@@ -53,7 +44,7 @@ public class JsonModelBinder : IModelBinder
         }
         catch (Exception exception) when (exception is FormatException or OverflowException)
         {
-            _logger.LogError(exception, "Failed to bind parameter '{FieldName}'", bindingContext.FieldName);
+            logger.LogError(exception, "Failed to bind parameter '{FieldName}'", bindingContext.FieldName);
             bindingContext.ActionContext.ModelState.TryAddModelError(
                 string.Empty,
                 exception,

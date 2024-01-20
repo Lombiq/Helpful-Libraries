@@ -5,12 +5,8 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.AspNetCore.Middlewares;
 
-public class DeferredTaskMiddleware
+public class DeferredTaskMiddleware(RequestDelegate next)
 {
-    private readonly RequestDelegate _next;
-
-    public DeferredTaskMiddleware(RequestDelegate next) => _next = next;
-
     public async Task InvokeAsync(
         HttpContext context,
         IEnumerable<IDeferredTask> deferredTasks)
@@ -23,7 +19,7 @@ public class DeferredTaskMiddleware
             await deferredTask.PreProcessAsync(context);
         }
 
-        await _next(context);
+        await next(context);
 
         foreach (var deferredTask in deferredTasksList) await deferredTask.PostProcessAsync(context);
     }

@@ -22,40 +22,33 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Shapes;
 /// theme instead of just per theme. Also the shape descriptor collection is cached per tenant instead of being a static
 /// dictionary.
 /// </summary>
-public class PerTenantShapeTableManager : IShapeTableManager
-{
-    private readonly IHostEnvironment _hostingEnvironment;
-    private readonly IEnumerable<IShapeTableProvider> _bindingStrategies;
-    private readonly IShellFeaturesManager _shellFeaturesManager;
-    private readonly IExtensionManager _extensionManager;
-    private readonly ITypeFeatureProvider _typeFeatureProvider;
-    private readonly IMemoryCache _memoryCache;
-    private readonly ILogger _logger;
-    private readonly ISiteService _siteService;
-
-    [SuppressMessage(
+[method: SuppressMessage(
         "Major Code Smell",
         "S107:Methods should not have too many parameters",
         Justification = "All of these are necessary for shape table management.")]
-    public PerTenantShapeTableManager(
-        IHostEnvironment hostingEnvironment,
-        IEnumerable<IShapeTableProvider> bindingStrategies,
-        IShellFeaturesManager shellFeaturesManager,
-        IExtensionManager extensionManager,
-        ITypeFeatureProvider typeFeatureProvider,
-        IMemoryCache memoryCache,
-        ILogger<PerTenantShapeTableManager> logger,
-        ISiteService siteService)
-    {
-        _hostingEnvironment = hostingEnvironment;
-        _bindingStrategies = bindingStrategies;
-        _shellFeaturesManager = shellFeaturesManager;
-        _extensionManager = extensionManager;
-        _typeFeatureProvider = typeFeatureProvider;
-        _memoryCache = memoryCache;
-        _logger = logger;
-        _siteService = siteService;
-    }
+/// <summary>
+/// An altered version of <see cref="DefaultShapeTableManager"/> where the shape table is cached per tenant and per
+/// theme instead of just per theme. Also the shape descriptor collection is cached per tenant instead of being a static
+/// dictionary.
+/// </summary>
+public class PerTenantShapeTableManager(
+    IHostEnvironment hostingEnvironment,
+    IEnumerable<IShapeTableProvider> bindingStrategies,
+    IShellFeaturesManager shellFeaturesManager,
+    IExtensionManager extensionManager,
+    ITypeFeatureProvider typeFeatureProvider,
+    IMemoryCache memoryCache,
+    ILogger<PerTenantShapeTableManager> logger,
+    ISiteService siteService) : IShapeTableManager
+{
+    private readonly IHostEnvironment _hostingEnvironment = hostingEnvironment;
+    private readonly IEnumerable<IShapeTableProvider> _bindingStrategies = bindingStrategies;
+    private readonly IShellFeaturesManager _shellFeaturesManager = shellFeaturesManager;
+    private readonly IExtensionManager _extensionManager = extensionManager;
+    private readonly ITypeFeatureProvider _typeFeatureProvider = typeFeatureProvider;
+    private readonly IMemoryCache _memoryCache = memoryCache;
+    private readonly ILogger _logger = logger;
+    private readonly ISiteService _siteService = siteService;
 
     public ShapeTable GetShapeTable(string themeId) =>
         GetShapeTableAsync(themeId)
@@ -141,7 +134,7 @@ public class PerTenantShapeTableManager : IShapeTableManager
     private static void BuildDescriptors(
         IShapeTableProvider bindingStrategy,
         IEnumerable<ShapeAlteration> builtAlterations,
-        IDictionary<string, FeatureShapeDescriptor> shapeDescriptors)
+        Dictionary<string, FeatureShapeDescriptor> shapeDescriptors)
     {
         var alterationSets = builtAlterations.GroupBy(a => a.Feature.Id + a.ShapeType);
 
