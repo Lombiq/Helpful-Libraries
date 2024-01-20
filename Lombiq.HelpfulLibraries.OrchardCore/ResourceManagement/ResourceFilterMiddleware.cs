@@ -34,7 +34,7 @@ public class ResourceFilterMiddleware(RequestDelegate next)
 
         var builder = new ResourceFilterBuilder();
         var anyProviders = providers
-            .Where(providerInfo => !providerInfo.ThemeRequirements.Any() ||
+            .Where(providerInfo => providerInfo.ThemeRequirements.Count == 0 ||
                                    providerInfo.ThemeRequirements.Exists(themes.Contains))
             .ForEach(providerInfo => providerInfo.Provider.AddResourceFilter(builder));
 

@@ -97,7 +97,7 @@ public class TypedRoute
     /// </summary>
     public override string ToString()
     {
-        var arguments = _arguments.Any()
+        var arguments = _arguments.Count != 0
             ? "?" + string.Join('&', _arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
             : string.Empty;
 
