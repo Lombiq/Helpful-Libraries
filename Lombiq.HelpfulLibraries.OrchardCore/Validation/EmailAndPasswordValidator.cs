@@ -13,6 +13,7 @@ public class EmailAndPasswordValidator(
     UserManager<IUser> userManager,
     IStringLocalizer<EmailAndPasswordValidator> stringLocalizer) : IEmailAndPasswordValidator
 {
+    private readonly IStringLocalizer T = stringLocalizer;
     public Task<IEnumerable<LocalizedString>> ValidateEmailAsync(string email) =>
         Task.FromResult(emailAddressValidator.Validate(email)
             ? Enumerable.Empty<LocalizedString>()
