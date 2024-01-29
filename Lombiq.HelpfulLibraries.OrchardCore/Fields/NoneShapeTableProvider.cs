@@ -18,8 +18,6 @@ public class NoneShapeTableProvider(IContentDefinitionManager contentDefinitionM
 {
     public const string None = nameof(None);
 
-    private readonly IContentDefinitionManager _contentDefinitionManager = contentDefinitionManager;
-
     public void Discover(ShapeTableBuilder builder)
     {
         // The interface requires this method to be implemented so this is temporarily here.
@@ -31,7 +29,7 @@ public class NoneShapeTableProvider(IContentDefinitionManager contentDefinitionM
     /// </summary>
     public async Task DiscoverAsync(ShapeTableBuilder builder)
     {
-        var allFieldNames = (await _contentDefinitionManager.ListPartDefinitionsAsync())
+        var allFieldNames = (await contentDefinitionManager.ListPartDefinitionsAsync())
             .SelectMany(part => part.Fields)
             .Select(field => field.FieldDefinition.Name)
             .Distinct();
