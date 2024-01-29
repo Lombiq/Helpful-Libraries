@@ -19,7 +19,7 @@ public static class CliWrapHelper
     /// <param name="name">The application name you can invoke directly in the command line.</param>
     public static async Task<IEnumerable<FileInfo>> WhichAsync(string name)
     {
-        var appName = OperatingSystem.IsOSPlatform(nameof(OSPlatform.Windows)) ? "where" : "which";
+        var appName = OperatingSystem.IsWindows() ? "where" : "which";
         var result = await CliWrap.Cli.Wrap(appName)
             .WithArguments(name)
             .WithValidation(CommandResultValidation.None)
