@@ -14,11 +14,7 @@ public class InlineStartup(
     Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider> configure = null,
     int order = 0) : StartupBase
 {
-    private readonly Action<IServiceCollection> _configureServices = configureServices;
-    private readonly Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider> _configure = configure;
-    private readonly int _order = order;
-
-    public override int Order => _order;
+    public override int Order => order;
 
     public InlineStartup(
         Action<IServiceCollection> configureServices,
@@ -29,8 +25,8 @@ public class InlineStartup(
     }
 
     public override void ConfigureServices(IServiceCollection services) =>
-        _configureServices?.Invoke(services);
+        configureServices?.Invoke(services);
 
     public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider) =>
-        _configure?.Invoke(app, routes, serviceProvider);
+        configure?.Invoke(app, routes, serviceProvider);
 }
