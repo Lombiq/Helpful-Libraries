@@ -9,7 +9,6 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Liquid;
 
 public class LiquidContentDisplayService(IDisplayHelper displayHelper, IShapeFactory shapeFactory) : ILiquidContentDisplayService
 {
-    private readonly IDisplayHelper _displayHelper = displayHelper;
     private readonly IShapeFactory _shapeFactory = shapeFactory;
 
     public async ValueTask<FluidValue> DisplayNewAsync(
@@ -30,7 +29,7 @@ public class LiquidContentDisplayService(IDisplayHelper displayHelper, IShapeFac
 
     public async ValueTask<FluidValue> DisplayShapeAsync(IShape shape)
     {
-        var content = await _displayHelper.ShapeExecuteAsync(shape);
+        var content = await displayHelper.ShapeExecuteAsync(shape);
         return new HtmlContentValue(content);
     }
 }
