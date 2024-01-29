@@ -14,10 +14,11 @@ public class EmailAndPasswordValidator(
     IStringLocalizer<EmailAndPasswordValidator> stringLocalizer) : IEmailAndPasswordValidator
 {
     private readonly IStringLocalizer T = stringLocalizer;
+
     public Task<IEnumerable<LocalizedString>> ValidateEmailAsync(string email) =>
         Task.FromResult(emailAddressValidator.Validate(email)
             ? Enumerable.Empty<LocalizedString>()
-            : new[] { stringLocalizer["Invalid email address."] });
+            : new[] { T["Invalid email address."] });
 
     public async Task<IEnumerable<LocalizedString>> ValidatePasswordAsync(string password)
     {
@@ -29,7 +30,7 @@ public class EmailAndPasswordValidator(
             var result = await passwordValidator.ValidateAsync(userManager, user: null, password);
 
             if (result.Succeeded) continue;
-            errors.AddRange(result.Errors.Select(error => stringLocalizer[error.Description]));
+            errors.AddRange(result.Errors.Select(error => T[error.Description]));
         }
 
         return errors;
