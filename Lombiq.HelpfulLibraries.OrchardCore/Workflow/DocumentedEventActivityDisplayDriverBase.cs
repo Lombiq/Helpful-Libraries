@@ -18,6 +18,8 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity>(
     IStringLocalizer<DocumentedEventActivityDisplayDriver> baseLocalizer) : SimpleEventActivityDisplayDriverBase<TActivity>
     where TActivity : class, IActivity
 {
+    private readonly IStringLocalizer T = baseLocalizer;
+
     protected readonly INotifier _notifier = notifier;
 
     public virtual IDictionary<string, string> AvailableInputs => ImmutableDictionary<string, string>.Empty;
@@ -27,12 +29,12 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity>(
     {
         if (AvailableInputs?.Any() == true)
         {
-            await NotifyAsync(baseLocalizer["The available inputs are:"], AvailableInputs);
+            await NotifyAsync(T["The available inputs are:"], AvailableInputs);
         }
 
         if (ExpectedOutputs?.Any() == true)
         {
-            await NotifyAsync(baseLocalizer["The expected outputs are:"], ExpectedOutputs);
+            await NotifyAsync(T["The expected outputs are:"], ExpectedOutputs);
         }
 
         return null; // We don't display any shapes, just the notifications above.
@@ -46,8 +48,8 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity>(
         var arguments = new List<object>(capacity: 3 + (2 * content.Count))
         {
             title.Value,
-            baseLocalizer["Name"].Value,
-            baseLocalizer["Type"].Value,
+            T["Name"].Value,
+            T["Type"].Value,
         };
 
         foreach (var (name, schema) in content)
