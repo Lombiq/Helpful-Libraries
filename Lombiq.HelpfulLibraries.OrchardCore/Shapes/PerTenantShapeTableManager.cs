@@ -22,20 +22,41 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Shapes;
 /// theme instead of just per theme. Also the shape descriptor collection is cached per tenant instead of being a static
 /// dictionary.
 /// </summary>
-[method: SuppressMessage(
+public class PerTenantShapeTableManager : IShapeTableManager
+{
+    private readonly IHostEnvironment _hostingEnvironment;
+    private readonly IEnumerable<IShapeTableProvider> _bindingStrategies;
+    private readonly IShellFeaturesManager _shellFeaturesManager;
+    private readonly IExtensionManager _extensionManager;
+    private readonly ITypeFeatureProvider _typeFeatureProvider;
+    private readonly IMemoryCache _memoryCache;
+    private readonly ILogger _logger;
+    private readonly ISiteService _siteService;
+
+    [SuppressMessage(
         "Major Code Smell",
         "S107:Methods should not have too many parameters",
         Justification = "All of these are necessary for shape table management.")]
-public class PerTenantShapeTableManager(
-    IHostEnvironment hostingEnvironment,
-    IEnumerable<IShapeTableProvider> bindingStrategies,
-    IShellFeaturesManager shellFeaturesManager,
-    IExtensionManager extensionManager,
-    ITypeFeatureProvider typeFeatureProvider,
-    IMemoryCache memoryCache,
-    ILogger<PerTenantShapeTableManager> logger,
-    ISiteService siteService) : IShapeTableManager
-{
+    public PerTenantShapeTableManager(
+        IHostEnvironment hostingEnvironment,
+        IEnumerable<IShapeTableProvider> bindingStrategies,
+        IShellFeaturesManager shellFeaturesManager,
+        IExtensionManager extensionManager,
+        ITypeFeatureProvider typeFeatureProvider,
+        IMemoryCache memoryCache,
+        ILogger<PerTenantShapeTableManager> logger,
+        ISiteService siteService)
+    {
+        _hostingEnvironment = hostingEnvironment;
+        _bindingStrategies = bindingStrategies;
+        _shellFeaturesManager = shellFeaturesManager;
+        _extensionManager = extensionManager;
+        _typeFeatureProvider = typeFeatureProvider;
+        _memoryCache = memoryCache;
+        _logger = logger;
+        _siteService = siteService;
+    }
+
     public ShapeTable GetShapeTable(string themeId) =>
         GetShapeTableAsync(themeId)
             .GetAwaiter()
@@ -43,24 +64,24 @@ public class PerTenantShapeTableManager(
 
     public async Task<ShapeTable> GetShapeTableAsync(string themeId)
     {
-        var siteSettings = await siteService.GetSiteSettingsAsync();
+        var siteSettings = await _siteService.GetSiteSettingsAsync();
 
         var shapeTableCacheKey = $"ShapeTable:{siteSettings.SiteName}:{themeId}";
         var shapeDescriptorsCacheKey = $"ShapeDescriptors:{siteSettings.SiteName}";
 
-        if (memoryCache.TryGetValue(shapeTableCacheKey, out ShapeTable shapeTable)) return shapeTable;
+        if (_memoryCache.TryGetValue(shapeTableCacheKey, out ShapeTable shapeTable)) return shapeTable;
 
-        if (logger.IsEnabled(LogLevel.Information))
+        if (_logger.IsEnabled(LogLevel.Information))
         {
-            logger.LogInformation("Start building shape table");
+            _logger.LogInformation("Start building shape table");
         }
 
-        var shapeDescriptors = memoryCache.GetOrNew<Dictionary<string, FeatureShapeDescriptor>>(shapeDescriptorsCacheKey);
+        var shapeDescriptors = _memoryCache.GetOrNew<Dictionary<string, FeatureShapeDescriptor>>(shapeDescriptorsCacheKey);
         var excludedFeatures = shapeDescriptors.Values.Select(value => value.Feature.Id).ToHashSet();
 
-        foreach (var bindingStrategy in bindingStrategies)
+        foreach (var bindingStrategy in _bindingStrategies)
         {
-            var strategyFeature = typeFeatureProvider.GetFeatureForDependency(bindingStrategy.GetType());
+            var strategyFeature = _typeFeatureProvider.GetFeatureForDependency(bindingStrategy.GetType());
 
             var builder = new ShapeTableBuilder(strategyFeature, excludedFeatures);
             await bindingStrategy.DiscoverAsync(builder);
@@ -69,16 +90,16 @@ public class PerTenantShapeTableManager(
             BuildDescriptors(bindingStrategy, builtAlterations, shapeDescriptors);
         }
 
-        memoryCache.Set(shapeDescriptorsCacheKey, shapeDescriptors);
+        _memoryCache.Set(shapeDescriptorsCacheKey, shapeDescriptors);
 
-        var enabledAndOrderedFeatureIds = (await shellFeaturesManager.GetEnabledFeaturesAsync())
+        var enabledAndOrderedFeatureIds = (await _shellFeaturesManager.GetEnabledFeaturesAsync())
             .Select(featureInfo => featureInfo.Id)
             .ToList();
 
         // Let the application acting as a super theme for shapes rendering.
-        if (enabledAndOrderedFeatureIds.Remove(hostingEnvironment.ApplicationName))
+        if (enabledAndOrderedFeatureIds.Remove(_hostingEnvironment.ApplicationName))
         {
-            enabledAndOrderedFeatureIds.Add(hostingEnvironment.ApplicationName);
+            enabledAndOrderedFeatureIds.Add(_hostingEnvironment.ApplicationName);
         }
 
         // Create a Dictionary for faster lookup operations.
@@ -107,12 +128,12 @@ public class PerTenantShapeTableManager(
             bindings: descriptors.SelectMany(sd => sd.Bindings).ToDictionary(kv => kv.Key, kv => kv.Value, StringComparer.OrdinalIgnoreCase)
         );
 
-        if (logger.IsEnabled(LogLevel.Information))
+        if (_logger.IsEnabled(LogLevel.Information))
         {
-            logger.LogInformation("Done building shape table");
+            _logger.LogInformation("Done building shape table");
         }
 
-        memoryCache.Set(shapeTableCacheKey, shapeTable, new MemoryCacheEntryOptions { Priority = CacheItemPriority.NeverRemove });
+        _memoryCache.Set(shapeTableCacheKey, shapeTable, new MemoryCacheEntryOptions { Priority = CacheItemPriority.NeverRemove });
 
         return shapeTable;
     }
@@ -120,7 +141,7 @@ public class PerTenantShapeTableManager(
     private static void BuildDescriptors(
         IShapeTableProvider bindingStrategy,
         IEnumerable<ShapeAlteration> builtAlterations,
-        Dictionary<string, FeatureShapeDescriptor> shapeDescriptors)
+        IDictionary<string, FeatureShapeDescriptor> shapeDescriptors)
     {
         var alterationSets = builtAlterations.GroupBy(a => a.Feature.Id + a.ShapeType);
 
@@ -157,7 +178,7 @@ public class PerTenantShapeTableManager(
     }
 
     private bool IsBaseTheme(string themeFeatureId, string themeId) =>
-        extensionManager
+        _extensionManager
             .GetFeatureDependencies(themeId)
             .Any(f => f.Id == themeFeatureId);
 

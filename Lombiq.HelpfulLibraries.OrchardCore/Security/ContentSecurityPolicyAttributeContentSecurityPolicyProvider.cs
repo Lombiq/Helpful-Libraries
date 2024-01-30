@@ -1,4 +1,4 @@
-using Lombiq.HelpfulLibraries.AspNetCore.Security;
+﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Infrastructure;
@@ -32,19 +32,25 @@ public sealed class ScriptUnsafeEvalAttribute : ContentSecurityPolicyAttribute
     "Performance",
     "CA1813:Avoid unsealed attributes",
     Justification = $"Inherited by {nameof(ScriptUnsafeEvalAttribute)}.")]
-public class ContentSecurityPolicyAttribute(string directiveValue, params string[] directiveNames) : Attribute
+public class ContentSecurityPolicyAttribute : Attribute
 {
     /// <summary>
     /// Gets the fallback chain of the directive, excluding <see cref="DefaultSrc"/>. This is used to get the current
     /// value.
     /// </summary>
-    public string[] DirectiveNames { get; } = directiveNames;
+    public string[] DirectiveNames { get; }
 
     /// <summary>
     /// Gets the value to be added to the directive. The content is split into words and added to the current values
     /// without repetition.
     /// </summary>
-    public string DirectiveValue { get; } = directiveValue;
+    public string DirectiveValue { get; }
+
+    public ContentSecurityPolicyAttribute(string directiveValue, params string[] directiveNames)
+    {
+        DirectiveValue = directiveValue;
+        DirectiveNames = directiveNames;
+    }
 }
 
 /// <summary>

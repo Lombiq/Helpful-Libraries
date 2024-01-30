@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -46,19 +46,19 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     {
         var any = false;
 
-        if (!PermittedStyleSources.IsEmpty)
+        if (PermittedStyleSources.Any())
         {
             any = true;
             MergeValues(securityPolicies, StyleSrc, PermittedStyleSources);
         }
 
-        if (!PermittedScriptSources.IsEmpty)
+        if (PermittedScriptSources.Any())
         {
             any = true;
             MergeValues(securityPolicies, ScriptSrc, PermittedScriptSources);
         }
 
-        if (!PermittedFontSources.IsEmpty)
+        if (PermittedFontSources.Any())
         {
             any = true;
             MergeValues(securityPolicies, FontSrc, PermittedFontSources);

@@ -1,4 +1,4 @@
-using Fluid.Values;
+﻿using Fluid.Values;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Implementation;
 using OrchardCore.DisplayManagement.Liquid;
@@ -7,9 +7,15 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Liquid;
 
-public class LiquidContentDisplayService(IDisplayHelper displayHelper, IShapeFactory shapeFactory) : ILiquidContentDisplayService
+public class LiquidContentDisplayService : ILiquidContentDisplayService
 {
-    private readonly IShapeFactory _shapeFactory = shapeFactory;
+    private readonly IDisplayHelper _displayHelper;
+    private readonly IShapeFactory _shapeFactory;
+    public LiquidContentDisplayService(IDisplayHelper displayHelper, IShapeFactory shapeFactory)
+    {
+        _displayHelper = displayHelper;
+        _shapeFactory = shapeFactory;
+    }
 
     public async ValueTask<FluidValue> DisplayNewAsync(
         string shapeType,
@@ -29,7 +35,7 @@ public class LiquidContentDisplayService(IDisplayHelper displayHelper, IShapeFac
 
     public async ValueTask<FluidValue> DisplayShapeAsync(IShape shape)
     {
-        var content = await displayHelper.ShapeExecuteAsync(shape);
+        var content = await _displayHelper.ShapeExecuteAsync(shape);
         return new HtmlContentValue(content);
     }
 }

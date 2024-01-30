@@ -1,4 +1,4 @@
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.ContentManagement.Display.Models;
@@ -53,10 +53,13 @@ public abstract class SingleDisplayTypeContentPartDisplayDriver<TPart> : Content
             });
     }
 
-    public class FieldHiderPlacementInfoResolver<TDriver>(IServiceProvider provider) : IPlacementInfoResolver, IShapePlacementProvider
+    public class FieldHiderPlacementInfoResolver<TDriver> : IPlacementInfoResolver, IShapePlacementProvider
         where TDriver : SingleDisplayTypeContentPartDisplayDriver<TPart>
     {
-        private readonly TDriver _driver = (TDriver)provider.GetRequiredService(typeof(TDriver));
+        private readonly TDriver _driver;
+
+        public FieldHiderPlacementInfoResolver(IServiceProvider provider) =>
+            _driver = (TDriver)provider.GetRequiredService(typeof(TDriver));
 
         public PlacementInfo ResolvePlacement(ShapePlacementContext placementContext)
         {

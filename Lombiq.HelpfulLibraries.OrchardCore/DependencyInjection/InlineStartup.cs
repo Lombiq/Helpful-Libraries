@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Modules;
@@ -9,12 +9,13 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 /// <summary>
 /// A startup class that invokes the delegates provided in the constructor.
 /// </summary>
-public class InlineStartup(
-    Action<IServiceCollection> configureServices,
-    Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider> configure = null,
-    int order = 0) : StartupBase
+public class InlineStartup : StartupBase
 {
-    public override int Order => order;
+    private readonly Action<IServiceCollection> _configureServices;
+    private readonly Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider> _configure;
+    private readonly int _order;
+
+    public override int Order => _order;
 
     public InlineStartup(
         Action<IServiceCollection> configureServices,
@@ -24,9 +25,19 @@ public class InlineStartup(
     {
     }
 
+    public InlineStartup(
+        Action<IServiceCollection> configureServices,
+        Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider> configure = null,
+        int order = 0)
+    {
+        _configureServices = configureServices;
+        _configure = configure;
+        _order = order;
+    }
+
     public override void ConfigureServices(IServiceCollection services) =>
-        configureServices?.Invoke(services);
+        _configureServices?.Invoke(services);
 
     public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder routes, IServiceProvider serviceProvider) =>
-        configure?.Invoke(app, routes, serviceProvider);
+        _configure?.Invoke(app, routes, serviceProvider);
 }

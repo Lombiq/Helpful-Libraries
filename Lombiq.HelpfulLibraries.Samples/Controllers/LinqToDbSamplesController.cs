@@ -14,13 +14,17 @@ using YesSql;
 namespace Lombiq.HelpfulLibraries.Samples.Controllers;
 
 // Some examples of querying the database with Lombiq.HelpfulLibraries.LinqToDb.
-public class LinqToDbSamplesController(ISession session) : Controller
+public class LinqToDbSamplesController : Controller
 {
+    private readonly ISession _session;
+
+    public LinqToDbSamplesController(ISession session) => _session = session;
+
     // A simple query on AutoroutePartIndex. Open this from under
     // /Lombiq.HelpfulLibraries.Samples/LinqToDbSamples/SimpleQuery
     public async Task<IActionResult> SimpleQuery()
     {
-        var result = await session.LinqQueryAsync(
+        var result = await _session.LinqQueryAsync(
             accessor => accessor
                 // GetTable method optionally receives a collection name.
                 .GetTable<AutoroutePartIndex>()
@@ -37,7 +41,7 @@ public class LinqToDbSamplesController(ISession session) : Controller
     {
         // This will fetch all items under the "blog/" path. If you used the Blog recipe then these will be all blog
         // posts.
-        var result = await session.LinqQueryAsync(
+        var result = await _session.LinqQueryAsync(
             accessor =>
                 (from contentItemIndex in accessor.GetTable<ContentItemIndex>()
                  join autoroutePartIndex in accessor.GetTable<AutoroutePartIndex>()
@@ -54,7 +58,7 @@ public class LinqToDbSamplesController(ISession session) : Controller
     public async Task<IActionResult> Crud()
     {
         // LinqTableQueryAsync method optionally receives a collection name.
-        var insertedCount = await session.LinqTableQueryAsync<BookRecord, int>(table => table
+        var insertedCount = await _session.LinqTableQueryAsync<BookRecord, int>(table => table
             .InsertAsync(
                 () => new BookRecord
                 {
@@ -63,12 +67,12 @@ public class LinqToDbSamplesController(ISession session) : Controller
                 },
                 HttpContext.RequestAborted));
 
-        var modifiedCount = await session.LinqTableQueryAsync<BookRecord, int>(table => table
+        var modifiedCount = await _session.LinqTableQueryAsync<BookRecord, int>(table => table
             .Where(record => record.Title == "Twenty Thousand Leagues Under the Seas")
             .Set(record => record.Title, "Around the World in Eighty Days")
             .UpdateAsync(HttpContext.RequestAborted));
 
-        var deletedCount = await session.LinqTableQueryAsync<BookRecord, int>(table => table
+        var deletedCount = await _session.LinqTableQueryAsync<BookRecord, int>(table => table
             .Where(record => record.Author == "Jules Verne")
             .DeleteAsync(HttpContext.RequestAborted));
 

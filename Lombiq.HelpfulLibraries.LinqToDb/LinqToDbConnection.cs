@@ -5,11 +5,14 @@ using System.Data.Common;
 
 namespace Lombiq.HelpfulLibraries.LinqToDb;
 
-public class LinqToDbConnection(
-    IDataProvider dataProvider,
-    DbTransaction dbTransaction,
-    string tablePrefix) : DataConnection(dataProvider, dbTransaction), ITableAccessor
+public class LinqToDbConnection : DataConnection, ITableAccessor
 {
+    private readonly string _tablePrefix;
+
+    public LinqToDbConnection(IDataProvider dataProvider, DbTransaction dbTransaction, string tablePrefix)
+        : base(dataProvider, dbTransaction) =>
+            _tablePrefix = tablePrefix;
+
     /// <summary>
     /// For the current query, overrides <see cref="ITable{T}.TableName"/> of the table-like source
     /// <typeparamref name="T"/> used in the query with a prefixed table name that optionally includes the specified
@@ -22,8 +25,8 @@ public class LinqToDbConnection(
         var table = DataExtensions.GetTable<T>(this);
 
         var tableName = string.IsNullOrEmpty(collectionName)
-            ? tablePrefix + table.TableName
-            : tablePrefix + collectionName + "_" + table.TableName;
+            ? _tablePrefix + table.TableName
+            : _tablePrefix + collectionName + "_" + table.TableName;
 
         return table.TableName(tableName);
     }

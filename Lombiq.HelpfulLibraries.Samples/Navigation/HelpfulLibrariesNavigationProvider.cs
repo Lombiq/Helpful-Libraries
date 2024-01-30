@@ -1,4 +1,4 @@
-using Lombiq.HelpfulLibraries.OrchardCore.Navigation;
+﻿using Lombiq.HelpfulLibraries.OrchardCore.Navigation;
 using Lombiq.HelpfulLibraries.Samples.Controllers;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Localization;
@@ -6,10 +6,15 @@ using OrchardCore.Navigation;
 
 namespace Lombiq.HelpfulLibraries.Samples.Navigation;
 
-public class HelpfulLibrariesNavigationProvider(
-    IHttpContextAccessor hca,
-    IStringLocalizer<HelpfulLibrariesNavigationProvider> stringLocalizer) : MainMenuNavigationProviderBase(hca, stringLocalizer)
+public class HelpfulLibrariesNavigationProvider : MainMenuNavigationProviderBase
 {
+    public HelpfulLibrariesNavigationProvider(
+        IHttpContextAccessor hca,
+        IStringLocalizer<HelpfulLibrariesNavigationProvider> stringLocalizer)
+        : base(hca, stringLocalizer)
+    {
+    }
+
     protected override void Build(NavigationBuilder builder)
     {
         var context = _hca.HttpContext;

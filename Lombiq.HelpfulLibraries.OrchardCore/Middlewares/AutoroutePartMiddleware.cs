@@ -5,16 +5,20 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Middlewares;
 
-public class AutoroutePartMiddleware(RequestDelegate next)
+public class AutoroutePartMiddleware
 {
     private const string BaseUrl = "/Contents/ContentItems/";
+
+    private readonly RequestDelegate _next;
+
+    public AutoroutePartMiddleware(RequestDelegate next) => _next = next;
 
     public async Task InvokeAsync(HttpContext context, IAutorouteEntries autorouteEntries)
     {
         var url = context.Request.Path.ToString();
         if (!url.StartsWithOrdinalIgnoreCase(BaseUrl))
         {
-            await next(context);
+            await _next(context);
             return;
         }
 
@@ -22,6 +26,6 @@ public class AutoroutePartMiddleware(RequestDelegate next)
         var (success, entries) = await autorouteEntries.TryGetEntryByContentItemIdAsync(id);
         if (success) context.Response.Redirect(entries.Path);
 
-        await next(context);
+        await _next(context);
     }
 }

@@ -13,17 +13,22 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Workflow;
 
-public class DocumentedEventActivityDisplayDriverBase<TActivity>(
-    INotifier notifier,
-    IStringLocalizer<DocumentedEventActivityDisplayDriver> baseLocalizer) : SimpleEventActivityDisplayDriverBase<TActivity>
+public class DocumentedEventActivityDisplayDriverBase<TActivity> : SimpleEventActivityDisplayDriverBase<TActivity>
     where TActivity : class, IActivity
 {
-    private readonly IStringLocalizer T = baseLocalizer;
-
-    protected readonly INotifier _notifier = notifier;
+    protected readonly INotifier _notifier;
+    private readonly IStringLocalizer<DocumentedEventActivityDisplayDriver> T;
 
     public virtual IDictionary<string, string> AvailableInputs => ImmutableDictionary<string, string>.Empty;
     public virtual IDictionary<string, string> ExpectedOutputs => ImmutableDictionary<string, string>.Empty;
+
+    public DocumentedEventActivityDisplayDriverBase(
+        INotifier notifier,
+        IStringLocalizer<DocumentedEventActivityDisplayDriver> baseLocalizer)
+    {
+        _notifier = notifier;
+        T = baseLocalizer;
+    }
 
     public override async Task<IDisplayResult> EditAsync(TActivity model, BuildEditorContext context)
     {
@@ -67,7 +72,7 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity>(
             layout,
             layout,
             isResourceNotFound: false,
-            arguments));
+            [.. arguments]));
     }
 }
 

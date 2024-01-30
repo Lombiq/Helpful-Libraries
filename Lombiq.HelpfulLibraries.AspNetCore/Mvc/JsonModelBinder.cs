@@ -8,9 +8,16 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.AspNetCore.Mvc;
 
-public class JsonModelBinder(ILogger<JsonModelBinder> logger, IObjectModelValidator validator) : IModelBinder
+public class JsonModelBinder : IModelBinder
 {
-    private static readonly JsonSerializerOptions SerializeOptions = new(JsonSerializerDefaults.Web);
+    private readonly ILogger<JsonModelBinder> _logger;
+    private readonly IObjectModelValidator _validator;
+
+    public JsonModelBinder(ILogger<JsonModelBinder> logger, IObjectModelValidator validator)
+    {
+        _logger = logger;
+        _validator = validator;
+    }
 
     public Task BindModelAsync(ModelBindingContext bindingContext)
     {
@@ -21,14 +28,14 @@ public class JsonModelBinder(ILogger<JsonModelBinder> logger, IObjectModelValida
             var parsed = value is null ? null : JsonSerializer.Deserialize(
                 value,
                 bindingContext.ModelType,
-                SerializeOptions);
+                new JsonSerializerOptions(JsonSerializerDefaults.Web));
 
             if (parsed is null)
             {
                 return Task.CompletedTask;
             }
 
-            validator.Validate(
+            _validator.Validate(
                 bindingContext.ActionContext,
                 validationState: bindingContext.ValidationState,
                 prefix: string.Empty,
@@ -38,7 +45,7 @@ public class JsonModelBinder(ILogger<JsonModelBinder> logger, IObjectModelValida
         }
         catch (JsonException jsonException)
         {
-            logger.LogError(jsonException, "Failed to bind parameter '{FieldName}'", bindingContext.FieldName);
+            _logger.LogError(jsonException, "Failed to bind parameter '{FieldName}'", bindingContext.FieldName);
             bindingContext.ActionContext.ModelState.TryAddModelError(
                 key: jsonException.Path,
                 exception: jsonException,
@@ -46,7 +53,7 @@ public class JsonModelBinder(ILogger<JsonModelBinder> logger, IObjectModelValida
         }
         catch (Exception exception) when (exception is FormatException or OverflowException)
         {
-            logger.LogError(exception, "Failed to bind parameter '{FieldName}'", bindingContext.FieldName);
+            _logger.LogError(exception, "Failed to bind parameter '{FieldName}'", bindingContext.FieldName);
             bindingContext.ActionContext.ModelState.TryAddModelError(
                 string.Empty,
                 exception,

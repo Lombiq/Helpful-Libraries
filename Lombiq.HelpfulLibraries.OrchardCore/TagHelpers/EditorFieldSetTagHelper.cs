@@ -12,9 +12,11 @@ using System.Threading.Tasks;
 namespace Lombiq.HelpfulLibraries.OrchardCore.TagHelpers;
 
 [HtmlTargetElement("fieldset", Attributes = "asp-for,label")]
-public class EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) : TagHelper
+public class EditorFieldSetTagHelper : TagHelper
 {
     private const string Class = "class";
+
+    private readonly IHtmlGenerator _htmlGenerator;
 
     [HtmlAttributeNotBound]
     [ViewContext]
@@ -41,6 +43,9 @@ public class EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) : TagHelper
     [HtmlAttributeName("options")]
     public IEnumerable<SelectListItem> Options { get; set; }
 
+    public EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) =>
+        _htmlGenerator = htmlGenerator;
+
     public override Task ProcessAsync(TagHelperContext context, TagHelperOutput output)
     {
         const string fieldsetClasses = "form-group mb-3 col-xl-6";
@@ -58,7 +63,7 @@ public class EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) : TagHelper
 
         AppendInputAndLabel(output, IsRequired || HasRequiredAttribute(For));
 
-        var tagBuilder = htmlGenerator.GenerateValidationMessage(
+        var tagBuilder = _htmlGenerator.GenerateValidationMessage(
             ViewContext,
             For.ModelExplorer,
             For.Name,
@@ -72,7 +77,7 @@ public class EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) : TagHelper
 
     private void AppendInputAndLabel(TagHelperOutput output, bool isRequired)
     {
-        var label = htmlGenerator.GenerateLabel(
+        var label = _htmlGenerator.GenerateLabel(
             ViewContext,
             For.ModelExplorer,
             For.Name,
@@ -86,7 +91,7 @@ public class EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) : TagHelper
         if (InputType.EqualsOrdinalIgnoreCase("checkbox"))
         {
             attributes[Class] = "custom-control-input";
-            var checkbox = htmlGenerator.GenerateCheckBox(
+            var checkbox = _htmlGenerator.GenerateCheckBox(
                 ViewContext,
                 For.ModelExplorer,
                 For.Name,
@@ -121,7 +126,7 @@ public class EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) : TagHelper
         }
 
         var input = inputType == "select"
-            ? htmlGenerator.GenerateSelect(
+            ? _htmlGenerator.GenerateSelect(
                 ViewContext,
                 For.ModelExplorer,
                 string.Empty,
@@ -129,7 +134,7 @@ public class EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) : TagHelper
                 Options,
                 allowMultiple: false,
                 attributes)
-            : htmlGenerator.GenerateTextBox(
+            : _htmlGenerator.GenerateTextBox(
                 ViewContext,
                 For.ModelExplorer,
                 For.Name,
