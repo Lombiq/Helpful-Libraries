@@ -5,9 +5,11 @@ using System.Reflection;
 namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
 [AttributeUsage(AttributeTargets.Class)]
-public sealed class ResourceFilterThemeRequirementAttribute(string theme) : Attribute
+public sealed class ResourceFilterThemeRequirementAttribute : Attribute
 {
-    public string Theme { get; } = theme;
+    public string Theme { get; }
+
+    public ResourceFilterThemeRequirementAttribute(string theme) => Theme = theme;
 
     /// <summary>
     /// Retrieves the required themes by <paramref name="type"/>.
