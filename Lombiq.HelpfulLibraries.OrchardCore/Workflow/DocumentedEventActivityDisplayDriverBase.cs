@@ -72,7 +72,7 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity> : SimpleEventAc
             layout,
             layout,
             isResourceNotFound: false,
-            [.. arguments]));
+            arguments));
     }
 }
 
