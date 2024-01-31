@@ -11,7 +11,6 @@ namespace Lombiq.HelpfulLibraries.LinqToDb;
 
 public static class LinqToDbQueryExecutor
 {
-    // We have no control over where these fields are declared.
     static LinqToDbQueryExecutor()
     {
         // Generate aliases for final projection.

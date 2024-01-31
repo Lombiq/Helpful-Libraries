@@ -17,6 +17,7 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Extensions;
 public class SafeJsonTests
 {
     private const string ExceptionText = "Intentional Exception";
+
     // The JsonResult in ASP.NET Core uses camelCase outputs so we have to replicate that.
     private static readonly JsonSerializerOptions JsonSerializerOptions = new()
     {

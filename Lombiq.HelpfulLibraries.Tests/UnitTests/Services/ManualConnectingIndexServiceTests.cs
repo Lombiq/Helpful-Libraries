@@ -13,8 +13,9 @@ public class ManualConnectingIndexServiceTests : IClassFixture<ManualConnectingI
 {
     public const string NamePrefix = "test_";
 
-    private readonly ManualConnectingIndexServiceFixture _fixture;
     private static readonly int[] Numbers = [3, 6];
+
+    private readonly ManualConnectingIndexServiceFixture _fixture;
 
     public ManualConnectingIndexServiceTests(ManualConnectingIndexServiceFixture fixture) => _fixture = fixture;
 

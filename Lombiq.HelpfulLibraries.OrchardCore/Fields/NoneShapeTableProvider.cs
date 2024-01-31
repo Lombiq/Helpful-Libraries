@@ -25,8 +25,8 @@ public class NoneShapeTableProvider : IShapeTableProvider
 
     public void Discover(ShapeTableBuilder builder)
     {
-        // The interface requires this method to be implemented so this is temporarily here.
-        // Remove this method once it gets deleted in IShapeTableProvider.
+        // The interface requires this obsolete method to be implemented so this is temporarily here. Remove this method
+        // once it gets deleted in IShapeTableProvider.
     }
 
     /// <summary>
