@@ -30,5 +30,5 @@ public class ContentDefinitionCommands : DefaultCommandHandler
         "\r\n\t" + "Attaches a content part to a content type.")]
     [OrchardSwitches(nameof(Type) + ", " + nameof(Part))]
     public Task AttachContentPartAsync() =>
-         _contentDefinitionManager.AlterTypeDefinitionAsync(Type, type => type.WithPart(Part));
+        _contentDefinitionManager.AlterTypeDefinitionAsync(Type, type => type.WithPart(Part));
 }
