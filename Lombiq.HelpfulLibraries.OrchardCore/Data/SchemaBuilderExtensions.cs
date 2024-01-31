@@ -44,7 +44,7 @@ public static class SchemaBuilderExtensions
         if (columnNames.Exists(string.IsNullOrWhiteSpace))
         {
             throw new ArgumentException(
-                "The column names shouldn't be null, empty, or all whitespace.",
+                "The column names shouldn't be null, empty or all whitespace.",
                 nameof(columnNames));
         }
 
