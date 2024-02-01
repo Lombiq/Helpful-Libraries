@@ -29,8 +29,6 @@ public class TypedRouteTests
             additional,
             serviceProvider);
         route.ToString(tenantName).ShouldBe(expected);
-
-        serviceProvider.Dispose();
     }
 
     [Fact]
