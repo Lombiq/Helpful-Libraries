@@ -22,7 +22,7 @@ public class TypedRouteTests
         (string Name, object Value)[] additional,
         string tenantName)
     {
-        var serviceProvider = CreateServiceProvider();
+        using var serviceProvider = CreateServiceProvider();
 
         var route = TypedRoute.CreateFromExpression(
             actionExpression,
