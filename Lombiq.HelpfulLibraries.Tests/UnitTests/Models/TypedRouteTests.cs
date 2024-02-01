@@ -38,14 +38,13 @@ public class TypedRouteTests
     {
         const string expected = "/CustomAdmin/Lombiq.HelpfulLibraries.Tests/RouteTest/Baz";
 
-        var serviceProvider = CreateServiceProvider(services => services
+        using var serviceProvider = CreateServiceProvider(services => services
                 .Configure<AdminOptions>(options => options.AdminUrlPrefix = " /CustomAdmin /"));
 
         var route = TypedRoute.CreateFromExpression(
             AsExpression(controller => controller.Baz()),
             serviceProvider: serviceProvider);
         route.ToString(tenantName: string.Empty).ShouldBe(expected);
-        serviceProvider.Dispose();
     }
 
     private static ServiceProvider CreateServiceProvider(Action<ServiceCollection> configure = null)
