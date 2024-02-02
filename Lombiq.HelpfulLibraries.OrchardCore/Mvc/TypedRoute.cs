@@ -49,6 +49,10 @@ public class TypedRoute
         else
         {
             var typeFeatureProvider = serviceProvider?.GetService<ITypeFeatureProvider>();
+
+            // The fallbacks are only in case either the service provider or the ITypeFeatureProvider are missing. If
+            // the service is available but can't resolve the feature for the provided controller it will throw. This is
+            // good, because in that case the resulting link would not work anyway.
             _area = typeFeatureProvider?.GetFeatureForDependency(controller).Extension.Id ??
                     controller.Assembly.GetCustomAttribute<ModuleNameAttribute>()?.Name ??
                     controller.Assembly.GetCustomAttribute<ModuleMarkerAttribute>()?.Name ??
