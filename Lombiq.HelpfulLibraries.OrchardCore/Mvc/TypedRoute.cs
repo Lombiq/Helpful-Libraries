@@ -41,7 +41,7 @@ public class TypedRoute
         _action = action;
         _arguments = arguments;
 
-        if (_arguments.FirstOrDefault(pair => pair.Key.EqualsOrdinalIgnoreCase("area")) is { Value: { } value } area)
+        if (_arguments.Find(pair => pair.Key.EqualsOrdinalIgnoreCase("area")) is { Value: { } value } area)
         {
             _area = value;
             _arguments.Remove(area);
