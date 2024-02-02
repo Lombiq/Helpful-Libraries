@@ -1,5 +1,11 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Lombiq.HelpfulLibraries.Tests.Controllers;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Abstractions;
+using Microsoft.AspNetCore.Mvc.Routing;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.AspNetCore.Routing.Tree;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Admin;
 using OrchardCore.Environment.Extensions;
@@ -39,6 +45,19 @@ public class TypedRouteTests
             serviceProvider: CreateServiceProvider(services => services
                 .Configure<AdminOptions>(options => options.AdminUrlPrefix = " /CustomAdmin /")));
         route.ToString(tenantName: string.Empty).ShouldBe(expected);
+    }
+
+    [Theory]
+    [InlineData("/content/1/", null, null)]
+    [InlineData("/content/1/?anotherValue=foo", null, "foo")]
+    [InlineData("/content/1/this", "this", null)]
+    [InlineData("/content/1/that?anotherValue=etc", "that", "etc")]
+    public void OptionalRouteSubstitutionShouldWork(string expected, string optionalArgument, string anotherValue)
+    {
+        var route = TypedRoute.CreateFromExpression(
+            AsExpression(controller => controller.RouteSubstitutionOptional(1, optionalArgument, anotherValue)),
+            serviceProvider: CreateServiceProvider());
+        route.ToString().ShouldBe(expected);
     }
 
     private static IServiceProvider CreateServiceProvider(Action<ServiceCollection> configure = null)
