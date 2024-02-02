@@ -27,25 +27,24 @@ public class TypedRoute
     private readonly string _area;
     private readonly Type _controller;
     private readonly MethodInfo _action;
-    private readonly List<KeyValuePair<string, string>> _arguments;
+    private readonly IList<KeyValuePair<string, string>> _arguments;
 
     private readonly string _prefix = "/";
 
     private TypedRoute(
         Type controller,
         MethodInfo action,
-        IEnumerable<KeyValuePair<string, string>> arguments,
+        List<KeyValuePair<string, string>> arguments,
         IServiceProvider serviceProvider = null)
     {
         _controller = controller;
         _action = action;
+        _arguments = arguments;
 
-        _arguments = arguments is List<KeyValuePair<string, string>> list ? list : arguments.ToList();
-        var areaPair = _arguments.Find(pair => pair.Key.EqualsOrdinalIgnoreCase("area"));
-        if (areaPair.Value is { } areaArgumentValue)
+        if (_arguments.FirstOrDefault(pair => pair.Key.EqualsOrdinalIgnoreCase("area")) is { Value: { } value } area)
         {
-            _area = areaArgumentValue;
-            _arguments.Remove(areaPair);
+            _area = value;
+            _arguments.Remove(area);
         }
         else
         {
