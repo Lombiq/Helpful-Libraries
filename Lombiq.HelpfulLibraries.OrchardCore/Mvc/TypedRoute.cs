@@ -30,19 +30,13 @@ public class TypedRoute
     private readonly List<KeyValuePair<string, string>> _arguments;
 
     private readonly string _prefix = "/";
-    private readonly string _route;
 
     private TypedRoute(
+        Type controller,
         MethodInfo action,
         IEnumerable<KeyValuePair<string, string>> arguments,
         IServiceProvider serviceProvider = null)
     {
-        if (action?.DeclaringType is not { } controller)
-        {
-            throw new InvalidOperationException(
-                $"{action?.Name ?? nameof(action)}'s {nameof(action.DeclaringType)} cannot be null.");
-        }
-
         _controller = controller;
         _action = action;
 
@@ -69,10 +63,6 @@ public class TypedRoute
         {
             _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions()).AdminUrlPrefix}/";
         }
-
-        _route = action.GetCustomAttribute<RouteAttribute>()?.Template is { } route && !string.IsNullOrWhiteSpace(route)
-            ? GetRoute(route)
-            : $"{_area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}";
     }
 
     /// <summary>
@@ -96,11 +86,16 @@ public class TypedRoute
     /// </summary>
     public override string ToString()
     {
-        var arguments = _arguments.Any()
-            ? "?" + string.Join('&', _arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
+        var (route, arguments) = _action.GetCustomAttribute<RouteAttribute>()?.Template is { } routeTempalte &&
+                    !string.IsNullOrWhiteSpace(routeTempalte)
+            ? GetRouteFromTemplate(routeTempalte, _arguments)
+            : ($"{_area}/{_controller.ControllerName()}/{_action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? _action.Name}", _arguments);
+
+        var queryString = arguments.Any()
+            ? "?" + string.Join('&', arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
             : string.Empty;
 
-        return _prefix + _route + arguments;
+        return _prefix + route + queryString;
     }
 
     /// <summary>
@@ -113,19 +108,39 @@ public class TypedRoute
             ? ToString()
             : $"/{tenantName}{this}";
 
-    private string GetRoute(string route)
+    /// <summary>
+    /// Resolves a route template such as <c>[Route("DataTable/{providerName}/{queryId?}")]</c>.
+    /// </summary>
+    /// <returns>
+    /// The final route with the template strings substituted from <paramref name="arguments"/>, and the list of pairs
+    /// not used up by this substitution. The latter can be added to the query string of the final URL.
+    /// </returns>
+    private static (string Route, IList<KeyValuePair<string, string>> OtherArguments) GetRouteFromTemplate(
+        string routeTemplate,
+        IList<KeyValuePair<string, string>> arguments)
     {
-        var argumentsCopy = _arguments.ToList(); // This way modifying _arguments in the loop won't cause problems.
-        foreach (var (name, value) in argumentsCopy)
-        {
-            var placeholder = $"{{{name}}}";
-            if (!route.ContainsOrdinalIgnoreCase(placeholder)) continue;
+        if (!routeTemplate.Contains('{')) return (routeTemplate, arguments);
 
-            route = route.ReplaceOrdinalIgnoreCase(placeholder, WebUtility.UrlEncode(value));
-            _arguments.RemoveAll(pair => pair.Key == name);
+        var otherArguments = new List<KeyValuePair<string, string>>();
+
+        foreach (var pair in arguments)
+        {
+            if (routeTemplate.RegexMatch($@"{{\s*{pair.Key}\s*\??\s*}}") is { Success: true, Groups: { } match })
+            {
+                routeTemplate = routeTemplate.ReplaceOrdinalIgnoreCase(
+                    match[0].Value,
+                    WebUtility.UrlEncode(pair.Value));
+            }
+            else
+            {
+                otherArguments.Add(pair);
+            }
         }
 
-        return route;
+        // Remove unmatched optional argument templates.
+        routeTemplate = routeTemplate.RegexReplace(@"{[^?}]+\?\s*}", string.Empty);
+
+        return (routeTemplate, otherArguments);
     }
 
     public static implicit operator RouteValueDictionary(TypedRoute route) =>
@@ -193,6 +208,7 @@ public class TypedRoute
             return cache.GetOrCreate(
                 key,
                 _ => new TypedRoute(
+                    typeof(TController),
                     operation.Method,
                     arguments,
                     serviceProvider));
@@ -201,6 +217,7 @@ public class TypedRoute
         return _cache.GetOrAdd(
             key,
             _ => new TypedRoute(
+                typeof(TController),
                 operation.Method,
                 arguments,
                 serviceProvider));
