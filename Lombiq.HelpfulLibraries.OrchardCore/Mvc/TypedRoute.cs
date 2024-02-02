@@ -27,7 +27,7 @@ public class TypedRoute
     private readonly string _area;
     private readonly Type _controller;
     private readonly MethodInfo _action;
-    private readonly IList<KeyValuePair<string, string>> _arguments;
+    private readonly List<KeyValuePair<string, string>> _arguments;
 
     private readonly string _prefix = "/";
 
