@@ -40,6 +40,9 @@ public class TypedRoute
         if (arguments.Find(pair => pair.Key.EqualsOrdinalIgnoreCase("area")) is { Value: { } value } area)
         {
             _area = value;
+
+            // It is safe to edit arguments here but treat it read-only everywhere else, because it's always locally
+            // created in CreateFromExpression(), which is the only caller of this this private constructor.
             arguments.Remove(area);
         }
         else
@@ -60,7 +63,7 @@ public class TypedRoute
         var isAdmin = controller.GetCustomAttribute<AdminAttribute>() != null || action.GetCustomAttribute<AdminAttribute>() != null;
         if (isAdmin && action.GetCustomAttribute(typeof(RouteAttribute)) == null)
         {
-            _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions()).AdminUrlPrefix}/";
+            _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions())!.AdminUrlPrefix}/";
         }
 
         _controller = controller;
