@@ -27,7 +27,7 @@ public class TypedRoute
     private readonly string _area;
     private readonly Type _controller;
     private readonly MethodInfo _action;
-    private readonly List<KeyValuePair<string, string>> _arguments;
+    private readonly IReadOnlyList<KeyValuePair<string, string>> _arguments;
 
     private readonly string _prefix = "/";
 
@@ -37,14 +37,10 @@ public class TypedRoute
         List<KeyValuePair<string, string>> arguments,
         IServiceProvider serviceProvider = null)
     {
-        _controller = controller;
-        _action = action;
-        _arguments = arguments;
-
-        if (_arguments.Find(pair => pair.Key.EqualsOrdinalIgnoreCase("area")) is { Value: { } value } area)
+        if (arguments.Find(pair => pair.Key.EqualsOrdinalIgnoreCase("area")) is { Value: { } value } area)
         {
             _area = value;
-            _arguments.Remove(area);
+            arguments.Remove(area);
         }
         else
         {
@@ -66,6 +62,10 @@ public class TypedRoute
         {
             _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions()).AdminUrlPrefix}/";
         }
+
+        _controller = controller;
+        _action = action;
+        _arguments = arguments;
     }
 
     /// <summary>
@@ -118,9 +118,9 @@ public class TypedRoute
     /// The final route with the template strings substituted from <paramref name="arguments"/>, and the list of pairs
     /// not used up by this substitution. The latter can be added to the query string of the final URL.
     /// </returns>
-    private static (string Route, IList<KeyValuePair<string, string>> OtherArguments) GetRouteFromTemplate(
+    private static (string Route, IReadOnlyList<KeyValuePair<string, string>> OtherArguments) GetRouteFromTemplate(
         string routeTemplate,
-        IList<KeyValuePair<string, string>> arguments)
+        IReadOnlyList<KeyValuePair<string, string>> arguments)
     {
         if (!routeTemplate.Contains('{')) return (routeTemplate, arguments);
 
