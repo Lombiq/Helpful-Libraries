@@ -18,7 +18,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 /// </summary>
 /// <remarks>
 /// <para>
-/// In practice this mapper makes <c>[AdminRoute("My/Path/{id}")]</c> works the same way as if you used
+/// In practice this mapper makes <c>[AdminRoute("My/Path/{id}")]</c> work the same way as if you used
 /// <c>[Route("Admin/My/Path/{id}")]</c> except the admin prefix is no longer hard coded.
 /// </para>
 /// <para>
