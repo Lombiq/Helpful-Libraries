@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
@@ -44,7 +43,6 @@ public class AdminRouteAttributeRouteMapper : IAreaControllerRouteMapper
         );
 
         return true;
-
     }
 
     public static void AddToServices(IServiceCollection services) =>
