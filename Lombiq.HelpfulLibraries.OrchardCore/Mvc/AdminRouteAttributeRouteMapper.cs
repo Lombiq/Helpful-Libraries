@@ -9,7 +9,7 @@ using System.Reflection;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 
-// Mark this class as AdminRouteAttribute as Obsolete when upgrading to the first Orchard Core version that contains
+// Mark this class and AdminRouteAttribute as Obsolete when upgrading to the first Orchard Core version that contains
 // https://github.com/OrchardCMS/OrchardCore/pull/15251. The message should inform to use [Admin(template)] instead.
 
 /// <summary>
