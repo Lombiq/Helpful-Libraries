@@ -9,6 +9,9 @@ using System.Reflection;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 
+// Mark this class as AdminRouteAttribute as Obsolete when upgrading to the first Orchard Core version that contains
+// https://github.com/OrchardCMS/OrchardCore/pull/15251. The message should inform to use [Admin(template)] instead.
+
 /// <summary>
 /// A route mapper that maps a route comprised of the <see cref="AdminOptions.AdminUrlPrefix"/> and the provided
 /// template string to any action that has the <see cref="AdminRouteAttribute"/>.
