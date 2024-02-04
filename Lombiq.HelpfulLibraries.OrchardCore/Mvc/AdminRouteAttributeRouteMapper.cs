@@ -29,7 +29,8 @@ public class AdminRouteAttributeRouteMapper : IAreaControllerRouteMapper
 {
     private readonly string _adminUrlPrefix;
 
-    public int Order => 0;
+    // Must take precedence over AdminAreaControllerRouteMapper whose Order value is -1000.
+    public int Order => -2000;
 
     public AdminRouteAttributeRouteMapper(IOptions<AdminOptions> adminOptions) =>
         _adminUrlPrefix = adminOptions.Value.AdminUrlPrefix;
