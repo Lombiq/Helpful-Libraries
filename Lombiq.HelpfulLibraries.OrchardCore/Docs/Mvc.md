@@ -19,3 +19,7 @@ If you also use our [UI Testing Toolbox](https://github.com/Lombiq/UI-Testing-To
 ## `WidgetFilterBase<T>`
 
 A base class for creating filters that insert a content as widget in a specified zone with permission check.
+
+## `[AdminRoute]`
+
+`[AdminRoute("My/Path/{id}")]` can be applied to any MVC action method. It work the same way as if you used [Route("Admin/My/Path/{id}")] except the admin prefix is no longer hard coded. This functionality is enabled by registering its mapper as a DI service using the `AdminRouteAttributeRouteMapper.AddToServices(services)` static method.
