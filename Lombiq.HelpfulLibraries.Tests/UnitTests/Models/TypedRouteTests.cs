@@ -45,7 +45,19 @@ public class TypedRouteTests
         route.ToString(tenantName: string.Empty).ShouldBe(expected);
     }
 
-    private static ServiceProvider CreateServiceProvider(Action<ServiceCollection> configure = null)
+    [Theory]
+    [InlineData("/content/1/", null, null)]
+    [InlineData("/content/1/?anotherValue=foo", null, "foo")]
+    [InlineData("/content/1/this", "this", null)]
+    [InlineData("/content/1/that?anotherValue=etc", "that", "etc")]
+    public void OptionalRouteSubstitutionShouldWork(string expected, string optionalArgument, string anotherValue)
+    {
+        var route = TypedRoute.CreateFromExpression(
+            AsExpression(controller => controller.RouteSubstitutionOptional(1, optionalArgument, anotherValue)),
+            serviceProvider: CreateServiceProvider());
+        route.ToString().ShouldBe(expected);
+    }
+
     {
         var services = new ServiceCollection();
 
