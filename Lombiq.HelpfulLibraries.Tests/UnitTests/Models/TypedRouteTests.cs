@@ -27,7 +27,7 @@ public class TypedRouteTests
         var route = TypedRoute.CreateFromExpression(
             actionExpression,
             additional,
-            serviceProvider);
+            serviceProvider: serviceProvider);
         route.ToString(tenantName).ShouldBe(expected);
     }
 
@@ -52,12 +52,15 @@ public class TypedRouteTests
     [InlineData("/content/1/that?anotherValue=etc", "that", "etc")]
     public void OptionalRouteSubstitutionShouldWork(string expected, string optionalArgument, string anotherValue)
     {
+        using var serviceProvider = CreateServiceProvider();
+
         var route = TypedRoute.CreateFromExpression(
             AsExpression(controller => controller.RouteSubstitutionOptional(1, optionalArgument, anotherValue)),
-            serviceProvider: CreateServiceProvider());
+            serviceProvider: serviceProvider);
         route.ToString().ShouldBe(expected);
     }
 
+    private static ServiceProvider CreateServiceProvider(Action<ServiceCollection> configure = null)
     {
         var services = new ServiceCollection();
 
