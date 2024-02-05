@@ -50,7 +50,7 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
 
     // We could have a
     //// if (File.Exists(FileName)) File.Delete(FileName);
-    // here but on .NET 6 the file remains locked despite the disposal. It doesn't really matter if it remains there
+    // here but on .NET 8 the file remains locked despite the disposal. It doesn't really matter if it remains there
     // after a test execution.
     public void Dispose() => Store?.Dispose();
 
