@@ -1,3 +1,4 @@
+using Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 using Microsoft.AspNetCore.Html;
 using OrchardCore.ResourceManagement.TagHelpers;
 using System;
@@ -44,6 +45,12 @@ public static class ResourceManagerExtensions
         var headerHtml = transform(stringWriter.ToString());
         return new HtmlString(headerHtml);
     }
+
+    public static ResourceDefinition DefineScriptAsModule(this ResourceManifest manifest, string name) =>
+        manifest.DefineResource(ResourceTypes.ScriptModule, name);
+
+    public static RequireSettings RegisterScriptAsModule(this IResourceManager resourceManager, string name) =>
+        resourceManager.RegisterResource(ResourceTypes.ScriptModule, name);
 
     private static RequireSettings SetVersionIfAny(RequireSettings requireSettings, string version)
     {
