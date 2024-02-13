@@ -46,10 +46,19 @@ public static class ResourceManagerExtensions
         return new HtmlString(headerHtml);
     }
 
-    public static ResourceDefinition DefineScriptAsModule(this ResourceManifest manifest, string name) =>
+    /// <summary>
+    /// Adds a <c>script-module"</c> resource to the manifest. All of these resources are mapped using <see
+    /// cref="GetScriptModuleMap"/> so they can be imported by module type scripts using the <c>import ... from</c>
+    /// statement.
+    /// </summary>
+    public static ResourceDefinition DefineScriptModule(this ResourceManifest manifest, string name) =>
         manifest.DefineResource(ResourceTypes.ScriptModule, name);
 
-    public static RequireSettings RegisterScriptAsModule(this IResourceManager resourceManager, string name) =>
+    /// <summary>
+    /// Registers a <c>script-module"</c> resource to be used on the current page. These can be rendered using <see
+    /// cref="GetRequiredScriptModuleTags"/> as <c>&lt;script src="..." type="module"&gt;</c> elements.
+    /// </summary>
+    public static RequireSettings RegisterScriptModule(this IResourceManager resourceManager, string name) =>
         resourceManager.RegisterResource(ResourceTypes.ScriptModule, name);
 
     private static RequireSettings SetVersionIfAny(RequireSettings requireSettings, string version)
