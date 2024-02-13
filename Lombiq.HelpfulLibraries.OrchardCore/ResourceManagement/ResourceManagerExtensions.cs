@@ -87,7 +87,7 @@ public static class ResourceManagerExtensions
 
         return contexts.Select(context => new TagBuilder("script")
         {
-            TagRenderMode = TagRenderMode.SelfClosing,
+            TagRenderMode = TagRenderMode.Normal,
             Attributes =
             {
                 ["type"] = "module",
@@ -172,7 +172,7 @@ public static class ResourceManagerExtensions
 
         if (url.StartsWith("~/", StringComparison.Ordinal))
         {
-            url = basePath + url[1..];
+            url = basePath.Value?.TrimEnd('/') + url[1..];
         }
 
         return fileVersionProvider.AddFileVersionToPath(basePath, url);
