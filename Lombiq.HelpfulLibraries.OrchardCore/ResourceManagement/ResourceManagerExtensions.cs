@@ -1,8 +1,11 @@
+using AngleSharp.Common;
 using Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using OrchardCore.ResourceManagement.TagHelpers;
 using System;
 using System.Collections.Generic;
@@ -119,27 +122,23 @@ public static class ResourceManagerExtensions
                 context => context.Resource.Name == resourceName)
             .FirstOrDefault();
 
-    /// <summary>
-    /// Returns a <c>&lt;script type="importmap"&gt;</c> element that maps all the registered module resources by
-    /// resource name to their respective URLs so you can import these resources in your module type scripts using
-    /// <c>import someModule from 'resourceName'</c> instead of using the full resource URL. This way import will work
-    /// regardless of your CDN configuration.
-    /// </summary>
-    public static IHtmlContent GetScriptModuleMap(
-        this ResourceManagementOptions resources,
+
+    /// <inheritdoc cref="GetScriptModuleImportMap(IOrchardHelper)"/>
+    public static IHtmlContent GetScriptModuleImportMap(
+        this ResourceManagementOptions resourceOptions,
+        IEnumerable<ResourceManifest> resourceManifests,
         IFileVersionProvider fileVersionProvider)
     {
-        var imports = resources
-            .ResourceManifests
+        var imports = (resourceManifests ?? resourceOptions.ResourceManifests)
             .SelectMany(manifest => manifest.GetResources(ResourceTypes.ScriptModule).Values)
             .SelectMany(list => list)
             .ToDictionary(
                 resource => resource.Name,
                 resource => resource.GetResourceUrl(
                     fileVersionProvider,
-                    resources.DebugMode,
-                    resources.UseCdn,
-                    resources.ContentBasePath));
+                    resourceOptions.DebugMode,
+                    resourceOptions.UseCdn,
+                    resourceOptions.ContentBasePath));
 
         var tagBuilder = new TagBuilder("script")
         {
@@ -149,6 +148,24 @@ public static class ResourceManagerExtensions
 
         tagBuilder.InnerHtml.AppendHtml(JsonSerializer.Serialize(new { imports }));
         return tagBuilder;
+    }
+
+    /// <summary>
+    /// Returns a <c>&lt;script type="importmap"&gt;</c> element that maps all the registered module resources by
+    /// resource name to their respective URLs so you can import these resources in your module type scripts using
+    /// <c>import someModule from 'resourceName'</c> instead of using the full resource URL. This way import will work
+    /// regardless of your CDN configuration.
+    /// </summary>
+    public static IHtmlContent GetScriptModuleImportMap(this IOrchardHelper helper)
+    {
+        var serviceProvider = helper.HttpContext.RequestServices;
+        var resourceOptions = serviceProvider.GetRequiredService<IOptions<ResourceManagementOptions>>().Value;
+        var resourceManager = serviceProvider.GetRequiredService<IResourceManager>();
+        var fileVersionProvider = serviceProvider.GetRequiredService<IFileVersionProvider>();
+
+        return resourceOptions.GetScriptModuleImportMap(
+            resourceOptions.ResourceManifests.Concat(resourceManager.InlineManifest),
+            fileVersionProvider);
     }
 
     private static string GetResourceUrl(
