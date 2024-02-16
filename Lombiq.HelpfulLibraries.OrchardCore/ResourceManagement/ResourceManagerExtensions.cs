@@ -156,24 +156,6 @@ public static class ResourceManagerExtensions
         return tagBuilder;
     }
 
-    /// <summary>
-    /// Returns a <c>&lt;script type="importmap"&gt;</c> element that maps all the registered module resources by
-    /// resource name to their respective URLs so you can import these resources in your module type scripts using
-    /// <c>import someModule from 'resourceName'</c> instead of using the full resource URL. This way import will work
-    /// regardless of your CDN configuration.
-    /// </summary>
-    public static IHtmlContent GetScriptModuleImportMap(this IOrchardHelper helper)
-    {
-        var serviceProvider = helper.HttpContext.RequestServices;
-        var resourceOptions = serviceProvider.GetRequiredService<IOptions<ResourceManagementOptions>>().Value;
-        var resourceManager = serviceProvider.GetRequiredService<IResourceManager>();
-        var fileVersionProvider = serviceProvider.GetRequiredService<IFileVersionProvider>();
-
-        return resourceOptions.GetScriptModuleImportMap(
-            resourceOptions.ResourceManifests.Concat(resourceManager.InlineManifest),
-            fileVersionProvider);
-    }
-
     private static string GetResourceUrl(
         this ResourceDefinition definition,
         IFileVersionProvider fileVersionProvider,
