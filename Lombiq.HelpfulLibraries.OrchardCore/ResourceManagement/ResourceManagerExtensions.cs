@@ -88,18 +88,24 @@ public static class ResourceManagerExtensions
         var contexts = resourceManager.GetRequiredResources(ResourceTypes.ScriptModule);
         if (filter != null) contexts = contexts.Where(filter);
 
-        return contexts.Select(context => new TagBuilder("script")
+        return contexts.Select(context =>
         {
-            TagRenderMode = TagRenderMode.Normal,
-            Attributes =
+            var builder = new TagBuilder("script")
             {
-                ["type"] = "module",
-                ["src"] = context.Resource.GetResourceUrl(
-                    context.FileVersionProvider,
-                    context.Settings.DebugMode,
-                    context.Settings.CdnMode,
-                    basePath),
-            },
+                TagRenderMode = TagRenderMode.Normal,
+                Attributes =
+                {
+                    ["type"] = "module",
+                    ["src"] = context.Resource.GetResourceUrl(
+                        context.FileVersionProvider,
+                        context.Settings.DebugMode,
+                        context.Settings.CdnMode,
+                        basePath),
+                },
+            };
+            builder.MergeAttributes(context.Resource.Attributes, replaceExisting: true);
+
+            return builder;
         });
     }
 
