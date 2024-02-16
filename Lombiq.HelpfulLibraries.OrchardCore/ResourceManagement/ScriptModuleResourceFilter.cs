@@ -4,10 +4,8 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Options;
-using OrchardCore.DisplayManagement.Descriptors;
+using OrchardCore.DisplayManagement.Implementation;
 using OrchardCore.DisplayManagement.Layout;
-using OrchardCore.DisplayManagement.Shapes;
-using OrchardCore.DisplayManagement.Theming;
 using OrchardCore.ResourceManagement;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,46 +16,19 @@ public record ScriptModuleResourceFilter(
     IFileVersionProvider FileVersionProvider,
     ILayoutAccessor LayoutAccessor,
     IResourceManager ResourceManager,
-    IOptions<ResourceManagementOptions> ResourceManagerOptions,
-    IShapeTableManager ShapeTableManager,
-    IThemeManager ThemeManager) : IAsyncResultFilter
+    IOptions<ResourceManagementOptions> ResourceManagerOptions) : IAsyncResultFilter
 {
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        var theme = await ThemeManager.GetThemeAsync();
-        var shapeTable = ShapeTableManager.GetShapeTable(theme.Id);
-        var shape = new Shape
-        {
-            Metadata =
-            {
-                Type = nameof(ScriptModuleResourceFilter),
-            },
-        };
-
-        var shapeDescriptor = new ShapeDescriptor
-        {
-            ShapeType = nameof(ScriptModuleResourceFilter),
-            Bindings =
-            {
-                [nameof(ScriptModuleResourceFilter)] = new ShapeBinding
-                {
-                    BindingName = nameof(ScriptModuleResourceFilter),
-                    BindingAsync = _ => Task.FromResult(Display()),
-                },
-            },
-        };
-
-        shapeTable.Descriptors[shapeDescriptor.ShapeType] = shapeDescriptor;
-        foreach (var binding in shapeDescriptor.Bindings)
-        {
-            shapeTable.Bindings[binding.Key] = binding.Value;
-        }
+        var shape = await context.HttpContext.RequestServices.CreateAdHocShapeForCurrentThemeAsync(
+            nameof(ScriptModuleResourceFilter),
+            _ => Task.FromResult(DisplayScriptModuleResources()));
 
         await LayoutAccessor.AddShapeToZoneAsync("Content", shape, "After");
         await next();
     }
 
-    private IHtmlContent Display()
+    private IHtmlContent DisplayScriptModuleResources()
     {
         var options = ResourceManagerOptions.Value;
         var scriptElements = ResourceManager
