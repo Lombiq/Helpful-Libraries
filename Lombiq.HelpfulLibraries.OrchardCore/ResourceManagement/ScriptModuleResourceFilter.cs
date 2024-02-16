@@ -12,6 +12,11 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
+/// <summary>
+/// A filter that looks for the required <c>script-module"</c> resources. If there were any, it injects the input map
+/// (used for mapping module names to URLs) of all registered module resources and the script blocks of the currently
+/// required resource.
+/// </summary>
 public record ScriptModuleResourceFilter(
     IFileVersionProvider FileVersionProvider,
     ILayoutAccessor LayoutAccessor,
