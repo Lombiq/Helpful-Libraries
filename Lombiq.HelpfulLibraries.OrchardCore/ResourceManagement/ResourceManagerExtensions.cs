@@ -128,8 +128,12 @@ public static class ResourceManagerExtensions
                 context => context.Resource.Name == resourceName)
             .FirstOrDefault();
 
-
-    /// <inheritdoc cref="GetScriptModuleImportMap(IOrchardHelper)"/>
+    /// <summary>
+    /// Returns a <c>&lt;script type="importmap"&gt;</c> element that maps all the registered module resources by
+    /// resource name to their respective URLs so you can import these resources in your module type scripts using
+    /// <c>import someModule from 'resourceName'</c> instead of using the full resource URL. This way import will work
+    /// regardless of your CDN configuration.
+    /// </summary>
     public static IHtmlContent GetScriptModuleImportMap(
         this ResourceManagementOptions resourceOptions,
         IEnumerable<ResourceManifest> resourceManifests,
@@ -155,6 +159,22 @@ public static class ResourceManagerExtensions
         tagBuilder.InnerHtml.AppendHtml(JsonSerializer.Serialize(new { imports }));
         return tagBuilder;
     }
+
+    /// <inheritdoc cref="GetScriptModuleImportMap(ResourceManagementOptions, IEnumerable{ResourceManifest}, IFileVersionProvider)"/>
+    internal static IHtmlContent GetScriptModuleImportMap(this IServiceProvider serviceProvider)
+    {
+        var options = serviceProvider.GetRequiredService<IOptions<ResourceManagementOptions>>().Value;
+        var resourceManager = serviceProvider.GetRequiredService<IResourceManager>();
+        var fileVersionProvider = serviceProvider.GetRequiredService<IFileVersionProvider>();
+
+        return options.GetScriptModuleImportMap(
+            options.ResourceManifests.Concat(resourceManager.InlineManifest),
+            fileVersionProvider);
+    }
+
+    /// <inheritdoc cref="GetScriptModuleImportMap(ResourceManagementOptions, IEnumerable{ResourceManifest}, IFileVersionProvider)"/>
+    public static IHtmlContent GetScriptModuleImportMap(this IOrchardHelper helper) =>
+        helper.HttpContext.RequestServices.GetScriptModuleImportMap();
 
     private static string GetResourceUrl(
         this ResourceDefinition definition,

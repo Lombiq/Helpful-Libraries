@@ -38,18 +38,11 @@ public record ScriptModuleResourceFilter(ILayoutAccessor LayoutAccessor) : IAsyn
         // IResourceManager.InlineManifest being different.
         var resourceManager = serviceProvider.GetRequiredService<IResourceManager>();
         var options = serviceProvider.GetRequiredService<IOptions<ResourceManagementOptions>>().Value;
-        var fileVersionProvider = serviceProvider.GetRequiredService<IFileVersionProvider>();
 
-        var scriptElements = resourceManager
-            .GetRequiredScriptModuleTags(options.ContentBasePath)
-            .ToList();
-
+        var scriptElements = resourceManager.GetRequiredScriptModuleTags(options.ContentBasePath).ToList();
         if (!scriptElements.Any()) return null;
 
-        var importMap = options.GetScriptModuleImportMap(
-            options.ResourceManifests.Concat(resourceManager.InlineManifest),
-            fileVersionProvider);
-
+        var importMap = serviceProvider.GetScriptModuleImportMap();
         var content = new HtmlContentBuilder(capacity: scriptElements.Count + 1).AppendHtml(importMap);
         foreach (var script in scriptElements) content.AppendHtml(script);
 
