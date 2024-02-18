@@ -1,7 +1,6 @@
 ﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
 using OrchardCore.ResourceManagement;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

@@ -1,8 +1,6 @@
-using AngleSharp.Common;
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Filters;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OrchardCore.DisplayManagement.Implementation;
@@ -32,7 +30,7 @@ public record ScriptModuleResourceFilter(ILayoutAccessor LayoutAccessor) : IAsyn
     }
 
     // We can't safely inject resources from constructor here, as some get disposed by the time this display takes place.
-    private IHtmlContent DisplayScriptModuleResources(IServiceProvider serviceProvider)
+    private static IHtmlContent DisplayScriptModuleResources(IServiceProvider serviceProvider)
     {
         // Won't work correctly with injected resources, the scriptElements below will be empty. Possibly related to the
         // IResourceManager.InlineManifest being different.

@@ -57,8 +57,8 @@ public static class ResourceManagerExtensions
 
     /// <summary>
     /// Adds a <c>script-module"</c> resource to the manifest. All of these resources are mapped using <see
-    /// cref="GetScriptModuleImportMap"/> so they can be imported by module type scripts using the <c>import ... from</c>
-    /// statement.
+    /// cref="GetScriptModuleImportMap(IOrchardHelper)"/> so they can be imported by module type scripts using the
+    /// <c>import ResourceName from 'resourceName'</c> statement.
     /// </summary>
     public static ResourceDefinition DefineScriptModule(this ResourceManifest manifest, string name) =>
         manifest.DefineResource(ResourceTypes.ScriptModule, name);
