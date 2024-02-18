@@ -27,7 +27,6 @@ public interface IContentSecurityPolicyProvider
     public static string GetDirective(IDictionary<string, string> securityPolicies, params string[] names) =>
         GetDirective(securityPolicies, names.AsEnumerable());
 
-    /// <inheritdoc cref="GetDirective(System.Collections.Generic.IDictionary{string,string},string[])"/>
     public static string GetDirective(IDictionary<string, string> securityPolicies, IEnumerable<string> names)
     {
         foreach (var name in names)

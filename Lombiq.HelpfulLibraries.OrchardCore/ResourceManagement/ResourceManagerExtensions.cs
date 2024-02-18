@@ -55,31 +55,12 @@ public static class ResourceManagerExtensions
         return new HtmlString(headerHtml);
     }
 
-    /// <summary>
-    /// Adds a <c>script-module"</c> resource to the manifest. All of these resources are mapped using <see
-    /// cref="GetScriptModuleImportMap(IOrchardHelper)"/> so they can be imported by module type scripts using the
-    /// <c>import ResourceName from 'resourceName'</c> statement.
-    /// </summary>
     public static ResourceDefinition DefineScriptModule(this ResourceManifest manifest, string name) =>
         manifest.DefineResource(ResourceTypes.ScriptModule, name);
 
-    /// <summary>
-    /// Registers a <c>script-module"</c> resource to be used on the current page. These can be rendered using <see
-    /// cref="GetRequiredScriptModuleTags"/> as <c>&lt;script src="..." type="module"&gt;</c> elements.
-    /// </summary>
     public static RequireSettings RegisterScriptModule(this IResourceManager resourceManager, string name) =>
         resourceManager.RegisterResource(ResourceTypes.ScriptModule, name);
 
-    /// <summary>
-    /// Turns the required <c>script-module"</c> resources into <c>&lt;script src="..." type="module"&gt;</c> elements.
-    /// </summary>
-    /// <param name="basePath">
-    /// The path that's used to resolve <c>~</c> in the resource URLs. Typically <see
-    /// cref="ResourceManagementOptions.ContentBasePath"/> should be used..
-    /// </param>
-    /// <param name="filter">
-    /// If not <see langword="null"/> it's used to select which required resources should be considered.
-    /// </param>
     public static IEnumerable<TagBuilder> GetRequiredScriptModuleTags(
         this IResourceManager resourceManager,
         string basePath = null,
@@ -109,15 +90,6 @@ public static class ResourceManagerExtensions
         });
     }
 
-    /// <summary>
-    /// Turns the required <c>script-module"</c> resource with the <paramref name="resourceName"/> into a
-    /// <c>&lt;script src="..." type="module"&gt;</c> element.
-    /// </summary>
-    /// <param name="basePath">
-    /// The path that's used to resolve <c>~</c> in the resource URLs. Typically <see
-    /// cref="ResourceManagementOptions.ContentBasePath"/> should be used..
-    /// </param>
-    /// <param name="resourceName">The expected value of <see cref="ResourceDefinition.Name"/>.</param>
     public static TagBuilder GetRequiredScriptModuleTag(
         this IResourceManager resourceManager,
         string basePath,
@@ -160,7 +132,6 @@ public static class ResourceManagerExtensions
         return tagBuilder;
     }
 
-    /// <inheritdoc cref="GetScriptModuleImportMap(ResourceManagementOptions, IEnumerable{ResourceManifest}, IFileVersionProvider)"/>
     internal static IHtmlContent GetScriptModuleImportMap(this IServiceProvider serviceProvider)
     {
         var options = serviceProvider.GetRequiredService<IOptions<ResourceManagementOptions>>().Value;
@@ -172,7 +143,6 @@ public static class ResourceManagerExtensions
             fileVersionProvider);
     }
 
-    /// <inheritdoc cref="GetScriptModuleImportMap(ResourceManagementOptions, IEnumerable{ResourceManifest}, IFileVersionProvider)"/>
     public static IHtmlContent GetScriptModuleImportMap(this IOrchardHelper helper) =>
         helper.HttpContext.RequestServices.GetScriptModuleImportMap();
 
