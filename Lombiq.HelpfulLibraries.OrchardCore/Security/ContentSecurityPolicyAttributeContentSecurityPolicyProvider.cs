@@ -65,9 +65,10 @@ public class ContentSecurityPolicyAttributeContentSecurityPolicyProvider : ICont
         {
             foreach (var attribute in actionDescriptor.MethodInfo.GetCustomAttributes<ContentSecurityPolicyAttribute>())
             {
-                securityPolicies[ScriptSrc] = IContentSecurityPolicyProvider
-                    .GetDirective(securityPolicies, attribute.DirectiveNames)
-                    .MergeWordSets(attribute.DirectiveValue);
+                IContentSecurityPolicyProvider.MergeDirectiveValues(
+                    securityPolicies,
+                    attribute.DirectiveNames,
+                    attribute.DirectiveValue);
             }
         }
 

@@ -32,9 +32,7 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
 
         if (resourceExists)
         {
-            securityPolicies[DirectiveName] = IContentSecurityPolicyProvider
-                .GetDirective(securityPolicies, DirectiveNameChain.ToArray())
-                .MergeWordSets(DirectiveValue);
+            IContentSecurityPolicyProvider.MergeDirectiveValues(securityPolicies, DirectiveNameChain, DirectiveValue);
         }
 
         return ThenUpdateAsync(securityPolicies, context, resourceExists);
