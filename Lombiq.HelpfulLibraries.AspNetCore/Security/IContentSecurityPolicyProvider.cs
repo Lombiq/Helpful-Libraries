@@ -27,6 +27,10 @@ public interface IContentSecurityPolicyProvider
     public static string GetDirective(IDictionary<string, string> securityPolicies, params string[] names) =>
         GetDirective(securityPolicies, names.AsEnumerable());
 
+    /// <summary>
+    /// Returns the first non-empty directive from the <paramref name="names"/> or <see cref="DefaultSrc"/> or an empty
+    /// string.
+    /// </summary>
     public static string GetDirective(IDictionary<string, string> securityPolicies, IEnumerable<string> names)
     {
         foreach (var name in names)
