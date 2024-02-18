@@ -57,7 +57,7 @@ public static class ResourceManagerExtensions
 
     /// <summary>
     /// Adds a <c>script-module"</c> resource to the manifest. All of these resources are mapped using <see
-    /// cref="GetScriptModuleMap"/> so they can be imported by module type scripts using the <c>import ... from</c>
+    /// cref="GetScriptModuleImportMap"/> so they can be imported by module type scripts using the <c>import ... from</c>
     /// statement.
     /// </summary>
     public static ResourceDefinition DefineScriptModule(this ResourceManifest manifest, string name) =>
