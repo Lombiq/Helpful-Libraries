@@ -8,8 +8,8 @@ namespace Microsoft.AspNetCore.Mvc.Rendering;
 public static class JsonHelperExtensions
 {
     /// <summary>
-    /// Returns a full HTML element attribute withe the given <paramref name="name"/> prefixed with <c>data-</c> and the
-    /// value appropriately encoded.
+    /// Returns a full HTML element attribute with the given <paramref name="name"/> prefixed with <c>data-</c> and the
+    /// value appropriately encoded to prevent XSS attacks.
     /// </summary>
     public static IHtmlContent DataAttribute(this IJsonHelper helper, string name, object value)
     {
