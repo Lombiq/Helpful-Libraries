@@ -29,7 +29,9 @@ public record ScriptModuleResourceFilter(ILayoutAccessor LayoutAccessor) : IAsyn
         await next();
     }
 
-    // We can't safely inject resources from constructor here, as some get disposed by the time this display takes place.
+    // We can't safely inject resources from the constructor because some resources may get disposed by the time  this
+    // display action takes place, leading to potential access of disposed objects. Instead, the DisplayContext's
+    // service provider is used.
     private static IHtmlContent DisplayScriptModuleResources(IServiceProvider serviceProvider)
     {
         // Won't work correctly with injected resources, the scriptElements below will be empty. Possibly related to the
