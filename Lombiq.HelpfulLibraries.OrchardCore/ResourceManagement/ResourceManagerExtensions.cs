@@ -56,7 +56,7 @@ public static class ResourceManagerExtensions
     }
 
     /// <summary>
-    /// Adds a <c>script-module"</c> resource to the manifest. All of these resources are mapped using <see
+    /// Adds a <c>script-module</c> resource to the manifest. All of these resources are mapped using <see
     /// cref="GetScriptModuleImportMap(IOrchardHelper)"/> so they can be imported by module type scripts using the
     /// <c>import ResourceName from 'resourceName'</c> statement.
     /// </summary>
@@ -64,14 +64,14 @@ public static class ResourceManagerExtensions
         manifest.DefineResource(ResourceTypes.ScriptModule, name);
 
     /// <summary>
-    /// Registers a <c>script-module"</c> resource to be used on the current page. These can be rendered using <see
+    /// Registers a <c>script-module</c> resource to be used on the current page. These can be rendered using <see
     /// cref="GetRequiredScriptModuleTags"/> as <c>&lt;script src="..." type="module"&gt;</c> elements.
     /// </summary>
     public static RequireSettings RegisterScriptModule(this IResourceManager resourceManager, string name) =>
         resourceManager.RegisterResource(ResourceTypes.ScriptModule, name);
 
     /// <summary>
-    /// Turns the required <c>script-module"</c> resources into <c>&lt;script src="..." type="module"&gt;</c> elements.
+    /// Turns the required <c>script-module</c> resources into <c>&lt;script src="..." type="module"&gt;</c> elements.
     /// </summary>
     /// <param name="basePath">
     /// The path that's used to resolve <c>~</c> in the resource URLs. Typically <see
@@ -110,7 +110,7 @@ public static class ResourceManagerExtensions
     }
 
     /// <summary>
-    /// Turns the required <c>script-module"</c> resource with the <paramref name="resourceName"/> into a
+    /// Turns the required <c>script-module</c> resource with the <paramref name="resourceName"/> into a
     /// <c>&lt;script src="..." type="module"&gt;</c> element.
     /// </summary>
     /// <param name="basePath">
