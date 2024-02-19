@@ -27,10 +27,9 @@ public interface IContentSecurityPolicyProvider
     public static string GetDirective(IDictionary<string, string> securityPolicies, params string[] names) =>
         GetDirective(securityPolicies, names.AsEnumerable());
 
-    /// <summary>
-    /// Returns the first non-empty directive from the <paramref name="names"/> or <see cref="DefaultSrc"/> or an empty
-    /// string.
-    /// </summary>
+    // Documenting this somehow causes the analyzer to crash:
+    // https://github.com/Lombiq/Open-Source-Orchard-Core-Extensions/actions/runs/7952542539/job/21707262816?pr=705
+#pragma warning disable SA1600 // Elements should be documented
     public static string GetDirective(IDictionary<string, string> securityPolicies, IEnumerable<string> names)
     {
         foreach (var name in names)
@@ -43,6 +42,7 @@ public interface IContentSecurityPolicyProvider
 
         return securityPolicies.GetMaybe(DefaultSrc) ?? string.Empty;
     }
+#pragma warning restore SA1600 // Elements should be documented
 
     /// <summary>
     /// Updates the directive (the first entry of the <paramref name="directiveNameChain"/>) by merging its space
