@@ -12,6 +12,10 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
+// Don't replace the "script-module" there with <c>script-module</c> as that will cause the DOC105UseParamref analyzer
+// to throw NullReferenceException. The same doesn't seem to happen in other files, for example the
+// ResourceManagerExtensions.cs in this directory.
+
 /// <summary>
 /// A filter that looks for the required "script-module" resources. If there were any, it injects the input map
 /// (used for mapping module names to URLs) of all registered module resources and the script blocks of the currently
