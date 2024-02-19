@@ -96,6 +96,12 @@ public static class ShapeExtensions
         return shape;
     }
 
+    /// <summary>
+    /// Creates a new shape with the given <paramref name="type"/> in the shape table of the current front-end theme. If
+    /// the type is not yet in the theme's <see cref="ShapeTable"/>, then a new descriptor is added with binding that
+    /// uses <paramref name="displayAsync"/>. If <paramref name="type"/> is null or empty, a new random unique name is
+    /// generated.
+    /// </summary>
     public static async Task<IShape> CreateAdHocShapeForCurrentThemeAsync(
         this IServiceProvider provider,
         string type,
