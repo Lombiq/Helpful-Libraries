@@ -1,4 +1,5 @@
 using OrchardCore.Data.Migration;
+using System.Threading.Tasks;
 using YesSql.Indexes;
 using YesSql.Sql;
 using YesSql.Sql.Schema;
@@ -15,11 +16,11 @@ public abstract class IndexDataMigration<TIndex> : DataMigration
 {
     protected virtual int CreateVersion => 1;
 
-    public int Create()
+    public async Task<int> CreateAsync()
     {
-        SchemaBuilder.CreateMapIndexTable<TIndex>(CreateIndex);
+        await SchemaBuilder.CreateMapIndexTableAsync<TIndex>(CreateIndex);
 
-        SchemaBuilder.CreateDocumentIdIndex<TIndex>();
+        await SchemaBuilder.CreateDocumentIdIndexAsync<TIndex>();
 
         return CreateVersion;
     }

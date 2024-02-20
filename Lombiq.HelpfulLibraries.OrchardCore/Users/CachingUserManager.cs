@@ -12,10 +12,10 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Users;
 
 public class CachingUserManager : ICachingUserManager
 {
-    private readonly Dictionary<string, User> _userByNameCache = new();
-    private readonly Dictionary<string, User> _userByEmailCache = new();
-    private readonly Dictionary<string, User> _userByIdCache = new();
-    private readonly Dictionary<string, User> _userByUserIdCache = new();
+    private readonly Dictionary<string, User> _userByNameCache = [];
+    private readonly Dictionary<string, User> _userByEmailCache = [];
+    private readonly Dictionary<string, User> _userByIdCache = [];
+    private readonly Dictionary<string, User> _userByUserIdCache = [];
 
     private readonly Lazy<UserManager<IUser>> _userManagerLazy;
     private readonly Lazy<ISession> _sessionLazy;

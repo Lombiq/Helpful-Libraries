@@ -1,6 +1,7 @@
 using Microsoft.Extensions.Localization;
 using OrchardCore.ContentManagement.Metadata;
 using OrchardCore.Environment.Commands;
+using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 
@@ -28,6 +29,6 @@ public class ContentDefinitionCommands : DefaultCommandHandler
         " /Part:<contentPartName>" +
         "\r\n\t" + "Attaches a content part to a content type.")]
     [OrchardSwitches(nameof(Type) + ", " + nameof(Part))]
-    public void AttachContentPart() =>
-        _contentDefinitionManager.AlterTypeDefinition(Type, type => type.WithPart(Part));
+    public Task AttachContentPartAsync() =>
+        _contentDefinitionManager.AlterTypeDefinitionAsync(Type, type => type.WithPart(Part));
 }
