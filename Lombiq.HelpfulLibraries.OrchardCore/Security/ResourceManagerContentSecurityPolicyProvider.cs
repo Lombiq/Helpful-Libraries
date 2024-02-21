@@ -1,7 +1,6 @@
 using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
 using OrchardCore.ResourceManagement;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,12 +31,7 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
 
         if (resourceExists)
         {
-            // False positive, see: https://github.com/SonarSource/sonar-dotnet/issues/8510.
-#pragma warning disable S3878 // Arrays should not be created for params parameters
-            securityPolicies[DirectiveName] = IContentSecurityPolicyProvider
-                .GetDirective(securityPolicies, [.. DirectiveNameChain])
-                .MergeWordSets(DirectiveValue);
-#pragma warning restore S3878 // Arrays should not be created for params parameters
+            IContentSecurityPolicyProvider.MergeDirectiveValues(securityPolicies, DirectiveNameChain, DirectiveValue);
         }
 
         return ThenUpdateAsync(securityPolicies, context, resourceExists);
