@@ -50,7 +50,7 @@ public static class ResourceManifestExtensions
             .SelectMany(manifest => manifest.GetResources(resourceType))
             .Where(pair => pair.Value != null)
             .SelectMany(pair => pair.Value
-                .SelectWhere(definition => definition?.Dependencies, dependencies => dependencies?.Any() == true)
+                .SelectWhere(definition => definition?.Dependencies, dependencies => dependencies?.Count != 0)
                 .SelectMany(dependencies => dependencies
                     .Select(dependency => new { Resource = pair.Key, Dependency = dependency })))
             .ToLookup(pair => pair.Resource, pair => pair.Dependency);

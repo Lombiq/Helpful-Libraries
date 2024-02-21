@@ -19,7 +19,7 @@ public static class RandomNumberGeneratorExtensions
     /// </remarks>
     public static int Next(this RandomNumberGenerator randomNumberGenerator, int minValue, int maxValue)
     {
-        if (minValue > maxValue) throw new ArgumentOutOfRangeException(nameof(minValue));
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(minValue, maxValue);
         if (minValue == maxValue) return minValue;
 
         var diff = (long)maxValue - minValue;

@@ -44,7 +44,7 @@ public record ScriptModuleResourceFilter(ILayoutAccessor LayoutAccessor) : IAsyn
         var options = serviceProvider.GetRequiredService<IOptions<ResourceManagementOptions>>().Value;
 
         var scriptElements = resourceManager.GetRequiredScriptModuleTags(options.ContentBasePath).ToList();
-        if (!scriptElements.Any()) return null;
+        if (scriptElements.Count == 0) return null;
 
         var importMap = serviceProvider.GetScriptModuleImportMap();
         var content = new HtmlContentBuilder(capacity: scriptElements.Count + 1).AppendHtml(importMap);

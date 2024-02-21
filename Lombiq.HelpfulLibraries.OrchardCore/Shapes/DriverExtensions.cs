@@ -1,4 +1,3 @@
-﻿using Newtonsoft.Json.Linq;
 using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.DisplayManagement.Views;
@@ -18,7 +17,7 @@ public static class DriverExtensions
             model.HtmlBodyPart = new HtmlBodyPart { Html = model.Html, ContentItem = model.ContentItem };
             model.TypePartDefinition = new ContentTypePartDefinition(
                 nameof(RawHtml),
-                new ContentPartDefinition(nameof(RawHtml), Array.Empty<ContentPartFieldDefinition>(), new JObject()),
-                new JObject());
+                new ContentPartDefinition(nameof(RawHtml), Array.Empty<ContentPartFieldDefinition>(), []),
+                []);
         });
 }

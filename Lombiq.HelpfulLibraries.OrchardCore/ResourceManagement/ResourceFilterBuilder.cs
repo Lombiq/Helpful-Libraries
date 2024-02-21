@@ -101,7 +101,7 @@ public class ResourceFilterBuilder
 
     private ResourceFilter WhenContentTypeInner(string displayType, params string[] contentTypes)
     {
-        if (!contentTypes.Any())
+        if (contentTypes.Length == 0)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(contentTypes),

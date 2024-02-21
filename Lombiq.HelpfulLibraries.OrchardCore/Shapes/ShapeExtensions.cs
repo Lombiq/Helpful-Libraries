@@ -111,7 +111,7 @@ public static class ShapeExtensions
         var shapeTableManager = provider.GetRequiredService<IShapeTableManager>();
 
         var theme = await themeManager.GetThemeAsync();
-        var shapeTable = shapeTableManager.GetShapeTable(theme.Id);
+        var shapeTable = await shapeTableManager.GetShapeTableAsync(theme.Id);
 
         return shapeTable.CreateAdHocShape(type, displayAsync);
     }

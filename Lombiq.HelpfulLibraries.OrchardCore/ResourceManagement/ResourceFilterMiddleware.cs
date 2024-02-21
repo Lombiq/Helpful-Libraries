@@ -25,7 +25,7 @@ public class ResourceFilterMiddleware
             .ToList();
 
         IList<string> themes =
-            providers.Exists(providerInfo => providerInfo.ThemeRequirements.Any())
+            providers.Exists(providerInfo => providerInfo.ThemeRequirements.Count != 0)
                 ? new[]
                     {
                         await context.RequestServices.GetRequiredService<ISiteThemeService>().GetSiteThemeAsync(),
@@ -38,7 +38,7 @@ public class ResourceFilterMiddleware
 
         var builder = new ResourceFilterBuilder();
         var anyProviders = providers
-            .Where(providerInfo => !providerInfo.ThemeRequirements.Any() ||
+            .Where(providerInfo => providerInfo.ThemeRequirements.Count == 0 ||
                                    providerInfo.ThemeRequirements.Exists(themes.Contains))
             .ForEach(providerInfo => providerInfo.Provider.AddResourceFilter(builder));
 

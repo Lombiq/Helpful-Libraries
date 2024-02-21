@@ -84,13 +84,13 @@ public static class StringExtensions
     /// Returns an array by splitting the input along commas and stripping empty entries.
     /// </summary>
     public static string[] SplitByCommas(this string? text) =>
-        text?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? Array.Empty<string>();
+        text?.Split(',', StringSplitOptions.RemoveEmptyEntries) ?? [];
 
     /// <summary>
     /// Returns the input split into lines (using <see cref="Environment.NewLine"/>).
     /// </summary>
     public static string[] SplitByNewLines(this string? text) =>
-        text?.Split(Environment.NewLine) ?? Array.Empty<string>();
+        text?.Split(Environment.NewLine) ?? [];
 
     /// <summary>
     /// A shortcut for <c>string.Contains(string, StringComparison.InvariantCultureIgnoreCase)</c>. It also safely
