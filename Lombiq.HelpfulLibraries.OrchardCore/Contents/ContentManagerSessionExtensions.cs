@@ -87,7 +87,7 @@ public static class ContentManagerSessionExtensions
             // If the published version is already stored, we can return it.
             if (contentManagerSession.RecallPublishedItemId(contentItemId, out var contentItem))
             {
-                storedItems ??= new List<ContentItem>();
+                storedItems ??= [];
                 storedItems.Add(contentItem);
             }
         }

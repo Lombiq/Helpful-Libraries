@@ -1,6 +1,7 @@
 using OrchardCore.ContentManagement.Metadata.Builders;
 using System;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace OrchardCore.ContentManagement.Metadata;
 
@@ -13,13 +14,13 @@ public static class ContentDefinitionManagerExtensions
     /// <param name="contentType">Technical name of the content type.</param>
     /// <param name="contentPartName">Technical name of the content part.</param>
     /// <returns>Content part settings object.</returns>
-    public static T GetContentPartSettings<T>(
+    public static async Task<T> GetContentPartSettingsAsync<T>(
         this IContentDefinitionManager contentDefinitionManager,
         string contentType,
         string contentPartName)
         where T : class, new()
     {
-        var contentTypeDefinition = contentDefinitionManager.GetTypeDefinition(contentType);
+        var contentTypeDefinition = await contentDefinitionManager.GetTypeDefinitionAsync(contentType);
         var contentTypePartDefinition = contentTypeDefinition.Parts
             .FirstOrDefault(part => part.PartDefinition.Name == contentPartName);
 
@@ -30,13 +31,13 @@ public static class ContentDefinitionManagerExtensions
     /// Alters the definition of a content part whose technical name is its model's type name. It uses the typed wrapper
     /// <see cref="ContentPartDefinitionBuilder{TPart}"/> for configuration.
     /// </summary>
-    public static string AlterPartDefinition<TPart>(
+    public static async Task<string> AlterPartDefinitionAsync<TPart>(
         this IContentDefinitionManager manager,
         Action<ContentPartDefinitionBuilder<TPart>> configure)
         where TPart : ContentPart
     {
         var name = typeof(TPart).Name;
-        manager.AlterPartDefinition(name, part => configure(part.AsPart<TPart>()));
+        await manager.AlterPartDefinitionAsync(name, part => configure(part.AsPart<TPart>()));
         return name;
     }
 
@@ -44,6 +45,6 @@ public static class ContentDefinitionManagerExtensions
     /// Prepares a <paramref name="contentType"/> to be used as a Taxonomy by resetting all content type settings to
     /// <see langword="false"/> and adding <c>TitlePart</c>.
     /// </summary>
-    public static void AlterTypeDefinitionForTaxonomy(this IContentDefinitionManager manager, string contentType) =>
-        manager.AlterTypeDefinition(contentType, type => type.NoAbilities().WithTitlePart());
+    public static Task AlterTypeDefinitionForTaxonomyAsync(this IContentDefinitionManager manager, string contentType) =>
+        manager.AlterTypeDefinitionAsync(contentType, type => type.NoAbilities().WithTitlePart());
 }

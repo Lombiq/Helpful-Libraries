@@ -22,10 +22,12 @@ public class TypedRouteTests
         (string Name, object Value)[] additional,
         string tenantName)
     {
+        using var serviceProvider = CreateServiceProvider();
+
         var route = TypedRoute.CreateFromExpression(
             actionExpression,
             additional,
-            CreateServiceProvider());
+            serviceProvider: serviceProvider);
         route.ToString(tenantName).ShouldBe(expected);
     }
 
@@ -34,10 +36,12 @@ public class TypedRouteTests
     {
         const string expected = "/CustomAdmin/Lombiq.HelpfulLibraries.Tests/RouteTest/Baz";
 
+        using var serviceProvider = CreateServiceProvider(services => services
+                .Configure<AdminOptions>(options => options.AdminUrlPrefix = " /CustomAdmin /"));
+
         var route = TypedRoute.CreateFromExpression(
             AsExpression(controller => controller.Baz()),
-            serviceProvider: CreateServiceProvider(services => services
-                .Configure<AdminOptions>(options => options.AdminUrlPrefix = " /CustomAdmin /")));
+            serviceProvider: serviceProvider);
         route.ToString(tenantName: string.Empty).ShouldBe(expected);
     }
 
@@ -48,13 +52,15 @@ public class TypedRouteTests
     [InlineData("/content/1/that?anotherValue=etc", "that", "etc")]
     public void OptionalRouteSubstitutionShouldWork(string expected, string optionalArgument, string anotherValue)
     {
+        using var serviceProvider = CreateServiceProvider();
+
         var route = TypedRoute.CreateFromExpression(
             AsExpression(controller => controller.RouteSubstitutionOptional(1, optionalArgument, anotherValue)),
-            serviceProvider: CreateServiceProvider());
+            serviceProvider: serviceProvider);
         route.ToString().ShouldBe(expected);
     }
 
-    private static IServiceProvider CreateServiceProvider(Action<ServiceCollection> configure = null)
+    private static ServiceProvider CreateServiceProvider(Action<ServiceCollection> configure = null)
     {
         var services = new ServiceCollection();
 
@@ -160,13 +166,13 @@ public class TypedRouteTests
         {
             var date = new DateTime(1997, 8, 29, 2, 14, 0, DateTimeKind.Utc).AddDays(addDays);
 
-            tests.Add(new object[]
-            {
+            tests.Add(
+            [
                 expect,
                 AsExpression(controller => controller.Arguments(9001, 2.71, date, "done")),
                 noMoreArguments,
                 noTenant,
-            });
+            ]);
         }
 
         AddArgumentsTest(

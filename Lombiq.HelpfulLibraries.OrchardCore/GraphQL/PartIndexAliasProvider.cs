@@ -14,7 +14,7 @@ public class PartIndexAliasProvider<TIndex> : IIndexAliasProvider
     where TIndex : class, IIndex
 {
     private static readonly IndexAlias[] _aliases =
-    {
+    [
         new()
         {
             Alias = typeof(TIndex)
@@ -24,7 +24,7 @@ public class PartIndexAliasProvider<TIndex> : IIndexAliasProvider
             Index = typeof(TIndex).Name,
             IndexType = typeof(TIndex),
         },
-    };
+    ];
 
     /// <summary>
     /// Gets indexes with a name ending in <c>PartIndex</c>.

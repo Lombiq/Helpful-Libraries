@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using YesSql.Sql;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Data;
@@ -15,8 +15,8 @@ public static class SchemaBuilderExtensions
     /// </summary>
     /// <typeparam name="T">Index table type.</typeparam>
     /// <param name="schemaBuilder">SchemaBuilder Interface.</param>
-    public static void CreateDocumentIdIndex<T>(this ISchemaBuilder schemaBuilder) =>
-        schemaBuilder.AlterTable(typeof(T).Name, table => table
+    public static Task CreateDocumentIdIndexAsync<T>(this ISchemaBuilder schemaBuilder) =>
+        schemaBuilder.AlterTableAsync(typeof(T).Name, table => table
             .CreateIndex(
                 $"IDX_{typeof(T).Name}_{DocumentId}",
                 DocumentId));
@@ -34,9 +34,9 @@ public static class SchemaBuilderExtensions
     /// <exception cref="ArgumentException">
     /// It is thrown when the <paramref name="columnNames"/> is null or empty.
     /// </exception>
-    public static ISchemaBuilder AddDatabaseIndex<TTable>(this ISchemaBuilder schemaBuilder, params string[] columnNames)
+    public static Task AddDatabaseIndexAsync<TTable>(this ISchemaBuilder schemaBuilder, params string[] columnNames)
     {
-        if (columnNames?.Any() != true)
+        if (columnNames?.Length != 0)
         {
             throw new ArgumentException("You must provide at least one column name.", nameof(columnNames));
         }
@@ -48,7 +48,7 @@ public static class SchemaBuilderExtensions
                 nameof(columnNames));
         }
 
-        return schemaBuilder.AlterTable(typeof(TTable).Name, table => table
+        return schemaBuilder.AlterTableAsync(typeof(TTable).Name, table => table
             .CreateIndex(
                 $"IDX_{typeof(TTable).Name}_{string.Join('_', columnNames)}",
                 columnNames));
@@ -57,10 +57,10 @@ public static class SchemaBuilderExtensions
     /// <summary>
     /// Creates a Map Index table with the provided index type of <typeparamref name="T"/>.
     /// </summary>
-    public static ISchemaBuilder CreateMapIndexTable<T>(
+    public static Task CreateMapIndexTableAsync<T>(
         this ISchemaBuilder builder,
         string collection = null) =>
-        builder.CreateMapIndexTable(
+        builder.CreateMapIndexTableAsync(
             typeof(T),
             table =>
             {
