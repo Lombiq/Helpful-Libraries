@@ -20,6 +20,13 @@ public interface IContentSecurityPolicyProvider
     /// </summary>
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context);
 
+    [Obsolete($"Use the method in the {nameof(ContentSecurityPolicyProvider)} static class instead.")]
+    public static string GetDirective(IDictionary<string, string> securityPolicies, params string[] names) =>
+        ContentSecurityPolicyProvider.GetDirective(securityPolicies, names.AsEnumerable());
+}
+
+public static class ContentSecurityPolicyProvider
+{
     /// <summary>
     /// Returns the first non-empty directive from the <paramref name="names"/> or <see cref="DefaultSrc"/> or an empty
     /// string.
