@@ -1,8 +1,10 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
-using Newtonsoft.Json.Linq;
 using OrchardCore.Alias.Models;
 using OrchardCore.ContentManagement.Records;
 using System;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Settings;
 using System.Threading.Tasks;
 using YesSql;
 
@@ -173,4 +175,13 @@ public static class ContentExtensions
         !content.ContentItem.Latest &&
         !content.ContentItem.Published &&
         content.ContentItem.Id == 0;
+
+    /// <summary>
+    /// Deserializes the content item's JSON property.
+    /// </summary>
+    public static T GetProperty<T>(this ContentItem contentItem, string name)
+    {
+        var data = (JsonObject)contentItem.Content;
+        return data[name].Deserialize<T>();
+    }
 }
