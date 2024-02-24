@@ -177,11 +177,12 @@ public static class ContentExtensions
         content.ContentItem.Id == 0;
 
     /// <summary>
-    /// Deserializes the content item's JSON property.
+    /// Deserializes the <paramref name="contentElement"/>'s first JSON node that matches <paramref name="path"/>.
     /// </summary>
-    public static T GetProperty<T>(this ContentItem contentItem, string name)
+    public static T GetProperty<T>(this ContentElement contentElement, string path)
+        where T : class
     {
-        var data = (JsonObject)contentItem.Content;
-        return data[name].Deserialize<T>();
+        var data = (JsonObject)contentElement.Content;
+        return data.SelectNode(path)?.Deserialize<T>();
     }
 }
