@@ -22,4 +22,21 @@ public static class JsonExtensions
             return false;
         }
     }
+
+    /// <summary>
+    /// Converts the provided <paramref name="node"/> into the appropriate primitive types of <see langword="string"/>,
+    /// <see langword="decimal"/>, <see langword="bool"/> or <see langword="null"/>. If the <paramref name="node"/> is
+    /// array or object then it's serialized into JSON <see langword="string"/>.
+    /// </summary>
+    public static IComparable ToComparable(this JsonNode node) =>
+        node.GetValueKind() switch
+        {
+            JsonValueKind.String => node.GetValue<string>(),
+            JsonValueKind.Number => node.GetValue<decimal>(),
+            JsonValueKind.True => true,
+            JsonValueKind.False => false,
+            JsonValueKind.Object => node.ToString(),
+            JsonValueKind.Array => node.ToString(),
+            _ => null,
+        };
 }
