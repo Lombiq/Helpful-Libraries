@@ -23,13 +23,18 @@ public class NoneShapeTableProvider : IShapeTableProvider
     public NoneShapeTableProvider(IContentDefinitionManager contentDefinitionManager) =>
         _contentDefinitionManager = contentDefinitionManager;
 
+    public void Discover(ShapeTableBuilder builder)
+    {
+        // The interface requires this obsolete method to be implemented so this is temporarily here. Remove this method
+        // once it gets deleted in IShapeTableProvider.
+    }
+
     /// <summary>
     /// Adds a "None" option to every field's display and editor and renders an empty shape.
     /// </summary>
-    public void Discover(ShapeTableBuilder builder)
+    public async Task DiscoverAsync(ShapeTableBuilder builder)
     {
-        var allFieldNames = _contentDefinitionManager
-            .ListPartDefinitions()
+        var allFieldNames = (await _contentDefinitionManager.ListPartDefinitionsAsync())
             .SelectMany(part => part.Fields)
             .Select(field => field.FieldDefinition.Name)
             .Distinct();

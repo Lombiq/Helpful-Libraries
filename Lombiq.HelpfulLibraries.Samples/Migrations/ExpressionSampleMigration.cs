@@ -8,6 +8,7 @@ using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.Data.Migration;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics.CodeAnalysis;
+using System.Threading.Tasks;
 using YesSql.Indexes;
 
 namespace Lombiq.HelpfulLibraries.Samples.Migrations;
@@ -28,9 +29,9 @@ public class ExpressionSampleMigration : DataMigration
         "StyleCop.CSharp.ReadabilityRules",
         "SA1114:Parameter list should follow declaration",
         Justification = "Needed for commenting first arguments.")]
-    public int Create()
+    public async Task<int> CreateAsync()
     {
-        _contentDefinitionManager.AlterTypeDefinition(ExpressionContent, type => type
+        await _contentDefinitionManager.AlterTypeDefinitionAsync(ExpressionContent, async type => type
             // The point of using SetAbilities instead of individual extensions is that this way you can be explicit
             // about whether you want to refuse some feature or you don't care. This improves maintainability.
             .SetAbilities(
@@ -40,7 +41,7 @@ public class ExpressionSampleMigration : DataMigration
             .WithPart(
                 // The new generic AlterPartDefinition overload returns the type name, so you can create a part
                 // definition "in-line".
-                _contentDefinitionManager.AlterPartDefinition<ExpressionPart>(partBuilder => partBuilder
+                await _contentDefinitionManager.AlterPartDefinitionAsync<ExpressionPart>(partBuilder => partBuilder
                     // Even when you don't configure anything you get the correct "OfType" and the property name as
                     // display name by default.
                     .WithField(part => part.SomeText)
@@ -51,7 +52,7 @@ public class ExpressionSampleMigration : DataMigration
 
         // This generic overload lets you create an index automatically, using property attributes to set up common
         // constraints.
-        SchemaBuilder.CreateMapIndexTable<ExpressionIndex>();
+        await SchemaBuilder.CreateMapIndexTableAsync<ExpressionIndex>();
 
         return 1;
     }

@@ -50,7 +50,7 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
 
     // We could have a
     //// if (File.Exists(FileName)) File.Delete(FileName);
-    // here but on .NET 6 the file remains locked despite the disposal. It doesn't really matter if it remains there
+    // here but on .NET 8 the file remains locked despite the disposal. It doesn't really matter if it remains there
     // after a test execution.
     public void Dispose() => Store?.Dispose();
 
@@ -71,14 +71,14 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
             {
                 var schemaBuilder = new SchemaBuilder(_configuration, transaction);
 
-                if (transaction.Connection.Query<string>(
-                        $"SELECT name FROM sqlite_master WHERE type='table' AND name='{nameof(TestDocumentIndex)}';")
+                if ((await transaction.Connection.QueryAsync<string>(
+                        $"SELECT name FROM sqlite_master WHERE type='table' AND name='{nameof(TestDocumentIndex)}';"))
                     .FirstOrDefault() != null)
                 {
-                    schemaBuilder.DropTable(nameof(TestDocumentIndex));
+                    await schemaBuilder.DropTableAsync(nameof(TestDocumentIndex));
                 }
 
-                schemaBuilder.CreateMapIndexTable<TestDocumentIndex>(
+                await schemaBuilder.CreateMapIndexTableAsync<TestDocumentIndex>(
                     table => table.Column<int>(nameof(TestDocumentIndex.Number)));
                 await transaction.CommitAsync();
             }
@@ -86,10 +86,9 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
             await connection.CloseAsync();
         }
 
-        await SessionAsync(session =>
+        await SessionAsync(async session =>
         {
-            foreach (var document in Documents) session.Save(document);
-            return Task.CompletedTask;
+            foreach (var document in Documents) await session.SaveAsync(document);
         });
 
         var manualConnectingIndexService = new ManualConnectingIndexService<TestDocumentIndex>(

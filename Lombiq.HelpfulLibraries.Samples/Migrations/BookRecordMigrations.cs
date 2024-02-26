@@ -1,13 +1,14 @@
 using Lombiq.HelpfulLibraries.Samples.Models;
 using OrchardCore.Data.Migration;
+using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.Samples.Migrations;
 
 public class BookRecordMigrations : DataMigration
 {
-    public int Create()
+    public async Task<int> CreateAsync()
     {
-        SchemaBuilder.CreateTable(nameof(BookRecord), table => table
+        await SchemaBuilder.CreateTableAsync(nameof(BookRecord), table => table
             .Column<int>(nameof(BookRecord.Id), column => column.PrimaryKey().Identity())
             .Column<string>(nameof(BookRecord.Title), column => column.NotNull().Unique().WithLength(2048))
             .Column<string>(nameof(BookRecord.Author), column => column.NotNull())

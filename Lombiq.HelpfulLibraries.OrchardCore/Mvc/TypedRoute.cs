@@ -27,52 +27,48 @@ public class TypedRoute
     private readonly string _area;
     private readonly Type _controller;
     private readonly MethodInfo _action;
-    private readonly List<KeyValuePair<string, string>> _arguments;
+    private readonly IReadOnlyList<KeyValuePair<string, string>> _arguments;
 
     private readonly string _prefix = "/";
-    private readonly string _route;
 
     private TypedRoute(
+        Type controller,
         MethodInfo action,
-        IEnumerable<KeyValuePair<string, string>> arguments,
+        List<KeyValuePair<string, string>> arguments,
         IServiceProvider serviceProvider = null)
     {
-        if (action?.DeclaringType is not { } controller)
+        if (arguments.Find(pair => pair.Key.EqualsOrdinalIgnoreCase("area")) is { Value: { } value } area)
         {
-            throw new InvalidOperationException(
-                $"{action?.Name ?? nameof(action)}'s {nameof(action.DeclaringType)} cannot be null.");
-        }
+            _area = value;
 
-        _controller = controller;
-        _action = action;
-
-        _arguments = arguments is List<KeyValuePair<string, string>> list ? list : arguments.ToList();
-        var areaPair = _arguments.Find(pair => pair.Key.EqualsOrdinalIgnoreCase("area"));
-        if (areaPair.Value is { } areaArgumentValue)
-        {
-            _area = areaArgumentValue;
-            _arguments.Remove(areaPair);
+            // It is safe to edit arguments here but treat it read-only everywhere else, because it's always locally
+            // created in CreateFromExpression(), which is the only caller of this this private constructor.
+            arguments.Remove(area);
         }
         else
         {
             var typeFeatureProvider = serviceProvider?.GetService<ITypeFeatureProvider>();
+
+            // The fallbacks are only in case either the service provider or the ITypeFeatureProvider are missing. If
+            // the service is available but can't resolve the feature for the provided controller it will throw. This is
+            // good, because in that case the resulting link would not work anyway.
             _area = typeFeatureProvider?.GetFeatureForDependency(controller).Extension.Id ??
                     controller.Assembly.GetCustomAttribute<ModuleNameAttribute>()?.Name ??
                     controller.Assembly.GetCustomAttribute<ModuleMarkerAttribute>()?.Name ??
                     throw new InvalidOperationException(
-                        "No area argument was provided and couldn't figure out the module technical name. Are " +
-                        "you sure this controller belongs to an Orchard Core module?");
+                        $"No \"area\" argument was provided and couldn't figure out the module technical name. Are " +
+                        $"you sure the \"{controller.Name}\" controller belongs to an Orchard Core module?");
         }
 
         var isAdmin = controller.GetCustomAttribute<AdminAttribute>() != null || action.GetCustomAttribute<AdminAttribute>() != null;
         if (isAdmin && action.GetCustomAttribute(typeof(RouteAttribute)) == null)
         {
-            _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions()).AdminUrlPrefix}/";
+            _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions())!.AdminUrlPrefix}/";
         }
 
-        _route = action.GetCustomAttribute<RouteAttribute>()?.Template is { } route && !string.IsNullOrWhiteSpace(route)
-            ? GetRoute(route)
-            : $"{_area}/{controller.ControllerName()}/{action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? action.Name}";
+        _controller = controller;
+        _action = action;
+        _arguments = arguments;
     }
 
     /// <summary>
@@ -96,11 +92,17 @@ public class TypedRoute
     /// </summary>
     public override string ToString()
     {
-        var arguments = _arguments.Any()
-            ? "?" + string.Join('&', _arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
+        var routeTemplate = _action.GetCustomAttribute<RouteAttribute>()?.Template ??
+            _action.GetCustomAttribute<AdminRouteAttribute>()?.Template;
+        var (route, arguments) = routeTemplate != null && !string.IsNullOrWhiteSpace(routeTemplate)
+            ? GetRouteFromTemplate(routeTemplate, _arguments)
+            : ($"{_area}/{_controller.ControllerName()}/{_action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? _action.Name}", _arguments);
+
+        var queryString = arguments.Any()
+            ? "?" + string.Join('&', arguments.Select((key, value) => $"{key}={WebUtility.UrlEncode(value)}"))
             : string.Empty;
 
-        return _prefix + _route + arguments;
+        return _prefix + route + queryString;
     }
 
     /// <summary>
@@ -113,19 +115,39 @@ public class TypedRoute
             ? ToString()
             : $"/{tenantName}{this}";
 
-    private string GetRoute(string route)
+    /// <summary>
+    /// Resolves a route template such as <c>[Route("DataTable/{providerName}/{queryId?}")]</c>.
+    /// </summary>
+    /// <returns>
+    /// The final route with the template strings substituted from <paramref name="arguments"/>, and the list of pairs
+    /// not used up by this substitution. The latter can be added to the query string of the final URL.
+    /// </returns>
+    private static (string Route, IReadOnlyList<KeyValuePair<string, string>> OtherArguments) GetRouteFromTemplate(
+        string routeTemplate,
+        IReadOnlyList<KeyValuePair<string, string>> arguments)
     {
-        var argumentsCopy = _arguments.ToList(); // This way modifying _arguments in the loop won't cause problems.
-        foreach (var (name, value) in argumentsCopy)
-        {
-            var placeholder = $"{{{name}}}";
-            if (!route.ContainsOrdinalIgnoreCase(placeholder)) continue;
+        if (!routeTemplate.Contains('{')) return (routeTemplate, arguments);
 
-            route = route.ReplaceOrdinalIgnoreCase(placeholder, WebUtility.UrlEncode(value));
-            _arguments.RemoveAll(pair => pair.Key == name);
+        var otherArguments = new List<KeyValuePair<string, string>>();
+
+        foreach (var pair in arguments)
+        {
+            if (routeTemplate.RegexMatch($@"{{\s*{pair.Key}\s*\??\s*}}") is { Success: true, Groups: { } match })
+            {
+                routeTemplate = routeTemplate.ReplaceOrdinalIgnoreCase(
+                    match[0].Value,
+                    WebUtility.UrlEncode(pair.Value));
+            }
+            else
+            {
+                otherArguments.Add(pair);
+            }
         }
 
-        return route;
+        // Remove unmatched optional argument templates.
+        routeTemplate = routeTemplate.RegexReplace(@"{[^?}]+\?\s*}", string.Empty);
+
+        return (routeTemplate, otherArguments);
     }
 
     public static implicit operator RouteValueDictionary(TypedRoute route) =>
@@ -193,6 +215,7 @@ public class TypedRoute
             return cache.GetOrCreate(
                 key,
                 _ => new TypedRoute(
+                    typeof(TController),
                     operation.Method,
                     arguments,
                     serviceProvider));
@@ -201,6 +224,7 @@ public class TypedRoute
         return _cache.GetOrAdd(
             key,
             _ => new TypedRoute(
+                typeof(TController),
                 operation.Method,
                 arguments,
                 serviceProvider));

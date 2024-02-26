@@ -80,10 +80,10 @@ public static class ContentExtensions
     /// <returns>The status of the <see cref="ContentItem"/>'s publication if any.</returns>
     public static PublicationStatus GetPublicationStatus(this IContent content)
     {
-        if (content == null) throw new ArgumentNullException(nameof(content));
+        ArgumentNullException.ThrowIfNull(content);
         if (content.ContentItem == null)
         {
-            throw new ArgumentException($"{nameof(content)}.{nameof(content.ContentItem)} shouldn't be null.");
+            throw new ArgumentNullException($"{nameof(content)}.{nameof(content.ContentItem)} shouldn't be null.");
         }
 
         if (content.ContentItem.Published) return PublicationStatus.Published;
@@ -118,7 +118,7 @@ public static class ContentExtensions
         {
             toRemove.Published = false;
             toRemove.Latest = false;
-            session.Save(toRemove);
+            await session.SaveAsync(toRemove);
         }
     }
 
