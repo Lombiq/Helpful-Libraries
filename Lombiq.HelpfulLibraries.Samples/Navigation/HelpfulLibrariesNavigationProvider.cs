@@ -32,6 +32,9 @@ public class HelpfulLibrariesNavigationProvider : MainMenuNavigationProviderBase
                     .Action<TypedRouteController>(context, controller => controller.Index()))
                 .Add(T["---"], subMenu => subMenu.Url("#"))
                 .Add(T["JSON API Error Handling"], itemBuilder => itemBuilder
-                    .Action<ErrorController>(context, controller => controller.Json())));
+                    .Action<ErrorController>(context, controller => controller.Json()))
+                .Add(T["---"], subMenu => subMenu.Url("#"))
+                .Add(T["Script Modules"], itemBuilder => itemBuilder
+                    .Action<ScriptModulesController>(context, controller => controller.Index())));
     }
 }
