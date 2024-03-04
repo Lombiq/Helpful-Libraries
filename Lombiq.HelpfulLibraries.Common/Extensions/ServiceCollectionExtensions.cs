@@ -48,7 +48,7 @@ public static class ServiceCollectionExtensions
 
     [Obsolete($"Use {nameof(RemoveImplementationsOf)} instead (renamed for clarity).")]
     public static IServiceCollection RemoveImplementations(this IServiceCollection services, string serviceFullName) =>
-        services.RemoveImplementationsOf(serviceFullName)
+        services.RemoveImplementationsOf(serviceFullName);
 
     /// <summary>
     /// Removes implementations of type <typeparamref name="T"/> from an <see cref="IServiceCollection"/> instance.
