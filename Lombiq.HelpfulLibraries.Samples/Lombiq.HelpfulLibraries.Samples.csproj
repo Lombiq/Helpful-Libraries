@@ -29,4 +29,10 @@
     <ProjectReference Include="..\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Include="Views\ScriptModules\Index.cshtml" />
+    <Content Include="wwwroot\child.js" />
+    <Content Include="wwwroot\parent.js" />
+  </ItemGroup>
+
 </Project>

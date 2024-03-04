@@ -1,0 +1,15 @@
+@using OrchardCore.ResourceManagement
+
+@inject IResourceManager ResourceManager
+@{
+    ResourceManager.RegisterScriptModule("child");
+    ResourceManager.GetRequiredScriptModuleTags();
+}
+
+@Orchard.GetScriptModuleImportMap()
+
+<script type="module">
+    import parent from 'parent';
+
+    console.log('imported module', parent);
+</script>
