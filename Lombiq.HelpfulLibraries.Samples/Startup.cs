@@ -1,3 +1,5 @@
+using Lombiq.HelpfulLibraries.AspNetCore.Extensions;
+using Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 using Lombiq.HelpfulLibraries.Samples.Migrations;
 using Lombiq.HelpfulLibraries.Samples.Navigation;
 using Microsoft.Extensions.DependencyInjection;
@@ -16,6 +18,8 @@ public class Startup : StartupBase
         services.AddDataMigration<BookRecordMigrations>();
         services.AddDataMigration<ExpressionSampleMigration>();
         services.AddScoped<INavigationProvider, HelpfulLibrariesNavigationProvider>();
+
         services.AddTransient<IConfigureOptions<ResourceManagementOptions>, ResourceManagementOptionsConfiguration>();
+        services.AddAsyncResultFilter<ScriptModuleResourceFilter>();
     }
 }
