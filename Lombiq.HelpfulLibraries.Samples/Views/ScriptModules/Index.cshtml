@@ -3,13 +3,13 @@
 @inject IResourceManager ResourceManager
 @{
     ResourceManager.RegisterScriptModule("child");
-    ResourceManager.GetRequiredScriptModuleTags();
 }
 
-@Orchard.GetScriptModuleImportMap()
+<pre id="script-modules-output" class="border-danger"></pre>
 
-<script type="module">
+<script type="module" at="Foot">
     import parent from 'parent';
 
-    console.log('imported module', parent);
+    document.getElementById('script-modules-output').textContent += `imported module ${JSON.stringify(parent)}\n`;
+    document.getElementById('script-modules-output').textContent += `parent module is exported? ${window.parent === parent}`;
 </script>

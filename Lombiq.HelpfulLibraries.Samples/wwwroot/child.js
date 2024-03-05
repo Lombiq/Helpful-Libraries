@@ -1,3 +1,3 @@
-import { foo, hello } from 'parent'
+import parent from 'parent'
 
-hello('JS modules');
+parent.hello(parent.foo);

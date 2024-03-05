@@ -1,4 +1,4 @@
 export default {
-    foo: "bar",
+    foo: "javascript module",
     hello: function(name) { alert(`Hello ${name}!`); }
 }
