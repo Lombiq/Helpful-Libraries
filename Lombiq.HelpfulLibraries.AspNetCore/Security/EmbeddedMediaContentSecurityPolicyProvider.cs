@@ -8,8 +8,8 @@ using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDi
 namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 
 /// <summary>
-/// A content security policy directive provider that provides additional permitted host names for <see
-/// cref="FrameSrc"/>.
+/// A content security policy directive provider that provides additional permitted host names used by usual media
+/// embedding sources (like YouTube) for <see cref="FrameSrc"/>.
 /// </summary>
 public class EmbeddedMediaContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
