@@ -94,6 +94,7 @@ public static class SecurityOrchardCoreBuilderExtensions
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<VueContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<EmbeddedMediaContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<ExternalLoginContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<ContentSecurityPolicyAttributeContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             (app, _, serviceProvider) =>
