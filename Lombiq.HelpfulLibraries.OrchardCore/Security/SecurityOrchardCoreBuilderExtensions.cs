@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
+using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
@@ -93,6 +93,7 @@ public static class SecurityOrchardCoreBuilderExtensions
             services => services
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<VueContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<FrameSourceContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<ContentSecurityPolicyAttributeContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             (app, _, serviceProvider) =>
