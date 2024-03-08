@@ -11,7 +11,7 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 /// A content security policy directive provider that provides additional permitted host names for <see
 /// cref="FrameSrc"/>.
 /// </summary>
-public class FrameSourceContentSecurityPolicyProvider : IContentSecurityPolicyProvider
+public class EmbeddedMediaContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
     /// <summary>
     /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="FrameSrc"/> directive.
