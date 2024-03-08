@@ -31,6 +31,11 @@ public class SimpleTextResponse
     public bool IsOk { get; }
 
     /// <summary>
+    /// Gets the HTTP response status code.
+    /// </summary>
+    public HttpStatusCode StatusCode { get; }
+
+    /// <summary>
     /// Gets the error captured by the original <see cref="ApiResponse{T}"/> or <see langword="null"/>.
     /// </summary>
     public ApiException Error { get; }
@@ -45,6 +50,7 @@ public class SimpleTextResponse
         Content = response.Content;
         Headers = response.Headers.ToDictionary(header => header.Key, header => header.Value.First());
         IsOk = response.Error == null && response.StatusCode == HttpStatusCode.OK;
+        StatusCode = response.StatusCode;
         Error = response.Error;
     }
 
