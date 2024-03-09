@@ -1,0 +1,55 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+        <IsRoslynComponent>true</IsRoslynComponent>
+
+        <RootNamespace>Lombiq.HelpfulLibraries.SourceGenerators</RootNamespace>
+        <PackageId>Lombiq.HelpfulLibraries.SourceGenerators</PackageId>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <Title>Lombiq Helpful Libraries - Source Generators</Title>
+        <Authors>Lombiq Technologies</Authors>
+        <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
+        <Description>Lombiq Helpful Libraries - Source Generators: A collection of source generators that can perform certain actions at compile time i.e. automatically keep version numbers synchronized.</Description>
+        <PackageTags>OrchardCore;SourceGenerators</PackageTags>
+        <PackageIcon>NuGetIcon.png</PackageIcon>
+        <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.SourceGenerators/Readme.md</PackageProjectUrl>
+        <PackageLicenseFile>License.md</PackageLicenseFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="License.md" Pack="true" PackagePath="" />
+        <None Include="Readme.md" />
+        <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.3.0"/>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.3.0"/>
+        <PackageReference Include="System.Text.Json" Version="7.0.3" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="NuGetIcon.png">
+        <Pack>true</Pack>
+        <PackagePath></PackagePath>
+      </None>
+      <None Update="License.md">
+        <Pack>true</Pack>
+        <PackagePath></PackagePath>
+      </None>
+    </ItemGroup>
+    
+</Project>
