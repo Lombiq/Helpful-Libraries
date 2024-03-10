@@ -1,5 +1,4 @@
 using Generators;
-using System;
 
 namespace Lombiq.HelpfulLibraries.SourceGenerators.Sample;
 
@@ -8,9 +7,11 @@ namespace Lombiq.HelpfulLibraries.SourceGenerators.Sample;
 public partial class Examples
 {
     // Show usage of the generated constants
-    public void LogVersions()
+    public string ReturnVersions()
     {
-        Console.WriteLine(GulpUglifyVersion);
-        Console.WriteLine(GulpVersion);
+        var stringBuilder = new System.Text.StringBuilder();
+        stringBuilder.AppendLine($"Gulp version: {GulpVersion}");
+        stringBuilder.AppendLine($"Gulp-uglify version: {GulpUglifyVersion}");
+        return stringBuilder.ToString();
     }
 }

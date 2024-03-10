@@ -48,8 +48,8 @@ namespace {Namespace}
             .CreateSyntaxProvider(
                 (s, _) => s is ClassDeclarationSyntax,
                 (ctx, _) => GetClassDeclarationForSourceGen(ctx))
-            .Where(t => t.reportAttributeFound)
-            .Select((t, _) => (t.Item1, t.Item3));
+            .Where(t => t.ReportAttributeFound)
+            .Select((t, _) => (t.Syntax, t.AttributesData));
 
         var additionalFiles = context.AdditionalTextsProvider
             .Where(static file => file.Path.EndsWith(".json", StringComparison.OrdinalIgnoreCase));
@@ -78,45 +78,61 @@ namespace {Namespace}
     ///     Checks whether the Node is annotated with the [ConstantFromJson] attribute and maps syntax context to
     ///     the specific node type (ClassDeclarationSyntax).
     /// </summary>
-    /// <param name="context">Syntax context, based on CreateSyntaxProvider predicate</param>
+    /// <param name="context">Syntax context, based on CreateSyntaxProvider predicate.</param>
     /// <returns>The specific cast and whether the attribute was found.</returns>
-    private static (ClassDeclarationSyntax, bool reportAttributeFound, List<Dictionary<string, string>>)
-        GetClassDeclarationForSourceGen(
-            GeneratorSyntaxContext context)
+    private static (ClassDeclarationSyntax Syntax, bool ReportAttributeFound, List<Dictionary<string, string>> AttributesData)
+        GetClassDeclarationForSourceGen(GeneratorSyntaxContext context)
     {
         var classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
-        var attributesData = new List<Dictionary<string, string>>();
-
-        // Go through all attributes of the class.
-        foreach (var attributeListSyntax in classDeclarationSyntax.AttributeLists)
-            foreach (var attributeSyntax in attributeListSyntax.Attributes)
-            {
-                if (context.SemanticModel.GetSymbolInfo(attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
-                {
-                    continue; // if we can't get the symbol, ignore it
-                }
-
-                string attributeName = attributeSymbol.ContainingType.ToDisplayString();
-                // Check the full name of the [ConstantFromJson] attribute.
-                if (attributeName != $"{Namespace}.{AttributeName}")
-                {
-                    continue;
-                }
-
-                var arguments = new Dictionary<string, string>();
-                int idx = 0;
-                foreach (var argumentSyntax in attributeSyntax.ArgumentList?.Arguments!)
-                {
-                    if (argumentSyntax.Expression is LiteralExpressionSyntax literalExpression)
-                        arguments.Add(attributeSymbol.Parameters[idx].Name, literalExpression.Token.Text);
-
-                    idx += 1;
-                }
-
-                attributesData.Add(arguments);
-            }
+        var attributesData = GetAttributesData(context, classDeclarationSyntax);
 
         return (classDeclarationSyntax, attributesData.Count > 0, attributesData);
+    }
+
+    private static List<Dictionary<string, string>> GetAttributesData(GeneratorSyntaxContext context, MemberDeclarationSyntax classDeclarationSyntax)
+    {
+        var attributesData = new List<Dictionary<string, string>>();
+
+        foreach (var attributeListSyntax in classDeclarationSyntax.AttributeLists)
+        {
+            foreach (var attributeSyntax in attributeListSyntax.Attributes)
+            {
+                var attributeArguments = GetAttributeArguments(context, attributeSyntax);
+                if (attributeArguments != null)
+                {
+                    attributesData.Add(attributeArguments);
+                }
+            }
+        }
+
+        return attributesData;
+    }
+
+    private static Dictionary<string, string>? GetAttributeArguments(GeneratorSyntaxContext context, AttributeSyntax attributeSyntax)
+    {
+        if (context.SemanticModel.GetSymbolInfo(attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
+        {
+            return null; // if we can't get the symbol, ignore it
+        }
+
+        string attributeName = attributeSymbol.ContainingType.ToDisplayString();
+        // Check the full name of the [ConstantFromJson] attribute.
+        if (attributeName != $"{Namespace}.{AttributeName}")
+        {
+            return null;
+        }
+
+        var arguments = new Dictionary<string, string>();
+        int idx = 0;
+        foreach (var argumentSyntax in attributeSyntax.ArgumentList?.Arguments!)
+        {
+            if (argumentSyntax.Expression is LiteralExpressionSyntax literalExpression)
+                arguments.Add(attributeSymbol.Parameters[idx].Name, literalExpression.Token.Text);
+
+            idx += 1;
+        }
+
+        return arguments;
     }
 
     /// <summary>
@@ -130,8 +146,10 @@ namespace {Namespace}
     ///     Nodes annotated with the [ConstantFromJson] attribute that trigger the
     ///     generate action.
     /// </param>
-    private void GenerateCode(SourceProductionContext context, Compilation compilation,
-        ImmutableArray<(ClassDeclarationSyntax, List<Dictionary<string, string>>)> classDeclarations)
+    private void GenerateCode(
+        SourceProductionContext context,
+        Compilation compilation,
+        ImmutableArray<(ClassDeclarationSyntax Syntax, List<Dictionary<string, string>> Dictionary)> classDeclarations)
     {
         // Go through all filtered class declarations.
         foreach (var (classDeclarationSyntax, attributeData) in classDeclarations)
@@ -151,7 +169,7 @@ namespace {Namespace}
             // 'Identifier' means the token of the node. Get class name from the syntax node.
             string className = classDeclarationSyntax.Identifier.Text;
 
-            string partialBody = string.Empty;
+            var partialBody = new StringBuilder();
 
             // It's possible that a single class is annotated with our marker attribute multiple times
             foreach (var dictionary in attributeData)
@@ -175,16 +193,14 @@ namespace {Namespace}
                 var jsonDocument = JsonDocument.Parse(fileContent.Value);
 
                 // try to find the value in the jsonDocument
-                var jsonValue = FindProperty(jsonDocument.RootElement, jsonPath.Replace("\"", ""));
+                var jsonValue = FindProperty(jsonDocument.RootElement, jsonPath.Replace("\"", string.Empty));
 
                 if (jsonValue == null)
                 {
                     return;
                 }
 
-                partialBody += $"""
-                                    public const string {constantName.Replace("\"", "")} = "{jsonValue.Value}";
-                                """;
+                partialBody.AppendLine($"public const string {constantName.Replace("\"", string.Empty)} = \"{jsonValue.Value}\";");
             }
 
             // Create a new partial class with the same name as the original class.
@@ -210,45 +226,52 @@ partial class {className}
     ///     Find a property in a JSON document recursively.
     /// </summary>
     /// <param name="element">The JSON element to search in.</param>
-    /// <param name="propertyName">The property name to look for</param>
+    /// <param name="propertyName">The property name to look for.</param>
     private static JsonElement? FindProperty(JsonElement element, string propertyName)
     {
         foreach (var property in element.EnumerateObject())
         {
-            if (property.Name == propertyName)
+            var result = ProcessProperty(property, propertyName);
+            if (result != null)
             {
-                return property.Value;
+                return result;
             }
+        }
 
-            switch (property.Value.ValueKind)
+        return null;
+    }
+
+    private static JsonElement? ProcessProperty(JsonProperty property, string propertyName)
+    {
+        if (property.Name == propertyName)
+        {
+            return property.Value;
+        }
+
+        if (property.Value.ValueKind == JsonValueKind.Object)
+        {
+            return FindProperty(property.Value, propertyName);
+        }
+
+        if (property.Value.ValueKind == JsonValueKind.Array)
+        {
+            return ProcessArrayProperty(property.Value.EnumerateArray(), propertyName);
+        }
+
+        return null;
+    }
+
+    private static JsonElement? ProcessArrayProperty(JsonElement.ArrayEnumerator array, string propertyName)
+    {
+        foreach (var arrayElement in array)
+        {
+            if (arrayElement.ValueKind == JsonValueKind.Object)
             {
-                case JsonValueKind.Object:
-                    {
-                        var result = FindProperty(property.Value, propertyName);
-                        if (result != null)
-                        {
-                            return result;
-                        }
-
-                        break;
-                    }
-
-                case JsonValueKind.Array:
-                    {
-                        foreach (var arrayElement in property.Value.EnumerateArray())
-                        {
-                            if (arrayElement.ValueKind == JsonValueKind.Object)
-                            {
-                                var result = FindProperty(arrayElement, propertyName);
-                                if (result != null)
-                                {
-                                    return result;
-                                }
-                            }
-                        }
-
-                        break;
-                    }
+                var result = FindProperty(arrayElement, propertyName);
+                if (result != null)
+                {
+                    return result;
+                }
             }
         }
 
