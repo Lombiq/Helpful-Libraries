@@ -27,10 +27,8 @@ namespace {Namespace}
     [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
     public class {AttributeName} : System.Attribute
     {{
-            public string Value {{ get; }}
             public {AttributeName}(string constantName, string fileName, string jsonPath)
             {{
-                Value = ""testvaluetje"";
             }}
     }}
 }}";
@@ -165,8 +163,8 @@ namespace {Namespace}
 
                 // Try get content of file from dictionary where key ends with filename
                 var fileContent = _fileContents
-                    .FirstOrDefault(kvp =>
-                        kvp.Key.EndsWith(fileName.Replace($"\"", string.Empty), StringComparison.Ordinal));
+                    .FirstOrDefault(k =>
+                        k.Key.EndsWith(fileName.Replace($"\"", string.Empty), StringComparison.Ordinal));
 
                 // If the file content is empty, skip
                 if (string.IsNullOrEmpty(fileContent.Value))
