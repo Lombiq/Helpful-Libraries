@@ -75,10 +75,11 @@ public static class LinqToDbQueryExecutor
     private static string GetDatabaseProviderName(string dbName) =>
         dbName switch
         {
-            // Using explicit string instead of LinqToDB.ProviderName.SqlServer because if the "System.Data.SqlClient"
-            // provider will be used it will cause "Could not load type System.Data.SqlClient.SqlCommandBuilder"
-            // exception. See: https://github.com/linq2db/linq2db/issues/2191#issuecomment-618450439.
-            "SqlServer" => "Microsoft.Data.SqlClient",
+            // Using a concrete SQL Server version here removes the need for an initial auto-detection query that can
+            // fail, see https://github.com/Lombiq/Helpful-Libraries/issues/236. This needs to be the same version
+            // YesSql and thus OC supports. You can check it out in YesSql's build workflow:
+            // https://github.com/sebastienros/yessql/blob/main/.github/workflows/build.yml.
+            "SqlServer" => ProviderName.SqlServer2019,
             "Sqlite" => ProviderName.SQLite,
             "MySql" => ProviderName.MySql,
             "PostgreSql" => ProviderName.PostgreSQL,
