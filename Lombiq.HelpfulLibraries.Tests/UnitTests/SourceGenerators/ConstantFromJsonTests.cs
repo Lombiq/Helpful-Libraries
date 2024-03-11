@@ -9,27 +9,23 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.SourceGenerators;
 
 public class ConstantFromJsonTests
 {
-    private const string TestClassText = """
-using Lombiq.HelpfulLibraries.SourceGenerators;
+    private const string TestClassText = @"using Lombiq.HelpfulLibraries.SourceGenerators;
 
 namespace TestNamespace;
 
-[ConstantFromJson(constantName: "GulpVersion", fileName: "package.json", propertyName: "gulp")]
+[ConstantFromJson(constantName: ""GulpVersion"", fileName: ""package.json"", propertyName: ""gulp"")]
 public partial class SourceGeneratorTest
 {
-}
-""";
+}";
 
-    private const string JsonText = """
-{
-  "private": true,
-  "devDependencies": {
-    "gulp": "3.9.0",
-    "gulp-uglify": "1.4.1",
+    private const string JsonText = @"{
+  ""private"": true,
+  ""devDependencies"": {
+    ""gulp"": ""3.9.0"",
+    ""gulp-uglify"": ""1.4.1"",
   },
-  "dependencies": { }
-}
-""";
+  ""dependencies"": { }
+}";
 
     [Fact]
     public void TestGeneratedConstants()

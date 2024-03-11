@@ -11,9 +11,6 @@
 
         <RootNamespace>Lombiq.HelpfulLibraries.SourceGenerators</RootNamespace>
         <PackageId>Lombiq.HelpfulLibraries.SourceGenerators</PackageId>
-
-        <EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
-        <CompilerGeneratedFilesOutputPath>Generated</CompilerGeneratedFilesOutputPath>
     </PropertyGroup>
 
     <ItemGroup>

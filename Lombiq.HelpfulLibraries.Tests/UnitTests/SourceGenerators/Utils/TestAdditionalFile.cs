@@ -4,7 +4,7 @@ using System.Threading;
 
 namespace Lombiq.HelpfulLibraries.Tests.UnitTests.SourceGenerators.Utils;
 
-internal class InMemoryAdditionalText(string path, string text) : AdditionalText
+internal sealed class InMemoryAdditionalText(string path, string text) : AdditionalText
 {
     private readonly SourceText _text = SourceText.From(text);
 
