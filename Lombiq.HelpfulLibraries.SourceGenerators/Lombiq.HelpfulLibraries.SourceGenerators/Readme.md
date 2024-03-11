@@ -1,19 +1,15 @@
-# Lombiq.HelpfulLibraries.SourceGenerators
+# Lombiq HelpfulLibraries - Source Generators
+
+## About
 
 A collection of helpful source generators.
-**When using one of the generators you must run a build before errors will go away**
+> ⚠ When using one of the generators you must run a build before errors will go away.
 
 - [ConstantFromJsonGenerator.cs](ConstantFromJsonGenerator.cs): A source generator that creates a constant from a JSON file.
 
-## Lombiq.HelpfulLibraries.SourceGenerators.Sample
+For general details about and on using the Helpful Libraries see the [root Readme](../Readme.md).
 
-A project that references source generators. It is used to test and showcase the source generators.
-
-## Lombiq.HelpfulLibraries.SourceGenerators.Tests
-
-Unit tests for source generators.
-
-## How To?
+## Documentation
 
 ### How to use the `ConstantFromJsonGenerator`?
 

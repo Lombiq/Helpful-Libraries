@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.Ref
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.SourceGenerators", "Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj", "{FB53DB02-5C86-44C9-A88E-294B95C1F979}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.SourceGenerators.Sample", "Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.Sample\Lombiq.HelpfulLibraries.SourceGenerators.Sample.csproj", "{DD8D992A-43C8-4E9B-8A40-B57F0D5B4217}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,10 +69,6 @@ Global
 		{FB53DB02-5C86-44C9-A88E-294B95C1F979}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB53DB02-5C86-44C9-A88E-294B95C1F979}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB53DB02-5C86-44C9-A88E-294B95C1F979}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DD8D992A-43C8-4E9B-8A40-B57F0D5B4217}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DD8D992A-43C8-4E9B-8A40-B57F0D5B4217}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DD8D992A-43C8-4E9B-8A40-B57F0D5B4217}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DD8D992A-43C8-4E9B-8A40-B57F0D5B4217}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
