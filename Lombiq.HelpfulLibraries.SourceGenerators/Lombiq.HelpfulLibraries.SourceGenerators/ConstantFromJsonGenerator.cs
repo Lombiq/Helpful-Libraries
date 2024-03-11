@@ -189,7 +189,7 @@ partial class {className}
     /// Find a property in a JSON document recursively.
     /// </summary>
     /// <param name="element">The JSON element to search in.</param>
-    /// <param name="propertyName">The property name to look for</param>
+    /// <param name="propertyName">The property name to look for.</param>
     private static JsonElement? FindProperty(JsonElement element, string propertyName)
     {
         foreach (var property in element.EnumerateObject())
@@ -199,33 +199,25 @@ partial class {className}
                 return property.Value;
             }
 
-            switch (property.Value.ValueKind)
+            if (property.Value.ValueKind == JsonValueKind.Object)
             {
-                case JsonValueKind.Object:
-                    {
-                        var result = FindProperty(property.Value, propertyName);
-                        if (result != null)
-                        {
-                            return result;
-                        }
+                var result = FindProperty(property.Value, propertyName);
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            else if (property.Value.ValueKind == JsonValueKind.Array)
+            {
+                var result = property.Value.EnumerateArray()
+                    .Where(arrayElement => arrayElement.ValueKind == JsonValueKind.Object)
+                    .Select(arrayElement => FindProperty(arrayElement, propertyName))
+                    .FirstOrDefault(jsonProperty => jsonProperty != null);
 
-                        break;
-                    }
-
-                case JsonValueKind.Array:
-                    {
-                        var result = property.Value.EnumerateArray()
-                            .Where(arrayElement => arrayElement.ValueKind == JsonValueKind.Object)
-                            .Select(arrayElement => FindProperty(arrayElement, propertyName))
-                            .FirstOrDefault(jsonProperty => jsonProperty != null);
-
-                        if (result != null)
-                        {
-                            return result;
-                        }
-
-                        break;
-                    }
+                if (result != null)
+                {
+                    return result;
+                }
             }
         }
 
