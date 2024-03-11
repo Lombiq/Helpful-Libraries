@@ -14,7 +14,7 @@ using Lombiq.HelpfulLibraries.SourceGenerators;
 
 namespace TestNamespace;
 
-[ConstantFromJson(constantName: "GulpVersion", fileName: "package.json", jsonPath: "gulp")]
+[ConstantFromJson(constantName: "GulpVersion", fileName: "package.json", propertyName: "gulp")]
 public partial class SourceGeneratorTest
 {
 }
@@ -57,6 +57,6 @@ public partial class SourceGeneratorTest
 
         // Retrieve all files in the compilation.
         var generatedFiles = newCompilation.SyntaxTrees;
-        Assert.True(generatedFiles.ToImmutableArray().Length == 2);
+        Assert.True(generatedFiles.ToImmutableArray().Length == 1);
     }
 }
