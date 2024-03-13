@@ -182,7 +182,9 @@ public static class ContentExtensions
     public static T GetProperty<T>(this ContentElement contentElement, string path)
         where T : class
     {
-        var data = (JsonObject)contentElement.Content;
+        // Re-serializing ensures that the SelectNode will query from the current root.
+        var data = JsonSerializer.SerializeToNode((JsonObject)contentElement.Content);
+
         return data.SelectNode(path)?.Deserialize<T>();
     }
 }
