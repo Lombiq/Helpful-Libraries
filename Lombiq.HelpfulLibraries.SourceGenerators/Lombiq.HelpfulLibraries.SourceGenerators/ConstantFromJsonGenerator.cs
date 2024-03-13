@@ -17,9 +17,8 @@ namespace Lombiq.HelpfulLibraries.SourceGenerators;
 [Generator]
 public class ConstantFromJsonGenerator : IIncrementalGenerator
 {
-    // Get current file namespace
-    private const string Namespace = "Lombiq.HelpfulLibraries.SourceGenerators";
     private const string AttributeName = nameof(ConstantFromJsonAttribute);
+    private static readonly string? Namespace = typeof(ConstantFromJsonAttribute).Namespace;
 
     private readonly Dictionary<string, string> _fileContents = [];
 
@@ -67,16 +66,13 @@ public class ConstantFromJsonGenerator : IIncrementalGenerator
         GetClassDeclarationForSourceGen(GeneratorSyntaxContext context)
     {
         var classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
-        var attributesData = GetAttributesData(context, classDeclarationSyntax);
+        var attributesData = classDeclarationSyntax.AttributeLists
+            .SelectMany(list => list.Attributes)
+            .Select(attributeSyntax => GetAttributeArguments(context, attributeSyntax))
+            .OfType<Dictionary<string, string>>().ToList();
 
         return (classDeclarationSyntax, attributesData.Count > 0, attributesData);
     }
-
-    private static List<Dictionary<string, string>>
-        GetAttributesData(GeneratorSyntaxContext context, MemberDeclarationSyntax classDeclarationSyntax) =>
-            classDeclarationSyntax.AttributeLists.SelectMany(list => list.Attributes)
-                .Select(attributeSyntax => GetAttributeArguments(context, attributeSyntax))
-                .OfType<Dictionary<string, string>>().ToList();
 
     private static Dictionary<string, string>? GetAttributeArguments(GeneratorSyntaxContext context, AttributeSyntax attributeSyntax)
     {
