@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using OrchardCore.Admin;
 using OrchardCore.Mvc.Routing;
+using System;
 using System.Reflection;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Mvc;
@@ -25,6 +26,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 /// It can be added to the DI service collection using the <see cref="AddToServices"/> static method.
 /// </para>
 /// </remarks>
+[Obsolete("Use the [Admin(route)] attribute instead of [AdminRoute(route)].")]
 public class AdminRouteAttributeRouteMapper : IAreaControllerRouteMapper
 {
     private readonly string _adminUrlPrefix;

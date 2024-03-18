@@ -93,7 +93,7 @@ public class TypedRoute
     public override string ToString()
     {
         var routeTemplate = _action.GetCustomAttribute<RouteAttribute>()?.Template ??
-            _action.GetCustomAttribute<AdminRouteAttribute>()?.Template;
+            _action.GetCustomAttribute<AdminAttribute>()?.Template;
         var (route, arguments) = routeTemplate != null && !string.IsNullOrWhiteSpace(routeTemplate)
             ? GetRouteFromTemplate(routeTemplate, _arguments)
             : ($"{_area}/{_controller.ControllerName()}/{_action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? _action.Name}", _arguments);
