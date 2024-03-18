@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Net.Mime;
 using System.Threading.Tasks;
@@ -27,6 +28,10 @@ public static class ApplicationBuilderExtensions
     /// If <see langword="true"/> then inline styles are permitted. Note that even if your site has no embedded style
     /// blocks and no style attributes, some Javascript libraries may still create some from code.
     /// </param>
+    [SuppressMessage(
+        "Critical Code Smell",
+        "S3776:Cognitive Complexity of methods should not be too high",
+        Justification = "It's not that complex, calculation is skewed by the logic being inside an anonymous function.")]
     public static IApplicationBuilder UseContentSecurityPolicyHeader(
         this IApplicationBuilder app,
         bool allowInlineScript,
