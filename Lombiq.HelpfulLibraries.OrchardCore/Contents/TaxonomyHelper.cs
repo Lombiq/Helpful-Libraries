@@ -1,4 +1,3 @@
-using Newtonsoft.Json.Linq;
 using OrchardCore.ContentManagement;
 using OrchardCore.Taxonomies.Models;
 using System.Collections.Generic;
@@ -40,7 +39,7 @@ public class TaxonomyHelper : ITaxonomyHelper
         if (includeSelf) results.Add(contentItem);
 
         var partTerms = contentItem.As<TaxonomyPart>()?.Terms ?? Enumerable.Empty<ContentItem>();
-        var itemTerms = (contentItem.Content.Terms as JArray)?.ToObject<List<ContentItem>>() ?? Enumerable.Empty<ContentItem>();
+        var itemTerms = contentItem.GetProperty<List<ContentItem>>(nameof(TaxonomyPart.Terms)) ?? Enumerable.Empty<ContentItem>();
         foreach (var child in partTerms.Concat(itemTerms))
         {
             results.AddRange(GetAllChildren(child, includeSelf: true));

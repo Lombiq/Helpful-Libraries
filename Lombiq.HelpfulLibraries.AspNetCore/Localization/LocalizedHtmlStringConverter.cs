@@ -1,49 +1,40 @@
 ﻿using Microsoft.AspNetCore.Mvc.Localization;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Serialization;
 
 namespace Lombiq.HelpfulLibraries.AspNetCore.Localization;
 
 public class LocalizedHtmlStringConverter : JsonConverter<LocalizedHtmlString>
 {
-    public override void WriteJson(JsonWriter writer, LocalizedHtmlString value, JsonSerializer serializer)
+    public override void Write(Utf8JsonWriter writer, LocalizedHtmlString value, JsonSerializerOptions options)
     {
         writer.WriteStartObject();
 
-        writer.WritePropertyName(nameof(LocalizedHtmlString.Name));
-        writer.WriteValue(value.Name);
-
-        writer.WritePropertyName(nameof(LocalizedHtmlString.Value));
-        writer.WriteValue(value.Html());
-
-        writer.WritePropertyName(nameof(LocalizedHtmlString.IsResourceNotFound));
-        writer.WriteValue(value.IsResourceNotFound);
+        writer.WriteString(nameof(LocalizedHtmlString.Name), value.Name);
+        writer.WriteString(nameof(LocalizedHtmlString.Value), value.Html());
+        writer.WriteBoolean(nameof(LocalizedHtmlString.IsResourceNotFound), value.IsResourceNotFound);
 
         writer.WriteEndObject();
     }
 
-    public override LocalizedHtmlString ReadJson(
-        JsonReader reader,
-        Type objectType,
-        LocalizedHtmlString existingValue,
-        bool hasExistingValue,
-        JsonSerializer serializer)
+    public override LocalizedHtmlString Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
     {
-        var token = JToken.Load(reader);
+        var token = JsonNode.Parse(ref reader);
 
-        if (token.Type == JTokenType.String)
+        if (token is JsonValue jsonValue)
         {
-            var text = token.Value<string>();
+            var text = jsonValue.GetValue<string>();
             return new LocalizedHtmlString(text, text);
         }
 
-        if (token is JObject jObject)
+        if (token is JsonObject jsonObject)
         {
-            var name = jObject.GetMaybe(nameof(LocalizedHtmlString.Name))?.ToObject<string>();
-            var value = jObject.GetMaybe(nameof(LocalizedHtmlString.Value))?.ToObject<string>() ?? name;
-            var isResourceNotFound = jObject.GetMaybe(nameof(LocalizedHtmlString.IsResourceNotFound))?.ToObject<bool>();
+            var name = jsonObject[nameof(LocalizedHtmlString.Name)]?.Deserialize<string>();
+            var value = jsonObject.GetMaybe(nameof(LocalizedHtmlString.Value))?.Deserialize<string>() ?? name;
+            var isResourceNotFound = jsonObject.GetMaybe(nameof(LocalizedHtmlString.IsResourceNotFound))?.Deserialize<bool>();
 
             name ??= value;
             if (string.IsNullOrEmpty(name)) throw new InvalidOperationException("Missing name.");

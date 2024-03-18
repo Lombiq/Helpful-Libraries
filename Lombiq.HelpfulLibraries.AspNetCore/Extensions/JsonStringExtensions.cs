@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Html;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace System;
 
@@ -10,6 +10,5 @@ public static class JsonStringExtensions
     /// tags in a Razor view.
     /// </summary>
     public static IHtmlContent JsonHtmlContent(this string htmlString) =>
-        new HtmlString(JsonConvert.SerializeObject(
-            htmlString, new JsonSerializerSettings { StringEscapeHandling = StringEscapeHandling.EscapeHtml }));
+        new HtmlString(JsonSerializer.Serialize(htmlString));
 }

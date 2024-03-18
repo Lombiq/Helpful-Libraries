@@ -1,6 +1,7 @@
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.Common.Utilities;
@@ -11,84 +12,90 @@ public static class JsonHelpers
     /// Attempts to validate a string that contains JSON by parsing it.
     /// </summary>
     /// <returns>
-    /// <see langword="true"/> if string is empty or parsing was successful, <see langword="false"/> otherwise.
+    /// <see langword="null"/> if the string is null or empty, <see langword="true"/> if parsing was successful,
+    /// <see langword="false"/> otherwise.
     /// </returns>
-    public static bool ValidateJsonIfNotNull(string json)
+    public static bool? ValidateJsonIfNotNull(string json)
     {
-        if (!string.IsNullOrEmpty(json))
-        {
-            try
-            {
-                JObject.Parse(json);
-                return true;
-            }
-            catch (JsonReaderException)
-            {
-                return false;
-            }
-        }
-
-        return true;
+        if (string.IsNullOrEmpty(json)) return null;
+        return TryParse(json, out _);
     }
 
     /// <summary>
-    /// Alters a <see cref="JObject"/> by iterating through all their inner JObject nodes deeply and executing the
-    /// provided alter operation on it.
+    /// Attempts to validate a string that contains JSON by parsing it.
     /// </summary>
-    /// <param name="jObject"><see cref="JObject"/> to alter.</param>
-    /// <param name="alter">Operation that alters a deep <see cref="JObject"/> node.</param>
-    /// <param name="propertyName">Name of the deep <see cref="JObject"/> node.</param>
-    public static void AlterDeep(JObject jObject, Action<string, JObject> alter, string propertyName = null)
+    /// <returns>
+    /// <see langword="true"/> if parsing was successful, <see langword="false"/> otherwise.
+    /// </returns>
+    public static bool TryParse(string json, out JsonNode result)
     {
-        alter(propertyName, jObject);
-
-        foreach (var (key, value) in jObject)
+        try
         {
-            if (value is JObject innerObject)
+            result = JsonNode.Parse(json);
+            return true;
+        }
+        catch (JsonException)
+        {
+            result = default;
+            return false;
+        }
+    }
+
+    /// <summary>
+    /// Walks through the properties of <paramref name="jsonObject"/> recursively and invokes <paramref name="alter"/>
+    /// on each property with an object value.
+    /// </summary>
+    /// <param name="alter">
+    /// The action to be invoked. The first parameter is the current property name, the second is its value.
+    /// </param>
+    public static void AlterDeep(JsonObject jsonObject, Action<string, JsonObject> alter) =>
+        AlterDeep(jsonObject, alter, propertyName: null);
+
+    private static void AlterDeep(JsonObject jsonObject, Action<string, JsonObject> alter, string propertyName)
+    {
+        if (propertyName != null) alter(propertyName, jsonObject);
+
+        foreach (var (key, value) in jsonObject)
+        {
+            if (value is JsonObject innerObject)
             {
                 AlterDeep(innerObject, alter, key);
             }
-
-            if (value is JArray innerArray)
+            else if (value is JsonArray innerArray)
             {
-                foreach (var innerToken in innerArray)
-                {
-                    if (innerToken is JObject innerTokenObject)
-                    {
-                        AlterDeep(innerTokenObject, alter, key);
-                    }
-                }
+                innerArray
+                    .CastWhere<JsonObject>()
+                    .ForEach(innerTokenObject => AlterDeep(innerTokenObject, alter, key));
             }
         }
     }
 
     /// <summary>
-    /// Alters a <see cref="JObject"/> by iterating through all their inner JObject nodes deeply and executing the
-    /// provided asynchronous alter operation on it.
+    /// Walks through the properties of <paramref name="jsonObject"/> recursively and invokes <paramref
+    /// name="alterAsync"/> on each property with an object value.
     /// </summary>
-    /// <param name="jObject"><see cref="JObject"/> to alter.</param>
-    /// <param name="alterAsync">Async operation that alters a deep <see cref="JObject"/> node.</param>
-    /// <param name="propertyName">Name of the deep <see cref="JObject"/> node.</param>
-    public static async Task AlterDeepAsync(JObject jObject, Func<string, JObject, Task> alterAsync, string propertyName = null)
-    {
-        await alterAsync(propertyName, jObject);
+    /// <param name="alterAsync">
+    /// The asynchronous operation to be invoked. The first parameter is the current property name, the second is its
+    /// value.
+    /// </param>
+    public static Task AlterDeepAsync(JsonObject jsonObject, Func<string, JsonObject, Task> alterAsync) =>
+        AlterDeepAsync(jsonObject, alterAsync, propertyName: null);
 
-        foreach (var (key, value) in jObject)
+    public static async Task AlterDeepAsync(JsonObject jsonObject, Func<string, JsonObject, Task> alterAsync, string propertyName)
+    {
+        if (propertyName != null) await alterAsync(propertyName, jsonObject);
+
+        foreach (var (key, value) in jsonObject)
         {
-            if (value is JObject innerObject)
+            if (value is JsonObject innerObject)
             {
                 await AlterDeepAsync(innerObject, alterAsync, key);
             }
-
-            if (value is JArray innerArray)
+            else if (value is JsonArray innerArray)
             {
-                foreach (var innerToken in innerArray)
-                {
-                    if (innerToken is JObject innerTokenObject)
-                    {
-                        await AlterDeepAsync(innerTokenObject, alterAsync, key);
-                    }
-                }
+                await innerArray
+                    .CastWhere<JsonObject>()
+                    .AwaitEachAsync(innerTokenObject => AlterDeepAsync(innerTokenObject, alterAsync, key));
             }
         }
     }

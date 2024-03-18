@@ -184,7 +184,7 @@ public class PerTenantShapeTableManager : IShapeTableManager
 
     public static void ReplaceDefaultShapeTableManager(IServiceCollection services)
     {
-        services.RemoveAll(service => service.ImplementationType == typeof(DefaultShapeTableManager));
+        services.RemoveByImplementation<DefaultShapeTableManager>();
         services.AddTransient<IShapeTableManager, PerTenantShapeTableManager>();
     }
 }

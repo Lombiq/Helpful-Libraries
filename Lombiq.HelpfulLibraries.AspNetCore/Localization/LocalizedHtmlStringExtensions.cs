@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Html;
-using Newtonsoft.Json;
 using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
+using System.Text.Json;
 
 namespace Microsoft.AspNetCore.Mvc.Localization;
 
@@ -15,9 +15,7 @@ public static class LocalizedHtmlStringExtensions
     /// </summary>
     public static IHtmlContent Json(this LocalizedHtmlString htmlString) =>
         htmlString?.Html() is { } html
-            ? new HtmlString(JsonConvert.SerializeObject(
-                html,
-                new JsonSerializerSettings { StringEscapeHandling = StringEscapeHandling.EscapeHtml }))
+            ? new HtmlString(JsonSerializer.Serialize(html))
             : new HtmlString("null");
 
     /// <summary>
@@ -47,6 +45,9 @@ public static class LocalizedHtmlStringExtensions
         return new LocalizedHtmlString(html, html);
     }
 
+    /// <summary>
+    /// Concatenates the <paramref name="items"/> with the provided <paramref name="separator"/> in-between.
+    /// </summary>
     public static LocalizedHtmlString Join(this IHtmlContent separator, params LocalizedHtmlString[] items)
     {
         if (items.Length == 0) return null;
