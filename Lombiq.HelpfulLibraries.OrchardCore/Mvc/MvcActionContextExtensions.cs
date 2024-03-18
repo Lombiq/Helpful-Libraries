@@ -7,7 +7,7 @@ namespace Microsoft.AspNetCore.Mvc;
 
 public static class MvcActionContextExtensions
 {
-    private static readonly string settingsAdminControllerName = typeof(SettingsAdminController).ControllerName();
+    private static readonly string _settingsAdminControllerName = typeof(SettingsAdminController).ControllerName();
 
     /// <summary>
     /// Returns a value indicating whether the requested page matches the provided non-empty route values.
@@ -34,7 +34,7 @@ public static class MvcActionContextExtensions
     public static bool IsSiteSettingsPage(this ActionContext context, string groupId) =>
         context.IsMvcRoute(
             nameof(SettingsAdminController.Index),
-            settingsAdminControllerName,
+            _settingsAdminControllerName,
             $"{nameof(OrchardCore)}.{nameof(OrchardCore.Settings)}") &&
         context.RouteData.Values.GetMaybe("GroupId")?.ToString() == groupId;
 }
