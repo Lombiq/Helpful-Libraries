@@ -1,4 +1,5 @@
 ﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using System;
@@ -65,6 +66,9 @@ public static class ApplicationBuilderExtensions
                 // No need to do content security policy on non-HTML responses.
                 if (context.Response.ContentType?.ContainsOrdinalIgnoreCase(MediaTypeNames.Text.Html) != true) return;
 
+                // Don't apply to Admin.
+                if (context.Request.GetDisplayUrl().Split('/').Contains("Admin", StringComparer.OrdinalIgnoreCase)) return;
+
                 // The thought behind this provider model is that if you need something else than the default, you
                 // should add a provider that only applies the additional directive on screens where it's actually
                 // needed. This way we maintain minimal permissions. Also if you need additional permissions for a
@@ -73,6 +77,8 @@ public static class ApplicationBuilderExtensions
                 {
                     await provider.UpdateAsync(securityPolicies, context);
                 }
+
+                if (!securityPolicies.Any()) return;
 
                 var policy = string.Join("; ", securityPolicies.Select(pair => $"{pair.Key} {pair.Value}"));
                 context.Response.Headers[key] = policy;
