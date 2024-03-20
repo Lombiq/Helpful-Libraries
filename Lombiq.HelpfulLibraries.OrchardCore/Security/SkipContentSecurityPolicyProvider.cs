@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Options;
 using OrchardCore.Admin;
 using System;
-using System.Collections.Generic;
 using System.Net.Mime;
 using System.Threading.Tasks;
 
@@ -20,7 +19,7 @@ public class SkipContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     public SkipContentSecurityPolicyProvider(IOptions<AdminOptions> adminOptions) =>
         _adminPathPrefix = '/' + adminOptions.Value.AdminUrlPrefix;
 
-    public ValueTask<bool> ShouldSuppressHeaderAsync(IDictionary<string, string> securityPolicies, HttpContext context) =>
+    public ValueTask<bool> ShouldSuppressHeaderAsync(HttpContext context) =>
         new(ShouldSuppressHeaderInnerAsync(context));
 
     private bool ShouldSuppressHeaderInnerAsync(HttpContext context) =>
