@@ -31,6 +31,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     public static ConcurrentBag<Uri> PermittedScriptSources { get; } = new(new[]
     {
         new Uri("https://cdn.jsdelivr.net/npm"),
+        new Uri("https://code.jquery.com/jquery-3.7.0.js"),
     });
 
     /// <summary>
