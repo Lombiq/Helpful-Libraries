@@ -68,17 +68,20 @@ public static class ApplicationBuilderExtensions
 
             context.Response.OnStarting(async () =>
             {
-                // No need to do content security policy on non-HTML responses.
-                if (context.Response.ContentType?.ContainsOrdinalIgnoreCase(MediaTypeNames.Text.Html) != true) return;
+                var providers = context.RequestServices.GetServices<IContentSecurityPolicyProvider>().AsList();
 
-                // Don't apply to Admin.
-                if (context.Request.GetDisplayUrl().Split('/').Contains("Admin", StringComparer.OrdinalIgnoreCase)) return;
+                // Additional extension point for scenarios where it's desirable to skip the Content-Security-Policy
+                // entirely.
+                foreach (var provider in providers)
+                {
+                    if (await provider.ShouldSuppressHeaderAsync(context)) return;
+                }
 
                 // The thought behind this provider model is that if you need something else than the default, you
                 // should add a provider that only applies the additional directive on screens where it's actually
                 // needed. This way we maintain minimal permissions. Also if you need additional permissions for a
                 // specific action you can use the [ContentSecurityPolicyAttribute(value, name, parentName)] attribute.
-                foreach (var provider in context.RequestServices.GetServices<IContentSecurityPolicyProvider>())
+                foreach (var provider in providers)
                 {
                     await provider.UpdateAsync(securityPolicies, context);
                 }
