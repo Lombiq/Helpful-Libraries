@@ -24,7 +24,5 @@ public class SkipContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 
     private bool ShouldSuppressHeaderInner(HttpContext context) =>
         // No need to do content security policy on non-HTML responses.
-        context.Response.ContentType?.ContainsOrdinalIgnoreCase(MediaTypeNames.Text.Html) != true ||
-        // The Admin dashboard is only accessible to trusted users so content security is not a concern.
-        new Uri(context.Request.GetDisplayUrl()).AbsolutePath.StartsWithOrdinalIgnoreCase(_adminPathPrefix);
+        context.Response.ContentType?.ContainsOrdinalIgnoreCase(MediaTypeNames.Text.Html) != true;
 }
