@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
+using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
@@ -34,8 +34,8 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///     </item>
     ///     <item>
     ///         <description>
-    ///             Add <see cref="VueContentSecurityPolicyProvider"/> to permit script evaluation when the
-    ///             <c>vuejs</c> resource is included.
+    ///             Add <see cref="VueContentSecurityPolicyProvider"/> to permit script evaluation when the <c>vuejs</c>
+    ///             resource is included.
     ///         </description>
     ///     </item>
     ///     <item>
