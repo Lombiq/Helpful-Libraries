@@ -85,7 +85,7 @@ public static class ApplicationBuilderExtensions
                     await provider.UpdateAsync(securityPolicies, context);
                 }
 
-                if (!securityPolicies.Any()) return;
+                if (securityPolicies.Count == 0) return;
 
                 var policy = string.Join("; ", securityPolicies.Select(pair => $"{pair.Key} {pair.Value}"));
                 context.Response.Headers[key] = policy;
