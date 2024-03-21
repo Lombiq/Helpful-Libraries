@@ -34,6 +34,30 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///     </item>
     ///     <item>
     ///         <description>
+    ///             Add <see cref="VueContentSecurityPolicyProvider"/> to permit script evaluation when the
+    ///             <c>vuejs</c> resource is included.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///             Add <see cref="ContentSecurityPolicyAttributeContentSecurityPolicyProvider"/> to amend the content
+    ///             security policy using the <see cref="ContentSecurityPolicyAttribute"/>.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///             Add <see cref="SkipContentSecurityPolicyProvider"/> to skip declaring a content security policy on
+    ///             responses where it makes no sense.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///             Add <see cref="BrowserLinkContentSecurityPolicyProvider"/> to permit accessing other ports on
+    ///             <c>localhost</c> during local development.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
     ///             Make the session token's cookie always secure.
     ///         </description>
     ///     </item>
@@ -95,6 +119,7 @@ public static class SecurityOrchardCoreBuilderExtensions
                 .AddContentSecurityPolicyProvider<VueContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<ContentSecurityPolicyAttributeContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<SkipContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<BrowserLinkContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             (app, _, serviceProvider) =>
             {
