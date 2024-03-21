@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -13,14 +13,9 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 /// </summary>
 public class BrowserLinkContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
-    private readonly IHttpContextAccessor _hca;
-
-    public BrowserLinkContentSecurityPolicyProvider(IHttpContextAccessor hca) =>
-        _hca = hca;
-
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
-        if (_hca.HttpContext?.IsDevelopmentAndLocalhost() == true)
+        if (context.IsDevelopmentAndLocalhost())
         {
             // Browser Link is accessed through multiple random ports on localhost.
             securityPolicies[ConnectSrc] = IContentSecurityPolicyProvider
