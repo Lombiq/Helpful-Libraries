@@ -20,9 +20,9 @@ public class SkipContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         _adminPathPrefix = '/' + adminOptions.Value.AdminUrlPrefix;
 
     public ValueTask<bool> ShouldSuppressHeaderAsync(HttpContext context) =>
-        new(ShouldSuppressHeaderInnerAsync(context));
+        new(ShouldSuppressHeaderInner(context));
 
-    private bool ShouldSuppressHeaderInnerAsync(HttpContext context) =>
+    private bool ShouldSuppressHeaderInner(HttpContext context) =>
         // No need to do content security policy on non-HTML responses.
         context.Response.ContentType?.ContainsOrdinalIgnoreCase(MediaTypeNames.Text.Html) != true ||
         // The Admin dashboard is only accessible to trusted users so content security is not a concern.
