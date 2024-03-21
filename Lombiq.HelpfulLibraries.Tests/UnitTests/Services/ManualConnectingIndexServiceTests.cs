@@ -13,6 +13,8 @@ public class ManualConnectingIndexServiceTests : IClassFixture<ManualConnectingI
 {
     public const string NamePrefix = "test_";
 
+    private static readonly int[] Numbers = [3, 6];
+
     private readonly ManualConnectingIndexServiceFixture _fixture;
 
     public ManualConnectingIndexServiceTests(ManualConnectingIndexServiceFixture fixture) => _fixture = fixture;
@@ -43,8 +45,7 @@ public class ManualConnectingIndexServiceTests : IClassFixture<ManualConnectingI
     [Fact]
     public Task MissingOrDeletedIndexShouldNotRetrieveAnyDocument() => _fixture.SessionAsync(async session =>
     {
-        var numbers = new[] { 3, 6 };
-        var documents = (await session.Query<TestDocument, TestDocumentIndex>(index => index.Number.IsIn(numbers)).ListAsync()).ToList();
+        var documents = (await session.Query<TestDocument, TestDocumentIndex>(index => index.Number.IsIn(Numbers)).ListAsync()).ToList();
         documents.ShouldBeEmpty();
     });
 }

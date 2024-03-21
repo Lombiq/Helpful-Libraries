@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 
@@ -30,7 +32,22 @@ public interface IContentSecurityPolicyProvider
     /// Returns the first non-empty directive from the <paramref name="names"/> or <see cref="DefaultSrc"/> or an empty
     /// string.
     /// </summary>
-    public static string GetDirective(IDictionary<string, string> securityPolicies, params string[] names)
+    [Obsolete($"Use the method in the {nameof(ContentSecurityPolicyProvider)} static class instead.")]
+    public static string GetDirective(IDictionary<string, string> securityPolicies, params string[] names) =>
+        ContentSecurityPolicyProvider.GetDirective(securityPolicies, names.AsEnumerable());
+}
+
+public static class ContentSecurityPolicyProvider
+{
+    /// <summary>
+    /// Returns the first non-empty directive from the <paramref name="names"/> or <see cref="DefaultSrc"/> or an empty
+    /// string.
+    /// </summary>
+    public static string GetDirective(IDictionary<string, string> securityPolicies, params string[] names) =>
+        GetDirective(securityPolicies, names.AsEnumerable());
+
+    /// <inheritdoc cref="GetDirective(System.Collections.Generic.IDictionary{string,string},string[])"/>
+    public static string GetDirective(IDictionary<string, string> securityPolicies, IEnumerable<string> names)
     {
         foreach (var name in names)
         {
@@ -41,5 +58,18 @@ public interface IContentSecurityPolicyProvider
         }
 
         return securityPolicies.GetMaybe(DefaultSrc) ?? string.Empty;
+    }
+
+    /// <summary>
+    /// Updates the directive (the first entry of the <paramref name="directiveNameChain"/>) by merging its space
+    /// separated values with the values from <paramref name="otherValues"/>.
+    /// </summary>
+    public static void MergeDirectiveValues(
+        IDictionary<string, string> securityPolicies,
+        IEnumerable<string> directiveNameChain,
+        params string[] otherValues)
+    {
+        var nameChain = directiveNameChain.AsList();
+        securityPolicies[nameChain[0]] = GetDirective(securityPolicies, nameChain).MergeWordSets(otherValues);
     }
 }

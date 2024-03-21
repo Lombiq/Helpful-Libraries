@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
@@ -23,6 +23,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         new Uri("https://fonts.googleapis.com/css"),
         new Uri("https://fonts.gstatic.com/"),
         new Uri("https://cdn.jsdelivr.net/npm"),
+        new Uri("https://fastly.jsdelivr.net/npm"),
     });
 
     /// <summary>
@@ -32,6 +33,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     {
         new Uri("https://cdn.jsdelivr.net/npm"),
         new Uri("https://code.jquery.com/jquery-3.7.0.js"),
+        new Uri("https://fastly.jsdelivr.net/npm"),
     });
 
     /// <summary>
@@ -47,19 +49,19 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     {
         var any = false;
 
-        if (PermittedStyleSources.Any())
+        if (!PermittedStyleSources.IsEmpty)
         {
             any = true;
             MergeValues(securityPolicies, StyleSrc, PermittedStyleSources);
         }
 
-        if (PermittedScriptSources.Any())
+        if (!PermittedScriptSources.IsEmpty)
         {
             any = true;
             MergeValues(securityPolicies, ScriptSrc, PermittedScriptSources);
         }
 
-        if (PermittedFontSources.Any())
+        if (!PermittedFontSources.IsEmpty)
         {
             any = true;
             MergeValues(securityPolicies, FontSrc, PermittedFontSources);

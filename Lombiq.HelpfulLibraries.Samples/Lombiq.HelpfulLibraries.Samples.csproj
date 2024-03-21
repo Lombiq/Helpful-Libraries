@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
     <IsPackable>false</IsPackable>
     <DefaultItemExcludes>$(DefaultItemExcludes);.git*;node_modules\**;Tests\**</DefaultItemExcludes>
@@ -12,12 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OrchardCore.ContentFields" Version="1.7.0" />
-    <PackageReference Include="OrchardCore.Module.Targets" Version="1.7.0" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="1.7.0" />
-    <PackageReference Include="OrchardCore.ContentTypes.Abstractions" Version="1.7.0" />
-    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.7.0" />
-    <PackageReference Include="OrchardCore.Autoroute" Version="1.7.0" />
+    <PackageReference Include="OrchardCore.ContentFields" Version="1.8.2" />
+    <PackageReference Include="OrchardCore.Module.Targets" Version="1.8.2" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="1.8.2" />
+    <PackageReference Include="OrchardCore.ContentTypes.Abstractions" Version="1.8.2" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="1.8.2" />
+    <PackageReference Include="OrchardCore.Autoroute" Version="1.8.2" />
   </ItemGroup>
 
   <ItemGroup>

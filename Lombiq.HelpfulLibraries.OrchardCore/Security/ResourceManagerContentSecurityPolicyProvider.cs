@@ -1,7 +1,6 @@
-﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
+using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
 using OrchardCore.ResourceManagement;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -32,9 +31,7 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
 
         if (resourceExists)
         {
-            securityPolicies[DirectiveName] = IContentSecurityPolicyProvider
-                .GetDirective(securityPolicies, DirectiveNameChain.ToArray())
-                .MergeWordSets(DirectiveValue);
+            ContentSecurityPolicyProvider.MergeDirectiveValues(securityPolicies, DirectiveNameChain, DirectiveValue);
         }
 
         return ThenUpdateAsync(securityPolicies, context, resourceExists);

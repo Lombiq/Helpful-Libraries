@@ -32,7 +32,7 @@ public static class PasswordHelper
             passwordChars.Add(validChars[rng.Next(0, validChars.Length)]);
         }
 
-        passwordChars = passwordChars.OrderBy(c => rng.Next(0, int.MaxValue)).ToList();
+        passwordChars = [.. passwordChars.OrderBy(c => rng.Next(0, int.MaxValue))];
         string password = new(passwordChars.ToArray());
 
         return password;

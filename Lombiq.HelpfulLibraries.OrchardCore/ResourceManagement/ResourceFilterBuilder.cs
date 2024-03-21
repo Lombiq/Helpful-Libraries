@@ -52,9 +52,18 @@ public class ResourceFilterBuilder
     /// </summary>
     public ResourceFilter WhenPath(params string[] paths)
     {
-        var trimmedPaths = paths.Select(path => path.Trim('/'));
-        return When(context =>
-            trimmedPaths.Contains(context.Request.Path.Value?.Trim('/'), StringComparer.OrdinalIgnoreCase));
+        var trimmedPaths = TrimPaths(paths);
+        return When(context => IsPathContained(trimmedPaths, context));
+    }
+
+    /// <summary>
+    /// Adds a filter that excludes all of the provided <paramref name="paths"/> to the list of
+    /// <see cref="ResourceFilters"/>.
+    /// </summary>
+    public ResourceFilter WhenNotPath(params string[] paths)
+    {
+        var trimmedPaths = TrimPaths(paths);
+        return When(context => !IsPathContained(trimmedPaths, context));
     }
 
     /// <summary>
@@ -101,7 +110,7 @@ public class ResourceFilterBuilder
 
     private ResourceFilter WhenContentTypeInner(string displayType, params string[] contentTypes)
     {
-        if (!contentTypes.Any())
+        if (contentTypes.Length == 0)
         {
             throw new ArgumentOutOfRangeException(
                 nameof(contentTypes),
@@ -129,4 +138,10 @@ public class ResourceFilterBuilder
                 contentTypes.Contains(contentType, StringComparer.OrdinalIgnoreCase);
         });
     }
+
+    private static IEnumerable<string> TrimPaths(params string[] paths) =>
+        paths.Select(path => path.Trim('/'));
+
+    private static bool IsPathContained(IEnumerable<string> trimmedPaths, HttpContext context) =>
+        trimmedPaths.Contains(context.Request.Path.Value?.Trim('/'), StringComparer.OrdinalIgnoreCase);
 }
