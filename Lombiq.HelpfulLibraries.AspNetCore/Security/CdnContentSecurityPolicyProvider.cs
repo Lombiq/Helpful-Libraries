@@ -23,6 +23,8 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         new Uri("https://fonts.googleapis.com/css"),
         new Uri("https://fonts.gstatic.com/"),
         new Uri("https://cdn.jsdelivr.net/npm"),
+        new Uri("https://cdnjs.cloudflare.com/"),
+        new Uri("https://maxcdn.bootstrapcdn.com/"),
     });
 
     /// <summary>
@@ -31,7 +33,9 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     public static ConcurrentBag<Uri> PermittedScriptSources { get; } = new(new[]
     {
         new Uri("https://cdn.jsdelivr.net/npm"),
-        new Uri("https://code.jquery.com/jquery-3.7.0.js"),
+        new Uri("https://code.jquery.com/"),
+        new Uri("https://cdnjs.cloudflare.com/"),
+        new Uri("https://maxcdn.bootstrapcdn.com/"),
     });
 
     /// <summary>
