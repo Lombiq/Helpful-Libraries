@@ -20,7 +20,7 @@ public class BrowserLinkContentSecurityPolicyProvider : IContentSecurityPolicyPr
             // Browser Link is accessed through multiple random ports on localhost.
             securityPolicies[ConnectSrc] = IContentSecurityPolicyProvider
                 .GetDirective(securityPolicies, ConnectSrc)
-                .MergeWordSets("localhost:*");
+                .MergeWordSets("http://localhost:* ws://localhost:*");
         }
 
         return ValueTask.CompletedTask;
