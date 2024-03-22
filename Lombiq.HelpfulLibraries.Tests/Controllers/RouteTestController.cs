@@ -25,6 +25,9 @@ public class RouteTestController : Controller
     [Route("content/{id}")]
     public IActionResult RouteSubstitution(int id) => Content(string.Empty);
 
+    [Route("content/{id}/{selector?}")]
+    public IActionResult RouteSubstitutionOptional(int id, string selector, string anotherValue) => Content(string.Empty);
+
     public IActionResult Arguments(int number, double fraction, DateTime dateTime, string text) =>
         Content(string.Empty);
 }
