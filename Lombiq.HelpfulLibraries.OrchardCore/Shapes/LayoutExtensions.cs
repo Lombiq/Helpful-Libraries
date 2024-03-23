@@ -18,7 +18,7 @@ public static class LayoutExtensions
     {
         var layout = await layoutAccessor.GetLayoutAsync();
         var zone = layout.Zones[zoneName];
-        if (zone != null) await zone.AddAsync(shape, position);
+        if (zone is not null and not PositionWrapper) await zone.AddAsync(shape, position);
     }
 
     /// <summary>
