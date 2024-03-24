@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -38,7 +38,7 @@ public static class ContentSecurityPolicyProvider
     public static string GetDirective(IDictionary<string, string> securityPolicies, params string[] names) =>
         GetDirective(securityPolicies, names.AsEnumerable());
 
-    /// <inheritdoc cref="GetDirective(System.Collections.Generic.IDictionary{string,string},string[])"/>
+    /// <inheritdoc cref="GetDirective(IDictionary{string,string},string[])"/>
     public static string GetDirective(IDictionary<string, string> securityPolicies, IEnumerable<string> names)
     {
         foreach (var name in names)
