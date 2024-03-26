@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.Com
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.OrchardCore.Testing", "Lombiq.HelpfulLibraries.OrchardCore.Testing\Lombiq.HelpfulLibraries.OrchardCore.Testing.csproj", "{F87DC121-2ADD-458D-9E01-BC0032860188}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.Cli", "Lombiq.HelpfulLibraries.Cli\Lombiq.HelpfulLibraries.Cli.csproj", "{E4434D6F-7C4F-4CBD-AAA3-B57809DFF571}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.Cli", "Lombiq.HelpfulLibraries.Cli\Lombiq.HelpfulLibraries.Cli.csproj", "{E4434D6F-7C4F-4CBD-AAA3-B57809DFF571}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.Refit", "Lombiq.HelpfulLibraries.Refit\Lombiq.HelpfulLibraries.Refit.csproj", "{5DC1A3D5-0626-4258-95C6-7E5CA5495A80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.Refit", "Lombiq.HelpfulLibraries.Refit\Lombiq.HelpfulLibraries.Refit.csproj", "{5DC1A3D5-0626-4258-95C6-7E5CA5495A80}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lombiq.HelpfulLibraries.SourceGenerators", "Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj", "{FB53DB02-5C86-44C9-A88E-294B95C1F979}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lombiq.HelpfulLibraries.SourceGenerators", "Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj", "{8F917489-1FE1-4855-B75D-92A5ED7859B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -65,10 +65,10 @@ Global
 		{5DC1A3D5-0626-4258-95C6-7E5CA5495A80}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5DC1A3D5-0626-4258-95C6-7E5CA5495A80}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5DC1A3D5-0626-4258-95C6-7E5CA5495A80}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FB53DB02-5C86-44C9-A88E-294B95C1F979}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FB53DB02-5C86-44C9-A88E-294B95C1F979}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FB53DB02-5C86-44C9-A88E-294B95C1F979}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FB53DB02-5C86-44C9-A88E-294B95C1F979}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8F917489-1FE1-4855-B75D-92A5ED7859B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8F917489-1FE1-4855-B75D-92A5ED7859B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8F917489-1FE1-4855-B75D-92A5ED7859B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8F917489-1FE1-4855-B75D-92A5ED7859B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
