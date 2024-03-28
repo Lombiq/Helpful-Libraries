@@ -9,7 +9,7 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 
 /// <summary>
 /// A content security policy directive provider that provides additional permitted host names for <see
-/// cref="FormAction"/>.
+/// cref="FormAction"/> for external login providers that require this (like Microsoft and GitHub).
 /// </summary>
 public class ExternalLoginContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
