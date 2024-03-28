@@ -22,9 +22,9 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         "fonts.googleapis.com",
         "fonts.gstatic.com", // #spell-check-ignore-line
         "cdn.jsdelivr.net", // #spell-check-ignore-line
-        "fastly.jsdelivr.net",
+        "fastly.jsdelivr.net", // #spell-check-ignore-line
         "cdnjs.cloudflare.com", // #spell-check-ignore-line
-        "maxcdn.bootstrapcdn.com",
+        "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
     });
 
     /// <summary>
@@ -35,7 +35,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         "cdn.jsdelivr.net", // #spell-check-ignore-line
         "cdnjs.cloudflare.com", // #spell-check-ignore-line
         "code.jquery.com",
-        "fastly.jsdelivr.net",
+        "fastly.jsdelivr.net", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
     });
 
