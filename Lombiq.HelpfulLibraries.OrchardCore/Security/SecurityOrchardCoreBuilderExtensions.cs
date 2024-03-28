@@ -90,7 +90,13 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///     <item>
     ///         <description>
     ///            Adds <see cref="ReCaptchaContentSecurityPolicyProvider"/> that provides various directives for the
-    ///            <c>Content-Security-Policy</c> header, allowing using a ReCaptcha captcha.
+    ///            <c>Content-Security-Policy</c> header, allowing using ReCaptcha captchas.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///            Adds <see cref="GoogleAnalyticsContentSecurityPolicyProvider"/> that provides various directives for
+    ///            the <c>Content-Security-Policy</c> header, allowing using Google Analytics tracking.
     ///         </description>
     ///     </item>
     ///     <item>
@@ -144,6 +150,7 @@ public static class SecurityOrchardCoreBuilderExtensions
                 .AddContentSecurityPolicyProvider<SkipContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<BrowserLinkContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<ReCaptchaContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<GoogleAnalyticsContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             (app, _, serviceProvider) =>
             {
