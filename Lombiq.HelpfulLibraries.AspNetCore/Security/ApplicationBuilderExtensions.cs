@@ -4,8 +4,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Primitives;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
-using System.Net.Mime;
 using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
@@ -27,6 +27,10 @@ public static class ApplicationBuilderExtensions
     /// If <see langword="true"/> then inline styles are permitted. Note that even if your site has no embedded style
     /// blocks and no style attributes, some Javascript libraries may still create some from code.
     /// </param>
+    [SuppressMessage(
+        "Critical Code Smell",
+        "S3776:Cognitive Complexity of methods should not be too high",
+        Justification = "It's not that complex, calculation is skewed by the logic being inside an anonymous function.")]
     public static IApplicationBuilder UseContentSecurityPolicyHeader(
         this IApplicationBuilder app,
         bool allowInlineScript,
@@ -63,17 +67,25 @@ public static class ApplicationBuilderExtensions
 
             context.Response.OnStarting(async () =>
             {
-                // No need to do content security policy on non-HTML responses.
-                if (context.Response.ContentType?.ContainsOrdinalIgnoreCase(MediaTypeNames.Text.Html) != true) return;
+                var providers = context.RequestServices.GetServices<IContentSecurityPolicyProvider>().AsList();
+
+                // Additional extension point for scenarios where it's desirable to skip the Content-Security-Policy
+                // entirely.
+                foreach (var provider in providers)
+                {
+                    if (await provider.ShouldSuppressHeaderAsync(context)) return;
+                }
 
                 // The thought behind this provider model is that if you need something else than the default, you
                 // should add a provider that only applies the additional directive on screens where it's actually
                 // needed. This way we maintain minimal permissions. Also if you need additional permissions for a
                 // specific action you can use the [ContentSecurityPolicyAttribute(value, name, parentName)] attribute.
-                foreach (var provider in context.RequestServices.GetServices<IContentSecurityPolicyProvider>())
+                foreach (var provider in providers)
                 {
                     await provider.UpdateAsync(securityPolicies, context);
                 }
+
+                if (securityPolicies.Count == 0) return;
 
                 var policy = string.Join("; ", securityPolicies.Select(pair => $"{pair.Key} {pair.Value}"));
                 context.Response.Headers[key] = policy;
