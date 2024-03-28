@@ -10,7 +10,7 @@ using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDi
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Security;
 
-internal class ReCaptchaContentSecurityPolicyProvider : IContentSecurityPolicyProvider
+internal sealed class ReCaptchaContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
     public async ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
