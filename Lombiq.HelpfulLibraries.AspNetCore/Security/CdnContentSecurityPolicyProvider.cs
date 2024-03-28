@@ -34,9 +34,11 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     public static ConcurrentBag<Uri> PermittedScriptSources { get; } = new(new[]
     {
         new Uri("https://cdn.jsdelivr.net/npm"),
+        new Uri("https://cdnjs.cloudflare.com/"),
         new Uri("https://code.jquery.com/"),
         new Uri("https://fastly.jsdelivr.net/npm"),
-        new Uri("https://cdnjs.cloudflare.com/"),
+        new Uri("https://www.google.com/recaptcha/"),
+        new Uri("https://www.gstatic.com/recaptcha/"),
         new Uri("https://maxcdn.bootstrapcdn.com/"),
     });
 
@@ -45,8 +47,18 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// </summary>
     public static ConcurrentBag<Uri> PermittedFontSources { get; } = new(new[]
     {
+        new Uri("https://cdn.jsdelivr.net/npm"),
         new Uri("https://fonts.googleapis.com/"),
         new Uri("https://fonts.gstatic.com/"),
+    });
+
+    /// <summary>
+    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="FrameSrc"/> directive.
+    /// </summary>
+    public static ConcurrentBag<Uri> PermittedFrameSources { get; } = new(new[]
+    {
+        // For ReCaptcha.
+        new Uri("https://www.google.com"),
     });
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
@@ -69,6 +81,12 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         {
             any = true;
             CspHelper.MergeValues(securityPolicies, FontSrc, PermittedFontSources);
+        }
+
+        if (!PermittedFrameSources.IsEmpty)
+        {
+            any = true;
+            CspHelper.MergeValues(securityPolicies, FrameSrc, PermittedFrameSources);
         }
 
         if (any)
