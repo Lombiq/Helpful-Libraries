@@ -20,6 +20,11 @@
         </PackageReference>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0" PrivateAssets="all" />
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="4.0.0" PrivateAssets="all" />
-        <PackageReference Include="System.Text.Json" Version="7.0.0" PrivateAssets="all" />
     </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="System.Text.Json" Version="7.0.0" PrivateAssets="all" />
+      <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators.Attributes\Lombiq.HelpfulLibraries.SourceGenerators.Attributes.csproj" PrivateAssets="all" />
+    </ItemGroup>
+  
 </Project>

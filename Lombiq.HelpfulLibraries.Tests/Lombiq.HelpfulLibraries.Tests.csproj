@@ -14,8 +14,9 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\test\Lombiq.Tests\Lombiq.Tests.csproj" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators.Attributes\Lombiq.HelpfulLibraries.SourceGenerators.Attributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.csproj" />
-    <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup>

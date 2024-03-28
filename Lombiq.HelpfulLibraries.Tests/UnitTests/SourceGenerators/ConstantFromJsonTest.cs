@@ -1,4 +1,4 @@
-﻿using DefaultNamespace;
+﻿using Lombiq.HelpfulLibraries.Tests.Models;
 using Shouldly;
 using System;
 using Xunit;

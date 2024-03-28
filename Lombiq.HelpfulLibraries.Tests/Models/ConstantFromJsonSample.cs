@@ -1,6 +1,6 @@
-﻿using Lombiq.HelpfulLibraries.SourceGenerators;
+﻿using Lombiq.HelpfulLibraries.SourceGenerators.Attributes;
 
-namespace DefaultNamespace;
+namespace Lombiq.HelpfulLibraries.Tests.Models;
 
 /// <summary>
 /// Shows how to use the <see cref="ConstantFromJsonAttribute" />.

@@ -1,4 +1,5 @@
-﻿using Microsoft.CodeAnalysis;
+﻿using Lombiq.HelpfulLibraries.SourceGenerators.Attributes;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Text;
 using System;
@@ -14,7 +15,6 @@ namespace Lombiq.HelpfulLibraries.SourceGenerators;
 public class ConstantFromJsonGenerator : IIncrementalGenerator
 {
     private const string AttributeName = nameof(ConstantFromJsonAttribute);
-    private static readonly string? Namespace = typeof(ConstantFromJsonAttribute).Namespace;
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
@@ -83,7 +83,7 @@ public class ConstantFromJsonGenerator : IIncrementalGenerator
 
         var attributeName = attributeSymbol.ContainingType.ToDisplayString();
         // Check the full name of the [ConstantFromJson] attribute.
-        if (attributeName != $"{Namespace}.{AttributeName}")
+        if (attributeName != $"{typeof(ConstantFromJsonAttribute).Namespace}.{AttributeName}")
         {
             return null;
         }
@@ -112,7 +112,7 @@ public class ConstantFromJsonGenerator : IIncrementalGenerator
     /// Nodes annotated with the [ConstantFromJson] attribute that trigger the
     /// generate action.
     /// </param>
-    private void GenerateCode(
+    private static void GenerateCode(
         SourceProductionContext context,
         Compilation compilation,
         ImmutableArray<(ClassDeclarationSyntax Syntax, List<Dictionary<string, string>> Dictionary)> classDeclarations,
