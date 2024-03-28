@@ -17,7 +17,7 @@ public class ExternalLoginContentSecurityPolicyProvider : IContentSecurityPolicy
     /// </summary>
     public static ConcurrentBag<string> PermittedFormActions { get; } = new(new[]
     {
-        "login.microsoftonline.com",
+        "login.microsoftonline.com", // #spell-check-ignore-line
         "github.com",
     });
 

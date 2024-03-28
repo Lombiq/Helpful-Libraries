@@ -20,10 +20,10 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     public static ConcurrentBag<string> PermittedStyleSources { get; } = new(new[]
     {
         "fonts.googleapis.com",
-        "fonts.gstatic.com",
-        "cdn.jsdelivr.net",
+        "fonts.gstatic.com", // #spell-check-ignore-line
+        "cdn.jsdelivr.net", // #spell-check-ignore-line
         "fastly.jsdelivr.net",
-        "cdnjs.cloudflare.com",
+        "cdnjs.cloudflare.com", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com",
     });
 
@@ -32,11 +32,11 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// </summary>
     public static ConcurrentBag<string> PermittedScriptSources { get; } = new(new[]
     {
-        "cdn.jsdelivr.net",
-        "cdnjs.cloudflare.com",
+        "cdn.jsdelivr.net", // #spell-check-ignore-line
+        "cdnjs.cloudflare.com", // #spell-check-ignore-line
         "code.jquery.com",
         "fastly.jsdelivr.net",
-        "maxcdn.bootstrapcdn.com",
+        "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
     });
 
     /// <summary>
@@ -44,9 +44,9 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// </summary>
     public static ConcurrentBag<string> PermittedFontSources { get; } = new(new[]
     {
-        "cdn.jsdelivr.net",
+        "cdn.jsdelivr.net", // #spell-check-ignore-line
         "fonts.googleapis.com",
-        "fonts.gstatic.com",
+        "fonts.gstatic.com", // #spell-check-ignore-line
     });
 
     /// <summary>
