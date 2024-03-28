@@ -25,7 +25,7 @@ public static class ApplicationBuilderExtensions
     /// </param>
     /// <param name="allowInlineStyle">
     /// If <see langword="true"/> then inline styles are permitted. Note that even if your site has no embedded style
-    /// blocks and no style attributes, some Javascript libraries may still create some from code.
+    /// blocks and no style attributes, some JavaScript libraries may still create some from code.
     /// </param>
     [SuppressMessage(
         "Critical Code Smell",

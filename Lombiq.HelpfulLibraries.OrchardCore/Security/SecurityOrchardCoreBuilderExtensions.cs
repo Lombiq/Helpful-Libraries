@@ -74,6 +74,19 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///     </item>
     ///     <item>
     ///         <description>
+    ///            Adds a middleware that provides permitted hosts for the <c>frame-src</c> directive of the
+    ///            <c>Content-Security-Policy</c> header, covering usual media embedding sources like YouTube.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///            Adds a middleware that provides permitted hosts for the <c>form-action</c> directive of the
+    ///            <c>Content-Security-Policy</c> header, covering external login providers that require this (like
+    ///            Microsoft and GitHub).
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
     ///            Adds a middleware that supplies the <c>Content-Security-Policy</c> header.
     ///         </description>
     ///     </item>
@@ -117,6 +130,8 @@ public static class SecurityOrchardCoreBuilderExtensions
             services => services
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<VueContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<EmbeddedMediaContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<ExternalLoginContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<ContentSecurityPolicyAttributeContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<SkipContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<BrowserLinkContentSecurityPolicyProvider>()
