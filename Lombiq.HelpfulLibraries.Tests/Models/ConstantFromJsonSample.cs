@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.SourceGenerators.Attributes;
+﻿using Lombiq.HelpfulLibraries.Attributes;
 
 namespace Lombiq.HelpfulLibraries.Tests.Models;
 

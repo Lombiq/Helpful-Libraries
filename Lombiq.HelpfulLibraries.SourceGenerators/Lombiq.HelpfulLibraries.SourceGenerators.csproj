@@ -24,7 +24,7 @@
 
     <ItemGroup>
         <PackageReference Include="System.Text.Json" Version="7.0.0" PrivateAssets="all" />
-      <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators.Attributes\Lombiq.HelpfulLibraries.SourceGenerators.Attributes.csproj" PrivateAssets="all" />
+      <ProjectReference Include="..\Lombiq.HelpfulLibraries.Attributes\Lombiq.HelpfulLibraries.Attributes.csproj" PrivateAssets="all" />
     </ItemGroup>
   
 </Project>

@@ -1,4 +1,4 @@
-﻿namespace Lombiq.HelpfulLibraries.SourceGenerators.Attributes;
+﻿namespace Lombiq.HelpfulLibraries.Attributes;
 
 [System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
 public sealed class ConstantFromJsonAttribute : System.Attribute
