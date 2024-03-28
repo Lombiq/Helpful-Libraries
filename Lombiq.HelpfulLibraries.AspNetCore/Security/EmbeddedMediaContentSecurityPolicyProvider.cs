@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,12 +13,12 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 public class EmbeddedMediaContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
     /// <summary>
-    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="FrameSrc"/> directive.
+    /// Gets the sources that will be added to the <see cref="FrameSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<Uri> PermittedFrameSources { get; } = new(new[]
+    public static ConcurrentBag<string> PermittedFrameSources { get; } = new(new[]
     {
-        new Uri("https://www.youtube.com/"),
-        new Uri("https://www.youtube-nocookie.com/"),
+        "www.youtube.com/",
+        "www.youtube-nocookie.com/",
     });
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)

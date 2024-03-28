@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,44 +15,44 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
     /// <summary>
-    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="StyleSrc"/> directive.
+    /// Gets the sources that will be added to the <see cref="StyleSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<Uri> PermittedStyleSources { get; } = new(new[]
+    public static ConcurrentBag<string> PermittedStyleSources { get; } = new(new[]
     {
-        new Uri("https://fonts.googleapis.com/css"),
-        new Uri("https://fonts.gstatic.com/"),
-        new Uri("https://cdn.jsdelivr.net/npm"),
-        new Uri("https://fastly.jsdelivr.net/npm"),
-        new Uri("https://cdnjs.cloudflare.com/"),
-        new Uri("https://maxcdn.bootstrapcdn.com/"),
+        "fonts.googleapis.com",
+        "fonts.gstatic.com",
+        "cdn.jsdelivr.net",
+        "fastly.jsdelivr.net",
+        "cdnjs.cloudflare.com",
+        "maxcdn.bootstrapcdn.com",
     });
 
     /// <summary>
-    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="ScriptSrc"/> directive.
+    /// Gets the sources that will be added to the <see cref="ScriptSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<Uri> PermittedScriptSources { get; } = new(new[]
+    public static ConcurrentBag<string> PermittedScriptSources { get; } = new(new[]
     {
-        new Uri("https://cdn.jsdelivr.net/npm"),
-        new Uri("https://cdnjs.cloudflare.com/"),
-        new Uri("https://code.jquery.com/"),
-        new Uri("https://fastly.jsdelivr.net/npm"),
-        new Uri("https://maxcdn.bootstrapcdn.com/"),
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com",
+        "code.jquery.com",
+        "fastly.jsdelivr.net",
+        "maxcdn.bootstrapcdn.com",
     });
 
     /// <summary>
-    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="FontSrc"/> directive.
+    /// Gets the sources that will be added to the <see cref="FontSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<Uri> PermittedFontSources { get; } = new(new[]
+    public static ConcurrentBag<string> PermittedFontSources { get; } = new(new[]
     {
-        new Uri("https://cdn.jsdelivr.net/npm"),
-        new Uri("https://fonts.googleapis.com/"),
-        new Uri("https://fonts.gstatic.com/"),
+        "cdn.jsdelivr.net",
+        "fonts.googleapis.com",
+        "fonts.gstatic.com",
     });
 
     /// <summary>
-    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="FrameSrc"/> directive.
+    /// Gets the sources that will be added to the <see cref="FrameSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<Uri> PermittedFrameSources { get; } = new();
+    public static ConcurrentBag<string> PermittedFrameSources { get; } = [];
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
