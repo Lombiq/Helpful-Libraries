@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
+using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
@@ -30,6 +30,30 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///         <description>
     ///             Add <see cref="CdnContentSecurityPolicyProvider"/> to permit using script and style resources from
     ///             some common CDNs.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///             Add <see cref="VueContentSecurityPolicyProvider"/> to permit script evaluation when the <c>vuejs</c>
+    ///             resource is included.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///             Add <see cref="ContentSecurityPolicyAttributeContentSecurityPolicyProvider"/> to amend the content
+    ///             security policy using the <see cref="ContentSecurityPolicyAttribute"/>.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///             Add <see cref="SkipContentSecurityPolicyProvider"/> to skip declaring a content security policy on
+    ///             responses where it makes no sense.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///             Add <see cref="BrowserLinkContentSecurityPolicyProvider"/> to permit accessing other ports on
+    ///             <c>localhost</c> during local development.
     ///         </description>
     ///     </item>
     ///     <item>
@@ -94,6 +118,8 @@ public static class SecurityOrchardCoreBuilderExtensions
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<VueContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<ContentSecurityPolicyAttributeContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<SkipContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<BrowserLinkContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             (app, _, serviceProvider) =>
             {
