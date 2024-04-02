@@ -17,12 +17,12 @@ internal sealed class ExternalLoginContentSecurityPolicyProvider : IContentSecur
         var shellFeaturesManager = context.RequestServices.GetRequiredService<IShellFeaturesManager>();
         var enabledFeatures = await shellFeaturesManager.GetEnabledFeaturesAsync();
 
-        if (enabledFeatures.Any(feature => feature.Id == "OrchardCore.Microsoft.Authentication.AzureAD"))
+        if (enabledFeatures.Any("OrchardCore.Microsoft.Authentication.AzureAD"))
         {
             CspHelper.MergeValues(securityPolicies, FormAction, "login.microsoftonline.com"); // #spell-check-ignore-line
         }
 
-        if (enabledFeatures.Any(feature => feature.Id == "OrchardCore.GitHub.Authentication"))
+        if (enabledFeatures.Any("OrchardCore.GitHub.Authentication"))
         {
             CspHelper.MergeValues(securityPolicies, FormAction, "github.com");
         }

@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Environment.Shell;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
@@ -21,8 +20,7 @@ public class GoogleAnalyticsContentSecurityPolicyProvider : IContentSecurityPoli
         if (!googleAnalyticsIsEnabled)
         {
             var shellFeaturesManager = context.RequestServices.GetRequiredService<IShellFeaturesManager>();
-            googleAnalyticsIsEnabled = (await shellFeaturesManager.GetEnabledFeaturesAsync())
-               .Any(feature => feature.Id == "OrchardCore.Google.Analytics");
+            googleAnalyticsIsEnabled = await shellFeaturesManager.IsFeatureEnabledAsync("OrchardCore.Google.Analytics");
         }
 
         if (googleAnalyticsIsEnabled)
