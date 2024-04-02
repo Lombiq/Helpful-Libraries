@@ -183,7 +183,7 @@ public static class ContentExtensions
         where T : class
     {
         // Re-serializing ensures that the SelectNode will query from the current root.
-        var data = JsonSerializer.SerializeToNode((JsonObject)contentElement.Content);
+        var data = JObject.FromObject((JsonObject)contentElement.Content);
 
         return data.SelectNode(path)?.Deserialize<T>();
     }
