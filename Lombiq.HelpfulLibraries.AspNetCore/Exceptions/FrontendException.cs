@@ -1,6 +1,5 @@
 ﻿#nullable enable
 
-using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Localization;
 using System;
 using System.Collections.Generic;
@@ -23,7 +22,7 @@ public class FrontendException : Exception
     /// <summary>
     /// Gets the list of error messages that can be displayed on the front end.
     /// </summary>
-    public IReadOnlyList<LocalizedHtmlString> HtmlMessages { get; }
+    public IReadOnlyList<LocalizedHtmlString> HtmlMessages { get; } = ArraySegment<LocalizedHtmlString>.Empty;
 
     public FrontendException(LocalizedHtmlString message, Exception? innerException = null)
         : base(message.Value, innerException) =>
