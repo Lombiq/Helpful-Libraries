@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System;
 using System.Collections.Generic;
@@ -18,7 +18,15 @@ public interface IContentSecurityPolicyProvider
     /// Updates the <paramref name="securityPolicies"/> dictionary where the keys are the <c>Content-Security-Policy</c>
     /// directives names and the values are the matching directive values.
     /// </summary>
-    public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context);
+    public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context) =>
+        ValueTask.CompletedTask;
+
+    /// <summary>
+    /// Returns a value indicating whether the <c>Content-Security-Policy</c> header should not be added to the current
+    /// page.
+    /// </summary>
+    public ValueTask<bool> ShouldSuppressHeaderAsync(HttpContext context) =>
+        new(result: false);
 
     /// <summary>
     /// Returns the first non-empty directive from the <paramref name="names"/> or <see cref="DefaultSrc"/> or an empty
@@ -38,7 +46,7 @@ public static class ContentSecurityPolicyProvider
     public static string GetDirective(IDictionary<string, string> securityPolicies, params string[] names) =>
         GetDirective(securityPolicies, names.AsEnumerable());
 
-    /// <inheritdoc cref="GetDirective(System.Collections.Generic.IDictionary{string,string},string[])"/>
+    /// <inheritdoc cref="GetDirective(IDictionary{string,string},string[])"/>
     public static string GetDirective(IDictionary<string, string> securityPolicies, IEnumerable<string> names)
     {
         foreach (var name in names)
