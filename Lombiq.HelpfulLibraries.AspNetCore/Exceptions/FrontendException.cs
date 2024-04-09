@@ -15,7 +15,7 @@ public class FrontendException : Exception
 {
     /// <summary>
     /// The string placed between error messages in the <see cref="Exception.Message"/> property, if there are multiple
-    /// entries in the <see cref="HtmlMessages"/>/
+    /// entries in the <see cref="HtmlMessages"/>.
     /// </summary>
     public const string MessageSeparator = "<br>";
 
