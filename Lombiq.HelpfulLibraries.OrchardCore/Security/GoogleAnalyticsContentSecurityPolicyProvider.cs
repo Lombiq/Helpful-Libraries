@@ -29,5 +29,10 @@ public class GoogleAnalyticsContentSecurityPolicyProvider : IContentSecurityPoli
         }
     }
 
+    /// <summary>
+    /// Enable the CSP headers necessary for Google Analytics, even if the <c>OrchardCore.Google.Analytics</c> module is
+    /// not enabled.
+    /// </summary>
+    /// <param name="context">The current <see cref="HttpContext"/>.</param>
     public static void EnableForCurrentRequest(HttpContext context) => context.Items[HttpContextItemKey] = "enabled";
 }
