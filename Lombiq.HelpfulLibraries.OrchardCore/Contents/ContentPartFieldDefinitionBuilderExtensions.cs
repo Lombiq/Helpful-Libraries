@@ -25,6 +25,6 @@ public static class ContentPartFieldDefinitionBuilderExtensions
         {
             Multiple = multiple,
             DisplayAllContentTypes = false,
-            DisplayedContentTypes = contentTypes,,
+            DisplayedContentTypes = contentTypes,
         });
 }
