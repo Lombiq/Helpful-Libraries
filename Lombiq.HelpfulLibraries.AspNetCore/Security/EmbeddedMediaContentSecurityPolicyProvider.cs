@@ -17,8 +17,8 @@ public class EmbeddedMediaContentSecurityPolicyProvider : IContentSecurityPolicy
     /// </summary>
     public static ConcurrentBag<string> PermittedFrameSources { get; } = new(new[]
     {
-        "www.youtube.com/",
-        "www.youtube-nocookie.com/",
+        "www.youtube.com",
+        "www.youtube-nocookie.com",
     });
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)

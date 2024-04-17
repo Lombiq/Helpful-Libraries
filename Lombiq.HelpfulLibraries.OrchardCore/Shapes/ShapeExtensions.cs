@@ -115,4 +115,10 @@ public static class ShapeExtensions
 
         return shapeTable.CreateAdHocShape(type, displayAsync);
     }
+
+    /// <summary>
+    /// Adds the warning to the screen which says "The current tenant will be reloaded when the settings are saved.".
+    /// </summary>
+    public static void AddTenantReloadWarning(this IShape shape) =>
+        shape.Metadata.Wrappers.Add("Settings_Wrapper__General");
 }
