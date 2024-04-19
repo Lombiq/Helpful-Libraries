@@ -22,11 +22,19 @@ public static class OrchardControllerExtensions
     public static RedirectResult RedirectToContentDisplay(this Controller controller, IContent content) =>
         controller.RedirectToContentDisplay(content.ContentItem.ContentItemId);
 
-    /// <summary>
-    /// Uses <see cref="Routing.UrlHelperExtensions.DisplayContentItem(Microsoft.AspNetCore.Mvc.IUrlHelper,OrchardCore.ContentManagement.IContent)"/>
-    /// extension method to redirect to this <see cref="ContentItem"/>'s display page.
-    /// </summary>
+    /// <inheritdoc cref="RedirectToContentDisplay(Microsoft.AspNetCore.Mvc.Controller,OrchardCore.ContentManagement.IContent)"/>
     public static RedirectResult RedirectToContentDisplay(this Controller controller, string contentItemId) =>
+        controller.Redirect(controller.Url.DisplayContentItem(contentItemId));
+
+    /// <summary>
+    /// Uses <see cref="Routing.UrlHelperExtensions.EditContentItem"/> extension method to redirect to this <see
+    /// cref="ContentItem"/>'s editor page.
+    /// </summary>
+    public static RedirectResult RedirectToContentEdit(this Controller controller, IContent content) =>
+        controller.RedirectToContentEdit(content.ContentItem.ContentItemId);
+
+    /// <inheritdoc cref="RedirectToContentEdit(Microsoft.AspNetCore.Mvc.Controller,string)"/>
+    public static RedirectResult RedirectToContentEdit(this Controller controller, string contentItemId) =>
         controller.Redirect(controller.Url.DisplayContentItem(contentItemId));
 
     /// <summary>
