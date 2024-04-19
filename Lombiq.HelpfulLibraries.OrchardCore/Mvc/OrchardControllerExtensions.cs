@@ -35,7 +35,7 @@ public static class OrchardControllerExtensions
 
     /// <inheritdoc cref="RedirectToContentEdit(Microsoft.AspNetCore.Mvc.Controller,string)"/>
     public static RedirectResult RedirectToContentEdit(this Controller controller, string contentItemId) =>
-        controller.Redirect(controller.Url.DisplayContentItem(contentItemId));
+        controller.Redirect(controller.Url.EditContentItem(contentItemId));
 
     /// <summary>
     /// Similar to <c>controller.Json(data)</c>, but catches any exception in the <paramref name="dataFactory"/> and if
