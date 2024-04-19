@@ -39,7 +39,7 @@
     <PackageReference Include="OrchardCore.Themes" Version="1.8.2" />
     <PackageReference Include="OrchardCore.Email.Abstractions" Version="1.8.2" />
     <PackageReference Include="OrchardCore.Infrastructure" Version="1.8.2" />
-    <PackageReference Include="NodaTime" Version="3.1.10" />
+    <PackageReference Include="NodaTime" Version="3.1.11" />
     <!-- Necessary so tag helpers will work in the projects depending on this. -->
     <PackageReference Include="OrchardCore.DisplayManagement" Version="1.8.2" />
     <PackageReference Include="OrchardCore.ResourceManagement" Version="1.8.2" />
