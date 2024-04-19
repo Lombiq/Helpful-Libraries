@@ -1,4 +1,6 @@
+using Lombiq.HelpfulLibraries.AspNetCore.Exceptions;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
@@ -6,6 +8,7 @@ using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 using OrchardCore.ContentManagement;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Mvc;
@@ -33,23 +36,25 @@ public static class OrchardControllerExtensions
     /// </summary>
     public static async Task<JsonResult> SafeJsonAsync<T>(this Controller controller, Func<Task<T>> dataFactory)
     {
+        var context = controller.HttpContext;
+
         try
         {
             return controller.Json(await dataFactory());
         }
+        catch (FrontendException exception)
+        {
+            LogJsonError(controller, exception);
+            return controller.Json(new
+            {
+                error = exception.Message,
+                html = exception.HtmlMessages.Select(message => message.Html()),
+                data = context.IsDevelopmentAndLocalhost(),
+            });
+        }
         catch (Exception exception)
         {
-            var context = controller.HttpContext;
-
-            var logger = context
-                .RequestServices
-                .GetRequiredService<ILoggerFactory>()
-                .CreateLogger(controller.GetType());
-            logger.LogError(
-                exception,
-                "An error has occurred while generating a JSON result. (Request Route Values: {RouteValues})",
-                JsonConvert.SerializeObject(context.Request.RouteValues));
-
+            LogJsonError(controller, exception);
             return controller.Json(context.IsDevelopmentAndLocalhost()
                 ? new { error = exception.Message, data = exception.ToString() }
                 : new
@@ -61,5 +66,19 @@ public static class OrchardControllerExtensions
                         .Value ?? "An error has occurred while trying to process your request.",
                 });
         }
+    }
+
+    private static void LogJsonError(Controller controller, Exception exception)
+    {
+        var context = controller.HttpContext;
+
+        var logger = context
+            .RequestServices
+            .GetRequiredService<ILoggerFactory>()
+            .CreateLogger(controller.GetType());
+        logger.LogError(
+            exception,
+            "An error has occurred while generating a JSON result. (Request Route Values: {RouteValues})",
+            JsonConvert.SerializeObject(context.Request.RouteValues));
     }
 }

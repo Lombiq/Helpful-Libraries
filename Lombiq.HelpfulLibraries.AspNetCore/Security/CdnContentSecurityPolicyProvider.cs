@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Http;
-using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,33 +15,44 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
     /// <summary>
-    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="StyleSrc"/> directive.
+    /// Gets the sources that will be added to the <see cref="StyleSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<Uri> PermittedStyleSources { get; } = new(new[]
+    public static ConcurrentBag<string> PermittedStyleSources { get; } = new(new[]
     {
-        new Uri("https://fonts.googleapis.com/css"),
-        new Uri("https://fonts.gstatic.com/"),
-        new Uri("https://cdn.jsdelivr.net/npm"),
-        new Uri("https://fastly.jsdelivr.net/npm"),
+        "fonts.googleapis.com",
+        "fonts.gstatic.com", // #spell-check-ignore-line
+        "cdn.jsdelivr.net", // #spell-check-ignore-line
+        "fastly.jsdelivr.net", // #spell-check-ignore-line
+        "cdnjs.cloudflare.com", // #spell-check-ignore-line
+        "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
     });
 
     /// <summary>
-    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="ScriptSrc"/> directive.
+    /// Gets the sources that will be added to the <see cref="ScriptSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<Uri> PermittedScriptSources { get; } = new(new[]
+    public static ConcurrentBag<string> PermittedScriptSources { get; } = new(new[]
     {
-        new Uri("https://cdn.jsdelivr.net/npm"),
-        new Uri("https://fastly.jsdelivr.net/npm"),
+        "cdn.jsdelivr.net", // #spell-check-ignore-line
+        "cdnjs.cloudflare.com", // #spell-check-ignore-line
+        "code.jquery.com",
+        "fastly.jsdelivr.net", // #spell-check-ignore-line
+        "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
     });
 
     /// <summary>
-    /// Gets the URLs whose <see cref="Uri.Host"/> will be added to the <see cref="FontSrc"/> directive.
+    /// Gets the sources that will be added to the <see cref="FontSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<Uri> PermittedFontSources { get; } = new(new[]
+    public static ConcurrentBag<string> PermittedFontSources { get; } = new(new[]
     {
-        new Uri("https://fonts.googleapis.com/"),
-        new Uri("https://fonts.gstatic.com/"),
+        "cdn.jsdelivr.net", // #spell-check-ignore-line
+        "fonts.googleapis.com",
+        "fonts.gstatic.com", // #spell-check-ignore-line
     });
+
+    /// <summary>
+    /// Gets the sources that will be added to the <see cref="FrameSrc"/> directive.
+    /// </summary>
+    public static ConcurrentBag<string> PermittedFrameSources { get; } = [];
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
@@ -51,37 +61,33 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         if (!PermittedStyleSources.IsEmpty)
         {
             any = true;
-            MergeValues(securityPolicies, StyleSrc, PermittedStyleSources);
+            CspHelper.MergeValues(securityPolicies, StyleSrc, PermittedStyleSources);
         }
 
         if (!PermittedScriptSources.IsEmpty)
         {
             any = true;
-            MergeValues(securityPolicies, ScriptSrc, PermittedScriptSources);
+            CspHelper.MergeValues(securityPolicies, ScriptSrc, PermittedScriptSources);
         }
 
         if (!PermittedFontSources.IsEmpty)
         {
             any = true;
-            MergeValues(securityPolicies, FontSrc, PermittedFontSources);
+            CspHelper.MergeValues(securityPolicies, FontSrc, PermittedFontSources);
+        }
+
+        if (!PermittedFrameSources.IsEmpty)
+        {
+            any = true;
+            CspHelper.MergeValues(securityPolicies, FrameSrc, PermittedFrameSources);
         }
 
         if (any)
         {
             var allPermittedSources = PermittedStyleSources.Concat(PermittedScriptSources).Concat(PermittedFontSources);
-            MergeValues(securityPolicies, ConnectSrc, allPermittedSources);
+            CspHelper.MergeValues(securityPolicies, ConnectSrc, allPermittedSources);
         }
 
         return ValueTask.CompletedTask;
-    }
-
-    private static void MergeValues(IDictionary<string, string> policies, string key, IEnumerable<Uri> sources)
-    {
-        var directiveValue = policies.GetMaybe(key) ?? policies.GetMaybe(DefaultSrc) ?? string.Empty;
-
-        policies[key] = string.Join(' ', directiveValue
-            .Split(' ')
-            .Union(sources.Select(uri => uri.Host))
-            .Distinct());
     }
 }
