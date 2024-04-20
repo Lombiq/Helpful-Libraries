@@ -7,6 +7,7 @@
 - `QueryExtensions`: Adds `IQuery` manipulating extension methods to YesSql queries. For example, `PaginateAsync()` for breaking the result into pages.
 - `SchemaBuilderExtensions`: Adds shortcut extension method for `SchemaBuilder`.
 - `SqlDialectExtensions`: Adds extensions to check the type of SQL language used.
+- `IndexExtensions`: Adds extensions for index creation.
 
 ## Services
 
