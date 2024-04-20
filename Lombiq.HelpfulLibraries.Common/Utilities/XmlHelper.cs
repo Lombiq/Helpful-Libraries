@@ -12,11 +12,14 @@ namespace Lombiq.HelpfulLibraries.Common.Utilities;
 public static class XmlHelper
 {
     /// <summary>
-    /// Deserializes the provided <paramref name="xml"/> to the expected <paramref name="outputType"/>.
+    /// Deserializes the provided <paramref name="xml"/> to the expected <paramref name="outputType"/>. If <paramref
+    /// name="xml"/> is null or empty it just shortcuts by returning <see langword="default"/>.
     /// </summary>
     /// <exception cref="InvalidOperationException">An error occurred during deserialization.</exception>
     public static object Deserialize(string xml, Type outputType, params Type[] extraTypes)
     {
+        if (string.IsNullOrEmpty(xml)) return default;
+
         var serializer = new XmlSerializer(outputType, extraTypes);
 
         using var stringReader = new StringReader(xml);
