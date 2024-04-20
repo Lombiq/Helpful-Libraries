@@ -57,11 +57,11 @@ public static class XmlHelper
     }
 
     /// <summary>
-    /// Serializes <paramref name="data"/> (whose type must be <paramref name="dataType"/>).
+    /// Serializes <paramref name="data"/>.
     /// </summary>
-    public static string Serialize(object data, Type dataType, params Type[] extraTypes)
+    public static string Serialize<T>(T data, params Type[] extraTypes)
     {
-        var serializer = new XmlSerializer(dataType, extraTypes);
+        var serializer = new XmlSerializer(typeof(T), extraTypes);
         var stringBuilder = new StringBuilder();
 
         using var writer = new StringWriter(stringBuilder);
@@ -69,8 +69,4 @@ public static class XmlHelper
 
         return stringBuilder.ToString();
     }
-
-    /// <inheritdoc cref="Serialize"/>
-    public static string Serialize<T>(T data, params Type[] extraTypes) =>
-        Serialize(data, typeof(T), extraTypes);
 }
