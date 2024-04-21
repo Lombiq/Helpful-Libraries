@@ -26,11 +26,11 @@ public static class IndexExtensions
     /// <inheritdoc cref="MapFor{TPart,TIndex}"/>
     public static IGroupFor<TIndex> Map<TPart, TIndex>(
         this IMapFor<ContentItem, TIndex> mapFor,
-        Func<TPart, TIndex> map,
+        Func<TPart, TIndex> mapPartToIndex,
         bool latest = true)
         where TPart : ContentPart
         where TIndex : IIndex =>
         mapFor
             .When(item => item.Has<TPart>() && (item.Latest || !latest))
-            .Map(item => map(item.As<TPart>()));
+            .Map(item => mapPartToIndex(item.As<TPart>()));
 }

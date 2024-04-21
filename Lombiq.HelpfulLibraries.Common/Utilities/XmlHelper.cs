@@ -7,7 +7,7 @@ using System.Xml.Serialization;
 namespace Lombiq.HelpfulLibraries.Common.Utilities;
 
 /// <summary>
-/// Utility class to streamline XML serialization
+/// Utility class to streamline XML serialization.
 /// </summary>
 public static class XmlHelper
 {
