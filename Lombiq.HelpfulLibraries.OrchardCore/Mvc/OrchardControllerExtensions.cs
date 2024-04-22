@@ -79,6 +79,6 @@ public static class OrchardControllerExtensions
         logger.LogError(
             exception,
             "An error has occurred while generating a JSON result. (Request Route Values: {RouteValues})",
-            JsonConvert.SerializeObject(context.Request.RouteValues));
+            JsonSerializer.Serialize(context.Request.RouteValues));
     }
 }
