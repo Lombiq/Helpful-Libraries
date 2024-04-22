@@ -14,5 +14,8 @@ These extensions provide additional security and can resolve issues reported by 
 
 ## Services
 
+- `ExternalLoginContentSecurityPolicyProvider`: Provides various directives for the `Content-Security-Policy` header, allowing using external login providers that require special headers (like Microsoft login). Is automatically enabled when the affected features are enabled.
+- `GoogleAnalyticsContentSecurityPolicyProvider`: Provides various directives for the `Content-Security-Policy` header, allowing using Google Analytics tracking. Is automatically enabled when the `OrchardCore.Google.Analytics` feature is enabled or the provider is explicitly enabled for the current request via is `static` method.
+- `ReCaptchaContentSecurityPolicyProvider`: Provides various directives for the `Content-Security-Policy` header, allowing using ReCaptcha captchas. Is automatically enabled when the `OrchardCore.ReCaptcha` feature is enabled.
 - `ResourceManagerContentSecurityPolicyProvider`: An abstract base class for implementing content security policy providers that trigger when the specified resource is included.
 - `VueContentSecurityPolicyProvider`: An implementation of `ResourceManagerContentSecurityPolicyProvider` that adds `script-src: unsafe-eval` permission to the page if it uses the `vuejs` resource. This includes any Vue.js app in stock Orchard Core, apps you create in your view files, and SFCs created with the Lombiq.VueJs module. This is necessary, because without `unsafe-eval` Vue.js only supports templates that are pre-compiled into JS code.

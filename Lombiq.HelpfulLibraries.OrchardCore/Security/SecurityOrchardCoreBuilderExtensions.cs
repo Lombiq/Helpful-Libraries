@@ -1,5 +1,6 @@
 using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
+using Lombiq.HelpfulLibraries.OrchardCore.Security;
 using Microsoft.AspNetCore.Antiforgery;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
@@ -74,6 +75,32 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///     </item>
     ///     <item>
     ///         <description>
+    ///            Adds <see cref="EmbeddedMediaContentSecurityPolicyProvider"/> that provides permitted hosts for the
+    ///            <c>frame-src</c> directive of the <c>Content-Security-Policy</c> header, covering usual media
+    ///            embedding sources like YouTube.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///            Adds <see cref="ExternalLoginContentSecurityPolicyProvider"/> that provides permitted hosts for the
+    ///            <c>form-action</c> directive of the <c>Content-Security-Policy</c> header, covering external login
+    ///            providers that require this (like Microsoft and GitHub).
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///            Adds <see cref="ReCaptchaContentSecurityPolicyProvider"/> that provides various directives for the
+    ///            <c>Content-Security-Policy</c> header, allowing using ReCaptcha captchas.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
+    ///            Adds <see cref="GoogleAnalyticsContentSecurityPolicyProvider"/> that provides various directives for
+    ///            the <c>Content-Security-Policy</c> header, allowing using Google Analytics tracking.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
     ///            Adds a middleware that supplies the <c>Content-Security-Policy</c> header.
     ///         </description>
     ///     </item>
@@ -117,9 +144,13 @@ public static class SecurityOrchardCoreBuilderExtensions
             services => services
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<VueContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<EmbeddedMediaContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<ExternalLoginContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<ContentSecurityPolicyAttributeContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<SkipContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<BrowserLinkContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<ReCaptchaContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<GoogleAnalyticsContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             (app, _, serviceProvider) =>
             {
