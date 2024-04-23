@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OrchardCore.DisplayManagement.Entities;
 using OrchardCore.DisplayManagement.Handlers;
+using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Security.Permissions;
 using OrchardCore.Settings;
@@ -43,7 +44,7 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Sect
                 .OnGroup(GroupId)
             : null;
 
-    public override async Task<IDisplayResult> UpdateAsync(TSection section, BuildEditorContext context)
+    public override async Task<IDisplayResult> UpdateAsync(TSection section, UpdateEditorContext context)
     {
         var viewModel = new JsonViewModel<TAdditionalData>();
 
