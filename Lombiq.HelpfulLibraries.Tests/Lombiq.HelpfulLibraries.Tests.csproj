@@ -12,6 +12,10 @@
     <NoWarn>1701;1702;8034;</NoWarn>
   </PropertyGroup>
 
+  <PropertyGroup>
+    <SourceGeneratorLocation>$(SolutionDir)src\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.SourceGenerators\bin\Debug\netstandard2.0\Lombiq.HelpfulLibraries.SourceGenerators.dll</SourceGeneratorLocation>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.7.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.5.1">
@@ -20,11 +24,18 @@
     </PackageReference>
   </ItemGroup>
 
+  <Choose>
+    <When Condition="Exists('$(SourceGeneratorLocation)')">
+      <ItemGroup>
+        <ProjectReference Include="..\Lombiq.HelpfulLibraries.Attributes\Lombiq.HelpfulLibraries.Attributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+        <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+      </ItemGroup>
+    </When>
+  </Choose>
+
   <ItemGroup>
     <ProjectReference Include="..\..\..\..\test\Lombiq.Tests\Lombiq.Tests.csproj" />
-    <ProjectReference Include="..\Lombiq.HelpfulLibraries.Attributes\Lombiq.HelpfulLibraries.Attributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.csproj" />
-    <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
   </ItemGroup>
 
   <ItemGroup>
