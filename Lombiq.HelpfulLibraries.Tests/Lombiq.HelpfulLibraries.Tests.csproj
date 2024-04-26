@@ -12,7 +12,7 @@
     <NoWarn>1701;1702;8034;</NoWarn>
   </PropertyGroup>
 
-  <Target Name="CustomOnInnerBuild" BeforeTargets="BeforeBuild">
+  <Target Name="CustomOnInnerBuild" BeforeTargets="BeforeCompile">
     <MSBuild Projects="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" />
   </Target>
 
