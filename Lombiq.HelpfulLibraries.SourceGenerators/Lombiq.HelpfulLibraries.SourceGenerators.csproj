@@ -42,6 +42,11 @@
         <None Include="$(PKGMicrosoft_CodeAnalysis_Analyzers)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="bin\Debug\netstandard2.0\\Lombiq.HelpfulLibraries.Attributes.dll" />
+      <None Remove="bin\Debug\netstandard2.0\\Lombiq.HelpfulLibraries.SourceGenerators.dll" />
+    </ItemGroup>
+
     <!-- For local referencing we will need this too -->
     <PropertyGroup>
         <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
