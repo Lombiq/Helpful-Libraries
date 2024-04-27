@@ -429,41 +429,16 @@ public static class StringExtensions
             .WithoutOverlappingRanges(isSortedByStart: true);
 
     /// <summary>
-    /// Returns a new <see cref="Range"/> where <see cref="Index.IsFromEnd"/> is <see langword="false"/> for both <see
-    /// cref="Range.Start"/> and <see cref="Range.End"/>.
-    /// </summary>
-    public static Range Normalize(this Range range, int length) =>
-        new(
-            range.Start.IsFromEnd ? new Index(length - range.Start.Value) : range.Start,
-            range.End.IsFromEnd ? new Index(length - range.End.Value) : range.End);
-
-    /// <summary>
     /// Returns a new list containing the ranges around and in-between the <paramref name="ranges"/>.
     /// </summary>
-    /// <param name="ranges">The ranges to exclude from [0..<paramref name="length"/>].</param>
-    /// <param name="length">The end index of the enveloping range.</param>
-    /// <param name="onlyStartingIndexes">
-    /// Set this to <see langword="true"/> if you are certain that all ranges are already normalized (both ends are <see
-    /// cref="Index.IsFromEnd"/> <see langword="false"/>).
-    /// </param>
-    public static IList<Range> InvertRanges(this IList<Range> ranges, int length, bool onlyStartingIndexes = false)
+    public static IList<Range> InvertRanges(this IList<Range> ranges, int length)
     {
         var results = new List<Range>(capacity: ranges.Count + 2);
 
-        if (!onlyStartingIndexes)
+        var startRange = new Range(0, ranges[0].Start);
+        if (startRange.GetOffsetAndLength(length).Length > 0)
         {
-            for (var i = 0; i < ranges.Count; i++)
-            {
-                if (ranges[i].Start.IsFromEnd || ranges[i].End.IsFromEnd)
-                {
-                    ranges[i] = ranges[i].Normalize(length);
-                }
-            }
-        }
-
-        if (ranges[0].Start.Value > 0)
-        {
-            results.Add(new Range(0, ranges[0].Start));
+            results.Add(startRange);
         }
 
         for (int i = 0; i < ranges.Count - 1; i++)
@@ -472,9 +447,10 @@ public static class StringExtensions
             if (range.Start.Value < range.End.Value) results.Add(range);
         }
 
-        if (ranges[^1].End.Value < length)
+        var endRange = new Range(ranges[^1].End, length);
+        if (endRange.GetOffsetAndLength(length).Length > 0)
         {
-            results.Add(new Range(ranges[^1].End, length));
+            results.Add(endRange);
         }
 
         return results;
