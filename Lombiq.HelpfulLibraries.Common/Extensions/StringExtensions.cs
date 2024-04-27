@@ -433,6 +433,8 @@ public static class StringExtensions
     /// </summary>
     public static IList<Range> InvertRanges(this IList<Range> ranges, int length)
     {
+        if (ranges.Count == 0) return new[] { Range.All };
+
         var results = new List<Range>(capacity: ranges.Count + 2);
 
         var startRange = new Range(0, ranges[0].Start);
@@ -459,8 +461,11 @@ public static class StringExtensions
     /// <summary>
     /// Concatenates the <paramref name="ranges"/> in <paramref name="text"/> into a new <see cref="string"/>.
     /// </summary>
-    public static string Concat(this string text, ICollection<Range> ranges)
+    public static string Concat(this string text, IList<Range> ranges)
     {
+        if (ranges.Count == 0) return string.Empty;
+        if (ranges is [{ Start: { Value: 0, IsFromEnd: false }, End: { Value: 0, IsFromEnd: true } }]) return text;
+
         var builder = new StringBuilder(capacity: ranges.Count);
 
         foreach (var range in ranges)
@@ -472,5 +477,5 @@ public static class StringExtensions
     }
 
     /// <inheritdoc cref="Concat"/>
-    public static string Join(this ICollection<Range> ranges, string text) => text.Concat(ranges);
+    public static string Join(this IList<Range> ranges, string text) => text.Concat(ranges);
 }
