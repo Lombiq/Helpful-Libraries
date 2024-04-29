@@ -20,7 +20,9 @@ For general details about and on using the Helpful Libraries see the [root Readm
         <AdditionalFiles Include="package.json" />
     </ItemGroup>
     ```
+
 3. Add reference to both the Source Generator as well as the Attributes project (this adds the marker attribute 'ConstantFromJson') and make sure to include the project as analyzer:
+
     ```xml
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Attributes\Lombiq.HelpfulLibraries.Attributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
