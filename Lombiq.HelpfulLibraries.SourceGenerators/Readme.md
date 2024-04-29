@@ -3,7 +3,6 @@
 ## About
 
 A collection of helpful source generators.
-> ⚠ When using one of the generators you must run a build before errors will go away.
 
 - [ConstantFromJsonGenerator.cs](ConstantFromJsonGenerator.cs): A source generator that creates a constant from a JSON file.
 
@@ -21,8 +20,13 @@ For general details about and on using the Helpful Libraries see the [root Readm
         <AdditionalFiles Include="package.json" />
     </ItemGroup>
     ```
+3. Add reference to both the Source Generator as well as the Attributes project (this adds the marker attribute 'ConstantFromJson') and make sure to include the project as analyzer:
+    ```xml
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.Attributes\Lombiq.HelpfulLibraries.Attributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    ```
 
-3. Wherever you want to use the JSON file, make sure to use a `partial class` and add the `ConstantFromJsonGenerator` attribute to it.
+4. Wherever you want to use the JSON file, make sure to use a `partial class` and add the `ConstantFromJsonGenerator` attribute to it.
 Where the first parameter is the name of the constant and the second parameter is the path to the JSON file, the last parameter is the name or 'key' for the value we are looking for.
 
     ```csharp
@@ -33,8 +37,8 @@ Where the first parameter is the name of the constant and the second parameter i
     }
     ```
 
-4. Run a build and the constant will be generated .
-5. Use the constant in your code, full example:
+5. Run a build and the constant will be generated .
+6. Use the constant in your code, full example:
 
     ```csharp
     using System;
