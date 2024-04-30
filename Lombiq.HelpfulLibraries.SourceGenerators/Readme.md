@@ -39,7 +39,7 @@ Where the first parameter is the name of the constant and the second parameter i
     }
     ```
 
-5. Run a build and the constant will be generated .
+5. Run a build and the constant will be generated.
 6. Use the constant in your code, full example:
 
     ```csharp
