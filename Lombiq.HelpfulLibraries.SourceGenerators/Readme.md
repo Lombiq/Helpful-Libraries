@@ -21,11 +21,27 @@ For general details about and on using the Helpful Libraries see the [root Readm
     </ItemGroup>
     ```
 
-3. Add reference to both the Source Generator as well as the Attributes project (this adds the marker attribute 'ConstantFromJson') and make sure to include the project as analyzer:
+3. Add reference to both the Source Generator and the Attributes project (this adds the marker attribute 'ConstantFromJson') and make sure to include the project as analyzer:
 
     ```xml
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Attributes\Lombiq.HelpfulLibraries.Attributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
+    ```
+   
+    In the samples you can also see the snippet below, while not strictly necessary for the source generator to function, it suppresses a warning that happens in Visual Studio when first cloning the project.
+    If you do decide to include this part make sure you update the relative paths to the correct location of the projects.
+
+    ```xml
+    <PropertyGroup>
+      <SourceGeneratorLocation>$(SolutionDir)src\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.SourceGenerators\bin\Debug\netstandard2.0\Lombiq.HelpfulLibraries.SourceGenerators.dll</SourceGeneratorLocation>
+      <SourceGeneratorLocation Condition=" '$(Configuration)' != 'Debug' ">
+      $(SolutionDir)src\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.SourceGenerators\bin\Release\netstandard2.0\Lombiq.HelpfulLibraries.SourceGenerators.dll
+      </SourceGeneratorLocation>
+    </PropertyGroup> 
+
+    <Target Name="CustomBeforeCompile" BeforeTargets="Compile">
+      <MSBuild Condition="!Exists('$(SourceGeneratorLocation)')" Projects="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" />
+    </Target>
     ```
 
 4. Wherever you want to use the JSON file, make sure to use a `partial class` and add the `ConstantFromJsonGenerator` attribute to it.
