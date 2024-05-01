@@ -28,15 +28,12 @@ For general details about and on using the Helpful Libraries see the [root Readm
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     ```
 
-    In the samples you can also see the snippet below, while not strictly necessary for the source generator to function, it suppresses a warning that happens in Visual Studio when first cloning the project.
-    If you do decide to include this part make sure you update the relative paths to the correct location of the projects.
+4. In the samples you can also see the snippet below, while not strictly necessary for the source generator to function, it suppresses a warning that happens in Visual Studio when first cloning the project. If you do decide to include this part make sure you update the relative paths to the correct location of the projects.
 
     ```xml
     <PropertyGroup>
         <SourceGeneratorLocation>$(SolutionDir)src\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.SourceGenerators\bin\Debug\netstandard2.0\Lombiq.HelpfulLibraries.SourceGenerators.dll</SourceGeneratorLocation>
-        <SourceGeneratorLocation Condition=" '$(Configuration)' != 'Debug' ">
-            $(SolutionDir)src\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.SourceGenerators\bin\Release\netstandard2.0\Lombiq.HelpfulLibraries.SourceGenerators.dll
-        </SourceGeneratorLocation>
+        <SourceGeneratorLocation Condition=" '$(Configuration)' != 'Debug' ">$(SolutionDir)src\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.SourceGenerators\bin\Release\netstandard2.0\Lombiq.HelpfulLibraries.SourceGenerators.dll</SourceGeneratorLocation>
     </PropertyGroup> 
 
     <Target Name="CustomBeforeCompile" BeforeTargets="Compile">
@@ -44,7 +41,7 @@ For general details about and on using the Helpful Libraries see the [root Readm
     </Target>
     ```
 
-4. Wherever you want to use the JSON file, make sure to use a `partial class` and add the `ConstantFromJsonGenerator` attribute to it.
+5. Wherever you want to use the JSON file, make sure to use a `partial class` and add the `ConstantFromJsonGenerator` attribute to it.
 Where the first parameter is the name of the constant and the second parameter is the path to the JSON file, the last parameter is the name or 'key' for the value we are looking for.
 
     ```csharp
@@ -55,8 +52,8 @@ Where the first parameter is the name of the constant and the second parameter i
     }
     ```
 
-5. Run a build and the constant will be generated.
-6. Use the constant in your code, full example:
+6. Run a build and the constant will be generated.
+7. Use the constant in your code, full example:
 
     ```csharp
     using System;
