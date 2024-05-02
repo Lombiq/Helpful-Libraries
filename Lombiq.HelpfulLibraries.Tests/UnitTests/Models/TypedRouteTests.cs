@@ -7,6 +7,7 @@ using OrchardCore.Environment.Extensions.Features;
 using Shouldly;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using Xunit;
 
@@ -14,21 +15,23 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Models;
 
 public class TypedRouteTests
 {
+    public static readonly TheoryData<TypedRouteShouldWorkCorrectlyInput> TypedRouteShouldWorkCorrectlyInputs =
+        new(GenerateTypedRouteShouldWorkCorrectlyInputs());
+
     [Theory]
-    [MemberData(nameof(TypedRouteShouldWorkCorrectlyData))]
-    public void TypedRouteShouldWorkCorrectly(
-        string expected,
-        Expression<Action<RouteTestController>> actionExpression,
-        (string Name, object Value)[] additional,
-        string tenantName)
+    // TypedRouteShouldWorkCorrectlyInput would need to implement IXunitSerializable but it works like this anyway.
+#pragma warning disable xUnit1045 // Avoid using TheoryData type arguments that might not be serializable
+    [MemberData(nameof(TypedRouteShouldWorkCorrectlyInputs))]
+#pragma warning restore xUnit1045 // Avoid using TheoryData type arguments that might not be serializable
+    public void TypedRouteShouldWorkCorrectly(TypedRouteShouldWorkCorrectlyInput input)
     {
         using var serviceProvider = CreateServiceProvider();
 
         var route = TypedRoute.CreateFromExpression(
-            actionExpression,
-            additional,
+            input.ActionExpression,
+            input.Additional,
             serviceProvider: serviceProvider);
-        route.ToString(tenantName).ShouldBe(expected);
+        route.ToString(input.TenantName).ShouldBe(input.Expected);
     }
 
     [Fact]
@@ -80,84 +83,64 @@ public class TypedRouteTests
         Expression<Action<RouteTestController>> expression) =>
         expression;
 
-    public static IEnumerable<object[]> TypedRouteShouldWorkCorrectlyData()
+    public static IEnumerable<TypedRouteShouldWorkCorrectlyInput> GenerateTypedRouteShouldWorkCorrectlyInputs()
     {
         var noMoreArguments = Array.Empty<(string Name, object Value)>();
         var noTenant = string.Empty;
         var someTenant = "SomeTenant";
 
-        var tests = new List<object[]>
+        var tests = new List<TypedRouteShouldWorkCorrectlyInput>
         {
-            new object[]
-            {
+            new(
                 "/Lombiq.HelpfulLibraries.Tests/RouteTest/Foo",
                 AsExpression(controller => controller.Foo()),
                 noMoreArguments,
-                noTenant,
-            },
-            new object[]
-            {
+                noTenant),
+            new(
                 "/Lombiq.HelpfulLibraries.Tests/RouteTest/Bar",
                 AsExpression(controller => controller.Bar()),
                 noMoreArguments,
-                noTenant,
-            },
-            new object[]
-            {
+                noTenant),
+            new(
                 "/Admin/Lombiq.HelpfulLibraries.Tests/RouteTest/Baz",
                 AsExpression(controller => controller.Baz()),
                 noMoreArguments,
-                noTenant,
-            },
-            new object[]
-            {
+                noTenant),
+            new(
                 "/SomeTenant/Lombiq.HelpfulLibraries.Tests/RouteTest/Foo",
                 AsExpression(controller => controller.Foo()),
                 noMoreArguments,
-                someTenant,
-            },
-            new object[]
-            {
+                someTenant),
+            new(
                 "/SomeTenant/Lombiq.HelpfulLibraries.Tests/RouteTest/Bar",
                 AsExpression(controller => controller.Bar()),
                 noMoreArguments,
-                someTenant,
-            },
-            new object[]
-            {
+                someTenant),
+            new(
                 "/SomeTenant/Admin/Lombiq.HelpfulLibraries.Tests/RouteTest/Baz",
                 AsExpression(controller => controller.Baz()),
                 noMoreArguments,
-                someTenant,
-            },
-            new object[]
-            {
+                someTenant),
+            new(
                 "/I/Am/Routed",
                 AsExpression(controller => controller.Route()),
                 noMoreArguments,
-                noTenant,
-            },
-            new object[]
-            {
+                noTenant),
+            new(
                 "/I/Am/Routed/Admin",
                 AsExpression(controller => controller.AdminRoute()),
                 noMoreArguments,
-                noTenant,
-            },
-            new object[]
-            {
+                noTenant),
+            new(
                 "/I/Am/Routed?wat=is+this",
                 AsExpression(controller => controller.Route()),
-                new (string Name, object Value)[] { ("wat", "is this") },
-                noTenant,
-            },
-            new object[]
-            {
+                [("wat", "is this")],
+                noTenant),
+            new(
                 "/content/10",
                 AsExpression(controller => controller.RouteSubstitution(10)),
                 noMoreArguments,
-                noTenant,
-            },
+                noTenant),
         };
 
         // Here we test multiple arguments and also overlapping variable names to ensure it doesn't generate clashing
@@ -166,13 +149,11 @@ public class TypedRouteTests
         {
             var date = new DateTime(1997, 8, 29, 2, 14, 0, DateTimeKind.Utc).AddDays(addDays);
 
-            tests.Add(
-            [
+            tests.Add(new(
                 expect,
                 AsExpression(controller => controller.Arguments(9001, 2.71, date, "done")),
                 noMoreArguments,
-                noTenant,
-            ]);
+                noTenant));
         }
 
         AddArgumentsTest(
@@ -183,5 +164,18 @@ public class TypedRouteTests
             "/Lombiq.HelpfulLibraries.Tests/RouteTest/Arguments?number=9001&fraction=2.71&dateTime=1997-08-30T02%3A14%3A00&text=done");
 
         return tests;
+    }
+
+    [SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "This is just an input class for a unit test.")]
+    public class TypedRouteShouldWorkCorrectlyInput(
+        string expected,
+        Expression<Action<RouteTestController>> actionExpression,
+        (string Name, object Value)[] additional,
+        string tenantName)
+    {
+        public string Expected { get; set; } = expected;
+        public Expression<Action<RouteTestController>> ActionExpression { get; set; } = actionExpression;
+        public (string Name, object Value)[] Additional { get; set; } = additional;
+        public string TenantName { get; set; } = tenantName;
     }
 }
