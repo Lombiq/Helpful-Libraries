@@ -32,7 +32,7 @@ public class NoneShapeTableProvider : IShapeTableProvider
     /// <summary>
     /// Adds a "None" option to every field's display and editor and renders an empty shape.
     /// </summary>
-    public async Task DiscoverAsync(ShapeTableBuilder builder)
+    public async ValueTask DiscoverAsync(ShapeTableBuilder builder)
     {
         var allFieldNames = (await _contentDefinitionManager.ListPartDefinitionsAsync())
             .SelectMany(part => part.Fields)
