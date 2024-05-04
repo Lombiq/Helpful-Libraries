@@ -1,0 +1,64 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>netstandard2.0</TargetFramework>
+        <IsPackable>false</IsPackable>
+        <Nullable>enable</Nullable>
+        <LangVersion>latest</LangVersion>
+
+        <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
+        <IsRoslynComponent>true</IsRoslynComponent>
+
+        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+        <IncludeBuildOutput>false</IncludeBuildOutput>
+
+        <RootNamespace>Lombiq.HelpfulLibraries.SourceGenerators</RootNamespace>
+        <PackageId>Lombiq.HelpfulLibraries.SourceGenerators</PackageId>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0" PrivateAssets="all" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Lombiq.HelpfulLibraries.Attributes\Lombiq.HelpfulLibraries.Attributes.csproj" PrivateAssets="all" GeneratePathProperty="true" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <!-- Take a private dependency on with (PrivateAssets=all) Consumers of this generator will not reference it.
+             Set GeneratePathProperty=true so we can reference the binaries -->
+        <PackageReference Include="System.Text.Json" Version="8.0.0" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.3.4" GeneratePathProperty="true">
+          <PrivateAssets>all</PrivateAssets>
+          <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+
+        <!-- Package the generator in the analyzer directory of the nuget package -->
+        <None Include="$(OutputPath)\$(AssemblyName).dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+
+        <!-- Package the dependencies alongside the generator assembly -->
+        <None Include="$(OutputPath)\Lombiq.HelpfulLibraries.Attributes.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PKGSystem_Text_Json)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+        <None Include="$(PKGMicrosoft_CodeAnalysis_Analyzers)\lib\netstandard2.0\*.dll" Pack="true" PackagePath="analyzers/dotnet/cs" Visible="false" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="bin\Debug\netstandard2.0\\Lombiq.HelpfulLibraries.Attributes.dll" />
+      <None Remove="bin\Debug\netstandard2.0\\Lombiq.HelpfulLibraries.SourceGenerators.dll" />
+    </ItemGroup>
+
+    <!-- For local referencing we will need this too -->
+    <PropertyGroup>
+        <GetTargetPathDependsOn>$(GetTargetPathDependsOn);GetDependencyTargetPaths</GetTargetPathDependsOn>
+    </PropertyGroup>
+
+    <Target Name="GetDependencyTargetPaths">
+        <ItemGroup>
+            <!-- These will now generate a path property because we did the GeneratePathProperty="true"-->
+            <TargetPathWithTargetPlatformMoniker Include="$(Lombiq_HelpfulLibraries_Attributes)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgSystem_Text_Json)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+            <TargetPathWithTargetPlatformMoniker Include="$(PkgMicrosoft_CodeAnalysis_Analyzers)\lib\netstandard2.0\*.dll" IncludeRuntimeDependency="false" />
+        </ItemGroup>
+    </Target>
+
+</Project>

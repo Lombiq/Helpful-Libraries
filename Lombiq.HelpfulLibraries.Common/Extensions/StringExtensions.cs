@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
@@ -413,4 +414,68 @@ public static class StringExtensions
             $"{words} {string.Join(separator: ' ', otherWords)}"
                 .Split(' ', StringSplitOptions.RemoveEmptyEntries)
                 .Distinct());
+
+    /// <summary>
+    /// Finds all non-overlapping ranges in the <paramref name="text"/> that start with <paramref name="opening"/>
+    /// and end with <paramref name="closing"/>.
+    /// </summary>
+    public static IList<Range> GetParenthesisRanges(this string text, string opening, string closing) =>
+        text
+            .AllIndexesOf(opening)
+            .Where(index => text.IndexOf(closing, index + opening.Length, StringComparison.InvariantCulture) >= 0)
+            .Select(index => new Range(
+                index,
+                text.IndexOfOrdinal(value: closing, startIndex: index + opening.Length) + closing.Length))
+            .WithoutOverlappingRanges(isSortedByStart: true);
+
+    /// <summary>
+    /// Returns a new list containing the ranges around and in-between the <paramref name="ranges"/>.
+    /// </summary>
+    public static IList<Range> InvertRanges(this IList<Range> ranges, int length)
+    {
+        if (ranges.Count == 0) return new[] { Range.All };
+
+        var results = new List<Range>(capacity: ranges.Count + 2);
+
+        var startRange = new Range(0, ranges[0].Start);
+        if (startRange.GetOffsetAndLength(length).Length > 0)
+        {
+            results.Add(startRange);
+        }
+
+        for (int i = 0; i < ranges.Count - 1; i++)
+        {
+            var range = new Range(ranges[i].End, ranges[i + 1].Start);
+            if (range.Start.Value < range.End.Value) results.Add(range);
+        }
+
+        var endRange = new Range(ranges[^1].End, length);
+        if (endRange.GetOffsetAndLength(length).Length > 0)
+        {
+            results.Add(endRange);
+        }
+
+        return results;
+    }
+
+    /// <summary>
+    /// Concatenates the <paramref name="ranges"/> in <paramref name="text"/> into a new <see cref="string"/>.
+    /// </summary>
+    public static string Concat(this string text, IList<Range> ranges)
+    {
+        if (ranges.Count == 0) return string.Empty;
+        if (ranges is [{ Start: { Value: 0, IsFromEnd: false }, End: { Value: 0, IsFromEnd: true } }]) return text;
+
+        var builder = new StringBuilder(capacity: ranges.Count);
+
+        foreach (var range in ranges)
+        {
+            builder.Append(text[range]);
+        }
+
+        return builder.ToString();
+    }
+
+    /// <inheritdoc cref="Concat"/>
+    public static string Join(this IList<Range> ranges, string text) => text.Concat(ranges);
 }
