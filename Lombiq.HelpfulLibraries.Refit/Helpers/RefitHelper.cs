@@ -14,12 +14,12 @@ public static class RefitHelper
     /// <param name="configure">Optional action for configuring other settings.</param>
     /// <typeparam name="T">Interface to create the implementation for.</typeparam>
     /// <returns>An instance that implements <typeparamref name="T"/>.</returns>
-    [Obsolete("As of Orchard Core 1.9 Newtonsoft.Json is no longer supported.")]
+    [Obsolete("As of Orchard Core 2.0 Newtonsoft.Json is no longer supported.")]
     public static T WithNewtonsoftJson<T>(string hostUrl, Action<RefitSettings> configure = null) =>
         WithNewtonsoftJson<T>(new Uri(hostUrl), configure);
 
     /// <inheritdoc cref="WithNewtonsoftJson{T}(string,Action{RefitSettings})"/>
-    [Obsolete("As of Orchard Core 1.9 Newtonsoft.Json is no longer supported.")]
+    [Obsolete("As of Orchard Core 2.0 Newtonsoft.Json is no longer supported.")]
     public static T WithNewtonsoftJson<T>(Uri hostUrl, Action<RefitSettings> configure = null) =>
         RestService.For<T>(hostUrl.AbsoluteUri, CreateSettingsWithNewtonsoftJson(configure));
 
@@ -31,11 +31,11 @@ public static class RefitHelper
     /// <param name="configure">Optional action for configuring other settings.</param>
     /// <typeparam name="T">Interface to create the implementation for.</typeparam>
     /// <returns>An instance that implements <typeparamref name="T"/>.</returns>
-    [Obsolete("As of Orchard Core 1.9 Newtonsoft.Json is no longer supported.")]
+    [Obsolete("As of Orchard Core 2.0 Newtonsoft.Json is no longer supported.")]
     public static T WithNewtonsoftJson<T>(HttpClient httpClient, Action<RefitSettings> configure = null) =>
         RestService.For<T>(httpClient, CreateSettingsWithNewtonsoftJson(configure));
 
-    [Obsolete("As of Orchard Core 1.9 Newtonsoft.Json is no longer supported.")]
+    [Obsolete("As of Orchard Core 2.0 Newtonsoft.Json is no longer supported.")]
     private static RefitSettings CreateSettingsWithNewtonsoftJson(Action<RefitSettings> configure) =>
-        throw new NotSupportedException("As of Orchard Core 1.9 Newtonsoft.Json is no longer supported.");
+        throw new NotSupportedException("As of Orchard Core 2.0 Newtonsoft.Json is no longer supported.");
 }
