@@ -23,7 +23,7 @@ public class LocalizedHtmlStringConverterTests
         Name,
         "az én szövegem", // #spell-check-ignore-line
         null,
-        "{\"Name\":\"my text\",\"Value\":\"az \\u00E9n sz\\u00F6vegem\",\"IsResourceNotFound\":false}")]
+        "{\"Name\":\"my text\",\"Value\":\"az \\u00E9n sz\\u00F6vegem\",\"IsResourceNotFound\":false}")] // #spell-check-ignore-line
     public void LocalizedHtmlStringShouldBeSerializedCorrectly(string name, string value, bool? notFound, string expected)
     {
         var localized = notFound == null
