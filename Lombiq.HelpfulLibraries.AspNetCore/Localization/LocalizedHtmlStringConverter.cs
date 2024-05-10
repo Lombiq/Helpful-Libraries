@@ -32,9 +32,10 @@ public class LocalizedHtmlStringConverter : JsonConverter<LocalizedHtmlString>
 
         if (token is JsonObject jsonObject)
         {
-            var name = jsonObject[nameof(LocalizedHtmlString.Name)]?.Deserialize<string>();
-            var value = jsonObject.GetMaybe(nameof(LocalizedHtmlString.Value))?.Deserialize<string>() ?? name;
-            var isResourceNotFound = jsonObject.GetMaybe(nameof(LocalizedHtmlString.IsResourceNotFound))?.Deserialize<bool>();
+            var dictionary = jsonObject.ToDictionaryIgnoreCase();
+            var name = dictionary.GetMaybe(nameof(LocalizedHtmlString.Name))?.Deserialize<string>();
+            var value = dictionary.GetMaybe(nameof(LocalizedHtmlString.Value))?.Deserialize<string>() ?? name;
+            var isResourceNotFound = dictionary.GetMaybe(nameof(LocalizedHtmlString.IsResourceNotFound))?.Deserialize<bool>();
 
             name ??= value;
             if (string.IsNullOrEmpty(name)) throw new InvalidOperationException("Missing name.");
