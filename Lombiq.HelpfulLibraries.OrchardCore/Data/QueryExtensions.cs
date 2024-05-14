@@ -133,7 +133,7 @@ public static class QueryExtensions
     /// <remarks><para>
     /// The <see cref="PagerParameters.Page"/> should come from the <c>pagenum</c> route value and should be one-based.
     /// </para></remarks>
-    public static async Task<(IList<T> Items, IShape PagerShape, int Total, int PageSize)> GetPageAndPagerAsync<T>(
+    public static async Task<GetPageAndPagerViewModel<T>> GetPageAndPagerAsync<T>(
         this IQuery<T> query,
         IShapeFactory shapeFactory,
         ISiteService siteService,
@@ -152,7 +152,7 @@ public static class QueryExtensions
             .TotalItemCount(total)
             .RouteData(routeData == null ? new RouteData() : new RouteData(routeData));
 
-        return (items, pagerShape, total, pager.PageSize);
+        return new GetPageAndPagerViewModel<T>(items, pagerShape, total, pager.PageSize, index);
     }
 
     /// <summary>
@@ -163,7 +163,7 @@ public static class QueryExtensions
     /// <param name="defaultPageSize">
     /// An optional value it you want custom page size instead of the value coming from <see cref="ISite.PageSize"/>.
     /// </param>
-    public static Task<(IList<T> Items, IShape PagerShape, int Total, int PageSize)> GetPageAndPagerAsync<T>(
+    public static Task<GetPageAndPagerViewModel<T>> GetPageAndPagerAsync<T>(
         this IQuery<T> query,
         HttpContext httpContext,
         int? defaultPageSize = null)
@@ -183,3 +183,5 @@ public static class QueryExtensions
             defaultPageSize);
     }
 }
+
+public record GetPageAndPagerViewModel<T>(IList<T> Items, IShape Pager, int Total, int PageSize, int PageIndex);
