@@ -2,7 +2,7 @@
 
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <IsPackable>false</IsPackable>
+        <IsPackable>true</IsPackable>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
 
@@ -15,6 +15,24 @@
         <RootNamespace>Lombiq.HelpfulLibraries.SourceGenerators</RootNamespace>
         <PackageId>Lombiq.HelpfulLibraries.SourceGenerators</PackageId>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <Title>Lombiq Helpful Libraries - Source Generators for Orchard Core</Title>
+        <Authors>Lombiq Technologies</Authors>
+        <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
+        <Description>Lombiq Helpful Libraries - Source Generators for Orchard Core for Orchard Core: Adds helpful source generators. See the project website for detailed documentation.</Description>
+        <PackageIcon>NuGetIcon.png</PackageIcon>
+        <PackageTags>OrchardCore;Lombiq;SourceGenerators</PackageTags>
+        <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.SourceGenerators/Readme.md</PackageProjectUrl>
+        <PackageLicenseFile>License.md</PackageLicenseFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="License.md" Pack="true" PackagePath="" />
+        <None Include="Readme.md" />
+        <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
+    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.0.0" PrivateAssets="all" />
