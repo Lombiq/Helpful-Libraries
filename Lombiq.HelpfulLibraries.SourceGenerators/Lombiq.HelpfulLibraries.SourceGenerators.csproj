@@ -15,6 +15,7 @@
         <RootNamespace>Lombiq.HelpfulLibraries.SourceGenerators</RootNamespace>
         <PackageId>Lombiq.HelpfulLibraries.SourceGenerators</PackageId>
         <SuppressDependenciesWhenPacking>true</SuppressDependenciesWhenPacking>
+        <IncludeSymbols>false</IncludeSymbols>
     </PropertyGroup>
 
     <PropertyGroup>
