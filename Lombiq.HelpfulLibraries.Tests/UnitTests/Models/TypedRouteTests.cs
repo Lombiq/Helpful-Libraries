@@ -7,7 +7,6 @@ using OrchardCore.Environment.Extensions.Features;
 using Shouldly;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using Xunit;
 
@@ -166,16 +165,15 @@ public class TypedRouteTests
         return tests;
     }
 
-    [SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "This is just an input class for a unit test.")]
     public class TypedRouteShouldWorkCorrectlyInput(
         string expected,
         Expression<Action<RouteTestController>> actionExpression,
-        (string Name, object Value)[] additional,
+        IEnumerable<(string Key, object Value)> additional,
         string tenantName)
     {
         public string Expected { get; set; } = expected;
         public Expression<Action<RouteTestController>> ActionExpression { get; set; } = actionExpression;
-        public (string Name, object Value)[] Additional { get; set; } = additional;
+        public IEnumerable<(string Key, object Value)> Additional { get; set; } = additional;
         public string TenantName { get; set; } = tenantName;
     }
 }
