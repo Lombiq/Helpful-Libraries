@@ -5,6 +5,7 @@
       <IsPackable>true</IsPackable>
       <Nullable>enable</Nullable>
       <LangVersion>latest</LangVersion>
+      <NoWarn>$(NoWarn);NU5128</NoWarn>
     </PropertyGroup>
 
     <PropertyGroup>
