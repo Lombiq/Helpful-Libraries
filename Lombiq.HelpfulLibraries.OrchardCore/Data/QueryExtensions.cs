@@ -145,8 +145,8 @@ public static class QueryExtensions
         var pager = new Pager(pagerParameters, defaultPageSize ?? (await siteService.GetSiteSettingsAsync()).PageSize);
         var index = pager.GetStartIndex();
 
+        var total = await query.CountAsync();
         var items = (await query.PaginateAsync(index, pager.PageSize)).AsList();
-        var total = index == 0 && items.Count < pager.PageSize ? items.Count : await query.CountAsync();
 
         var pagerShape = (await shapeFactory.New.Pager(pager))
             .TotalItemCount(total)
