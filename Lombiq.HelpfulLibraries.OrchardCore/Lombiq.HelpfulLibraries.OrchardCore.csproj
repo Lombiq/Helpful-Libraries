@@ -30,6 +30,7 @@
     <PackageReference Include="OrchardCore.Html" Version="1.8.3" />
     <PackageReference Include="OrchardCore.Markdown" Version="1.8.3" />
     <PackageReference Include="OrchardCore.Media.Core" Version="1.8.3" />
+    <PackageReference Include="OrchardCore.Navigation" Version="1.8.3" />
     <PackageReference Include="OrchardCore.Taxonomies" Version="1.8.3" />
     <PackageReference Include="OrchardCore.ContentManagement" Version="1.8.3" />
     <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="1.8.3" />
