@@ -5,6 +5,7 @@
       <IsPackable>true</IsPackable>
       <Nullable>enable</Nullable>
       <LangVersion>latest</LangVersion>
+      <!-- Analyzer projects run into this warning because of https://github.com/nuget/home/issues/8583 disabled to not break nuget build-->
       <NoWarn>$(NoWarn);NU5128</NoWarn>
     </PropertyGroup>
 
