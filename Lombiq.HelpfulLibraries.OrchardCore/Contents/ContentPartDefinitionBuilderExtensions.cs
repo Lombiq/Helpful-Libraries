@@ -1,6 +1,9 @@
+using Lombiq.HelpfulLibraries.Common.Utilities;
+using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentManagement.Metadata.Settings;
 using System;
 using System.Linq.Expressions;
+using System.Text.Json.Nodes;
 
 namespace OrchardCore.ContentManagement.Metadata.Builders;
 
@@ -18,6 +21,13 @@ public static class ContentPartDefinitionBuilderExtensions
     /// </summary>
     public static ContentPartFieldDefinitionBuilder WithEditor(this ContentPartFieldDefinitionBuilder builder, Enum editor) =>
         builder.MergeSettings<ContentPartFieldSettings>(x => x.Editor = editor.ToString());
+
+    public static void CopySettingsTo<T>(this ContentPartFieldDefinition definition, T target)
+        where T : class, ICopier<T>
+    {
+        var settings = definition.Settings.ToObject<T>();
+        settings.CopyTo(target);
+    }
 }
 
 public class ContentPartDefinitionBuilder<TPart>

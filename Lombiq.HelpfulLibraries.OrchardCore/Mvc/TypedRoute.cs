@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
 using OrchardCore.Admin;
 using OrchardCore.Environment.Extensions;
 using OrchardCore.Modules.Manifest;
@@ -17,6 +16,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
+using System.Text.Json;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 
@@ -93,7 +93,7 @@ public class TypedRoute
     public override string ToString()
     {
         var routeTemplate = _action.GetCustomAttribute<RouteAttribute>()?.Template ??
-            _action.GetCustomAttribute<AdminRouteAttribute>()?.Template;
+            _action.GetCustomAttribute<AdminAttribute>()?.Template;
         var (route, arguments) = routeTemplate != null && !string.IsNullOrWhiteSpace(routeTemplate)
             ? GetRouteFromTemplate(routeTemplate, _arguments)
             : ($"{_area}/{_controller.ControllerName()}/{_action.GetCustomAttribute<ActionNameAttribute>()?.Name ?? _action.Name}", _arguments);
@@ -238,6 +238,6 @@ public class TypedRoute
             DateTime date => date.ToString("s", CultureInfo.InvariantCulture),
             byte or sbyte or short or ushort or int or uint or long or ulong or float or double or decimal =>
                 string.Format(CultureInfo.InvariantCulture, "{0}", value),
-            _ => JsonConvert.SerializeObject(value),
+            _ => JsonSerializer.Serialize(value),
         };
 }

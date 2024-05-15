@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
-using Newtonsoft.Json;
 using OrchardCore.DisplayManagement.Entities;
 using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Security.Permissions;
 using OrchardCore.Settings;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
@@ -36,14 +36,14 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Sect
                     ShapeType,
                     async settings =>
                     {
-                        settings.Json = JsonConvert.SerializeObject(section);
+                        settings.Json = JsonSerializer.Serialize(section);
                         settings.AdditionalData = await GetAdditionalDataAsync(section, context);
                     })
                 .Location(Location)
                 .OnGroup(GroupId)
             : null;
 
-    public override async Task<IDisplayResult> UpdateAsync(TSection section, BuildEditorContext context)
+    public override async Task<IDisplayResult> UpdateAsync(TSection section, UpdateEditorContext context)
     {
         var viewModel = new JsonViewModel<TAdditionalData>();
 
@@ -76,7 +76,7 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Sect
         {
             if (string.IsNullOrEmpty(json)) return false;
 
-            result = JsonConvert.DeserializeObject<TSection>(json);
+            result = JsonSerializer.Deserialize<TSection>(json);
             return true;
         }
         catch

@@ -8,4 +8,8 @@ For general details about and on using the Helpful Libraries see the [root Readm
 
 ## Helpers
 
-- `RefitHelper`: Adds shortcuts for creating Refit API clients from interfaces. (e.g. `RefitHelper.WithNewtonsoftJson<T>()`)
+- `RefitHelper`: Adds shortcuts for creating Refit API clients from interfaces. (Note: as of OC 2.0 `Newtonsoft.Json` has been deprecated so methods like `RefitHelper.WithNewtonsoftJson<T>()` are marked obsolete.)
+
+## Models
+
+- `SimpleTextResponse`: An simplified container for the content, headers and some other metadata from `ApiResponse<string>`. This way the `ApiResponse<string>` can be disposed early and doesn't have to be carried around which would be a potential memory leak risk.
