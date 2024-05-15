@@ -159,7 +159,10 @@ public static class ApplicationBuilderExtensions
 
                 if (changed)
                 {
+                    // There seems nothing wrong with it.
+#pragma warning disable IDE0305 // IDE0305: Collection initialization can be simplified
                     context.Response.Headers[setCookieHeader] = new StringValues(newCookies.ToArray());
+#pragma warning restore IDE0305
                 }
 
                 return Task.CompletedTask;
