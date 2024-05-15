@@ -2,9 +2,27 @@
 
     <PropertyGroup>
       <TargetFramework>netstandard2.0</TargetFramework>
-      <IsPackable>false</IsPackable>
+      <IsPackable>true</IsPackable>
       <Nullable>enable</Nullable>
       <LangVersion>latest</LangVersion>
     </PropertyGroup>
+
+    <PropertyGroup>
+        <Title>Lombiq Helpful Libraries - Attributes for Orchard Core</Title>
+        <Authors>Lombiq Technologies</Authors>
+        <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
+        <Description>Lombiq Helpful Libraries - Attributes for Orchard Core: Adds attributes used by other projects. See the project website for detailed documentation.</Description>
+        <PackageIcon>NuGetIcon.png</PackageIcon>
+        <PackageTags>OrchardCore;Lombiq;Attributes</PackageTags>
+        <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
+        <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.Attributes/Readme.md</PackageProjectUrl>
+        <PackageLicenseFile>License.md</PackageLicenseFile>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <None Include="License.md" Pack="true" PackagePath="" />
+        <None Include="Readme.md" />
+        <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
+    </ItemGroup>
 
 </Project>
