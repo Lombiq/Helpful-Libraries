@@ -159,7 +159,7 @@ public static class ApplicationBuilderExtensions
 
                 if (changed)
                 {
-                    context.Response.Headers[setCookieHeader] = new StringValues(newCookies.ToArray());
+                    context.Response.Headers[setCookieHeader] = new StringValues([.. newCookies]);
                 }
 
                 return Task.CompletedTask;
