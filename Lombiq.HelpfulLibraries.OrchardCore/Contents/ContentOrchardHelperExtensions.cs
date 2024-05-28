@@ -61,7 +61,7 @@ public static class ContentOrchardHelperExtensions
 
         if (httpContext.Request.Method == "POST")
         {
-            var previewContentItemId = httpContext.Request.Form["PreviewContentItemId"];
+            var previewContentItemId = httpContext.Request.Form["PreviewContentItemId"].ToString();
             if (!string.IsNullOrEmpty(previewContentItemId))
             {
                 return httpContext.RequestServices.GetService<IContentManager>().GetAsync(previewContentItemId);
