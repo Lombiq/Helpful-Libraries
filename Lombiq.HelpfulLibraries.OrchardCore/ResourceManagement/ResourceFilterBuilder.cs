@@ -1,6 +1,8 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
+using OrchardCore.Admin;
 using OrchardCore.ResourceManagement;
 using System;
 using System.Collections.Generic;
@@ -57,7 +59,7 @@ public class ResourceFilterBuilder
     }
 
     /// <summary>
-    /// Adds a filter that excludes all of the provided <paramref name="paths"/> to the list of
+    /// Adds a filter that excludes all the provided <paramref name="paths"/> to the list of
     /// <see cref="ResourceFilters"/>.
     /// </summary>
     public ResourceFilter WhenNotPath(params string[] paths)
@@ -106,6 +108,25 @@ public class ResourceFilterBuilder
         var filter = When(_ => true);
         filter.Execution = execution;
         return filter;
+    }
+
+    /// <summary>
+    /// Adds a filter that matches when the request is made on the Admin site.
+    /// </summary>
+    public ResourceFilter WhenAdmin() =>
+        When(IsAdminUrl);
+
+    /// <summary>
+    /// Adds a filter that matches when the request is not made on the Admin site.
+    /// </summary>
+    public ResourceFilter WhenNotAdmin() =>
+        When(context => !IsAdminUrl(context));
+
+    private static bool IsAdminUrl(HttpContext context)
+    {
+        var adminOptions = context.RequestServices.GetRequiredService<IOptions<AdminOptions>>();
+
+        return context.Request.Path.Value?.StartsWithOrdinalIgnoreCase("/" + adminOptions.Value.AdminUrlPrefix) == true;
     }
 
     private ResourceFilter WhenContentTypeInner(string displayType, params string[] contentTypes)
