@@ -1,0 +1,14 @@
+name: Publish to NuGet
+
+on:
+  push:
+    tags:
+      - v*-preview-*
+
+jobs:
+  publish-nuget:
+    uses: Lombiq/GitHub-Actions/.github/workflows/publish-nuget.yml@dev
+    with:
+      source: https://nuget.cloudsmith.io/lombiq/open-source-orchard-core-extensions/v3/index.json
+    secrets:
+      API_KEY: ${{ secrets.CLOUDSMITH_NUGET_PUBLISH_API_KEY }}
