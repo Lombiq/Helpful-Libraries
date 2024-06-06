@@ -12,7 +12,7 @@ jobs:
       source: https://nuget.cloudsmith.io/lombiq/open-source-orchard-core-extensions/v3/index.json
     secrets:
       API_KEY: ${{ secrets.CLOUDSMITH_NUGET_PUBLISH_API_KEY }}
-  publish-nuget:
+  publish-nuget-info:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout
