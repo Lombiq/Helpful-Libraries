@@ -1,5 +1,12 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
+using OrchardCore.DisplayManagement;
+using OrchardCore.Navigation;
+using OrchardCore.Settings;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using YesSql.Indexes;
@@ -102,4 +109,90 @@ public static class QueryExtensions
 
         return isAscending ? query.ThenBy(sql) : query.ThenByDescending(sql);
     }
+
+    /// <summary>
+    /// Gets the appropriate page of the <paramref name="query"/>, then returns its values, the total count and the
+    /// <c>Pager</c> shape that can be used to navigate to other pages.
+    /// </summary>
+    /// <param name="query">The query that should be paged.</param>
+    /// <param name="shapeFactory">Used to create the <c>Pager</c> shape.</param>
+    /// <param name="siteService">
+    /// If <paramref name="defaultPageSize"/> is <see langword="null"/>, this is used to get <see
+    /// cref="ISite.PageSize"/> as the fallback value for the default page size. So if it's specified then this can be
+    /// <see langword="null"/>.
+    /// </param>
+    /// <param name="pagerParameters">Used to configure the current page number and similar values.</param>
+    /// <param name="routeData">
+    /// The source of other route values that should be supplied to the pager links. Normally you should pass <see
+    /// cref="HttpRequest.RouteValues"/> to this parameter.
+    /// </param>
+    /// <param name="defaultPageSize">
+    /// An optional value it you want custom page size instead of the value coming from <see cref="ISite.PageSize"/>.
+    /// </param>
+    /// <typeparam name="T">The type of the items in the <paramref name="query"/>.</typeparam>
+    /// <remarks><para>
+    /// The <see cref="PagerParameters.Page"/> should come from the <c>pagenum</c> <!-- #spell-check-ignore-line -->
+    /// route value. The number should be one-based.
+    /// </para></remarks>
+    public static async Task<GetPageAndPagerViewModel<T>> GetPageAndPagerAsync<T>(
+        this IQuery<T> query,
+        IShapeFactory shapeFactory,
+        ISiteService siteService,
+        PagerParameters pagerParameters,
+        RouteValueDictionary routeData,
+        int? defaultPageSize = null)
+        where T : class
+    {
+        var pager = new Pager(pagerParameters, defaultPageSize ?? (await siteService.GetSiteSettingsAsync()).PageSize);
+        var index = pager.GetStartIndex();
+
+        var total = await query.CountAsync();
+        var items = (await query.PaginateAsync(index, pager.PageSize)).AsList();
+
+        var pagerShape = (await shapeFactory.New.Pager(pager))
+            .TotalItemCount(total)
+            .RouteData(routeData == null ? new RouteData() : new RouteData(routeData));
+
+        return new GetPageAndPagerViewModel<T>(items, pagerShape, total, pager.PageSize, index);
+    }
+
+    /// <summary>
+    /// Gets the appropriate page of the <paramref name="query"/>, then returns its values, the total count and the
+    /// <c>Pager</c> shape that can be used to navigate to other pages.
+    /// </summary>
+    /// <param name="httpContext">Used to source some required services and current request information.</param>
+    /// <param name="pageNumber">
+    /// If not <see langword="null"/>, it's used to configure the <see cref="PagerParameters"/>. Otherwise the query
+    /// value of <c>pagenum</c> is used from <paramref name="httpContext"/>. <!-- #spell-check-ignore-line -->
+    /// </param>
+    /// <param name="defaultPageSize">
+    /// An optional value it you want custom page size instead of the value coming from <see cref="ISite.PageSize"/>.
+    /// </param>
+    public static Task<GetPageAndPagerViewModel<T>> GetPageAndPagerAsync<T>(
+        this IQuery<T> query,
+        HttpContext httpContext,
+        int? pageNumber = null,
+        int? defaultPageSize = null)
+        where T : class
+    {
+        var page = pageNumber ?? 0;
+        if (page <= 0)
+        {
+            page = httpContext.Request.Query.TryGetValue("pagenum", out var pageNumberString) && // #spell-check-ignore-line
+                   int.TryParse(pageNumberString, CultureInfo.InvariantCulture, out var pageNumberInt)
+                ? pageNumberInt
+                : 1;
+        }
+
+        var provider = httpContext.RequestServices;
+
+        return query.GetPageAndPagerAsync(
+            provider.GetRequiredService<IShapeFactory>(),
+            provider.GetRequiredService<ISiteService>(),
+            new PagerParameters { Page = page > 0 ? page : 1 },
+            httpContext.Request.RouteValues,
+            defaultPageSize);
+    }
 }
+
+public record GetPageAndPagerViewModel<T>(IList<T> Items, IShape Pager, int Total, int PageSize, int PageIndex);

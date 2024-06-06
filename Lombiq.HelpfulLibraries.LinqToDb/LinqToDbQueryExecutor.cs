@@ -76,9 +76,10 @@ public static class LinqToDbQueryExecutor
         dbName switch
         {
             // Using a concrete SQL Server version here removes the need for an initial auto-detection query that can
-            // fail, see https://github.com/Lombiq/Helpful-Libraries/issues/236. This needs to be the same version
-            // YesSql and thus OC supports. You can check it out in YesSql's build workflow:
-            // https://github.com/sebastienros/yessql/blob/main/.github/workflows/build.yml.
+            // fail, see https://github.com/Lombiq/Helpful-Libraries/issues/236. This needs to be the same minimum
+            // version YesSql and thus OC supports. You can check it out in YesSql's build workflow:
+            // https://github.com/sebastienros/yessql/blob/main/.github/workflows/build.yml. Keep this up-to-date with
+            // Orchard Core upgrades bringing YesSql upgrades.
             "SqlServer" => ProviderName.SqlServer2019,
             "Sqlite" => ProviderName.SQLite,
             "MySql" => ProviderName.MySql,
