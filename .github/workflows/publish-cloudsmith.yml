@@ -28,4 +28,6 @@ jobs:
         shell: pwsh
         run: |
           dotnet nuget list source
+          dotnet nuget add source --name orchardcore-preview https://nuget.cloudsmith.io/orchardcore/preview/v3/index.json
+          dotnet nuget list source
           dotnet restore
