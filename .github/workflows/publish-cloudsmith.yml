@@ -28,3 +28,4 @@ jobs:
         shell: pwsh
         run: |
           dotnet nuget list source
+          dotnet restore
