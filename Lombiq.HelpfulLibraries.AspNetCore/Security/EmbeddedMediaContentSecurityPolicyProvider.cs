@@ -15,11 +15,11 @@ public class EmbeddedMediaContentSecurityPolicyProvider : IContentSecurityPolicy
     /// <summary>
     /// Gets the sources that will be added to the <see cref="FrameSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<string> PermittedFrameSources { get; } = new(new[]
-    {
+    public static ConcurrentBag<string> PermittedFrameSources { get; } = new(
+    [
         "www.youtube.com",
         "www.youtube-nocookie.com",
-    });
+    ]);
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {

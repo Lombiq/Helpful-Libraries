@@ -433,7 +433,7 @@ public static class StringExtensions
     /// </summary>
     public static IList<Range> InvertRanges(this IList<Range> ranges, int length)
     {
-        if (ranges.Count == 0) return new[] { Range.All };
+        if (ranges.Count == 0) return [Range.All];
 
         var results = new List<Range>(capacity: ranges.Count + 2);
 

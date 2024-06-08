@@ -13,7 +13,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
 public class ResourceFilterBuilder
 {
-    public IList<ResourceFilter> ResourceFilters { get; private set; } = new List<ResourceFilter>();
+    public IList<ResourceFilter> ResourceFilters { get; private set; } = [];
 
     /// <summary>
     /// Adds the provided <paramref name="filter"/> to the list of <see cref="ResourceFilters"/>.
