@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 namespace Lombiq.HelpfulLibraries.OrchardCore.Shapes;
 
 /// <summary>
-/// Renders shapes to <c>string</c>.
+/// Renders shapes to <see langword="string"/>.
 /// </summary>
 public interface IShapeRenderer
 {

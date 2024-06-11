@@ -201,7 +201,7 @@ public class TypedRoute
                 methodParameters[index].Name,
                 ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke())))
             .Where(pair => pair.Value != null)
-            .Concat(additionalArguments ?? Enumerable.Empty<KeyValuePair<string, string>>())
+            .Concat(additionalArguments ?? [])
             .ToList();
 
         var key = string.Join(

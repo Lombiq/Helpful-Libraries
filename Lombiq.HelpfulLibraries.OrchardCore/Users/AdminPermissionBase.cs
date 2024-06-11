@@ -21,12 +21,11 @@ public abstract class AdminPermissionBase : IPermissionProvider
     /// Retrieves the default <c>admin</c> permission stereotypes.
     /// </summary>
     public IEnumerable<PermissionStereotype> GetDefaultStereotypes() =>
-        new[]
-        {
+        [
             new PermissionStereotype
             {
                 Name = "Administrator",
                 Permissions = AdminPermissions,
             },
-        };
+        ];
 }

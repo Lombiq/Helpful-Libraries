@@ -123,7 +123,7 @@ public static class ContentManagerSessionExtensions
         }
         else
         {
-            return Enumerable.Empty<ContentItem>();
+            return [];
         }
 
         return contentItems.OrderBy(contentItems => contentItemIdsList.IndexOf(contentItems.ContentItemId));
