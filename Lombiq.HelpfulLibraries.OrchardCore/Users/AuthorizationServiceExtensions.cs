@@ -43,7 +43,7 @@ public static class AuthorizationServiceExtensions
     /// name="executeAsync"/>.
     /// </typeparam>
     /// <typeparam name="TResult">The final outcome.</typeparam>
-    public static async Task<IActionResult> AuthorizeForCurrentUserAndExecuteAsync<TData, TResult>(
+    public static async Task<IActionResult> AuthorizeForCurrentUserValidateAndExecuteAsync<TData, TResult>(
         this IAuthorizationService service,
         Controller controller,
         IEnumerable<Permission> permissions,
@@ -66,7 +66,21 @@ public static class AuthorizationServiceExtensions
         return result is IActionResult actionResult ? actionResult : controller.Ok(result);
     }
 
-    /// <inheritdoc cref="AuthorizeForCurrentUserAndExecuteAsync{TData,TResult}"/>
+    /// <inheritdoc cref="AuthorizeForCurrentUserValidateAndExecuteAsync{TData,TResult}"/>
+    public static Task<IActionResult> AuthorizeForCurrentUserAndExecuteAsync<TResult>(
+        this IAuthorizationService service,
+        Controller controller,
+        IEnumerable<Permission> permissions,
+        Func<Task<TResult>> executeAsync,
+        string authenticationScheme = "Api") =>
+        service.AuthorizeForCurrentUserValidateAndExecuteAsync<object, TResult>(
+            controller,
+            permissions,
+            validateAsync: null,
+            _ => executeAsync(),
+            authenticationScheme);
+
+    /// <inheritdoc cref="AuthorizeForCurrentUserValidateAndExecuteAsync{TData,TResult}"/>
     public static Task<IActionResult> AuthorizeForCurrentUserValidateNotNullAndExecuteAsync<TData, TResult>(
         this IAuthorizationService service,
         Controller controller,
@@ -75,7 +89,7 @@ public static class AuthorizationServiceExtensions
         Func<TData, Task<TResult>> executeAsync,
         string authenticationScheme = "Api")
         where TData : class =>
-        service.AuthorizeForCurrentUserAndExecuteAsync(
+        service.AuthorizeForCurrentUserValidateAndExecuteAsync(
             controller,
             permissions,
             async () => await validateAsync() is { } data ? (true, data) : (false, default),
