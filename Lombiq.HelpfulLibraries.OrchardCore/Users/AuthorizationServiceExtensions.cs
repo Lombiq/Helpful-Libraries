@@ -26,9 +26,9 @@ public static class AuthorizationServiceExtensions
     /// <param name="permissions">The <see cref="Controller.User"/> must pass each of these permissions.</param>
     /// <param name="validateAsync">
     /// An optional fetching or validation step, if it's <see langword="null"/> then it's ignored and <see
-    /// langword="default"/> is passed to the <paramref name="executeAsync"/>. The first value of its result must be <
-    /// see langword="true"/>, otherwise <see cref="NotFoundResult"/> is returned. Use this for example to query a value
-    /// from the database or to simply return an opaque failure state.
+    /// langword="default"/> is passed to the <paramref name="executeAsync"/>. The first value of its result must be
+    /// <see langword="true"/>, otherwise <see cref="NotFoundResult"/> is returned. Use this for example to query a
+    /// value from the database or to simply return an opaque failure state.
     /// </param>
     /// <param name="executeAsync">
     /// The method that returns the final result if everything is ok. If the result is <see cref="IActionResult"/> then
