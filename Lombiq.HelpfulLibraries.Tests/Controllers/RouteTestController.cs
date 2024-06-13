@@ -21,11 +21,12 @@ public class RouteTestController : Controller
     public IActionResult AdminRoute() => Content(string.Empty);
 
     [Route("content/{id}")]
-    public IActionResult RouteSubstitution(int id) => Content(string.Empty);
+    public IActionResult RouteSubstitution(int id) => ModelState.IsValid ? Content(string.Empty) : BadRequest(ModelState);
 
     [Route("content/{id}/{selector?}")]
-    public IActionResult RouteSubstitutionOptional(int id, string selector, string anotherValue) => Content(string.Empty);
+    public IActionResult RouteSubstitutionOptional(int id, string selector, string anotherValue) =>
+        ModelState.IsValid ? Content(string.Empty) : BadRequest(ModelState);
 
     public IActionResult Arguments(int number, double fraction, DateTime dateTime, string text) =>
-        Content(string.Empty);
+        ModelState.IsValid ? Content(string.Empty) : BadRequest(ModelState);
 }

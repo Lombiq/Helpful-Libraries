@@ -13,7 +13,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
 public class ResourceFilterBuilder
 {
-    public IList<ResourceFilter> ResourceFilters { get; private set; } = new List<ResourceFilter>();
+    public IList<ResourceFilter> ResourceFilters { get; private set; } = [];
 
     /// <summary>
     /// Adds the provided <paramref name="filter"/> to the list of <see cref="ResourceFilters"/>.
@@ -57,7 +57,7 @@ public class ResourceFilterBuilder
     }
 
     /// <summary>
-    /// Adds a filter that excludes all of the provided <paramref name="paths"/> to the list of
+    /// Adds a filter that excludes all the provided <paramref name="paths"/> to the list of
     /// <see cref="ResourceFilters"/>.
     /// </summary>
     public ResourceFilter WhenNotPath(params string[] paths)

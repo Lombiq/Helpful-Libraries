@@ -2,6 +2,7 @@
 
 ## Extensions and helpers
 
+- `HttpContextExtensions`: Adds extension methods like `IsAdminUrl()` to `HttpContext` objects.
 - `OrchardControllerExtensions`: Adds extension methods like `RedirectToContentDisplay(content)` to `Controller` objects.
 - `ResultExecutingContextExtensions`: contains shortcuts for common context operations in `IAsyncResultFilter`s.
 - `ShapeResultExtensions`: Adds extensions methods generating placement strings on your shape description, such as `UseTab()`.

@@ -1,4 +1,4 @@
-﻿#nullable enable
+#nullable enable
 
 using Microsoft.AspNetCore.Mvc.Localization;
 using System;
@@ -22,7 +22,7 @@ public class FrontendException : Exception
     /// <summary>
     /// Gets the list of error messages that can be displayed on the front end.
     /// </summary>
-    public IReadOnlyList<LocalizedHtmlString> HtmlMessages { get; } = ArraySegment<LocalizedHtmlString>.Empty;
+    public IReadOnlyList<LocalizedHtmlString> HtmlMessages { get; } = [];
 
     public FrontendException(LocalizedHtmlString message, Exception? innerException = null)
         : base(message.Value, innerException) =>
@@ -30,7 +30,7 @@ public class FrontendException : Exception
 
     public FrontendException(ICollection<LocalizedHtmlString> messages, Exception? innerException = null)
         : base(string.Join("<br>", messages.Select(message => message.Value)), innerException) =>
-        HtmlMessages = messages.ToList();
+        HtmlMessages = [.. messages];
 
     public FrontendException(string message)
         : base(message) =>
