@@ -23,7 +23,7 @@ public static class AuthorizationServiceExtensions
     /// </summary>
     /// <param name="service">The service used for authorization.</param>
     /// <param name="controller">The controller whose current context is used for authorization and results..</param>
-    /// <param name="permissions">The <see cref="Controller.User"/> must pass each of these permissions.</param>
+    /// <param name="permissions">The <see cref="ControllerBase.User"/> must pass each of these permissions.</param>
     /// <param name="validateAsync">
     /// An optional fetching or validation step, if it's <see langword="null"/> then it's ignored and <see
     /// langword="default"/> is passed to the <paramref name="executeAsync"/>. The first value of its result must be
