@@ -17,37 +17,37 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// <summary>
     /// Gets the sources that will be added to the <see cref="StyleSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<string> PermittedStyleSources { get; } = new(new[]
-    {
+    public static ConcurrentBag<string> PermittedStyleSources { get; } = new(
+    [
         "fonts.googleapis.com",
         "fonts.gstatic.com", // #spell-check-ignore-line
         "cdn.jsdelivr.net", // #spell-check-ignore-line
         "fastly.jsdelivr.net", // #spell-check-ignore-line
         "cdnjs.cloudflare.com", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
-    });
+    ]);
 
     /// <summary>
     /// Gets the sources that will be added to the <see cref="ScriptSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<string> PermittedScriptSources { get; } = new(new[]
-    {
+    public static ConcurrentBag<string> PermittedScriptSources { get; } = new(
+    [
         "cdn.jsdelivr.net", // #spell-check-ignore-line
         "cdnjs.cloudflare.com", // #spell-check-ignore-line
         "code.jquery.com",
         "fastly.jsdelivr.net", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
-    });
+    ]);
 
     /// <summary>
     /// Gets the sources that will be added to the <see cref="FontSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<string> PermittedFontSources { get; } = new(new[]
-    {
+    public static ConcurrentBag<string> PermittedFontSources { get; } = new(
+    [
         "cdn.jsdelivr.net", // #spell-check-ignore-line
         "fonts.googleapis.com",
         "fonts.gstatic.com", // #spell-check-ignore-line
-    });
+    ]);
 
     /// <summary>
     /// Gets the sources that will be added to the <see cref="FrameSrc"/> directive.

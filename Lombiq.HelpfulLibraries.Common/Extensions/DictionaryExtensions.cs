@@ -60,7 +60,7 @@ public static class DictionaryExtensions
         Func<TValue, TKey> keySelector)
     {
         var missingKeys = keys.Where(key => !dictionary.ContainsKey(key));
-        var missingItems = missingKeys.Any() ? await valuesFactory(missingKeys) : Enumerable.Empty<TValue>();
+        var missingItems = missingKeys.Any() ? await valuesFactory(missingKeys) : [];
         foreach (var item in missingItems)
         {
             dictionary[keySelector(item)] = item;
@@ -173,8 +173,8 @@ public static class DictionaryExtensions
         TKey key,
         TValue value)
     {
-        var list = dictionary.GetMaybe(key) ?? Enumerable.Empty<TValue>();
-        list = list.Union(new[] { value });
+        var list = dictionary.GetMaybe(key) ?? [];
+        list = list.Union([value]);
         dictionary[key] = list;
     }
 
