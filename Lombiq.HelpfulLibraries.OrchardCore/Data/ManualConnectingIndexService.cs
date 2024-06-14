@@ -4,6 +4,7 @@ using OrchardCore.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Common;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Text.Json;
@@ -41,6 +42,11 @@ public class ManualConnectingIndexService<T> : IManualConnectingIndexService<T>
         _keys = string.Join(", ", _properties.Keys.Select(key => "@" + key));
     }
 
+    [SuppressMessage(
+        "Minor Code Smell",
+        "S6667:Logging in a catch clause should pass the caught exception as a parameter.",
+        Justification = "Resolving S6667 results in S2139." +
+        "Solution for S2139 requires exception handling in the catch block which in this case is only used for logging.")]
     public Task AddAsync(T item, ISession session, long? setDocumentId = null) =>
         RunTransactionAsync(session, async (connection, transaction, dialect, name) =>
         {

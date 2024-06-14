@@ -173,7 +173,7 @@ public static class EnumerableExtensions
         Func<TIn, TOut> select,
         Func<TOut, bool> where = null)
     {
-        foreach (var item in collection ?? Array.Empty<TIn>())
+        foreach (var item in collection ?? [])
         {
             var converted = select(item);
             if (where?.Invoke(converted) ?? converted is not null) yield return converted;
@@ -272,7 +272,7 @@ public static class EnumerableExtensions
     /// A new <see cref="string"/> that concatenates all values with the <paramref name="separator"/> provided.
     /// </returns>
     public static string Join(this IEnumerable<string> values, string separator = " ") =>
-        string.Join(separator, values ?? Enumerable.Empty<string>());
+        string.Join(separator, values ?? []);
 
     /// <summary>
     /// A simple conditional enumeration where the items are <see langword="yield"/> ed from the <paramref
@@ -294,7 +294,7 @@ public static class EnumerableExtensions
     /// cref="Enumerable.Empty{TResult}"/>.
     /// </summary>
     public static IEnumerable<T> EmptyIfNull<T>(this IEnumerable<T> collection) =>
-        collection ?? Enumerable.Empty<T>();
+        collection ?? [];
 
     /// <summary>
     /// Returns <paramref name="array"/> if it's not <see langword="null"/>, otherwise <see

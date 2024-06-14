@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Localization;
 using OrchardCore.Email;
 using OrchardCore.Users;
@@ -26,7 +26,7 @@ public class EmailAndPasswordValidator : IEmailAndPasswordValidator
     public Task<IEnumerable<LocalizedString>> ValidateEmailAsync(string email) =>
         Task.FromResult(_emailAddressValidator.Validate(email)
             ? Enumerable.Empty<LocalizedString>()
-            : new[] { T["Invalid email address."] });
+            : [T["Invalid email address."]]);
 
     public async Task<IEnumerable<LocalizedString>> ValidatePasswordAsync(string password)
     {

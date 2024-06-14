@@ -21,12 +21,11 @@ public abstract class AuthenticatedPermissionBase : IPermissionProvider
     /// Retrieves the default <c>authenticated</c> permission stereotypes.
     /// </summary>
     public IEnumerable<PermissionStereotype> GetDefaultStereotypes() =>
-        new[]
-        {
+        [
             new PermissionStereotype
             {
                 Name = "Authenticated",
                 Permissions = AuthenticatedPermissions,
             },
-        };
+        ];
 }

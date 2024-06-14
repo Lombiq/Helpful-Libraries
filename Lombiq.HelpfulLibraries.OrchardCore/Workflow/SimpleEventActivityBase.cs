@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Localization;
+using Microsoft.Extensions.Localization;
 using OrchardCore.Workflows.Abstractions.Models;
 using OrchardCore.Workflows.Activities;
 using OrchardCore.Workflows.Models;
@@ -24,7 +24,7 @@ public abstract class SimpleEventActivityBase : EventActivity
     public override IEnumerable<Outcome> GetPossibleOutcomes(
         WorkflowExecutionContext workflowContext,
         ActivityContext activityContext) =>
-        new[] { new Outcome(T["Done"]) };
+        [new Outcome(T["Done"])];
 
     public override ActivityExecutionResult Resume(
         WorkflowExecutionContext workflowContext,
