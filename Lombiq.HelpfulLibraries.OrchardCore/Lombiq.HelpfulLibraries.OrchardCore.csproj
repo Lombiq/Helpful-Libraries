@@ -24,31 +24,31 @@
 
   <ItemGroup>
     <PackageReference Include="NodaTime" Version="3.1.11" />
-    <PackageReference Include="OrchardCore.Alias" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Autoroute" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.ContentFields" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Email.Abstractions" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Html" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Infrastructure" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Markdown" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Media.Core" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Queries" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Settings" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Setup.Abstractions" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Taxonomies" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Themes" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Title" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Users.Core" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.Workflows.Abstractions" Version="2.0.0-preview-18232" />
+    <PackageReference Include="OrchardCore.Alias" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Autoroute" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.ContentFields" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Email.Abstractions" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Html" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Infrastructure" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Markdown" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Media.Core" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Queries" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Settings" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Setup.Abstractions" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Taxonomies" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Themes" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Title" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Users.Core" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.Workflows.Abstractions" Version="2.0.0-preview-18244" />
   </ItemGroup>
 
   <!-- Necessary so tag helpers will work in the projects depending on this. -->
   <ItemGroup>
-    <PackageReference Include="OrchardCore.DisplayManagement" Version="2.0.0-preview-18232" />
-    <PackageReference Include="OrchardCore.ResourceManagement" Version="2.0.0-preview-18232" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="2.0.0-preview-18244" />
+    <PackageReference Include="OrchardCore.ResourceManagement" Version="2.0.0-preview-18244" />
   </ItemGroup>
 
   <ItemGroup>
