@@ -1,19 +1,18 @@
-using Lombiq.HelpfulLibraries.AspNetCore.Localization;
 using Microsoft.AspNetCore.Mvc.Localization;
 using Shouldly;
+using System;
 using System.Text.Json;
 using Xunit;
 
 namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Converters;
 
+[Obsolete("The previously custom LocalizedHtmlStringConverter is not needed in STJ, this test only exists to show " +
+          "that removing it is safe and non-breaking.")]
 public class LocalizedHtmlStringConverterTests
 {
     private const string Name = "my text";
 
-    private static readonly JsonSerializerOptions _options = new()
-    {
-        Converters = { new LocalizedHtmlStringConverter() },
-    };
+    private static readonly JsonSerializerOptions _options = JOptions.Default;
 
     [Theory]
     [InlineData(Name, Name, null, "{\"Name\":\"my text\",\"Value\":\"my text\",\"IsResourceNotFound\":false}")]
