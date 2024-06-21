@@ -6,8 +6,8 @@ using Xunit;
 
 namespace Lombiq.HelpfulLibraries.Tests.UnitTests.Converters;
 
-[Obsolete("The previously custom LocalizedHtmlStringConverter is not needed in STJ, this test only exists to show " +
-          "that removing it is safe and non-breaking.")]
+[Obsolete("The previously custom LocalizedHtmlStringConverter is not needed in System.Text.Json, this test only " +
+          "exists to show that removing it is safe and non-breaking.")]
 public class LocalizedHtmlStringConverterTests
 {
     private const string Name = "my text";
