@@ -57,5 +57,5 @@ public static class OrchardCoreBuilderExtensions
     /// </remarks>
     public static OrchardCoreBuilder DisableResourceDebugMode(this OrchardCoreBuilder builder) =>
         builder.ConfigureServices((tenantServices, _) =>
-                tenantServices.PostConfigure<ResourceManagementOptions>(settings => settings.DebugMode = false));
+            tenantServices.PostConfigure<ResourceManagementOptions>(settings => settings.DebugMode = false));
 }
