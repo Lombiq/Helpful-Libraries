@@ -10,22 +10,6 @@ jobs:
     uses: Lombiq/GitHub-Actions/.github/workflows/publish-nuget.yml@issue/OCC-245
     with:
       source: https://nuget.cloudsmith.io/lombiq/open-source-orchard-core-extensions/v3/index.json
+      add-source-link-package: false
     secrets:
       API_KEY: ${{ secrets.CLOUDSMITH_NUGET_PUBLISH_API_KEY }}
-  publish-nuget-info:
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout
-        uses: Lombiq/GitHub-Actions/.github/actions/checkout@dev
-        with:
-          token: ${{ secrets.CHECKOUT_TOKEN }}
-      - name: Set up .NET
-        uses: Lombiq/GitHub-Actions/.github/actions/setup-dotnet@dev
-        with:
-          dotnet-version: 8.0.x
-      - name: Setup NuGet Version
-        id: setup
-        shell: pwsh
-        run: |
-          dotnet nuget list source
-          dotnet restore
