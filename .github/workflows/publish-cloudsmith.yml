@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish-nuget:
-    uses: Lombiq/GitHub-Actions/.github/workflows/publish-nuget.yml@dev
+    uses: Lombiq/GitHub-Actions/.github/workflows/publish-nuget.yml@issue/OCC-245
     with:
       source: https://nuget.cloudsmith.io/lombiq/open-source-orchard-core-extensions/v3/index.json
     secrets:
@@ -27,7 +27,5 @@ jobs:
         id: setup
         shell: pwsh
         run: |
-          dotnet nuget list source
-          dotnet nuget add source --name orchardcore-preview https://nuget.cloudsmith.io/orchardcore/preview/v3/index.json
           dotnet nuget list source
           dotnet restore
