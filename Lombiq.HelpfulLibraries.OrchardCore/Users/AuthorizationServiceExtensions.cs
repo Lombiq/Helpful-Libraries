@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OrchardCore.Security.Permissions;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,8 @@ public static class AuthorizationServiceExtensions
     /// </param>
     /// <param name="checkModelState">
     /// If <see langword="true"/>, the <see cref="ControllerBase.ModelState"/> of the <paramref name="controller"/> is
-    /// checked and if it's not valid, then <see cref="BadRequestResult"/> is returned. Otherwise nothing happens.
+    /// checked and if it's not valid, then returns a result indicating validation problem via <see
+    /// cref="ControllerBase.ValidationProblem(ModelStateDictionary)"/>. Otherwise nothing happens.
     /// </param>
     /// <typeparam name="TData">
     /// The type of the intermediate result received from <paramref name="validateAsync"/> and passed to <paramref
@@ -71,7 +73,7 @@ public static class AuthorizationServiceExtensions
 
         if (checkModelState && !controller.ModelState.IsValid)
         {
-            return controller.BadRequest(controller.ModelState);
+            return controller.ValidationProblem(controller.ModelState);
         }
 
         return result is IActionResult actionResult ? actionResult : controller.Ok(result);
