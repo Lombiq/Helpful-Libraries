@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OrchardCore.Security.Permissions;
 using System;
 using System.Collections.Generic;
@@ -38,6 +39,11 @@ public static class AuthorizationServiceExtensions
     /// The information used by <see cref="ChallengeResult"/> or <see cref="ForbidResult"/> if the authorization fails.
     /// This is conventionally <c>Api</c> so usually the parameter can be skipped.
     /// </param>
+    /// <param name="checkModelState">
+    /// If <see langword="true"/>, the <see cref="ControllerBase.ModelState"/> of the <paramref name="controller"/> is
+    /// checked and if it's not valid, then returns a result indicating validation problem via <see
+    /// cref="ControllerBase.ValidationProblem(ModelStateDictionary)"/>. Otherwise nothing happens.
+    /// </param>
     /// <typeparam name="TData">
     /// The type of the intermediate result received from <paramref name="validateAsync"/> and passed to <paramref
     /// name="executeAsync"/>.
@@ -49,7 +55,8 @@ public static class AuthorizationServiceExtensions
         IEnumerable<Permission> permissions,
         Func<Task<(bool IsSuccess, TData Data)>> validateAsync,
         Func<TData, Task<TResult>> executeAsync,
-        string authenticationScheme = "Api")
+        string authenticationScheme = "Api",
+        bool checkModelState = true)
     {
         foreach (var permission in permissions)
         {
@@ -63,6 +70,12 @@ public static class AuthorizationServiceExtensions
         if (!isSuccess) return controller.NotFound();
 
         var result = await executeAsync(data);
+
+        if (checkModelState && !controller.ModelState.IsValid)
+        {
+            return controller.ValidationProblem(controller.ModelState);
+        }
+
         return result is IActionResult actionResult ? actionResult : controller.Ok(result);
     }
 
@@ -72,13 +85,15 @@ public static class AuthorizationServiceExtensions
         Controller controller,
         IEnumerable<Permission> permissions,
         Func<Task<TResult>> executeAsync,
-        string authenticationScheme = "Api") =>
+        string authenticationScheme = "Api",
+        bool checkModelState = true) =>
         service.AuthorizeForCurrentUserValidateAndExecuteAsync<object, TResult>(
             controller,
             permissions,
             validateAsync: null,
             _ => executeAsync(),
-            authenticationScheme);
+            authenticationScheme,
+            checkModelState);
 
     /// <inheritdoc cref="AuthorizeForCurrentUserValidateAndExecuteAsync{TData,TResult}"/>
     public static Task<IActionResult> AuthorizeForCurrentUserValidateNotNullAndExecuteAsync<TData, TResult>(
@@ -87,12 +102,14 @@ public static class AuthorizationServiceExtensions
         IEnumerable<Permission> permissions,
         Func<Task<TData>> validateAsync,
         Func<TData, Task<TResult>> executeAsync,
-        string authenticationScheme = "Api")
+        string authenticationScheme = "Api",
+        bool checkModelState = true)
         where TData : class =>
         service.AuthorizeForCurrentUserValidateAndExecuteAsync(
             controller,
             permissions,
             async () => await validateAsync() is { } data ? (true, data) : (false, default),
             executeAsync,
-            authenticationScheme);
+            authenticationScheme,
+            checkModelState);
 }
