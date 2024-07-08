@@ -25,6 +25,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         "fastly.jsdelivr.net", // #spell-check-ignore-line
         "cdnjs.cloudflare.com", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
+        "giscus.app", // #spell-check-ignore-line
     ]);
 
     /// <summary>
@@ -37,6 +38,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         "code.jquery.com",
         "fastly.jsdelivr.net", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
+        "giscus.app", // #spell-check-ignore-line
     ]);
 
     /// <summary>
@@ -52,7 +54,10 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// <summary>
     /// Gets the sources that will be added to the <see cref="FrameSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<string> PermittedFrameSources { get; } = [];
+    public static ConcurrentBag<string> PermittedFrameSources { get; } = new(
+    [
+        "giscus.app", // #spell-check-ignore-line
+    ]);
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
