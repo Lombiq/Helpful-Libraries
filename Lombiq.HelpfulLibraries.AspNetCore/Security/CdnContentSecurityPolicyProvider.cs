@@ -22,6 +22,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         "cdn.jsdelivr.net", // #spell-check-ignore-line
         "cdnjs.cloudflare.com", // #spell-check-ignore-line
         "fastly.jsdelivr.net", // #spell-check-ignore-line
+        "fonts.cdnfonts.com",
         "fonts.googleapis.com",
         "fonts.gstatic.com", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
@@ -48,6 +49,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     [
         "cdn.jsdelivr.net", // #spell-check-ignore-line
         "cdnjs.cloudflare.com", // #spell-check-ignore-line
+        "fonts.cdnfonts.com",
         "fonts.googleapis.com",
         "fonts.gstatic.com", // #spell-check-ignore-line
     ];
