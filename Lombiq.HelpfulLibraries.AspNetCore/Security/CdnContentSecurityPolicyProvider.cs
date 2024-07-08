@@ -25,7 +25,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         "fonts.googleapis.com",
         "fonts.gstatic.com", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
-        "unpkg.com",
+        "unpkg.com", // #spell-check-ignore-line
     ];
 
     /// <summary>
@@ -38,7 +38,7 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         "code.jquery.com",
         "fastly.jsdelivr.net", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
-        "unpkg.com",
+        "unpkg.com", // #spell-check-ignore-line
     ];
 
     /// <summary>

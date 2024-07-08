@@ -9,7 +9,7 @@ namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 /// An optional content security policy provider that provides configuration to allow the usage of X (Twitter) social
 /// widgets.
 /// </summary>
-public class XWidgetsContentSecurityPolicyProvider : IContentSecurityPolicyProvider
+public class XWidgetsContentSecurityPolicyProvider : IContentSecurityPolicyProvider // #spell-check-ignore-line
 {
     private const string PlatformDotTwitter = "platform.twitter.com";
 
