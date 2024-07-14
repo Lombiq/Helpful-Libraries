@@ -59,6 +59,11 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// </summary>
     public static ConcurrentBag<string> PermittedFrameSources { get; } = [];
 
+    /// <summary>
+    /// Gets the sources that will be added to the <see cref="ImgSrc"/> directive.
+    /// </summary>
+    public static ConcurrentBag<string> PermittedImgSources { get; } = [];
+
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
         var any = false;
@@ -85,6 +90,12 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         {
             any = true;
             CspHelper.MergeValues(securityPolicies, FrameSrc, PermittedFrameSources);
+        }
+
+        if (!PermittedImgSources.IsEmpty)
+        {
+            any = true;
+            CspHelper.MergeValues(securityPolicies, ImgSrc, PermittedImgSources);
         }
 
         if (any)
