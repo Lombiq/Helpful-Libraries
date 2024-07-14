@@ -45,11 +45,7 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Sect
 
     public override async Task<IDisplayResult> UpdateAsync(TSection section, UpdateEditorContext context)
     {
-        var viewModel = new JsonViewModel<TAdditionalData>();
-
-        if (context.GroupId == GroupId &&
-            await AuthorizeAsync() &&
-            await context.Updater.TryUpdateModelAsync(viewModel, Prefix) &&
+        if (await context.CreateModelMaybeAsync<JsonViewModel<TAdditionalData>>(Prefix, GroupId, AuthorizeAsync) is { } viewModel &&
             TryParseJson(viewModel.Json, out var result))
         {
             await UpdateAsync(section, context, result);
