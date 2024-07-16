@@ -1,3 +1,5 @@
+#nullable enable
+
 using Lombiq.HelpfulLibraries.Common.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
@@ -27,9 +29,9 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddInlineStartup(
         this IServiceCollection services,
-        Action<IServiceCollection> configureServices,
-        Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider> configure,
-        Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask> configureAsync = null,
+        Action<IServiceCollection>? configureServices = null,
+        Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider>? configure = null,
+        Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask>? configureAsync = null,
         int order = 0) =>
         services.AddSingleton<IStartup>(new InlineStartup(configureServices, configure, configureAsync, order));
 
@@ -39,9 +41,9 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddInlineStartup(
         this IServiceCollection services,
-        Action<IServiceCollection> configureServices,
+        Action<IServiceCollection>? configureServices,
         Action<IApplicationBuilder> configure,
-        Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask> configureAsync = null,
+        Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask>? configureAsync = null,
         int order = 0) =>
         services.AddSingleton<IStartup>(new InlineStartup(configureServices, configure, configureAsync, order));
 }

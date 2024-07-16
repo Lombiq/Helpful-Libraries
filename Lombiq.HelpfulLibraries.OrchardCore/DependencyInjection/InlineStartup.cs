@@ -1,4 +1,6 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿#nullable enable
+
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Modules;
@@ -12,32 +14,31 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 /// </summary>
 public class InlineStartup : StartupBase
 {
-    private readonly Action<IServiceCollection> _configureServices;
-    private readonly Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider> _configure;
-    private readonly Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask> _configureAsync;
-    private readonly int _order;
+    private readonly Action<IServiceCollection>? _configureServices;
+    private readonly Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider>? _configure;
+    private readonly Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask>? _configureAsync;
 
-    public override int Order => _order;
+    public override int Order { get; }
 
     public InlineStartup(
-        Action<IServiceCollection> configureServices,
+        Action<IServiceCollection>? configureServices,
         Action<IApplicationBuilder> configure,
-        Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask> configureAsync = null,
+        Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask>? configureAsync = null,
         int order = 0)
         : this(configureServices, (app, _, _) => configure(app), configureAsync, order)
     {
     }
 
     public InlineStartup(
-        Action<IServiceCollection> configureServices,
-        Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider> configure = null,
-        Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask> configureAsync = null,
+        Action<IServiceCollection>? configureServices = null,
+        Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider>? configure = null,
+        Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask>? configureAsync = null,
         int order = 0)
     {
         _configureServices = configureServices;
         _configure = configure;
         _configureAsync = configureAsync;
-        _order = order;
+        Order = order;
     }
 
     public override void ConfigureServices(IServiceCollection services) =>
