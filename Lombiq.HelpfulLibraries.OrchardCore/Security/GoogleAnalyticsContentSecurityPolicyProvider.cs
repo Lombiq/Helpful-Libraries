@@ -13,9 +13,11 @@ public class GoogleAnalyticsContentSecurityPolicyProvider : IContentSecurityPoli
 {
     private const string HttpContextItemKey = nameof(GoogleAnalyticsContentSecurityPolicyProvider);
 
+    public static bool AlwaysEnabled { get; set; }
+
     public async ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
-        var googleAnalyticsIsEnabled = context.Items.ContainsKey(HttpContextItemKey);
+        var googleAnalyticsIsEnabled = AlwaysEnabled || context.Items.ContainsKey(HttpContextItemKey);
 
         if (!googleAnalyticsIsEnabled)
         {
