@@ -422,11 +422,13 @@ public static class EnumerableExtensions
     /// <typeparam name="T">The type of the items in <paramref name="enumerable"/>.</typeparam>
     /// <returns>A tuple of two collections. Each item in <paramref name="enumerable"/> is in one of them.</returns>
     public static (IList<T> Left, IList<T> Right) Fork<T>(
-        this IEnumerable<T> enumerable,
+        this IEnumerable<T>? enumerable,
         Func<T, bool> leftPredicate)
     {
         var left = new List<T>();
         var right = new List<T>();
+
+        if (enumerable is null) return (left, right);
 
         foreach (var item in enumerable)
         {
