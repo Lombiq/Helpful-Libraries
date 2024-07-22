@@ -404,4 +404,30 @@ public static class EnumerableExtensions
         enumerable.FirstOrDefault() is { } item
             ? funcAsync(item)
             : Task.FromResult(default(TResult));
+
+    /// <summary>
+    /// Splits the provided <paramref name="enumerable"/> into two.
+    /// </summary>
+    /// <param name="enumerable">The original collection to be tested.</param>
+    /// <param name="leftPredicate">
+    /// Tests each item of <paramref name="enumerable"/>. If returns <see langword="true"/>, the
+    /// item is added to the left collection, otherwise added to the right collection.
+    /// </param>
+    /// <typeparam name="T">The type of the items in <paramref name="enumerable"/>.</typeparam>
+    /// <returns>A tuple of two collections. Each item in <paramref name="enumerable"/> is in one of them.</returns>
+    public static (IList<T> Left, IList<T> Right) Fork<T>(
+        this IEnumerable<T> enumerable,
+        Func<T, bool> leftPredicate)
+    {
+        var left = new List<T>();
+        var right = new List<T>();
+
+        foreach (var item in enumerable)
+        {
+            var target = leftPredicate(item) ? left : right;
+            target.Add(item);
+        }
+
+        return (left, right);
+    }
 }
