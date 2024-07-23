@@ -167,18 +167,31 @@ public static class EnumerableExtensions
 
     /// <summary>
     /// Transforms the specified <paramref name="collection"/> with the <paramref name="select"/> function and returns
-    /// the items that are not null. Or if the <paramref name="where"/> function is given then those that return <see
-    /// langword="true"/> with it.
+    /// the items that return <see langword="true"/> when passed to the <paramref name="where"/> function.
     /// </summary>
     public static IEnumerable<TOut> SelectWhere<TIn, TOut>(
         this IEnumerable<TIn> collection,
         Func<TIn, TOut> select,
-        Func<TOut, bool>? where = null)
+        Func<TOut, bool> where)
     {
         foreach (var item in collection)
         {
             var converted = select(item);
-            if (where?.Invoke(converted) ?? converted is not null) yield return converted;
+            if (where.Invoke(converted)) yield return converted;
+        }
+    }
+
+    /// <summary>
+    /// Transforms the specified <paramref name="collection"/> with the <paramref name="select"/> function and returns
+    /// the items that are not null.
+    /// </summary>
+    public static IEnumerable<TOut> SelectWhere<TIn, TOut>(this IEnumerable<TIn> collection, Func<TIn, TOut?> select)
+        where TOut : notnull
+    {
+        foreach (var item in collection)
+        {
+            var converted = select(item);
+            if (converted is not null) yield return converted;
         }
     }
 
