@@ -69,6 +69,11 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// </summary>
     public static ConcurrentBag<string> PermittedImgSources { get; } = [];
 
+    /// <summary>
+    /// Gets the sources that will be added to the <see cref="ImgSrc"/> directive.
+    /// </summary>
+    public static ConcurrentBag<string> PermittedImgSources { get; } = [];
+
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
         var any = false;
