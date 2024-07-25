@@ -17,39 +17,44 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// <summary>
     /// Gets the sources that will be added to the <see cref="StyleSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<string> PermittedStyleSources { get; } = new(
+    public static ConcurrentBag<string> PermittedStyleSources { get; } =
     [
+        "cdn.jsdelivr.net", // #spell-check-ignore-line
+        "cdnjs.cloudflare.com", // #spell-check-ignore-line
+        "fastly.jsdelivr.net", // #spell-check-ignore-line
+        "fonts.cdnfonts.com", // #spell-check-ignore-line
         "fonts.googleapis.com",
         "fonts.gstatic.com", // #spell-check-ignore-line
-        "cdn.jsdelivr.net", // #spell-check-ignore-line
-        "fastly.jsdelivr.net", // #spell-check-ignore-line
-        "cdnjs.cloudflare.com", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
+        "unpkg.com", // #spell-check-ignore-line
         "giscus.app", // #spell-check-ignore-line
-    ]);
+    ];
 
     /// <summary>
     /// Gets the sources that will be added to the <see cref="ScriptSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<string> PermittedScriptSources { get; } = new(
+    public static ConcurrentBag<string> PermittedScriptSources { get; } =
     [
         "cdn.jsdelivr.net", // #spell-check-ignore-line
         "cdnjs.cloudflare.com", // #spell-check-ignore-line
         "code.jquery.com",
         "fastly.jsdelivr.net", // #spell-check-ignore-line
         "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
+        "unpkg.com", // #spell-check-ignore-line
         "giscus.app", // #spell-check-ignore-line
-    ]);
+    ];
 
     /// <summary>
     /// Gets the sources that will be added to the <see cref="FontSrc"/> directive.
     /// </summary>
-    public static ConcurrentBag<string> PermittedFontSources { get; } = new(
+    public static ConcurrentBag<string> PermittedFontSources { get; } =
     [
         "cdn.jsdelivr.net", // #spell-check-ignore-line
+        "cdnjs.cloudflare.com", // #spell-check-ignore-line
+        "fonts.cdnfonts.com", // #spell-check-ignore-line
         "fonts.googleapis.com",
         "fonts.gstatic.com", // #spell-check-ignore-line
-    ]);
+    ];
 
     /// <summary>
     /// Gets the sources that will be added to the <see cref="FrameSrc"/> directive.
@@ -58,6 +63,11 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     [
         "giscus.app", // #spell-check-ignore-line
     ]);
+
+    /// <summary>
+    /// Gets the sources that will be added to the <see cref="ImgSrc"/> directive.
+    /// </summary>
+    public static ConcurrentBag<string> PermittedImgSources { get; } = [];
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
@@ -85,6 +95,12 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
         {
             any = true;
             CspHelper.MergeValues(securityPolicies, FrameSrc, PermittedFrameSources);
+        }
+
+        if (!PermittedImgSources.IsEmpty)
+        {
+            any = true;
+            CspHelper.MergeValues(securityPolicies, ImgSrc, PermittedImgSources);
         }
 
         if (any)

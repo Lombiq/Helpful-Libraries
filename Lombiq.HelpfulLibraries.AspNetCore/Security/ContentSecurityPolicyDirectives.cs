@@ -1,8 +1,9 @@
-﻿namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
+namespace Lombiq.HelpfulLibraries.AspNetCore.Security;
 
 /// <summary>
-/// The <c>Content-Security-Policy</c> directives defined in the <a href="https://www.w3.org/TR/CSP2/#directives">W3C
-/// Recommendation</a>.
+/// The <c>Content-Security-Policy</c> directives defined in the <see href="https://www.w3.org/TR/CSP2/#directives">W3C
+/// Recommendation</see> (also see the <see
+/// href="https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy#directives">MDN page</see>).
 /// </summary>
 public static class ContentSecurityPolicyDirectives
 {
@@ -15,13 +16,20 @@ public static class ContentSecurityPolicyDirectives
     public const string FrameAncestors = "frame-ancestors";
     public const string FrameSrc = "frame-src";
     public const string ImgSrc = "img-src";
+    public const string ManifestSrc = "manifest-src";
     public const string MediaSrc = "media-src";
     public const string ObjectSrc = "object-src";
     public const string PluginTypes = "plugin-types";
+    public const string ReportTo = "report-to";
     public const string ReportUri = "report-uri";
     public const string Sandbox = "sandbox";
     public const string ScriptSrc = "script-src";
+    public const string ScriptSrcAttr = "script-src-attr";
+    public const string ScriptSrcElem = "script-src-elem";
     public const string StyleSrc = "style-src";
+    public const string StyleSrcAttr = "style-src-attr";
+    public const string UpgradeInsecureRequests = "upgrade-insecure-requests";
+    public const string StyleSrcElem = "style-src-elem";
     public const string WorkerSrc = "worker-src";
 
     public static class CommonValues
