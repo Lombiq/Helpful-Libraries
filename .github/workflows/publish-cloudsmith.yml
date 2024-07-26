@@ -10,6 +10,5 @@ jobs:
     uses: Lombiq/GitHub-Actions/.github/workflows/publish-nuget.yml@issue/OCC-245
     with:
       source: https://nuget.cloudsmith.io/lombiq/open-source-orchard-core-extensions/v3/index.json
-      add-source-link-package: false
     secrets:
       API_KEY: ${{ secrets.CLOUDSMITH_NUGET_PUBLISH_API_KEY }}

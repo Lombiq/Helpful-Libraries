@@ -2,6 +2,7 @@ using Microsoft.Extensions.Configuration;
 using OrchardCore.Email;
 using OrchardCore.Environment.Shell.Configuration;
 using OrchardCore.ResourceManagement;
+using System;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -29,6 +30,7 @@ public static class OrchardCoreBuilderExtensions
     /// If set to <see langword="true"/> the settings coming from the configuration provider will override the ones set
     /// up from the admin UI.
     /// </param>
+    [Obsolete("The email configuration has changed in OC 2.0, see https://docs.orchardcore.net/en/latest/releases/2.0.0/#email-module.")]
     public static OrchardCoreBuilder ConfigureSmtpSettings(
         this OrchardCoreBuilder builder,
         bool overrideAdminSettings = true)
