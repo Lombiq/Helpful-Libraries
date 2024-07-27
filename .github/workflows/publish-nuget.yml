@@ -4,8 +4,7 @@ on:
   push:
     tags:
       - v*
-    tags-ignore:
-      - v*-preview.*
+      - !v*-preview.*
 
 jobs:
   publish-nuget:
