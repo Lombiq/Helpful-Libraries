@@ -1,3 +1,5 @@
+#nullable enable
+
 using Microsoft.AspNetCore.Html;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Html;
@@ -19,13 +21,13 @@ public class HtmlShape : IHtmlContent, IPositioned, IShape
 
     private readonly IHtmlContent _value;
 
-    public string Position { get; set; }
+    public string? Position { get; set; }
 
     public ShapeMetadata Metadata { get; set; } = new();
 
-    public string Id { get; set; }
+    public string? Id { get; set; }
 
-    public string TagName { get; set; }
+    public string? TagName { get; set; }
 
     public IList<string> Classes => [];
 
@@ -35,14 +37,14 @@ public class HtmlShape : IHtmlContent, IPositioned, IShape
 
     public IReadOnlyList<IPositioned> Items => [];
 
-    public HtmlShape(IHtmlContent value, string position)
+    public HtmlShape(IHtmlContent? value, string? position = null)
     {
-        _value = value;
+        _value = value ?? new HtmlString(string.Empty);
         Position = position;
     }
 
-    public HtmlShape(string value, string position)
-        : this(new HtmlContentString(value), position)
+    public HtmlShape(string? value, string? position = null)
+        : this(new HtmlContentString(value ?? string.Empty), position)
     {
     }
 

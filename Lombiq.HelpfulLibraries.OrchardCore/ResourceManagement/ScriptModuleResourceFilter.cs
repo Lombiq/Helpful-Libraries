@@ -24,10 +24,11 @@ public record ScriptModuleResourceFilter(ILayoutAccessor LayoutAccessor) : IAsyn
 {
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        var html = DisplayScriptModuleResources(context.HttpContext.RequestServices);
-        var shape = new HtmlShape(html, "before");
+        if (DisplayScriptModuleResources(context.HttpContext.RequestServices) is { } html)
+        {
+            await LayoutAccessor.AddShapeToZoneAsync(CommonLocationNames.Content, new HtmlShape(html), "After");
+        }
 
-        await LayoutAccessor.AddShapeToZoneAsync("Content", shape, "After");
         await next();
     }
 
