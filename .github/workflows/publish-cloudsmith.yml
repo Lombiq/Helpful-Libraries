@@ -7,7 +7,7 @@ on:
 
 jobs:
   publish-nuget:
-    uses: Lombiq/GitHub-Actions/.github/workflows/publish-nuget.yml@issue/OCC-245
+    uses: Lombiq/GitHub-Actions/.github/workflows/publish-nuget.yml@dev
     with:
       source: https://nuget.cloudsmith.io/lombiq/open-source-orchard-core-extensions/v3/index.json
     secrets:
