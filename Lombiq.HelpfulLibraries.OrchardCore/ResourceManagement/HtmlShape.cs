@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Html;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Html;
 using OrchardCore.DisplayManagement.Shapes;
+using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Data;
@@ -13,13 +14,12 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
-// Based on OrchardCore.DisplayManagement.PositionWrapper.
 public class HtmlShape : IHtmlContent, IPositioned, IShape
 {
     private static readonly IDictionary<string, string> _dummyAttributes = new Dictionary<string, string>().ToFrozenDictionary();
     private static readonly IDictionary<string, object> _dummyProperties = new Dictionary<string, object>().ToFrozenDictionary();
 
-    private readonly IHtmlContent _value;
+    private readonly Func<IHtmlContent?> _getHtml;
 
     public string? Position { get; set; }
 
@@ -37,10 +37,15 @@ public class HtmlShape : IHtmlContent, IPositioned, IShape
 
     public IReadOnlyList<IPositioned> Items => [];
 
-    public HtmlShape(IHtmlContent? value, string? position = null)
+    public HtmlShape(Func<IHtmlContent?> getHtml, string? position = null)
     {
-        _value = value ?? new HtmlString(string.Empty);
+        _getHtml = getHtml;
         Position = position;
+    }
+
+    public HtmlShape(IHtmlContent? value, string? position = null)
+        : this(() => value, position)
+    {
     }
 
     public HtmlShape(string? value, string? position = null)
@@ -48,7 +53,7 @@ public class HtmlShape : IHtmlContent, IPositioned, IShape
     {
     }
 
-    public void WriteTo(TextWriter writer, HtmlEncoder encoder) => _value.WriteTo(writer, encoder);
+    public void WriteTo(TextWriter writer, HtmlEncoder encoder) => _getHtml.Invoke()?.WriteTo(writer, encoder);
 
     public ValueTask<IShape> AddAsync(object item, string position) => throw new ReadOnlyException();
 }
