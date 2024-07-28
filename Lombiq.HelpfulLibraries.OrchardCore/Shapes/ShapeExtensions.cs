@@ -1,3 +1,4 @@
+using Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 using Microsoft.AspNetCore.Html;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.DisplayManagement.Descriptors;
@@ -60,6 +61,7 @@ public static class ShapeExtensions
     /// name="shapeTable"/>, then a new descriptor is added with binding that uses <paramref name="displayAsync"/>.
     /// If <paramref name="type"/> is null or empty, a new random unique name is generated.
     /// </summary>
+    [Obsolete($"This no longer works with the {nameof(DefaultShapeTableManager)}. Use {nameof(HtmlShape)} instead.")]
     public static IShape CreateAdHocShape(this ShapeTable shapeTable, string type, Func<DisplayContext, Task<IHtmlContent>> displayAsync)
     {
         if (string.IsNullOrEmpty(type)) type = $"AdHocShape_{Guid.NewGuid():D}";
@@ -102,6 +104,7 @@ public static class ShapeExtensions
     /// uses <paramref name="displayAsync"/>. If <paramref name="type"/> is null or empty, a new random unique name is
     /// generated.
     /// </summary>
+    [Obsolete($"This no longer works with the {nameof(DefaultShapeTableManager)}. Use {nameof(HtmlShape)} instead.")]
     public static async Task<IShape> CreateAdHocShapeForCurrentThemeAsync(
         this IServiceProvider provider,
         string type,

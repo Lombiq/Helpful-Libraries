@@ -27,7 +27,7 @@ public class TotalOfContentTypeBuilder : IContentTypeBuilder
     /// <param name="contentItemType">
     /// The content item type to be extended with the <c>totalOfContentType</c> integer field.
     /// </param>
-    public void Build(FieldType contentQuery, ContentTypeDefinition contentTypeDefinition, ContentItemType contentItemType)
+    public void Build(ISchema schema, FieldType contentQuery, ContentTypeDefinition contentTypeDefinition, ContentItemType contentItemType)
     {
         var name = contentTypeDefinition.Name;
 
