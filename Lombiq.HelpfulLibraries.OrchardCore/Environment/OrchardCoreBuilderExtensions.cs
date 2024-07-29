@@ -124,9 +124,11 @@ public static class OrchardCoreBuilderExtensions
 
         var ocSection = webApplicationBuilder.Configuration.GetSection("OrchardCore");
 
-        if (webApplicationBuilder.Environment.IsDevelopment())
+        if (webApplicationBuilder.Configuration.IsAzureHosting())
         {
-
+            builder.AddTenantFeatures(
+                "OrchardCore.DataProtection.Azure",
+                "Lombiq.Hosting.BuildVersionDisplay");
         }
 
         return builder;
