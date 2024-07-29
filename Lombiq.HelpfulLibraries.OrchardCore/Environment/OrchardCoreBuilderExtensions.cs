@@ -1,4 +1,6 @@
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 using OrchardCore.Email;
 using OrchardCore.Environment.Shell.Configuration;
 using OrchardCore.ResourceManagement;
@@ -58,4 +60,74 @@ public static class OrchardCoreBuilderExtensions
     public static OrchardCoreBuilder DisableResourceDebugMode(this OrchardCoreBuilder builder) =>
         builder.ConfigureServices((tenantServices, _) =>
             tenantServices.PostConfigure<ResourceManagementOptions>(settings => settings.DebugMode = false));
+
+    /// <summary>
+    /// Recommended default configuration for features of a standard Orchard Core application. If any of the
+    /// configuration values exist, they won't be overridden, so e.g. appsettings.json configuration will take
+    /// precedence.
+    /// </summary>
+    /// <param name="webApplicationBuilder">The <see cref="WebApplicationBuilder"/> instance of the app.</param>
+    public static OrchardCoreBuilder ConfigureHostingDefaults(
+        this OrchardCoreBuilder builder,
+        WebApplicationBuilder webApplicationBuilder)
+    {
+        var ocSection = webApplicationBuilder.Configuration.GetSection("OrchardCore");
+
+        ocSection.GetSection("OrchardCore_Tenants").AddValueIfKeyNotExists("TenantRemovalAllowed", "true");
+
+        if (webApplicationBuilder.Environment.IsDevelopment())
+        {
+            // Orchard Core 1.8 and prior, this can be removed after an Orchard Core upgrade to 2.0.
+            // OrchardCore_Email_Smtp below is 2.0+.
+            var oc18SmtpSection = ocSection.GetSection("SmtpSettings");
+
+            if (oc18SmtpSection["Host"] == null)
+            {
+                oc18SmtpSection["Host"] = "127.0.0.1";
+                oc18SmtpSection["RequireCredentials"] = "false";
+                oc18SmtpSection["Port"] = "25";
+            }
+
+            oc18SmtpSection.AddValueIfKeyNotExists("DefaultSender", "sender@example.com");
+
+            var smtpSection = ocSection.GetSection("OrchardCore_Email_Smtp");
+
+            if (smtpSection["Host"] == null)
+            {
+                smtpSection["Host"] = "127.0.0.1";
+                smtpSection["RequireCredentials"] = "false";
+                smtpSection["Port"] = "25";
+            }
+
+            smtpSection.AddValueIfKeyNotExists("DefaultSender", "sender@example.com");
+        }
+
+        builder.AddDatabaseShellsConfigurationIfAvailable(webApplicationBuilder.Configuration);
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Recommended default configuration for features of an Orchard Core application hosted in Azure. If any of the
+    /// configuration values exist, they won't be overridden, so e.g. appsettings.json configuration will take
+    /// precedence.
+    /// </summary>
+    /// <param name="webApplicationBuilder">The <see cref="WebApplicationBuilder"/> instance of the app.</param>
+    public static OrchardCoreBuilder ConfigureAzureHostingDefaults(
+        this OrchardCoreBuilder builder,
+        WebApplicationBuilder webApplicationBuilder)
+    {
+        builder.ConfigureHostingDefaults(webApplicationBuilder);
+
+        var ocSection = webApplicationBuilder.Configuration.GetSection("OrchardCore");
+
+        if (webApplicationBuilder.Environment.IsDevelopment())
+        {
+            var appInsightsSection = webApplicationBuilder.Configuration.GetSection("ApplicationInsights");
+
+            appInsightsSection.AddValueIfKeyNotExists("EnableDependencyTrackingTelemetryModule", "false");
+        }
+
+        return builder;
+    }
 }
