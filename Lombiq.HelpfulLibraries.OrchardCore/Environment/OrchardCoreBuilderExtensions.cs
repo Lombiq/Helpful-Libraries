@@ -67,9 +67,13 @@ public static class OrchardCoreBuilderExtensions
     /// precedence.
     /// </summary>
     /// <param name="webApplicationBuilder">The <see cref="WebApplicationBuilder"/> instance of the app.</param>
+    /// <param name="enableHealthChecksInProduction">
+    /// Indicates whether to enable <c>OrchardCore.HealthChecks</c> in the Production environment.
+    /// </param>
     public static OrchardCoreBuilder ConfigureHostingDefaults(
         this OrchardCoreBuilder builder,
-        WebApplicationBuilder webApplicationBuilder)
+        WebApplicationBuilder webApplicationBuilder,
+        bool enableHealthChecksInProduction = true)
     {
         var ocSection = webApplicationBuilder.Configuration.GetSection("OrchardCore");
 
@@ -102,6 +106,11 @@ public static class OrchardCoreBuilderExtensions
             smtpSection.AddValueIfKeyNotExists("DefaultSender", "sender@example.com");
         }
 
+        if (enableHealthChecksInProduction && webApplicationBuilder.Environment.IsProduction())
+        {
+            builder.AddTenantFeatures("OrchardCore.HealthChecks");
+        }
+
         builder
             .AddDatabaseShellsConfigurationIfAvailable(webApplicationBuilder.Configuration)
             .ConfigureSmtpSettings(overrideAdminSettings: false)
@@ -116,9 +125,17 @@ public static class OrchardCoreBuilderExtensions
     /// precedence.
     /// </summary>
     /// <param name="webApplicationBuilder">The <see cref="WebApplicationBuilder"/> instance of the app.</param>
+    /// <param name="enableAzureMediaStorage">
+    /// Indicates whether to enable <c>OrchardCore.Media.Azure.Storage</c> and its dependencies when hosted in Azure.
+    /// </param>
+    /// <param name="enableHealthChecksInProduction">
+    /// Indicates whether to enable <c>OrchardCore.HealthChecks</c> in the Production environment.
+    /// </param>
     public static OrchardCoreBuilder ConfigureAzureHostingDefaults(
         this OrchardCoreBuilder builder,
-        WebApplicationBuilder webApplicationBuilder)
+        WebApplicationBuilder webApplicationBuilder,
+        bool enableAzureMediaStorage = true,
+        bool enableHealthChecksInProduction = true)
     {
         builder.ConfigureHostingDefaults(webApplicationBuilder);
 
@@ -131,6 +148,19 @@ public static class OrchardCoreBuilderExtensions
                     "OrchardCore.DataProtection.Azure",
                     "Lombiq.Hosting.BuildVersionDisplay")
                 .DisableResourceDebugMode();
+
+            if (enableAzureMediaStorage)
+            {
+                // Azure Media Storage and its dependencies. Keep this updated with Orchard upgrades.
+                builder.AddTenantFeatures(
+                    "OrchardCore.Contents",
+                    "OrchardCore.ContentTypes",
+                    "OrchardCore.Liquid",
+                    "OrchardCore.Media",
+                    "OrchardCore.Media.Azure.Storage",
+                    "OrchardCore.Media.Cache",
+                    "OrchardCore.Settings");
+            }
         }
 
         return builder;
