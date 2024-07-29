@@ -102,7 +102,9 @@ public static class OrchardCoreBuilderExtensions
             smtpSection.AddValueIfKeyNotExists("DefaultSender", "sender@example.com");
         }
 
-        builder.AddDatabaseShellsConfigurationIfAvailable(webApplicationBuilder.Configuration);
+        builder
+            .AddDatabaseShellsConfigurationIfAvailable(webApplicationBuilder.Configuration)
+            .ConfigureSmtpSettings(overrideAdminSettings: false);
 
         return builder;
     }
@@ -123,9 +125,7 @@ public static class OrchardCoreBuilderExtensions
 
         if (webApplicationBuilder.Environment.IsDevelopment())
         {
-            var appInsightsSection = webApplicationBuilder.Configuration.GetSection("ApplicationInsights");
 
-            appInsightsSection.AddValueIfKeyNotExists("EnableDependencyTrackingTelemetryModule", "false");
         }
 
         return builder;
