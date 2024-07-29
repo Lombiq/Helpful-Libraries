@@ -126,9 +126,11 @@ public static class OrchardCoreBuilderExtensions
 
         if (webApplicationBuilder.Configuration.IsAzureHosting())
         {
-            builder.AddTenantFeatures(
-                "OrchardCore.DataProtection.Azure",
-                "Lombiq.Hosting.BuildVersionDisplay");
+            builder
+                .AddTenantFeatures(
+                    "OrchardCore.DataProtection.Azure",
+                    "Lombiq.Hosting.BuildVersionDisplay")
+                .DisableResourceDebugMode();
         }
 
         return builder;
