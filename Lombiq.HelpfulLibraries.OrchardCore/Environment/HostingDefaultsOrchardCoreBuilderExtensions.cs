@@ -27,6 +27,8 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
 
         ocSection.GetSection("OrchardCore_Tenants").AddValueIfKeyNotExists("TenantRemovalAllowed", "true");
 
+        ocSection.GetSection("OrchardCore_Localization_CultureOptions").AddValueIfKeyNotExists("IgnoreSystemSettings", "true");
+
         var logLevelSection = webApplicationBuilder.Configuration.GetSection("Logging:LogLevel");
 
         if (webApplicationBuilder.Environment.IsDevelopment())
