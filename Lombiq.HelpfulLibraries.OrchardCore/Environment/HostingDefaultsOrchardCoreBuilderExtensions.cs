@@ -85,6 +85,8 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
                 .AddValueIfKeyNotExists("Default", "Warning")
                 .AddValueIfKeyNotExists("Microsoft.AspNetCore", "Warning");
 
+            ocSection.AddValueIfKeyNotExists("DatabaseProvider", "SqlConnection");
+
             // Elastic Cloud configuration if none is provided. The Url and Password are still needed.
             if (elasticSearchSection["ConnectionType"] == null &&
                 elasticSearchSection["Ports"] == null &&
@@ -126,6 +128,11 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
         builder.ConfigureHostingDefaults(webApplicationBuilder, hostingConfiguration);
 
         var ocSection = webApplicationBuilder.Configuration.GetSection("OrchardCore");
+
+        if (!webApplicationBuilder.Environment.IsDevelopment())
+        {
+            ocSection.AddValueIfKeyNotExists(AzureConfigurationExtensions.IsAzureHostingKey, "true");
+        }
 
         if (webApplicationBuilder.Configuration.IsAzureHosting())
         {
