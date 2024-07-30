@@ -34,6 +34,8 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
         shellsDatabaseSection.AddValueIfKeyNotExists("DatabaseProvider", "SqlConnection");
         shellsDatabaseSection.AddValueIfKeyNotExists("TablePrefix", "Shells");
 
+        ocSection.GetSection("OrchardCore_Tenants").AddValueIfKeyNotExists("TenantRemovalAllowed", "true");
+
         var logLevelSection = webApplicationBuilder.Configuration.GetSection("Logging:LogLevel");
 
         if (webApplicationBuilder.Environment.IsDevelopment())
