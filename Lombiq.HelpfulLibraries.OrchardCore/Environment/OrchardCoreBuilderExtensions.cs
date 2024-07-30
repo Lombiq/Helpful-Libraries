@@ -79,8 +79,15 @@ public static class OrchardCoreBuilderExtensions
 
         ocSection.GetSection("OrchardCore_Tenants").AddValueIfKeyNotExists("TenantRemovalAllowed", "true");
 
+        var logLevelSection = webApplicationBuilder.Configuration.GetSection("Logging:LogLevel");
+
         if (webApplicationBuilder.Environment.IsDevelopment())
         {
+            logLevelSection
+                .AddValueIfKeyNotExists("Default", "Debug")
+                .AddValueIfKeyNotExists("System", "Information")
+                .AddValueIfKeyNotExists("Microsoft", "Information");
+
             // Orchard Core 1.8 and prior, this can be removed after an Orchard Core upgrade to 2.0.
             // OrchardCore_Email_Smtp below is 2.0+.
             var oc18SmtpSection = ocSection.GetSection("SmtpSettings");
@@ -104,6 +111,12 @@ public static class OrchardCoreBuilderExtensions
             }
 
             smtpSection.AddValueIfKeyNotExists("DefaultSender", "sender@example.com");
+        }
+        else
+        {
+            logLevelSection
+                .AddValueIfKeyNotExists("Default", "Warning")
+                .AddValueIfKeyNotExists("Microsoft.AspNetCore", "Warning");
         }
 
         if (enableHealthChecksInProduction && webApplicationBuilder.Environment.IsProduction())
@@ -138,8 +151,6 @@ public static class OrchardCoreBuilderExtensions
         bool enableHealthChecksInProduction = true)
     {
         builder.ConfigureHostingDefaults(webApplicationBuilder);
-
-        var ocSection = webApplicationBuilder.Configuration.GetSection("OrchardCore");
 
         if (webApplicationBuilder.Configuration.IsAzureHosting())
         {
