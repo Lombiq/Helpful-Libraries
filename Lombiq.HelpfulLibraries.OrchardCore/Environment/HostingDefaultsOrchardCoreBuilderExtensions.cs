@@ -120,14 +120,17 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
             }
         }
 
+        var mediaSection = ocSection.GetSection("OrchardCore_Media_Azure");
+
+        mediaSection.AddValueIfKeyNotExists("ContainerName", "media");
+        mediaSection.AddValueIfKeyNotExists("BasePath", "{{ ShellSettings.Name }}");
+
         if (webApplicationBuilder.Environment.IsDevelopment())
         {
             var dataProtectionSection = ocSection.GetSection("OrchardCore_DataProtection_Azure");
 
             dataProtectionSection.AddValueIfKeyNotExists("CreateContainer", "true");
             dataProtectionSection.AddValueIfKeyNotExists("ConnectionString", "UseDevelopmentStorage=true");
-
-            var mediaSection = ocSection.GetSection("OrchardCore_Media_Azure");
 
             mediaSection.AddValueIfKeyNotExists("CreateContainer", "true");
             mediaSection.AddValueIfKeyNotExists("ConnectionString", "UseDevelopmentStorage=true");
