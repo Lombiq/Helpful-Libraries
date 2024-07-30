@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 
@@ -126,6 +126,11 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
 
             dataProtectionSection.AddValueIfKeyNotExists("CreateContainer", "true");
             dataProtectionSection.AddValueIfKeyNotExists("ConnectionString", "UseDevelopmentStorage=true");
+
+            var mediaSection = ocSection.GetSection("OrchardCore_Media_Azure");
+
+            mediaSection.AddValueIfKeyNotExists("CreateContainer", "true");
+            mediaSection.AddValueIfKeyNotExists("ConnectionString", "UseDevelopmentStorage=true");
         }
 
         return builder;
