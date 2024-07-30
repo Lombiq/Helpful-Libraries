@@ -62,19 +62,22 @@ public static class OrchardCoreBuilderExtensions
             tenantServices.PostConfigure<ResourceManagementOptions>(settings => settings.DebugMode = false));
 
     /// <summary>
-    /// Recommended default configuration for features of a standard Orchard Core application. If any of the
-    /// configuration values exist, they won't be overridden, so e.g. appsettings.json configuration will take
+    /// Lombiq-recommended opinionated default configuration for features of a standard Orchard Core application. If any
+    /// of the configuration values exist, they won't be overridden, so e.g. appsettings.json configuration will take
     /// precedence.
     /// </summary>
     /// <param name="webApplicationBuilder">The <see cref="WebApplicationBuilder"/> instance of the app.</param>
-    /// <param name="enableHealthChecksInProduction">
-    /// Indicates whether to enable <c>OrchardCore.HealthChecks</c> in the Production environment.
-    /// </param>
+    /// <param name="hostingConfiguration">Configuration for the hosting defaults.</param>
     public static OrchardCoreBuilder ConfigureHostingDefaults(
         this OrchardCoreBuilder builder,
         WebApplicationBuilder webApplicationBuilder,
-        bool enableHealthChecksInProduction = true)
+        HostingConfiguration hostingConfiguration = null)
     {
+        hostingConfiguration ??= new HostingConfiguration();
+
+        // Not using static type references for the names here because those practically never change, but we'd need to
+        // add project/package references to all the affected projects.
+
         var ocSection = webApplicationBuilder.Configuration.GetSection("OrchardCore");
 
         ocSection.GetSection("OrchardCore_Tenants").AddValueIfKeyNotExists("TenantRemovalAllowed", "true");
@@ -119,7 +122,7 @@ public static class OrchardCoreBuilderExtensions
                 .AddValueIfKeyNotExists("Microsoft.AspNetCore", "Warning");
         }
 
-        if (enableHealthChecksInProduction && webApplicationBuilder.Environment.IsProduction())
+        if (hostingConfiguration.EnableHealthChecksInProduction && webApplicationBuilder.Environment.IsProduction())
         {
             builder.AddTenantFeatures("OrchardCore.HealthChecks");
         }
@@ -133,24 +136,22 @@ public static class OrchardCoreBuilderExtensions
     }
 
     /// <summary>
-    /// Recommended default configuration for features of an Orchard Core application hosted in Azure. If any of the
-    /// configuration values exist, they won't be overridden, so e.g. appsettings.json configuration will take
-    /// precedence.
+    /// Lombiq-recommended opinionated default configuration for features of an Orchard Core application hosted in
+    /// Azure. If any of the configuration values exist, they won't be overridden, so e.g. appsettings.json
+    /// configuration will take precedence.
     /// </summary>
     /// <param name="webApplicationBuilder">The <see cref="WebApplicationBuilder"/> instance of the app.</param>
-    /// <param name="enableAzureMediaStorage">
-    /// Indicates whether to enable <c>OrchardCore.Media.Azure.Storage</c> and its dependencies when hosted in Azure.
-    /// </param>
-    /// <param name="enableHealthChecksInProduction">
-    /// Indicates whether to enable <c>OrchardCore.HealthChecks</c> in the Production environment.
-    /// </param>
+    /// <param name="hostingConfiguration">Configuration for the hosting defaults.</param>
     public static OrchardCoreBuilder ConfigureAzureHostingDefaults(
         this OrchardCoreBuilder builder,
         WebApplicationBuilder webApplicationBuilder,
-        bool enableAzureMediaStorage = true,
-        bool enableHealthChecksInProduction = true)
+        AzureHostingConfiguration hostingConfiguration = null)
     {
-        builder.ConfigureHostingDefaults(webApplicationBuilder);
+        hostingConfiguration ??= new AzureHostingConfiguration();
+
+        builder.ConfigureHostingDefaults(webApplicationBuilder, hostingConfiguration);
+
+        var ocSection = webApplicationBuilder.Configuration.GetSection("OrchardCore");
 
         if (webApplicationBuilder.Configuration.IsAzureHosting())
         {
@@ -160,7 +161,7 @@ public static class OrchardCoreBuilderExtensions
                     "Lombiq.Hosting.BuildVersionDisplay")
                 .DisableResourceDebugMode();
 
-            if (enableAzureMediaStorage)
+            if (hostingConfiguration.EnableAzureMediaStorage)
             {
                 // Azure Media Storage and its dependencies. Keep this updated with Orchard upgrades.
                 builder.AddTenantFeatures(
@@ -174,6 +175,31 @@ public static class OrchardCoreBuilderExtensions
             }
         }
 
+        if (webApplicationBuilder.Environment.IsDevelopment())
+        {
+            var dataProtectionSection = ocSection.GetSection("OrchardCore_DataProtection_Azure");
+
+            dataProtectionSection.AddValueIfKeyNotExists("CreateContainer", "true");
+            dataProtectionSection.AddValueIfKeyNotExists("ConnectionString", "UseDevelopmentStorage=true");
+        }
+
         return builder;
     }
+}
+
+public class HostingConfiguration
+{
+    /// <summary>
+    /// Gets or sets a value indicating whether to enable <c>OrchardCore.HealthChecks</c> in the Production environment.
+    /// </summary>
+    public bool EnableHealthChecksInProduction { get; set; } = true;
+}
+
+public class AzureHostingConfiguration : HostingConfiguration
+{
+    /// <summary>
+    /// Gets or sets a value indicating whether to enable <c>OrchardCore.Media.Azure.Storage</c> and its
+    /// dependencies when hosted in Azure.
+    /// </summary>
+    public bool EnableAzureMediaStorage { get; set; } = true;
 }
