@@ -29,6 +29,11 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
 
         ocSection.GetSection("OrchardCore_Localization_CultureOptions").AddValueIfKeyNotExists("IgnoreSystemSettings", "true");
 
+        var shellsDatabaseSection = ocSection.GetSection("OrchardCore_Shells_Database");
+
+        shellsDatabaseSection.AddValueIfKeyNotExists("DatabaseProvider", "SqlConnection");
+        shellsDatabaseSection.AddValueIfKeyNotExists("TablePrefix", "Shells");
+
         var logLevelSection = webApplicationBuilder.Configuration.GetSection("Logging:LogLevel");
 
         if (webApplicationBuilder.Environment.IsDevelopment())
