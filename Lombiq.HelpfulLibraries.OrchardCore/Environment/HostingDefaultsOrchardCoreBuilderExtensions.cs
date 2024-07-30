@@ -37,6 +37,7 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
         ocSection.GetSection("OrchardCore_Tenants").AddValueIfKeyNotExists("TenantRemovalAllowed", "true");
 
         var logLevelSection = webApplicationBuilder.Configuration.GetSection("Logging:LogLevel");
+        var elasticSearchSection = ocSection.GetSection("OrchardCore_Elasticsearch");
 
         if (webApplicationBuilder.Environment.IsDevelopment())
         {
@@ -68,12 +69,31 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
             }
 
             smtpSection.AddValueIfKeyNotExists("DefaultSender", "sender@example.com");
+
+            if (elasticSearchSection["Url"] == null)
+            {
+                elasticSearchSection["ConnectionType"] = "SingleNodeConnectionPool";
+                elasticSearchSection["Url"] = "http://localhost";
+                elasticSearchSection["Ports:0"] = "9200";
+                elasticSearchSection["Username"] = "admin";
+                elasticSearchSection["Password"] = "admin";
+            }
         }
         else
         {
             logLevelSection
                 .AddValueIfKeyNotExists("Default", "Warning")
                 .AddValueIfKeyNotExists("Microsoft.AspNetCore", "Warning");
+
+            // Elastic Cloud configuration if none is provided. The Url and Password are still needed.
+            if (elasticSearchSection["ConnectionType"] == null &&
+                elasticSearchSection["Ports"] == null &&
+                elasticSearchSection["Username"] == null)
+            {
+                elasticSearchSection["ConnectionType"] = "CloudConnectionPool";
+                elasticSearchSection["Ports:0"] = "9243";
+                elasticSearchSection["Username"] = "elastic";
+            }
         }
 
         if (hostingConfiguration.EnableHealthChecksInProduction && webApplicationBuilder.Environment.IsProduction())
