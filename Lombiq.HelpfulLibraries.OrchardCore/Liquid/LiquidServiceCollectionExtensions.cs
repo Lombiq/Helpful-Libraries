@@ -49,7 +49,6 @@ public static class LiquidServiceCollectionExtensions
         services.AddKeyedScoped<ILiquidParserTag, T>(tagName);
 
         return services.Configure<LiquidViewOptions>(options =>
-        {
             options.LiquidViewParserConfiguration.Add(parser => parser.RegisterParserTag(
                 tagName,
                 parser.ArgumentsListParser,
@@ -58,7 +57,6 @@ public static class LiquidServiceCollectionExtensions
                     var provider = ((LiquidTemplateContext)context).Services;
                     var service = provider.GetKeyedService<ILiquidParserTag>(tagName);
                     return service.WriteToAsync(arguments, writer, encoder, context);
-                }));
-        });
+                })));
     }
 }
