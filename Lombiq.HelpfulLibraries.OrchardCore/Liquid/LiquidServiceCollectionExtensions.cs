@@ -46,7 +46,7 @@ public static class LiquidServiceCollectionExtensions
     {
         services.AddScoped<T>();
         services.AddScoped<ILiquidParserTag, T>();
-        services.AddKeyedScoped<ILiquidParserTag>(tagName);
+        services.AddKeyedScoped<ILiquidParserTag, T>(tagName);
 
         return services.Configure<LiquidViewOptions>(options =>
         {
