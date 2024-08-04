@@ -10,8 +10,8 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.TagHelpers;
 /// </summary>
 public abstract class ShapeTagHelperBase<TModel> : TagHelper
 {
-    private readonly IDisplayHelper _displayHelper;
-    private readonly IShapeFactory _shapeFactory;
+    protected readonly IDisplayHelper _displayHelper;
+    protected readonly IShapeFactory _shapeFactory;
 
     /// <summary>
     /// Gets the type name of the shape to be displayed. If it returns <see langword="null"/>, the then <see
