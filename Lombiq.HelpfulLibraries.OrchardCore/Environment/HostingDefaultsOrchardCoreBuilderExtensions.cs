@@ -179,7 +179,8 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
 public class HostingConfiguration
 {
     /// <summary>
-    /// Gets or sets a value indicating whether to enable <c>OrchardCore.HealthChecks</c> in the Production environment.
+    /// Gets or sets a value indicating whether to always enable <c>OrchardCore.HealthChecks</c> and its dependencies in
+    /// the Production environment, for all tenants, without the ability to turn them off.
     /// </summary>
     public bool AlwaysEnableHealthChecksInProduction { get; set; } = true;
 }
@@ -187,8 +188,8 @@ public class HostingConfiguration
 public class AzureHostingConfiguration : HostingConfiguration
 {
     /// <summary>
-    /// Gets or sets a value indicating whether to enable <c>OrchardCore.Media.Azure.Storage</c> and its
-    /// dependencies when hosted in Azure.
+    /// Gets or sets a value indicating whether to always enable <c>OrchardCore.Media.Azure.Storage</c> and its
+    /// dependencies when hosted in Azure, for all tenants, without the ability to turn them off.
     /// </summary>
     public bool AlwaysEnableAzureMediaStorage { get; set; } = true;
 }
