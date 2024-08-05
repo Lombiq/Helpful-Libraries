@@ -98,7 +98,7 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
             }
         }
 
-        if (hostingConfiguration.EnableHealthChecksInProduction && webApplicationBuilder.Environment.IsProduction())
+        if (hostingConfiguration.AlwaysEnableHealthChecksInProduction && webApplicationBuilder.Environment.IsProduction())
         {
             builder.AddTenantFeatures("OrchardCore.HealthChecks");
         }
@@ -142,7 +142,7 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
                     "Lombiq.Hosting.BuildVersionDisplay")
                 .DisableResourceDebugMode();
 
-            if (hostingConfiguration.EnableAzureMediaStorage)
+            if (hostingConfiguration.AlwaysEnableAzureMediaStorage)
             {
                 // Azure Media Storage and its dependencies. Keep this updated with Orchard upgrades.
                 builder.AddTenantFeatures(
@@ -181,7 +181,7 @@ public class HostingConfiguration
     /// <summary>
     /// Gets or sets a value indicating whether to enable <c>OrchardCore.HealthChecks</c> in the Production environment.
     /// </summary>
-    public bool EnableHealthChecksInProduction { get; set; } = true;
+    public bool AlwaysEnableHealthChecksInProduction { get; set; } = true;
 }
 
 public class AzureHostingConfiguration : HostingConfiguration
@@ -190,5 +190,5 @@ public class AzureHostingConfiguration : HostingConfiguration
     /// Gets or sets a value indicating whether to enable <c>OrchardCore.Media.Azure.Storage</c> and its
     /// dependencies when hosted in Azure.
     /// </summary>
-    public bool EnableAzureMediaStorage { get; set; } = true;
+    public bool AlwaysEnableAzureMediaStorage { get; set; } = true;
 }
