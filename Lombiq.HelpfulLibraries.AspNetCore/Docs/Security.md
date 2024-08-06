@@ -8,6 +8,7 @@
 - `EmbeddedMediaContentSecurityPolicyProvider`: An optional policy provider that permits additional host names used by usual media embedding sources (like YouTube) for the `frame-scr` directive.
 - `IContentSecurityPolicyProvider`: Interface for services that update the dictionary that will be turned into the `Content-Security-Policy` header value.
 - `ServiceCollectionExtensions`: Extensions methods for `IServiceCollection`, e.g. `AddContentSecurityPolicyProvider()` is a shortcut to register `IContentSecurityPolicyProvider` in dependency injection.
+- `XWidgetsContentSecurityPolicyProvider`: An optional content security policy provider that provides configuration to allow the usage of X (Twitter) social widgets.
 
 There is a similar section for security extensions related to Orchard Core [here](../../Lombiq.HelpfulLibraries.OrchardCore/Docs/Security.md).
 
