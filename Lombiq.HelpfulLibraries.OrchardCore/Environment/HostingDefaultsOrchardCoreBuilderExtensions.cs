@@ -105,7 +105,6 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
 
         builder
             .AddDatabaseShellsConfigurationIfAvailable(webApplicationBuilder.Configuration)
-            .ConfigureSmtpSettings(overrideAdminSettings: false)
             .ConfigureSecurityDefaultsWithStaticFiles(allowInlineStyle: true);
 
         return builder;
