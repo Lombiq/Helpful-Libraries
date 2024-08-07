@@ -1,4 +1,5 @@
 using OrchardCore.ContentManagement.Display.Models;
+using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.ModelBinding;
 using OrchardCore.DisplayManagement.Views;
 using System.Collections.Generic;
@@ -34,9 +35,8 @@ public abstract class SingleViewModelContentPartDisplayDriver<TPart, TViewModel>
         IUpdateModel updater,
         UpdatePartEditorContext context)
     {
-        var viewModel = new TViewModel();
-        if (await updater.TryUpdateModelAsync(viewModel, Prefix) &&
-            await UpdateAsync(part, viewModel, context) is { } updateResults)
+        var viewModel = await context.CreateModelAsync<TViewModel>(Prefix);
+        if (await UpdateAsync(part, viewModel, context) is { } updateResults)
         {
             foreach (var (key, error) in updateResults)
             {
