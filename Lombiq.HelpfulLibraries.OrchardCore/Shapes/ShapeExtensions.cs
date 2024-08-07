@@ -125,5 +125,5 @@ public static class ShapeExtensions
     /// </summary>
     [Obsolete("Use OC's AddTenantReloadWarningWrapper extension method instead.")]
     public static void AddTenantReloadWarning(this IShape shape) =>
-        shape.AddTenantReloadWarningWrapper;
+        shape.Metadata.Wrappers.Add("Settings_Wrapper__Reload");
 }
