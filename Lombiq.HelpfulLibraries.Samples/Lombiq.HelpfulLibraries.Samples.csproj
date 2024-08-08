@@ -12,12 +12,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OrchardCore.ContentFields" Version="2.0.0-preview-18297" />
-    <PackageReference Include="OrchardCore.Module.Targets" Version="2.0.0-preview-18297" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="2.0.0-preview-18297" />
-    <PackageReference Include="OrchardCore.ContentTypes.Abstractions" Version="2.0.0-preview-18297" />
-    <PackageReference Include="OrchardCore.DisplayManagement" Version="2.0.0-preview-18297" />
-    <PackageReference Include="OrchardCore.Autoroute" Version="2.0.0-preview-18297" />
+    <PackageReference Include="OrchardCore.ContentFields" Version="2.0.0-preview-18300" />
+    <PackageReference Include="OrchardCore.Module.Targets" Version="2.0.0-preview-18300" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="2.0.0-preview-18300" />
+    <PackageReference Include="OrchardCore.ContentTypes.Abstractions" Version="2.0.0-preview-18300" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="2.0.0-preview-18300" />
+    <PackageReference Include="OrchardCore.Autoroute" Version="2.0.0-preview-18300" />
   </ItemGroup>
 
   <ItemGroup>
