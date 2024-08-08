@@ -30,17 +30,14 @@ public abstract class SingleViewModelContentPartDisplayDriver<TPart, TViewModel>
     /// Attempts to perform the update activity and adds model state errors if necessary, then redirects to the Edit
     /// action.
     /// </summary>
-    public override async Task<IDisplayResult> UpdateAsync(
-        TPart part,
-        IUpdateModel updater,
-        UpdatePartEditorContext context)
+    public override async Task<IDisplayResult> UpdateAsync(TPart part, UpdatePartEditorContext context)
     {
         var viewModel = await context.CreateModelAsync<TViewModel>(Prefix);
         if (await UpdateAsync(part, viewModel, context) is { } updateResults)
         {
             foreach (var (key, error) in updateResults)
             {
-                updater.ModelState.AddModelError(key, error);
+                context.Updater.ModelState.AddModelError(key, error);
             }
         }
 
