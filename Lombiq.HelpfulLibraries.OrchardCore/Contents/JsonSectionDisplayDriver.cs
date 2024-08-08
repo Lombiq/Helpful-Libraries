@@ -6,6 +6,7 @@ using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Security.Permissions;
 using OrchardCore.Settings;
+using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -14,7 +15,9 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : SiteDisplayDriver<TSection>
     where TSection : class, new()
 {
-    protected abstract string GroupId { get; }
+    [Obsolete($"Override {nameof(SettingsGroupId)} instead. This property will be removed in future versions.")]
+    protected virtual string GroupId => SettingsGroupId;
+
     protected virtual Permission Permission => null;
     protected virtual string ShapeType => $"{typeof(TSection).Name}_Edit";
     protected virtual string Location => $"{CommonLocationNames.Content}:1";
@@ -40,7 +43,7 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Site
                         settings.AdditionalData = await GetAdditionalDataAsync(section, context);
                     })
                 .Location(Location)
-                .OnGroup(GroupId)
+                .OnGroup(SettingsGroupId)
             : null;
 
     public override async Task<IDisplayResult> UpdateAsync(ISite model, TSection section, UpdateEditorContext context)
