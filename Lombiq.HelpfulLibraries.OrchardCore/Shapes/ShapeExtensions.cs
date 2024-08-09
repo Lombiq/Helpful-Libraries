@@ -120,8 +120,10 @@ public static class ShapeExtensions
     }
 
     /// <summary>
-    /// Adds the warning to the screen which says "The current tenant will be reloaded when the settings are saved.".
+    /// Adds the warning to the screen which says "The website might be restarted upon saving the settings, potentially
+    /// leading to temporary unresponsiveness during the process.".
     /// </summary>
+    [Obsolete("Use OC's AddTenantReloadWarningWrapper extension method instead.")]
     public static void AddTenantReloadWarning(this IShape shape) =>
-        shape.Metadata.Wrappers.Add("Settings_Wrapper__General");
+        shape.Metadata.Wrappers.Add("Settings_Wrapper__Reload");
 }
