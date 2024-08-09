@@ -1,6 +1,8 @@
 ﻿#nullable enable
 
+using Microsoft.Extensions.Localization;
 using OrchardCore.DisplayManagement.Entities;
+using OrchardCore.DisplayManagement.ModelBinding;
 using System;
 using System.Threading.Tasks;
 
@@ -71,4 +73,11 @@ public static class BuildEditorContextExtensions
         await context.Updater.TryUpdateModelAsync(viewModel, prefix);
         return viewModel;
     }
+
+    /// <summary>
+    /// Adds an error message to the <see cref="BuildShapeContext.Updater"/>.<see cref="IUpdateModel.ModelState"/>. The
+    /// <paramref name="message"/> is <see cref="LocalizedString"/>, because it's user-facing data.
+    /// </summary>
+    public static void AddModelError(this BuildEditorContext context, string key, LocalizedString message) =>
+        context.Updater.ModelState.AddModelError(key, message);
 }
