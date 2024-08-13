@@ -22,7 +22,7 @@ public abstract class SimpleEventActivityDisplayDriverBase<TActivity> : DisplayD
 
     private string IconHtml => string.IsNullOrEmpty(IconClass) ? string.Empty : $"<i class=\"fa {IconClass}\"></i>";
 
-    public override IDisplayResult Display(TActivity model) =>
+    public override IDisplayResult Display(TActivity model, BuildDisplayContext context) =>
         Combine(
             this.RawHtml(ThumbnailHtml(model)).Location(CommonContentDisplayTypes.Thumbnail, CommonLocationNames.Content),
             this.RawHtml(DesignHtml(model)).Location(CommonContentDisplayTypes.Design, CommonLocationNames.Content));

@@ -6,18 +6,21 @@ using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Security.Permissions;
 using OrchardCore.Settings;
+using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 
-public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : SectionDisplayDriver<ISite, TSection>
+public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : SiteDisplayDriver<TSection>
     where TSection : class, new()
 {
-    protected abstract string GroupId { get; }
+    [Obsolete($"Override {nameof(SettingsGroupId)} instead. This property will be removed in future versions.")]
+    protected virtual string GroupId => SettingsGroupId;
+
     protected virtual Permission Permission => null;
     protected virtual string ShapeType => $"{typeof(TSection).Name}_Edit";
-    protected virtual string Location => "Content:1";
+    protected virtual string Location => $"{CommonLocationNames.Content}:1";
 
     protected readonly IAuthorizationService _authorizationService;
     protected readonly IHttpContextAccessor _hca;
@@ -30,7 +33,7 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Sect
         _hca = hca;
     }
 
-    public override async Task<IDisplayResult> EditAsync(TSection section, BuildEditorContext context) =>
+    public async override Task<IDisplayResult> EditAsync(ISite model, TSection section, BuildEditorContext context) =>
         await AuthorizeAsync()
             ? Initialize<JsonViewModel<TAdditionalData>>(
                     ShapeType,
@@ -40,18 +43,18 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Sect
                         settings.AdditionalData = await GetAdditionalDataAsync(section, context);
                     })
                 .Location(Location)
-                .OnGroup(GroupId)
+                .OnGroup(SettingsGroupId)
             : null;
 
-    public override async Task<IDisplayResult> UpdateAsync(TSection section, UpdateEditorContext context)
+    public override async Task<IDisplayResult> UpdateAsync(ISite model, TSection section, UpdateEditorContext context)
     {
-        if (await context.CreateModelMaybeAsync<JsonViewModel<TAdditionalData>>(Prefix, GroupId, AuthorizeAsync) is { } viewModel &&
+        if (await context.CreateModelMaybeAsync<JsonViewModel<TAdditionalData>>(Prefix, AuthorizeAsync) is { } viewModel &&
             TryParseJson(viewModel.Json, out var result))
         {
             await UpdateAsync(section, context, result);
         }
 
-        return await EditAsync(section, context);
+        return await EditAsync(model, section, context);
     }
 
     protected abstract Task UpdateAsync(TSection section, BuildEditorContext context, TSection viewModel);
