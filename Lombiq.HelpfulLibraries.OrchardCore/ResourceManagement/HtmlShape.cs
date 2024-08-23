@@ -7,7 +7,6 @@ using OrchardCore.DisplayManagement.Shapes;
 using System;
 using System.Collections.Frozen;
 using System.Collections.Generic;
-using System.Data;
 using System.IO;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
@@ -19,7 +18,9 @@ public class HtmlShape : IHtmlContent, IPositioned, IShape
     private static readonly IDictionary<string, string> _dummyAttributes = new Dictionary<string, string>().ToFrozenDictionary();
     private static readonly IDictionary<string, object> _dummyProperties = new Dictionary<string, object>().ToFrozenDictionary();
 
+    private readonly List<IHtmlContent> _beforeContent = [];
     private readonly Func<IHtmlContent?> _getHtml;
+    private readonly List<IHtmlContent> _afterContent = [];
 
     public string? Position { get; set; }
 
@@ -53,7 +54,29 @@ public class HtmlShape : IHtmlContent, IPositioned, IShape
     {
     }
 
-    public void WriteTo(TextWriter writer, HtmlEncoder encoder) => _getHtml.Invoke()?.WriteTo(writer, encoder);
+    public void WriteTo(TextWriter writer, HtmlEncoder encoder)
+    {
+        foreach (var before in _beforeContent)
+        {
+            before.WriteTo(writer, encoder);
+        }
 
-    public ValueTask<IShape> AddAsync(object item, string position) => throw new ReadOnlyException();
+        _getHtml.Invoke()?.WriteTo(writer, encoder);
+
+        foreach (var after in _afterContent)
+        {
+            after.WriteTo(writer, encoder);
+        }
+    }
+
+    public ValueTask<IShape> AddAsync(object? item, string? position)
+    {
+        if (item is null) return ValueTask.FromResult<IShape>(this);
+
+        var content = item as IHtmlContent ?? new HtmlContentString(item.ToString());
+        var target = position?.ContainsOrdinalIgnoreCase("before") == true ? _beforeContent : _afterContent;
+
+        target.Add(content);
+        return ValueTask.FromResult<IShape>(this);
+    }
 }
