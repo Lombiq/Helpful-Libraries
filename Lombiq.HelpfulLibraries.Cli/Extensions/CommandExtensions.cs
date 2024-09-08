@@ -1,6 +1,11 @@
+#nullable enable
+
 using CliWrap.Builders;
 using CliWrap.EventStream;
+using Lombiq.HelpfulLibraries.Common.Utilities;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -14,7 +19,7 @@ public static class CommandExtensions
     /// </summary>
     public static async Task ExecuteDotNetApplicationAsync(
         this Command command,
-        Action<StandardErrorCommandEvent> stdErrHandler = default,
+        Action<StandardErrorCommandEvent>? stdErrHandler = default,
         CancellationToken cancellationToken = default)
     {
         await using var enumerator = command.ListenAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
@@ -45,4 +50,21 @@ public static class CommandExtensions
 
         return command.WithArguments(builder.Build());
     }
+
+    /// <summary>
+    /// Same as <see cref="Command.WithEnvironmentVariables(IReadOnlyDictionary{string,string?})"/>, but the values can
+    /// be any type. If a value is <see cref="IConvertible"/>, like all C# primitive types then <see
+    /// cref="NumberExtensions.ToTechnicalString(IConvertible)"/> is called, otherwise <see cref="object.ToString"/>.
+    /// </summary>
+    public static Command WithEnvironmentVariables(this Command command, IEnumerable<KeyValuePair<string?, object?>> variables) =>
+        command.WithEnvironmentVariables(variables
+            .Where(pair => pair is { Key: { } })
+            .ToDictionary(
+                pair => pair.Key!,
+                pair => pair.Value switch
+                {
+                    string text => text,
+                    IConvertible convertible => convertible.ToTechnicalString(),
+                    _ => pair.Value?.ToString(),
+                }));
 }
