@@ -21,11 +21,4 @@ public static class MulticastDelegateExtensions
             : multicastDelegate.GetInvocationList()
                 .Cast<TDelegate>()
                 .AwaitEachAsync(delegateExecution);
-
-    /// <summary>
-    /// A shortcut for <see cref="InvokeAsync{TDelegate}"/> when the delegate is a <see cref="Task"/> returning <see
-    /// cref="Func{TIn, TResult}"/>.
-    /// </summary>
-    public static Task InvokeFuncAsync<TIn>(this Func<TIn, Task> @delegate, TIn argument) =>
-        @delegate.InvokeAsync<Func<TIn, Task>>(func => func(argument));
 }
