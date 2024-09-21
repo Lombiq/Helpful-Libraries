@@ -19,6 +19,7 @@ internal sealed class ReCaptchaContentSecurityPolicyProvider : IContentSecurityP
         {
             CspHelper.MergeValues(securityPolicies, ScriptSrc, "www.google.com", "www.gstatic.com");
             CspHelper.MergeValues(securityPolicies, FrameSrc, "www.google.com");
+            CspHelper.MergeValues(securityPolicies, FrameAncestors, "www.google.com");
         }
     }
 }
