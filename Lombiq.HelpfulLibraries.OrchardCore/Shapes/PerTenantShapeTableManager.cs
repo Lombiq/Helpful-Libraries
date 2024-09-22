@@ -110,11 +110,10 @@ public class PerTenantShapeTableManager : IShapeTableManager
 
         var concurrentShapeDescriptors = new ConcurrentDictionary<string, FeatureShapeDescriptor>(shapeDescriptors);
 
+        // Using the dictionary for O(1) index retrieval instead of O(n) in a list.
         var descriptors = shapeDescriptors
-            // Filtering using the dictionary for O(1) lookup instead of O(n) in a list.
             .Where(shapeDescriptor => featureIdIndexLookup.ContainsKey(shapeDescriptor.Value.Feature.Id) &&
             IsModuleOrRequestedTheme(shapeDescriptor.Value.Feature, themeId))
-            // Using the dictionary for O(1) index retrieval instead of O(n) in a list.
             .OrderBy(shapeDescriptor => featureIdIndexLookup[shapeDescriptor.Value.Feature.Id])
             .GroupBy(shapeDescriptor => shapeDescriptor.Value.ShapeType, StringComparer.OrdinalIgnoreCase)
             .Select(group => new ShapeDescriptorIndex(
