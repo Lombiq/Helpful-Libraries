@@ -30,13 +30,15 @@ public abstract class NavigationProviderBase : INavigationProvider
     public ValueTask BuildNavigationAsync(string name, NavigationBuilder builder) =>
         name.EqualsOrdinalIgnoreCase(NavigationName) &&
         (!RequireAuthentication || _hca.HttpContext?.User.Identity?.IsAuthenticated == true)
-            ? BuildAsync(builder)
+            ? BuildNavigationInnerAsync(builder)
             : ValueTask.CompletedTask;
 
-    protected virtual ValueTask BuildAsync(NavigationBuilder builder)
+    private async ValueTask BuildNavigationInnerAsync(NavigationBuilder builder) => await BuildAsync(builder);
+
+    protected virtual Task BuildAsync(NavigationBuilder builder)
     {
         Build(builder);
-        return ValueTask.CompletedTask;
+        return Task.CompletedTask;
     }
 
     protected virtual void Build(NavigationBuilder builder) =>
