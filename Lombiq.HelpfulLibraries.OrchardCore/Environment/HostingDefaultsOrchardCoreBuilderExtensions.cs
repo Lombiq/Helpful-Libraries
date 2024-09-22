@@ -25,8 +25,6 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
 
         var ocSection = webApplicationBuilder.Configuration.GetSection("OrchardCore");
 
-        ocSection.GetSection("OrchardCore_Tenants").AddValueIfKeyNotExists("TenantRemovalAllowed", "true");
-
         ocSection.GetSection("OrchardCore_Localization_CultureOptions").AddValueIfKeyNotExists("IgnoreSystemSettings", "true");
 
         var shellsDatabaseSection = ocSection.GetSection("OrchardCore_Shells_Database");
