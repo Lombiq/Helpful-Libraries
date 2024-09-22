@@ -27,16 +27,16 @@ public abstract class NavigationProviderBase : INavigationProvider
     /// Builds navigation if the provided <paramref name="name"/> matches <see cref="NavigationName"/> and if the user
     /// is authenticated.
     /// </summary>
-    public Task BuildNavigationAsync(string name, NavigationBuilder builder) =>
+    public ValueTask BuildNavigationAsync(string name, NavigationBuilder builder) =>
         name.EqualsOrdinalIgnoreCase(NavigationName) &&
-        (!RequireAuthentication || _hca.HttpContext?.User?.Identity?.IsAuthenticated == true)
+        (!RequireAuthentication || _hca.HttpContext?.User.Identity?.IsAuthenticated == true)
             ? BuildAsync(builder)
-            : Task.CompletedTask;
+            : ValueTask.CompletedTask;
 
-    protected virtual Task BuildAsync(NavigationBuilder builder)
+    protected virtual ValueTask BuildAsync(NavigationBuilder builder)
     {
         Build(builder);
-        return Task.CompletedTask;
+        return ValueTask.CompletedTask;
     }
 
     protected virtual void Build(NavigationBuilder builder) =>
