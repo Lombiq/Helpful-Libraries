@@ -17,8 +17,11 @@ internal sealed class ReCaptchaContentSecurityPolicyProvider : IContentSecurityP
 
         if (await shellFeaturesManager.IsFeatureEnabledAsync("OrchardCore.ReCaptcha"))
         {
-            CspHelper.MergeValues(securityPolicies, ScriptSrc, "www.google.com", "www.gstatic.com");
-            CspHelper.MergeValues(securityPolicies, FrameSrc, "www.google.com");
+            const string googleDotCom = "www.google.com";
+
+            CspHelper.MergeValues(securityPolicies, ScriptSrc, googleDotCom, "www.gstatic.com");
+            CspHelper.MergeValues(securityPolicies, FrameSrc, googleDotCom);
+            CspHelper.MergeValues(securityPolicies, FrameAncestors, googleDotCom);
         }
     }
 }
