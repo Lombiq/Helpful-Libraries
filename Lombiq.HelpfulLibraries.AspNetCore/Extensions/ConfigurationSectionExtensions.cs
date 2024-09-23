@@ -27,12 +27,14 @@ public static class ConfigurationSectionExtensions
     /// If <see langword="null"/> or empty, then <paramref name="configuration"/> is used, otherwise the section with
     /// this key inside it.
     /// </param>
-    public static T BindNew<T>(this IConfiguration configuration, string sectionKey = null)
+    public static (T Options, IConfiguration ConfigurationSection) BindNew<T>(
+        this IConfiguration configuration,
+        string sectionKey = null)
         where T : new()
     {
         var options = new T();
         var section = string.IsNullOrEmpty(sectionKey) ? configuration : configuration.GetSection(sectionKey);
         section.Bind(options);
-        return options;
+        return (options, section);
     }
 }
