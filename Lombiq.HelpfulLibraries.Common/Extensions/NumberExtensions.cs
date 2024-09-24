@@ -1,3 +1,5 @@
+#nullable enable
+
 using System.Globalization;
 
 namespace System;
@@ -57,6 +59,12 @@ public static class NumberExtensions
     /// </summary>
     /// <param name="number">The number to stringify.</param>
     public static string ToTechnicalString(this decimal number) => number.ToString(CultureInfo.InvariantCulture);
+
+    /// <summary>
+    /// Returns culture-invariant <see cref="string"/> created from the specified <see cref="IConvertible"/>.
+    /// </summary>
+    /// <param name="number">The number to stringify.</param>
+    public static string? ToTechnicalString(this IConvertible? number) => number?.ToString(CultureInfo.InvariantCulture);
 
     /// <summary>
     /// Returns the result if the <paramref name="number"/> can be parsed to <see cref="int"/>. Returns -1 if the parse
