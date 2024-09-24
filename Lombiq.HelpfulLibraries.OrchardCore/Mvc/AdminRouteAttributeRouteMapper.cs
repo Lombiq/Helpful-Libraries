@@ -7,7 +7,7 @@ using System;
 namespace Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 
 [Obsolete("Use the [Admin(route)] attribute instead of [AdminRoute(route)].")]
-public class AdminRouteAttributeRouteMapper : IAreaControllerRouteMapper
+public sealed class AdminRouteAttributeRouteMapper : IAreaControllerRouteMapper
 {
     public int Order => 0;
 

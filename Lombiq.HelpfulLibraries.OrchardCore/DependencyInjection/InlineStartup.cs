@@ -12,7 +12,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 /// <summary>
 /// A startup class that invokes the delegates provided in the constructor.
 /// </summary>
-public class InlineStartup : StartupBase
+public sealed class InlineStartup : StartupBase
 {
     private readonly Action<IServiceCollection>? _configureServices;
     private readonly Action<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider>? _configure;
