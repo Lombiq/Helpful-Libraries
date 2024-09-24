@@ -15,7 +15,7 @@ namespace Lombiq.HelpfulLibraries.Samples.Migrations;
 
 // Here we demonstrate a more tightly coupled way of declaring parts and fields. We won't do anything with the part and
 // index so they can be a local classes. This way it's easier to see the whole thing in context too.
-public class ExpressionSampleMigration : DataMigration
+public sealed class ExpressionSampleMigration : DataMigration
 {
     // The content type
     private const string ExpressionContent = nameof(ExpressionContent);
