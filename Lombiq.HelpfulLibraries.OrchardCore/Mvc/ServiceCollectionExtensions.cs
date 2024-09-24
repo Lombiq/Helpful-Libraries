@@ -13,13 +13,6 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         IShellConfiguration shellConfiguration,
         string sectionName)
-        where T : class, new()
-    {
-        var options = new T();
-        var configSection = shellConfiguration.GetSection(sectionName);
-        configSection.Bind(options);
-        services.Configure<T>(configSection);
-
-        return services;
-    }
+        where T : class, new() =>
+        services.Configure<T>(shellConfiguration.BindNew<T>(sectionName).ConfigurationSection);
 }
