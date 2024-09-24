@@ -13,6 +13,6 @@ public class Startup : StartupBase
     {
         services.AddDataMigration<BookRecordMigrations>();
         services.AddDataMigration<ExpressionSampleMigration>();
-        services.AddScoped<INavigationProvider, HelpfulLibrariesNavigationProvider>();
+        services.AddNavigationProvider<HelpfulLibrariesNavigationProvider>();
     }
 }
