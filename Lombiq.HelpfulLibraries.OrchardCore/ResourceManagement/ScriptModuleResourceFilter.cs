@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Html;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
-using OrchardCore.DisplayManagement.Implementation;
 using OrchardCore.DisplayManagement.Layout;
 using OrchardCore.ResourceManagement;
 using System;
@@ -25,11 +24,11 @@ public record ScriptModuleResourceFilter(ILayoutAccessor LayoutAccessor) : IAsyn
 {
     public async Task OnResultExecutionAsync(ResultExecutingContext context, ResultExecutionDelegate next)
     {
-        var shape = await context.HttpContext.RequestServices.CreateAdHocShapeForCurrentThemeAsync(
-            nameof(ScriptModuleResourceFilter),
-            displayContext => Task.FromResult(DisplayScriptModuleResources(displayContext.ServiceProvider)));
+        await LayoutAccessor.AddShapeToZoneAsync(
+            CommonLocationNames.Content,
+            new HtmlShape(() => DisplayScriptModuleResources(context.HttpContext.RequestServices)),
+            "After");
 
-        await LayoutAccessor.AddShapeToZoneAsync("Content", shape, "After");
         await next();
     }
 

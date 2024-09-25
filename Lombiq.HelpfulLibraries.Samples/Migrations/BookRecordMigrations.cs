@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.Samples.Migrations;
 
-public class BookRecordMigrations : DataMigration
+public sealed class BookRecordMigrations : DataMigration
 {
     public async Task<int> CreateAsync()
     {

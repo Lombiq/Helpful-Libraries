@@ -7,12 +7,12 @@ using OrchardCore.Navigation;
 
 namespace Lombiq.HelpfulLibraries.Samples;
 
-public class Startup : StartupBase
+public sealed class Startup : StartupBase
 {
     public override void ConfigureServices(IServiceCollection services)
     {
         services.AddDataMigration<BookRecordMigrations>();
         services.AddDataMigration<ExpressionSampleMigration>();
-        services.AddScoped<INavigationProvider, HelpfulLibrariesNavigationProvider>();
+        services.AddNavigationProvider<HelpfulLibrariesNavigationProvider>();
     }
 }

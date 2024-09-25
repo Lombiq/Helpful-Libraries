@@ -2,6 +2,7 @@ using GraphQL;
 using OrchardCore.ContentManagement.GraphQL.Queries;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using YesSql.Indexes;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.GraphQL;
@@ -13,7 +14,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.GraphQL;
 public class PartIndexAliasProvider<TIndex> : IIndexAliasProvider
     where TIndex : class, IIndex
 {
-    private static readonly IndexAlias[] _aliases =
+    private static readonly IEnumerable<IndexAlias> _aliases =
     [
         new()
         {
@@ -29,5 +30,5 @@ public class PartIndexAliasProvider<TIndex> : IIndexAliasProvider
     /// <summary>
     /// Gets indexes with a name ending in <c>PartIndex</c>.
     /// </summary>
-    public IEnumerable<IndexAlias> GetAliases() => _aliases;
+    public ValueTask<IEnumerable<IndexAlias>> GetAliasesAsync() => ValueTask.FromResult(_aliases);
 }

@@ -1,8 +1,10 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
-using Newtonsoft.Json.Linq;
 using OrchardCore.Alias.Models;
 using OrchardCore.ContentManagement.Records;
 using System;
+using System.Text.Json;
+using System.Text.Json.Nodes;
+using System.Text.Json.Settings;
 using System.Threading.Tasks;
 using YesSql;
 
@@ -173,4 +175,16 @@ public static class ContentExtensions
         !content.ContentItem.Latest &&
         !content.ContentItem.Published &&
         content.ContentItem.Id == 0;
+
+    /// <summary>
+    /// Deserializes the <paramref name="contentElement"/>'s first JSON node that matches <paramref name="path"/>.
+    /// </summary>
+    public static T GetProperty<T>(this ContentElement contentElement, string path)
+        where T : class
+    {
+        // Re-serializing ensures that the SelectNode will query from the current root.
+        var data = JObject.FromObject((JsonObject)contentElement.Content);
+
+        return data.SelectNode(path)?.Deserialize<T>();
+    }
 }

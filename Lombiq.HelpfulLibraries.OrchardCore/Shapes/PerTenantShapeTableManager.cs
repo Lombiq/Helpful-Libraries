@@ -10,6 +10,7 @@ using OrchardCore.Environment.Shell;
 using OrchardCore.Settings;
 using System;
 using System.Collections.Concurrent;
+using System.Collections.Frozen;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -109,11 +110,10 @@ public class PerTenantShapeTableManager : IShapeTableManager
 
         var concurrentShapeDescriptors = new ConcurrentDictionary<string, FeatureShapeDescriptor>(shapeDescriptors);
 
+        // Using the dictionary for O(1) index retrieval instead of O(n) in a list.
         var descriptors = shapeDescriptors
-            // Filtering using the dictionary for O(1) lookup instead of O(n) in a list.
             .Where(shapeDescriptor => featureIdIndexLookup.ContainsKey(shapeDescriptor.Value.Feature.Id) &&
             IsModuleOrRequestedTheme(shapeDescriptor.Value.Feature, themeId))
-            // Using the dictionary for O(1) index retrieval instead of O(n) in a list.
             .OrderBy(shapeDescriptor => featureIdIndexLookup[shapeDescriptor.Value.Feature.Id])
             .GroupBy(shapeDescriptor => shapeDescriptor.Value.ShapeType, StringComparer.OrdinalIgnoreCase)
             .Select(group => new ShapeDescriptorIndex(
@@ -124,8 +124,8 @@ public class PerTenantShapeTableManager : IShapeTableManager
             .ToList();
 
         shapeTable = new ShapeTable(
-            descriptors: descriptors.ToDictionary(sd => sd.ShapeType, x => (ShapeDescriptor)x, StringComparer.OrdinalIgnoreCase),
-            bindings: descriptors.SelectMany(sd => sd.Bindings).ToDictionary(kv => kv.Key, kv => kv.Value, StringComparer.OrdinalIgnoreCase)
+            descriptors: descriptors.ToFrozenDictionary(sd => sd.ShapeType, x => (ShapeDescriptor)x, StringComparer.OrdinalIgnoreCase),
+            bindings: descriptors.SelectMany(sd => sd.Bindings).ToFrozenDictionary(kv => kv.Key, kv => kv.Value, StringComparer.OrdinalIgnoreCase)
         );
 
         if (_logger.IsEnabled(LogLevel.Information))
@@ -184,7 +184,7 @@ public class PerTenantShapeTableManager : IShapeTableManager
 
     public static void ReplaceDefaultShapeTableManager(IServiceCollection services)
     {
-        services.RemoveAll(service => service.ImplementationType == typeof(DefaultShapeTableManager));
+        services.RemoveByImplementation<DefaultShapeTableManager>();
         services.AddTransient<IShapeTableManager, PerTenantShapeTableManager>();
     }
 }

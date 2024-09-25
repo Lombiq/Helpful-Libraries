@@ -5,10 +5,10 @@ using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Localization;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using OrchardCore.ContentManagement;
 using System;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Microsoft.AspNetCore.Mvc;
@@ -87,6 +87,6 @@ public static class OrchardControllerExtensions
         logger.LogError(
             exception,
             "An error has occurred while generating a JSON result. (Request Route Values: {RouteValues})",
-            JsonConvert.SerializeObject(context.Request.RouteValues));
+            JsonSerializer.Serialize(context.Request.RouteValues));
     }
 }

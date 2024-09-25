@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -9,16 +10,57 @@ namespace Microsoft.Extensions.DependencyInjection;
 public static class ServiceCollectionExtensions
 {
     /// <summary>
+    /// Removes all service descriptors where the <see cref="ServiceDescriptor.ImplementationType"/> is <typeparamref
+    /// name="T"/>.
+    /// </summary>
+    /// <param name="includeKeyed">
+    /// If <see langword="true"/>, it also considers keyed services by checking the <see
+    /// cref="ServiceDescriptor.KeyedImplementationType"/>.
+    /// </param>
+    public static IServiceCollection RemoveByImplementation<T>(this IServiceCollection services, bool includeKeyed = true) =>
+        services.RemoveByImplementation(typeof(T), includeKeyed);
+
+    /// <summary>
+    /// Removes all service descriptors where the <see cref="ServiceDescriptor.ImplementationType"/> is <paramref
+    /// name="implementationType"/>.
+    /// </summary>
+    /// <param name="includeKeyed">
+    /// If <see langword="true"/>, it also considers keyed services by checking the <see
+    /// cref="ServiceDescriptor.KeyedImplementationType"/>.
+    /// </param>
+    public static IServiceCollection RemoveByImplementation(
+        this IServiceCollection services,
+        Type implementationType,
+        bool includeKeyed = true)
+    {
+        // Have to check "service.IsKeyedService" to avoid new breaking behavior described here:
+        // https://github.com/dotnet/runtime/issues/95789
+        services.RemoveAll(service =>
+            (includeKeyed || !service.IsKeyedService) &&
+            (service.IsKeyedService ? service.KeyedImplementationType : service.ImplementationType) == implementationType);
+
+        return services;
+    }
+
+    [Obsolete($"Use {nameof(RemoveImplementationsOf)} instead (renamed for clarity).")]
+    public static IServiceCollection RemoveImplementations<T>(this IServiceCollection services) =>
+        services.RemoveImplementationsOf<T>();
+
+    [Obsolete($"Use {nameof(RemoveImplementationsOf)} instead (renamed for clarity).")]
+    public static IServiceCollection RemoveImplementations(this IServiceCollection services, string serviceFullName) =>
+        services.RemoveImplementationsOf(serviceFullName);
+
+    /// <summary>
     /// Removes implementations of type <typeparamref name="T"/> from an <see cref="IServiceCollection"/> instance.
     /// </summary>
-    public static IServiceCollection RemoveImplementations<T>(this IServiceCollection services) =>
-        RemoveImplementations(services, typeof(T).FullName);
+    public static IServiceCollection RemoveImplementationsOf<T>(this IServiceCollection services) =>
+        RemoveImplementationsOf(services, typeof(T).FullName);
 
     /// <summary>
     /// Removes the implementations specified in <paramref name="serviceFullName"/> from an
     /// <see cref="IServiceCollection"/> instance.
     /// </summary>
-    public static IServiceCollection RemoveImplementations(this IServiceCollection services, string serviceFullName)
+    public static IServiceCollection RemoveImplementationsOf(this IServiceCollection services, string serviceFullName)
     {
         var servicesToRemove = services
             .Where(service => service.ServiceType?.FullName == serviceFullName)

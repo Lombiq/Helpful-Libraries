@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.Samples.Controllers;
 
-public class ErrorController : Controller
+public sealed class ErrorController : Controller
 {
     // A front-end page to demonstrate error handling on JSON-returning REST API requests.
     // /Lombiq.HelpfulLibraries.Samples/Error/Json

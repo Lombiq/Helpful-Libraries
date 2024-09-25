@@ -1,6 +1,5 @@
 using Dapper;
 using Microsoft.Extensions.Logging;
-using Newtonsoft.Json;
 using OrchardCore.Data;
 using System;
 using System.Collections.Generic;
@@ -8,6 +7,7 @@ using System.Data.Common;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
+using System.Text.Json;
 using System.Threading.Tasks;
 using YesSql;
 using YesSql.Indexes;
@@ -65,7 +65,7 @@ public class ManualConnectingIndexService<T> : IManualConnectingIndexService<T>
                 _logger.LogError(
                     "Failed to execute the following SQL query:\n{Sql}\nArguments:\n{Item}",
                     sql,
-                    JsonConvert.SerializeObject(item));
+                    JsonSerializer.Serialize(item));
                 throw;
             }
         });

@@ -5,6 +5,7 @@ using OrchardCore.ContentManagement;
 using OrchardCore.ContentManagement.GraphQL.Queries.Types;
 using OrchardCore.ContentManagement.Metadata.Models;
 using OrchardCore.ContentManagement.Records;
+using System;
 using YesSql;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.GraphQL;
@@ -26,18 +27,19 @@ public class TotalOfContentTypeBuilder : IContentTypeBuilder
     /// <param name="contentItemType">
     /// The content item type to be extended with the <c>totalOfContentType</c> integer field.
     /// </param>
-    public void Build(FieldType contentQuery, ContentTypeDefinition contentTypeDefinition, ContentItemType contentItemType)
+    public void Build(ISchema schema, FieldType contentQuery, ContentTypeDefinition contentTypeDefinition, ContentItemType contentItemType)
     {
         var name = contentTypeDefinition.Name;
 
-        var builder = contentItemType.Field<IntGraphType, int>()
-            .Name("totalOfContentType")
+        var builder = contentItemType
+            .Field<IntGraphType, int>("totalOfContentType")
             .Description(S["Gets the total count of all published content items with the type {0}.", name]);
 
         builder.ResolveAsync(async context =>
         {
-            var serviceProvider = context.RequestServices;
-            var session = serviceProvider.GetService<ISession>();
+            var session = context.RequestServices?.GetService<ISession>() ?? throw new InvalidOperationException(
+                $"Couldn't retrieve {nameof(ISession)} service from {nameof(context)} of \"{name}\".");
+
             return await session.QueryIndex<ContentItemIndex>(index =>
                 index.Published &&
                 index.Latest &&

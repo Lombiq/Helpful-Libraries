@@ -14,7 +14,7 @@ using YesSql;
 namespace Lombiq.HelpfulLibraries.Samples.Controllers;
 
 // Some examples of querying the database with Lombiq.HelpfulLibraries.LinqToDb.
-public class LinqToDbSamplesController : Controller
+public sealed class LinqToDbSamplesController : Controller
 {
     private readonly ISession _session;
 

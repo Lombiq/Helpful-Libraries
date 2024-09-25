@@ -44,23 +44,14 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
                 .AddValueIfKeyNotExists("System", "Information")
                 .AddValueIfKeyNotExists("Microsoft", "Information");
 
-            // Orchard Core 1.8 and prior, this can be removed after an Orchard Core upgrade to 2.0.
-            // OrchardCore_Email_Smtp below is 2.0+.
+            // Orchard Core 1.8 and prior section. Keeping it here for leftover configs, because it keeps working under
+            // 2.0 too
             var oc18SmtpSection = ocSection.GetSection("SmtpSettings");
-
-            if (oc18SmtpSection["Host"] == null)
-            {
-                oc18SmtpSection["Host"] = "127.0.0.1";
-                oc18SmtpSection["RequireCredentials"] = "false";
-                oc18SmtpSection["Port"] = "25";
-            }
-
-            oc18SmtpSection.AddValueIfKeyNotExists("DefaultSender", "sender@example.com");
-
             var smtpSection = ocSection.GetSection("OrchardCore_Email_Smtp");
 
-            if (smtpSection["Host"] == null)
+            if (oc18SmtpSection["Host"] == null && smtpSection["Host"] == null)
             {
+                smtpSection["IsEnabled"] = "true";
                 smtpSection["Host"] = "127.0.0.1";
                 smtpSection["RequireCredentials"] = "false";
                 smtpSection["Port"] = "25";
@@ -103,7 +94,6 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
 
         builder
             .AddDatabaseShellsConfigurationIfAvailable(webApplicationBuilder.Configuration)
-            .ConfigureSmtpSettings(overrideAdminSettings: false)
             .ConfigureSecurityDefaultsWithStaticFiles(allowInlineStyle: true);
 
         return builder;
