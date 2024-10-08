@@ -27,7 +27,7 @@ public class Union<T1, T2>
 
 public static class Union
 {
+    // The value of leftIsSet doesn't matter.
     public static Union<T1, T2> Neither<T1, T2>() =>
-        // The value of leftIsSet doesn't matter.
         new(default, default, leftIsSet: true);
 }

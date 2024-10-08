@@ -51,7 +51,7 @@ public static class AuthorizationServiceExtensions
     /// <typeparam name="TResult">The final outcome.</typeparam>
     public static async Task<IActionResult> AuthorizeForCurrentUserValidateAndExecuteAsync<TData, TResult>(
         this IAuthorizationService service,
-        Controller controller,
+        ControllerBase controller,
         IEnumerable<Permission> permissions,
         Func<Task<(bool IsSuccess, TData Data)>> validateAsync,
         Func<TData, Task<TResult>> executeAsync,
@@ -82,7 +82,7 @@ public static class AuthorizationServiceExtensions
     /// <inheritdoc cref="AuthorizeForCurrentUserValidateAndExecuteAsync{TData,TResult}"/>
     public static Task<IActionResult> AuthorizeForCurrentUserAndExecuteAsync<TResult>(
         this IAuthorizationService service,
-        Controller controller,
+        ControllerBase controller,
         IEnumerable<Permission> permissions,
         Func<Task<TResult>> executeAsync,
         string authenticationScheme = "Api",
@@ -98,7 +98,7 @@ public static class AuthorizationServiceExtensions
     /// <inheritdoc cref="AuthorizeForCurrentUserValidateAndExecuteAsync{TData,TResult}"/>
     public static Task<IActionResult> AuthorizeForCurrentUserValidateNotNullAndExecuteAsync<TData, TResult>(
         this IAuthorizationService service,
-        Controller controller,
+        ControllerBase controller,
         IEnumerable<Permission> permissions,
         Func<Task<TData>> validateAsync,
         Func<TData, Task<TResult>> executeAsync,

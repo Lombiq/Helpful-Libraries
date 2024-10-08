@@ -8,6 +8,7 @@ using OrchardCore.Settings;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using YesSql.Indexes;
 
@@ -195,4 +196,9 @@ public static class QueryExtensions
     }
 }
 
-public record GetPageAndPagerViewModel<T>(IList<T> Items, IShape Pager, int Total, int PageSize, int PageIndex);
+public record GetPageAndPagerViewModel<T>(
+    IList<T> Items,
+    [property: JsonIgnore] IShape Pager,
+    int Total,
+    int PageSize,
+    int PageIndex);
