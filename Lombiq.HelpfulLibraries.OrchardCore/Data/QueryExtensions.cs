@@ -196,4 +196,9 @@ public static class QueryExtensions
     }
 }
 
-public record GetPageAndPagerViewModel<T>(IList<T> Items, [property: JsonIgnore] IShape Pager, int Total, int PageSize, int PageIndex);
+public record GetPageAndPagerViewModel<T>(
+    IList<T> Items,
+    [property: JsonIgnore] IShape Pager,
+    int Total,
+    int PageSize,
+    int PageIndex);
