@@ -99,6 +99,33 @@ public class ResourceFilterBuilder
         WhenContentTypeInner("Edit", contentTypes);
 
     /// <summary>
+    /// Adds a filter that matches any of the provided <paramref name="contentTypes"/> to the list of
+    /// <see cref="ResourceFilters"/> and it is currently Create display mode.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Thrown when <paramref name="contentTypes"/> has no provided items.
+    /// </exception>
+    public ResourceFilter WhenContentTypeCreate(params string[] contentTypes)
+    {
+        if (contentTypes.Length == 0)
+        {
+            throw new ArgumentOutOfRangeException(
+                nameof(contentTypes),
+                $"{nameof(contentTypes)} must have at least 1 item.");
+        }
+
+        return When(context =>
+        {
+            var routeValues = context
+                .Request
+                .RouteValues
+                .ToDictionary(pair => pair.Key, pair => pair.Value?.ToString(), StringComparer.OrdinalIgnoreCase);
+
+            return routeValues.GetMaybe("action") == "Create" && contentTypes.Contains(routeValues.GetMaybe("id"));
+        });
+    }
+
+    /// <summary>
     /// Adds an always matching filter to the list of <see cref="ResourceFilters"/>.
     /// </summary>
     public ResourceFilter Always(Action<IResourceManager> execution = null)
