@@ -24,6 +24,7 @@
 
   <ItemGroup>
     <PackageReference Include="NodaTime" Version="3.1.11" />
+    <PackageReference Include="OrchardCore.Abstractions" Version="2.0.0" />
     <PackageReference Include="OrchardCore.Alias" Version="2.0.0" />
     <PackageReference Include="OrchardCore.Autoroute" Version="2.0.0" />
     <PackageReference Include="OrchardCore.ContentFields" Version="2.0.0" />
