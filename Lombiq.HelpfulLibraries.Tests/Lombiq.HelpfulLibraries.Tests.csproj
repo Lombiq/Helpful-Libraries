@@ -34,4 +34,10 @@
     <AdditionalFiles Include="package.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="VersionTreeTests.*.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
