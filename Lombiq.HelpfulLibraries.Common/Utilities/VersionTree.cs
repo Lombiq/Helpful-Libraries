@@ -30,7 +30,10 @@ public record VersionTree(IReadOnlyList<Version> Versions, IReadOnlyDictionary<i
     /// <summary>
     /// Gets all versions that match the provided <paramref name="version"/>, that can be partial/floating.
     /// </summary>
-    public VersionTree? this[Version version] => this[version.Major]?[version.Minor]?[version.Build]?[version.Revision];
+    public VersionTree? this[Version? version] =>
+        version is null
+            ? this
+            : this[version.Major]?[version.Minor]?[version.Build]?[version.Revision];
 
     /// <summary>
     /// Creates a new tree from a copy of the provided <paramref name="versions"/>.
