@@ -18,8 +18,6 @@ public record VersionTree(IReadOnlyList<Version> Versions, IReadOnlyDictionary<i
     /// Gets the subtree for the provided key, if it exists (otherwise <see langword="null"/>). If the <paramref
     /// name="index"/> is negative, this instance is returned instead.
     /// </summary>
-    /// <remarks><para><see cref="Version"/> uses <c>-1</c> to indicate a floating version part, so you can chain all 4
-    /// version parts using null-conditional indexers (<c>?[]</c>).</para></remarks>
     public VersionTree? this[int index]
     {
         get
@@ -28,6 +26,11 @@ public record VersionTree(IReadOnlyList<Version> Versions, IReadOnlyDictionary<i
             return SubVersions.TryGetValue(index, out var sub) ? sub : null;
         }
     }
+
+    /// <summary>
+    /// Gets all versions that match the provided <paramref name="version"/>, that can be partial/floating.
+    /// </summary>
+    public VersionTree? this[Version version] => this[version.Major]?[version.Minor]?[version.Build]?[version.Revision];
 
     /// <summary>
     /// Creates a new tree from a copy of the provided <paramref name="versions"/>.
@@ -39,7 +42,8 @@ public record VersionTree(IReadOnlyList<Version> Versions, IReadOnlyDictionary<i
         var majorVersions =
             FromVersions(allVersions, version => version.Major, major =>
                 FromVersions(major, version => version.Minor, minor =>
-                    FromVersions(minor, version => version.Build, _ => [])));
+                    FromVersions(minor, version => version.Build, revision =>
+                        FromVersions(revision, version => version.Revision, _ => []))));
 
         return new(allVersions, majorVersions);
     }
