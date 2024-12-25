@@ -33,7 +33,7 @@ public static class PasswordHelper
         }
 
         passwordChars = [.. passwordChars.OrderBy(c => rng.Next(0, int.MaxValue))];
-        string password = new(passwordChars.ToArray());
+        string password = new([.. passwordChars]);
 
         return password;
     }
