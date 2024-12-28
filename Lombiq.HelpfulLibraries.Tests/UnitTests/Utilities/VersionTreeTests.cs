@@ -13,10 +13,11 @@ public class VersionTreeTests
 {
     private static readonly JsonSerializerOptions _indentedJsonOption = new() { WriteIndented = true };
 
-    private static List<Version> _versions = "1.0, 1.2, 1.2.1, 1.2.2, 1.2.3, 1.3, 1.4, 1.4.1, 1.4.1.1, 1.4.1.2, 1.4.1.3, 1.4.2.1, 1.4.2.2, 1.4.2.4"
-        .Split(',')
-        .Select(Version.Parse)
-        .ToList();
+    private static readonly List<Version> _versions =
+        "1.0 1.2 1.2.1 1.2.2 1.2.3 1.3 1.4 1.4.1 1.4.1.1 1.4.1.2 1.4.1.3 1.4.2.1 1.4.2.2 1.4.2.4"
+            .Split()
+            .Select(Version.Parse)
+            .ToList();
 
     [Fact]
     public void VersionTreeShouldHaveExpectedStructure()
