@@ -1,0 +1,24 @@
+{
+    '$schema': 'https://docs.renovatebot.com/renovate-schema.json',
+    'extends': ['github>Lombiq/renovate-config:default-orchard-core-submodule.json5'],
+    packageRules: [
+        {
+            groupName: 'Gulp',
+            matchPackageNames: [
+                'gulp*',
+            ],
+        },
+        {
+            groupName: 'Microsoft.Extensions',
+            matchPackageNames: [
+                'Microsoft.Extensions.*',
+            ],
+        },
+        {
+            groupName: 'RestEase',
+            matchPackageNames: [
+                'RestEase*',
+            ],
+        },
+    ],
+}
