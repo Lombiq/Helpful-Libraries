@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.Tests.Models;
+using Lombiq.HelpfulLibraries.Tests.Models;
 using Shouldly;
 using System;
 using Xunit;
@@ -10,11 +10,11 @@ public class ConstantFromJsonTest
     [Fact]
     public void TestGeneratedConstants()
     {
-        ConstantFromJsonSample.GulpVersion.ShouldBe("3.9.0");
-        ConstantFromJsonSample.GulpUglifyVersion.ShouldBe("1.4.1");
+        ConstantFromJsonSample.IsEvenVersion.ShouldBe("1.0.0");
+        ConstantFromJsonSample.IsOddVersion.ShouldBe("3.0.1");
         new ConstantFromJsonSample()
             .ReturnVersions()
             .Split(["\n", "\r"], StringSplitOptions.RemoveEmptyEntries)
-            .ShouldBe(["Gulp version: 3.9.0", "Gulp-uglify version: 1.4.1"]);
+            .ShouldBe(["is-even version: 1.0.0", "is-odd version: 3.0.1"]);
     }
 }
