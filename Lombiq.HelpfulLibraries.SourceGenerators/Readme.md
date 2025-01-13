@@ -6,6 +6,8 @@ A collection of helpful source generators.
 
 - [ConstantFromJsonGenerator.cs](ConstantFromJsonGenerator.cs): A source generator that creates a constant from a JSON file.
 
+You can watch a demo video of the project [here](https://www.youtube.com/watch?v=MluV1ocZGiE).
+
 For general details about and on using the Helpful Libraries see the [root Readme](../Readme.md).
 
 ## Documentation
