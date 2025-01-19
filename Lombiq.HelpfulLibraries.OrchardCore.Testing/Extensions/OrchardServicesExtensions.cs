@@ -18,7 +18,7 @@ public static class OrchardServicesExtensions
     /// <summary>
     /// Sets up auto mocking for <see cref="IOrchardServices{T}" />.
     /// </summary>
-    /// <typeparam name="T">The type of the dependant service, used for logger.</typeparam>
+    /// <typeparam name="T">The type of the dependent service, used for <see cref="ILogger"/>.</typeparam>
     public static void MockOrchardServices<T>(this AutoMocker mocker) =>
         mocker.Use<IOrchardServices<T>>(
             new OrchardServices<T>(
