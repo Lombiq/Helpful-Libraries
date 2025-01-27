@@ -67,46 +67,51 @@ public static class HttpRequestExtensions
     }
 
     /// <summary>
-    /// Checks if the <paramref name="controller"/> and <paramref name="action"/> route values match the provided
-    /// arguments.
+    /// Checks if the <paramref name="area"/>, <paramref name="controller"/> and <paramref name="action"/> route values
+    /// match the provided arguments.
     /// </summary>
-    public static bool IsAction(this HttpRequest request, string controller, string action)
+    public static bool IsAction(this HttpRequest request, string controller, string action, string area = null)
     {
         var values = request.RouteValues;
         return (string.IsNullOrEmpty(controller) || values.GetMaybe(nameof(controller))?.ToString().EqualsOrdinalIgnoreCase(controller) == true) &&
-               (string.IsNullOrEmpty(action) || values.GetMaybe(nameof(action))?.ToString().EqualsOrdinalIgnoreCase(action) == true);
+               (string.IsNullOrEmpty(action) || values.GetMaybe(nameof(action))?.ToString().EqualsOrdinalIgnoreCase(action) == true) &&
+               (string.IsNullOrEmpty(area) || values.GetMaybe(nameof(area))?.ToString().EqualsOrdinalIgnoreCase(area) == true);
     }
 
     /// <summary>
-    /// Checks if the <c>controller</c> and <paramref name="action"/> route values match the provided
-    /// arguments.
+    /// Checks if the <paramref name="area"/>, <c>controller</c> and <paramref name="action"/> route values match the
+    /// provided arguments.
     /// </summary>
-    public static bool IsAction<TController>(this HttpRequest request, string action)
-        where TController : Controller
+    public static bool IsAction<TController>(this HttpRequest request, string action, string area = null)
+        where TController : ControllerBase
     {
         var controllerType = typeof(TController);
         var controllerName = controllerType.Name.EndsWith(nameof(Controller), StringComparison.OrdinalIgnoreCase)
             ? controllerType.Name[..^nameof(Controller).Length]
             : controllerType.Name;
 
-        return request.IsAction(controllerName, action);
+        return request.IsAction(controllerName, action, area);
     }
 
     /// <summary>
     /// Checks if the <c>controller</c> and <c>action</c> route values match the <paramref name="actionSelector"/>.
+    /// Optionally, checks if the provided <paramref name="area"/> matches the route value of the same name as well.
     /// </summary>
-    public static bool IsAction<TController>(this HttpRequest request, Expression<Action<TController>> actionSelector)
-        where TController : Controller
+    public static bool IsAction<TController>(
+        this HttpRequest request,
+        Expression<Action<TController>> actionSelector,
+        string area = null)
+        where TController : ControllerBase
     {
         var action = actionSelector.GetMethodCallInfo().Method.Name;
         return request.IsAction<TController>(action);
     }
 
-    /// <inheritdoc cref="IsAction{TController}(HttpRequest,Expression{Action{TController}})"/>
-    public static bool IsAction<TController>(this HttpRequest request, Expression<Func<TController, Task>> actionSelector)
-        where TController : Controller
-    {
-        var action = actionSelector.GetMethodCallInfo().Method.Name;
-        return request.IsAction<TController>(action);
-    }
+    /// <inheritdoc cref="IsAction{TController}(HttpRequest,Expression{Action{TController}}, string)"/>
+    public static bool IsAction<TController>(
+        this HttpRequest request,
+        Expression<Func<TController, Task>> actionSelector,
+        string area = null)
+        where TController : ControllerBase =>
+        request.IsAction(actionSelector.StripResult(), area);
 }
