@@ -1,7 +1,10 @@
 using Lombiq.HelpfulLibraries.Common.Utilities;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
+using System.Threading.Tasks;
 using System.Web;
 
 namespace Microsoft.AspNetCore.Http;
@@ -87,5 +90,23 @@ public static class HttpRequestExtensions
             : controllerType.Name;
 
         return request.IsAction(controllerName, action);
+    }
+
+    /// <summary>
+    /// Checks if the <c>controller</c> and <c>action</c> route values match the <paramref name="actionSelector"/>.
+    /// </summary>
+    public static bool IsAction<TController>(this HttpRequest request, Expression<Action<TController>> actionSelector)
+        where TController : Controller
+    {
+        var action = actionSelector.GetMethodCallInfo().Method.Name;
+        return request.IsAction<TController>(action);
+    }
+
+    /// <inheritdoc cref="IsAction{TController}(HttpRequest,Expression{Action{TController}})"/>
+    public static bool IsAction<TController>(this HttpRequest request, Expression<Func<TController, Task>> actionSelector)
+        where TController : Controller
+    {
+        var action = actionSelector.GetMethodCallInfo().Method.Name;
+        return request.IsAction<TController>(action);
     }
 }
