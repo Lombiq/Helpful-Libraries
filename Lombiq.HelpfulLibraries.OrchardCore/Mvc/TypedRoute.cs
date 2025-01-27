@@ -12,12 +12,10 @@ using OrchardCore.Mvc.Core.Utilities;
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Net;
 using System.Reflection;
-using System.Text.Json;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 
@@ -187,28 +185,12 @@ public class TypedRoute
         IServiceProvider serviceProvider = null)
         where TController : ControllerBase
     {
-        Expression actionExpression = action;
-        while (actionExpression is LambdaExpression { Body: not MethodCallExpression } lambdaExpression)
-        {
-            actionExpression = lambdaExpression.Body;
-        }
-
-        var operation = (MethodCallExpression)((LambdaExpression)actionExpression).Body;
-        var methodParameters = operation.Method.GetParameters();
-
-        var arguments = operation
-            .Arguments
-            .Select((argument, index) => new KeyValuePair<string, string>(
-                methodParameters[index].Name,
-                ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke())))
-            .Where(pair => pair.Value != null)
-            .Concat(additionalArguments ?? [])
-            .ToList();
+        var (method, arguments) = action.GetMethodCallInfo();
 
         var key = string.Join(
             separator: '|',
             typeof(TController).FullName,
-            operation.Method,
+            method,
             string.Join(',', arguments.Select(pair => $"{pair.Key}={pair.Value}")));
 
         if (serviceProvider?.GetService<IMemoryCache>() is { } cache)
@@ -217,7 +199,7 @@ public class TypedRoute
                 key,
                 _ => new TypedRoute(
                     typeof(TController),
-                    operation.Method,
+                    method,
                     arguments,
                     serviceProvider));
         }
@@ -226,19 +208,8 @@ public class TypedRoute
             key,
             _ => new TypedRoute(
                 typeof(TController),
-                operation.Method,
+                method,
                 arguments,
                 serviceProvider));
     }
-
-    private static string ValueToString(object value) =>
-        value switch
-        {
-            null => null,
-            string text => text,
-            DateTime date => date.ToString("s", CultureInfo.InvariantCulture),
-            byte or sbyte or short or ushort or int or uint or long or ulong or float or double or decimal =>
-                string.Format(CultureInfo.InvariantCulture, "{0}", value),
-            _ => JsonSerializer.Serialize(value),
-        };
 }
