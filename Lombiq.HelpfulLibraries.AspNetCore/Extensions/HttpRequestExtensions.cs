@@ -62,4 +62,30 @@ public static class HttpRequestExtensions
 
         return request.GetLinkWithDifferentQuery(key, newValue);
     }
+
+    /// <summary>
+    /// Checks if the <paramref name="controller"/> and <paramref name="action"/> route values match the provided
+    /// arguments.
+    /// </summary>
+    public static bool IsAction(this HttpRequest request, string controller, string action)
+    {
+        var values = request.RouteValues;
+        return (string.IsNullOrEmpty(controller) || values.GetMaybe(nameof(controller))?.ToString().EqualsOrdinalIgnoreCase(controller) == true) &&
+               (string.IsNullOrEmpty(action) || values.GetMaybe(nameof(action))?.ToString().EqualsOrdinalIgnoreCase(action) == true);
+    }
+
+    /// <summary>
+    /// Checks if the <c>controller</c> and <paramref name="action"/> route values match the provided
+    /// arguments.
+    /// </summary>
+    public static bool IsAction<TController>(this HttpRequest request, string action)
+        where TController : Controller
+    {
+        var controllerType = typeof(TController);
+        var controllerName = controllerType.Name.EndsWith(nameof(Controller), StringComparison.OrdinalIgnoreCase)
+            ? controllerType.Name[..^nameof(Controller).Length]
+            : controllerType.Name;
+
+        return request.IsAction(controllerName, action);
+    }
 }
