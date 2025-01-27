@@ -186,6 +186,7 @@ public class TypedRoute
         where TController : ControllerBase
     {
         var (method, arguments) = action.GetMethodCallInfo();
+        if (additionalArguments != null) arguments.AddRange(additionalArguments);
 
         var key = string.Join(
             separator: '|',
