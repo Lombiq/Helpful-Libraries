@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
+using Lombiq.HelpfulLibraries.OrchardCore.Mvc;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Localization;
@@ -51,7 +51,7 @@ public static class NavigationItemBuilderExtensions
     /// </summary>
     /// <remarks>
     /// <para>
-    /// The "disabled" class is necessary so Bootstrap won't mark it as "active" on the home page. This also greys out
+    /// The "disabled" class is necessary so Bootstrap won't mark it as "active" on the home page. This also grays out
     /// the text by default. Themes derived from Lombiq.BaseTheme automatically remove this effect.
     /// </para>
     /// </remarks>

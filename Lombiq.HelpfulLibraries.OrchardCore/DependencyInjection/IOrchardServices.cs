@@ -17,7 +17,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 /// <summary>
 /// A convenience bundle of services that are common dependencies of other CMS services in Orchard Core.
 /// </summary>
-/// <typeparam name="T">The type of the dependant service, used for logger.</typeparam>
+/// <typeparam name="T">The type of the dependent service, used for <see cref="ILogger"/>.</typeparam>
 [SuppressMessage(
     "StyleCop.CSharp.DocumentationRules",
     "SA1600:Elements should be documented",

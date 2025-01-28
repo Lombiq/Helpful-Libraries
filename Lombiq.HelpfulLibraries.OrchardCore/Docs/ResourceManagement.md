@@ -30,7 +30,7 @@ public class ResourceFilters : IResourceFilterProvider
 }
 ```
 
-## Javascript Module Support
+## JavaScript Module Support
 
 The `ScriptModuleResourceFilter` makes it possible to register JS modules in a way that they can be imported by name, so no bundling or importing by URL is necessary. Once you've added it to your service collection (`services.AddAsyncResultFilter<ScriptModuleResourceFilter>();`) you can register modules with the `ResourceManifest.DefineScriptModule(resourceName)` extension method and require them using the `IResourceManager.RegisterScriptModule(resourceName)` extension method.
 
