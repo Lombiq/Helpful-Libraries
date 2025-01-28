@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
+using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 
@@ -8,7 +8,8 @@ public static class ServiceCollectionExtensions
 {
     /// <summary>
     /// Registers a Content Security Policy provider that implements <see cref="IContentSecurityPolicyProvider"/> and
-    /// will be used by <see cref="ApplicationBuilderExtensions.UseContentSecurityPolicyHeader"/>.
+    /// will be used by <see cref="ApplicationBuilderExtensions.UseContentSecurityPolicyHeader(IApplicationBuilder,
+    /// ContentSecurityPolicyHeaderConfiguration)"/>.
     /// </summary>
     public static IServiceCollection AddContentSecurityPolicyProvider<TProvider>(this IServiceCollection services)
         where TProvider : class, IContentSecurityPolicyProvider =>
