@@ -401,7 +401,7 @@ public static class StringExtensions
 
     /// <summary>
     /// Combines all provided parameters into a single string and eliminates duplicates. This can be used to get the
-    /// union of space separated word lists. For example it's used to build the values of individual directives in the
+    /// union of space separated word lists. For example, it's used to build the values of individual directives in the
     /// <c>Content-Security-Policy</c> HTTP header.
     /// </summary>
     /// <example>

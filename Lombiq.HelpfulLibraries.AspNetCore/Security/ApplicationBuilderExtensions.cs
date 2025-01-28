@@ -14,6 +14,8 @@ namespace Microsoft.AspNetCore.Builder;
 
 public static class ApplicationBuilderExtensions
 {
+    private static readonly char[] _cspDirectivesSeparator = [';', ','];
+
     /// <summary>
     /// Adds a middleware that supplies the <c>Content-Security-Policy</c> header. It may be further expanded by
     /// registering services that implement <see cref="IContentSecurityPolicyProvider"/>.
@@ -27,19 +29,35 @@ public static class ApplicationBuilderExtensions
     /// If <see langword="true"/> then inline styles are permitted. Note that even if your site has no embedded style
     /// blocks and no style attributes, some JavaScript libraries may still create some from code.
     /// </param>
+    [Obsolete("Use the overload with ContentSecurityPolicyHeaderOptions instead.")]
+    public static IApplicationBuilder UseContentSecurityPolicyHeader(
+        this IApplicationBuilder app,
+        bool allowInlineScript,
+        bool allowInlineStyle) =>
+        app.UseContentSecurityPolicyHeader(new ContentSecurityPolicyHeaderConfiguration
+        {
+            AllowInlineScript = allowInlineScript,
+            AllowInlineStyle = allowInlineStyle,
+        });
+
+    /// <summary>
+    /// Adds a middleware that supplies the <c>Content-Security-Policy</c> header. It may be further expanded by
+    /// registering services that implement <see cref="IContentSecurityPolicyProvider"/>.
+    /// </summary>
+    /// <param name="options">Options for the middleware.</param>
     [SuppressMessage(
         "Critical Code Smell",
         "S3776:Cognitive Complexity of methods should not be too high",
         Justification = "It's not that complex, calculation is skewed by the logic being inside an anonymous function.")]
     public static IApplicationBuilder UseContentSecurityPolicyHeader(
         this IApplicationBuilder app,
-        bool allowInlineScript,
-        bool allowInlineStyle) =>
+        ContentSecurityPolicyHeaderConfiguration options) =>
         app.Use(async (context, next) =>
         {
             const string key = "Content-Security-Policy";
+            var headerExists = context.Response.Headers.ContainsKey(key);
 
-            if (context.Response.Headers.ContainsKey(key))
+            if (options.OverwriteMode == ContentSecurityPolicyHeaderOverwriteMode.StopIfHeaderExists && headerExists)
             {
                 await next();
                 return;
@@ -62,8 +80,8 @@ public static class ApplicationBuilderExtensions
                 [FrameAncestors] = Self,
             };
 
-            if (allowInlineScript) securityPolicies[ScriptSrc] = $"{Self} {UnsafeInline}";
-            if (allowInlineStyle) securityPolicies[StyleSrc] = $"{Self} {UnsafeInline}";
+            if (options.AllowInlineScript) securityPolicies[ScriptSrc] = $"{Self} {UnsafeInline}";
+            if (options.AllowInlineStyle) securityPolicies[StyleSrc] = $"{Self} {UnsafeInline}";
 
             context.Response.OnStarting(async () =>
             {
@@ -86,6 +104,30 @@ public static class ApplicationBuilderExtensions
                 }
 
                 if (securityPolicies.Count == 0) return;
+
+                if (headerExists && options.OverwriteMode == ContentSecurityPolicyHeaderOverwriteMode.MergeWithExistingHeader)
+                {
+                    // The valid separator is only a semicolon, but OrchardCore.Security used a comma. The latter needs
+                    // to be removed once https://github.com/OrchardCMS/OrchardCore/pull/17409 is released.
+
+                    var existingPolicy = context.Response.Headers[key];
+                    var existingDirectives = existingPolicy.SelectMany(policy =>
+                        policy.Split(_cspDirectivesSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+
+                    foreach (var directive in existingDirectives)
+                    {
+                        var parts = directive.Split(' ', 2);
+
+                        if (parts.Length != 2) continue;
+
+                        var name = parts[0];
+                        var value = parts[1];
+
+                        securityPolicies[name] = securityPolicies.TryGetValue(name, out var overridingValue)
+                            ? value.MergeWordSets(overridingValue)
+                            : value;
+                    }
+                }
 
                 var policy = string.Join("; ", securityPolicies.Select(pair => $"{pair.Key} {pair.Value}"));
                 context.Response.Headers[key] = policy;
@@ -168,4 +210,44 @@ public static class ApplicationBuilderExtensions
             return next();
         });
     }
+}
+
+public enum ContentSecurityPolicyHeaderOverwriteMode
+{
+    /// <summary>
+    /// If the <c>Content-Security-Policy</c> header already exists then nothing will be done.
+    /// </summary>
+    StopIfHeaderExists,
+
+    /// <summary>
+    /// If the <c>Content-Security-Policy</c> header already exists then it will be overwritten.
+    /// </summary>
+    OverwriteExistingHeader,
+
+    /// <summary>
+    /// If the <c>Content-Security-Policy</c> header already exists then the new directives will be merged with the
+    /// existing ones, the result being a union of all the directives with all their values.
+    /// </summary>
+    MergeWithExistingHeader,
+}
+
+public class ContentSecurityPolicyHeaderConfiguration
+{
+    /// <summary>
+    /// Gets or sets the mode of how to handle existing <c>Content-Security-Policy</c> header values.
+    /// </summary>
+    public ContentSecurityPolicyHeaderOverwriteMode OverwriteMode { get; set; } = ContentSecurityPolicyHeaderOverwriteMode.StopIfHeaderExists;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether inline scripts are permitted. When using Orchard Core a lot of front end
+    /// shapes use inline script blocks without a nonce (see https://github.com/OrchardCMS/OrchardCore/issues/13389)
+    /// making this a required setting.
+    /// </summary>
+    public bool AllowInlineScript { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets a value indicating whether inline styles are permitted. Note that even if your site has no embedded
+    /// style blocks and no style attributes, some JavaScript libraries may still create some from code.
+    /// </summary>
+    public bool AllowInlineStyle { get; set; }
 }
