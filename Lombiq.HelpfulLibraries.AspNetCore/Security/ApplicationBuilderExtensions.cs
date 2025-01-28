@@ -57,7 +57,7 @@ public static class ApplicationBuilderExtensions
             const string key = "Content-Security-Policy";
             var headerExists = context.Response.Headers.ContainsKey(key);
 
-            if (options.OverwriteMode == ContentSecurityPolicyHeaderOverwriteMode.StopIfHeaderExists && headerExists)
+            if (headerExists && options.OverwriteMode == ContentSecurityPolicyHeaderOverwriteMode.StopIfHeaderExists)
             {
                 await next();
                 return;
