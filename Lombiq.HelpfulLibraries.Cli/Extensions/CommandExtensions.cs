@@ -16,8 +16,18 @@ public static class CommandExtensions
     /// Executes a <see cref="Command"/> as a <c>dotnet</c> command that starts a long-running application, and waits
     /// for the app to be started.
     /// </summary>
-    public static async Task ExecuteDotNetApplicationAsync(
+    public static Task ExecuteDotNetApplicationAsync(
         this Command command,
+        Action<StandardErrorCommandEvent>? stdErrHandler = default,
+        CancellationToken cancellationToken = default) =>
+        command.ExecuteUntilOutputAsync("Application started. Press Ctrl+C to shut down.", stdErrHandler, cancellationToken);
+
+    /// <summary>
+    /// Executes a <see cref="Command"/> until the given output is received, then returns.
+    /// </summary>
+    public static async Task ExecuteUntilOutputAsync(
+        this Command command,
+        string outputToWaitFor,
         Action<StandardErrorCommandEvent>? stdErrHandler = default,
         CancellationToken cancellationToken = default)
     {
@@ -25,8 +35,7 @@ public static class CommandExtensions
 
         while (await enumerator.MoveNextAsync())
         {
-            if (enumerator.Current is StandardOutputCommandEvent stdOut &&
-                stdOut.Text.ContainsOrdinalIgnoreCase("Application started. Press Ctrl+C to shut down."))
+            if (enumerator.Current is StandardOutputCommandEvent stdOut && stdOut.Text.ContainsOrdinalIgnoreCase(outputToWaitFor))
             {
                 return;
             }

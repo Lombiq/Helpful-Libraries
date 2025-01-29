@@ -168,7 +168,7 @@ public class EditorFieldSetTagHelper : TagHelper
             .GetCustomAttributes(typeof(RequiredAttribute), inherit: false)
             .FirstOrDefault() is RequiredAttribute;
 
-    private static void AddBoolAttribute(IDictionary<string, object> attributes, bool value, string attributeName)
+    private static void AddBoolAttribute(Dictionary<string, object> attributes, bool value, string attributeName)
     {
         if (value)
         {

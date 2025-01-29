@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using OrchardCore.DisplayManagement.Entities;
@@ -33,7 +33,7 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Site
         _hca = hca;
     }
 
-    public async override Task<IDisplayResult> EditAsync(ISite model, TSection section, BuildEditorContext context) =>
+    public override async Task<IDisplayResult> EditAsync(ISite model, TSection section, BuildEditorContext context) =>
         await AuthorizeAsync()
             ? Initialize<JsonViewModel<TAdditionalData>>(
                     ShapeType,
