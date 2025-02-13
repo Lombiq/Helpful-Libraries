@@ -7,6 +7,7 @@ using OrchardCore.Data;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -54,6 +55,10 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
     // after a test execution.
     public void Dispose() => Store?.Dispose();
 
+    [SuppressMessage(
+        "Usage",
+        "MA0040:Forward the CancellationToken parameter to methods that take one",
+        Justification = "This is just a stub, no need to support cancellation.")]
     private async Task CreateDatabaseAsync()
     {
         if (File.Exists(FileName)) File.Delete(FileName);
