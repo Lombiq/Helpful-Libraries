@@ -11,12 +11,12 @@ public static class PasswordHelper
     /// </summary>
     public static string GenerateRandomPassword(int minLength)
     {
-        const string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-="; // #spell-check-ignore-line
+        const string validChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+-=";
 
         using var rng = RandomNumberGenerator.Create();
         const string digits = "0123456789";
-        const string lowerChars = "abcdefghijklmnopqrstuvwxyz"; // #spell-check-ignore-line
-        const string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // #spell-check-ignore-line
+        const string lowerChars = "abcdefghijklmnopqrstuvwxyz";
+        const string upperChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
         const string specialChars = "!@#$%^&*()_+-=";
 
         var passwordChars = new List<char>
