@@ -14,7 +14,7 @@ namespace Microsoft.AspNetCore.Builder;
 
 public static class ApplicationBuilderExtensions
 {
-    private static readonly char[] _cspDirectivesSeparator = [';', ','];
+    private static readonly char[] _cspDirectivesSeparator = [';'];
 
     /// <summary>
     /// Adds a middleware that supplies the <c>Content-Security-Policy</c> header. It may be further expanded by
@@ -107,9 +107,6 @@ public static class ApplicationBuilderExtensions
 
                 if (headerExists && options.OverwriteMode == ContentSecurityPolicyHeaderOverwriteMode.MergeWithExistingHeader)
                 {
-                    // The valid separator is only a semicolon, but OrchardCore.Security used a comma. The latter needs
-                    // to be removed once https://github.com/OrchardCMS/OrchardCore/pull/17409 is released.
-
                     var existingPolicy = context.Response.Headers[key];
                     var existingDirectives = existingPolicy.SelectMany(policy =>
                         policy.Split(_cspDirectivesSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
