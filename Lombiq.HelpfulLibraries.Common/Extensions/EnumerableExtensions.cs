@@ -163,7 +163,7 @@ public static class EnumerableExtensions
     /// cref="IEnumerable{T}"/>.
     /// </summary>
     public static IList<T> AsList<T>(this IEnumerable<T> collection) =>
-        collection is IList<T> list ? list : new List<T>(collection);
+        collection is IList<T> list ? list : [.. collection];
 
     /// <summary>
     /// Transforms the specified <paramref name="collection"/> with the <paramref name="select"/> function and returns

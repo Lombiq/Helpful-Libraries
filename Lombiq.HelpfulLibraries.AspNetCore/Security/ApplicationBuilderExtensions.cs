@@ -151,7 +151,14 @@ public static class ApplicationBuilderExtensions
                 {
                     var newCookie = cookie;
 
-                    UpdateIfMissing(ref newCookie, ref changed, "SameSite", "; SameSite=Strict");
+                    // The "orch_notify" cookie is used by Orchard Core' INotifier. It's usually set before a redirect,
+                    // so using SameSite=Strict would break it.
+                    UpdateIfMissing(
+                        ref newCookie,
+                        ref changed,
+                        "SameSite",
+                        cookie.StartsWithOrdinalIgnoreCase("orch_notify") ? "; SameSite=Lax" : "; SameSite=Strict");
+
                     UpdateIfMissing(ref newCookie, ref changed, "Secure", "; Secure");
 
                     newCookies.Add(newCookie);
