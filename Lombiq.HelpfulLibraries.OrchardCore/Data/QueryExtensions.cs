@@ -132,7 +132,7 @@ public static class QueryExtensions
     /// </param>
     /// <typeparam name="T">The type of the items in the <paramref name="query"/>.</typeparam>
     /// <remarks><para>
-    /// The <see cref="PagerParameters.Page"/> should come from the <c>pagenum</c> <!-- #spell-check-ignore-line -->
+    /// The <see cref="PagerParameters.Page"/> should come from the <c>pagenum</c>
     /// route value. The number should be one-based.
     /// </para></remarks>
     public static async Task<GetPageAndPagerViewModel<T>> GetPageAndPagerAsync<T>(
@@ -164,7 +164,7 @@ public static class QueryExtensions
     /// <param name="httpContext">Used to source some required services and current request information.</param>
     /// <param name="pageNumber">
     /// If not <see langword="null"/>, it's used to configure the <see cref="PagerParameters"/>. Otherwise the query
-    /// value of <c>pagenum</c> is used from <paramref name="httpContext"/>. <!-- #spell-check-ignore-line -->
+    /// value of <c>pagenum</c> is used from <paramref name="httpContext"/>.
     /// </param>
     /// <param name="defaultPageSize">
     /// An optional value it you want custom page size instead of the value coming from <see cref="ISite.PageSize"/>.
@@ -179,7 +179,7 @@ public static class QueryExtensions
         var page = pageNumber ?? 0;
         if (page <= 0)
         {
-            page = httpContext.Request.Query.TryGetValue("pagenum", out var pageNumberString) && // #spell-check-ignore-line
+            page = httpContext.Request.Query.TryGetValue("pagenum", out var pageNumberString) &&
                    int.TryParse(pageNumberString, CultureInfo.InvariantCulture, out var pageNumberInt)
                 ? pageNumberInt
                 : 1;

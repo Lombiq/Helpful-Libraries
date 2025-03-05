@@ -19,14 +19,14 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// </summary>
     public static ConcurrentBag<string> PermittedStyleSources { get; } =
     [
-        "cdn.jsdelivr.net", // #spell-check-ignore-line
-        "cdnjs.cloudflare.com", // #spell-check-ignore-line
-        "fastly.jsdelivr.net", // #spell-check-ignore-line
-        "fonts.cdnfonts.com", // #spell-check-ignore-line
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com",
+        "fastly.jsdelivr.net",
+        "fonts.cdnfonts.com",
         "fonts.googleapis.com",
-        "fonts.gstatic.com", // #spell-check-ignore-line
-        "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
-        "unpkg.com", // #spell-check-ignore-line
+        "fonts.gstatic.com",
+        "maxcdn.bootstrapcdn.com",
+        "unpkg.com",
     ];
 
     /// <summary>
@@ -34,12 +34,12 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// </summary>
     public static ConcurrentBag<string> PermittedScriptSources { get; } =
     [
-        "cdn.jsdelivr.net", // #spell-check-ignore-line
-        "cdnjs.cloudflare.com", // #spell-check-ignore-line
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com",
         "code.jquery.com",
-        "fastly.jsdelivr.net", // #spell-check-ignore-line
-        "maxcdn.bootstrapcdn.com", // #spell-check-ignore-line
-        "unpkg.com", // #spell-check-ignore-line
+        "fastly.jsdelivr.net",
+        "maxcdn.bootstrapcdn.com",
+        "unpkg.com",
     ];
 
     /// <summary>
@@ -47,11 +47,11 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     /// </summary>
     public static ConcurrentBag<string> PermittedFontSources { get; } =
     [
-        "cdn.jsdelivr.net", // #spell-check-ignore-line
-        "cdnjs.cloudflare.com", // #spell-check-ignore-line
-        "fonts.cdnfonts.com", // #spell-check-ignore-line
+        "cdn.jsdelivr.net",
+        "cdnjs.cloudflare.com",
+        "fonts.cdnfonts.com",
         "fonts.googleapis.com",
-        "fonts.gstatic.com", // #spell-check-ignore-line
+        "fonts.gstatic.com",
     ];
 
     /// <summary>

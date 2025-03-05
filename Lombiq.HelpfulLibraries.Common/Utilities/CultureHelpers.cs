@@ -17,7 +17,7 @@ public static class CultureHelpers
             {
                 // This sometimes throws "CultureNotFoundException: Culture is not supported." exception on Linux, or
                 // "ArgumentException: Customized cultures cannot be passed by ID, only by name." on Windows.
-                try { return new RegionInfo(culture.LCID); } // #spell-check-ignore-line
+                try { return new RegionInfo(culture.LCID); }
                 catch { return null; }
             })
             .Where(region => region is { TwoLetterISORegionName.Length: 2 } && !string.IsNullOrEmpty(region.EnglishName))

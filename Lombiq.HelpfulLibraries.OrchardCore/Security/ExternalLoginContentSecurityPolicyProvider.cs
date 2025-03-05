@@ -19,7 +19,7 @@ internal sealed class ExternalLoginContentSecurityPolicyProvider : IContentSecur
 
         if (enabledFeatures.Any("OrchardCore.Microsoft.Authentication.AzureAD"))
         {
-            CspHelper.MergeValues(securityPolicies, FormAction, "login.microsoftonline.com"); // #spell-check-ignore-line
+            CspHelper.MergeValues(securityPolicies, FormAction, "login.microsoftonline.com");
         }
 
         if (enabledFeatures.Any("OrchardCore.GitHub.Authentication"))
