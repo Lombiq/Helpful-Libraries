@@ -19,6 +19,7 @@ public class EmbeddedMediaContentSecurityPolicyProvider : IContentSecurityPolicy
     [
         "www.youtube.com",
         "www.youtube-nocookie.com",
+        "youtu.be",
     ]);
 
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
