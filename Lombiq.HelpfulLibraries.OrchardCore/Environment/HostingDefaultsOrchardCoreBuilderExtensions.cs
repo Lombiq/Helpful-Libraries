@@ -91,7 +91,7 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
 
         builder
             .AddDatabaseShellsConfigurationIfAvailable(webApplicationBuilder.Configuration)
-            .ConfigureSecurityDefaultsWithStaticFiles(allowInlineStyle: true);
+            .ConfigureSecurityDefaultsWithStaticFiles(hostingConfiguration.ContentSecurityPolicyHeaderConfiguration);
 
         return builder;
     }
@@ -168,6 +168,14 @@ public class HostingConfiguration
     /// the Production environment, for all tenants, without the ability to turn them off.
     /// </summary>
     public bool AlwaysEnableHealthChecksInProduction { get; set; } = true;
+
+    /// <summary>
+    /// Gets or sets the configuration for the <c>Content-Security-Policy</c> header.
+    /// </summary>
+    public ContentSecurityPolicyHeaderConfiguration ContentSecurityPolicyHeaderConfiguration { get; set; } = new()
+    {
+        AllowInlineStyle = true,
+    };
 }
 
 public class AzureHostingConfiguration : HostingConfiguration
