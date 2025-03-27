@@ -13,14 +13,16 @@ public class DefaultElasticsearchIndexManager : IElasticsearchIndexManager
 
     public DefaultElasticsearchIndexManager(ElasticIndexManager manager) => _manager = manager;
 
-    public Task<bool> DeleteIndex(string indexName) => _manager.DeleteIndex(indexName);
+    public Task<bool> DeleteIndex(string indexName) =>
+        _manager.DeleteIndex(indexName);
 
     public Task<ElasticTopDocs> SearchAsync(string indexName, QueryContainer query, List<ISort> sort, int from, int size) =>
         _manager.SearchAsync(indexName, query, sort, from, size);
 
-    public Task<bool> ExistsAsync(string indexName) => _manager.ExistsAsync(indexName);
+    public Task<bool> ExistsAsync(string indexName) =>
+        _manager.ExistsAsync(indexName);
 
-    public static void Add(IServiceCollection services)
+    public static void AddDefaultServices(IServiceCollection services)
     {
         services.AddSingleton<ElasticIndexManager>();
         services.AddScoped<IElasticsearchIndexManager, DefaultElasticsearchIndexManager>();
