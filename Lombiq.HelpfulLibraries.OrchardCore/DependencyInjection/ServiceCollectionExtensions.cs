@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Nest;
 using OrchardCore.Modules;
 using System;
 using System.Threading.Tasks;
@@ -46,4 +47,16 @@ public static class ServiceCollectionExtensions
         Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask>? configureAsync = null,
         int order = 0) =>
         services.AddSingleton<IStartup>(new InlineStartup(configureServices, configure, configureAsync, order));
+
+    /// <summary>
+    /// Shortcut for <see cref="DefaultElasticsearchIndexManager.AddDefaultServices"/> to register all necessary
+    /// Elasticserach related services.
+    /// </summary>
+    public static IServiceCollection AddDefaultElasticsearchWrapperServices(
+        this IServiceCollection services,
+        ConnectionSettings? settings = null)
+    {
+        DefaultElasticsearchIndexManager.AddDefaultServices(services, settings);
+        return services;
+    }
 }

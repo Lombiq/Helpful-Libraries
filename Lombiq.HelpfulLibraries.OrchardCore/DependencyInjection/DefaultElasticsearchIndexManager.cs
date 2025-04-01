@@ -22,9 +22,20 @@ public class DefaultElasticsearchIndexManager : IElasticsearchIndexManager
     public Task<bool> ExistsAsync(string indexName) =>
         _manager.ExistsAsync(indexName);
 
-    public static void AddDefaultServices(IServiceCollection services)
+    public static void AddDefaultServices(IServiceCollection services, ConnectionSettings settings = null)
     {
+        services.AddSingleton<IElasticClient>(settings is null ? new ElasticClient() : new ElasticClient(settings));
         services.AddSingleton<ElasticIndexManager>();
-        services.AddScoped<IElasticsearchIndexManager, DefaultElasticsearchIndexManager>();
+        services.AddSingleton<ElasticIndexingService>();
+
+        if (!services.HasImplementationsOf<IElasticsearchIndexManager>())
+        {
+            services.AddScoped<IElasticsearchIndexManager, DefaultElasticsearchIndexManager>();
+        }
+
+        if (!services.HasImplementationsOf<IElasticsearchIndexingService>())
+        {
+            services.AddScoped<IElasticsearchIndexingService, DefaultElasticsearchIndexingService>();
+        }
     }
 }
