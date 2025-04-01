@@ -18,6 +18,11 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 public interface IElasticsearchIndexManager
 {
     /// <summary>
+    /// A shortcut for <see cref="DeleteIndex"/> using a wildcard as the index name.
+    /// </summary>
+    Task<bool> DeleteAllIndexesAsync() => DeleteIndex("*");
+
+    /// <summary>
     /// Deletes the provided index.
     /// </summary>
     Task<bool> DeleteIndex(string indexName);
