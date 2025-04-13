@@ -1,4 +1,4 @@
-# Lombiq Helpful Libraries - Orchard Core Libraries - Dependency Injection for Orchard Core
+# Lombiq Helpful Libraries - Orchard Core Libraries - Elasticsearch for Orchard Core
 
 ## Shell scope extensions
 
