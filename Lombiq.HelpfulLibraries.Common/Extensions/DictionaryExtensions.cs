@@ -142,21 +142,6 @@ public static class DictionaryExtensions
     }
 
     /// <summary>
-    /// Adds several entries to the dictionary (e.g. from another dictionary). If the key already exists in the dictionary
-    /// then the value will be overriden.
-    /// </summary>
-    public static void AddRangeAndOverride<TKey, TValue>(
-        this IDictionary<TKey, TValue> dictionary,
-        IEnumerable<KeyValuePair<TKey, TValue>> additionalEntries)
-    {
-        if (additionalEntries == null) return;
-        foreach (var (key, value) in additionalEntries)
-        {
-            dictionary[key] = value;
-        }
-    }
-
-    /// <summary>
     /// Adds a collection of <paramref name="values"/> to the dictionary by generating a key for each item using the
     /// <paramref name="keySelector"/>. If the selector's result in <see langword="null"/> that value is not added.
     /// </summary>
@@ -172,6 +157,21 @@ public static class DictionaryExtensions
             {
                 dictionary[key] = value;
             }
+        }
+    }
+
+    /// <summary>
+    /// Adds several entries to the dictionary (e.g. from another dictionary). If the key already exists in the dictionary
+    /// then the value will be overriden.
+    /// </summary>
+    public static void AddRangeAndOverride<TKey, TValue>(
+        this IDictionary<TKey, TValue> dictionary,
+        IEnumerable<KeyValuePair<TKey, TValue>> additionalEntries)
+    {
+        if (additionalEntries == null) return;
+        foreach (var (key, value) in additionalEntries)
+        {
+            dictionary[key] = value;
         }
     }
 
