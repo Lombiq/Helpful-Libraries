@@ -1,9 +1,8 @@
 using Microsoft.Extensions.Configuration;
 using Nest;
-using OrchardCore.Environment.Shell.Configuration;
 using OrchardCore.Search.Elasticsearch.Core.Models;
 
-namespace Microsoft.Extensions.DependencyInjection;
+namespace OrchardCore.Environment.Shell.Configuration;
 
 public static class ConfigurationExtensions
 {
