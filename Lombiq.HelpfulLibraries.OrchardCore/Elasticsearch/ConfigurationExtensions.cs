@@ -1,0 +1,16 @@
+using Microsoft.Extensions.Configuration;
+using Nest;
+using OrchardCore.Search.Elasticsearch.Core.Models;
+
+namespace OrchardCore.Environment.Shell.Configuration;
+
+public static class ConfigurationExtensions
+{
+    public static IElasticClient CreateElasticClient(this IShellConfiguration shellConfiguration)
+    {
+        var configuration = shellConfiguration.GetSection("OrchardCore_Elasticsearch");
+        var elasticConfiguration = configuration.Get<ElasticConnectionOptions>();
+
+        return new ElasticClient(elasticConfiguration?.GetConnectionSettings());
+    }
+}

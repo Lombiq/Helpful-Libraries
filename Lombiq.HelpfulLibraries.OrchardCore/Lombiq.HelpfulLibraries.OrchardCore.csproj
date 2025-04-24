@@ -29,6 +29,7 @@
     <PackageReference Include="OrchardCore.ContentFields" Version="2.1.0" />
     <PackageReference Include="OrchardCore.ContentManagement" Version="2.1.0" />
     <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="2.1.0" />
+    <PackageReference Include="OrchardCore.Search.Elasticsearch.Core" Version="2.1.0" />
     <PackageReference Include="OrchardCore.Email.Abstractions" Version="2.1.0" />
     <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="2.1.0" />
     <PackageReference Include="OrchardCore.Html" Version="2.1.0" />

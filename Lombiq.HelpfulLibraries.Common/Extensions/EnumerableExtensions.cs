@@ -309,6 +309,15 @@ public static class EnumerableExtensions
     }
 
     /// <summary>
+    /// Filters the elements of the <paramref name="collection"/> if they return <see langword="false"/> when evaluated
+    /// by the <paramref name="negativePredicate"/>.
+    /// </summary>
+    public static IAsyncEnumerable<T> WhereNotAsync<T>(
+        this IAsyncEnumerable<T> collection,
+        Func<T, Task<bool>> negativePredicate) =>
+        collection.WhereAwait(async value => !await negativePredicate(value));
+
+    /// <summary>
     /// Returns <paramref name="collection"/> if it's not <see langword="null"/>, otherwise <see
     /// cref="Enumerable.Empty{TResult}"/>.
     /// </summary>
