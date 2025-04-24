@@ -161,8 +161,8 @@ public static class DictionaryExtensions
     }
 
     /// <summary>
-    /// Adds several entries to the dictionary (e.g. from another dictionary). If the key already exists in the dictionary
-    /// then the value will be overridden.
+    /// Adds several entries to the dictionary, e.g. from another dictionary. If a key to be added already exists in the
+    /// dictionary, then its value will be overwritten.
     /// </summary>
     public static void AddRangeAndOverride<TKey, TValue>(
         this IDictionary<TKey, TValue> dictionary,
