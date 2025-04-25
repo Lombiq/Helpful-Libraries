@@ -33,7 +33,7 @@ public static class CommandExtensions
     {
         await using var enumerator = command.ListenAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
 
-        while (await enumerator.MoveNextAsync())
+        while (await enumerator.MoveNextAsync(cancellationToken))
         {
             if (enumerator.Current is StandardOutputCommandEvent stdOut && stdOut.Text.ContainsOrdinalIgnoreCase(outputToWaitFor))
             {

@@ -103,4 +103,10 @@ public static class ServiceCollectionExtensions
 
         return services;
     }
+
+    /// <summary>
+    /// Returns <see langword="true"/> if there is a registered service that implements <typeparamref name="TService"/>.
+    /// </summary>
+    public static bool HasImplementationsOf<TService>(this IServiceCollection services) =>
+        services.Any(service => service.ServiceType == typeof(TService));
 }
