@@ -18,6 +18,7 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static IServiceCollection AddResourceFilter(
         this IServiceCollection services,
-        Action<ResourceFilterBuilder> filter) =>
-        services.AddScoped<IResourceFilterProvider, SimpleResourceFilterProvider>(_ => new(filter));
+        Action<ResourceFilterBuilder> filter,
+        params string[] requiredThemes) =>
+        services.AddScoped<IResourceFilterProvider, SimpleResourceFilterProvider>(_ => new(filter, requiredThemes));
 }

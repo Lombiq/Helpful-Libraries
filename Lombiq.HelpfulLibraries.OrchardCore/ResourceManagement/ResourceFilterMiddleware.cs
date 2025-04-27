@@ -21,7 +21,11 @@ public class ResourceFilterMiddleware
         var providers = context
             .RequestServices
             .GetRequiredService<IEnumerable<IResourceFilterProvider>>()
-            .Select(provider => new { Provider = provider, ThemeRequirements = provider.GetRequiredThemes().ToList() })
+            .Select(provider => new
+            {
+                Provider = provider,
+                ThemeRequirements = provider.GetRequiredThemes().Concat(provider.RequiredThemes).ToList(),
+            })
             .ToList();
 
         IList<string> themes =
