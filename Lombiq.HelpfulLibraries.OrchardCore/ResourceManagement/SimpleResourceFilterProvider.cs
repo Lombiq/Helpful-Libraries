@@ -2,7 +2,7 @@ using System;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
-internal class SimpleResourceFilterProvider : IResourceFilterProvider
+internal sealed class SimpleResourceFilterProvider : IResourceFilterProvider
 {
     private readonly Action<ResourceFilterBuilder> _filter;
 
