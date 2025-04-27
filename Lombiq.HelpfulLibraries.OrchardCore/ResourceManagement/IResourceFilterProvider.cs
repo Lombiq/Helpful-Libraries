@@ -25,10 +25,9 @@ public static class ResourceFilterProviderExtensions
     /// <summary>
     /// Returns the themes required by the <see cref="ResourceFilterThemeRequirementAttribute"/> from the provider.
     /// </summary>
-    [SuppressMessage(
-        "Naming",
-        "CS0618:Type or member is obsolete",
-        Justification = "Obsolete is only used because the referenced member will be turned internal.")]
     public static IEnumerable<string> GetRequiredThemes(this IResourceFilterProvider provider) =>
+        // Obsolete is only used because the referenced member will be turned internal in a later release.
+#pragma warning disable CS0618 // Type or member is obsolete
         ResourceFilterThemeRequirementAttribute.GetRequirementsByType(provider.GetType());
+#pragma warning restore CS0618 // Type or member is obsolete
 }
