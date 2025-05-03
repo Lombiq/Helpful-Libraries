@@ -10,7 +10,7 @@ public static class ResponseExtensions
         if (response.IsValid) return response;
 
         if (!string.IsNullOrWhiteSpace(message)) message = $" ({message.Trim()})";
-        var error = $"Elasticsearch operation failed{message}. {response}";
+        var error = $"Elasticsearch operation failed{message}. {response.DebugInformation}";
         throw new InvalidOperationException(error);
     }
 }
