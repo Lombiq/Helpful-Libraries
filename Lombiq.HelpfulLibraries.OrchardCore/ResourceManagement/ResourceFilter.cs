@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using OrchardCore.ResourceManagement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
@@ -10,18 +11,33 @@ public class ResourceFilter
 {
     public Func<HttpContext, bool> Filter { get; set; }
     public Func<HttpContext, Task<bool>> FilterAsync { get; set; }
-    public Action<IResourceManager> Execution { get; set; }
-    public Func<IResourceManager, Task> ExecutionAsync { get; set; }
+
+    public IList<Action<IResourceManager>> Executions { get; init; } = [];
+    public IList<Func<IResourceManager, Task>> ExecutionsAsync { get; init; } = [];
+
+    [Obsolete($"Use {nameof(Executions)} instead.")]
+    public Action<IResourceManager> Execution
+    {
+        get => Executions.FirstOrDefault();
+        set => Executions.SetItems([value]);
+    }
+
+    [Obsolete($"Use {nameof(ExecutionsAsync)} instead.")]
+    public Func<IResourceManager, Task> ExecutionAsync
+    {
+        get => ExecutionsAsync.FirstOrDefault();
+        set => ExecutionsAsync.SetItems([value]);
+    }
 
     public ResourceFilter Execute(Action<IResourceManager> action)
     {
-        Execution = action;
+        Executions.Add(action);
         return this;
     }
 
     public ResourceFilter ExecuteTask(Func<IResourceManager, Task> actionAsync)
     {
-        ExecutionAsync = actionAsync;
+        ExecutionsAsync.Add(actionAsync);
         return this;
     }
 
@@ -59,4 +75,20 @@ public class ResourceFilter
             Rel = rel,
             Type = type,
         }));
+
+    /// <summary>
+    /// Applies the actions listed in <see cref="ExecutionsAsync"/> and <see cref="Executions"/>.
+    /// </summary>
+    public async Task ApplyAsync(IResourceManager resourceManager)
+    {
+        foreach (var executionAsync in ExecutionsAsync)
+        {
+            await executionAsync(resourceManager);
+        }
+
+        foreach (var execution in Executions)
+        {
+            execution(resourceManager);
+        }
+    }
 }

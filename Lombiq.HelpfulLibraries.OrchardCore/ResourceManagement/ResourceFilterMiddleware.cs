@@ -62,13 +62,7 @@ public class ResourceFilterMiddleware
             {
                 resourceManager ??= context.RequestServices.GetRequiredService<IResourceManager>();
 
-                if (filter.ExecutionAsync != null)
-                {
-                    await filter.ExecutionAsync(resourceManager);
-                    continue;
-                }
-
-                filter.Execution(resourceManager);
+                await filter.ApplyAsync(resourceManager);
             }
         }
 
