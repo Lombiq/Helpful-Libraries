@@ -131,7 +131,7 @@ public class ResourceFilterBuilder
     public ResourceFilter Always(Action<IResourceManager> execution = null)
     {
         var filter = When(_ => true);
-        filter.Execution = execution;
+        if (execution != null) filter.Executions.Add(execution);
         return filter;
     }
 
