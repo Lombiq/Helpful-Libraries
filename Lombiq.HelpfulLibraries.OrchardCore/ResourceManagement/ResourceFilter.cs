@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Http;
 using OrchardCore.ResourceManagement;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
@@ -10,45 +11,84 @@ public class ResourceFilter
 {
     public Func<HttpContext, bool> Filter { get; set; }
     public Func<HttpContext, Task<bool>> FilterAsync { get; set; }
-    public Action<IResourceManager> Execution { get; set; }
-    public Func<IResourceManager, Task> ExecutionAsync { get; set; }
 
-    public void Execute(Action<IResourceManager> action) => Execution = action;
+    public IList<Action<IResourceManager>> Executions { get; init; } = [];
+    public IList<Func<IResourceManager, Task>> ExecutionsAsync { get; init; } = [];
 
-    public void ExecuteTask(Func<IResourceManager, Task> actionAsync) => ExecutionAsync = actionAsync;
+    [Obsolete($"Use {nameof(Executions)} instead.")]
+    public Action<IResourceManager> Execution
+    {
+        get => Executions.FirstOrDefault();
+        set => Executions.SetItems([value]);
+    }
+
+    [Obsolete($"Use {nameof(ExecutionsAsync)} instead.")]
+    public Func<IResourceManager, Task> ExecutionAsync
+    {
+        get => ExecutionsAsync.FirstOrDefault();
+        set => ExecutionsAsync.SetItems([value]);
+    }
+
+    public ResourceFilter Execute(Action<IResourceManager> action)
+    {
+        Executions.Add(action);
+        return this;
+    }
+
+    public ResourceFilter ExecuteTask(Func<IResourceManager, Task> actionAsync)
+    {
+        ExecutionsAsync.Add(actionAsync);
+        return this;
+    }
 
     /// <summary>
     /// Registers the provided <c>stylesheet</c> <paramref name="resources"/>.
     /// </summary>
-    public void RegisterStylesheet(params string[] resources) =>
+    public ResourceFilter RegisterStylesheet(params string[] resources) =>
         Execute(resourceManager => resources.ForEach(resource => resourceManager.RegisterResource("stylesheet", resource)));
 
     /// <summary>
     /// Registers the provided <c>script</c> <paramref name="resources"/> at the foot of the page.
     /// </summary>
-    public void RegisterFootScript(params string[] resources) =>
+    public ResourceFilter RegisterFootScript(params string[] resources) =>
         Execute(resourceManager => resources.ForEach(resource => resourceManager.RegisterResource("script", resource).AtFoot()));
 
     /// <summary>
     /// Registers the provided <c>script</c> <paramref name="resources"/> at the head of the page.
     /// </summary>
-    public void RegisterHeadScript(params string[] resources) =>
+    public ResourceFilter RegisterHeadScript(params string[] resources) =>
         Execute(resourceManager => resources.ForEach(resource => resourceManager.RegisterResource("script", resource).AtHead()));
 
     /// <summary>
     /// Registers the provided <c>link</c> <paramref name="resources"/> at the head of the page.
     /// </summary>
-    public void RegisterLink(params LinkEntry[] resources) =>
+    public ResourceFilter RegisterLink(params LinkEntry[] resources) =>
         Execute(resourceManager => resources.ForEach(resourceManager.RegisterLink));
 
     /// <summary>
     /// Registers an icon <c>link</c> resource with the provided address and attributes.
     /// </summary>
-    public void RegisterFavoriteIcon(string href, string type = "image/x-icon", string rel = "shortcut icon") =>
+    public ResourceFilter RegisterFavoriteIcon(string href, string type = "image/x-icon", string rel = "shortcut icon") =>
         Execute(resourceManager => resourceManager.RegisterLink(new LinkEntry
         {
             Href = href,
             Rel = rel,
             Type = type,
         }));
+
+    /// <summary>
+    /// Applies the actions listed in <see cref="ExecutionsAsync"/> and <see cref="Executions"/>.
+    /// </summary>
+    public async Task ApplyAsync(IResourceManager resourceManager)
+    {
+        foreach (var executionAsync in ExecutionsAsync)
+        {
+            await executionAsync(resourceManager);
+        }
+
+        foreach (var execution in Executions)
+        {
+            execution(resourceManager);
+        }
+    }
 }

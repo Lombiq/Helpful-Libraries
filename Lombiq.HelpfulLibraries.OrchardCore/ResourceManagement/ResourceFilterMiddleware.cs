@@ -21,7 +21,11 @@ public class ResourceFilterMiddleware
         var providers = context
             .RequestServices
             .GetRequiredService<IEnumerable<IResourceFilterProvider>>()
-            .Select(provider => new { Provider = provider, ThemeRequirements = provider.GetRequiredThemes().ToList() })
+            .Select(provider => new
+            {
+                Provider = provider,
+                ThemeRequirements = provider.GetRequiredThemes().Concat(provider.RequiredThemes).ToList(),
+            })
             .ToList();
 
         IList<string> themes =
@@ -58,13 +62,7 @@ public class ResourceFilterMiddleware
             {
                 resourceManager ??= context.RequestServices.GetRequiredService<IResourceManager>();
 
-                if (filter.ExecutionAsync != null)
-                {
-                    await filter.ExecutionAsync(resourceManager);
-                    continue;
-                }
-
-                filter.Execution(resourceManager);
+                await filter.ApplyAsync(resourceManager);
             }
         }
 

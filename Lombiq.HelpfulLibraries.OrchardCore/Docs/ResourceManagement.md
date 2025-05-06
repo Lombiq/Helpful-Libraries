@@ -15,7 +15,7 @@ public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder ro
 }
 ```
 
-To add resource filters, the `IResourceFilterProvider` interface needs to be implemented and the registration needs to be added to the service collection as well.
+To add resource filters, the `IResourceFilterProvider` interface needs to be implemented first:
 
 Example:
 
@@ -27,6 +27,28 @@ public class ResourceFilters : IResourceFilterProvider
         builder.WhenHomePage().RegisterHeadScript("HomePageStyle");
         builder.WhenPath("/my-page").RegisterHeadScript("MyPageScript");
     }
+}
+```
+
+Then the registration needs to be added to the service collection as well:
+
+```C#
+public override void ConfigureServices(IServiceCollection services)
+{
+    services.AddResourceFilter<ResourceFilters>();
+}
+```
+
+In case the service is simple and doesn't depend on additional services, you can forego the custom class and declare the rules directly in the Startup file:
+
+```C#
+public override void ConfigureServices(IServiceCollection services)
+{
+    services.AddResourceFilter(builder =>
+    {
+        builder.WhenHomePage().RegisterHeadScript("HomePageStyle");
+        builder.WhenPath("/my-page").RegisterHeadScript("MyPageScript");
+    });
 }
 ```
 
@@ -42,3 +64,4 @@ You don't even have to register dependencies, because thanks to the [importmap s
 - `ResourceFilterProviderExtensions`: Extension methods for the `IResourceFilterProvider` interface.
 - `ResourceManifestExtensions`: Extensions for building the resource manifest, such as `SetDependenciesRecursively()` which helps registering multi-level dependencies.
 - `ResourceManagerExtensions`: Extensions for resource usage, such as `RegisterStyle()` which registers a stylesheet resource by name without having to use the error-prone "stylesheet" literal.
+- `ServiceCollectionExtensions`: Extensions for registering resource filter providers.
