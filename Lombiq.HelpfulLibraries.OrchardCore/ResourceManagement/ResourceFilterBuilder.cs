@@ -1,6 +1,7 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using OrchardCore.ContentManagement.Records;
 using OrchardCore.ResourceManagement;
 using System;
 using System.Collections.Generic;
@@ -158,8 +159,11 @@ public class ResourceFilterBuilder
             }
 
             var session = context.RequestServices.GetRequiredService<ISession>();
-            var contentItemIndex = await session.QueryContentItemIndex(PublicationStatus.Published)
-                .Where(index => index.ContentItemId == contentItemId)
+            var query = displayType is "Edit" ?
+                // We check for both published and draft content items.
+                session.QueryIndex<ContentItemIndex>(index => index.Published || (index.Latest && !index.Published))
+                : session.QueryContentItemIndex(PublicationStatus.Published);
+            var contentItemIndex = await query.Where(index => index.ContentItemId == contentItemId)
                 .FirstOrDefaultAsync();
             return contentItemIndex?.ContentType is { } contentType &&
                 contentTypes.Contains(contentType, StringComparer.OrdinalIgnoreCase);
