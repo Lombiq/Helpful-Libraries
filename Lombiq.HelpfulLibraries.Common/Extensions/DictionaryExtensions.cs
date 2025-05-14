@@ -161,6 +161,21 @@ public static class DictionaryExtensions
     }
 
     /// <summary>
+    /// Adds several entries to the dictionary, e.g. from another dictionary. If a key to be added already exists in the
+    /// dictionary, then its value will be overwritten.
+    /// </summary>
+    public static void AddRangeWithOverwrite<TKey, TValue>(
+        this IDictionary<TKey, TValue> dictionary,
+        IEnumerable<KeyValuePair<TKey, TValue>> additionalEntries)
+    {
+        if (additionalEntries == null) return;
+        foreach (var (key, value) in additionalEntries)
+        {
+            dictionary[key] = value;
+        }
+    }
+
+    /// <summary>
     /// Adds a new item to the list identified by a key in the dictionary. If the item is already part of the list
     /// then it won't add it again.
     /// </summary>
