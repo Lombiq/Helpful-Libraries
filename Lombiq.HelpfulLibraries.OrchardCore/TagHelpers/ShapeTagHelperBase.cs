@@ -48,7 +48,7 @@ public abstract class ShapeTagHelperBase<TModel> : TagHelper
     {
         var shape = await _shapeFactory.CreateAsync(
             ShapeType ?? await GetShapeTypeAsync(context, output),
-            await GetViewModelAsync(context, output));
+            new { ViewModel = await GetViewModelAsync(context, output) });
         var content = await _displayHelper.ShapeExecuteAsync(shape);
 
         output.TagName = null;
