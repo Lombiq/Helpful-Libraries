@@ -18,8 +18,8 @@ public class ResourceFilterMiddleware
 
     public async Task InvokeAsync(HttpContext context)
     {
-        var providers = context
-            .RequestServices
+        var services = context.RequestServices;
+        var providers = services
             .GetRequiredService<IEnumerable<IResourceFilterProvider>>()
             .Select(provider => new
             {
@@ -29,11 +29,11 @@ public class ResourceFilterMiddleware
             .ToList();
 
         IList<string> themes =
-            providers.Exists(providerInfo => providerInfo.ThemeRequirements.Count != 0)
+            providers.Exists(providerInfo => providerInfo.ThemeRequirements.Count > 0)
                 ? new[]
                     {
-                        await context.RequestServices.GetRequiredService<ISiteThemeService>().GetSiteThemeAsync(),
-                        await context.RequestServices.GetRequiredService<IAdminThemeService>().GetAdminThemeAsync(),
+                        await services.GetRequiredService<ISiteThemeService>().GetSiteThemeAsync(),
+                        await services.GetRequiredService<IAdminThemeService>().GetAdminThemeAsync(),
                     }
                     .Where(info => info != null)
                     .Select(info => info.Id)
@@ -60,7 +60,7 @@ public class ResourceFilterMiddleware
 
             foreach (var filter in activeFilters)
             {
-                resourceManager ??= context.RequestServices.GetRequiredService<IResourceManager>();
+                resourceManager ??= services.GetRequiredService<IResourceManager>();
 
                 await filter.ApplyAsync(resourceManager);
             }
