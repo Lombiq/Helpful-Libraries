@@ -1,9 +1,11 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Admin;
+using OrchardCore.DisplayManagement.Extensions;
+using OrchardCore.DisplayManagement.Manifest;
+using OrchardCore.Environment.Shell;
 using OrchardCore.ResourceManagement;
 using OrchardCore.Themes.Services;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,22 +30,25 @@ public class ResourceFilterMiddleware
             })
             .ToList();
 
-        IList<string> themes =
-            providers.Exists(providerInfo => providerInfo.ThemeRequirements.Count > 0)
-                ? new[]
-                    {
-                        await services.GetRequiredService<ISiteThemeService>().GetSiteThemeAsync(),
-                        await services.GetRequiredService<IAdminThemeService>().GetAdminThemeAsync(),
-                    }
-                    .Where(info => info != null)
-                    .Select(info => info.Id)
-                    .ToList()
-                : Array.Empty<string>();
+        IList<string> themeIds = [];
+        if (providers.Exists(providerInfo => providerInfo.ThemeRequirements.Count > 0))
+        {
+            var themes = (await services.GetRequiredService<IShellFeaturesManager>().GetAvailableFeaturesAsync())
+                .SelectWhere(feature => feature.Extension as IThemeExtensionInfo)
+                .ToDictionary(info => info.Id);
+            themeIds = new[]
+            {
+                (await services.GetRequiredService<ISiteThemeService>().GetSiteThemeAsync())?.Id,
+                (await services.GetRequiredService<IAdminThemeService>().GetAdminThemeAsync())?.Id,
+            }
+            .SelectMany(id => GetThemeAndBaseIds(themes, id))
+            .ToList();
+        }
 
         var builder = new ResourceFilterBuilder();
         var anyProviders = providers
             .Where(providerInfo => providerInfo.ThemeRequirements.Count == 0 ||
-                                   providerInfo.ThemeRequirements.Exists(themes.Contains))
+                                   providerInfo.ThemeRequirements.Exists(themeIds.Contains))
             .ForEach(providerInfo => providerInfo.Provider.AddResourceFilter(builder));
 
         if (anyProviders)
@@ -67,5 +72,18 @@ public class ResourceFilterMiddleware
         }
 
         await _next(context);
+    }
+
+    private static IEnumerable<string> GetThemeAndBaseIds(Dictionary<string, IThemeExtensionInfo> themes, string id)
+    {
+        if (string.IsNullOrEmpty(id) || !themes.TryGetValue(id, out var info))
+        {
+            return [];
+        }
+
+        var baseThemeId = (info.Manifest.ModuleInfo as ThemeAttribute)?.BaseTheme;
+        return string.IsNullOrEmpty(baseThemeId)
+            ? [id]
+            : [id, ..GetThemeAndBaseIds(themes, baseThemeId)];
     }
 }
