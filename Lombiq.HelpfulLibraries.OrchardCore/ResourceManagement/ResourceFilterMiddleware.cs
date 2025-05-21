@@ -1,11 +1,14 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 using OrchardCore.Admin;
 using OrchardCore.DisplayManagement.Extensions;
 using OrchardCore.DisplayManagement.Manifest;
+using OrchardCore.DisplayManagement.Theming;
 using OrchardCore.Environment.Shell;
 using OrchardCore.ResourceManagement;
 using OrchardCore.Themes.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -36,13 +39,17 @@ public class ResourceFilterMiddleware
             var themes = (await services.GetRequiredService<IShellFeaturesManager>().GetAvailableFeaturesAsync())
                 .SelectWhere(feature => feature.Extension as IThemeExtensionInfo)
                 .ToDictionary(info => info.Id);
-            themeIds = new[]
-            {
-                (await services.GetRequiredService<ISiteThemeService>().GetSiteThemeAsync())?.Id,
-                (await services.GetRequiredService<IAdminThemeService>().GetAdminThemeAsync())?.Id,
-            }
-            .SelectMany(id => GetThemeAndBaseIds(themes, id))
-            .ToList();
+
+            // This is necessary to determine if we are in admin mode, because AdminZoneFilter won't have executed yet
+            // by this point of the pipeline.
+            var adminPrefix = (services.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions()).AdminUrlPrefix ?? "Admin";
+            var isAdmin = adminPrefix.EqualsOrdinalIgnoreCase(
+                context.Request.Path.ToString().Split('/', StringSplitOptions.RemoveEmptyEntries).FirstOrDefault());
+
+            var themeName = isAdmin
+                ? (await services.GetRequiredService<IAdminThemeService>().GetAdminThemeAsync())?.Id
+                : (await services.GetRequiredService<ISiteThemeService>().GetSiteThemeAsync())?.Id;
+            themeIds = GetThemeAndBaseIds(themes, themeName).AsList();
         }
 
         var builder = new ResourceFilterBuilder();
