@@ -4,7 +4,6 @@ using Microsoft.Extensions.Options;
 using OrchardCore.Admin;
 using OrchardCore.DisplayManagement.Extensions;
 using OrchardCore.DisplayManagement.Manifest;
-using OrchardCore.DisplayManagement.Theming;
 using OrchardCore.Environment.Shell;
 using OrchardCore.ResourceManagement;
 using OrchardCore.Themes.Services;
@@ -91,6 +90,6 @@ public class ResourceFilterMiddleware
         var baseThemeId = (info.Manifest.ModuleInfo as ThemeAttribute)?.BaseTheme;
         return string.IsNullOrEmpty(baseThemeId)
             ? [id]
-            : [id, ..GetThemeAndBaseIds(themes, baseThemeId)];
+            : [id, .. GetThemeAndBaseIds(themes, baseThemeId)];
     }
 }
