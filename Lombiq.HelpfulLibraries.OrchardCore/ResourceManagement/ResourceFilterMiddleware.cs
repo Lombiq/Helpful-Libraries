@@ -25,11 +25,9 @@ public class ResourceFilterMiddleware
         var services = context.RequestServices;
         var providers = services
             .GetRequiredService<IEnumerable<IResourceFilterProvider>>()
-            .Select(provider => new
-            {
-                Provider = provider,
-                ThemeRequirements = provider.GetRequiredThemes().Concat(provider.RequiredThemes).ToList(),
-            })
+            .Select(provider => new ProviderInfo(
+                provider,
+                provider.GetRequiredThemes().Concat(provider.RequiredThemes).ToList()))
             .ToList();
 
         IList<string> themeIds = [];
@@ -48,13 +46,22 @@ public class ResourceFilterMiddleware
             var themeName = isAdmin
                 ? (await services.GetRequiredService<IAdminThemeService>().GetAdminThemeAsync())?.Id
                 : (await services.GetRequiredService<ISiteThemeService>().GetSiteThemeAsync())?.Id;
-            themeIds = GetThemeAndBaseIds(themes, themeName).AsList();
+            var themeNames = new List<string> { themeName };
+
+            foreach (var resolver in services.GetServices<IResourceFilterThemeResolver>())
+            {
+                await resolver.UpdateThemeNamesAsync(themeNames, themes, providers);
+            }
+
+            themeIds = themeNames
+                .SelectMany(themeName => GetThemeAndBaseIds(themes, themeName))
+                .ToList();
         }
 
         var builder = new ResourceFilterBuilder();
         var anyProviders = providers
             .Where(providerInfo => providerInfo.ThemeRequirements.Count == 0 ||
-                                   providerInfo.ThemeRequirements.Exists(themeIds.Contains))
+                                   providerInfo.ThemeRequirements.Any(themeIds.Contains))
             .ForEach(providerInfo => providerInfo.Provider.AddResourceFilter(builder));
 
         if (anyProviders)
@@ -92,4 +99,6 @@ public class ResourceFilterMiddleware
             ? [id]
             : [id, .. GetThemeAndBaseIds(themes, baseThemeId)];
     }
+
+    public record ProviderInfo(IResourceFilterProvider Provider, IList<string> ThemeRequirements);
 }
