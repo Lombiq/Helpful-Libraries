@@ -4,7 +4,7 @@
 
 Makes it possible to include resources automatically based on the current context, e.g. allows only injecting home page styling when the home page is being loaded.
 
-### Usage:
+### Usage
 
 Activate the resource filter middleware by adding `app.UseResourceFilters()` to the `Configure()` method of the Startup file located in a common module or the web project:
 
@@ -17,7 +17,7 @@ public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder ro
 
 To add resource filters, the `IResourceFilterProvider` interface needs to be implemented first:
 
-### Example:
+### Example
 
 ```C#
 public class ResourceFilters : IResourceFilterProvider
@@ -78,7 +78,7 @@ You can reduce the boilerplate when configuring the resource manager by inheriti
 
 - `~/{Area}/css/{filename}`
 - `~/{Area}/js/{filename}`
-- `~/{Area}/vendors/{filename}` 
+- `~/{Area}/vendors/{filename}`
 
 Then implement the `Configure` method. Inside, you can access methods of the provided `ResourceManagementContext` to make defining resources easier, for example:
 
@@ -87,7 +87,9 @@ context.DefineStyle(ResourceNames.NativeVariables, "native-variables.css");
 context.DefineStyle(ResourceNames.Helpers, "helpers.css");
 context.DefineStyle(ResourceNames.General, "general.css", ResourceNames.NativeVariables, ResourceNames.Helpers);
 ```
+
 Finally, you can register it with an extension method:
+
 ```csharp
 services.AddResourceManagementConfiguration<ResourceManagementOptionsConfiguration>();
 ```

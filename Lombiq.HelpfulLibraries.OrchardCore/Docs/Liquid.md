@@ -15,4 +15,4 @@ Note: Use `services.RegisterLiquidPropertyAccessor<TImplementation>(propertyName
 ## Extensions
 
 - `LiquidServiceCollectionExtensions`: Used for registering related services, like `RegisterLiquidPropertyAccessor()` to register new properties.
-- `TemplateOptionsExtensions`: Used for registering accessors with the Liquid engine inside a `services.Configure<TemplateOptions>(options => ...)` call. 
+- `TemplateOptionsExtensions`: Used for registering accessors with the Liquid engine inside a `services.Configure<TemplateOptions>(options => ...)` call.
