@@ -4,7 +4,7 @@
 
 Makes it possible to include resources automatically based on the current context, e.g. allows only injecting home page styling when the home page is being loaded.
 
-Usage:
+### Usage:
 
 Activate the resource filter middleware by adding `app.UseResourceFilters()` to the `Configure()` method of the Startup file located in a common module or the web project:
 
@@ -17,7 +17,7 @@ public override void Configure(IApplicationBuilder app, IEndpointRouteBuilder ro
 
 To add resource filters, the `IResourceFilterProvider` interface needs to be implemented first:
 
-Example:
+### Example:
 
 ```C#
 public class ResourceFilters : IResourceFilterProvider
@@ -52,6 +52,10 @@ public override void ConfigureServices(IServiceCollection services)
 }
 ```
 
+### Extensibility
+
+You can register services that implement the `IResourceFilterThemeResolver` interface. These are used to resolve targets for the required theme configuration. It can be necessary if the theme depends on resources other than what's defined in the `ThemeAttribute.BaseTheme`. For example, our [Media Theme](https://github.com/Lombiq/Hosting-Media-Theme) loads a selected theme dynamically from the media library, so that has to be added to the list separately using such a service.
+
 ## JavaScript Module Support
 
 The `ScriptModuleResourceFilter` makes it possible to register JS modules in a way that they can be imported by name, so no bundling or importing by URL is necessary. Once you've added it to your service collection (`services.AddAsyncResultFilter<ScriptModuleResourceFilter>();`) you can register modules with the `ResourceManifest.DefineScriptModule(resourceName)` extension method and require them using the `IResourceManager.RegisterScriptModule(resourceName)` extension method.
@@ -65,3 +69,25 @@ You don't even have to register dependencies, because thanks to the [importmap s
 - `ResourceManifestExtensions`: Extensions for building the resource manifest, such as `SetDependenciesRecursively()` which helps registering multi-level dependencies.
 - `ResourceManagerExtensions`: Extensions for resource usage, such as `RegisterStyle()` which registers a stylesheet resource by name without having to use the error-prone "stylesheet" literal.
 - `ServiceCollectionExtensions`: Extensions for registering resource filter providers.
+
+## Abstractions
+
+### `ResourceManagementOptionsConfiguratorBase`
+
+You can reduce the boilerplate when configuring the resource manager by inheriting from this class instead of `IConfigureOptions<ResourceManagementOptions>`. First, place your static assets inside one of these locations (the `filename` can contain subdirectories):
+
+- `~/{Area}/css/{filename}`
+- `~/{Area}/js/{filename}`
+- `~/{Area}/vendors/{filename}` 
+
+Then implement the `Configure` method. Inside, you can access methods of the provided `ResourceManagementContext` to make defining resources easier, for example:
+
+```csharp
+context.DefineStyle(ResourceNames.NativeVariables, "native-variables.css");
+context.DefineStyle(ResourceNames.Helpers, "helpers.css");
+context.DefineStyle(ResourceNames.General, "general.css", ResourceNames.NativeVariables, ResourceNames.Helpers);
+```
+Finally, you can register it with an extension method:
+```csharp
+services.AddResourceManagementConfiguration<ResourceManagementOptionsConfiguration>();
+```
