@@ -57,4 +57,7 @@ public static class LiquidServiceCollectionExtensions
                     return service.WriteToAsync(arguments, writer, encoder, context);
                 })));
     }
+
+    public static IServiceCollection AddDisplayChildrenLiquidFilter(this IServiceCollection services) =>
+        services.AddLiquidFilter<DisplayChildrenLiquidFilter>("display-children");
 }

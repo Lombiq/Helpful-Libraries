@@ -1,4 +1,6 @@
 using Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
+using Microsoft.Extensions.Options;
+using OrchardCore.ResourceManagement;
 using System;
 
 namespace Microsoft.Extensions.DependencyInjection;
@@ -21,4 +23,12 @@ public static class ServiceCollectionExtensions
         Action<ResourceFilterBuilder> filter,
         params string[] requiredThemes) =>
         services.AddScoped<IResourceFilterProvider, SimpleResourceFilterProvider>(_ => new(filter, requiredThemes));
+
+    /// <summary>
+    /// Registers a resource management configuration service descended from <see
+    /// cref="ResourceManagementOptionsConfiguratorBase"/>.
+    /// </summary>
+    public static IServiceCollection AddResourceManagementConfiguration<T>(this IServiceCollection services)
+        where T : ResourceManagementOptionsConfiguratorBase =>
+        services.AddTransient<IConfigureOptions<ResourceManagementOptions>, T>();
 }
