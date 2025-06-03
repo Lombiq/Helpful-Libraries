@@ -27,4 +27,14 @@ public static class ContentPartFieldDefinitionBuilderExtensions
             DisplayAllContentTypes = false,
             DisplayedContentTypes = contentTypes,
         });
+
+    /// <summary>
+    /// Configures the field of type <typeparamref name="TField"/> to be required.
+    /// </summary>
+    public static ContentPartFieldDefinitionBuilder Required<TField>(this ContentPartFieldDefinitionBuilder builder)
+        where TField : ContentField
+    {
+        DefinitionHelper.ConfigureRequired<TField>(builder);
+        return builder;
+    }
 }
