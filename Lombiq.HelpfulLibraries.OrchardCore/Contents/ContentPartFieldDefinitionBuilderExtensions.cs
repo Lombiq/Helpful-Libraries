@@ -58,7 +58,9 @@ public static class ContentPartFieldDefinitionBuilderExtensions
             {
                 DefaultValue = defaultValue.ToString(),
                 Editor = editor,
-                Options = Enum.GetNames<TEnum>()
+                Options = Enum.GetValues<TEnum>()
+                    .OrderBy(value => (int)(object)value)
+                    .Select(value => value.ToString())
                     .Select(name => new ListValueOption(name, name))
                     .ToArray(),
             });
