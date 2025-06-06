@@ -20,5 +20,8 @@ public static class HtmlHelper
     /// </summary>
     /// <returns>The human-readable text content, trimmed of surrounding spaces and duplicate line breaks.</returns>
     public static string ConvertToPlainText(string htmlFragment) =>
-        ParseHtmlFragment(htmlFragment).Text().RegexReplace(@"\n(\s*\n)+", "\n").Trim();
+        ParseHtmlFragment(htmlFragment)
+            .Text()
+            .RegexReplace(@"\n(\s*\n)+", "\n")
+            .Trim();
 }
