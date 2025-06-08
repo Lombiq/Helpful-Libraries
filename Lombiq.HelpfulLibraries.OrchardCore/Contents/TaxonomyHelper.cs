@@ -28,8 +28,8 @@ public class TaxonomyHelper : ITaxonomyHelper
             return [];
         }
 
-        var ids = termIds?.AsList() ?? [];
-        return ids.Count == 0
+        var ids = termIds?.AsList();
+        return ids is null
             ? GetAllChildren(contentItem)
             : GetSelected(contentItem, ids);
     }
