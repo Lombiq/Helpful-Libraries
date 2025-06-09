@@ -1,4 +1,3 @@
-
 # Lombiq Helpful Libraries - Orchard Core Libraries - Liquid for Orchard Core
 
 Contains supplementary extensions and services for using Liquid in Orchard Core.
