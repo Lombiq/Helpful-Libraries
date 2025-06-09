@@ -16,7 +16,7 @@ Note: Use `services.RegisterLiquidPropertyAccessor<TImplementation>(propertyName
 ## Extensions
 
 - `LiquidServiceCollectionExtensions`: Used for registering related services, like `RegisterLiquidPropertyAccessor()` to register new properties.
-	- `RegisterLiquidPropertyAccessor`: Allows registering a new Liquid property with the provided name.
-	- `AddLiquidParserTag`: Configures the `LiquidViewOptions` with an additional parser tag, like `{% my_tag "arg1", "arg2" %}`.
-	- `AddLiquidEmptyTag`: Configures the `LiquidViewOptions` with an additional tag that takes no arguments. Use this if you want to add a tag like `{% tag_that_writes_out_a_string %}`.
+  - `RegisterLiquidPropertyAccessor`: Allows registering a new Liquid property with the provided name.
+  - `AddLiquidParserTag`: Configures the `LiquidViewOptions` with an additional parser tag, like `{% my_tag "arg1", "arg2" %}`.
+  - `AddLiquidEmptyTag`: Configures the `LiquidViewOptions` with an additional tag that takes no arguments. Use this if you want to add a tag like `{% tag_that_writes_out_a_string %}`.
 - `TemplateOptionsExtensions`: Used for registering accessors with the Liquid engine inside a `services.Configure<TemplateOptions>(options => ...)` call.
