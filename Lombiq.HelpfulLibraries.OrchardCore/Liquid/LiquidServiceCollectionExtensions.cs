@@ -58,6 +58,26 @@ public static class LiquidServiceCollectionExtensions
                 })));
     }
 
+    /// <summary>
+    /// Configures the <see cref="LiquidViewOptions"/> with an additional parser block.
+    /// </summary>
+    public static IServiceCollection AddLiquidParserBlock<T>(this IServiceCollection services, string blockName)
+        where T : class, ILiquidParserBlock
+    {
+        services.AddKeyedScoped<ILiquidParserBlock, T>(blockName);
+
+        return services.Configure<LiquidViewOptions>(options =>
+            options.LiquidViewParserConfiguration.Add(parser => parser.RegisterParserBlock(
+                blockName,
+                parser.ArgumentsListParser,
+                (arguments, statements, writer, encoder, context) =>
+                {
+                    var provider = ((LiquidTemplateContext)context).Services;
+                    var service = provider.GetKeyedService<ILiquidParserBlock>(blockName);
+                    return service.WriteToAsync(arguments, statements, writer, encoder, context);
+                })));
+    }
+
     public static IServiceCollection AddDisplayChildrenLiquidFilter(this IServiceCollection services) =>
         services.AddLiquidFilter<DisplayChildrenLiquidFilter>("display-children");
 }
