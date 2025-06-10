@@ -35,6 +35,7 @@ public static class ContentPartFieldDefinitionBuilderExtensions
     /// <summary>
     /// Configures the field of type <typeparamref name="TField"/> to be required.
     /// </summary>
+    /// <remarks><para>Only the Orchard Core's built-in fields are supported.</para></remarks>
     public static ContentPartFieldDefinitionBuilder Required<TField>(this ContentPartFieldDefinitionBuilder builder)
         where TField : ContentField
     {

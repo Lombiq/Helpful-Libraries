@@ -15,6 +15,7 @@ public static class DefinitionHelper
     /// <summary>
     /// Configures the field of type <typeparamref name="TField"/> to be required.
     /// </summary>
+    /// <remarks><para>Only the Orchard Core's built-in fields are supported.</para></remarks>
     public static void ConfigureRequired<TField>(ContentPartFieldDefinitionBuilder builder)
         where TField : ContentField
     {
