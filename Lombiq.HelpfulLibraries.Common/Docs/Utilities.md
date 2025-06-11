@@ -3,6 +3,7 @@
 - `CultureHelpers`: A static helper class with utility functions for retrieving available countries and languages.
 - `ExceptionHelpers`: Using these helpers, arguments can be tested without writing `if` statements.
 - `FileSystemHelper`: Some shortcuts for file system operations.
+- `HtmlHelper`: Tools for parsing and converting HTML code using AngleSharp.
 - `JsonHelpers`: JSON syntax can be validated with the `ValidateJsonIfNotNull()` helper method.
 - `NonSecurityRandomizer`: A wrapper around `System.Random` for explicitly not security-related usage-cases.
 - `Sha256Helper`: A static helper class with the `ComputeHash()` utility function that converts text into [SHA-256](https://en.wikipedia.org/wiki/SHA-256) hash string.

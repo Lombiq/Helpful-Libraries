@@ -460,4 +460,25 @@ public static class EnumerableExtensions
 
         return (left, right);
     }
+
+    /// <summary>
+    /// Returns a new list of an exact <paramref name="length"/>. If the <paramref name="source"/> is longer, the first
+    /// items are used until the new list is filled. If the <paramref name="source"/> is shorter, the remaining items
+    /// are left as <see langword="default"/>.
+    /// </summary>
+    public static IList<T> TakeExactly<T>(this IEnumerable<T> source, int length)
+    {
+        var result = new T[length];
+
+        var index = 0;
+        foreach (var item in source)
+        {
+            if (index >= length) return result;
+
+            result[index] = item;
+            index++;
+        }
+
+        return result;
+    }
 }

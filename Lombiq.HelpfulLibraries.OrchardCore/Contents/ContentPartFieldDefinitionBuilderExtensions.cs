@@ -1,4 +1,8 @@
-﻿using OrchardCore.ContentFields.Settings;
+﻿using Lombiq.HelpfulLibraries.OrchardCore.Contents;
+using Lombiq.HelpfulLibraries.OrchardCore.Fields;
+using OrchardCore.ContentFields.Settings;
+using System;
+using System.Linq;
 
 namespace OrchardCore.ContentManagement.Metadata.Builders;
 
@@ -27,4 +31,38 @@ public static class ContentPartFieldDefinitionBuilderExtensions
             DisplayAllContentTypes = false,
             DisplayedContentTypes = contentTypes,
         });
+
+    /// <summary>
+    /// Configures the field of type <typeparamref name="TField"/> to be required.
+    /// </summary>
+    /// <remarks><para>Only the Orchard Core's built-in fields are supported.</para></remarks>
+    public static ContentPartFieldDefinitionBuilder Required<TField>(this ContentPartFieldDefinitionBuilder builder)
+        where TField : ContentField
+    {
+        DefinitionHelper.ConfigureRequired<TField>(builder);
+        return builder;
+    }
+
+    /// <summary>
+    /// Configures the field to use the <see cref="ContentFieldEditorEnums.TextFieldEditors.PredefinedList"/> editor,
+    /// sets the default value to <paramref name="defaultValue"/>, and populates its options with the names of the
+    /// provided <typeparamref name="TEnum"/> type.
+    /// </summary>
+    public static ContentPartFieldDefinitionBuilder WithEnumEditor<TEnum>(
+        this ContentPartFieldDefinitionBuilder builder,
+        TEnum defaultValue = default,
+        EditorOption editor = EditorOption.Dropdown)
+        where TEnum : struct, Enum =>
+        builder
+            .WithEditor(ContentFieldEditorEnums.TextFieldEditors.PredefinedList)
+            .WithSettings<TextFieldPredefinedListEditorSettings>(new()
+            {
+                DefaultValue = defaultValue.ToString(),
+                Editor = editor,
+                Options = Enum.GetValues<TEnum>()
+                    .OrderBy(value => (int)(object)value)
+                    .Select(value => value.ToString())
+                    .Select(name => new ListValueOption(name, name))
+                    .ToArray(),
+            });
 }
