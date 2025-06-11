@@ -78,6 +78,25 @@ public static class LiquidServiceCollectionExtensions
                 })));
     }
 
+    /// <summary>
+    /// Configures the <see cref="LiquidViewOptions"/> with an additional tag that takes no arguments.
+    /// </summary>
+    public static IServiceCollection AddLiquidEmptyTag<T>(this IServiceCollection services, string tagName)
+        where T : class, ILiquidParserTag
+    {
+        services.AddKeyedScoped<ILiquidParserTag, T>(tagName);
+
+        return services.Configure<LiquidViewOptions>(options =>
+            options.LiquidViewParserConfiguration.Add(parser => parser.RegisterEmptyTag(
+                tagName,
+                async (writer, encoder, context) =>
+                {
+                    var provider = ((LiquidTemplateContext)context).Services;
+                    var service = provider.GetKeyedService<ILiquidParserTag>(tagName);
+                    return await service.WriteToAsync([], writer, encoder, context);
+                })));
+    }
+
     public static IServiceCollection AddDisplayChildrenLiquidFilter(this IServiceCollection services) =>
         services.AddLiquidFilter<DisplayChildrenLiquidFilter>("display-children");
 }
