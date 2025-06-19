@@ -297,16 +297,8 @@ public static class EnumerableExtensions
     /// A simple conditional enumeration where the items are <see langword="yield"/> ed from the <paramref
     /// name="collection"/> if the <paramref name="negativePredicate"/> returns <see langword="false"/>.
     /// </summary>
-    public static IEnumerable<T> WhereNot<T>(this IEnumerable<T> collection, Func<T, bool> negativePredicate)
-    {
-        foreach (var item in collection)
-        {
-            if (!negativePredicate(item))
-            {
-                yield return item;
-            }
-        }
-    }
+    public static IEnumerable<T> WhereNot<T>(this IEnumerable<T> collection, Func<T, bool> negativePredicate) =>
+        collection.Where(item => !negativePredicate(item));
 
     /// <summary>
     /// Filters the elements of the <paramref name="collection"/> if they return <see langword="false"/> when evaluated
