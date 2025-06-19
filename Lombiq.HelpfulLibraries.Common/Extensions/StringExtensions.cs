@@ -221,12 +221,7 @@ public static class StringExtensions
     {
         if (!string.IsNullOrEmpty(text)) return text;
 
-        foreach (var alternative in alternatives)
-        {
-            if (!string.IsNullOrEmpty(alternative)) return alternative;
-        }
-
-        return string.Empty;
+        return alternatives.FirstOrDefault(alternative => !string.IsNullOrEmpty(alternative)) ?? string.Empty;
     }
 
     /// <summary>
