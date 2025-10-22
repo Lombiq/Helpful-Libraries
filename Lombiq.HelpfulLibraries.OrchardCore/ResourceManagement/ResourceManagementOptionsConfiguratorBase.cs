@@ -38,6 +38,12 @@ public abstract class ResourceManagementOptionsConfiguratorBase : IConfigureOpti
             SetUrlAndDependencies(Manifest.DefineScript(resourceName), "js", fileName, dependencies);
 
         /// <summary>
+        /// Define an ES module script resource inside the <c>~/{Area}/js/{filename}</c> location.
+        /// </summary>
+        public ResourceDefinition DefineScriptModule(string resourceName, string fileName, params string[] dependencies) =>
+            SetUrlAndDependencies(Manifest.DefineScript(resourceName), "js", fileName, dependencies);
+
+        /// <summary>
         /// Define a style resource inside the <c>~/{Area}/vendors/{filename}</c> location.
         /// </summary>
         public ResourceDefinition DefineVendorStyle(string resourceName, string fileName, params string[] dependencies) =>
@@ -49,13 +55,37 @@ public abstract class ResourceManagementOptionsConfiguratorBase : IConfigureOpti
         public ResourceDefinition DefineVendorScript(string resourceName, string fileName, params string[] dependencies) =>
             SetUrlAndDependencies(Manifest.DefineScript(resourceName), "vendors", fileName, dependencies);
 
+        /// <summary>
+        /// Define an ES module script resource inside the <c>~/{Area}/vendors/{filename}</c> location.
+        /// </summary>
+        public ResourceDefinition DefineVendorScriptModule(string resourceName, string fileName, params string[] dependencies) =>
+            SetUrlAndDependencies(Manifest.DefineScriptModule(resourceName), "vendors", fileName, dependencies);
+
+        /// <inheritdoc cref="DefineVendorScriptModule(string, string, string[])" />
+        public ResourceDefinition DefineVendorScriptModule(
+            string resourceName,
+            (string Production, string Debug) fileNames,
+            params string[] dependencies) =>
+            SetUrlAndDependencies(Manifest.DefineScriptModule(resourceName), "vendors", fileNames, dependencies);
+
         private ResourceDefinition SetUrlAndDependencies(
             ResourceDefinition definition,
             string type,
             string fileName,
             string[] dependencies) =>
+            SetUrlAndDependencies(definition, type, (Production: fileName, Debug: null), dependencies);
+
+        private ResourceDefinition SetUrlAndDependencies(
+            ResourceDefinition definition,
+            string type,
+            (string Production, string Debug) fileNames,
+            string[] dependencies) =>
             definition
-                .SetUrl($"~/{Configurator.Area}/{type}/{fileName}")
+                .SetUrl(
+                    $"~/{Configurator.Area}/{type}/{fileNames.Production}",
+                    string.IsNullOrEmpty(fileNames.Debug)
+                        ? null
+                        : $"~/{Configurator.Area}/{type}/{fileNames.Debug}")
                 .SetDependencies(dependencies);
     }
 }
