@@ -41,7 +41,7 @@ public abstract class ResourceManagementOptionsConfiguratorBase : IConfigureOpti
         /// Define an ES module script resource inside the <c>~/{Area}/js/{filename}</c> location.
         /// </summary>
         public ResourceDefinition DefineScriptModule(string resourceName, string fileName, params string[] dependencies) =>
-            SetUrlAndDependencies(Manifest.DefineScript(resourceName), "js", fileName, dependencies);
+            SetUrlAndDependencies(Manifest.DefineScriptModule(resourceName), "js", fileName, dependencies);
 
         /// <summary>
         /// Define a style resource inside the <c>~/{Area}/vendors/{filename}</c> location.
