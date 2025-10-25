@@ -7,6 +7,8 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
 public abstract class ResourceManagementOptionsConfiguratorBase : IConfigureOptions<ResourceManagementOptions>
 {
+    private const string Vendors = "vendors";
+
     private static readonly ConcurrentDictionary<Type, ResourceManifest> _resourceManifests = new();
 
     protected abstract string Area { get; }
@@ -38,24 +40,54 @@ public abstract class ResourceManagementOptionsConfiguratorBase : IConfigureOpti
             SetUrlAndDependencies(Manifest.DefineScript(resourceName), "js", fileName, dependencies);
 
         /// <summary>
+        /// Define an ES module script resource inside the <c>~/{Area}/js/{filename}</c> location.
+        /// </summary>
+        public ResourceDefinition DefineScriptModule(string resourceName, string fileName, params string[] dependencies) =>
+            SetUrlAndDependencies(Manifest.DefineScriptModule(resourceName), "js", fileName, dependencies);
+
+        /// <summary>
         /// Define a style resource inside the <c>~/{Area}/vendors/{filename}</c> location.
         /// </summary>
         public ResourceDefinition DefineVendorStyle(string resourceName, string fileName, params string[] dependencies) =>
-            SetUrlAndDependencies(Manifest.DefineStyle(resourceName), "vendors", fileName, dependencies);
+            SetUrlAndDependencies(Manifest.DefineStyle(resourceName), Vendors, fileName, dependencies);
 
         /// <summary>
         /// Define a script resource inside the <c>~/{Area}/vendors/{filename}</c> location.
         /// </summary>
         public ResourceDefinition DefineVendorScript(string resourceName, string fileName, params string[] dependencies) =>
-            SetUrlAndDependencies(Manifest.DefineScript(resourceName), "vendors", fileName, dependencies);
+            SetUrlAndDependencies(Manifest.DefineScript(resourceName), Vendors, fileName, dependencies);
+
+        /// <summary>
+        /// Define an ES module script resource inside the <c>~/{Area}/vendors/{filename}</c> location.
+        /// </summary>
+        public ResourceDefinition DefineVendorScriptModule(string resourceName, string fileName, params string[] dependencies) =>
+            SetUrlAndDependencies(Manifest.DefineScriptModule(resourceName), Vendors, fileName, dependencies);
+
+        /// <inheritdoc cref="DefineVendorScriptModule(string, string, string[])" />
+        public ResourceDefinition DefineVendorScriptModule(
+            string resourceName,
+            (string Production, string Debug) fileNames,
+            params string[] dependencies) =>
+            SetUrlAndDependencies(Manifest.DefineScriptModule(resourceName), Vendors, fileNames, dependencies);
 
         private ResourceDefinition SetUrlAndDependencies(
             ResourceDefinition definition,
             string type,
             string fileName,
             string[] dependencies) =>
+            SetUrlAndDependencies(definition, type, (Production: fileName, Debug: null), dependencies);
+
+        private ResourceDefinition SetUrlAndDependencies(
+            ResourceDefinition definition,
+            string type,
+            (string Production, string Debug) fileNames,
+            string[] dependencies) =>
             definition
-                .SetUrl($"~/{Configurator.Area}/{type}/{fileName}")
+                .SetUrl(
+                    $"~/{Configurator.Area}/{type}/{fileNames.Production}",
+                    string.IsNullOrEmpty(fileNames.Debug)
+                        ? null
+                        : $"~/{Configurator.Area}/{type}/{fileNames.Debug}")
                 .SetDependencies(dependencies);
     }
 }

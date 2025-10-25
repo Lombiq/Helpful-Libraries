@@ -142,13 +142,25 @@ public static class ResourceManagerExtensions
         var imports = (resourceManifests ?? resourceOptions.ResourceManifests)
             .SelectMany(manifest => manifest.GetResources(ResourceTypes.ScriptModule).Values)
             .SelectMany(list => list)
+            .Distinct()
+            .SelectMany(resource => new[]
+            {
+                (resource.Name, Resource: resource),
+                (Name: $"{resource.Name}@{resource.Version}", Resource: resource),
+            })
+            .ToLookup(item => item.Name, item => item.Resource)
             .ToDictionary(
-                resource => resource.Name,
-                resource => resource.GetResourceUrl(
-                    fileVersionProvider,
-                    resourceOptions.DebugMode,
-                    resourceOptions.UseCdn,
-                    resourceOptions.ContentBasePath));
+                lookup => lookup.Key,
+                lookup => lookup
+                    .OrderByDescending(item => Version.TryParse(item.Version, out var version)
+                        ? version : new Version(0, 0, 0, 0))
+                    .ThenByDescending(item => item.Version)
+                    .FirstOrDefault()!
+                    .GetResourceUrl(
+                        fileVersionProvider,
+                        resourceOptions.DebugMode,
+                        resourceOptions.UseCdn,
+                        resourceOptions.ContentBasePath));
 
         var tagBuilder = new TagBuilder("script")
         {
