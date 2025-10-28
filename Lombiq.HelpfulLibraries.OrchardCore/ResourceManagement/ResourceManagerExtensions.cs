@@ -24,7 +24,7 @@ public static class ResourceManagerExtensions
         this IResourceManager resourceManager,
         string resourceName,
         string version = null) =>
-        SetVersionIfAny(resourceManager.RegisterResource("stylesheet", resourceName), version);
+        SetVersionIfAny(resourceManager.RegisterResource(ResourceTypes.Stylesheet, resourceName), version);
 
     /// <summary>
     /// Registers a <c>script</c> resource by name at the given <paramref name="location"/> (at foot by default).
@@ -34,7 +34,7 @@ public static class ResourceManagerExtensions
         string resourceName,
         string version = null,
         ResourceLocation location = ResourceLocation.Foot) =>
-        SetVersionIfAny(resourceManager.RegisterResource("script", resourceName).AtLocation(location), version);
+        SetVersionIfAny(resourceManager.RegisterResource(ResourceTypes.Script, resourceName).AtLocation(location), version);
 
     /// <summary>
     /// Renders the HTML for the header section and provides a hook to alter the resulting string. Similar to the

@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
+using static Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement.ResourceTypes;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -11,7 +12,7 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// </summary>
 public class VueContentSecurityPolicyProvider : ResourceManagerContentSecurityPolicyProvider
 {
-    protected override string ResourceType => "script";
+    protected override IList<string> ResourceTypes { get; init; } = [Script, ScriptModule];
     protected override string ResourceName => "vuejs";
     protected override IReadOnlyCollection<string> DirectiveNameChain { get; } = [ScriptSrc];
     protected override string DirectiveValue => UnsafeEval;
