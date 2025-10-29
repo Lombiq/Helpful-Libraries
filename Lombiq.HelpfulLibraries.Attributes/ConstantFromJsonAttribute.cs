@@ -1,7 +1,9 @@
-﻿namespace Lombiq.HelpfulLibraries.Attributes;
+﻿using System;
 
-[System.AttributeUsage(System.AttributeTargets.Class, AllowMultiple = true)]
-public sealed class ConstantFromJsonAttribute : System.Attribute
+namespace Lombiq.HelpfulLibraries.Attributes;
+
+[AttributeUsage(AttributeTargets.Class, AllowMultiple = true)]
+public sealed class ConstantFromJsonAttribute : Attribute
 {
     public ConstantFromJsonAttribute(string constantName, string fileName, string propertyName)
     {
