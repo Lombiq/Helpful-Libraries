@@ -12,111 +12,15 @@ using System.Text.Json;
 namespace Lombiq.HelpfulLibraries.SourceGenerators;
 
 [Generator]
-public class ConstantFromJsonGenerator : IIncrementalGenerator
+public class ConstantFromJsonGenerator : GeneratorFromFileBase
 {
-    private const string AttributeName = nameof(ConstantFromJsonAttribute);
+    protected override Type Attribute => typeof(ConstantFromJsonAttribute);
 
-    public void Initialize(IncrementalGeneratorInitializationContext context)
-    {
-        // Filter classes annotated with the [ConstantFromJson] attribute.
-        // Only filtered Syntax Nodes can trigger code generation.
-        var provider = context.SyntaxProvider
-            .CreateSyntaxProvider(
-                (node, _) => node is ClassDeclarationSyntax,
-                (syntaxContext, _) => GetClassDeclarationForSourceGen(syntaxContext))
-            .Where(tuple => tuple.ReportAttributeFound)
-            .Select((tuple, _) => (tuple.Syntax, tuple.AttributesData));
-
-        var additionalFiles = context.AdditionalTextsProvider
-            .Where(static file => file.Path.EndsWith(".json", StringComparison.OrdinalIgnoreCase));
-
-        var namesAndContents = additionalFiles
-            .Select((file, cancellationToken) =>
-                (Content: file.GetText(cancellationToken)?.ToString(),
-                    file.Path));
-
-        var filesAndContents = new Dictionary<string, string>();
-
-        context.RegisterSourceOutput(namesAndContents.Collect(), (_, contents) =>
-        {
-            foreach ((string? content, string path) in contents)
-            {
-                // Check if path already exists
-                if (!filesAndContents.ContainsKey(path))
-                {
-                    // Add to the dictionary
-                    filesAndContents.Add(path, content ?? string.Empty);
-                }
-            }
-        });
-
-        // Generate the source code.
-        context.RegisterSourceOutput(
-            context.CompilationProvider.Combine(provider.Collect()),
-            (productionContext, tuple) => GenerateCode(productionContext, tuple.Left, tuple.Right, filesAndContents));
-    }
-
-    /// <summary>
-    /// Checks whether the Node is annotated with the [ConstantFromJson] attribute and maps syntax context to
-    /// the specific node type (ClassDeclarationSyntax).
-    /// </summary>
-    /// <param name="context">Syntax context, based on CreateSyntaxProvider predicate.</param>
-    /// <returns>The specific cast and whether the attribute was found.</returns>
-    private static (ClassDeclarationSyntax Syntax, bool ReportAttributeFound, List<Dictionary<string, string>> AttributesData)
-        GetClassDeclarationForSourceGen(GeneratorSyntaxContext context)
-    {
-        var classDeclarationSyntax = (ClassDeclarationSyntax)context.Node;
-        var attributesData = classDeclarationSyntax.AttributeLists
-            .SelectMany(list => list.Attributes)
-            .Select(attributeSyntax => GetAttributeArguments(context, attributeSyntax))
-            .OfType<Dictionary<string, string>>().ToList();
-
-        return (classDeclarationSyntax, attributesData.Count > 0, attributesData);
-    }
-
-    private static Dictionary<string, string>? GetAttributeArguments(GeneratorSyntaxContext context, AttributeSyntax attributeSyntax)
-    {
-        if (context.SemanticModel.GetSymbolInfo(attributeSyntax).Symbol is not IMethodSymbol attributeSymbol)
-        {
-            return null; // if we can't get the symbol, ignore it
-        }
-
-        var attributeName = attributeSymbol.ContainingType.ToDisplayString();
-        // Check the full name of the [ConstantFromJson] attribute.
-        if (attributeName != $"{typeof(ConstantFromJsonAttribute).Namespace}.{AttributeName}")
-        {
-            return null;
-        }
-
-        var arguments = attributeSyntax.ArgumentList?.Arguments
-            .Select(argument => argument.Expression)
-            .OfType<LiteralExpressionSyntax>()
-            .Select((literalExpression, index) => new
-            {
-                Key = attributeSymbol.Parameters[index].Name,
-                Value = literalExpression.Token.Text,
-            })
-            .ToDictionary(keyValuePair => keyValuePair.Key, keyValuePair => keyValuePair.Value) ?? [];
-
-        return arguments;
-    }
-
-    /// <summary>
-    /// Generate code action.
-    /// It will be executed on specific nodes (ClassDeclarationSyntax annotated with the [ConstantFromJson] attribute)
-    /// changed by the user.
-    /// </summary>
-    /// <param name="context">Source generation context used to add source files.</param>
-    /// <param name="compilation">Compilation used to provide access to the Semantic Model.</param>
-    /// <param name="classDeclarations">
-    /// Nodes annotated with the [ConstantFromJson] attribute that trigger the
-    /// generate action.
-    /// </param>
-    private static void GenerateCode(
+    protected override void GenerateCode(
         SourceProductionContext context,
         Compilation compilation,
         ImmutableArray<(ClassDeclarationSyntax Syntax, List<Dictionary<string, string>> Dictionary)> classDeclarations,
-        Dictionary<string, string> additionalFiles)
+        IDictionary<string, string> additionalFiles)
     {
         // Go through all filtered class declarations.
         foreach (var (classDeclarationSyntax, attributeData) in classDeclarations)
@@ -196,25 +100,19 @@ partial class {className}
                 return property.Value;
             }
 
-            if (property.Value.ValueKind == JsonValueKind.Object)
+            var result = property.Value.ValueKind switch
             {
-                var result = FindProperty(property.Value, propertyName);
-                if (result != null)
-                {
-                    return result;
-                }
-            }
-            else if (property.Value.ValueKind == JsonValueKind.Array)
-            {
-                var result = property.Value.EnumerateArray()
+                JsonValueKind.Object => FindProperty(property.Value, propertyName),
+                JsonValueKind.Array => property.Value.EnumerateArray()
                     .Where(arrayElement => arrayElement.ValueKind == JsonValueKind.Object)
                     .Select(arrayElement => FindProperty(arrayElement, propertyName))
-                    .FirstOrDefault(jsonProperty => jsonProperty != null);
+                    .FirstOrDefault(jsonProperty => jsonProperty != null),
+                _ => null,
+            };
 
-                if (result != null)
-                {
-                    return result;
-                }
+            if (result != null)
+            {
+                return result;
             }
         }
 
