@@ -1,4 +1,6 @@
-﻿namespace Orchard.DisplayManagement.Implementation
+﻿using System.Web;
+
+namespace Orchard.DisplayManagement.Implementation
 {
     public static class ShapeDisplayingContextExtensions
     {
@@ -8,6 +10,6 @@
         public static void HideShape(this ShapeDisplayingContext context) =>
             // This is the easiest way to hide a shape (otherwise its Placement would need to be overridden from an
             // IShapeTableEventHandler).
-            context.ChildContent = new System.Web.HtmlString(string.Empty);
+            context.ChildContent = new HtmlString(string.Empty);
     }
 }
