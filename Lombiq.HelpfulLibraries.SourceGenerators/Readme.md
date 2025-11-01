@@ -23,12 +23,14 @@ For general details about and on using the Helpful Libraries see the [root Readm
         <AdditionalFiles Include="package.json" />
     </ItemGroup>
     ```
+
 3. Add reference to both the Source Generator and the Attributes project (which contains the marker attributes like `[ConstantFromJson]`) and make sure to include the project as analyzer:
 
     ```xml
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Attributes\Lombiq.HelpfulLibraries.Attributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="false" />
     ```
+
 4. In the samples you can also see the snippet below, while not strictly necessary for the source generator to function, it suppresses a warning that happens in Visual Studio when first cloning the project. If you do decide to include this part make sure you update the relative paths to the correct location of the projects.
 
     ```xml
@@ -103,4 +105,4 @@ Where the first parameter is the name of the constant and the second parameter i
             Console.WriteLine(LibMan_chartjs_plugin_annotation); // Outputs "3.1.0". Derived from "chartjs-plugin-annotation@3.1.0".
         }
     }
-    ``` 
+    ```
