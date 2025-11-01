@@ -1,9 +1,10 @@
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using Microsoft.CodeAnalysis.Text;
 using System;
 using System.Collections.Generic;
-using System.Collections.Immutable;
 using System.Linq;
+using System.Text;
 
 namespace Lombiq.HelpfulLibraries.SourceGenerators;
 
@@ -15,18 +16,11 @@ public abstract class GeneratorFromFileBase : IIncrementalGenerator
     /// Generate code action. It will be executed on specific nodes (<see cref="ClassDeclarationSyntax"/> annotated with
     /// the attribute).
     /// </summary>
-    /// <param name="context">Source generation context used to add source files.</param>
-    /// <param name="compilation">Compilation used to provide access to the Semantic Model.</param>
-    /// <param name="classDeclarations">Nodes annotated with the attribute that trigger the generate action.</param>
-    protected abstract void GenerateCode(
-        SourceProductionContext context,
-        Compilation compilation,
-        ImmutableArray<(ClassDeclarationSyntax Syntax, List<Dictionary<string, string>> Dictionary)> classDeclarations,
-        IDictionary<string, string> additionalFiles);
+    protected abstract string? GenerateCode(GeneratorFromFileModel model);
 
     public void Initialize(IncrementalGeneratorInitializationContext context)
     {
-        var fullName = $"{typeof(Attribute).Namespace}.{nameof(Attribute.Name)}";
+        var fullName = $"{Attribute.Namespace}.{Attribute.Name}";
 
         // Filter classes annotated with the attribute.
         // Only filtered Syntax Nodes can trigger code generation.
@@ -63,7 +57,20 @@ public abstract class GeneratorFromFileBase : IIncrementalGenerator
         // Generate the source code.
         context.RegisterSourceOutput(
             context.CompilationProvider.Combine(provider.Collect()),
-            (productionContext, tuple) => GenerateCode(productionContext, tuple.Left, tuple.Right, filesAndContents));
+            (productionContext, tuple) => tuple.Right
+                .Select(pair => new GeneratorFromFileModel(
+                    pair.Syntax,
+                    pair.AttributesData,
+                    productionContext,
+                    tuple.Left,
+                    filesAndContents))
+                .Where(model => model.ClassSymbol != null)
+                .Select(model => new { model.Context, model.ClassName, Code = GenerateCode(model) })
+                .Where(result => !string.IsNullOrWhiteSpace(result.Code))
+                .ToList()
+                .ForEach(result => result.Context.AddSource(
+                    $"{result.ClassName}.g.cs",
+                    SourceText.From(result.Code!, Encoding.UTF8))));
     }
 
     /// <summary>
