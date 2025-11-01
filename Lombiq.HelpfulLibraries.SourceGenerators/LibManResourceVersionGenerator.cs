@@ -42,7 +42,7 @@ public class LibManResourceVersionGenerator : GeneratorFromFileBase
             ? default
             : (
                 Name: "LibMan_" + Regex.Replace(
-                    library!.Substring(0, index).Replace('.', '_').Replace('-', '_'),
+                    library!.Substring(0, index).Replace('.', '_').Replace('-', '_').Replace('/', '_'),
                     "[^a-zA-Z0-9_]+",
                     string.Empty),
                 Value: library.Substring(index + 1)

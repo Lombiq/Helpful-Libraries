@@ -84,7 +84,7 @@ Where the first parameter is the name of the constant and the second parameter i
 
 1. Follow the general steps above.
 2. Add the `[LibManVersions]` attribute to your `partial` class.
-3. Run a build and an individual constant will be generated for each entry in the `libraries` array of your _libman.json_ file. Each array item is turned into a separate constant using the value of its `library` property. The part after the `@` becomes the value and the part before it becomes the constant's name using the `LibMan_{sanitized}` formula. Here `sanitized` is the value where `.` and `-` characters are turned into `_` and then every other non-alphanumeric characters are stripped out to comply with C# variable naming rules.
+3. Run a build and an individual constant will be generated for each entry in the `libraries` array of your _libman.json_ file. Each array item is turned into a separate constant using the value of its `library` property. The part after the `@` becomes the value and the part before it becomes the constant's name using the `LibMan_{sanitized}` formula. Here `sanitized` is the value where `.`, `-`, and `/` characters are turned into `_` and then every other non-alphanumeric characters are stripped out to comply with C# variable naming rules.
 4. Use the constant in your code, full example:
 
     ```csharp
