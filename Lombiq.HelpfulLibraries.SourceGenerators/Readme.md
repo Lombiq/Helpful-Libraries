@@ -86,7 +86,7 @@ Where the first parameter is the name of the constant and the second parameter i
 
 1. Follow the general steps above.
 2. Add the `[LibManVersions]` attribute to your `partial` class.
-3. Run a build and an individual constant will be generated for each entry in the `libraries` array of your _libman.json_ file. Each array item is turned into a separate constant using the value of its `library` property. The part after the `@` becomes the value and the part before it becomes the constant's name using the `LibMan_{sanitized}` formula. Here `sanitized` is the value where `.`, `-`, and `/` characters are turned into `_` and then every other non-alphanumeric characters are stripped out to comply with C# variable naming rules.
+3. Run a build and an individual constant will be generated for each entry in the `libraries` array of your _libman.json_ file. Each array item is turned into a separate constant using the value of its `library` property. The part after the `@` becomes the value and the part before it becomes the constant's name using the `LibManVersions.{sanitized}` formula. Here `sanitized` is the name where all non-alphanumeric characters are treated as word boundaries when converting into PascalCase and removed to comply with C# variable naming rules.
 4. Use the constant in your code, full example:
 
     ```csharp
@@ -101,8 +101,8 @@ Where the first parameter is the name of the constant and the second parameter i
         // Show usage of the generated constants
         public void LogVersions()
         {
-            Console.WriteLine(LibMan_chart_js); // Outputs "4.5.1". Derived from "chart.js@4.5.1".
-            Console.WriteLine(LibMan_chartjs_plugin_annotation); // Outputs "3.1.0". Derived from "chartjs-plugin-annotation@3.1.0".
+            Console.WriteLine(LibManVersions.ChartJs); // Outputs "4.5.1". Derived from "chart.js@4.5.1".
+            Console.WriteLine(LibManVersions.ChartjsPluginAnnotation); // Outputs "3.1.0". Derived from "chartjs-plugin-annotation@3.1.0".
         }
     }
     ```

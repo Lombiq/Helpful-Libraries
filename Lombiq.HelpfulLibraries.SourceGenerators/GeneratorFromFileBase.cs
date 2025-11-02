@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 
 namespace Lombiq.HelpfulLibraries.SourceGenerators;
 
@@ -93,12 +94,28 @@ partial class {className}
     /// <summary>
     /// Create basic scaffolding for a new partial class filled with <c>const string</c> <paramref name="constants"/>.
     /// </summary>
-    /// <remarks><para>
-    /// The value of each constant is placed into the quotes as-is, so you have to manually escape them.
-    /// </para></remarks>
-    protected static string CreatePartialBody(string namespaceName, string className, IEnumerable<(string Name, string Value)> constants) =>
-        CreatePartialBody(namespaceName, className, string.Join("\n    ", constants
-            .Select(constant => $"public const string {constant.Name} = \"{constant.Value}\";")));
+    protected static string CreateConstants(string namespaceName, string className, IEnumerable<(string Name, string Value)> constants) =>
+        CreateSubclassConstants(namespaceName, className, subClassName: string.Empty, constants);
+
+    /// <summary>
+    /// Create basic scaffolding for a new subclass filled with <c>const string</c> <paramref name="constants"/>.
+    /// </summary>
+    protected static string CreateSubclassConstants(
+        string namespaceName,
+        string className,
+        string subClassName,
+        IEnumerable<(string Name, string Value)> constants)
+    {
+        var body = string.Join("\n    ", constants
+            .Select(constant => $"public const string {constant.Name} = {JsonSerializer.Serialize(constant.Value)};"));
+
+        if (!string.IsNullOrWhiteSpace(subClassName))
+        {
+            body = $"public static partial class {subClassName} {{\n    {body}\n    }}";
+        }
+
+        return CreatePartialBody(namespaceName, className, body);
+    }
 
     /// <summary>
     /// Checks whether the Node is annotated with the <see cref="Attribute"/> and maps syntax context to

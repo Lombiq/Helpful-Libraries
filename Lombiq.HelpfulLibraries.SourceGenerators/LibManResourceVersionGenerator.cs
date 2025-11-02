@@ -2,6 +2,7 @@ using Lombiq.HelpfulLibraries.Attributes;
 using Microsoft.CodeAnalysis;
 using System;
 using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
 using System.Linq;
 using System.Text.Json;
 using System.Text.RegularExpressions;
@@ -25,27 +26,31 @@ public class LibManResourceVersionGenerator : GeneratorFromFileBase
         if (fileContent == null) return null;
 
         var jsonDocument = JsonDocument.Parse(fileContent);
-        return CreatePartialBody(model.NamespaceName, model.ClassName, jsonDocument
-            .RootElement
-            .GetProperty("libraries")
-            .EnumerateArray()
-            .Select(arrayItem => ParseLibraryExpression(arrayItem.GetProperty("library").GetString()))
-            .Where(pair => !string.IsNullOrWhiteSpace(pair.Value)));
+        return CreateSubclassConstants(
+            model.NamespaceName,
+            model.ClassName,
+            "LibManVersions",
+            jsonDocument
+                .RootElement
+                .GetProperty("libraries")
+                .EnumerateArray()
+                .Select(arrayItem => ParseLibraryExpression(arrayItem.GetProperty("library").GetString()))
+                .Where(pair => !string.IsNullOrWhiteSpace(pair.Value)));
     }
 
-    [SuppressMessage("Security", "MA0009:Add regex evaluation timeout", Justification = "Not applicable here.")]
     private static (string Name, string Value) ParseLibraryExpression(string? library)
     {
         var index = library?.IndexOf('@') ?? -1;
-
         return index <= 0
             ? default
-            : (
-                Name: "LibMan_" + Regex.Replace(
-                    library!.Substring(0, index).Replace('.', '_').Replace('-', '_').Replace('/', '_'),
-                    "[^a-zA-Z0-9_]+",
-                    string.Empty),
-                Value: library.Substring(index + 1)
-            );
+            : (Name: SanitizeToApproximatePascalCase(library!.Substring(0, index)), Value: library.Substring(index + 1));
+    }
+
+    [SuppressMessage("Security", "MA0009:Add regex evaluation timeout", Justification = "Not applicable here.")]
+    private static string SanitizeToApproximatePascalCase(string text)
+    {
+        var words = Regex.Replace(text, "[^a-zA-Z0-9]+", " ").Trim();
+
+        return CultureInfo.InvariantCulture.TextInfo.ToTitleCase(words).Replace(" ", string.Empty);
     }
 }
