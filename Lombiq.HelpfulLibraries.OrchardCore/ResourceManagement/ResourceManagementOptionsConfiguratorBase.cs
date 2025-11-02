@@ -52,10 +52,28 @@ public abstract class ResourceManagementOptionsConfiguratorBase : IConfigureOpti
             SetUrlAndDependencies(Manifest.DefineStyle(resourceName), Vendors, fileName, dependencies);
 
         /// <summary>
+        /// Define a style resource inside the <c>~/{Area}/vendors/{filenames}</c> location.
+        /// </summary>
+        public ResourceDefinition DefineVendorStyle(
+            string resourceName,
+            (string Production, string Debug) fileNames,
+            params string[] dependencies) =>
+            SetUrlAndDependencies(Manifest.DefineStyle(resourceName), Vendors, fileNames, dependencies);
+
+        /// <summary>
         /// Define a script resource inside the <c>~/{Area}/vendors/{filename}</c> location.
         /// </summary>
         public ResourceDefinition DefineVendorScript(string resourceName, string fileName, params string[] dependencies) =>
             SetUrlAndDependencies(Manifest.DefineScript(resourceName), Vendors, fileName, dependencies);
+
+        /// <summary>
+        /// Define a script resource inside the <c>~/{Area}/vendors/{filenames}</c> location.
+        /// </summary>
+        public ResourceDefinition DefineVendorScript(
+            string resourceName,
+            (string Production, string Debug) fileNames,
+            params string[] dependencies) =>
+            SetUrlAndDependencies(Manifest.DefineScript(resourceName), Vendors, fileNames, dependencies);
 
         /// <summary>
         /// Define an ES module script resource inside the <c>~/{Area}/vendors/{filename}</c> location.
