@@ -84,6 +84,8 @@ Where the first parameter is the name of the constant and the second parameter i
 
 ### Using the `LibManResourceVersionGenerator`
 
+This source generator is for [LibraryManager](https://github.com/aspnet/LibraryManager) users. It allows you to access the versions of the libraries defined in your _libman.json_ file as constants in your code. This way, if your code needs the dependency versions (like it is the case when defining resource manifests in [Orchard Core](https://orchardcore.net/)), you can avoid hardcoding them and instead refer to the generated constants, ensuring consistency and easier maintenance.
+
 1. Follow the general steps above.
 2. Add the `[LibManVersions]` attribute to your `partial` class.
 3. Run a build and an individual constant will be generated for each entry in the `libraries` array of your _libman.json_ file. Each array item is turned into a separate constant using the value of its `library` property. The part after the `@` becomes the value and the part before it becomes the constant's name using the `LibManVersions.{sanitized}` formula. Here `sanitized` is the name where all non-alphanumeric characters are treated as word boundaries when converting into PascalCase and removed to comply with C# variable naming rules.
