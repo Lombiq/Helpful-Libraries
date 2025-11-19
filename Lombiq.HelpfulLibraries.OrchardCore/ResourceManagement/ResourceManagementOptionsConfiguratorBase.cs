@@ -23,7 +23,7 @@ public abstract class ResourceManagementOptionsConfiguratorBase : IConfigureOpti
             return manifest;
         }));
 
-    protected record ResourceManagementContext(
+    public record ResourceManagementContext(
         ResourceManifest Manifest,
         ResourceManagementOptionsConfiguratorBase Configurator)
     {
