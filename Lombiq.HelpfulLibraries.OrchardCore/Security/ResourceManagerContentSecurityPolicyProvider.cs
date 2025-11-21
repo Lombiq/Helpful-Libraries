@@ -1,9 +1,13 @@
+#nullable enable
+
 using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
 using OrchardCore.ResourceManagement;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using static Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement.ResourceTypes;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -15,19 +19,27 @@ namespace Microsoft.Extensions.DependencyInjection;
 /// </summary>
 public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
-    protected abstract string ResourceType { get; }
-    protected abstract string ResourceName { get; }
+    protected virtual IList<(string Type, string Name)> Resources { get; init; } = [];
     protected abstract IReadOnlyCollection<string> DirectiveNameChain { get; }
     protected abstract string DirectiveValue { get; }
 
     protected string DirectiveName => DirectiveNameChain.First();
 
+    [Obsolete($"Use {nameof(Resources)} instead.")]
+    protected virtual string ResourceType => Resources.Count > 0 ? Resources[0].Type : Script;
+
+    [Obsolete($"Use {nameof(Resources)} instead.")]
+    protected virtual string ResourceName => Resources.Count > 0
+        ? Resources[0].Type
+        : throw new InvalidOperationException("Missing resource name definition!");
+
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
         var resourceManager = context.RequestServices.GetRequiredService<IResourceManager>();
-        var resourceExists = resourceManager
-            .GetRequiredResources(ResourceType)
-            .Any(script => script.Resource.Name == ResourceName);
+
+        var resourceExists = Resources.Any(resource => resourceManager
+            .GetRequiredResources(resource.Type)
+            .Any(script => script.Resource.Name == resource.Name));
 
         if (resourceExists)
         {

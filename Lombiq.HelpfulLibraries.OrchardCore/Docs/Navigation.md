@@ -6,7 +6,7 @@ An abstract base class for reducing boilerplate in `INavigationProvider`. Use `B
 
 ## MainMenuNavigationProviderBase
 
-An abstract base class derived from `NavigationProviderBase` for creating home page menu structure using the `main` navigation name. If you use the _Lombiq.BaseTheme_, it automatically displays the generated menu as a widget in the _Navigation_ zone.
+An abstract base class derived from `NavigationProviderBase` for creating home page menu structure using the `main` navigation name. If you use a theme derived from _Lombiq.BaseTheme.Core_, it automatically displays the generated menu as a widget in the _Navigation_ zone.
 
 ## Extensions
 

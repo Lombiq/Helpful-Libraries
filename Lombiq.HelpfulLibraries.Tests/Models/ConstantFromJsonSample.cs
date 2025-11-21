@@ -10,8 +10,8 @@ namespace Lombiq.HelpfulLibraries.Tests.Models;
 /// Using two really simple packages as a test.
 /// </para>
 /// </remarks>
-[ConstantFromJson(constantName: "IsEvenVersion", fileName: "package.json", propertyName: "is-even")]
-[ConstantFromJson(constantName: "IsOddVersion", fileName: "package.json", propertyName: "is-odd")]
+[ConstantFromJson(constantName: "IsEvenVersion", fileName: "constant-from-json-sample.json", propertyName: "is-even")]
+[ConstantFromJson(constantName: "IsOddVersion", fileName: "constant-from-json-sample.json", propertyName: "is-odd")]
 public partial class ConstantFromJsonSample
 {
     public string ReturnVersions()

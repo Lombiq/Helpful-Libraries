@@ -1,0 +1,19 @@
+{
+  "version": "3.0",
+  "defaultProvider": "jsdelivr",
+  "defaultDestination": "wwwroot/vendors/[Name]",
+  "libraries": [
+    {
+      "library": "chart.js@4.5.1",
+      "files": [ "dist/chart.umd.min.js", "dist/chart.umd.js" ]
+    },
+    {
+      "library": "chartjs-plugin-annotation@3.1.0",
+      "files": [ "dist/chartjs-plugin-annotation.min.js" ]
+    },
+    {
+      "library": "chartjs-plugin-datalabels@2.2.0",
+      "files": [ "dist/chartjs-plugin-datalabels.min.js", "dist/chartjs-plugin-datalabels.js" ]
+    }
+  ]
+}
