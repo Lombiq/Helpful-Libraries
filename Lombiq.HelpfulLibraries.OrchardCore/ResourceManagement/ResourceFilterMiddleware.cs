@@ -40,8 +40,8 @@ public class ResourceFilterMiddleware
             var themes = await memoryCache.GetOrCreateAsync(
                 typeof(ResourceFilterMiddleware).FullName + ".Themes",
                 async entry =>
-                    // No options needed for the cache entry since ideally its kept for the lifetime of the shell, but can
-                    // be evicted any time.
+                    // No options needed for the cache entry since ideally it's kept for the lifetime of the shell, but
+                    // can be evicted any time.
                     (await services.GetRequiredService<IShellFeaturesManager>().GetAvailableFeaturesAsync())
                         .SelectWhere(feature => feature.Extension as IThemeExtensionInfo)
                         .ToDictionary(info => info.Id));
