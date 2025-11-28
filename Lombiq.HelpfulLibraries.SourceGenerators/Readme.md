@@ -43,7 +43,7 @@ For general details about and on using the Helpful Libraries see the [root Readm
         <MSBuild Condition="!Exists('$(SourceGeneratorLocation)')" Projects="..\Lombiq.HelpfulLibraries.SourceGenerators\Lombiq.HelpfulLibraries.SourceGenerators.csproj" />
     </Target>
     ```
-   
+
     > [!TIP]
     > If you use our `Lombiq.MSBuild.Module.Targets` from [MSBuild-Targets](https://github.com/Lombiq/MSBuild-Targets) (either directly using `<Import>` tasks or as a NuGet package) then you can skip this step, because it's automatically included.
 
