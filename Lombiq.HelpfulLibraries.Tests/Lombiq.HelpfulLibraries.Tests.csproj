@@ -1,6 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Test.UI.Targets/Lombiq.MSBuild.Test.UI.Targets.props" />
+  <Import Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Tests.UI.Targets/Lombiq.MSBuild.Tests.UI.Targets.props" />
 
   <PropertyGroup>
     <SourceGeneratorLocation>$(SolutionDir)src\Libraries\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.SourceGenerators\bin\Debug\netstandard2.0\Lombiq.HelpfulLibraries.SourceGenerators.dll</SourceGeneratorLocation>
