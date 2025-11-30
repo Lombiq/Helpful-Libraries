@@ -1,6 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
-  <Import Project="..\..\..\Utilities\Lombiq.MSBuild.Targets\Lombiq.MSBuild.Core.Targets\Lombiq.MSBuild.Core.Targets.props" />
+  <Import Project="..\..\..\Utilities\Lombiq.MSBuild.Targets\Lombiq.MSBuild.Core.Targets\Lombiq.MSBuild.Core.Targets.props"
+          Condition="'$(NuGetBuild)' != 'true'"/>
 
   <PropertyGroup>
     <Title>Lombiq Helpful Libraries - Orchard Core Libraries</Title>
@@ -12,6 +13,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Lombiq.MSBuild.Core.Targets" Version="1.0.0-alpha.1.nest-643" Condition="'$(NuGetBuild)' == 'true'" />
     <PackageReference Include="OrchardCore.Alias" Version="$(OrchardCoreVersion)" />
     <PackageReference Include="OrchardCore.Abstractions" Version="$(OrchardCoreVersion)" />
     <PackageReference Include="OrchardCore.Autoroute" Version="$(OrchardCoreVersion)" />

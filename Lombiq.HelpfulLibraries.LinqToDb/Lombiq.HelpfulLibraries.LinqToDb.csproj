@@ -1,5 +1,6 @@
 <Project Sdk="Microsoft.NET.Sdk">
-  <Import Project="..\..\..\Utilities\Lombiq.MSBuild.Targets\Lombiq.MSBuild.Core.Targets\Lombiq.MSBuild.Core.Targets.props" />
+  <Import Project="..\..\..\Utilities\Lombiq.MSBuild.Targets\Lombiq.MSBuild.Core.Targets\Lombiq.MSBuild.Core.Targets.props"
+          Condition="'$(NuGetBuild)' != 'true'"/>
 
   <PropertyGroup>
     <Title>Lombiq Helpful Libraries - LINQ to DB Libraries for Orchard Core</Title>
@@ -11,6 +12,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Lombiq.MSBuild.Core.Targets" Version="1.0.0-alpha.1.nest-643" Condition="'$(NuGetBuild)' == 'true'" />
     <PackageReference Include="linq2db" Version="5.4.1.9" />
     <PackageReference Include="OrchardCore.Data.YesSql" Version="$(OrchardCoreVersion)" />
   </ItemGroup>
