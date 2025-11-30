@@ -8,6 +8,7 @@
   </ItemGroup>
 
   <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
     <Title>Lombiq Helpful Libraries - LINQ to DB Libraries for Orchard Core</Title>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
     <Description>Lombiq Helpful Libraries - LINQ to DB Libraries for Orchard Core: With the help of this project you can write LINQ expressions and run them with a YesSql ISession extension method to query from the DB instead of writing plain SQL queries. Uses the LINQ to DB project. See the project website for detailed documentation.</Description>
