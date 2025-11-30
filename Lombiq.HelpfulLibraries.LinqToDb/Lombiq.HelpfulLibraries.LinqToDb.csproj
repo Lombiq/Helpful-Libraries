@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <Import Project="..\..\..\Utilities\Lombiq.MSBuild.Targets\Lombiq.MSBuild.Core.Targets\Lombiq.MSBuild.Core.Targets.props"
           Condition="'$(NuGetBuild)' != 'true'"/>
 
   <ItemGroup Condition="'$(NuGetBuild)' == 'true'">
-    <PackageReference Include="Lombiq.MSBuild.Core.Targets" Version="1.0.0-alpha.1.nest-643" />
+    <PackageReference Include="Lombiq.MSBuild.Core.Targets" Version="1.0.0-alpha.2.nest-643" />
   </ItemGroup>
 
   <PropertyGroup>

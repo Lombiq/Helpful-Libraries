@@ -4,10 +4,11 @@
           Condition="'$(NuGetBuild)' != 'true'"/>
 
   <ItemGroup Condition="'$(NuGetBuild)' == 'true'">
-    <PackageReference Include="Lombiq.MSBuild.Core.Targets" Version="1.0.0-alpha.1.nest-643" />
+    <PackageReference Include="Lombiq.MSBuild.Core.Targets" Version="1.0.0-alpha.2.nest-643" />
   </ItemGroup>
 
   <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
     <Title>Lombiq Helpful Libraries - RestEase Libraries for Orchard Core</Title>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
     <Description>Lombiq Helpful Libraries - RestEase Libraries for Orchard Core for Orchard Core: Adds a typed HTTP client to the service collection using RestEase, for dependency injection. See the project website for detailed documentation.</Description>

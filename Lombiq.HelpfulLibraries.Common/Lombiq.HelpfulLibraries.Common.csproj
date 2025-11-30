@@ -4,10 +4,11 @@
           Condition="'$(NuGetBuild)' != 'true'"/>
 
   <ItemGroup Condition="'$(NuGetBuild)' == 'true'">
-    <PackageReference Include="Lombiq.MSBuild.Core.Targets" Version="1.0.0-alpha.1.nest-643" />
+    <PackageReference Include="Lombiq.MSBuild.Core.Targets" Version="1.0.0-alpha.2.nest-643" />
   </ItemGroup>
 
   <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
     <Title>Lombiq Helpful Libraries - Common Libraries</Title>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
     <Description>Lombiq Helpful Libraries - Common Libraries: Various useful libraries that can be handy when developing for .NET. See the project website for detailed documentation.</Description>
