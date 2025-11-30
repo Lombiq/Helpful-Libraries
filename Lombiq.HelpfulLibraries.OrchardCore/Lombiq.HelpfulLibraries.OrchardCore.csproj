@@ -3,6 +3,10 @@
   <Import Project="..\..\..\Utilities\Lombiq.MSBuild.Targets\Lombiq.MSBuild.Core.Targets\Lombiq.MSBuild.Core.Targets.props"
           Condition="'$(NuGetBuild)' != 'true'"/>
 
+  <ItemGroup Condition="'$(NuGetBuild)' == 'true'">
+    <PackageReference Include="Lombiq.MSBuild.Core.Targets" Version="1.0.0-alpha.1.nest-643" />
+  </ItemGroup>
+
   <PropertyGroup>
     <Title>Lombiq Helpful Libraries - Orchard Core Libraries</Title>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
