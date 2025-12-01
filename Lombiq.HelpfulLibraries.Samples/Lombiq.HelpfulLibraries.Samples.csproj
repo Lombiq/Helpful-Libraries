@@ -8,10 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="OrchardCore.ContentFields" Version="$(OrchardCoreVersion)" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="$(OrchardCoreVersion)" />
-    <PackageReference Include="OrchardCore.ContentTypes.Abstractions" Version="$(OrchardCoreVersion)" />
-    <PackageReference Include="OrchardCore.Autoroute" Version="$(OrchardCoreVersion)" />
+    <PackageReference Include="OrchardCore.ContentFields" Version="2.1.0" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="2.1.0" />
+    <PackageReference Include="OrchardCore.ContentTypes.Abstractions" Version="2.1.0" />
+    <PackageReference Include="OrchardCore.Autoroute" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>
