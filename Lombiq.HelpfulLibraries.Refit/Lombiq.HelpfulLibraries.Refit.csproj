@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
     <Title>Lombiq Helpful Libraries - Refit Libraries for Orchard Core</Title>
     <Authors>Lombiq Technologies</Authors>
     <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>

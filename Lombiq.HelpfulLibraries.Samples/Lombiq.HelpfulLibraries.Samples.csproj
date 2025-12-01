@@ -1,9 +1,10 @@
 <Project Sdk="Microsoft.NET.Sdk.Razor">
 
   <Import Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Module.Targets/Lombiq.MSBuild.Module.Targets.props"
-          Condition="'$(NuGetBuild)' != 'true' "/>
+          Condition="'$(NuGetBuild)' != 'true'" />
 
   <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
     <IsPackable>false</IsPackable>
   </PropertyGroup>
 
@@ -19,6 +20,6 @@
   </ItemGroup>
 
   <Import Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Module.Targets/Lombiq.MSBuild.Module.Targets.targets"
-          Condition="'$(NuGetBuild)' != 'true' "/>
+          Condition="'$(NuGetBuild)' != 'true'" />
 
 </Project>
