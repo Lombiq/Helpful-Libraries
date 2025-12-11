@@ -307,7 +307,8 @@ public static class EnumerableExtensions
     public static IAsyncEnumerable<T> WhereNotAsync<T>(
         this IAsyncEnumerable<T> collection,
         Func<T, Task<bool>> negativePredicate) =>
-        collection.WhereAwait(async value => !await negativePredicate(value));
+        collection.Where(
+            async (value, _) => !await negativePredicate(value));
 
     /// <summary>
     /// Returns <paramref name="collection"/> if it's not <see langword="null"/>, otherwise <see
