@@ -59,8 +59,8 @@ public class TypedRoute
                         $"you sure the \"{controller.Name}\" controller belongs to an Orchard Core module?");
         }
 
-        var isAdmin = controller.GetCustomAttribute<AdminAttribute>() != null || action.GetCustomAttribute<AdminAttribute>() != null;
-        if (isAdmin && action.GetCustomAttribute(typeof(RouteAttribute)) == null)
+        var isAdmin = Attribute.IsDefined(controller, typeof(AdminAttribute)) || Attribute.IsDefined(action, typeof(AdminAttribute));
+        if (isAdmin && !Attribute.IsDefined(action, typeof(RouteAttribute)))
         {
             _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions())!.AdminUrlPrefix}/";
         }
