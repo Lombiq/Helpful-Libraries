@@ -15,9 +15,6 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : SiteDisplayDriver<TSection>
     where TSection : class, new()
 {
-    [Obsolete($"Override {nameof(SettingsGroupId)} instead. This property will be removed in future versions.")]
-    protected virtual string GroupId => SettingsGroupId;
-
     protected virtual Permission Permission => null;
     protected virtual string ShapeType => $"{typeof(TSection).Name}_Edit";
     protected virtual string Location => $"{CommonLocationNames.Content}:1";

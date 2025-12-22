@@ -22,18 +22,6 @@ public static class SecurityOrchardCoreBuilderExtensions
         builder.ConfigureServices((services, _) =>
             services.Configure<AntiforgeryOptions>(options => options.Cookie.SecurePolicy = CookieSecurePolicy.Always));
 
-    /// <inheritdoc cref="ConfigureSecurityDefaults(OrchardCoreBuilder, ContentSecurityPolicyHeaderConfiguration)"/>
-    [Obsolete("Use the overload with the ContentSecurityPolicyHeaderConfiguration parameter instead.")]
-    public static OrchardCoreBuilder ConfigureSecurityDefaults(
-        this OrchardCoreBuilder builder,
-        bool allowInlineScript = true,
-        bool allowInlineStyle = false) =>
-        builder.ConfigureSecurityDefaults(new ContentSecurityPolicyHeaderConfiguration
-        {
-            AllowInlineScript = allowInlineScript,
-            AllowInlineStyle = allowInlineStyle,
-        });
-
     /// <summary>
     /// Provides some default security configuration for Orchard Core.
     /// </summary>
@@ -134,24 +122,6 @@ public static class SecurityOrchardCoreBuilderExtensions
         this OrchardCoreBuilder builder,
         ContentSecurityPolicyHeaderConfiguration contentSecurityPolicyHeaderConfiguration) =>
         ConfigureSecurityDefaultsInner(builder, contentSecurityPolicyHeaderConfiguration, useStaticFiles: false);
-
-    /// <summary>
-    /// The same as <see cref="ConfigureSecurityDefaults(OrchardCoreBuilder, bool, bool)"/>, but
-    /// also registers the <see cref="StaticFileMiddleware"/> at the end of the chain, so <c>app.UseStaticFiles()</c>
-    /// should not be called when this is used. This is helpful because <see cref="StaticFileMiddleware"/>
-    /// short-circuits the call chain when delivering static files, so later middlewares are not executed (e.g. the
-    /// <c>X-Content-Type-Options: nosniff</c> header wouldn't be added).
-    /// </summary>
-    [Obsolete("Use the overload with the ContentSecurityPolicyHeaderConfiguration parameter instead.")]
-    public static OrchardCoreBuilder ConfigureSecurityDefaultsWithStaticFiles(
-        this OrchardCoreBuilder builder,
-        bool allowInlineScript = true,
-        bool allowInlineStyle = false) =>
-        builder.ConfigureSecurityDefaultsWithStaticFiles(new ContentSecurityPolicyHeaderConfiguration
-        {
-            AllowInlineScript = allowInlineScript,
-            AllowInlineStyle = allowInlineStyle,
-        });
 
     /// <summary>
     /// The same as <see cref="ConfigureSecurityDefaults(OrchardCoreBuilder, ContentSecurityPolicyHeaderConfiguration)"/>, but

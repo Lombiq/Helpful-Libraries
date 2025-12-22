@@ -42,14 +42,6 @@ public static class ServiceCollectionExtensions
         return services;
     }
 
-    [Obsolete($"Use {nameof(RemoveImplementationsOf)} instead (renamed for clarity).")]
-    public static IServiceCollection RemoveImplementations<T>(this IServiceCollection services) =>
-        services.RemoveImplementationsOf<T>();
-
-    [Obsolete($"Use {nameof(RemoveImplementationsOf)} instead (renamed for clarity).")]
-    public static IServiceCollection RemoveImplementations(this IServiceCollection services, string serviceFullName) =>
-        services.RemoveImplementationsOf(serviceFullName);
-
     /// <summary>
     /// Removes implementations of type <typeparamref name="T"/> from an <see cref="IServiceCollection"/> instance.
     /// </summary>

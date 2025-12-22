@@ -20,30 +20,6 @@ public static class ApplicationBuilderExtensions
     /// Adds a middleware that supplies the <c>Content-Security-Policy</c> header. It may be further expanded by
     /// registering services that implement <see cref="IContentSecurityPolicyProvider"/>.
     /// </summary>
-    /// <param name="allowInlineScript">
-    /// If <see langword="true"/> then inline scripts are permitted. When using Orchard Core a lot of front end shapes
-    /// use inline script blocks without a nonce (see https://github.com/OrchardCMS/OrchardCore/issues/13389) making
-    /// this a required setting.
-    /// </param>
-    /// <param name="allowInlineStyle">
-    /// If <see langword="true"/> then inline styles are permitted. Note that even if your site has no embedded style
-    /// blocks and no style attributes, some JavaScript libraries may still create some from code.
-    /// </param>
-    [Obsolete("Use the overload with ContentSecurityPolicyHeaderOptions instead.")]
-    public static IApplicationBuilder UseContentSecurityPolicyHeader(
-        this IApplicationBuilder app,
-        bool allowInlineScript,
-        bool allowInlineStyle) =>
-        app.UseContentSecurityPolicyHeader(new ContentSecurityPolicyHeaderConfiguration
-        {
-            AllowInlineScript = allowInlineScript,
-            AllowInlineStyle = allowInlineStyle,
-        });
-
-    /// <summary>
-    /// Adds a middleware that supplies the <c>Content-Security-Policy</c> header. It may be further expanded by
-    /// registering services that implement <see cref="IContentSecurityPolicyProvider"/>.
-    /// </summary>
     /// <param name="options">Options for the middleware.</param>
     [SuppressMessage(
         "Critical Code Smell",

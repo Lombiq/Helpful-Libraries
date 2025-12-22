@@ -25,14 +25,6 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
 
     protected string DirectiveName => DirectiveNameChain.First();
 
-    [Obsolete($"Use {nameof(Resources)} instead.")]
-    protected virtual string ResourceType => Resources.Count > 0 ? Resources[0].Type : Script;
-
-    [Obsolete($"Use {nameof(Resources)} instead.")]
-    protected virtual string ResourceName => Resources.Count > 0
-        ? Resources[0].Type
-        : throw new InvalidOperationException("Missing resource name definition!");
-
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
         var resourceManager = context.RequestServices.GetRequiredService<IResourceManager>();

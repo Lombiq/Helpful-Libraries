@@ -16,13 +16,6 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's edit URL.
     /// </summary>
-    [Obsolete($"Use {nameof(GetItemEditUrl)} instead as this method does not need to be async.")]
-    public static Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
-        Task.FromResult(orchardHelper.GetItemEditUrl(contentItem));
-
-    /// <summary>
-    /// Gets the given content item's edit URL.
-    /// </summary>
     [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
     public static string GetItemEditUrl(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
         orchardHelper.GetItemEditUrl(contentItem?.ContentItemId);

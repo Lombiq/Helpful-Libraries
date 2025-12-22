@@ -15,20 +15,6 @@ public class ResourceFilter
     public IList<Action<IResourceManager>> Executions { get; init; } = [];
     public IList<Func<IResourceManager, Task>> ExecutionsAsync { get; init; } = [];
 
-    [Obsolete($"Use {nameof(Executions)} instead.")]
-    public Action<IResourceManager> Execution
-    {
-        get => Executions.FirstOrDefault();
-        set => Executions.SetItems([value]);
-    }
-
-    [Obsolete($"Use {nameof(ExecutionsAsync)} instead.")]
-    public Func<IResourceManager, Task> ExecutionAsync
-    {
-        get => ExecutionsAsync.FirstOrDefault();
-        set => ExecutionsAsync.SetItems([value]);
-    }
-
     public ResourceFilter Execute(Action<IResourceManager> action)
     {
         Executions.Add(action);
