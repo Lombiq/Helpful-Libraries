@@ -51,7 +51,7 @@ public static class HttpContentExtensions
         this MultipartFormDataContent form,
         string name,
         string path,
-        string mediaType = null)
+        string? mediaType = null)
     {
         if (string.IsNullOrEmpty(mediaType) &&
             !new FileExtensionContentTypeProvider().TryGetContentType(path, out mediaType))

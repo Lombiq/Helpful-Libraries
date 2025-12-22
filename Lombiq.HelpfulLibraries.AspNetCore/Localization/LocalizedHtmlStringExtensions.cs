@@ -13,7 +13,7 @@ public static class LocalizedHtmlStringExtensions
     /// Returns a raw HTML string that's been JSON serialized and therefore safe to use within <c>&lt;script&gt;</c>
     /// tags in a Razor view.
     /// </summary>
-    public static IHtmlContent Json(this LocalizedHtmlString htmlString) =>
+    public static IHtmlContent Json(this LocalizedHtmlString? htmlString) =>
         htmlString?.Html() is { } html
             ? new HtmlString(JsonSerializer.Serialize(html))
             : new HtmlString("null");
@@ -21,7 +21,7 @@ public static class LocalizedHtmlStringExtensions
     /// <summary>
     /// Returns a raw HTML string representation of the <paramref name="htmlContent"/>.
     /// </summary>
-    public static string Html(this IHtmlContent htmlContent)
+    public static string? Html(this IHtmlContent? htmlContent)
     {
         if (htmlContent == null) return null;
 
@@ -48,7 +48,7 @@ public static class LocalizedHtmlStringExtensions
     /// <summary>
     /// Concatenates the <paramref name="items"/> with the provided <paramref name="separator"/> in-between.
     /// </summary>
-    public static LocalizedHtmlString Join(this IHtmlContent separator, params LocalizedHtmlString[] items)
+    public static LocalizedHtmlString? Join(this IHtmlContent separator, params LocalizedHtmlString[] items)
     {
         if (items.Length == 0) return null;
 

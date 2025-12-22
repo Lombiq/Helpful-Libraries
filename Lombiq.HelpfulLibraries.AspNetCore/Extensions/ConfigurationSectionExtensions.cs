@@ -13,7 +13,7 @@ public static class ConfigurationSectionExtensions
     public static IConfigurationSection AddValueIfKeyNotExists(
         this IConfigurationSection configurationSection,
         string key,
-        string value)
+        string? value)
     {
         configurationSection[key] ??= value;
         return configurationSection;
@@ -29,7 +29,7 @@ public static class ConfigurationSectionExtensions
     /// </param>
     public static (T Options, IConfiguration ConfigurationSection) BindNew<T>(
         this IConfiguration configuration,
-        string sectionKey = null)
+        string? sectionKey = null)
         where T : new()
     {
         var options = new T();

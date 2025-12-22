@@ -54,7 +54,7 @@ public class NonEmptyTagHelper : TagHelper
         "Usage",
         "CA2227:Collection properties should be read only",
         Justification = "TagHelper needs the direct access.")]
-    public ICollection IfNotEmpty { get; set; }
+    public ICollection? IfNotEmpty { get; set; }
 
     public override void Process(TagHelperContext context, TagHelperOutput output)
     {

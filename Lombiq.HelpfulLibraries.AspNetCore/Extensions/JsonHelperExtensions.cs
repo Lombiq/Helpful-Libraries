@@ -11,7 +11,7 @@ public static class JsonHelperExtensions
     /// Returns a full HTML element attribute with the given <paramref name="name"/> prefixed with <c>data-</c> and the
     /// value appropriately encoded to prevent XSS attacks.
     /// </summary>
-    public static IHtmlContent DataAttribute(this IJsonHelper helper, string name, object value)
+    public static IHtmlContent DataAttribute(this IJsonHelper helper, string name, object? value)
     {
         using var stringWriter = new StringWriter();
         helper.Serialize(value).WriteTo(stringWriter, NullHtmlEncoder.Default);

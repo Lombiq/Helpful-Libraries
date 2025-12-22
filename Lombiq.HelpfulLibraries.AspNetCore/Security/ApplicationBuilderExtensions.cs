@@ -85,7 +85,7 @@ public static class ApplicationBuilderExtensions
                 {
                     var existingPolicy = context.Response.Headers[key];
                     var existingDirectives = existingPolicy.SelectMany(policy =>
-                        policy.Split(_cspDirectivesSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries));
+                        policy?.Split(_cspDirectivesSeparator, StringSplitOptions.RemoveEmptyEntries | StringSplitOptions.TrimEntries) ?? []);
 
                     foreach (var directive in existingDirectives)
                     {
@@ -164,7 +164,7 @@ public static class ApplicationBuilderExtensions
 
                 foreach (var cookie in setCookie.WhereNot(string.IsNullOrWhiteSpace))
                 {
-                    var newCookie = cookie;
+                    var newCookie = cookie ?? string.Empty;
 
                     // The "orch_notify" cookie is used by Orchard Core' INotifier. It's usually set before a redirect,
                     // so using SameSite=Strict would break it.
@@ -172,7 +172,7 @@ public static class ApplicationBuilderExtensions
                         ref newCookie,
                         ref changed,
                         "SameSite",
-                        cookie.StartsWithOrdinalIgnoreCase("orch_notify") ? "; SameSite=Lax" : "; SameSite=Strict");
+                        newCookie.StartsWithOrdinalIgnoreCase("orch_notify") ? "; SameSite=Lax" : "; SameSite=Strict");
 
                     UpdateIfMissing(ref newCookie, ref changed, "Secure", "; Secure");
 
