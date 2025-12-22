@@ -48,7 +48,9 @@ public class SimpleTextResponse
     internal SimpleTextResponse(IApiResponse<string> response)
     {
         Content = response.Content;
-        Headers = response.Headers.ToDictionary(header => header.Key, header => header.Value.First());
+        Headers = response.Headers.ToDictionary<KeyValuePair<string, IEnumerable<string>>, string, string?>(
+            header => header.Key,
+            header => header.Value.First());
         IsOk = response.Error == null && response.StatusCode == HttpStatusCode.OK;
         StatusCode = response.StatusCode;
         Error = response.Error;

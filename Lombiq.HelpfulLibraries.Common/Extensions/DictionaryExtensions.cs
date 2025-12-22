@@ -79,7 +79,7 @@ public static class DictionaryExtensions
     /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
     /// <returns>Values in the dictionary including the newly added ones.</returns>
-    public static async Task<IEnumerable<TValue>> GetValuesOrAddIfMissingAsync<TKey, TValue>(
+    public static async Task<IEnumerable<TValue?>> GetValuesOrAddIfMissingAsync<TKey, TValue>(
         this IDictionary<TKey, TValue> dictionary,
         IEnumerable<TKey> keys,
         Func<TKey, Task<TValue>> valueFactory) =>

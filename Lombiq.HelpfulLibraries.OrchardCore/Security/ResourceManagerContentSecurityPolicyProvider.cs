@@ -10,10 +10,10 @@ using System.Threading.Tasks;
 namespace Microsoft.Extensions.DependencyInjection;
 
 /// <summary>
-/// Looks in the resource manager for a resource of type <see cref="ResourceType"/> called <see cref="ResourceName"/>.
-/// If found, the directive <see cref="DirectiveName"/> is amended with the value or values in <see
-/// cref="DirectiveValue"/>. The <see cref="DirectiveNameChain"/> refers to the resolution order where to look for the
-/// existing directive values. Its first item is the <see cref="DirectiveName"/>.
+/// Looks in the resource manager for the specified <see cref="Resources"/>. If found, the directive <see
+/// cref="DirectiveName"/> is amended with the value or values in <see cref="DirectiveValue"/>. The <see
+/// cref="DirectiveNameChain"/> refers to the resolution order where to look for the existing directive values. Its
+/// first item is the <see cref="DirectiveName"/>.
 /// </summary>
 public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
@@ -40,7 +40,7 @@ public abstract class ResourceManagerContentSecurityPolicyProvider : IContentSec
     }
 
     /// <summary>
-    /// When overridden, this may be used for additional updates related to the resource in <see cref="ResourceName"/>.
+    /// When overridden, this may be used for additional updates related to the resource in <see cref="Resources"/>.
     /// </summary>
     protected virtual ValueTask ThenUpdateAsync(
         IDictionary<string, string> securityPolicies,

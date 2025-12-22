@@ -10,4 +10,12 @@ public sealed class ResourceFilterThemeRequirementAttribute : Attribute
     public string Theme { get; }
 
     public ResourceFilterThemeRequirementAttribute(string theme) => Theme = theme;
+
+    /// <summary>
+    /// Retrieves the required themes by <paramref name="type"/>.
+    /// </summary>
+    internal static IEnumerable<string> GetRequirementsByType(Type type) =>
+        type
+            .GetCustomAttributes<ResourceFilterThemeRequirementAttribute>(inherit: false)
+            .SelectWhere(attribute => attribute.Theme, theme => !string.IsNullOrEmpty(theme));
 }
