@@ -14,7 +14,7 @@ public static class DictionaryExtensions
     /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
     /// <returns>Value identified by the key if it's in the dictionary.</returns>
-    public static TValue GetMaybe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) =>
+    public static TValue? GetMaybe<TKey, TValue>(this IDictionary<TKey, TValue> dictionary, TKey key) =>
         !Equals(key, default) && dictionary.TryGetValue(key, out var value) ? value : default;
 
     /// <summary>
@@ -24,8 +24,8 @@ public static class DictionaryExtensions
     /// <param name="key">Key in the dictionary.</param>
     /// <typeparam name="TValue">Type to convert to.</typeparam>
     /// <returns>Value identified by the key if it's in the dictionary.</returns>
-    public static TValue GetMaybe<TValue>(this IDictionary<object, object> dictionary, object key) =>
-        GetMaybe(dictionary, key) is TValue value ? value : default;
+    public static TValue? GetMaybe<TValue>(this IDictionary<object, object> dictionary, object key) => 
+        dictionary.GetMaybe(key) is TValue value ? value : default;
 
     /// <summary>
     /// Safely returns the value by key if it's in the dictionary. If the key is <see langword="default"/> or not found
@@ -35,7 +35,7 @@ public static class DictionaryExtensions
     /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
     /// <returns>Value identified by the key if it's in the dictionary.</returns>
-    public static TValue GetMaybeReadOnly<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key) =>
+    public static TValue? GetMaybeReadOnly<TKey, TValue>(this IReadOnlyDictionary<TKey, TValue> dictionary, TKey key) =>
         !Equals(key, default) && dictionary.TryGetValue(key, out var value) ? value : default;
 
     /// <summary>
@@ -53,20 +53,21 @@ public static class DictionaryExtensions
     /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
     /// <returns>Values in the dictionary including the newly added ones.</returns>
-    public static async Task<IEnumerable<TValue>> GetValuesOrAddRangeIfMissingAsync<TKey, TValue>(
-        this IDictionary<TKey, TValue> dictionary,
+    public static async Task<IEnumerable<TValue?>> GetValuesOrAddRangeIfMissingAsync<TKey, TValue>(
+        this IDictionary<TKey, TValue?> dictionary,
         IEnumerable<TKey> keys,
-        Func<IEnumerable<TKey>, Task<IEnumerable<TValue>>> valuesFactory,
-        Func<TValue, TKey> keySelector)
+        Func<IEnumerable<TKey>, Task<IEnumerable<TValue?>>> valuesFactory,
+        Func<TValue?, TKey> keySelector)
     {
-        var missingKeys = keys.Where(key => !dictionary.ContainsKey(key));
-        var missingItems = missingKeys.Any() ? await valuesFactory(missingKeys) : [];
+        var keysList = keys.AsList();
+        var missingKeys = keysList.Where(key => !dictionary.ContainsKey(key)).ToList();
+        var missingItems = missingKeys.Count > 0 ? (await valuesFactory(missingKeys)).AsList() : [];
         foreach (var item in missingItems)
         {
             dictionary[keySelector(item)] = item;
         }
 
-        return missingItems.Union(keys.SelectWhere(dictionary.GetMaybe));
+        return missingItems.Union<TValue?>(keysList.SelectWhere(dictionary.GetMaybe));
     }
 
     /// <summary>
@@ -93,7 +94,7 @@ public static class DictionaryExtensions
     /// <typeparam name="TKey">Type of the keys in the dictionary.</typeparam>
     /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
     /// <returns>Value in the dictionary.</returns>
-    public static async Task<TValue> GetValueOrAddIfMissingAsync<TKey, TValue>(
+    public static async Task<TValue?> GetValueOrAddIfMissingAsync<TKey, TValue>(
         this IDictionary<TKey, TValue> dictionary,
         TKey key,
         Func<TKey, Task<TValue>> valueFactory)
@@ -132,7 +133,7 @@ public static class DictionaryExtensions
     /// </summary>
     public static void AddRange<TKey, TValue>(
         this IDictionary<TKey, TValue> dictionary,
-        IEnumerable<KeyValuePair<TKey, TValue>> additionalEntries)
+        IEnumerable<KeyValuePair<TKey, TValue>>? additionalEntries)
     {
         if (additionalEntries == null) return;
         foreach (var (key, value) in additionalEntries)
@@ -147,7 +148,7 @@ public static class DictionaryExtensions
     /// </summary>
     public static void AddRange<TKey, TValue>(
         this IDictionary<TKey, TValue> dictionary,
-        IEnumerable<TValue> values,
+        IEnumerable<TValue>? values,
         Func<TValue, TKey> keySelector)
     {
         if (values == null) return;
@@ -166,7 +167,7 @@ public static class DictionaryExtensions
     /// </summary>
     public static void AddRangeWithOverwrite<TKey, TValue>(
         this IDictionary<TKey, TValue> dictionary,
-        IEnumerable<KeyValuePair<TKey, TValue>> additionalEntries)
+        IEnumerable<KeyValuePair<TKey, TValue>>? additionalEntries)
     {
         if (additionalEntries == null) return;
         foreach (var (key, value) in additionalEntries)
@@ -198,7 +199,8 @@ public static class DictionaryExtensions
     /// cref="IReadOnlyDictionary{TKey,TValue}"/> then the input is cast, otherwise copied into a new <see
     /// cref="Dictionary{TKey,TValue}"/> object.
     /// </summary>
-    public static IReadOnlyDictionary<TKey, TValue> ToReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary) =>
+    public static IReadOnlyDictionary<TKey, TValue> ToReadOnly<TKey, TValue>(this IDictionary<TKey, TValue> dictionary)
+        where TKey : notnull =>
         dictionary as IReadOnlyDictionary<TKey, TValue> ?? new Dictionary<TKey, TValue>(dictionary);
 
     /// <summary>
@@ -211,8 +213,9 @@ public static class DictionaryExtensions
         "MA0016:Prefer returning collection abstraction instead of implementation",
         Justification = "Better compatibility.")]
     public static Dictionary<TKey, TValue> WithFirstValues<TKey, TValue, TValues>(
-        this IEnumerable<KeyValuePair<TKey, TValues>> dictionary,
-        Func<TValues, TValue> select = null)
+        this IEnumerable<KeyValuePair<TKey, TValues?>> dictionary,
+        Func<TValues?, TValue>? select = null)
+        where TKey : notnull
         where TValues : IEnumerable<TValue>
     {
         var result = new Dictionary<TKey, TValue>();
@@ -249,7 +252,8 @@ public static class DictionaryExtensions
         Justification = "Better compatibility.")]
     public static Dictionary<TKey, TValues> ToListValuedDictionary<TKey, TValue, TValues>(
         this IEnumerable<KeyValuePair<TKey, TValue>> dictionary,
-        Func<TValue, TValues> select = null)
+        Func<TValue, TValues>? select = null)
+        where TKey : notnull
         where TValues : IList<TValue>, new()
     {
         var result = new Dictionary<TKey, TValues>();

@@ -186,7 +186,6 @@ public static class EnumerableExtensions
     /// the items that are not null.
     /// </summary>
     public static IEnumerable<TOut> SelectWhere<TIn, TOut>(this IEnumerable<TIn> collection, Func<TIn, TOut?> select)
-        where TOut : notnull
     {
         foreach (var item in collection)
         {

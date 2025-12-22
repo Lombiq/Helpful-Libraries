@@ -46,7 +46,9 @@ public static class ServiceCollectionExtensions
     /// Removes implementations of type <typeparamref name="T"/> from an <see cref="IServiceCollection"/> instance.
     /// </summary>
     public static IServiceCollection RemoveImplementationsOf<T>(this IServiceCollection services) =>
-        RemoveImplementationsOf(services, typeof(T).FullName);
+        typeof(T).FullName is { } fullName
+            ? services.RemoveImplementationsOf(fullName)
+            : services;
 
     /// <summary>
     /// Removes the implementations specified in <paramref name="serviceFullName"/> from an
@@ -68,7 +70,9 @@ public static class ServiceCollectionExtensions
     /// type of the specified <typeparamref name="TImplementation"/>.
     /// </summary>
     public static IServiceCollection RemoveImplementationsExcept<TService, TImplementation>(this IServiceCollection services) =>
-        RemoveImplementationsExcept<TService>(services, typeof(TImplementation).FullName);
+        typeof(TImplementation).FullName is { } fullName
+            ? RemoveImplementationsExcept<TService>(services, fullName)
+            : services;
 
     /// <summary>
     /// Attempts to remove all service implementations from an <see cref="IServiceCollection"/> instance except for the
@@ -88,7 +92,9 @@ public static class ServiceCollectionExtensions
         }
 
         var servicesToRemove = services
-            .Where(service => service.ServiceType == typeof(TService) && service.ImplementationType.FullName != keepImplementationTypeFullName)
+            .Where(service =>
+                service.ServiceType == typeof(TService) &&
+                service.ImplementationType?.FullName != keepImplementationTypeFullName)
             .ToList();
 
         servicesToRemove.ForEach(service => services.Remove(service));

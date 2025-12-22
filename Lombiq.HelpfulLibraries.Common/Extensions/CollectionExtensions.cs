@@ -11,14 +11,14 @@ public static class CollectionExtensions
     /// </summary>
     public static IEnumerable<(T Left, T Right)> CartesianProduct<T>(
         this ICollection<T> collection1,
-        ICollection<T> collection2 = null) =>
+        ICollection<T>? collection2 = null) =>
         collection1.SelectMany(_ => collection2 ?? collection1, (left, right) => (left, right));
 
     /// <summary>
     /// Appends every item from <paramref name="source"/> to <paramref name="target"/> using <see
     /// cref="ICollection{T}.Add(T)"/>.
     /// </summary>
-    public static void AddRange<T>(this ICollection<T> target, IEnumerable<T> source)
+    public static void AddRange<T>(this ICollection<T?> target, IEnumerable<T?> source)
     {
         foreach (var item in source) target.Add(item);
     }
@@ -27,9 +27,9 @@ public static class CollectionExtensions
     /// Removes every item <paramref name="collection"/> where <paramref name="predicate"/> returns <see
     /// langword="true"/> or if it's <see langword="null"/>.
     /// </summary>
-    public static void RemoveAll<T>(this ICollection<T> collection, Func<T, bool> predicate = null)
+    public static void RemoveAll<T>(this ICollection<T> collection, Func<T, bool>? predicate = null)
     {
-        var itemsToRemove = collection.Where(predicate ?? (item => true)).ToList();
+        var itemsToRemove = collection.Where(predicate ?? (_ => true)).ToList();
 
         foreach (var item in itemsToRemove)
         {
