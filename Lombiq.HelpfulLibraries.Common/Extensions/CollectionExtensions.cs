@@ -18,7 +18,7 @@ public static class CollectionExtensions
     /// Appends every item from <paramref name="source"/> to <paramref name="target"/> using <see
     /// cref="ICollection{T}.Add(T)"/>.
     /// </summary>
-    public static void AddRange<T>(this ICollection<T?> target, IEnumerable<T?> source)
+    public static void AddRange<T>(this ICollection<T> target, IEnumerable<T> source)
     {
         foreach (var item in source) target.Add(item);
     }

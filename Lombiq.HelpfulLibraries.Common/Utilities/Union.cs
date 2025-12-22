@@ -1,5 +1,3 @@
-using System;
-
 namespace Lombiq.HelpfulLibraries.Common.Utilities;
 
 /// <summary>

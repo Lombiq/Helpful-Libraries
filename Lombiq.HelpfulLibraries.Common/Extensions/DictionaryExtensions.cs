@@ -24,7 +24,7 @@ public static class DictionaryExtensions
     /// <param name="key">Key in the dictionary.</param>
     /// <typeparam name="TValue">Type to convert to.</typeparam>
     /// <returns>Value identified by the key if it's in the dictionary.</returns>
-    public static TValue? GetMaybe<TValue>(this IDictionary<object, object> dictionary, object key) => 
+    public static TValue? GetMaybe<TValue>(this IDictionary<object, object> dictionary, object key) =>
         dictionary.GetMaybe(key) is TValue value ? value : default;
 
     /// <summary>

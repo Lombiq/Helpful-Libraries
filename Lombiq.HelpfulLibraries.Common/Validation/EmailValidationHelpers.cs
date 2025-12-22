@@ -14,8 +14,10 @@ public static class EmailValidationHelpers
     /// <returns>
     /// <see langword="true"/> if the given string is a valid email address, <see langword="false"/> otherwise.
     /// </returns>
-    public static bool IsValidEmailAddress(string email)
+    public static bool IsValidEmailAddress(string? email)
     {
+        if (string.IsNullOrWhiteSpace(email)) return false;
+
         try
         {
             _ = new MailAddress(email);
