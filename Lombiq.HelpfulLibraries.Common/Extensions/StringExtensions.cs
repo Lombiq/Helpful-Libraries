@@ -224,7 +224,7 @@ public static class StringExtensions
     /// Concatenates an array of strings, using the specified <paramref name="separator"/> between each member. Empty or
     /// null strings are filtered out.
     /// </summary>
-    public static string JoinNotNullOrEmpty(this string[] strings, string separator = "") =>
+    public static string JoinNotNullOrEmpty(this string?[] strings, string separator = "") =>
         string.Join(separator, strings.Where(item => !string.IsNullOrEmpty(item)));
 
     /// <summary>
