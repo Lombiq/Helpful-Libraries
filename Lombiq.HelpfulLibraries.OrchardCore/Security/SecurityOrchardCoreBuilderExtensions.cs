@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 using OrchardCore.Environment.Shell;
 using OrchardCore.Environment.Shell.Models;
-using System;
 using System.Linq;
 
 namespace Microsoft.Extensions.DependencyInjection;

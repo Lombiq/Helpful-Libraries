@@ -1,7 +1,6 @@
 ﻿#nullable enable
 
 using Microsoft.Extensions.Localization;
-using OrchardCore.DisplayManagement.Entities;
 using OrchardCore.DisplayManagement.ModelBinding;
 using System;
 using System.Threading.Tasks;
