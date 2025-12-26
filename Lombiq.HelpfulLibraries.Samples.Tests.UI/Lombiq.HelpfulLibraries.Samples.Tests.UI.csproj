@@ -5,28 +5,8 @@
     <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
   </PropertyGroup>
 
-  <PropertyGroup>
-    <Title>Lombiq Helpful Libraries for Orchard Core - Samples - UI Test Extensions</Title>
-    <Authors>Lombiq Technologies</Authors>
-    <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-    <Description>Lombiq Helpful Libraries for Orchard Core - Samples - UI Test Extensions: UI tests verifying Lombiq Helpful Libraries Samples behavior, and thus testing some Lombiq Helpful Libraries features at a high level. See the project website for detailed documentation.</Description>
-    <PackageTags>OrchardCore;Lombiq;AspNetCore;UITesting;Testing;HelpfulLibraries</PackageTags>
-    <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/tree/dev/Lombiq.HelpfulLibraries.Samples.Tests.UI</PackageProjectUrl>
-    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
-  </PropertyGroup>
-
   <ItemGroup>
     <None Include="Readme.md" />
-    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(NuGetBuild)' != 'true'">
-    <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI\Lombiq.Tests.UI.csproj" />
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(NuGetBuild)' == 'true'">
-    <PackageReference Include="Lombiq.Tests.UI" Version="14.2.0" />
   </ItemGroup>
 
   <ItemGroup>
