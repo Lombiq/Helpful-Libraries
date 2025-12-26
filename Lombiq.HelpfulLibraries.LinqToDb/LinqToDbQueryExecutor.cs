@@ -18,7 +18,7 @@ public static class LinqToDbQueryExecutor
 
         // We need to disable null comparison for joins. Otherwise it would generate a syntax like this:
         // JOIN Table2 ON Table1.Key = Table2.Key OR Table1.Key IS NULL AND Table2.Key IS NULL
-        Linq.CompareNullsAsValues = false;
+        Linq.CompareNulls = CompareNulls.LikeSqlExceptParameters;
     }
 
     /// <summary>
