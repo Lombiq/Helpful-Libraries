@@ -19,5 +19,5 @@ public interface ILiquidPropertyRegistrar
     /// <summary>
     /// Returns the <see cref="ObjectValue"/> that this property gets.
     /// </summary>
-    Task<object> GetObjectAsync(LiquidTemplateContext context);
+    Task<object?> GetObjectAsync(LiquidTemplateContext context);
 }

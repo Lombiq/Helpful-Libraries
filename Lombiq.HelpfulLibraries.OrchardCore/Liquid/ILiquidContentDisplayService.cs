@@ -20,7 +20,7 @@ public interface ILiquidContentDisplayService
     /// Creates new instances of a typed shape object and renders it to HTML in a <see cref="FluidValue"/>.
     /// </summary>
     /// <typeparam name="TModel">The type to instantiate.</typeparam>
-    ValueTask<FluidValue> DisplayNewAsync<TModel>(string shapeType, Action<TModel> initialize);
+    ValueTask<FluidValue> DisplayNewAsync<TModel>(string shapeType, Action<TModel>? initialize);
 
     /// <summary>
     /// Displays an already instantiated <see cref="IShape"/> as a <see cref="FluidValue"/>.
@@ -28,6 +28,6 @@ public interface ILiquidContentDisplayService
     ValueTask<FluidValue> DisplayNewAsync(
         string shapeType,
         Func<ValueTask<IShape>> shapeFactory,
-        Action<ShapeCreatingContext> creating = null,
-        Action<ShapeCreatedContext> created = null);
+        Action<ShapeCreatingContext>? creating = null,
+        Action<ShapeCreatedContext>? created = null);
 }
