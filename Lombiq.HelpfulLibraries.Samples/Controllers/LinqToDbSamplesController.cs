@@ -1,4 +1,5 @@
 using LinqToDB;
+using LinqToDB.Async;
 using Lombiq.HelpfulLibraries.Common.Utilities;
 using Lombiq.HelpfulLibraries.LinqToDb;
 using Lombiq.HelpfulLibraries.Samples.Models;
