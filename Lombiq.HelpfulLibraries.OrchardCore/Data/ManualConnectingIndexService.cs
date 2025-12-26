@@ -11,6 +11,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using YesSql;
 using YesSql.Indexes;
+using YesSql.Provider.Sqlite;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Data;
 
@@ -23,9 +24,9 @@ public class ManualConnectingIndexService<T> : IManualConnectingIndexService<T>
     private readonly ILogger _logger;
     private readonly string _keys;
 
-    private string _documentIdKey;
-    private string _columns;
-    private string _tablePrefix;
+    private string? _documentIdKey;
+    private string? _columns;
+    private string? _tablePrefix;
 
     public ManualConnectingIndexService(
         IDbConnectionAccessor dbAccessor,
@@ -56,6 +57,8 @@ public class ManualConnectingIndexService<T> : IManualConnectingIndexService<T>
             var documentId = setDocumentId ?? (item as IIndex).GetAddedDocuments().Single().Id;
             var sql = $"INSERT INTO {name} ({_documentIdKey}, {_columns}) VALUES ({dialect.GetSqlValue(documentId)}, {_keys});";
 
+            if (connection == null) return -1;
+
             try
             {
                 return await connection.ExecuteAsync(sql, item, transaction);
@@ -70,27 +73,27 @@ public class ManualConnectingIndexService<T> : IManualConnectingIndexService<T>
             }
         });
 
-    public Task RemoveAsync(string columnName, object value, ISession session) =>
+    public Task RemoveAsync(string columnName, object? value, ISession session) =>
         RunTransactionAsync(session, (connection, transaction, dialect, name) =>
-        connection.ExecuteAsync(
+        connection?.ExecuteAsync(
             $"DELETE FROM {name} WHERE {dialect.QuoteForColumnName(columnName)} = @value",
             new { value },
-            transaction));
+            transaction) ?? Task.FromResult(-1));
 
     private async Task<TOut> RunTransactionAsync<TOut>(
-        ISession session,
-        Func<DbConnection, DbTransaction, ISqlDialect, string, Task<TOut>> request)
+        ISession? session,
+        Func<DbConnection?, DbTransaction, ISqlDialect, string?, Task<TOut>> request)
     {
         async Task<TOut> Run(
             DbTransaction transaction,
             bool doCommit,
-            Func<DbConnection, DbTransaction, ISqlDialect, string, Task<TOut>> request)
+            Func<DbConnection?, DbTransaction, ISqlDialect, string?, Task<TOut>> request)
         {
             _tablePrefix ??= session?.Store.Configuration.TablePrefix;
-            var dialect = session?.Store.Configuration.SqlDialect;
-            var quotedTableName = dialect?.QuoteForTableName(
+            var dialect = session?.Store.Configuration.SqlDialect ?? new SqliteDialect();
+            var quotedTableName = dialect.QuoteForTableName(
                 _tablePrefix + _type.Name,
-                session.Store.Configuration.Schema);
+                session?.Store.Configuration.Schema);
 
             var result = await request(transaction.Connection, transaction, dialect, quotedTableName);
             if (doCommit) await transaction.CommitAsync();

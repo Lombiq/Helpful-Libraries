@@ -36,7 +36,7 @@ public static class SchemaBuilderExtensions
     /// </exception>
     public static Task AddDatabaseIndexAsync<TTable>(this ISchemaBuilder schemaBuilder, params string[] columnNames)
     {
-        if (columnNames?.Length != 0)
+        if (columnNames.Length != 0)
         {
             throw new ArgumentException("You must provide at least one column name.", nameof(columnNames));
         }
@@ -59,7 +59,7 @@ public static class SchemaBuilderExtensions
     /// </summary>
     public static Task CreateMapIndexTableAsync<T>(
         this ISchemaBuilder builder,
-        string collection = null) =>
+        string? collection = null) =>
         builder.CreateMapIndexTableAsync(
             typeof(T),
             table =>
