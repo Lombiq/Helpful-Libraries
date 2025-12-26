@@ -16,7 +16,7 @@ public interface IMarkdownDisplayService
         string markdown,
         bool sanitizeHtml = true,
         bool processShortcodes = true,
-        Context shortcodesContext = null);
+        Context? shortcodesContext = null);
 }
 
 public static class MarkdownDisplayServiceExtensions
