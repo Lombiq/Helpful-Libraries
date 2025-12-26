@@ -17,7 +17,7 @@ public static class ExpressionExtensions
     /// Gets information about a <see cref="Expression{TDelegate}"/> which should contain just one method call. The <see
     /// cref="MethodInfo"/> and argument collection is extracted and returned.
     /// </summary>
-    public static (MethodInfo Method, List<KeyValuePair<string, string>> Arguments) GetMethodCallInfo(this Expression expression)
+    public static (MethodInfo Method, List<KeyValuePair<string, string?>> Arguments) GetMethodCallInfo(this Expression expression)
     {
         static string? ValueToString(object? value) =>
             value switch
