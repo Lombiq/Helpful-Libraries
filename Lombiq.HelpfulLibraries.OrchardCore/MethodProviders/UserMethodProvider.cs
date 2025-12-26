@@ -12,11 +12,11 @@ public class UserMethodProvider : IGlobalMethodProvider
     private static readonly GlobalMethod _getUserIdByUserName = new()
     {
         Name = "getUserIdByUserName",
-        Method = serviceProvider => (Func<string, string>)(email =>
+        Method = serviceProvider => (Func<string, string?>)(email =>
         {
             var userService = serviceProvider.GetRequiredService<IUserService>();
             var user = userService.GetUserAsync(email).Result as User;
-            var userId = user.Id.ToTechnicalString();
+            var userId = user?.Id.ToTechnicalString();
 
             return userId;
         }),
