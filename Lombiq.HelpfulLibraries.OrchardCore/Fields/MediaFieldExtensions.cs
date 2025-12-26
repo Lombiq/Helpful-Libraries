@@ -29,11 +29,13 @@ public static class MediaFieldExtensions
     public static IEnumerable<(string Path, string Text)> GetPathsAndAltTexts(
         this MediaField mediaField,
         string format) =>
-        Enumerable.Range(0, mediaField.Paths?.Length ?? 0)
-            .Select(i => (Path: mediaField.Paths[i], Text: mediaField.MediaTexts.ElementAtOrDefault(i)))
+        mediaField.Paths is { Length: > 0 } paths
+        ? Enumerable.Range(0, paths.Length)
+            .Select(i => (Path: paths[i], Text: mediaField.MediaTexts.ElementAtOrDefault(i)))
             .Select((path, text) => (
                 Path: path,
                 Text: string.IsNullOrWhiteSpace(text)
                     ? string.Format(CultureInfo.InvariantCulture, format, text, Path.GetFileName(text))
-                    : text));
+                    : text))
+        : [];
 }

@@ -3,8 +3,6 @@ using System.Collections.Generic;
 
 namespace OrchardCore.ContentFields.Fields;
 
-#nullable enable
-
 public static class ContentPickerFieldExtensions
 {
     /// <summary>
