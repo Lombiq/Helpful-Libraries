@@ -1,5 +1,6 @@
 using OrchardCore.ContentManagement;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc.TagHelpers.Cache;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 
@@ -26,16 +27,18 @@ public static class ContentVersionNumberServiceExtensions
     /// </summary>
     public static Task<int> GetLatestVersionNumberAsync(
         this IContentVersionNumberService service,
-        IContent content) =>
-        service.GetLatestVersionNumberAsync(content?.ContentItem?.ContentItemId);
+        IContent? content) =>
+        content?.ContentItem?.ContentItemId is { Length: > 0 } id
+            ? service.GetLatestVersionNumberAsync(id)
+            : Task.FromResult(0);
 
     /// <summary>
     /// Returns the current version number of the given <paramref name="content"/>.
     /// </summary>
     public static Task<int> GetCurrentVersionNumberAsync(
         this IContentVersionNumberService service,
-        IContent content) =>
-        service.GetCurrentVersionNumberAsync(
-            content?.ContentItem?.ContentItemId,
-            content?.ContentItem?.ContentItemVersionId);
+        IContent? content) =>
+        content?.ContentItem is { ContentItemId: { Length: > 0 } id, ContentItemVersionId: { Length: > 0 } version }
+            ? service.GetCurrentVersionNumberAsync(id, version)
+            : Task.FromResult(0);
 }

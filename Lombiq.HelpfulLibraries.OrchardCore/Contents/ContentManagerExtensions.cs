@@ -1,29 +1,23 @@
+using System;
 using OrchardCore.Taxonomies.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Nest;
 
 namespace OrchardCore.ContentManagement;
 
 public static class ContentManagerExtensions
 {
     /// <summary>
-    /// Gets the published content item with the specified <paramref name="id"/> and returns it as the provided
-    /// <typeparamref name="T"/> <see cref="ContentPart"/>.
-    /// </summary>
-    public static async Task<T> GetAsync<T>(this IContentManager contentManager, string id)
-        where T : ContentPart
-        => (await contentManager.GetAsync(id))?.As<T>();
-
-    /// <summary>
     /// Gets the published content item with the specified <paramref name="id"/> and version, and returns it as the
     /// provided <typeparamref name="T"/> <see cref="ContentPart"/>.
     /// </summary>
     /// <param name="id">The ID of the content item to retrieve.</param>
     /// <param name="versionOptions">The version data of the content item to retrieve.</param>
-    public static async Task<T> GetAsync<T>(this IContentManager contentManager, string id, VersionOptions versionOptions)
-        where T : ContentPart
-        => (await contentManager.GetAsync(id, versionOptions))?.As<T>();
+    public static async Task<T?> GetAsync<T>(this IContentManager contentManager, string id, VersionOptions? versionOptions = null)
+        where T : ContentPart =>
+        (await contentManager.GetAsync(id, versionOptions))?.As<T>();
 
     /// <summary>
     /// Persists the given <paramref name="contentItem"/> with a new version if it does not exist yet, or updates it
@@ -44,7 +38,7 @@ public static class ContentManagerExtensions
     /// <returns>The newly created or loaded content item.</returns>
     public static Task<ContentItem> NewOrLoadAsync(
         this IContentManager contentManager,
-        ContentItem contentItem,
+        ContentItem? contentItem,
         string name) =>
         contentItem == null ? contentManager.NewAsync(name) : contentManager.LoadAsync(contentItem);
 
@@ -62,7 +56,7 @@ public static class ContentManagerExtensions
             ? null
             : await contentManager.GetAsync(taxonomyContentItemId);
 
-        return taxonomy?.As<TaxonomyPart>()?.Terms;
+        return taxonomy?.As<TaxonomyPart>()?.Terms ?? [];
     }
 
     /// <summary>
@@ -85,7 +79,7 @@ public static class ContentManagerExtensions
     /// within a taxonomy identified by its <paramref name="alias"/>. If none are found <see langword="null"/> is
     /// returned.
     /// </summary>
-    public static async Task<string> GetTaxonomyTermDisplayTextAsync(
+    public static async Task<string?> GetTaxonomyTermDisplayTextAsync(
         this IContentManager contentManager,
         IContentHandleManager contentHandleManager,
         string alias,
@@ -103,11 +97,11 @@ public static class ContentManagerExtensions
     /// <param name="contentItemId">ID of the <see cref="ContentItem"/>.</param>
     /// <param name="versionOptions">Version of the <see cref="ContentItem"/> (e.g., Published, Latest).</param>
     /// <returns>Acquired or newly created <see cref="ContentItem"/>.</returns>
-    public static async Task<ContentItem> GetOfTypeAsync(
+    public static async Task<ContentItem?> GetOfTypeAsync(
         this IContentManager contentManager,
         string contentItemId,
         string contentType,
-        VersionOptions versionOptions = null)
+        VersionOptions? versionOptions = null)
     {
         var contentItem = await contentManager.GetAsync(contentItemId, versionOptions ?? VersionOptions.Published);
 
@@ -122,19 +116,27 @@ public static class ContentManagerExtensions
     /// <param name="contentItemId">ID of the <see cref="ContentItem"/>.</param>
     /// <param name="versionOptions">Version of the <see cref="ContentItem"/> (e.g., Published, Latest).</param>
     /// <returns>Acquired or newly created <see cref="ContentItem"/>.</returns>
-    public static Task<ContentItem> GetOrCreateAsync(
+    public static async Task<ContentItem> GetOrCreateAsync(
         this IContentManager contentManager,
         string contentItemId,
-        string contentType,
-        VersionOptions versionOptions = null)
+        string? contentType,
+        VersionOptions? versionOptions = null)
     {
-        if (string.IsNullOrEmpty(contentType))
+        // Check existing item.
+        if (!string.IsNullOrEmpty(contentItemId) &&
+            await contentManager.GetAsync(contentItemId, versionOptions) is { } existingItem)
         {
-            return contentManager.GetOfTypeAsync(contentItemId, contentType, versionOptions);
+            // Found it with correct content type.
+            if (string.IsNullOrEmpty(contentType) || existingItem.ContentType == contentType)
+            {
+                return existingItem;
+            }
+
+            // Delete wrong type item before creating a new one.
+            await contentManager.RemoveAsync(existingItem);
         }
 
-        return string.IsNullOrEmpty(contentItemId)
-            ? contentManager.NewAsync(contentType)
-            : contentManager.GetOfTypeAsync(contentItemId, contentType, versionOptions);
+        // No applicable item found, creating a new one.
+        return await contentManager.NewAsync(contentType);
     }
 }

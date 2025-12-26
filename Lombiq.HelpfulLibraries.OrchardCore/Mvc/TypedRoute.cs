@@ -165,12 +165,12 @@ public class TypedRoute
     /// <param name="additionalArguments">Additional arguments to add to the route and the key in the cache.</param>
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> actionExpression,
-        IEnumerable<(string Key, object Value)> additionalArguments,
-        IServiceProvider serviceProvider = null)
+        IEnumerable<(string Key, object? Value)>? additionalArguments,
+        IServiceProvider? serviceProvider = null)
         where TController : ControllerBase =>
         CreateFromExpression(
             actionExpression,
-            additionalArguments.Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
+            additionalArguments?.Select((key, value) => new KeyValuePair<string, string?>(key, value?.ToString())),
             serviceProvider);
 
     /// <summary>

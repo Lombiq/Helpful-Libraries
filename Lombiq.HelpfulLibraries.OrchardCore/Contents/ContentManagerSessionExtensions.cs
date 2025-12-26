@@ -15,9 +15,9 @@ public static class ContentManagerSessionExtensions
     /// <summary>
     /// Queries a <see cref="ContentItem"/> and then stores it in the scoped cache.
     /// </summary>
-    public static async Task<ContentItem> QueryContentAsync(
+    public static async Task<ContentItem?> QueryContentAsync(
         this IContentManagerSession contentManagerSession,
-        Func<Task<ContentItem>> queryAsync)
+        Func<Task<ContentItem?>> queryAsync)
     {
         var contentItem = await queryAsync();
         if (contentItem != null && !contentManagerSession.RecallVersionId(contentItem.Id, out _))
@@ -33,9 +33,10 @@ public static class ContentManagerSessionExtensions
     /// </summary>
     public static async Task<IEnumerable<ContentItem>> QueryContentAsync(
         this IContentManagerSession contentManagerSession,
-        Func<Task<IEnumerable<ContentItem>>> queryAsync)
+        Func<Task<IEnumerable<ContentItem?>?>> queryAsync)
     {
-        var contentItems = await queryAsync();
+        if ((await queryAsync())?.CastWhere<ContentItem>().ToList() is not { Count: > 0 } contentItems) return [];
+
         foreach (var contentItem in contentItems)
         {
             if (!contentManagerSession.RecallVersionId(contentItem.Id, out _))
@@ -50,10 +51,10 @@ public static class ContentManagerSessionExtensions
     /// <summary>
     /// Gets a published <see cref="ContentItem"/> from the scoped cache or query it.
     /// </summary>
-    public static async Task<ContentItem> GetOrQueryContentAsync(
+    public static async Task<ContentItem?> GetOrQueryContentAsync(
         this IContentManagerSession contentManagerSession,
         string contentItemId,
-        Func<string, Task<ContentItem>> queryAsync)
+        Func<string, Task<ContentItem?>> queryAsync)
     {
         // If the published version is already stored, we can return it.
         if (contentManagerSession.RecallPublishedItemId(contentItemId, out var contentItem))
@@ -78,8 +79,8 @@ public static class ContentManagerSessionExtensions
         IEnumerable<string> contentItemIds,
         Func<IEnumerable<string>, Task<IEnumerable<ContentItem>>> queryAsync)
     {
-        List<ContentItem> contentItems = null;
-        List<ContentItem> storedItems = null;
+        List<ContentItem>? contentItems = null;
+        List<ContentItem>? storedItems = null;
         var contentItemIdsList = contentItemIds.AsList();
 
         foreach (var contentItemId in contentItemIdsList)
@@ -94,7 +95,7 @@ public static class ContentManagerSessionExtensions
 
         // Only query the ids not already stored.
         var itemIdsToQuery = storedItems != null
-            ? contentItemIdsList.Except(storedItems.Select(x => x.ContentItemId))
+            ? contentItemIdsList.Except(storedItems.Select(x => x.ContentItemId)).ToList()
             : contentItemIdsList;
 
         if (itemIdsToQuery.Any())
@@ -104,18 +105,11 @@ public static class ContentManagerSessionExtensions
 
         if (contentItems != null)
         {
-            for (var i = 0; i < contentItems.Count; i++)
-            {
-                if (!contentManagerSession.RecallVersionId(contentItems[i].Id, out _))
-                {
-                    contentManagerSession.Store(contentItems[i]);
-                }
-            }
+            contentItems
+                .Where(item => !contentManagerSession.RecallVersionId(item.Id, out _))
+                .ForEach(contentManagerSession.Store);
 
-            if (storedItems != null)
-            {
-                contentItems.AddRange(storedItems);
-            }
+            contentItems.AddRange(storedItems ?? []);
         }
         else if (storedItems != null)
         {
