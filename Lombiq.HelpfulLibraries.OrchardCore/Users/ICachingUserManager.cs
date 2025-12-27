@@ -15,7 +15,7 @@ public interface ICachingUserManager
     /// </summary>
     /// <param name="id">Unique ID identifying the <see cref="User"/> document.</param>
     /// <returns>Potentially cached <see cref="User"/>.</returns>
-    Task<User> GetUserByIdAsync(string id, bool forceUpdate = false);
+    Task<User?> GetUserByIdAsync(string id, bool forceUpdate = false);
 
     /// <summary>
     /// Retrieves <see cref="User"/>s from a transient per-request cache by their <see cref="User.Id"/> or gets them
@@ -23,7 +23,7 @@ public interface ICachingUserManager
     /// </summary>
     /// <param name="userId">Unique ID identifying the <see cref="User"/>.</param>
     /// <returns>Potentially cached <see cref="User"/>.</returns>
-    Task<User> GetUserByUserIdAsync(string userId, bool forceUpdate = false);
+    Task<User?> GetUserByUserIdAsync(string userId, bool forceUpdate = false);
 
     /// <summary>
     /// Retrieves <see cref="User"/>s from a transient per-request cache by their username or gets them from the store
@@ -31,7 +31,7 @@ public interface ICachingUserManager
     /// </summary>
     /// <param name="username">Username of the <see cref="User"/>.</param>
     /// <returns>Potentially cached <see cref="User"/>.</returns>
-    Task<User> GetUserByNameAsync(string username, bool forceUpdate = false);
+    Task<User?> GetUserByNameAsync(string username, bool forceUpdate = false);
 
     /// <summary>
     /// Retrieves <see cref="User"/>s from a transient per-request cache by their email or gets them from the store if
@@ -39,7 +39,7 @@ public interface ICachingUserManager
     /// </summary>
     /// <param name="email">Email of the <see cref="User"/>.</param>
     /// <returns>Potentially cached <see cref="User"/>.</returns>
-    Task<User> GetUserByEmailAsync(string email, bool forceUpdate = false);
+    Task<User?> GetUserByEmailAsync(string email, bool forceUpdate = false);
 
     /// <summary>
     /// Retrieves an authenticated <see cref="User"/> from a transient per-request cache or gets them from the store if
@@ -49,7 +49,7 @@ public interface ICachingUserManager
     /// <see cref="ClaimsPrincipal"/> representing the authenticated <see cref="User"/>.
     /// </param>
     /// <returns>Potentially cached <see cref="User"/>.</returns>
-    Task<User> GetUserByClaimsPrincipalAsync(ClaimsPrincipal claimsPrincipal, bool forceUpdate = false);
+    Task<User?> GetUserByClaimsPrincipalAsync(ClaimsPrincipal claimsPrincipal, bool forceUpdate = false);
 }
 
 public static class CachingUserServiceExtensions
@@ -60,6 +60,6 @@ public static class CachingUserServiceExtensions
     /// </summary>
     /// <param name="nameOrEmail">Username or email of the <see cref="User"/>.</param>
     /// <returns>Potentially cached <see cref="User"/>.</returns>
-    public static async Task<User> GetUserByNameOrEmailAsync(this ICachingUserManager manager, string nameOrEmail) =>
+    public static async Task<User?> GetUserByNameOrEmailAsync(this ICachingUserManager manager, string nameOrEmail) =>
         await manager.GetUserByNameAsync(nameOrEmail) ?? await manager.GetUserByEmailAsync(nameOrEmail);
 }
