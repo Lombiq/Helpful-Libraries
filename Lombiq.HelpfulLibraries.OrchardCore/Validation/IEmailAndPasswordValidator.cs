@@ -17,5 +17,5 @@ public interface IEmailAndPasswordValidator
     /// <summary>
     /// Validates the provided <paramref name="password"/> and returns any validation errors as a localized string.
     /// </summary>
-    Task<IEnumerable<LocalizedString>> ValidatePasswordAsync(string password);
+    Task<IEnumerable<LocalizedString>> ValidatePasswordAsync(string? password);
 }
