@@ -3,11 +3,12 @@ using Microsoft.AspNetCore.Mvc.Localization;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.AspNetCore.Razor.TagHelpers;
-using OrchardCore.Modules;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using StringExtensions = OrchardCore.Modules.StringExtensions;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.TagHelpers;
 
@@ -20,16 +21,16 @@ public class EditorFieldSetTagHelper : TagHelper
 
     [HtmlAttributeNotBound]
     [ViewContext]
-    public ViewContext ViewContext { get; set; }
+    public ViewContext? ViewContext { get; set; }
 
     [HtmlAttributeName("asp-for")]
-    public ModelExpression For { get; set; }
+    public ModelExpression? For { get; set; }
 
     [HtmlAttributeName("label")]
-    public LocalizedHtmlString Label { get; set; }
+    public LocalizedHtmlString? Label { get; set; }
 
     [HtmlAttributeName("hint")]
-    public LocalizedHtmlString Hint { get; set; }
+    public LocalizedHtmlString? Hint { get; set; }
 
     [HtmlAttributeName("type")]
     public string InputType { get; set; } = "text";
@@ -41,7 +42,7 @@ public class EditorFieldSetTagHelper : TagHelper
     public bool IsReadOnly { get; set; }
 
     [HtmlAttributeName("options")]
-    public IEnumerable<SelectListItem> Options { get; set; }
+    public IEnumerable<SelectListItem>? Options { get; set; }
 
     public EditorFieldSetTagHelper(IHtmlGenerator htmlGenerator) =>
         _htmlGenerator = htmlGenerator;
@@ -61,7 +62,13 @@ public class EditorFieldSetTagHelper : TagHelper
             output.Attributes.Add(Class, fieldsetClasses);
         }
 
-        AppendInputAndLabel(output, IsRequired || HasRequiredAttribute(For));
+        if (For == null || Label == null)
+        {
+            throw new InvalidOperationException(
+                "This should not be possible because these are required attributes set by the tag helper.");
+        }
+
+        AppendInputAndLabel(output, IsRequired || HasRequiredAttribute(For), For, Label.Html()?.Trim() ?? string.Empty);
 
         var tagBuilder = _htmlGenerator.GenerateValidationMessage(
             ViewContext,
@@ -75,31 +82,31 @@ public class EditorFieldSetTagHelper : TagHelper
         return Task.CompletedTask;
     }
 
-    private void AppendInputAndLabel(TagHelperOutput output, bool isRequired)
+    private void AppendInputAndLabel(TagHelperOutput output, bool isRequired, ModelExpression forExpression, string labelHtml)
     {
         var label = _htmlGenerator.GenerateLabel(
             ViewContext,
-            For.ModelExplorer,
-            For.Name,
-            Label.Html().Trim() + (isRequired ? " *" : string.Empty),
+            forExpression.ModelExplorer,
+            forExpression.Name,
+            labelHtml + (isRequired ? " *" : string.Empty),
             htmlAttributes: null);
 
         var attributes = new Dictionary<string, object>();
         AddBoolAttribute(attributes, IsReadOnly, "readonly");
         AddBoolAttribute(attributes, isRequired, "required");
 
-        if (InputType.EqualsOrdinalIgnoreCase("checkbox"))
+        if (StringExtensions.EqualsOrdinalIgnoreCase(InputType, (string?)"checkbox"))
         {
             attributes[Class] = "custom-control-input";
             var checkbox = _htmlGenerator.GenerateCheckBox(
                 ViewContext,
-                For.ModelExplorer,
-                For.Name,
-                For.Model switch
+                forExpression.ModelExplorer,
+                forExpression.Name,
+                forExpression.Model switch
                 {
                     null => null,
                     bool value => value,
-                    _ => bool.TryParse(For.Model.ToString(), out var parsedValue) ? parsedValue : null,
+                    _ => bool.TryParse(forExpression.Model.ToString(), out var parsedValue) ? parsedValue : null,
                 },
                 attributes);
 
@@ -128,18 +135,18 @@ public class EditorFieldSetTagHelper : TagHelper
         var input = inputType == "select"
             ? _htmlGenerator.GenerateSelect(
                 ViewContext,
-                For.ModelExplorer,
+                forExpression.ModelExplorer,
                 string.Empty,
-                For.Name,
+                forExpression.Name,
                 Options,
                 allowMultiple: false,
                 attributes)
             : _htmlGenerator.GenerateTextBox(
                 ViewContext,
-                For.ModelExplorer,
-                For.Name,
-                For.Model,
-                For.ModelExplorer.Metadata.EditFormatString,
+                forExpression.ModelExplorer,
+                forExpression.Name,
+                forExpression.Model,
+                forExpression.ModelExplorer.Metadata.EditFormatString,
                 attributes);
 
         AppendContent(output, label);
@@ -155,7 +162,7 @@ public class EditorFieldSetTagHelper : TagHelper
         output.Content.AppendHtml($" <span class=\"hint {additionalClasses}\">{Hint.Html()}</span>");
     }
 
-    private static void AppendContent(TagHelperOutput output, IHtmlContent content)
+    private static void AppendContent(TagHelperOutput output, IHtmlContent? content)
     {
         if (content != null) output.Content.AppendHtml(content.Html());
     }
