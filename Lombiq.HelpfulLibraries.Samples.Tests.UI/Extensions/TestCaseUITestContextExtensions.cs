@@ -25,9 +25,9 @@ public static class TestCaseUITestContextExtensions
     private static async Task AssertSimpleQueryAsync(UITestContext context, HttpClient client)
     {
         var simpleQueryUrl = context.GetAbsoluteUrlOfAction<LinqToDbSamplesController>(controller => controller.SimpleQuery());
-        var actualContent = await client.GetStringAsync(simpleQueryUrl, context.Configuration.TestCancellationToken);
+        var simpleQueryOutput = await client.GetStringAsync(simpleQueryUrl, context.Configuration.TestCancellationToken);
 
-        actualContent.ShouldMatchApproved(
+        simpleQueryOutput.ShouldMatchApproved(
             options => options
                 .WithScrubber(ScrubContentItemIds)
                 .WithFileExtension("json"),
