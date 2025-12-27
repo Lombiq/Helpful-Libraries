@@ -61,5 +61,5 @@ public static class UrlHelperExtensions
             {
                 area = OrchardCoreContentsArea,
                 contentItemId,
-            });
+            }) ?? string.Empty;
 }

@@ -1,9 +1,7 @@
-using System;
 using OrchardCore.Taxonomies.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Nest;
 
 namespace OrchardCore.ContentManagement;
 

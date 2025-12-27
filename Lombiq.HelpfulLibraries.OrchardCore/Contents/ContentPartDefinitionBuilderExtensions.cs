@@ -26,7 +26,7 @@ public static class ContentPartDefinitionBuilderExtensions
         where T : class, ICopier<T>
     {
         var settings = definition.Settings.ToObject<T>();
-        settings.CopyTo(target);
+        settings?.CopyTo(target);
     }
 }
 

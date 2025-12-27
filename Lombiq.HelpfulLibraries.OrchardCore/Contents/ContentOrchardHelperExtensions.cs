@@ -18,7 +18,7 @@ public static class ContentOrchardHelperExtensions
     /// </summary>
     [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
     public static string GetItemEditUrl(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
-        orchardHelper.GetItemEditUrl(contentItem?.ContentItemId);
+        orchardHelper.GetItemEditUrl(contentItem.ContentItemId);
 
     /// <summary>
     /// Gets the given content item's edit URL.
@@ -55,9 +55,10 @@ public static class ContentOrchardHelperExtensions
         if (httpContext.Request.Method == "POST")
         {
             var previewContentItemId = httpContext.Request.Form["PreviewContentItemId"].ToString();
-            if (!string.IsNullOrEmpty(previewContentItemId))
+            if (!string.IsNullOrEmpty(previewContentItemId) &&
+                httpContext.RequestServices.GetService<IContentManager>() is { } contentManager)
             {
-                return httpContext.RequestServices.GetService<IContentManager>().GetAsync(previewContentItemId);
+                return contentManager.GetAsync(previewContentItemId);
             }
         }
 
@@ -68,7 +69,7 @@ public static class ContentOrchardHelperExtensions
     public static string Action<TController>(
         this IOrchardHelper orchardHelper,
         Expression<Action<TController>> actionExpression,
-        params (string Key, object Value)[] additionalArguments)
+        params (string Key, object? Value)[] additionalArguments)
         where TController : ControllerBase =>
         orchardHelper.HttpContext.Action(actionExpression, additionalArguments);
 
@@ -76,7 +77,7 @@ public static class ContentOrchardHelperExtensions
     public static string Action<TController>(
         this IOrchardHelper orchardHelper,
         Expression<Func<TController, Task>> taskActionExpression,
-        params (string Key, object Value)[] additionalArguments)
+        params (string Key, object? Value)[] additionalArguments)
         where TController : ControllerBase =>
         orchardHelper.HttpContext.Action(taskActionExpression.StripResult(), additionalArguments);
 
@@ -86,7 +87,7 @@ public static class ContentOrchardHelperExtensions
     public static IUrlHelper GetUrlHelper(this IOrchardHelper orchardHelper)
     {
         var serviceProvider = orchardHelper.HttpContext.RequestServices;
-        var urlHelperFactory = serviceProvider.GetService<IUrlHelperFactory>();
+        var urlHelperFactory = serviceProvider.GetRequiredService<IUrlHelperFactory>();
         var actionContext = serviceProvider.GetService<IActionContextAccessor>()?.ActionContext ??
             throw new InvalidOperationException("Couldn't access the action context.");
 

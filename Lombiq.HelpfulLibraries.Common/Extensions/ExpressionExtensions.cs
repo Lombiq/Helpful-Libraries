@@ -46,7 +46,7 @@ public static class ExpressionExtensions
                 Value = ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke()),
             })
             .Where(pair => !string.IsNullOrEmpty(pair.Name) && !string.IsNullOrEmpty(pair.Value))
-            .Select(pair => new KeyValuePair<string, string>(pair.Name!, pair.Value!))
+            .Select(pair => new KeyValuePair<string, string?>(pair.Name!, pair.Value!))
             .ToList();
 
         return (operation.Method, arguments);
