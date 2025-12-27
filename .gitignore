@@ -10,3 +10,4 @@ node_modules/
 .pnpm-debug.log
 .editorconfig
 *.orig
+*.received*
