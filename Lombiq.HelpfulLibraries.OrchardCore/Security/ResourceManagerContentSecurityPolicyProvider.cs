@@ -1,5 +1,3 @@
-#nullable enable
-
 using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
 using OrchardCore.ResourceManagement;
