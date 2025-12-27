@@ -8,8 +8,8 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
 public class ResourceFilter
 {
-    public Func<HttpContext, bool> Filter { get; set; }
-    public Func<HttpContext, Task<bool>> FilterAsync { get; set; }
+    public Func<HttpContext, bool>? Filter { get; set; }
+    public Func<HttpContext, Task<bool>>? FilterAsync { get; set; }
 
     public IList<Action<IResourceManager>> Executions { get; init; } = [];
     public IList<Func<IResourceManager, Task>> ExecutionsAsync { get; init; } = [];

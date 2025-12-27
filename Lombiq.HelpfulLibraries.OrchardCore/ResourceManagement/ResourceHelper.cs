@@ -11,7 +11,7 @@ public static class ResourceHelper
     /// Returns the contents of an embedded text file in a given assembly. Returns the text content of the file located
     /// in the <paramref name="path"/> of the <paramref name="provider"/> or <see langword="null"/> if it doesn't exist.
     /// </summary>
-    public static async Task<string> GetFileAsync(IFileProvider provider, string path)
+    public static async Task<string?> GetFileAsync(IFileProvider provider, string path)
     {
         var fileInfo = provider
             .GetDirectoryContents(string.Empty)
@@ -28,7 +28,7 @@ public static class ResourceHelper
     /// name="provider"/> or <see langword="null"/> if it doesn't exist.
     /// </summary>
     /// <param name="extension">The extension of the target file.</param>
-    public static Task<string> GetFileAsync<T>(IFileProvider provider, string extension) =>
+    public static Task<string?> GetFileAsync<T>(IFileProvider provider, string extension) =>
         GetFileAsync(provider, GetTypeFilePath<T>(extension));
 
     /// <summary>
@@ -37,7 +37,7 @@ public static class ResourceHelper
     /// </summary>
     /// <typeparam name="T">A type defined in the same assembly where the embedded resource is.</typeparam>
     /// <param name="extension">The extension of the target file.</param>
-    public static Task<string> GetEmbeddedFileAsync<T>(string extension) =>
+    public static Task<string?> GetEmbeddedFileAsync<T>(string extension) =>
         GetFileAsync(new EmbeddedFileProvider(typeof(T).Assembly), GetTypeFilePath<T>(extension));
 
     /// <summary>

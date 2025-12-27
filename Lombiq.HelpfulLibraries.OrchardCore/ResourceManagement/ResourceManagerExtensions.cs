@@ -23,7 +23,7 @@ public static class ResourceManagerExtensions
     public static RequireSettings RegisterStyle(
         this IResourceManager resourceManager,
         string resourceName,
-        string version = null) =>
+        string? version = null) =>
         SetVersionIfAny(resourceManager.RegisterResource(ResourceTypes.Stylesheet, resourceName), version);
 
     /// <summary>
@@ -32,7 +32,7 @@ public static class ResourceManagerExtensions
     public static RequireSettings RegisterScript(
         this IResourceManager resourceManager,
         string resourceName,
-        string version = null,
+        string? version = null,
         ResourceLocation location = ResourceLocation.Foot) =>
         SetVersionIfAny(resourceManager.RegisterResource(ResourceTypes.Script, resourceName).AtLocation(location), version);
 
@@ -82,8 +82,8 @@ public static class ResourceManagerExtensions
     /// </param>
     public static IEnumerable<TagBuilder> GetRequiredScriptModuleTags(
         this IResourceManager resourceManager,
-        string basePath = null,
-        Func<ResourceRequiredContext, bool> filter = null)
+        string? basePath = null,
+        Func<ResourceRequiredContext, bool>? filter = null)
     {
         var contexts = resourceManager.GetRequiredResources(ResourceTypes.ScriptModule);
         if (filter != null) contexts = contexts.Where(filter);
@@ -118,9 +118,9 @@ public static class ResourceManagerExtensions
     /// cref="ResourceManagementOptions.ContentBasePath"/> should be used..
     /// </param>
     /// <param name="resourceName">The expected value of <see cref="ResourceDefinition.Name"/>.</param>
-    public static TagBuilder GetRequiredScriptModuleTag(
+    public static TagBuilder? GetRequiredScriptModuleTag(
         this IResourceManager resourceManager,
-        string basePath,
+        string? basePath,
         string resourceName) =>
         resourceManager
             .GetRequiredScriptModuleTags(
@@ -136,11 +136,11 @@ public static class ResourceManagerExtensions
     /// </summary>
     public static IHtmlContent GetScriptModuleImportMap(
         this ResourceManagementOptions resourceOptions,
-        IEnumerable<ResourceManifest> resourceManifests,
+        IEnumerable<ResourceManifest?>? resourceManifests,
         IFileVersionProvider fileVersionProvider)
     {
         var imports = (resourceManifests ?? resourceOptions.ResourceManifests)
-            .SelectMany(manifest => manifest.GetResources(ResourceTypes.ScriptModule).Values)
+            .SelectMany(manifest => manifest?.GetResources(ResourceTypes.ScriptModule).Values ?? [])
             .SelectMany(list => list)
             .Distinct()
             .SelectMany(resource => new[]
@@ -188,14 +188,14 @@ public static class ResourceManagerExtensions
     public static IHtmlContent GetScriptModuleImportMap(this IOrchardHelper helper) =>
         helper.HttpContext.RequestServices.GetScriptModuleImportMap();
 
-    private static string GetResourceUrl(
+    private static string? GetResourceUrl(
         this ResourceDefinition definition,
         IFileVersionProvider fileVersionProvider,
         bool isDebug,
         bool isCdn,
         PathString basePath)
     {
-        static string Coalesce(params string[] strings) => strings.Find(str => !string.IsNullOrEmpty(str));
+        static string? Coalesce(params string[] strings) => strings.Find(str => !string.IsNullOrEmpty(str));
 
         var url = (isDebug, isCdn) switch
         {
@@ -215,7 +215,7 @@ public static class ResourceManagerExtensions
         return fileVersionProvider.AddFileVersionToPath(basePath, url);
     }
 
-    private static RequireSettings SetVersionIfAny(RequireSettings requireSettings, string version)
+    private static RequireSettings SetVersionIfAny(RequireSettings requireSettings, string? version)
     {
         if (!string.IsNullOrEmpty(version)) requireSettings.UseVersion(version);
         return requireSettings;
