@@ -64,32 +64,4 @@
     <Right>lib/net8.0/Lombiq.HelpfulLibraries.Common.dll</Right>
     <IsBaselineSuppression>true</IsBaselineSuppression>
   </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0021</DiagnosticId>
-    <Target>M:System.Collections.Generic.DictionaryExtensions.ToListValuedDictionary``3(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``1}},System.Func{``1,``2})``0:notnull</Target>
-    <Left>lib/net8.0/Lombiq.HelpfulLibraries.Common.dll</Left>
-    <Right>lib/net8.0/Lombiq.HelpfulLibraries.Common.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0021</DiagnosticId>
-    <Target>M:System.Collections.Generic.DictionaryExtensions.ToReadOnly``2(System.Collections.Generic.IDictionary{``0,``1})``0:notnull</Target>
-    <Left>lib/net8.0/Lombiq.HelpfulLibraries.Common.dll</Left>
-    <Right>lib/net8.0/Lombiq.HelpfulLibraries.Common.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0021</DiagnosticId>
-    <Target>M:System.Collections.Generic.DictionaryExtensions.WithFirstValues``3(System.Collections.Generic.IEnumerable{System.Collections.Generic.KeyValuePair{``0,``2}},System.Func{``2,``1})``0:notnull</Target>
-    <Left>lib/net8.0/Lombiq.HelpfulLibraries.Common.dll</Left>
-    <Right>lib/net8.0/Lombiq.HelpfulLibraries.Common.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
-  <Suppression>
-    <DiagnosticId>CP0021</DiagnosticId>
-    <Target>M:System.ServiceProviderExtensions.GetLazyService``1(System.IServiceProvider)``0:notnull</Target>
-    <Left>lib/net8.0/Lombiq.HelpfulLibraries.Common.dll</Left>
-    <Right>lib/net8.0/Lombiq.HelpfulLibraries.Common.dll</Right>
-    <IsBaselineSuppression>true</IsBaselineSuppression>
-  </Suppression>
 </Suppressions>
