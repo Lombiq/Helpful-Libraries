@@ -298,6 +298,13 @@ public static class EnumerableExtensions
         collection.Where(item => !negativePredicate(item));
 
     /// <summary>
+    /// Filters out the <see langword="null"/> or whitespace elements of the <paramref name="collection"/>. The
+    /// resulting collection's elements are marked not null.
+    /// </summary>
+    public static IEnumerable<string> WhereNotNullOrWhiteSpace(this IEnumerable<string?> collection) =>
+        collection.WhereNot(string.IsNullOrWhiteSpace).Cast<string>();
+
+    /// <summary>
     /// Filters the elements of the <paramref name="collection"/> if they return <see langword="false"/> when evaluated
     /// by the <paramref name="negativePredicate"/>.
     /// </summary>

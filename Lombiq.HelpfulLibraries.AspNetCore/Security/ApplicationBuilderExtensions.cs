@@ -162,9 +162,9 @@ public static class ApplicationBuilderExtensions
                 var newCookies = new List<string>(capacity: setCookie.Count);
                 var changed = false;
 
-                foreach (var cookie in setCookie.WhereNot(string.IsNullOrWhiteSpace))
+                foreach (var cookie in setCookie.WhereNotNullOrWhiteSpace())
                 {
-                    var newCookie = cookie ?? string.Empty;
+                    var newCookie = cookie;
 
                     // The "orch_notify" cookie is used by Orchard Core' INotifier. It's usually set before a redirect,
                     // so using SameSite=Strict would break it.
