@@ -12,6 +12,8 @@ public static class ControllerExtensions
     /// Could be part of Orchard but <see href="https://github.com/OrchardCMS/OrchardCore/issues/2830">it won't</see>.
     /// </para>
     /// </remarks>
-    public static RedirectResult RedirectToLocal(this Controller controller, string redirectUrl) =>
-        controller.Redirect(controller.Url.IsLocalUrl(redirectUrl) ? redirectUrl : "~/");
+    public static RedirectResult RedirectToLocal(this Controller controller, string? redirectUrl) =>
+        controller.Redirect(controller.Url.IsLocalUrl(redirectUrl) && !string.IsNullOrWhiteSpace(redirectUrl)
+            ? redirectUrl
+            : "~/");
 }

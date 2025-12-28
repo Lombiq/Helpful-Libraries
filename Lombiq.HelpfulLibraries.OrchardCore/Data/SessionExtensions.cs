@@ -29,15 +29,15 @@ public static class SessionExtensions
     public static async Task<IEnumerable<TRow>> RawQueryAsync<TRow>(
         this ISession session,
         string sql,
-        IDictionary<string, object> parameters = null,
-        Func<(string ParsedQuery, IDbTransaction Transaction), Task<IEnumerable<TRow>>> queryExecutor = null,
-        DbTransaction transaction = null)
+        IDictionary<string, object?>? parameters = null,
+        Func<(string ParsedQuery, IDbTransaction Transaction), Task<IEnumerable<TRow>>>? queryExecutor = null,
+        DbTransaction? transaction = null)
     {
         transaction ??= await session.BeginTransactionAsync();
         var query = GetQuery(sql, session);
 
         return queryExecutor == null
-            ? await transaction.Connection.QueryAsync<TRow>(query, parameters, transaction)
+            ? await transaction.Connection!.QueryAsync<TRow>(query, parameters, transaction)
             : await queryExecutor((query, transaction));
     }
 
@@ -57,14 +57,14 @@ public static class SessionExtensions
     public static async Task<int> RawExecuteNonQueryAsync(
         this ISession session,
         GetSqlQuery getSqlQuery,
-        object parameters = null,
-        DbTransaction transaction = null)
+        object? parameters = null,
+        DbTransaction? transaction = null)
     {
         transaction ??= await session.BeginTransactionAsync();
         var prefix = session.Store.Configuration.TablePrefix;
         var query = getSqlQuery(transaction, prefix);
 
-        return await session.CurrentTransaction.Connection.ExecuteAsync(query, parameters, transaction);
+        return await session.CurrentTransaction.Connection!.ExecuteAsync(query, parameters, transaction);
     }
 
     private static string GetQuery(
@@ -82,7 +82,7 @@ public static class SessionExtensions
 
         if (parserResult) return query;
 
-        var messagesList = messages is IList<string> list ? list : messages.ToList();
+        var messagesList = messages as IList<string> ?? messages.ToList();
 
         throw new RawQueryException(
             $"Error during parsing the query \"{sql}\" with the following messages: {Environment.NewLine}" +
@@ -111,7 +111,7 @@ public static class SessionExtensions
                 SET {dialect.QuoteForColumnName("Content")} = @Content
                 WHERE {dialect.QuoteForColumnName("Id")} = @Id";
 
-        return await transaction.Connection.ExecuteAsync(sql, new { Id = documentId, Content = content }, transaction) > 0;
+        return await transaction.Connection!.ExecuteAsync(sql, new { Id = documentId, Content = content }, transaction) > 0;
     }
 
     /// <summary>
@@ -120,7 +120,7 @@ public static class SessionExtensions
     public static IQuery<ContentItem, ContentItemIndex> QueryContentItem(
         this ISession session,
         PublicationStatus status,
-        string contentType = null)
+        string? contentType = null)
     {
         var query = status switch
         {
@@ -167,7 +167,7 @@ public static class SessionExtensions
     public static IQueryIndex<ContentItemIndex> QueryContentItemIndex(
         this ISession session,
         PublicationStatus status,
-        string contentType = null)
+        string? contentType = null)
     {
         var query = status switch
         {

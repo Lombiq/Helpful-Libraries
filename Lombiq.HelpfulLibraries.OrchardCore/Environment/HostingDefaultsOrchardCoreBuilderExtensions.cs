@@ -16,9 +16,9 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
     public static OrchardCoreBuilder ConfigureHostingDefaults(
         this OrchardCoreBuilder builder,
         WebApplicationBuilder webApplicationBuilder,
-        HostingConfiguration hostingConfiguration = null)
+        HostingConfiguration? hostingConfiguration = null)
     {
-        hostingConfiguration ??= new HostingConfiguration();
+        hostingConfiguration ??= new();
 
         // Not using static type references for the names here because those practically never change, but we'd need to
         // add project/package references to all the affected projects.
@@ -106,9 +106,9 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
     public static OrchardCoreBuilder ConfigureAzureHostingDefaults(
         this OrchardCoreBuilder builder,
         WebApplicationBuilder webApplicationBuilder,
-        AzureHostingConfiguration hostingConfiguration = null)
+        AzureHostingConfiguration? hostingConfiguration = null)
     {
-        hostingConfiguration ??= new AzureHostingConfiguration();
+        hostingConfiguration ??= new();
 
         builder.ConfigureHostingDefaults(webApplicationBuilder, hostingConfiguration);
 

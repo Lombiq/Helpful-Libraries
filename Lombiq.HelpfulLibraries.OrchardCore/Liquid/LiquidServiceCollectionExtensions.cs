@@ -1,4 +1,5 @@
 using Fluid;
+using Fluid.Ast;
 using Fluid.Values;
 using Lombiq.HelpfulLibraries.OrchardCore.Liquid;
 using OrchardCore.DisplayManagement.Liquid;
@@ -54,7 +55,7 @@ public static class LiquidServiceCollectionExtensions
                 {
                     var provider = ((LiquidTemplateContext)context).Services;
                     var service = provider.GetKeyedService<ILiquidParserTag>(tagName);
-                    return service.WriteToAsync(arguments, writer, encoder, context);
+                    return service?.WriteToAsync(arguments, writer, encoder, context) ?? new(Completion.Normal);
                 })));
     }
 
@@ -74,7 +75,7 @@ public static class LiquidServiceCollectionExtensions
                 {
                     var provider = ((LiquidTemplateContext)context).Services;
                     var service = provider.GetKeyedService<ILiquidParserBlock>(blockName);
-                    return service.WriteToAsync(arguments, statements, writer, encoder, context);
+                    return service?.WriteToAsync(arguments, statements, writer, encoder, context) ?? new(Completion.Normal);
                 })));
     }
 
@@ -92,8 +93,10 @@ public static class LiquidServiceCollectionExtensions
                 async (writer, encoder, context) =>
                 {
                     var provider = ((LiquidTemplateContext)context).Services;
-                    var service = provider.GetKeyedService<ILiquidParserTag>(tagName);
-                    return await service.WriteToAsync([], writer, encoder, context);
+
+                    return provider.GetKeyedService<ILiquidParserTag>(tagName) is { } service
+                        ? await service.WriteToAsync([], writer, encoder, context)
+                        : Completion.Normal;
                 })));
     }
 

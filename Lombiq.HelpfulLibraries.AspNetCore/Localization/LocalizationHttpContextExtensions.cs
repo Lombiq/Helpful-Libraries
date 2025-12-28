@@ -10,5 +10,5 @@ public static class LocalizationHttpContextExtensions
     /// </summary>
     /// <returns>CultureInfo set in the request.</returns>
     public static CultureInfo GetUICulture(this HttpContext httpContext) =>
-        httpContext.Features.Get<IRequestCultureFeature>().RequestCulture.UICulture;
+        httpContext.Features.Get<IRequestCultureFeature>()?.RequestCulture.UICulture ?? CultureInfo.CurrentUICulture;
 }

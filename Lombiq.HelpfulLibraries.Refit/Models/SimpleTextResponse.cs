@@ -18,12 +18,12 @@ public class SimpleTextResponse
     /// <summary>
     /// Gets the string content of the API response.
     /// </summary>
-    public string Content { get; }
+    public string? Content { get; }
 
     /// <summary>
     /// Gets a read-only dictionary of all headers and their first values.
     /// </summary>
-    public IReadOnlyDictionary<string, string> Headers { get; }
+    public IReadOnlyDictionary<string, string?> Headers { get; }
 
     /// <summary>
     /// Gets a value indicating whether the response had no error and its status was <see cref="HttpStatusCode.OK"/>.
@@ -38,17 +38,19 @@ public class SimpleTextResponse
     /// <summary>
     /// Gets the error captured by the original <see cref="ApiResponse{T}"/> or <see langword="null"/>.
     /// </summary>
-    public ApiException Error { get; }
+    public ApiException? Error { get; }
 
     /// <summary>
     /// Gets the location header in <see cref="Headers"/>.
     /// </summary>
-    public string Location => Headers.TryGetValue(nameof(Location), out var value) ? value : null;
+    public string? Location => Headers.TryGetValue(nameof(Location), out var value) ? value : null;
 
     internal SimpleTextResponse(IApiResponse<string> response)
     {
         Content = response.Content;
-        Headers = response.Headers.ToDictionary(header => header.Key, header => header.Value.First());
+        Headers = response.Headers.ToDictionary<KeyValuePair<string, IEnumerable<string>>, string, string?>(
+            header => header.Key,
+            header => header.Value.First());
         IsOk = response.Error == null && response.StatusCode == HttpStatusCode.OK;
         StatusCode = response.StatusCode;
         Error = response.Error;
@@ -58,7 +60,7 @@ public class SimpleTextResponse
     /// Creates a new instance of <see cref="SimpleTextResponse"/> from <paramref name="response"/> and then disposes
     /// the input.
     /// </summary>
-    public static SimpleTextResponse ConvertAndDisposeApiResponse(ApiResponse<string> response)
+    public static SimpleTextResponse? ConvertAndDisposeApiResponse(ApiResponse<string>? response)
     {
         if (response == null) return null;
 

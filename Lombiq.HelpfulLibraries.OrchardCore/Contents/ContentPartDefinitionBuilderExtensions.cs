@@ -26,7 +26,7 @@ public static class ContentPartDefinitionBuilderExtensions
         where T : class, ICopier<T>
     {
         var settings = definition.Settings.ToObject<T>();
-        settings.CopyTo(target);
+        settings?.CopyTo(target);
     }
 }
 
@@ -54,7 +54,7 @@ public class ContentPartDefinitionBuilder<TPart>
     /// <typeparam name="TField">The type of the new field to be attached to the content part.</typeparam>
     public ContentPartDefinitionBuilder<TPart> WithField<TField>(
         Expression<Func<TPart, TField>> fieldPropertySelector,
-        Action<ContentPartFieldDefinitionBuilder> configuration = null)
+        Action<ContentPartFieldDefinitionBuilder>? configuration = null)
     {
         var property = ((MemberExpression)fieldPropertySelector.Body).Member;
         var name = property.Name;

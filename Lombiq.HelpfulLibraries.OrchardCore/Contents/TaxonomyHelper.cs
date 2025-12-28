@@ -17,10 +17,10 @@ public class TaxonomyHelper : ITaxonomyHelper
         _contentManager = contentManager;
     }
 
-    public async Task<ContentItem> GetTermContentItemByTaxonomyAliasAsync(string alias, string termId) =>
+    public async Task<ContentItem?> GetTermContentItemByTaxonomyAliasAsync(string alias, string termId) =>
         (await GetTermsOfTaxonomyByAliasAsync(alias, [termId])).FirstOrDefault();
 
-    public async Task<IEnumerable<ContentItem>> GetTermsOfTaxonomyByIdAsync(string taxonomyId, IEnumerable<string> termIds)
+    public async Task<IEnumerable<ContentItem>> GetTermsOfTaxonomyByIdAsync(string taxonomyId, IEnumerable<string>? termIds)
     {
         if (string.IsNullOrWhiteSpace(taxonomyId) ||
             await _contentManager.GetAsync(taxonomyId) is not { } contentItem)
@@ -34,7 +34,7 @@ public class TaxonomyHelper : ITaxonomyHelper
             : GetSelected(contentItem, ids);
     }
 
-    public async Task<IEnumerable<ContentItem>> GetTermsOfTaxonomyByAliasAsync(string taxonomyAlias, IEnumerable<string> termIds) =>
+    public async Task<IEnumerable<ContentItem>> GetTermsOfTaxonomyByAliasAsync(string taxonomyAlias, IEnumerable<string>? termIds) =>
         await GetTermsOfTaxonomyByIdAsync(
             await _contentHandleManager.GetContentItemIdAsync($"alias:{taxonomyAlias}"),
             termIds);
@@ -48,7 +48,7 @@ public class TaxonomyHelper : ITaxonomyHelper
     /// empty as long as  <paramref name="contentItem"/> isn't <see langword="null"/>.
     /// </param>
     /// <returns>An unsorted list of all child items.</returns>
-    public static IList<ContentItem> GetAllChildren(ContentItem contentItem, bool includeSelf = false)
+    public static IList<ContentItem> GetAllChildren(ContentItem? contentItem, bool includeSelf = false)
     {
         var results = new List<ContentItem>();
         if (contentItem == null) return results;

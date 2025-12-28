@@ -28,7 +28,7 @@ public static class UrlHelperExtensions
     /// name="tabIdPart"/> selected.
     /// </summary>
     /// <param name="tabIdPart">The name of the tab as used in the placement info.</param>
-    public static string EditContentItemWithTab(this IUrlHelper helper, string tabIdPart, string contentItemId)
+    public static string EditContentItemWithTab(this IUrlHelper helper, string? tabIdPart, string contentItemId)
     {
         var url = helper.Action(
             nameof(AdminController.Edit),
@@ -37,7 +37,8 @@ public static class UrlHelperExtensions
             {
                 area = OrchardCoreContentsArea,
                 contentItemId,
-            });
+            }) ?? string.Empty;
+
         return string.IsNullOrEmpty(tabIdPart)
             ? url
             : $"{url}#tab-{tabIdPart.HtmlClassify()}-{contentItemId}";
@@ -60,5 +61,5 @@ public static class UrlHelperExtensions
             {
                 area = OrchardCoreContentsArea,
                 contentItemId,
-            });
+            }) ?? string.Empty;
 }

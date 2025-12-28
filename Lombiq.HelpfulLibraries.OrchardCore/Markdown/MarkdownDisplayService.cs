@@ -25,7 +25,7 @@ public class MarkdownDisplayService : IMarkdownDisplayService
         string markdown,
         bool sanitizeHtml = true,
         bool processShortcodes = true,
-        Context shortcodesContext = null)
+        Context? shortcodesContext = null)
     {
         if (string.IsNullOrWhiteSpace(markdown)) return string.Empty;
 

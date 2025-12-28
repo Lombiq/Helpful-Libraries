@@ -14,7 +14,7 @@ public static class ContentDefinitionManagerExtensions
     /// <param name="contentType">Technical name of the content type.</param>
     /// <param name="contentPartName">Technical name of the content part.</param>
     /// <returns>Content part settings object.</returns>
-    public static async Task<T> GetContentPartSettingsAsync<T>(
+    public static async Task<T?> GetContentPartSettingsAsync<T>(
         this IContentDefinitionManager contentDefinitionManager,
         string contentType,
         string contentPartName)

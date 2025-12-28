@@ -49,7 +49,7 @@ public class JsonModelBinder : IModelBinder
         {
             _logger.LogError(jsonException, "Failed to bind parameter '{FieldName}'", bindingContext.FieldName);
             bindingContext.ActionContext.ModelState.TryAddModelError(
-                key: jsonException.Path,
+                key: jsonException.Path ?? string.Empty,
                 exception: jsonException,
                 bindingContext.ModelMetadata);
         }

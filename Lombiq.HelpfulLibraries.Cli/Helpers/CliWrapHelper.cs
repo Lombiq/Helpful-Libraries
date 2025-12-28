@@ -42,10 +42,10 @@ public static class CliWrapHelper
         string program,
         ICollection<string> arguments,
         Action<CommandEvent> handler,
-        Func<Command, Command> configureCommand = null)
+        Func<Command, Command>? configureCommand = null)
     {
         var command = CliWrap.Cli.Wrap(program);
-        if (arguments?.Count != 0) command = command.WithArguments(arguments);
+        if (arguments is { Count: > 0 }) command = command.WithArguments(arguments);
         if (configureCommand != null) command = configureCommand(command);
 
         await foreach (var commandEvent in command.ListenAsync()) handler(commandEvent);

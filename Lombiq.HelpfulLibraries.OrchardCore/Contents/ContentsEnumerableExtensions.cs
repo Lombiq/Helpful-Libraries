@@ -13,7 +13,8 @@ public static class ContentsEnumerableExtensions
         this IEnumerable<IGrouping<TKey, ContentItem>> lookup) =>
         lookup
             .SelectMany(grouping => grouping)
-            .Unique(contentItem => contentItem.ContentItemVersionId);
+            .Unique(contentItem => contentItem.ContentItemVersionId)
+            .CastWhere<ContentItem>();
 
     /// <summary>
     /// Re-flattens <see cref="ILookup{TKey, ContentItem}"/> or <c>GroupBy</c> collections and ensures that each

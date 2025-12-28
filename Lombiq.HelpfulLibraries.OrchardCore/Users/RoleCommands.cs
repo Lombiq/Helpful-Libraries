@@ -14,10 +14,10 @@ public class RoleCommands : DefaultCommandHandler
     private readonly ILogger<RoleCommands> _logger;
 
     [OrchardSwitch]
-    public string RoleName { get; set; }
+    public string? RoleName { get; set; }
 
     [OrchardSwitch]
-    public string Permission { get; set; }
+    public string? Permission { get; set; }
 
     public RoleCommands(RoleManager<IRole> roleManager, IStringLocalizer<RoleCommands> localizer, ILogger<RoleCommands> logger)
         : base(localizer)
@@ -52,8 +52,10 @@ public class RoleCommands : DefaultCommandHandler
         await _roleManager.UpdateAsync(role);
     }
 
-    private async Task<Role> LookupRoleByNameAsync()
+    private async Task<Role?> LookupRoleByNameAsync()
     {
+        if (string.IsNullOrWhiteSpace(RoleName)) return null;
+
         if (await _roleManager.FindByNameAsync(_roleManager.NormalizeKey(RoleName)) is Role role)
         {
             return role;

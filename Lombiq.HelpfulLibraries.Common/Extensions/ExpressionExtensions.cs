@@ -17,9 +17,9 @@ public static class ExpressionExtensions
     /// Gets information about a <see cref="Expression{TDelegate}"/> which should contain just one method call. The <see
     /// cref="MethodInfo"/> and argument collection is extracted and returned.
     /// </summary>
-    public static (MethodInfo Method, List<KeyValuePair<string, string>> Arguments) GetMethodCallInfo(this Expression expression)
+    public static (MethodInfo Method, List<KeyValuePair<string, string?>> Arguments) GetMethodCallInfo(this Expression expression)
     {
-        static string ValueToString(object value) =>
+        static string? ValueToString(object? value) =>
             value switch
             {
                 null => null,
@@ -40,10 +40,13 @@ public static class ExpressionExtensions
 
         var arguments = operation
             .Arguments
-            .Select((argument, index) => new KeyValuePair<string, string>(
+            .Select((argument, index) => new
+            {
                 methodParameters[index].Name,
-                ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke())))
-            .Where(pair => pair.Value != null)
+                Value = ValueToString(Expression.Lambda(argument).Compile().DynamicInvoke()),
+            })
+            .Where(pair => !string.IsNullOrEmpty(pair.Name) && !string.IsNullOrEmpty(pair.Value))
+            .Select(pair => new KeyValuePair<string, string?>(pair.Name!, pair.Value!))
             .ToList();
 
         return (operation.Method, arguments);

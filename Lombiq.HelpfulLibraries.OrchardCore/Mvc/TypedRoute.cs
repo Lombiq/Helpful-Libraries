@@ -26,15 +26,15 @@ public class TypedRoute
     private readonly string _area;
     private readonly Type _controller;
     private readonly MethodInfo _action;
-    private readonly IReadOnlyList<KeyValuePair<string, string>> _arguments;
+    private readonly IReadOnlyList<KeyValuePair<string, string?>> _arguments;
 
     private readonly string _prefix = "/";
 
     private TypedRoute(
         Type controller,
         MethodInfo action,
-        List<KeyValuePair<string, string>> arguments,
-        IServiceProvider serviceProvider = null)
+        List<KeyValuePair<string, string?>> arguments,
+        IServiceProvider? serviceProvider = null)
     {
         if (arguments.Find(pair => pair.Key.EqualsOrdinalIgnoreCase("area")) is { Value: { } value } area)
         {
@@ -62,7 +62,7 @@ public class TypedRoute
         var isAdmin = Attribute.IsDefined(controller, typeof(AdminAttribute)) || Attribute.IsDefined(action, typeof(AdminAttribute));
         if (isAdmin && !Attribute.IsDefined(action, typeof(RouteAttribute)))
         {
-            _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions())!.AdminUrlPrefix}/";
+            _prefix = $"/{(serviceProvider?.GetService<IOptions<AdminOptions>>()?.Value ?? new AdminOptions()).AdminUrlPrefix}/";
         }
 
         _controller = controller;
@@ -83,7 +83,7 @@ public class TypedRoute
             httpContext,
             _action.Name,
             _controller.ControllerName(),
-            arguments);
+            arguments) ?? ToString();
     }
 
     /// <summary>
@@ -121,13 +121,13 @@ public class TypedRoute
     /// The final route with the template strings substituted from <paramref name="arguments"/>, and the list of pairs
     /// not used up by this substitution. The latter can be added to the query string of the final URL.
     /// </returns>
-    private static (string Route, IReadOnlyList<KeyValuePair<string, string>> OtherArguments) GetRouteFromTemplate(
+    private static (string Route, IReadOnlyList<KeyValuePair<string, string?>> OtherArguments) GetRouteFromTemplate(
         string routeTemplate,
-        IReadOnlyList<KeyValuePair<string, string>> arguments)
+        IReadOnlyList<KeyValuePair<string, string?>> arguments)
     {
         if (!routeTemplate.Contains('{')) return (routeTemplate, arguments);
 
-        var otherArguments = new List<KeyValuePair<string, string>>();
+        var otherArguments = new List<KeyValuePair<string, string?>>();
 
         foreach (var pair in arguments)
         {
@@ -165,12 +165,12 @@ public class TypedRoute
     /// <param name="additionalArguments">Additional arguments to add to the route and the key in the cache.</param>
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> actionExpression,
-        IEnumerable<(string Key, object Value)> additionalArguments,
-        IServiceProvider serviceProvider = null)
+        IEnumerable<(string Key, object? Value)>? additionalArguments,
+        IServiceProvider? serviceProvider = null)
         where TController : ControllerBase =>
         CreateFromExpression(
             actionExpression,
-            additionalArguments.Select((key, value) => new KeyValuePair<string, string>(key, value.ToString())),
+            additionalArguments?.Select((key, value) => new KeyValuePair<string, string?>(key, value?.ToString())),
             serviceProvider);
 
     /// <summary>
@@ -181,8 +181,8 @@ public class TypedRoute
     /// <param name="additionalArguments">Additional arguments to add to the route and the key in the cache.</param>
     public static TypedRoute CreateFromExpression<TController>(
         Expression<Action<TController>> action,
-        IEnumerable<KeyValuePair<string, string>> additionalArguments = null,
-        IServiceProvider serviceProvider = null)
+        IEnumerable<KeyValuePair<string, string?>>? additionalArguments = null,
+        IServiceProvider? serviceProvider = null)
         where TController : ControllerBase
     {
         var (method, arguments) = action.GetMethodCallInfo();
@@ -194,15 +194,10 @@ public class TypedRoute
             method,
             string.Join(',', arguments.Select(pair => $"{pair.Key}={pair.Value}")));
 
-        if (serviceProvider?.GetService<IMemoryCache>() is { } cache)
+        if (serviceProvider?.GetService<IMemoryCache>() is { } cache &&
+            cache.GetOrCreate(key, _ => new TypedRoute(typeof(TController), method, arguments, serviceProvider)) is { } cached)
         {
-            return cache.GetOrCreate(
-                key,
-                _ => new TypedRoute(
-                    typeof(TController),
-                    method,
-                    arguments,
-                    serviceProvider));
+            return cached;
         }
 
         return _cache.GetOrAdd(

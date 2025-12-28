@@ -5,8 +5,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-#nullable enable
-
 namespace System;
 
 public static class StringExtensions
@@ -131,21 +129,6 @@ public static class StringExtensions
         text.Replace(oldValue, newValue ?? string.Empty, StringComparison.OrdinalIgnoreCase);
 
     /// <summary>
-    /// Use simple <see cref="string"/> equality check with <c>=</c> instead, since it already uses ordinal string
-    /// comparison.
-    /// </summary>
-    [Obsolete("The string equals operator already uses ordinal string comparison.")]
-    public static bool EqualsOrdinal(this string text, string? value) =>
-        throw new NotSupportedException();
-
-    /// <summary>
-    /// Use <c>string.Contains(string)</c> instead, since it already uses ordinal string comparison..
-    /// </summary>
-    [Obsolete("The string.Contains(value) member method already uses ordinal string comparison.")]
-    public static bool ContainsOrdinal(this string text, string value) =>
-        throw new NotSupportedException();
-
-    /// <summary>
     /// A shortcut for <c>string.StartsWith(string, StringComparison.Ordinal)</c>.
     /// </summary>
     /// <remarks>
@@ -168,13 +151,6 @@ public static class StringExtensions
     /// </remarks>
     public static bool EndsWithOrdinal(this string text, string value) =>
         text.EndsWith(value, StringComparison.Ordinal);
-
-    /// <summary>
-    /// Use <c>string.Replace(string, string) instead, since it already uses ordinal string comparison.</c>.
-    /// </summary>
-    [Obsolete("The string.Replace(oldValue, newValue) member method already uses ordinal string comparison.")]
-    public static string ReplaceOrdinal(this string text, string oldValue, string? newValue = "") =>
-        throw new NotSupportedException();
 
     /// <summary>
     /// A shortcut for <c>string.CompareOrdinal(string, string)</c> static method.
@@ -246,7 +222,7 @@ public static class StringExtensions
     /// Concatenates an array of strings, using the specified <paramref name="separator"/> between each member. Empty or
     /// null strings are filtered out.
     /// </summary>
-    public static string JoinNotNullOrEmpty(this string[] strings, string separator = "") =>
+    public static string JoinNotNullOrEmpty(this string?[] strings, string separator = "") =>
         string.Join(separator, strings.Where(item => !string.IsNullOrEmpty(item)));
 
     /// <summary>

@@ -32,7 +32,7 @@ public class CliProgram
             .Wrap(_command)
             .WithArguments(arguments.Select(argument => argument is IConvertible convertible
                 ? convertible.ToString(CultureInfo.InvariantCulture)
-                : argument.ToString()));
+                : $"{argument}"));
 
     /// <summary>
     /// Calls the command specified in the constructor with the provided arguments. If the process doesn't succeed or
@@ -57,7 +57,7 @@ public class CliProgram
     /// </exception>
     public async Task ExecuteAsync(
         ICollection<object> arguments,
-        string additionalExceptionText,
+        string? additionalExceptionText,
         CancellationToken token)
     {
         var result = await GetResultAsync(arguments, token);
@@ -121,7 +121,7 @@ public class CliProgram
     /// </exception>
     public async Task<string> ExecuteAndGetOutputAsync(
         ICollection<object> arguments,
-        string additionalExceptionText,
+        string? additionalExceptionText,
         CancellationToken token)
     {
         var result = await GetResultAsync(arguments, token);
@@ -139,25 +139,24 @@ public class CliProgram
     private void ThrowOnError(
         BufferedCommandResult result,
         ICollection<object> arguments,
-        string additionalExceptionText)
+        string? additionalExceptionText)
     {
-        if (result.ExitCode != 0 || !string.IsNullOrEmpty(result.StandardError))
+        if (result.ExitCode == 0 && string.IsNullOrEmpty(result.StandardError)) return;
+
+        var argumentsString = arguments
+            .Select(argument => argument is string argumentString && argumentString.Contains(' ')
+                ? $"\"{argument}\""
+                : $"{argument}")
+            .Join();
+
+        var lines = new[]
         {
-            var argumentsString = arguments
-                .Select(argument => argument is string argumentString && argumentString.Contains(' ')
-                    ? $"\"{argument}\""
-                    : argument.ToString())
-                .Join();
+            $"The {_command} {argumentsString} command failed with the output below.",
+            additionalExceptionText,
+            result.StandardOutput,
+            result.StandardError,
+        };
 
-            var lines = new[]
-            {
-                $"The {_command} {argumentsString} command failed with the output below.",
-                additionalExceptionText,
-                result.StandardOutput,
-                result.StandardError,
-            };
-
-            throw new InvalidOperationException(lines.JoinNotNullOrEmpty(Environment.NewLine));
-        }
+        throw new InvalidOperationException(lines.JoinNotNullOrEmpty(Environment.NewLine));
     }
 }

@@ -13,7 +13,7 @@ public static class MulticastDelegateExtensions
     /// <param name="delegateExecution">The function to execute each delegate with.</param>
     /// <returns>The <see cref="Task"/> that'll complete when all items have completed.</returns>
     public static Task InvokeAsync<TDelegate>(
-        this MulticastDelegate multicastDelegate,
+        this MulticastDelegate? multicastDelegate,
         Func<TDelegate, Task> delegateExecution)
         where TDelegate : Delegate =>
         multicastDelegate == null

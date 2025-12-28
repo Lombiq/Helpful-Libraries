@@ -7,7 +7,7 @@ namespace Fluid.Ast;
 
 public static class StatementExtensions
 {
-    public static async Task<string> RenderAsync(
+    public static async Task<string?> RenderAsync(
         this IReadOnlyList<Statement> statements,
         TextEncoder encoder,
         TemplateContext context)

@@ -14,12 +14,12 @@ public static class ContentValidateResultExtensions
             {
                 foreach (var memberName in error.MemberNames)
                 {
-                    modelState.AddModelError(memberName, error.ErrorMessage);
+                    modelState.AddModelError(memberName, error.ErrorMessage ?? memberName);
                 }
             }
             else
             {
-                modelState.AddModelError(string.Empty, error.ErrorMessage);
+                modelState.AddModelError(string.Empty, error.ErrorMessage ?? "error");
             }
         }
     }

@@ -7,7 +7,6 @@ using OrchardCore.Navigation;
 using OrchardCore.Settings;
 using System.Collections.Generic;
 using System.Globalization;
-using System.Linq;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using YesSql.Indexes;
@@ -54,7 +53,8 @@ public static class QueryExtensions
         int pageIndex = 0,
         int count = int.MaxValue)
         where TPart : ContentPart =>
-        PaginateAsync(query, pageIndex, count).ContinueWith(t => t.Result.As<TPart>().Where(part => part != null), TaskScheduler.Default);
+        PaginateAsync(query, pageIndex, count)
+            .ContinueWith(t => t.Result.As<TPart>(), TaskScheduler.Default);
 
     /// <summary>
     /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and count
@@ -140,7 +140,7 @@ public static class QueryExtensions
         IShapeFactory shapeFactory,
         ISiteService siteService,
         PagerParameters pagerParameters,
-        RouteValueDictionary routeData,
+        RouteValueDictionary? routeData,
         int? defaultPageSize = null)
         where T : class
     {

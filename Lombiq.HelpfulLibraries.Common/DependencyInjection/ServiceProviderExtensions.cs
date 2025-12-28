@@ -9,6 +9,7 @@ public static class ServiceProviderExtensions
     /// your service implementation without storing a service provider which is an anti-pattern.
     /// </summary>
     /// <typeparam name="T">The type of the required service.</typeparam>
-    public static Lazy<T> GetLazyService<T>(this IServiceProvider serviceProvider) =>
+    public static Lazy<T> GetLazyService<T>(this IServiceProvider serviceProvider)
+        where T : notnull =>
         new(serviceProvider.GetRequiredService<T>);
 }

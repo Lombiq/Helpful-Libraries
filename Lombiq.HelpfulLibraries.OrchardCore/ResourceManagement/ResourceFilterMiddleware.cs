@@ -39,12 +39,12 @@ public class ResourceFilterMiddleware
             // SELECT TOP (1) [Document].* FROM [Document] WHERE [Document].[Type] = @Type
             var themes = await memoryCache.GetOrCreateAsync(
                 typeof(ResourceFilterMiddleware).FullName + ".Themes",
-                async entry =>
+                async _ =>
                     // No options needed for the cache entry since ideally it's kept for the lifetime of the shell, but
                     // can be evicted any time.
                     (await services.GetRequiredService<IShellFeaturesManager>().GetAvailableFeaturesAsync())
                         .SelectWhere(feature => feature.Extension as IThemeExtensionInfo)
-                        .ToDictionary(info => info.Id));
+                        .ToDictionary(info => info.Id)) ?? [];
 
             // This is necessary to determine if we are in admin mode, because AdminZoneFilter won't have executed yet
             // by this point of the pipeline.
@@ -55,7 +55,7 @@ public class ResourceFilterMiddleware
             var themeName = isAdmin
                 ? (await services.GetRequiredService<IAdminThemeService>().GetAdminThemeAsync())?.Id
                 : (await services.GetRequiredService<ISiteThemeService>().GetSiteThemeAsync())?.Id;
-            var themeNames = new List<string> { themeName };
+            List<string> themeNames = string.IsNullOrWhiteSpace(themeName) ? [] : [themeName];
 
             foreach (var resolver in services.GetServices<IResourceFilterThemeResolver>())
             {
@@ -75,7 +75,7 @@ public class ResourceFilterMiddleware
 
         if (anyProviders)
         {
-            IResourceManager resourceManager = null;
+            IResourceManager? resourceManager = null;
 
             var activeFilters = await builder
                 .ResourceFilters
@@ -83,7 +83,7 @@ public class ResourceFilterMiddleware
                 .WhereAsync(
                     filter => filter.Filter != null
                         ? Task.FromResult(filter.Filter(context))
-                        : filter.FilterAsync(context));
+                        : filter.FilterAsync!(context));
 
             foreach (var filter in activeFilters)
             {
@@ -96,7 +96,7 @@ public class ResourceFilterMiddleware
         await _next(context);
     }
 
-    private static IEnumerable<string> GetThemeAndBaseIds(Dictionary<string, IThemeExtensionInfo> themes, string id)
+    private static IEnumerable<string> GetThemeAndBaseIds(Dictionary<string, IThemeExtensionInfo> themes, string? id)
     {
         if (string.IsNullOrEmpty(id) || !themes.TryGetValue(id, out var info))
         {

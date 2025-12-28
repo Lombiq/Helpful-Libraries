@@ -1,5 +1,3 @@
-#nullable enable
-
 using Microsoft.AspNetCore.Html;
 using OrchardCore.DisplayManagement;
 using OrchardCore.DisplayManagement.Html;

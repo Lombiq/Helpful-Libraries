@@ -16,7 +16,7 @@ public static class ContentExtensions
     /// Gets a content part by its type.
     /// </summary>
     /// <returns>The content part or <see langword="null"/> if it doesn't exist.</returns>
-    public static TPart As<TPart>(this IContent content)
+    public static TPart? As<TPart>(this IContent content)
         where TPart : ContentPart =>
         content.ContentItem.As<TPart>();
 
@@ -72,7 +72,7 @@ public static class ContentExtensions
     /// <param name="properties">The object to merge.</param>
     /// <param name="jsonMergeSettings">Settings for the merge.</param>
     /// <returns>The modified <see cref="ContentItem"/> instance.</returns>
-    public static IContent Merge(this IContent content, object properties, JsonMergeSettings jsonMergeSettings = null) =>
+    public static IContent Merge(this IContent content, object properties, JsonMergeSettings? jsonMergeSettings = null) =>
         content.ContentItem.Merge(properties, jsonMergeSettings);
 
     /// <summary>
@@ -129,7 +129,7 @@ public static class ContentExtensions
     /// </summary>
     /// <param name="content">Content item containing <see cref="AliasPart"/>.</param>
     /// <returns>Alias of the content item.</returns>
-    public static string GetAlias(this IContent content) => content.As<AliasPart>()?.Alias;
+    public static string? GetAlias(this IContent content) => content.As<AliasPart>()?.Alias;
 
     /// <summary>
     /// Provides the most essential data for a <see cref="ContentItem"/> enough to identify it in a text format. Can be
@@ -161,10 +161,10 @@ public static class ContentExtensions
     ///     </item>
     /// </list>
     /// </returns>
-    public static DateTime GetDateTimeUtc(this IContent content) =>
-        content.ContentItem.ModifiedUtc ??
-        content.ContentItem.PublishedUtc ??
-        content.ContentItem.CreatedUtc ??
+    public static DateTime GetDateTimeUtc(this IContent? content) =>
+        content?.ContentItem?.ModifiedUtc ??
+        content?.ContentItem?.PublishedUtc ??
+        content?.ContentItem?.CreatedUtc ??
         DateTime.MinValue;
 
     /// <summary>
@@ -179,12 +179,12 @@ public static class ContentExtensions
     /// <summary>
     /// Deserializes the <paramref name="contentElement"/>'s first JSON node that matches <paramref name="path"/>.
     /// </summary>
-    public static T GetProperty<T>(this ContentElement contentElement, string path)
+    public static T? GetProperty<T>(this ContentElement contentElement, string path)
         where T : class
     {
         // Re-serializing ensures that the SelectNode will query from the current root.
         var data = JObject.FromObject((JsonObject)contentElement.Content);
 
-        return data.SelectNode(path)?.Deserialize<T>();
+        return data?.SelectNode(path)?.Deserialize<T>();
     }
 }

@@ -33,10 +33,10 @@ public static class LinqToDbQueryExecutor
     /// of the affected tables in the database.
     /// </param>
     /// <returns>The output of the query.</returns>
-    public static Task<TResult> LinqTableQueryAsync<TTable, TResult>(
+    public static Task<TResult?> LinqTableQueryAsync<TTable, TResult>(
         this ISession session,
-        Func<ITable<TTable>, Task<TResult>> query,
-        string collectionName = null)
+        Func<ITable<TTable>, Task<TResult?>> query,
+        string? collectionName = null)
         where TTable : class =>
         session.LinqQueryAsync(accessor => query(accessor.GetTable<TTable>(collectionName)));
 
@@ -52,23 +52,30 @@ public static class LinqToDbQueryExecutor
     /// The API uses a function to execute the query so we can handle disposing <see cref="LinqToDbConnection"/> too.
     /// </para>
     /// </remarks>
-    public static async Task<TResult> LinqQueryAsync<TResult>(
+    public static async Task<TResult?> LinqQueryAsync<TResult>(
         this ISession session,
-        Func<ITableAccessor, Task<TResult>> query)
+        Func<ITableAccessor, Task<TResult?>> query)
     {
         var transaction = await session.BeginTransactionAsync();
 
+        if (transaction.Connection?.ConnectionString is not { Length: > 0 } connectionString)
+        {
+            throw new InvalidOperationException("Missing transaction connection.");
+        }
+
         // Instantiating a LinqToDB connection object as it is required to start building the query. Note that it won't
         // create an actual connection with the database.
-        var dataProvider = DataConnection.GetDataProvider(
-            GetDatabaseProviderName(session.Store.Configuration.SqlDialect.Name),
-            transaction.Connection.ConnectionString);
+        var configuration = session.Store.Configuration;
+        var dialectName = configuration.SqlDialect.Name;
+        var providerName = GetDatabaseProviderName(dialectName);
+        if (DataConnection.GetDataProvider(providerName, connectionString) is not { } provider)
+        {
+            throw new InvalidOperationException(
+                $"Couldn't get database provider (SQL dialect: \"{dialectName}\", database provider name: " +
+                $"\"{providerName}\", connection string: \"{connectionString}\").");
+        }
 
-        using var linqToDbConnection = new LinqToDbConnection(
-            dataProvider,
-            transaction,
-            session.Store.Configuration.TablePrefix);
-
+        await using var linqToDbConnection = new LinqToDbConnection(provider, transaction, configuration.TablePrefix);
         return await query(linqToDbConnection);
     }
 
