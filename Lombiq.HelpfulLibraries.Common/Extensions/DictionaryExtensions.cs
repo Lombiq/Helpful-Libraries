@@ -67,7 +67,7 @@ public static class DictionaryExtensions
             dictionary[keySelector(item)] = item;
         }
 
-        return missingItems.Union<TValue?>(keysList.SelectWhere(dictionary.GetMaybe));
+        return missingItems.Union(keysList.SelectWhere(dictionary.GetMaybe));
     }
 
     /// <summary>
