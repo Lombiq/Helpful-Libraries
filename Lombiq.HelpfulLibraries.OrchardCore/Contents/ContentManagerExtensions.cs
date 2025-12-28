@@ -116,22 +116,16 @@ public static class ContentManagerExtensions
     /// <returns>Acquired or newly created <see cref="ContentItem"/>.</returns>
     public static async Task<ContentItem> GetOrCreateAsync(
         this IContentManager contentManager,
-        string contentItemId,
+        string? contentItemId,
         string? contentType,
         VersionOptions? versionOptions = null)
     {
         // Check existing item.
         if (!string.IsNullOrEmpty(contentItemId) &&
-            await contentManager.GetAsync(contentItemId, versionOptions) is { } existingItem)
+            await contentManager.GetAsync(contentItemId, versionOptions) is { } existingItem &&
+            (string.IsNullOrEmpty(contentType) || existingItem.ContentType == contentType))
         {
-            // Found it with correct content type.
-            if (string.IsNullOrEmpty(contentType) || existingItem.ContentType == contentType)
-            {
-                return existingItem;
-            }
-
-            // Delete wrong type item before creating a new one.
-            await contentManager.RemoveAsync(existingItem);
+            return existingItem;
         }
 
         // No applicable item found, creating a new one.

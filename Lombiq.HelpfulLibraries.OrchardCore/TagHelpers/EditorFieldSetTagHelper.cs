@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
-using StringExtensions = OrchardCore.Modules.StringExtensions;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.TagHelpers;
 
@@ -95,7 +94,7 @@ public class EditorFieldSetTagHelper : TagHelper
         AddBoolAttribute(attributes, IsReadOnly, "readonly");
         AddBoolAttribute(attributes, isRequired, "required");
 
-        if (StringExtensions.EqualsOrdinalIgnoreCase(InputType, (string?)"checkbox"))
+        if (InputType.EqualsOrdinalIgnoreCase((string?)"checkbox"))
         {
             attributes[Class] = "custom-control-input";
             var checkbox = _htmlGenerator.GenerateCheckBox(

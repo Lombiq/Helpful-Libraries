@@ -54,10 +54,10 @@ public static class DictionaryExtensions
     /// <typeparam name="TValue">Type of the values in the dictionary.</typeparam>
     /// <returns>Values in the dictionary including the newly added ones.</returns>
     public static async Task<IEnumerable<TValue?>> GetValuesOrAddRangeIfMissingAsync<TKey, TValue>(
-        this IDictionary<TKey, TValue?> dictionary,
+        this IDictionary<TKey, TValue> dictionary,
         IEnumerable<TKey> keys,
-        Func<IEnumerable<TKey>, Task<IEnumerable<TValue?>>> valuesFactory,
-        Func<TValue?, TKey> keySelector)
+        Func<IEnumerable<TKey>, Task<IEnumerable<TValue>>> valuesFactory,
+        Func<TValue, TKey> keySelector)
     {
         var keysList = keys.AsList();
         var missingKeys = keysList.Where(key => !dictionary.ContainsKey(key)).ToList();

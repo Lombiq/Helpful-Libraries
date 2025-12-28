@@ -172,7 +172,7 @@ public static class ApplicationBuilderExtensions
                         ref newCookie,
                         ref changed,
                         "SameSite",
-                        newCookie.StartsWithOrdinalIgnoreCase("orch_notify") ? "; SameSite=Lax" : "; SameSite=Strict");
+                        cookie.StartsWithOrdinalIgnoreCase("orch_notify") ? "; SameSite=Lax" : "; SameSite=Strict");
 
                     UpdateIfMissing(ref newCookie, ref changed, "Secure", "; Secure");
 
