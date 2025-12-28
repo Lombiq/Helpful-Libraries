@@ -21,9 +21,9 @@ public static class LocalizedHtmlStringExtensions
     /// <summary>
     /// Returns a raw HTML string representation of the <paramref name="htmlContent"/>.
     /// </summary>
-    public static string? Html(this IHtmlContent? htmlContent)
+    public static string Html(this IHtmlContent? htmlContent)
     {
-        if (htmlContent == null) return null;
+        if (htmlContent == null) return string.Empty;
 
         using var stringWriter = new StringWriter();
         htmlContent.WriteTo(stringWriter, HtmlEncoder.Default);
@@ -48,9 +48,9 @@ public static class LocalizedHtmlStringExtensions
     /// <summary>
     /// Concatenates the <paramref name="items"/> with the provided <paramref name="separator"/> in-between.
     /// </summary>
-    public static LocalizedHtmlString? Join(this IHtmlContent separator, params LocalizedHtmlString[] items)
+    public static LocalizedHtmlString Join(this IHtmlContent separator, params LocalizedHtmlString[] items)
     {
-        if (items.Length == 0) return null;
+        if (items.Length == 0) return new LocalizedHtmlString(string.Empty, string.Empty);
 
         var first = items[0];
         var other = items.Skip(1).SelectMany(item => new[] { separator, item }).ToArray();
