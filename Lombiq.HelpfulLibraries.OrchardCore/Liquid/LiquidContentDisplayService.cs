@@ -20,16 +20,16 @@ public class LiquidContentDisplayService : ILiquidContentDisplayService
     public async ValueTask<FluidValue> DisplayNewAsync(
         string shapeType,
         Func<ValueTask<IShape>> shapeFactory,
-        Action<ShapeCreatingContext> creating = null,
-        Action<ShapeCreatedContext> created = null)
+        Action<ShapeCreatingContext>? creating = null,
+        Action<ShapeCreatedContext>? created = null)
     {
         var shape = await _shapeFactory.CreateAsync(shapeType, shapeFactory, creating, created);
         return await DisplayShapeAsync(shape);
     }
 
-    public async ValueTask<FluidValue> DisplayNewAsync<TModel>(string shapeType, Action<TModel> initialize)
+    public async ValueTask<FluidValue> DisplayNewAsync<TModel>(string shapeType, Action<TModel>? initialize)
     {
-        var shape = await _shapeFactory.CreateAsync(shapeType, initialize);
+        var shape = await _shapeFactory.CreateAsync(shapeType, initialize ?? (_ => { }));
         return await DisplayShapeAsync(shape);
     }
 

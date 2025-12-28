@@ -70,7 +70,10 @@ public class PerTenantShapeTableManager : IShapeTableManager
         var shapeTableCacheKey = $"ShapeTable:{siteSettings.SiteName}:{themeId}";
         var shapeDescriptorsCacheKey = $"ShapeDescriptors:{siteSettings.SiteName}";
 
-        if (_memoryCache.TryGetValue(shapeTableCacheKey, out ShapeTable shapeTable)) return shapeTable;
+        if (_memoryCache.TryGetValue(shapeTableCacheKey, out ShapeTable? shapeTable) && shapeTable != null)
+        {
+            return shapeTable;
+        }
 
         if (_logger.IsEnabled(LogLevel.Information))
         {

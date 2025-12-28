@@ -25,7 +25,7 @@ public abstract class SingleDisplayTypeContentPartDisplayDriver<TPart> : Content
     public abstract string DisplayType { get; }
 
     public virtual string Location => CommonLocationNames.Content;
-    public virtual string Position => null;
+    public virtual string? Position => null;
 
     public override IDisplayResult Display(TPart part, BuildPartDisplayContext context)
     {
@@ -61,7 +61,7 @@ public abstract class SingleDisplayTypeContentPartDisplayDriver<TPart> : Content
         public FieldHiderPlacementInfoResolver(IServiceProvider provider) =>
             _driver = (TDriver)provider.GetRequiredService(typeof(TDriver));
 
-        public PlacementInfo ResolvePlacement(ShapePlacementContext placementContext)
+        public PlacementInfo? ResolvePlacement(ShapePlacementContext placementContext)
         {
             if (placementContext.DisplayType == _driver.DisplayType &&
                 placementContext.Differentiator?.StartsWithOrdinal($"{typeof(TPart).Name}-") == true)

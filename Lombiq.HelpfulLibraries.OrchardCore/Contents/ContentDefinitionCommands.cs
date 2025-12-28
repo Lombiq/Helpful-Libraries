@@ -12,10 +12,10 @@ public class ContentDefinitionCommands : DefaultCommandHandler
     private readonly IContentDefinitionManager _contentDefinitionManager;
 
     [OrchardSwitch]
-    public string Type { get; set; }
+    public string? Type { get; set; }
 
     [OrchardSwitch]
-    public string Part { get; set; }
+    public string? Part { get; set; }
 
     public ContentDefinitionCommands(
         IStringLocalizer<ContentDefinitionCommands> localizer,

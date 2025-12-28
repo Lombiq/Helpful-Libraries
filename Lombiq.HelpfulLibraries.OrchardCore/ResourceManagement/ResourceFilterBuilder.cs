@@ -129,7 +129,7 @@ public class ResourceFilterBuilder
     /// <summary>
     /// Adds an always matching filter to the list of <see cref="ResourceFilters"/>.
     /// </summary>
-    public ResourceFilter Always(Action<IResourceManager> execution = null)
+    public ResourceFilter Always(Action<IResourceManager>? execution = null)
     {
         var filter = When(_ => true);
         if (execution != null) filter.Executions.Add(execution);

@@ -16,7 +16,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Data;
 /// </summary>
 public abstract class RecipeMigrationsBase : DataMigration
 {
-    protected virtual string BaseName => GetType()
+    protected virtual string? BaseName => GetType()
         .Assembly
         .GetCustomAttributes<FeatureAttribute>()
         .Select(feature => feature.Id)

@@ -8,13 +8,15 @@ public static class ZipArchiveExtensions
     /// <summary>
     /// Creates a new text file in <paramref name="zip"/> and writes the <paramref name="lines"/> into it.
     /// </summary>
-    public static async Task CreateTextEntryAsync(this ZipArchive zip, string entryName, IEnumerable<string> lines)
+    public static async Task CreateTextEntryAsync(this ZipArchive zip, string entryName, IEnumerable<string?>? lines)
     {
         await using var writer = new StreamWriter(zip.CreateEntry(entryName).Open());
 
+        if (lines == null) return;
+
         foreach (var line in lines)
         {
-            await writer.WriteLineAsync(line);
+            await writer.WriteLineAsync(line ?? string.Empty);
         }
     }
 

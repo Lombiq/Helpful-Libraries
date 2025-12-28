@@ -6,7 +6,6 @@ using OrchardCore.DisplayManagement.Handlers;
 using OrchardCore.DisplayManagement.Views;
 using OrchardCore.Security.Permissions;
 using OrchardCore.Settings;
-using System;
 using System.Text.Json;
 using System.Threading.Tasks;
 
@@ -15,10 +14,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : SiteDisplayDriver<TSection>
     where TSection : class, new()
 {
-    [Obsolete($"Override {nameof(SettingsGroupId)} instead. This property will be removed in future versions.")]
-    protected virtual string GroupId => SettingsGroupId;
-
-    protected virtual Permission Permission => null;
+    protected virtual Permission? Permission => null;
     protected virtual string ShapeType => $"{typeof(TSection).Name}_Edit";
     protected virtual string Location => $"{CommonLocationNames.Content}:1";
 
@@ -33,7 +29,7 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Site
         _hca = hca;
     }
 
-    public override async Task<IDisplayResult> EditAsync(ISite model, TSection section, BuildEditorContext context) =>
+    public override async Task<IDisplayResult?> EditAsync(ISite model, TSection section, BuildEditorContext context) =>
         await AuthorizeAsync()
             ? Initialize<JsonViewModel<TAdditionalData>>(
                     ShapeType,
@@ -46,10 +42,11 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Site
                 .OnGroup(SettingsGroupId)
             : null;
 
-    public override async Task<IDisplayResult> UpdateAsync(ISite model, TSection section, UpdateEditorContext context)
+    public override async Task<IDisplayResult?> UpdateAsync(ISite model, TSection section, UpdateEditorContext context)
     {
         if (await context.CreateModelMaybeAsync<JsonViewModel<TAdditionalData>>(Prefix, AuthorizeAsync) is { } viewModel &&
-            TryParseJson(viewModel.Json, out var result))
+            TryParseJson(viewModel.Json, out var result) &&
+            result != null)
         {
             await UpdateAsync(section, context, result);
         }
@@ -57,17 +54,21 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Site
         return await EditAsync(model, section, context);
     }
 
-    protected abstract Task UpdateAsync(TSection section, BuildEditorContext context, TSection viewModel);
+    protected abstract Task UpdateAsync(TSection? section, BuildEditorContext context, TSection viewModel);
 
-    protected virtual Task<TAdditionalData> GetAdditionalDataAsync(TSection section, BuildEditorContext context) =>
-        Task.FromResult<TAdditionalData>(default);
+    protected virtual Task<TAdditionalData?> GetAdditionalDataAsync(TSection section, BuildEditorContext context) =>
+        Task.FromResult<TAdditionalData?>(default);
 
-    private Task<bool> AuthorizeAsync() =>
-        Permission == null
+    private Task<bool> AuthorizeAsync()
+    {
+        if (_hca.HttpContext is not { } httpContext) return Task.FromResult(false);
+
+        return Permission == null
             ? Task.FromResult(true)
-            : _authorizationService.AuthorizeCurrentUserAsync(_hca.HttpContext, Permission);
+            : _authorizationService.AuthorizeCurrentUserAsync(httpContext, Permission);
+    }
 
-    private static bool TryParseJson(string json, out TSection result)
+    private static bool TryParseJson(string? json, out TSection? result)
     {
         result = null;
 
@@ -87,8 +88,8 @@ public abstract class JsonSectionDisplayDriver<TSection, TAdditionalData> : Site
 
 public class JsonViewModel<TAdditionalData>
 {
-    public string Json { get; set; }
+    public string? Json { get; set; }
 
     [BindNever]
-    public TAdditionalData AdditionalData { get; internal set; }
+    public TAdditionalData? AdditionalData { get; internal set; }
 }

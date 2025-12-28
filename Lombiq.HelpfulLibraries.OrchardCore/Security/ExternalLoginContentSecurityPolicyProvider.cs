@@ -15,7 +15,7 @@ internal sealed class ExternalLoginContentSecurityPolicyProvider : IContentSecur
     public async ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
         var shellFeaturesManager = context.RequestServices.GetRequiredService<IShellFeaturesManager>();
-        var enabledFeatures = await shellFeaturesManager.GetEnabledFeaturesAsync();
+        var enabledFeatures = (await shellFeaturesManager.GetEnabledFeaturesAsync()).AsList();
 
         if (enabledFeatures.Any("OrchardCore.Microsoft.Authentication.AzureAD"))
         {

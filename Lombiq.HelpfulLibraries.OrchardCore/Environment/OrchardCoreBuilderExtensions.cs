@@ -1,8 +1,5 @@
 using Microsoft.Extensions.Configuration;
-using OrchardCore.Email;
-using OrchardCore.Environment.Shell.Configuration;
 using OrchardCore.ResourceManagement;
-using System;
 
 namespace Microsoft.Extensions.DependencyInjection;
 
@@ -19,31 +16,6 @@ public static class OrchardCoreBuilderExtensions
             .GetValue<string>("OrchardCore:OrchardCore_Shells_Database:ConnectionString");
 
         if (!string.IsNullOrEmpty(shellsConnectionString)) builder.AddDatabaseShellsConfiguration();
-
-        return builder;
-    }
-
-    /// <summary>
-    /// Configures SMTP settings (<see cref="SmtpSettings"/>) from the configuration provider.
-    /// </summary>
-    /// <param name="overrideAdminSettings">
-    /// If set to <see langword="true"/> the settings coming from the configuration provider will override the ones set
-    /// up from the admin UI.
-    /// </param>
-    [Obsolete("The email configuration has changed in OC 2.0, see https://docs.orchardcore.net/en/latest/releases/2.0.0/#email-module.")]
-    public static OrchardCoreBuilder ConfigureSmtpSettings(
-        this OrchardCoreBuilder builder,
-        bool overrideAdminSettings = true)
-    {
-        builder.ConfigureServices((tenantServices, serviceProvider) =>
-        {
-            var shellConfiguration = serviceProvider.GetRequiredService<IShellConfiguration>().GetSection("SmtpSettings");
-            tenantServices.PostConfigure<SmtpSettings>(settings =>
-            {
-                if (!overrideAdminSettings && !string.IsNullOrEmpty(settings.Host)) return;
-                shellConfiguration.Bind(settings);
-            });
-        });
 
         return builder;
     }

@@ -39,8 +39,8 @@ public static class StringHelper
             convertibles.Select(formattable => formattable.ToString(CultureInfo.InvariantCulture)));
 
     /// <summary>
-    /// Creates a <see langword="string"/> from an interpolated string with the invariant culture. This prevents culture-
-    /// sensitive formatting of interpolated values.
+    /// Creates a <see langword="string"/> from an interpolated string with the invariant culture. This prevents
+    /// culture-sensitive formatting of interpolated values.
     /// </summary>
     public static string CreateInvariant(this DefaultInterpolatedStringHandler value) =>
         string.Create(CultureInfo.InvariantCulture, ref value);

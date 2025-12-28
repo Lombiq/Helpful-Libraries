@@ -14,9 +14,9 @@ public static class MvcActionContextExtensions
     /// </summary>
     public static bool IsMvcRoute(
         this ActionContext context,
-        string action = null,
-        string controller = null,
-        string area = null)
+        string? action = null,
+        string? controller = null,
+        string? area = null)
     {
         var routeValues = context.ActionDescriptor.RouteValues;
 
@@ -31,7 +31,7 @@ public static class MvcActionContextExtensions
     /// Returns a value indicating whether the requested page is a site setting editor for the provided <paramref
     /// name="groupId"/>.
     /// </summary>
-    public static bool IsSiteSettingsPage(this ActionContext context, string groupId) =>
+    public static bool IsSiteSettingsPage(this ActionContext context, string? groupId) =>
         context.IsMvcRoute(
             nameof(SettingsAdminController.Index),
             _settingsAdminControllerName,

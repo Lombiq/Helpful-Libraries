@@ -31,6 +31,6 @@ public interface ITableAccessor
     /// </para>
     /// </remarks>
     /// <returns>Linq2db table for query building purposes.</returns>
-    ITable<T> GetTable<T>(string collectionName)
+    ITable<T> GetTable<T>(string? collectionName)
         where T : class;
 }

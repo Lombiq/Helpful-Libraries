@@ -2,32 +2,17 @@ using Microsoft.AspNetCore.Http;
 using OrchardCore.ResourceManagement;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.ResourceManagement;
 
 public class ResourceFilter
 {
-    public Func<HttpContext, bool> Filter { get; set; }
-    public Func<HttpContext, Task<bool>> FilterAsync { get; set; }
+    public Func<HttpContext, bool>? Filter { get; set; }
+    public Func<HttpContext, Task<bool>>? FilterAsync { get; set; }
 
     public IList<Action<IResourceManager>> Executions { get; init; } = [];
     public IList<Func<IResourceManager, Task>> ExecutionsAsync { get; init; } = [];
-
-    [Obsolete($"Use {nameof(Executions)} instead.")]
-    public Action<IResourceManager> Execution
-    {
-        get => Executions.FirstOrDefault();
-        set => Executions.SetItems([value]);
-    }
-
-    [Obsolete($"Use {nameof(ExecutionsAsync)} instead.")]
-    public Func<IResourceManager, Task> ExecutionAsync
-    {
-        get => ExecutionsAsync.FirstOrDefault();
-        set => ExecutionsAsync.SetItems([value]);
-    }
 
     public ResourceFilter Execute(Action<IResourceManager> action)
     {

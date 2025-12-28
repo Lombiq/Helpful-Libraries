@@ -24,7 +24,7 @@ public static class CultureHelpers
             .Distinct()
             .Select(regionInfo => new Country
             {
-                TwoLetterIsoCode = regionInfo.TwoLetterISORegionName,
+                TwoLetterIsoCode = regionInfo!.TwoLetterISORegionName,
                 DisplayText = regionInfo.EnglishName,
             })
             .OrderBy(country => country.DisplayText);
@@ -45,24 +45,24 @@ public static class CultureHelpers
 
 public sealed class Country : IEquatable<Country>
 {
-    public string TwoLetterIsoCode { get; set; }
-    public string DisplayText { get; set; }
+    public required string TwoLetterIsoCode { get; init; }
+    public required string DisplayText { get; init; }
 
-    public bool Equals(Country other) => other != null && TwoLetterIsoCode == other.TwoLetterIsoCode;
+    public bool Equals(Country? other) => other != null && TwoLetterIsoCode == other.TwoLetterIsoCode;
 
-    public override bool Equals(object obj) => Equals(obj as Country);
+    public override bool Equals(object? obj) => Equals(obj as Country);
 
     public override int GetHashCode() => HashCode.Combine(TwoLetterIsoCode);
 }
 
 public sealed class Language : IEquatable<Language>
 {
-    public string Code { get; set; }
-    public string DisplayText { get; set; }
+    public required string Code { get; init; }
+    public required string DisplayText { get; init; }
 
-    public bool Equals(Language other) => other != null && Code == other.Code;
+    public bool Equals(Language? other) => other != null && Code == other.Code;
 
-    public override bool Equals(object obj) => Equals(obj as Language);
+    public override bool Equals(object? obj) => Equals(obj as Language);
 
     public override int GetHashCode() => HashCode.Combine(Code);
 }

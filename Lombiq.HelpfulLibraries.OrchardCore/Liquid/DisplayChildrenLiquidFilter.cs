@@ -23,7 +23,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Liquid;
 /// </example>
 public class DisplayChildrenLiquidFilter : ILiquidFilter
 {
-    public ValueTask<FluidValue> ProcessAsync(FluidValue input, FilterArguments arguments, LiquidTemplateContext context)
+    public ValueTask<FluidValue> ProcessAsync(FluidValue? input, FilterArguments arguments, LiquidTemplateContext context)
     {
         if (input is not ObjectValue { Value: IShape shape }) return NilValue.Instance;
 

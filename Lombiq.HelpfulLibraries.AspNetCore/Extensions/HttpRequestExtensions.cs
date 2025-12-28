@@ -26,7 +26,7 @@ public static class HttpRequestExtensions
     /// <summary>
     /// Returns the current URL but appends a new query string entry.
     /// </summary>
-    public static string GetLinkWithAdditionalQuery(this HttpRequest request, string queryString, string key, object value)
+    public static string GetLinkWithAdditionalQuery(this HttpRequest request, string? queryString, string key, object? value)
     {
         queryString ??= string.Empty;
         if (queryString.StartsWith('?')) queryString = queryString[1..];
@@ -40,14 +40,14 @@ public static class HttpRequestExtensions
     /// <summary>
     /// Returns the current URL but appends a new query string entry.
     /// </summary>
-    public static string GetLinkWithAdditionalQuery(this HttpRequest request, string key, object value) =>
+    public static string GetLinkWithAdditionalQuery(this HttpRequest request, string key, object? value) =>
         request.GetLinkWithAdditionalQuery(request.QueryString.Value, key, value);
 
     /// <summary>
     /// Returns the current URL excluding any existing query string entry with the key <paramref name="key"/>, and with
     /// a new <paramref name="key"/>-<paramref name="value"/> entry appended.
     /// </summary>
-    public static string GetLinkWithDifferentQuery(this HttpRequest request, string key, object value) =>
+    public static string GetLinkWithDifferentQuery(this HttpRequest request, string key, object? value) =>
         request.GetLinkWithAdditionalQuery(request.GetQueryWithout(key), key, value);
 
     /// <summary>
@@ -70,19 +70,19 @@ public static class HttpRequestExtensions
     /// Checks if the <paramref name="area"/>, <paramref name="controller"/> and <paramref name="action"/> route values
     /// match the provided arguments.
     /// </summary>
-    public static bool IsAction(this HttpRequest request, string controller, string action, string area = null)
+    public static bool IsAction(this HttpRequest request, string? controller, string? action, string? area = null)
     {
         var values = request.RouteValues;
-        return (string.IsNullOrEmpty(controller) || values.GetMaybe(nameof(controller))?.ToString().EqualsOrdinalIgnoreCase(controller) == true) &&
-               (string.IsNullOrEmpty(action) || values.GetMaybe(nameof(action))?.ToString().EqualsOrdinalIgnoreCase(action) == true) &&
-               (string.IsNullOrEmpty(area) || values.GetMaybe(nameof(area))?.ToString().EqualsOrdinalIgnoreCase(area) == true);
+        return (string.IsNullOrEmpty(controller) || values.GetMaybe(nameof(controller))?.ToString()?.EqualsOrdinalIgnoreCase(controller) == true) &&
+               (string.IsNullOrEmpty(action) || values.GetMaybe(nameof(action))?.ToString()?.EqualsOrdinalIgnoreCase(action) == true) &&
+               (string.IsNullOrEmpty(area) || values.GetMaybe(nameof(area))?.ToString()?.EqualsOrdinalIgnoreCase(area) == true);
     }
 
     /// <summary>
     /// Checks if the <paramref name="area"/>, <c>controller</c> and <paramref name="action"/> route values match the
     /// provided arguments.
     /// </summary>
-    public static bool IsAction<TController>(this HttpRequest request, string action, string area = null)
+    public static bool IsAction<TController>(this HttpRequest request, string? action, string? area = null)
         where TController : ControllerBase
     {
         var controllerType = typeof(TController);
@@ -100,18 +100,18 @@ public static class HttpRequestExtensions
     public static bool IsAction<TController>(
         this HttpRequest request,
         Expression<Action<TController>> actionSelector,
-        string area = null)
+        string? area = null)
         where TController : ControllerBase
     {
         var action = actionSelector.GetMethodCallInfo().Method.Name;
-        return request.IsAction<TController>(action);
+        return request.IsAction<TController>(action, area);
     }
 
     /// <inheritdoc cref="IsAction{TController}(HttpRequest,Expression{Action{TController}}, string)"/>
     public static bool IsAction<TController>(
         this HttpRequest request,
         Expression<Func<TController, Task>> actionSelector,
-        string area = null)
+        string? area = null)
         where TController : ControllerBase =>
         request.IsAction(actionSelector.StripResult(), area);
 }

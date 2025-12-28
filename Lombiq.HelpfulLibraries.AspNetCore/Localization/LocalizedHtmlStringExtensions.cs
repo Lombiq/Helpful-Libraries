@@ -13,7 +13,7 @@ public static class LocalizedHtmlStringExtensions
     /// Returns a raw HTML string that's been JSON serialized and therefore safe to use within <c>&lt;script&gt;</c>
     /// tags in a Razor view.
     /// </summary>
-    public static IHtmlContent Json(this LocalizedHtmlString htmlString) =>
+    public static IHtmlContent Json(this LocalizedHtmlString? htmlString) =>
         htmlString?.Html() is { } html
             ? new HtmlString(JsonSerializer.Serialize(html))
             : new HtmlString("null");
@@ -21,9 +21,9 @@ public static class LocalizedHtmlStringExtensions
     /// <summary>
     /// Returns a raw HTML string representation of the <paramref name="htmlContent"/>.
     /// </summary>
-    public static string Html(this IHtmlContent htmlContent)
+    public static string Html(this IHtmlContent? htmlContent)
     {
-        if (htmlContent == null) return null;
+        if (htmlContent == null) return string.Empty;
 
         using var stringWriter = new StringWriter();
         htmlContent.WriteTo(stringWriter, HtmlEncoder.Default);
@@ -50,7 +50,7 @@ public static class LocalizedHtmlStringExtensions
     /// </summary>
     public static LocalizedHtmlString Join(this IHtmlContent separator, params LocalizedHtmlString[] items)
     {
-        if (items.Length == 0) return null;
+        if (items.Length == 0) return new LocalizedHtmlString(string.Empty, string.Empty);
 
         var first = items[0];
         var other = items.Skip(1).SelectMany(item => new[] { separator, item }).ToArray();

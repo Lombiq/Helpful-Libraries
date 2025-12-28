@@ -15,7 +15,7 @@ public static class JsonHelpers
     /// <see langword="null"/> if the string is null or empty, <see langword="true"/> if parsing was successful,
     /// <see langword="false"/> otherwise.
     /// </returns>
-    public static bool? ValidateJsonIfNotNull(string json)
+    public static bool? ValidateJsonIfNotNull(string? json)
     {
         if (string.IsNullOrEmpty(json)) return null;
         return TryParse(json, out _);
@@ -27,7 +27,7 @@ public static class JsonHelpers
     /// <returns>
     /// <see langword="true"/> if parsing was successful, <see langword="false"/> otherwise.
     /// </returns>
-    public static bool TryParse(string json, out JsonNode result)
+    public static bool TryParse(string json, out JsonNode? result)
     {
         try
         {
@@ -36,7 +36,7 @@ public static class JsonHelpers
         }
         catch (JsonException)
         {
-            result = default;
+            result = null;
             return false;
         }
     }
@@ -51,7 +51,7 @@ public static class JsonHelpers
     public static void AlterDeep(JsonObject jsonObject, Action<string, JsonObject> alter) =>
         AlterDeep(jsonObject, alter, propertyName: null);
 
-    private static void AlterDeep(JsonObject jsonObject, Action<string, JsonObject> alter, string propertyName)
+    private static void AlterDeep(JsonObject jsonObject, Action<string, JsonObject> alter, string? propertyName)
     {
         if (propertyName != null) alter(propertyName, jsonObject);
 
@@ -81,7 +81,7 @@ public static class JsonHelpers
     public static Task AlterDeepAsync(JsonObject jsonObject, Func<string, JsonObject, Task> alterAsync) =>
         AlterDeepAsync(jsonObject, alterAsync, propertyName: null);
 
-    public static async Task AlterDeepAsync(JsonObject jsonObject, Func<string, JsonObject, Task> alterAsync, string propertyName)
+    public static async Task AlterDeepAsync(JsonObject jsonObject, Func<string, JsonObject, Task> alterAsync, string? propertyName)
     {
         if (propertyName != null) await alterAsync(propertyName, jsonObject);
 

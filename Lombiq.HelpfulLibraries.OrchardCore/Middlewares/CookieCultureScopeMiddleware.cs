@@ -34,9 +34,13 @@ public class CookieCultureScopeMiddleware
         await _next(context);
     }
 
-    private static bool TryGetCultureInfo(HttpContext context, out string culture)
+    private static bool TryGetCultureInfo(HttpContext context, out string result)
     {
-        if (context.Request.Query.TryGetValue(CultureKeyName, out var queryCulture))
+        string? culture;
+        result = string.Empty;
+
+        if (context.Request.Query.TryGetValue(CultureKeyName, out var queryCulture) &&
+            !string.IsNullOrWhiteSpace(queryCulture[0]))
         {
             culture = queryCulture[0];
         }
@@ -49,12 +53,11 @@ public class CookieCultureScopeMiddleware
 
         try
         {
-            culture = new CultureInfo(culture).Name;
+            result = new CultureInfo(culture).Name;
             return true;
         }
         catch
         {
-            culture = null;
             return false;
         }
     }

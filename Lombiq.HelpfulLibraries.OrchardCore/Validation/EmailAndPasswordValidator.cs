@@ -28,14 +28,15 @@ public class EmailAndPasswordValidator : IEmailAndPasswordValidator
             ? Enumerable.Empty<LocalizedString>()
             : [T["Invalid email address."]]);
 
-    public async Task<IEnumerable<LocalizedString>> ValidatePasswordAsync(string password)
+    public async Task<IEnumerable<LocalizedString>> ValidatePasswordAsync(string? password)
     {
         var errors = new List<LocalizedString>();
         if (password == null) return errors;
 
         foreach (var passwordValidator in _userManager.PasswordValidators)
         {
-            var result = await passwordValidator.ValidateAsync(_userManager, user: null, password);
+            // False warning, user can actually be null here.
+            var result = await passwordValidator.ValidateAsync(_userManager, user: null!, password);
 
             if (result.Succeeded) continue;
             errors.AddRange(result.Errors.Select(error => T[error.Description]));

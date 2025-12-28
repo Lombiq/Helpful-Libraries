@@ -18,7 +18,7 @@ public static class NavigationItemBuilderExtensions
         this NavigationItemBuilder builder,
         HttpContext httpContext,
         Expression<Func<TContext, Task<IActionResult>>> actionExpression,
-        params (string Key, object Value)[] additionalArguments)
+        params (string Key, object? Value)[] additionalArguments)
         where TContext : ControllerBase =>
         builder.Action(httpContext, actionExpression.StripResult(), additionalArguments);
 
@@ -29,7 +29,7 @@ public static class NavigationItemBuilderExtensions
         this NavigationItemBuilder builder,
         HttpContext httpContext,
         Expression<Action<TContext>> actionExpression,
-        params (string Key, object Value)[] additionalArguments)
+        params (string Key, object? Value)[] additionalArguments)
         where TContext : ControllerBase
     {
         var route = TypedRoute.CreateFromExpression(
@@ -43,6 +43,13 @@ public static class NavigationItemBuilderExtensions
     /// <summary>
     /// Adds a menu item that behaves like a separator (horizontal line) in the MenuWidget.
     /// </summary>
+    public static NavigationBuilder AddSeparator(this NavigationBuilder builder) =>
+        builder.AddLabel(new("---", "---"));
+
+    /// <summary>
+    /// Adds a menu item that behaves like a separator (horizontal line) in the MenuWidget.
+    /// </summary>
+    [Obsolete($"Use the overload without {nameof(IStringLocalizer)}.")]
     public static NavigationBuilder AddSeparator(this NavigationBuilder builder, IStringLocalizer localizer) =>
         builder.AddLabel(localizer["---"]);
 

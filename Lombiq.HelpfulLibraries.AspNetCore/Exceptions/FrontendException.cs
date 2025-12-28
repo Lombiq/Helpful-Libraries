@@ -1,5 +1,3 @@
-#nullable enable
-
 using Microsoft.AspNetCore.Mvc.Localization;
 using System;
 using System.Collections.Generic;

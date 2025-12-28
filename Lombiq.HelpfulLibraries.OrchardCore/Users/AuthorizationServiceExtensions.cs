@@ -16,7 +16,7 @@ public static class AuthorizationServiceExtensions
 {
     public static Task<bool> AuthorizeCurrentUserAsync(
         this IAuthorizationService service,
-        HttpContext context,
+        HttpContext? context,
         Permission permission) =>
         context?.User is { Identity.IsAuthenticated: true } user
             ? service.AuthorizeAsync(user, permission)
@@ -57,8 +57,8 @@ public static class AuthorizationServiceExtensions
         this IAuthorizationService service,
         ControllerBase controller,
         IEnumerable<Permission> permissions,
-        Func<Task<(bool IsSuccess, TData Data)>> validateAsync,
-        Func<TData, Task<TResult>> executeAsync,
+        Func<Task<(bool IsSuccess, TData? Data)>>? validateAsync,
+        Func<TData?, Task<TResult>> executeAsync,
         string authenticationScheme = "Api",
         bool checkModelState = true)
     {
@@ -86,7 +86,7 @@ public static class AuthorizationServiceExtensions
         }
         catch (Exception exception) when (exception is UserReadableException or FrontendException)
         {
-            var logger = controller.HttpContext?.RequestServices?.GetService<ILogger<Controller>>();
+            var logger = controller.HttpContext.RequestServices.GetService<ILogger<Controller>>();
             logger?.LogError(exception, "An error has occurred.");
             return controller.BadRequest(exception.Message);
         }
@@ -114,7 +114,7 @@ public static class AuthorizationServiceExtensions
         ControllerBase controller,
         IEnumerable<Permission> permissions,
         Func<Task<TData>> validateAsync,
-        Func<TData, Task<TResult>> executeAsync,
+        Func<TData?, Task<TResult>> executeAsync,
         string authenticationScheme = "Api",
         bool checkModelState = true)
         where TData : class =>

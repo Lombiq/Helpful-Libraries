@@ -21,6 +21,8 @@ public static class DateTimeHttpContextExtensions
     /// </para>
     /// </remarks>
     /// <returns>IANA time-zone ID.</returns>
-    public static string GetTimeZoneId(this HttpContext httpContext) =>
-        httpContext.Items.TryGetValue(HttpContextKeys.TimeZoneIdKey, out var timeZoneId) ? (string)timeZoneId : null;
+    public static string? GetTimeZoneId(this HttpContext httpContext) =>
+        httpContext.Items.TryGetValue(HttpContextKeys.TimeZoneIdKey, out var timeZoneId)
+            ? (string?)timeZoneId
+            : null;
 }

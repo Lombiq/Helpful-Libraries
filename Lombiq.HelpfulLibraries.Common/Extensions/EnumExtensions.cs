@@ -18,11 +18,11 @@ public static class EnumExtensions
     /// Attempts to retrieve an <see cref="Enum"/> object's <see cref="DisplayAttribute.Name"/> value.
     /// </summary>
     /// <returns>The display attribute's name if found, otherwise an empty string.</returns>
-    public static string GetDisplayNameAttribute(this Enum enumValue) =>
+    public static string GetDisplayNameAttribute(this Enum? enumValue) =>
         enumValue == null
             ? string.Empty
             : enumValue.GetType()
                 .GetMember(enumValue.ToString())[0]
                 .GetCustomAttribute<DisplayAttribute>()?
-                .Name;
+                .Name ?? string.Empty;
 }

@@ -19,7 +19,7 @@ public static class ContentHttpContextExtensions
     /// </summary>
     /// <param name="content">The content to be used as the key in the key value pair.</param>
     /// <param name="data">The data to set as the value in the key value pair.</param>
-    public static void SetContentSessionData(this HttpContext httpContext, IContent content, object data) =>
+    public static void SetContentSessionData(this HttpContext httpContext, IContent content, object? data) =>
         httpContext.Items[GetContentSessionDataKey(content)] = data;
 
     /// <summary>
@@ -29,10 +29,11 @@ public static class ContentHttpContextExtensions
     public static T GetOrCreateContentSessionData<T>(this HttpContext httpContext, IContent content)
         where T : new()
     {
-        if (httpContext.Items.GetMaybe(GetContentSessionDataKey(content)) is T data) return data;
+        var key = GetContentSessionDataKey(content);
+        if (httpContext.Items.GetMaybe(key) is T data) return data;
 
-        SetContentSessionData(httpContext, content, new T());
-        return (T)httpContext.Items.GetMaybe(GetContentSessionDataKey(content));
+        httpContext.SetContentSessionData(content, new T());
+        return (T)httpContext.Items[key]!;
     }
 
     /// <summary>
@@ -58,7 +59,7 @@ public static class ContentHttpContextExtensions
     public static string Action<TController>(
         this HttpContext httpContext,
         Expression<Action<TController>> actionExpression,
-        params (string Key, object Value)[] additionalArguments)
+        params (string Key, object? Value)[] additionalArguments)
         where TController : ControllerBase
     {
         var route = TypedRoute.CreateFromExpression(
@@ -74,22 +75,22 @@ public static class ContentHttpContextExtensions
     public static string ActionTask<TController>(
         this HttpContext httpContext,
         Expression<Func<TController, Task>> taskActionExpression,
-        params (string Key, object Value)[] additionalArguments)
+        params (string Key, object? Value)[] additionalArguments)
         where TController : ControllerBase =>
         httpContext.Action(taskActionExpression.StripResult(), additionalArguments);
 
     /// <summary>
     /// Returns the text of the MVC route value identified by <paramref name="name"/> (case-insensitive).
     /// </summary>
-    public static string GetRouteValueString(this HttpContext httpContext, string name) =>
-        httpContext?.Request.RouteValues.GetMaybe(name)?.ToString();
+    public static string? GetRouteValueString(this HttpContext httpContext, string name) =>
+        httpContext.Request.RouteValues.GetMaybe(name)?.ToString();
 
     /// <summary>
     /// Returns a value indicating whether the current MVC route matches the provided <paramref name="area"/>, <paramref
     /// name="controller"/> and  <paramref name="action"/>.
     /// </summary>
     public static bool IsAction(this HttpContext httpContext, string area, string controller, string action) =>
-        httpContext?.Request.RouteValues is { } routeValues &&
+        httpContext.Request.RouteValues is { } routeValues &&
         routeValues.GetMaybe(nameof(area))?.ToString() == area &&
         routeValues.GetMaybe(nameof(controller))?.ToString() == controller &&
         routeValues.GetMaybe(nameof(action))?.ToString() == action;
@@ -103,11 +104,11 @@ public static class ContentHttpContextExtensions
     /// <summary>
     /// Gets the content item from the database by the ID in the <c>contentItemId</c> or <c>id</c> route values.
     /// </summary>
-    public static Task<ContentItem> GetContentItemAsync(this HttpContext httpContext, string jsonPath = null)
+    public static Task<ContentItem?> GetContentItemAsync(this HttpContext httpContext, string? jsonPath = null)
     {
         var id = httpContext.GetRouteValueString(nameof(ContentItem.ContentItemId));
         if (string.IsNullOrWhiteSpace(id)) id = httpContext.GetRouteValueString("id");
-        if (string.IsNullOrWhiteSpace(id)) return Task.FromResult<ContentItem>(null);
+        if (string.IsNullOrWhiteSpace(id)) return Task.FromResult<ContentItem?>(null);
 
         var contentManager = httpContext.RequestServices.GetRequiredService<IContentManager>();
         return contentManager.GetAsync(id, jsonPath);

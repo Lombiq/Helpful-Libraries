@@ -40,8 +40,8 @@ public static class WorkflowManagerExtensions
     public static Task TriggerEventAsync(
         this IEnumerable<IWorkflowManager> workflowManagers,
         string name,
-        object input = null,
-        string correlationId = null) =>
+        object? input = null,
+        string? correlationId = null) =>
         workflowManagers.InvokeFirstOrCompletedAsync(manager => manager.TriggerEventAsync(name, input, correlationId));
 
     /// <summary>
@@ -49,8 +49,8 @@ public static class WorkflowManagerExtensions
     /// </summary>
     public static Task TriggerEventAsync<T>(
         this IWorkflowManager workflowManager,
-        object input = null,
-        string correlationId = null)
+        object? input = null,
+        string? correlationId = null)
         where T : IEvent =>
         workflowManager.TriggerEventAsync(typeof(T).Name, input, correlationId);
 
@@ -60,8 +60,8 @@ public static class WorkflowManagerExtensions
     /// <remarks><para>Executes on the first item of <paramref name="workflowManagers"/> if any.</para></remarks>
     public static Task TriggerEventAsync<T>(
         this IEnumerable<IWorkflowManager> workflowManagers,
-        object input = null,
-        string correlationId = null)
+        object? input = null,
+        string? correlationId = null)
         where T : IEvent =>
         workflowManagers.TriggerEventAsync(typeof(T).Name, input, correlationId);
 

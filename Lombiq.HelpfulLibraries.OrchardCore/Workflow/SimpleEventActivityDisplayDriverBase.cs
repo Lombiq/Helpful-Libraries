@@ -16,9 +16,9 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Workflow;
 public abstract class SimpleEventActivityDisplayDriverBase<TActivity> : DisplayDriver<IActivity, TActivity>
     where TActivity : class, IActivity
 {
-    public virtual string IconClass => null;
-    public virtual LocalizedHtmlString Title => null;
-    public virtual IHtmlContent Description => null;
+    public virtual string? IconClass => null;
+    public virtual LocalizedHtmlString? Title => null;
+    public virtual IHtmlContent? Description => null;
 
     private string IconHtml => string.IsNullOrEmpty(IconClass) ? string.Empty : $"<i class=\"fa {IconClass}\"></i>";
 
@@ -38,7 +38,7 @@ public abstract class SimpleEventActivityDisplayDriverBase<TActivity> : DisplayD
         var title = model.GetTitleOrDefault(() => Title).Html();
 
         return string.IsNullOrWhiteSpace(title)
-            ? new HtmlContentString(model.DisplayText).Html()
+            ? new HtmlContentString(model.DisplayText).Html() ?? string.Empty
             : title;
     }
 }

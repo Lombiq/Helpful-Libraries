@@ -17,7 +17,7 @@ public abstract class ShapeTagHelperBase<TModel> : TagHelper
     /// Gets the type name of the shape to be displayed. If it returns <see langword="null"/>, the then <see
     /// cref="GetShapeTypeAsync"/> is evaluated instead.
     /// </summary>
-    protected abstract string ShapeType { get; }
+    protected abstract string? ShapeType { get; }
 
     protected ShapeTagHelperBase(IDisplayHelper displayHelper, IShapeFactory shapeFactory)
     {

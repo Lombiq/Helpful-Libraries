@@ -1,5 +1,3 @@
-#nullable enable
-
 using CliWrap.Builders;
 using CliWrap.EventStream;
 using System;

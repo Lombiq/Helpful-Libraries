@@ -43,7 +43,7 @@ public interface IManualConnectingIndexService<in T>
     /// <param name="columnName">The name of the column (i.e. the property name) to check.</param>
     /// <param name="value">The value to select for.</param>
     /// <param name="session">If not null, its connection and transaction is used instead of creating a new one.</param>
-    Task RemoveAsync(string columnName, object value, ISession session);
+    Task RemoveAsync(string columnName, object? value, ISession session);
 }
 
 public static class ManualConnectingIndexServiceExtensions

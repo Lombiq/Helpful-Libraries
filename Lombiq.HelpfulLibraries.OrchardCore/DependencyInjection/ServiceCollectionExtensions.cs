@@ -1,5 +1,3 @@
-#nullable enable
-
 using Lombiq.HelpfulLibraries.Common.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;

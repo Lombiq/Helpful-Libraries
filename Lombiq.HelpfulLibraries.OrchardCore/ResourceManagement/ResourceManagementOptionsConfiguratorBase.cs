@@ -98,7 +98,7 @@ public abstract class ResourceManagementOptionsConfiguratorBase : IConfigureOpti
         private ResourceDefinition SetUrlAndDependencies(
             ResourceDefinition definition,
             string type,
-            (string Production, string Debug) fileNames,
+            (string Production, string? Debug) fileNames,
             string[] dependencies) =>
             definition
                 .SetUrl(

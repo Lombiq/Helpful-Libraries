@@ -46,7 +46,7 @@ public static class LocalClockExtensions
     /// be UTC. If the <see cref="DateTime.Kind"/> is something other than <see cref="DateTimeKind.Utc"/> then it will
     /// be coerced without any conversion. If you need conversion use <see cref="ConvertToUtcAsync"/> first.
     /// </summary>
-    public static async Task<string> LocalizeAndFormatAsync(
+    public static async Task<string?> LocalizeAndFormatAsync(
         this ILocalClock localClock,
         DateTime? dateTimeUtc)
     {

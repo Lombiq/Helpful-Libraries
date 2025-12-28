@@ -30,14 +30,14 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity> : SimpleEventAc
         T = baseLocalizer;
     }
 
-    public override async Task<IDisplayResult> EditAsync(TActivity model, BuildEditorContext context)
+    public override async Task<IDisplayResult?> EditAsync(TActivity model, BuildEditorContext context)
     {
-        if (AvailableInputs?.Any() == true)
+        if (AvailableInputs.Any())
         {
             await NotifyAsync(T["The available inputs are:"], AvailableInputs);
         }
 
-        if (ExpectedOutputs?.Any() == true)
+        if (ExpectedOutputs.Any())
         {
             await NotifyAsync(T["The expected outputs are:"], ExpectedOutputs);
         }

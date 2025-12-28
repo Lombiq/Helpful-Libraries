@@ -1,5 +1,3 @@
-#nullable enable
-
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
@@ -186,7 +184,6 @@ public static class EnumerableExtensions
     /// the items that are not null.
     /// </summary>
     public static IEnumerable<TOut> SelectWhere<TIn, TOut>(this IEnumerable<TIn> collection, Func<TIn, TOut?> select)
-        where TOut : notnull
     {
         foreach (var item in collection)
         {
@@ -299,6 +296,13 @@ public static class EnumerableExtensions
     /// </summary>
     public static IEnumerable<T> WhereNot<T>(this IEnumerable<T> collection, Func<T, bool> negativePredicate) =>
         collection.Where(item => !negativePredicate(item));
+
+    /// <summary>
+    /// Filters out the <see langword="null"/> or whitespace elements of the <paramref name="collection"/>. The
+    /// resulting collection's elements are marked not null.
+    /// </summary>
+    public static IEnumerable<string> WhereNotNullOrWhiteSpace(this IEnumerable<string?> collection) =>
+        collection.WhereNot(string.IsNullOrWhiteSpace).Cast<string>();
 
     /// <summary>
     /// Filters the elements of the <paramref name="collection"/> if they return <see langword="false"/> when evaluated
