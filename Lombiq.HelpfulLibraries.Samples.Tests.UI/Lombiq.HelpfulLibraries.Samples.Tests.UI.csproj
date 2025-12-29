@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="Readme.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+     <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI\Lombiq.Tests.UI.csproj" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.Samples\Lombiq.HelpfulLibraries.Samples.csproj" />
+  </ItemGroup>
+
+</Project>

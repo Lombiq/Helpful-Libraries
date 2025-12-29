@@ -10,7 +10,7 @@ public class LinqToDbConnection : DataConnection, ITableAccessor
     private readonly string _tablePrefix;
 
     public LinqToDbConnection(IDataProvider dataProvider, DbTransaction dbTransaction, string? tablePrefix)
-        : base(dataProvider, dbTransaction) =>
+        : base(new DataOptions().UseTransaction(dataProvider, dbTransaction)) =>
             _tablePrefix = tablePrefix ?? string.Empty;
 
     /// <summary>
