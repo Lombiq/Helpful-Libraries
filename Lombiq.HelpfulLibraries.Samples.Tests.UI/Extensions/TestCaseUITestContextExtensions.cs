@@ -52,9 +52,7 @@ public static class TestCaseUITestContextExtensions
 
     private static string ScrubContentItemIds(string json)
     {
-        var jsonArray = JsonNode.Parse(json) as JsonArray;
-
-        jsonArray.ShouldNotBeNull("SimpleQuery output is not a JSON array.");
+        var jsonArray = JsonNode.Parse(json).ShouldBeOfType<JsonArray>($"SimpleQuery output is not a JSON array. (JSON: {json})");
 
         foreach (var item in jsonArray)
         {
