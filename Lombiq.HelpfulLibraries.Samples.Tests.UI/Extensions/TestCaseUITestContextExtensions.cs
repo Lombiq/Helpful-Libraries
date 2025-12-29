@@ -5,6 +5,7 @@ using Lombiq.Tests.UI.Services;
 using Shouldly;
 using System;
 using System.Net.Http;
+using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 
@@ -40,7 +41,9 @@ public static class TestCaseUITestContextExtensions
         var joinQueryUrl = context.GetAbsoluteUrlOfAction<LinqToDbSamplesController>(controller => controller.JoinQuery());
         var joinQueryOutput = await client.GetStringAsync(joinQueryUrl, context.Configuration.TestCancellationToken);
 
-        joinQueryOutput.ShouldBe("[\"Man must explore, and this is exploration at its greatest\"]");
+        JsonSerializer
+            .Deserialize<string[]>(joinQueryOutput)
+            .ShouldBe(["Man must explore, and this is exploration at its greatest"]);
     }
 
     private static async Task AssertCrudAsync(UITestContext context, HttpClient client)
