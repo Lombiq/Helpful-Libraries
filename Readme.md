@@ -37,7 +37,7 @@ Helpful Libraries consists of the following independent libraries (all in their 
 
 Public APIs are always documented so please always read method comments.
 
-Check out the [`Lombiq.HelpfulLibraries.Samples` project](Lombiq.HelpfulLibraries.Samples) for various examples in the form of an Orchard Core module.
+Check out the [`Lombiq.HelpfulLibraries.Samples` project](Lombiq.HelpfulLibraries.Samples) for various examples in the form of an Orchard Core module. We also have a [corresponding UI test project](Lombiq.HelpfulLibraries.Samples.Tests.UI) that tests these samples.
 
 Note: The `Lombiq.HelpfulLibraries.sln` file exists to provide centralized building of the independent library projects but otherwise you don't need to use it.
 
