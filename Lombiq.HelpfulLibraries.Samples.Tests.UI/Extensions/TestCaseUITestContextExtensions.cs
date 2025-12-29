@@ -3,6 +3,7 @@ using Lombiq.HelpfulLibraries.Samples.Controllers;
 using Lombiq.Tests.UI.Extensions;
 using Lombiq.Tests.UI.Services;
 using Shouldly;
+using System;
 using System.Net.Http;
 using System.Text.Json.Nodes;
 using System.Threading.Tasks;
@@ -52,7 +53,9 @@ public static class TestCaseUITestContextExtensions
 
     private static string ScrubContentItemIds(string json)
     {
-        var jsonArray = JsonNode.Parse(json).ShouldBeOfType<JsonArray>($"SimpleQuery output is not a JSON array. (JSON: {json})");
+        var jsonArray = JsonNode
+            .Parse(json)
+            .ShouldBeOfType<JsonArray>($"SimpleQuery output is not a JSON array. JSON:{Environment.NewLine}{json}");
 
         foreach (var item in jsonArray)
         {
