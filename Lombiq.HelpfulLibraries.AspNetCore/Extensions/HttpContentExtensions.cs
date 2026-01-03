@@ -1,9 +1,11 @@
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.StaticFiles;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Text;
+using System.Threading;
 
 namespace System.Net.Http;
 
@@ -62,4 +64,11 @@ public static class HttpContentExtensions
 
         form.AddFile(name, Path.GetFileName(path), mediaType, File.ReadAllBytes(path));
     }
+
+    /// <summary>
+    /// A shortcut to get <see cref="HttpContext.RequestAborted"/> without worrying about <see
+    /// cref="IHttpContextAccessor.HttpContext"/> being <see langword="null"/>.
+    /// </summary>
+    public static CancellationToken GetCancellation(this IHttpContextAccessor hca) =>
+        hca.HttpContext?.RequestAborted ?? default;
 }
