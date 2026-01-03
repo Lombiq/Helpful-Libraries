@@ -1,7 +1,9 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading;
+using System.Threading.Tasks;
 
 namespace OrchardCore.Security.Permissions;
 
@@ -32,7 +34,7 @@ public static class PermissionExtensions
         new[] { permission }.WithImplicitPermissions();
 
     /// <summary>
-    /// Goes through all providers and returns the permissions from them.
+    /// Goes through all <paramref name="providers"/> and returns the permissions from them.
     /// </summary>
     public static async IAsyncEnumerable<Permission> GetAllPermissionsAsync(
         this IEnumerable<IPermissionProvider> providers,
@@ -51,5 +53,23 @@ public static class PermissionExtensions
                 yield return permission;
             }
         }
+    }
+
+    /// <summary>
+    /// Find the permissions with the given <paramref name="permissionName"/> by iterating through the <paramref
+    /// name="providers"/>.
+    /// </summary>
+    public static ValueTask<Permission?> GetPermissionAsync(
+        this IEnumerable<IPermissionProvider> providers,
+        string? permissionName,
+        CancellationToken cancellationToken = default)
+    {
+        if (string.IsNullOrWhiteSpace(permissionName)) return new(result: null);
+
+        var permissions = providers
+            .GetAllPermissionsAsync(cancellationToken)
+            .Where(permission => permissionName.EqualsOrdinalIgnoreCase(permission.Name));
+
+        return permissions.FirstOrDefaultAsync(cancellationToken);
     }
 }
