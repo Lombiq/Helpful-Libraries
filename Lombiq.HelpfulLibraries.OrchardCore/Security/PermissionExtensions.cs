@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace OrchardCore.Security.Permissions;
 
@@ -28,4 +30,26 @@ public static class PermissionExtensions
     /// </summary>
     public static ICollection<Permission> WithImplicitPermissions(this Permission permission) =>
         new[] { permission }.WithImplicitPermissions();
+
+    /// <summary>
+    /// Goes through all providers and returns the permissions from them.
+    /// </summary>
+    public static async IAsyncEnumerable<Permission> GetAllPermissionsAsync(
+        this IEnumerable<IPermissionProvider> providers,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        foreach (var provider in providers)
+        {
+            if (cancellationToken.IsCancellationRequested) yield break;
+
+            var permissions = (await provider.GetPermissionsAsync()).AsList();
+
+            if (permissions.Count <= 0) continue;
+
+            foreach (var permission in permissions)
+            {
+                yield return permission;
+            }
+        }
+    }
 }
