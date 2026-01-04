@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Http;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace Lombiq.HelpfulLibraries.AspNetCore.Middlewares;
@@ -9,7 +10,7 @@ public class DeferredTaskMiddleware
 {
     private readonly RequestDelegate _next;
 
-    public DeferredTaskMiddleware(RequestDelegate next) => _next = next;
+    public DeferredTaskMiddleware(RequestDelegate next, ITimer timer) => _next = next;
 
     public async Task InvokeAsync(
         HttpContext context,
