@@ -1,5 +1,6 @@
 using GraphQL;
 using OrchardCore.ContentManagement.GraphQL.Queries;
+using OrchardCore.Modules;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -14,6 +15,10 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.GraphQL;
 public class PartIndexAliasProvider<TIndex> : IIndexAliasProvider
     where TIndex : class, IIndex
 {
+    private readonly IClock _clock;
+
+    public PartIndexAliasProvider(IClock clock) => _clock = clock;
+
     private static readonly IEnumerable<IndexAlias> _aliases =
     [
         new()

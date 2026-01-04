@@ -22,7 +22,7 @@ public static class ServiceCollectionExtensions
         this IServiceCollection services,
         Action<ResourceFilterBuilder> filter,
         params string[] requiredThemes) =>
-        services.AddScoped<IResourceFilterProvider, SimpleResourceFilterProvider>(_ => new(filter, requiredThemes, clock: null));
+        services.AddScoped<IResourceFilterProvider, SimpleResourceFilterProvider>(_ => new(filter, requiredThemes));
 
     /// <summary>
     /// Registers a resource management configuration service descended from <see

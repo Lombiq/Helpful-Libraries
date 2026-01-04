@@ -1,4 +1,3 @@
-using OrchardCore.Modules;
 using System;
 using System.Collections.Generic;
 
@@ -10,7 +9,7 @@ internal sealed class SimpleResourceFilterProvider : IResourceFilterProvider
 
     public IEnumerable<string> RequiredThemes { get; private set; }
 
-    public SimpleResourceFilterProvider(Action<ResourceFilterBuilder> filter, ICollection<string> requiredThemes, IClock clock)
+    public SimpleResourceFilterProvider(Action<ResourceFilterBuilder> filter, ICollection<string> requiredThemes)
     {
         _filter = filter;
         RequiredThemes = requiredThemes;
