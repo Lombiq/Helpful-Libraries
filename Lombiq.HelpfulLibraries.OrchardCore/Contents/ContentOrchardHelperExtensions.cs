@@ -88,8 +88,13 @@ public static class ContentOrchardHelperExtensions
     {
         var serviceProvider = orchardHelper.HttpContext.RequestServices;
         var urlHelperFactory = serviceProvider.GetRequiredService<IUrlHelperFactory>();
+
+        // It's required by ASP.NET Core's IUrlHelperFactory at the time of writing:
+        // https://github.com/aspnet/Mvc/blob/04ce6ca/src/Microsoft.AspNetCore.Mvc.Core/Routing/IUrlHelperFactory.cs#L9
+#pragma warning disable ASPDEPR006 // Interface 'Microsoft.AspNetCore.Mvc.Infrastructure.IActionContextAccessor' is obsolete.
         var actionContext = serviceProvider.GetService<IActionContextAccessor>()?.ActionContext ??
             throw new InvalidOperationException("Couldn't access the action context.");
+#pragma warning restore ASPDEPR006 // Interface 'Microsoft.AspNetCore.Mvc.Infrastructure.IActionContextAccessor' is obsolete.
 
         return urlHelperFactory.GetUrlHelper(actionContext);
     }

@@ -111,8 +111,6 @@ public class PerTenantShapeTableManager : IShapeTableManager
             .Select((id, index) => new { id, index })
             .ToDictionary(item => item.id, item => item.index);
 
-        var concurrentShapeDescriptors = new ConcurrentDictionary<string, FeatureShapeDescriptor>(shapeDescriptors);
-
         // Using the dictionary for O(1) index retrieval instead of O(n) in a list.
         var descriptors = shapeDescriptors
             .Where(shapeDescriptor => featureIdIndexLookup.ContainsKey(shapeDescriptor.Value.Feature.Id) &&
@@ -121,9 +119,7 @@ public class PerTenantShapeTableManager : IShapeTableManager
             .GroupBy(shapeDescriptor => shapeDescriptor.Value.ShapeType, StringComparer.OrdinalIgnoreCase)
             .Select(group => new ShapeDescriptorIndex(
                 shapeType: group.Key,
-                alterationKeys: group.Select(kv => kv.Key),
-                descriptors: concurrentShapeDescriptors
-            ))
+                alterations: group.Select(pair => pair.Value)))
             .ToList();
 
         shapeTable = new ShapeTable(

@@ -4,7 +4,7 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Contents;
 
 /// <summary>
 /// Values that can be used with <see cref="IContentItemDisplayManager.BuildDisplayAsync"/> or <see
-/// cref="OrchardRazorHelperExtensions.DisplayAsync"/> to safely select the correct display type.
+/// cref="ContentOrchardRazorHelperExtensions.DisplayAsync"/> to safely select the correct display type.
 /// </summary>
 public static class CommonContentDisplayTypes
 {

@@ -32,7 +32,7 @@ public static class ForwardedHeadersApplicationBuilderExtensions
         };
 
         // These are not all known for Cloudflare and Azure.
-        forwardedHeadersOptions.KnownNetworks.Clear();
+        forwardedHeadersOptions.KnownIPNetworks.Clear();
         forwardedHeadersOptions.KnownProxies.Clear();
 
         builder.UseForwardedHeaders(forwardedHeadersOptions);

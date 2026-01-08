@@ -60,16 +60,18 @@ public class ContentSecurityPolicyAttributeContentSecurityPolicyProvider : ICont
 {
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
-        if (context.RequestServices.GetService<IActionContextAccessor>() is
-            { ActionContext.ActionDescriptor: ControllerActionDescriptor actionDescriptor })
+        var attributes = context
+            .GetEndpoint()?
+            .RequestDelegate?
+            .Method
+            .GetCustomAttributes<ContentSecurityPolicyAttribute>() ?? [];
+
+        foreach (var attribute in attributes)
         {
-            foreach (var attribute in actionDescriptor.MethodInfo.GetCustomAttributes<ContentSecurityPolicyAttribute>())
-            {
-                ContentSecurityPolicyProvider.MergeDirectiveValues(
-                    securityPolicies,
-                    attribute.DirectiveNames,
-                    attribute.DirectiveValue);
-            }
+            ContentSecurityPolicyProvider.MergeDirectiveValues(
+                securityPolicies,
+                attribute.DirectiveNames,
+                attribute.DirectiveValue);
         }
 
         return ValueTask.CompletedTask;
