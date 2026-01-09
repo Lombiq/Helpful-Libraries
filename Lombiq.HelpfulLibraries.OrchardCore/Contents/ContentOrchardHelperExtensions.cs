@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
+using OrchardCore.DisplayManagement.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
@@ -17,6 +17,7 @@ public static class ContentOrchardHelperExtensions
     /// Gets the given content item's edit URL.
     /// </summary>
     [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [Obsolete($"Use {nameof(GetItemEditUrlAsync)} instead.")]
     public static string GetItemEditUrl(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
         orchardHelper.GetItemEditUrl(contentItem.ContentItemId);
 
@@ -24,6 +25,14 @@ public static class ContentOrchardHelperExtensions
     /// Gets the given content item's edit URL.
     /// </summary>
     [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        orchardHelper.GetItemEditUrlAsync(contentItem.ContentItemId);
+
+    /// <summary>
+    /// Gets the given content item's edit URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [Obsolete($"Use {nameof(GetItemEditUrlAsync)} instead.")]
     public static string GetItemEditUrl(this IOrchardHelper orchardHelper, string contentItemId)
     {
         var urlHelper = orchardHelper.GetUrlHelper();
@@ -31,12 +40,33 @@ public static class ContentOrchardHelperExtensions
     }
 
     /// <summary>
+    /// Gets the given content item's edit URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static async Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, string contentItemId)
+    {
+        var urlHelper = await orchardHelper.GetUrlHelperAsync();
+        return urlHelper.EditContentItem(contentItemId);
+    }
+
+    /// <summary>
     /// Gets the given content item's display URL.
     /// </summary>
     [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [Obsolete($"Use {nameof(GetItemDisplayUrlAsync)} instead.")]
     public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, string contentItemId)
     {
         var urlHelper = orchardHelper.GetUrlHelper();
+        return urlHelper.DisplayContentItem(contentItemId);
+    }
+
+    /// <summary>
+    /// Gets the given content item's display URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static async Task<string> GetItemDisplayUrlAsync(this IOrchardHelper orchardHelper, string contentItemId)
+    {
+        var urlHelper = await orchardHelper.GetUrlHelperAsync();
         return urlHelper.DisplayContentItem(contentItemId);
     }
 
@@ -84,17 +114,20 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Constructs a new <see cref="IUrlHelper"/> instance using the current <see cref="IOrchardHelper.HttpContext"/>.
     /// </summary>
-    public static IUrlHelper GetUrlHelper(this IOrchardHelper orchardHelper)
+    [Obsolete($"Use {nameof(GetUrlHelperAsync)} instead.")]
+    public static IUrlHelper GetUrlHelper(this IOrchardHelper orchardHelper) =>
+        orchardHelper.GetUrlHelperAsync().Result;
+
+    /// <summary>
+    /// Constructs a new <see cref="IUrlHelper"/> instance using the current <see cref="IOrchardHelper.HttpContext"/>.
+    /// </summary>
+    public static async Task<IUrlHelper> GetUrlHelperAsync(this IOrchardHelper orchardHelper)
     {
         var serviceProvider = orchardHelper.HttpContext.RequestServices;
         var urlHelperFactory = serviceProvider.GetRequiredService<IUrlHelperFactory>();
 
-        // It's required by ASP.NET Core's IUrlHelperFactory at the time of writing:
-        // https://github.com/aspnet/Mvc/blob/04ce6ca/src/Microsoft.AspNetCore.Mvc.Core/Routing/IUrlHelperFactory.cs#L9
-#pragma warning disable ASPDEPR006 // Interface 'Microsoft.AspNetCore.Mvc.Infrastructure.IActionContextAccessor' is obsolete.
-        var actionContext = serviceProvider.GetService<IActionContextAccessor>()?.ActionContext ??
+        var actionContext = await orchardHelper.HttpContext.GetActionContextAsync() ??
             throw new InvalidOperationException("Couldn't access the action context.");
-#pragma warning restore ASPDEPR006 // Interface 'Microsoft.AspNetCore.Mvc.Infrastructure.IActionContextAccessor' is obsolete.
 
         return urlHelperFactory.GetUrlHelper(actionContext);
     }
