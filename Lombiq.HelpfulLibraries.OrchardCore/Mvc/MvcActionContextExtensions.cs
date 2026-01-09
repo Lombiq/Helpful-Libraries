@@ -18,13 +18,18 @@ public static class MvcActionContextExtensions
         string? controller = null,
         string? area = null)
     {
-        var routeValues = context.ActionDescriptor.RouteValues;
+        static bool IsMatch(IDictionary<string, string?> routeValues, string key, string? expected) => 
+            routeValues.TryGetValue(key, out var value) &&
+            (expected?.EqualsOrdinalIgnoreCase(value) ?? value is null);
 
-        if (!string.IsNullOrEmpty(action) && routeValues["Action"]?.EqualsOrdinalIgnoreCase(action) != true) return false;
-        if (!string.IsNullOrEmpty(controller) && routeValues["Controller"]?.EqualsOrdinalIgnoreCase(controller) != true) return false;
-        if (!string.IsNullOrEmpty(area) && routeValues["Area"]?.EqualsOrdinalIgnoreCase(area) != true) return false;
+        var routeValues = new Dictionary<string, string?>(
+            context.ActionDescriptor.RouteValues,
+            StringComparer.OrdinalIgnoreCase);
 
-        return true;
+        return
+            IsMatch(routeValues, "Action", action) &&
+            IsMatch(routeValues, "Controller", controller) &&
+            IsMatch(routeValues, "Area", area);
     }
 
     /// <summary>
