@@ -44,9 +44,9 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
     {
         if (Store == null) await CreateDatabaseAsync();
 
-        await using var session = Store.CreateSession();
+        await using var session = Store!.CreateSession();
         await action(session);
-        await session.SaveChangesAsync();
+        await session.SaveChangesAsync(Xunit.TestContext.Current.CancellationToken);
     }
 
     // We could have a

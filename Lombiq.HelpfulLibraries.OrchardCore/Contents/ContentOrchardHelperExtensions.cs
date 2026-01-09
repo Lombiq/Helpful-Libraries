@@ -25,19 +25,19 @@ public static class ContentOrchardHelperExtensions
     /// Gets the given content item's edit URL.
     /// </summary>
     [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
-    public static Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
-        orchardHelper.GetItemEditUrlAsync(contentItem.ContentItemId);
-
-    /// <summary>
-    /// Gets the given content item's edit URL.
-    /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
     [Obsolete($"Use {nameof(GetItemEditUrlAsync)} instead.")]
     public static string GetItemEditUrl(this IOrchardHelper orchardHelper, string contentItemId)
     {
         var urlHelper = orchardHelper.GetUrlHelper();
         return urlHelper.EditContentItem(contentItemId);
     }
+
+    /// <summary>
+    /// Gets the given content item's edit URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    public static Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        orchardHelper.GetItemEditUrlAsync(contentItem.ContentItemId);
 
     /// <summary>
     /// Gets the given content item's edit URL.

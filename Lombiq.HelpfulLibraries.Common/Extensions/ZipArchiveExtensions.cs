@@ -10,7 +10,7 @@ public static class ZipArchiveExtensions
     /// </summary>
     public static async Task CreateTextEntryAsync(this ZipArchive zip, string entryName, IEnumerable<string?>? lines)
     {
-        await using var writer = new StreamWriter(zip.CreateEntry(entryName).Open());
+        await using var writer = new StreamWriter(await zip.CreateEntry(entryName).OpenAsync());
 
         if (lines == null) return;
 
@@ -31,7 +31,7 @@ public static class ZipArchiveExtensions
     /// </summary>
     public static async Task CreateBinaryEntryAsync(this ZipArchive zip, string entryName, ReadOnlyMemory<byte> data)
     {
-        await using var stream = zip.CreateEntry(entryName).Open();
+        await using var stream = await zip.CreateEntry(entryName).OpenAsync();
         await stream.WriteAsync(data);
     }
 }

@@ -1,4 +1,3 @@
-
 using OrchardCore.Indexing.Models;
 using OrchardCore.Search.Elasticsearch;
 using System.Collections.Generic;

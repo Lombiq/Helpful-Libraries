@@ -163,8 +163,9 @@ public class ResourceFilterBuilder
                 // We check for both published and draft content items.
                 session.QueryIndex<ContentItemIndex>(index => index.Published || (index.Latest && !index.Published))
                 : session.QueryContentItemIndex(PublicationStatus.Published);
-            var contentItemIndex = await query.Where(index => index.ContentItemId == contentItemId)
-                .FirstOrDefaultAsync();
+            var contentItemIndex = await query
+                .Where(index => index.ContentItemId == contentItemId)
+                .FirstOrDefaultAsync(context.RequestAborted);
             return contentItemIndex?.ContentType is { } contentType &&
                 contentTypes.Contains(contentType, StringComparer.OrdinalIgnoreCase);
         });
