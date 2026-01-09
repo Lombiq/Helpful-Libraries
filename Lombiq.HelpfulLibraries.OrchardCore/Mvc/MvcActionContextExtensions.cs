@@ -18,7 +18,7 @@ public static class MvcActionContextExtensions
         string? controller = null,
         string? area = null)
     {
-        static bool IsMatch(IDictionary<string, string?> routeValues, string key, string? expected) => 
+        static bool IsMatch(IDictionary<string, string?> routeValues, string key, string? expected) =>
             routeValues.TryGetValue(key, out var value) &&
             (expected?.EqualsOrdinalIgnoreCase(value) ?? value is null);
 
