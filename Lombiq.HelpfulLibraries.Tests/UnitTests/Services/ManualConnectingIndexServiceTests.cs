@@ -1,6 +1,7 @@
 using Lombiq.HelpfulLibraries.Tests.Models;
 using Shouldly;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -25,7 +26,7 @@ public class ManualConnectingIndexServiceTests : IClassFixture<ManualConnectingI
         var indices = (await session.QueryIndex<TestDocumentIndex>().ListAsync()).ToList();
         indices.ShouldNotBeEmpty();
 
-        var documents = (await session.Query<TestDocument, TestDocumentIndex>().ListAsync())
+        IDictionary<string, TestDocument> documents = (await session.Query<TestDocument, TestDocumentIndex>().ListAsync())
             .ToDictionary(document => document.Name);
         foreach (var index in indices) documents.ShouldContainKey(NamePrefix + index.Number.ToTechnicalString());
     });
