@@ -1,8 +1,11 @@
 ﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Controllers;
+using OrchardCore.DisplayManagement.Extensions;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
@@ -56,13 +59,13 @@ public class ContentSecurityPolicyAttribute : Attribute
 /// </summary>
 public class ContentSecurityPolicyAttributeContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
-    public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
+    public async ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
-        var attributes = context
-            .GetEndpoint()?
-            .RequestDelegate?
-            .Method
-            .GetCustomAttributes<ContentSecurityPolicyAttribute>() ?? [];
+        var actionContext = await context.GetActionContextAsync();
+        var attributes = (actionContext?.ActionDescriptor as ControllerActionDescriptor)?
+            .MethodInfo
+            .GetCustomAttributes<ContentSecurityPolicyAttribute>()
+            .ToList() ?? [];
 
         foreach (var attribute in attributes)
         {
@@ -71,7 +74,5 @@ public class ContentSecurityPolicyAttributeContentSecurityPolicyProvider : ICont
                 attribute.DirectiveNames,
                 attribute.DirectiveValue);
         }
-
-        return ValueTask.CompletedTask;
     }
 }
