@@ -1,8 +1,6 @@
 ﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using OrchardCore.DisplayManagement.Extensions;
-using OrchardCore.DisplayManagement.Razor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
