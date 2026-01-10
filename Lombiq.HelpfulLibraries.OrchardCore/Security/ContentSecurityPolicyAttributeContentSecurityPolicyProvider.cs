@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using OrchardCore.DisplayManagement.Extensions;
+using OrchardCore.DisplayManagement.Razor;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -59,13 +60,17 @@ public class ContentSecurityPolicyAttribute : Attribute
 /// </summary>
 public class ContentSecurityPolicyAttributeContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 {
-    public async ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
+    public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
-        var actionContext = await context.GetActionContextAsync();
-        var attributes = (actionContext?.ActionDescriptor as ControllerActionDescriptor)?
+        var actionDescriptor = context
+            .GetEndpoint()?
+            .Metadata
+            .CastWhere<ControllerActionDescriptor>()
+            .FirstOrDefault();
+
+        var attributes = actionDescriptor?
             .MethodInfo
-            .GetCustomAttributes<ContentSecurityPolicyAttribute>()
-            .ToList() ?? [];
+            .GetCustomAttributes<ContentSecurityPolicyAttribute>() ?? [];
 
         foreach (var attribute in attributes)
         {
@@ -74,5 +79,7 @@ public class ContentSecurityPolicyAttributeContentSecurityPolicyProvider : ICont
                 attribute.DirectiveNames,
                 attribute.DirectiveValue);
         }
+
+        return ValueTask.CompletedTask;
     }
 }
