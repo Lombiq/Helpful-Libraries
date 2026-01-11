@@ -4,6 +4,7 @@ using Lombiq.Tests.UI.Extensions;
 using Lombiq.Tests.UI.Services;
 using Shouldly;
 using System;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Text.Json.Nodes;
@@ -28,8 +29,19 @@ public static class TestCaseUITestContextExtensions
     {
         var simpleQueryUrl = context.GetAbsoluteUrlOfAction<LinqToDbSamplesController>(controller => controller.SimpleQuery());
         var simpleQueryOutput = await client.GetStringAsync(simpleQueryUrl, context.Configuration.TestCancellationToken);
+        var simpleQueryParsed = JsonSerializer.Deserialize<Dictionary<string, object>[]>(simpleQueryOutput);
 
-        simpleQueryOutput.ShouldMatchApproved(
+        // Cleanup received data.
+        foreach (var item in simpleQueryParsed)
+        {
+            // The "id" property represents the record's write order in the database. It's not relevant guaranteed to be
+            // consistent on different setups, and it's not relevant for this query.
+            item.Remove("id");
+        }
+
+        // The results are re-serialized into JSON using standard options, so they can be compared in a consistent way.
+        var reserialized = JsonSerializer.Serialize(simpleQueryParsed, JOptions.Default);
+        reserialized.ShouldMatchApproved(
             options => options
                 .WithScrubber(ScrubContentItemIds)
                 .WithFileExtension("json"),
