@@ -56,6 +56,27 @@ public static class PermissionExtensions
     }
 
     /// <summary>
+    /// Goes through all <paramref name="providers"/> and returns the permissions from them, grouped by <see
+    /// cref="Permission.Category"/> and sorted by <see cref="Permission.Name"/> within category.
+    /// </summary>
+    public static async Task<IDictionary<string, IList<Permission>>> GetAllPermissionsGroupedByCategory(
+        this IEnumerable<IPermissionProvider> providers,
+        [EnumeratorCancellation] CancellationToken cancellationToken = default)
+    {
+        var permissions = await providers.GetAllPermissionsAsync(cancellationToken).ToListAsync(cancellationToken);
+        return permissions
+            .Where(permission => !string.IsNullOrWhiteSpace(permission.Name))
+            .GroupBy(permission => permission.Category?.Trim() ?? string.Empty)
+            .OrderBy(group => group.Key)
+            .ToDictionary(
+                group => group.Key,
+                group => group
+                    .DistinctBy(permission => permission.Name)
+                    .OrderBy(permission => permission.Name)
+                    .AsList());
+    }
+
+    /// <summary>
     /// Find the permissions with the given <paramref name="permissionName"/> by iterating through the <paramref
     /// name="providers"/>.
     /// </summary>
