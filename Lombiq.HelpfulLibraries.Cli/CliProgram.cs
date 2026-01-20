@@ -131,8 +131,8 @@ public class CliProgram
         return result.StandardOutput;
     }
 
-    private async Task<BufferedCommandResult> GetResultAsync(ICollection<object> arguments, CancellationToken token) =>
-        await GetCommand(arguments)
+    private Task<BufferedCommandResult> GetResultAsync(ICollection<object> arguments, CancellationToken token) =>
+        GetCommand(arguments)
             .WithValidation(CommandResultValidation.None)
             .ExecuteBufferedAsync(token);
 
