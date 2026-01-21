@@ -179,6 +179,7 @@ public class ResourceFilterBuilder
         if (displayType == "Preview")
         {
             if (!HttpMethods.IsPost(context.Request.Method) ||
+                !context.Request.HasFormContentType ||
                 !context.Request.Form.TryGetValue("PreviewContentItemId", out var previewContentItemId))
             {
                 contentItemId = null;
