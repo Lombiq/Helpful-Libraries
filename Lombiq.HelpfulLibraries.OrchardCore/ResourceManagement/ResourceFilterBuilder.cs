@@ -178,16 +178,14 @@ public class ResourceFilterBuilder
     {
         if (displayType == "Preview")
         {
-            if (!HttpMethods.IsPost(context.Request.Method) ||
-                context.Request.ContentType == null ||
-                !context.Request.ContentType.ContainsOrdinalIgnoreCase("application/x-www-form-urlencoded") ||
-                !context.Request.Form.TryGetValue("PreviewContentItemId", out var previewContentItemId))
+            if (HttpMethods.IsPost(context.Request.Method)
+                && (context.Request.ContentType?.ContainsOrdinalIgnoreCase("application/x-www-form-urlencoded") ?? false)
+                && context.Request.Form.TryGetValue("PreviewContentItemId", out var previewContentItemId))
             {
-                contentItemId = null;
-                return false;
-            }
+                contentItemId = previewContentItemId.FirstOrDefault();
 
-            contentItemId = previewContentItemId.FirstOrDefault();
+                return true;
+            }
         }
         else
         {
@@ -196,20 +194,16 @@ public class ResourceFilterBuilder
                 .RouteValues
                 .ToDictionary(pair => pair.Key, pair => pair.Value?.ToString(), StringComparer.OrdinalIgnoreCase);
 
-            if (routeValues.GetMaybe("action") != displayType)
+            if (routeValues.GetMaybe("action") == displayType
+                && routeValues.TryGetValue("contentItemId", out contentItemId))
             {
-                contentItemId = null;
-                return false;
-            }
-
-            contentItemId = routeValues.GetMaybe("contentItemId");
-            if (contentItemId == null)
-            {
-                return false;
+                return true;
             }
         }
 
-        return true;
+        contentItemId = null;
+
+        return false;
     }
 
     private static IEnumerable<string> TrimPaths(params string[] paths) =>
