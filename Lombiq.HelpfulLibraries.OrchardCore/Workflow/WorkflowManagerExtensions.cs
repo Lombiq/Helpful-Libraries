@@ -1,4 +1,4 @@
-﻿using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement;
 using OrchardCore.Workflows.Activities;
 using OrchardCore.Workflows.Models;
 using OrchardCore.Workflows.Services;
