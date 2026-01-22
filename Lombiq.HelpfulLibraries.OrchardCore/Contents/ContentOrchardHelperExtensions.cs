@@ -16,7 +16,7 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's edit URL.
     /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
     [Obsolete($"Use {nameof(GetItemEditUrlAsync)} instead.")]
     public static string GetItemEditUrl(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
         orchardHelper.GetItemEditUrl(contentItem.ContentItemId);
@@ -24,7 +24,7 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's edit URL.
     /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
     [Obsolete($"Use {nameof(GetItemEditUrlAsync)} instead.")]
     public static string GetItemEditUrl(this IOrchardHelper orchardHelper, string contentItemId)
     {
@@ -35,14 +35,14 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's edit URL.
     /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
     public static Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
         orchardHelper.GetItemEditUrlAsync(contentItem.ContentItemId);
 
     /// <summary>
     /// Gets the given content item's edit URL.
     /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
     public static async Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, string contentItemId)
     {
         var urlHelper = await orchardHelper.GetUrlHelperAsync();
@@ -52,7 +52,7 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's display URL.
     /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
     [Obsolete($"Use {nameof(GetItemDisplayUrlAsync)} instead.")]
     public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, string contentItemId)
     {
@@ -63,7 +63,7 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's display URL.
     /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
     public static async Task<string> GetItemDisplayUrlAsync(this IOrchardHelper orchardHelper, string contentItemId)
     {
         var urlHelper = await orchardHelper.GetUrlHelperAsync();
