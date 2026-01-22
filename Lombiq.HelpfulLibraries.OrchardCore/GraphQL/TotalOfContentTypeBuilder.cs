@@ -50,5 +50,6 @@ public class TotalOfContentTypeBuilder : IContentTypeBuilder
 
     public void Clear()
     {
+        // Nothing to do here.
     }
 }
