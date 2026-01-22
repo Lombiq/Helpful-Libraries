@@ -101,7 +101,7 @@ public class ResourceFilterBuilder
 
     /// <summary>
     /// Adds a filter that matches any of the provided <paramref name="contentTypes"/> to the list of
-    /// <see cref="ResourceFilters"/> and it is currently Preview display mode.
+    /// <see cref="ResourceFilters"/> when the content is being Previewed.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">
     /// Thrown when <paramref name="contentTypes"/> has no provided items.
