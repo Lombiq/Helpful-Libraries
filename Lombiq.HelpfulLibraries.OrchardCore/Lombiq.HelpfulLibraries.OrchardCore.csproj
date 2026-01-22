@@ -40,6 +40,7 @@
     <PackageReference Include="OrchardCore.Module.Targets" Version="3.0.0-preview-18891" />
     <PackageReference Include="OrchardCore.Queries" Version="3.0.0-preview-18891" />
     <PackageReference Include="OrchardCore.Settings" Version="3.0.0-preview-18891" />
+    <PackageReference Include="OrchardCore.Search.Elasticsearch" Version="3.0.0-preview-18891" />
     <PackageReference Include="OrchardCore.Setup.Abstractions" Version="3.0.0-preview-18891" />
     <PackageReference Include="OrchardCore.Taxonomies" Version="3.0.0-preview-18891" />
     <PackageReference Include="OrchardCore.Themes" Version="3.0.0-preview-18891" />

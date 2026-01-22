@@ -13,6 +13,12 @@ public static class ConfigurationExtensions
     public static ElasticsearchClient CreateElasticClient(this IShellConfiguration shellConfiguration) =>
         shellConfiguration.CreateElasticsearchClient();
 
+    /// <summary>
+    /// Returns a new instance of the client.
+    /// </summary>
+    /// <remarks><para>
+    /// Same as the code found in <see cref="OrchardCore.Search.Elasticsearch.Startup.ConfigureServices"/>.
+    /// </para></remarks>
     public static ElasticsearchClient CreateElasticsearchClient(
         this IShellConfiguration shellConfiguration,
         IElasticsearchClientFactory? factory = null)
