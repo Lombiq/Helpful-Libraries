@@ -101,6 +101,16 @@ public class ResourceFilterBuilder
 
     /// <summary>
     /// Adds a filter that matches any of the provided <paramref name="contentTypes"/> to the list of
+    /// <see cref="ResourceFilters"/> when the content is being Previewed.
+    /// </summary>
+    /// <exception cref="ArgumentOutOfRangeException">
+    /// Thrown when <paramref name="contentTypes"/> has no provided items.
+    /// </exception>
+    public ResourceFilter WhenContentTypePreview(params string[] contentTypes) =>
+        WhenContentTypeInner("Preview", contentTypes);
+
+    /// <summary>
+    /// Adds a filter that matches any of the provided <paramref name="contentTypes"/> to the list of
     /// <see cref="ResourceFilters"/> and it is currently Create display mode.
     /// </summary>
     /// <exception cref="ArgumentOutOfRangeException">
@@ -147,13 +157,7 @@ public class ResourceFilterBuilder
 
         return When(async context =>
         {
-            var routeValues = context
-                .Request
-                .RouteValues
-                .ToDictionary(pair => pair.Key, pair => pair.Value?.ToString(), StringComparer.OrdinalIgnoreCase);
-
-            if (routeValues.GetMaybe("action") != displayType ||
-                routeValues.GetMaybe("contentItemId") is not { } contentItemId)
+            if (!GetContentItemId(displayType, context, out var contentItemId))
             {
                 return false;
             }
@@ -168,6 +172,38 @@ public class ResourceFilterBuilder
             return contentItemIndex?.ContentType is { } contentType &&
                 contentTypes.Contains(contentType, StringComparer.OrdinalIgnoreCase);
         });
+    }
+
+    private static bool GetContentItemId(string displayType, HttpContext context, out string? contentItemId)
+    {
+        if (displayType == "Preview")
+        {
+            if (HttpMethods.IsPost(context.Request.Method)
+                && (context.Request.ContentType?.ContainsOrdinalIgnoreCase("application/x-www-form-urlencoded") ?? false)
+                && context.Request.Form.TryGetValue("PreviewContentItemId", out var previewContentItemId))
+            {
+                contentItemId = previewContentItemId.FirstOrDefault();
+
+                return true;
+            }
+        }
+        else
+        {
+            var routeValues = context
+                .Request
+                .RouteValues
+                .ToDictionary(pair => pair.Key, pair => pair.Value?.ToString(), StringComparer.OrdinalIgnoreCase);
+
+            if (routeValues.GetMaybe("action") == displayType
+                && routeValues.TryGetValue("contentItemId", out contentItemId))
+            {
+                return true;
+            }
+        }
+
+        contentItemId = null;
+
+        return false;
     }
 
     private static IEnumerable<string> TrimPaths(params string[] paths) =>
