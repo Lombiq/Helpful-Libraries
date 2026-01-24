@@ -12,8 +12,8 @@ namespace Elastic.Clients.Elasticsearch;
 public static class ElasticIndexManagerExtensions
 {
     /// <summary>
-    /// Clear all indexes for the tenant (within the prefix, if there is one) by passing a wildcard
-    /// character (<c>*</c>) as the index name.
+    /// Clear all indexes for the tenant (within the prefix, if there is one) by passing a wildcard character (<c>*</c>)
+    /// as the index name.
     /// </summary>
     public static async Task DeleteAllIndexesAsync(this ElasticsearchClient client, string? prefix)
     {
