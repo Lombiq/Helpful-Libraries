@@ -46,7 +46,7 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
 
         await using var session = Store!.CreateSession();
         await action(session);
-        await session.SaveChangesAsync(Xunit.TestContext.Current.CancellationToken);
+        await session.FlushAsync(Xunit.TestContext.Current.CancellationToken);
     }
 
     // We could have a
@@ -91,10 +91,8 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
             await connection.CloseAsync();
         }
 
-        await SessionAsync(async session =>
-        {
-            foreach (var document in Documents) await session.SaveAsync(document);
-        });
+        await using var session = Store.CreateSession();
+        foreach (var document in Documents) await session.SaveAsync(document);
 
         var manualConnectingIndexService = new ManualConnectingIndexService<TestDocumentIndex>(
             dbAccessor,
@@ -110,10 +108,10 @@ public sealed class ManualConnectingIndexServiceFixture : IDisposable
                     CultureInfo.InvariantCulture),
             };
 
-            await SessionAsync(session => manualConnectingIndexService.AddAsync(index, session, i + 1));
+            await manualConnectingIndexService.AddAsync(index, session, i + 1);
         }
 
-        await SessionAsync(session =>
-            manualConnectingIndexService.RemoveAsync(nameof(TestDocumentIndex.Number), 6, session));
+        await manualConnectingIndexService.RemoveAsync(nameof(TestDocumentIndex.Number), 6, session);
+        await session.SaveChangesAsync();
     }
 }
