@@ -5,6 +5,7 @@ using OrchardCore.ContentManagement.Records;
 using OrchardCore.ResourceManagement;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using YesSql;
@@ -178,13 +179,21 @@ public class ResourceFilterBuilder
     {
         if (displayType == "Preview")
         {
-            if (HttpMethods.IsPost(context.Request.Method)
-                && (context.Request.ContentType?.ContainsOrdinalIgnoreCase("application/x-www-form-urlencoded") ?? false)
-                && context.Request.Form.TryGetValue("PreviewContentItemId", out var previewContentItemId))
+            try
             {
-                contentItemId = previewContentItemId.FirstOrDefault();
+                if (HttpMethods.IsPost(context.Request.Method)
+                    && (context.Request.ContentType?.ContainsOrdinalIgnoreCase("application/x-www-form-urlencoded") ?? false)
+                    && context.Request.Form.TryGetValue("PreviewContentItemId", out var previewContentItemId))
+                {
+                    contentItemId = previewContentItemId.FirstOrDefault();
 
-                return true;
+                    return true;
+                }
+            }
+            catch (InvalidDataException)
+            {
+                // The form contained invalid data, which can only really happen by deliberately crafting it like that,
+                // what happens during security scans and cracking attempts. Nothing to do.
             }
         }
         else
