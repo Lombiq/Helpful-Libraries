@@ -82,17 +82,11 @@ public static class ContentOrchardHelperExtensions
     {
         var httpContext = orchardHelper.HttpContext;
 
-        if (httpContext.Request.Method == "POST")
-        {
-            var previewContentItemId = httpContext.Request.Form["PreviewContentItemId"].ToString();
-            if (!string.IsNullOrEmpty(previewContentItemId) &&
-                httpContext.RequestServices.GetService<IContentManager>() is { } contentManager)
-            {
-                return contentManager.GetAsync(previewContentItemId);
-            }
-        }
-
-        return contentItemGetter();
+        return httpContext.Request.GetFormValueMaybe("PreviewContentItemId") is { } previewContentItemId &&
+            !string.IsNullOrEmpty(previewContentItemId) &&
+            httpContext.RequestServices.GetService<IContentManager>() is { } contentManager
+                ? contentManager.GetAsync(previewContentItemId)
+                : contentItemGetter();
     }
 
     /// <inheritdoc cref="ContentHttpContextExtensions.Action{TController}"/>

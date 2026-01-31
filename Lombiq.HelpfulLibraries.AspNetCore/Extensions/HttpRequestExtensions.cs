@@ -114,4 +114,27 @@ public static class HttpRequestExtensions
         string? area = null)
         where TController : ControllerBase =>
         request.IsAction(actionSelector.StripResult(), area);
+
+    /// <summary>
+    /// If the <paramref name="request"/> has a form body, it tries to find the value for <paramref name="key"/> amd
+    /// trims it. If that fails or if the result is an empty string, <see langword="null"/> is returned instead.
+    /// </summary>
+    public static string? GetFormValueMaybe(this HttpRequest request, string key)
+    {
+        if (!request.HasFormContentType) return null;
+
+        // We use try-catch in case the request is somehow broken or invalid because then just accessing the form can
+        // throw an exception.
+        try
+        {
+            return request.Form.TryGetValue(key, out var values) &&
+                values.WhereNot(string.IsNullOrWhiteSpace).FirstOrDefault()?.Trim() is { } value
+                    ? value
+                    : null;
+        }
+        catch
+        {
+            return null;
+        }
+    }
 }

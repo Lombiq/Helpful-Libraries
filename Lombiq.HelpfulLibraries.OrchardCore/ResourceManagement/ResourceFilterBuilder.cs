@@ -179,12 +179,9 @@ public class ResourceFilterBuilder
     {
         if (displayType == "Preview")
         {
-            if (HttpMethods.IsPost(context.Request.Method)
-                && (context.Request.ContentType?.ContainsOrdinalIgnoreCase("application/x-www-form-urlencoded") ?? false)
-                && context.Request.Form.TryGetValue("PreviewContentItemId", out var previewContentItemId))
+            if (context.Request.GetFormValueMaybe("PreviewContentItemId") is { } previewContentItemId)
             {
-                contentItemId = previewContentItemId.FirstOrDefault();
-
+                contentItemId = previewContentItemId;
                 return true;
             }
         }
@@ -203,7 +200,6 @@ public class ResourceFilterBuilder
         }
 
         contentItemId = null;
-
         return false;
     }
 
