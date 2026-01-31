@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using OrchardCore.Environment.Shell;
+using OrchardCore.Environment.Shell.Descriptor.Models;
 using OrchardCore.Modules;
 using System;
 using System.Threading.Tasks;
@@ -44,4 +46,33 @@ public static class ServiceCollectionExtensions
         Func<IApplicationBuilder, IEndpointRouteBuilder, IServiceProvider, ValueTask>? configureAsync = null,
         int order = 0) =>
         services.AddSingleton<IStartup>(new InlineStartup(configureServices, configure, configureAsync, order));
+
+    /// <summary>
+    /// Enables the provided tenant features, but only for the <see cref="ShellSettings.DefaultShellName"/> tenant.
+    /// </summary>
+    public static IServiceCollection AddDefaultTenantFeatures(
+        this IServiceCollection services,
+        params string[] featureIds)
+    {
+        foreach (var id in featureIds)
+        {
+            services.AddTransient(sp =>
+            {
+                var shellSettings = sp.GetRequiredService<ShellSettings>();
+                return shellSettings.Name == ShellSettings.DefaultShellName
+                    ? new ShellFeature(id, alwaysEnabled: true)
+                    : new();
+            });
+        }
+
+        return services;
+    }
+
+    /// <summary>
+    /// Enables the provided tenant features, but only for the <see cref="ShellSettings.DefaultShellName"/> tenant.
+    /// </summary>
+    public static OrchardCoreBuilder AddDefaultTenantFeatures(
+        this OrchardCoreBuilder builder,
+        params string[] featureIds) =>
+        builder.ConfigureServices(services => services.AddDefaultTenantFeatures(featureIds));
 }
