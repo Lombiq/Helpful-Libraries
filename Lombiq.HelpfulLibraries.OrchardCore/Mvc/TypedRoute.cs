@@ -55,7 +55,7 @@ public class TypedRoute
                     controller.Assembly.GetCustomAttribute<ModuleNameAttribute>()?.Name ??
                     controller.Assembly.GetCustomAttribute<ModuleMarkerAttribute>()?.Name ??
                     throw new InvalidOperationException(
-                        $"No \"area\" argument was provided and couldn't figure out the module technical name. Are " +
+                        "No \"area\" argument was provided and couldn't figure out the module technical name. Are " +
                         $"you sure the \"{controller.Name}\" controller belongs to an Orchard Core module?");
         }
 
