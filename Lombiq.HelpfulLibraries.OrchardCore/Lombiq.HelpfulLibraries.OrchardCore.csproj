@@ -24,35 +24,35 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="OrchardCore.Alias" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Abstractions" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Autoroute" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.ContentFields" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Search.Elasticsearch.Core" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Email.Abstractions" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Html" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Infrastructure" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Markdown" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Media.Core" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Module.Targets" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Queries" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Settings" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Search.Elasticsearch" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Setup.Abstractions" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Taxonomies" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Themes" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Title" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Users.Core" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.Workflows.Abstractions" Version="3.0.0-preview-18907" />
+    <PackageReference Include="OrchardCore.Alias" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Abstractions" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Autoroute" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.ContentFields" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Search.Elasticsearch.Core" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Email.Abstractions" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Html" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Infrastructure" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Markdown" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Media.Core" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Module.Targets" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Queries" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Settings" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Search.Elasticsearch" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Setup.Abstractions" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Taxonomies" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Themes" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Title" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Users.Core" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.Workflows.Abstractions" Version="3.0.0-preview-18908" />
   </ItemGroup>
 
   <!-- Necessary so tag helpers will work in the projects depending on this. -->
   <ItemGroup>
-    <PackageReference Include="OrchardCore.DisplayManagement" Version="3.0.0-preview-18907" />
-    <PackageReference Include="OrchardCore.ResourceManagement" Version="3.0.0-preview-18907" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="3.0.0-preview-18908" />
+    <PackageReference Include="OrchardCore.ResourceManagement" Version="3.0.0-preview-18908" />
   </ItemGroup>
 
   <ItemGroup>
