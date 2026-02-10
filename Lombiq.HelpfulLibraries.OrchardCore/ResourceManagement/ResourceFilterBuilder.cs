@@ -184,7 +184,7 @@ public class ResourceFilterBuilder
             {
                 if (context.Request.GetFormValueMaybe("PreviewContentItemId") is { } previewContentItemId)
                 {
-                    contentItemId = previewContentItemId.FirstOrDefault();
+                    contentItemId = previewContentItemId;
 
                     return true;
                 }
