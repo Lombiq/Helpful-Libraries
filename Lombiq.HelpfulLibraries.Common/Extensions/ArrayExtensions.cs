@@ -11,7 +11,7 @@ public static class ArrayExtensions
     /// it's better to use this instead of the general `Any()` extension method.
     /// </para>
     /// </remarks>
-    public static bool Exists<T>(this T?[] array, Predicate<T?> match) => Array.Exists(array, match);
+    public static bool Exists<T>(this T[] array, Predicate<T> match) => Array.Exists(array, match);
 
     /// <summary>
     /// A fluid alternative to <see cref="Array.Find{T}(T[], Predicate{T})"/>.
@@ -22,12 +22,12 @@ public static class ArrayExtensions
     /// it's better to use this instead of the general `FirstOrDefault()` extension method.
     /// </para>
     /// </remarks>
-    public static T? Find<T>(this T?[] array, Predicate<T?> match) => Array.Find(array, match);
+    public static T? Find<T>(this T[] array, Predicate<T> match) => Array.Find(array, match);
 
     /// <summary>
     /// A fluid alternative to <see cref="Array.FindAll{T}(T[], Predicate{T})"/>.
     /// </summary>
-    public static T?[] FindAll<T>(this T?[] array, Predicate<T?> match) => Array.FindAll(array, match);
+    public static T[] FindAll<T>(this T[] array, Predicate<T> match) => Array.FindAll(array, match);
 
     /// <summary>
     /// A fluid alternative to <see cref="Array.FindIndex{T}(T[], Predicate{T})"/>.
@@ -38,5 +38,5 @@ public static class ArrayExtensions
     /// it's better to use this instead of the general `All()` extension method.
     /// </para>
     /// </remarks>
-    public static bool TrueForAll<T>(this T?[] array, Predicate<T?> match) => Array.TrueForAll(array, match);
+    public static bool TrueForAll<T>(this T[] array, Predicate<T> match) => Array.TrueForAll(array, match);
 }
