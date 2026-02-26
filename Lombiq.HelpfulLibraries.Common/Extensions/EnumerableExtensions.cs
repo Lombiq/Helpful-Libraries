@@ -311,7 +311,7 @@ public static class EnumerableExtensions
     public static IAsyncEnumerable<T> WhereNotAsync<T>(
         this IAsyncEnumerable<T> collection,
         Func<T, Task<bool>> negativePredicate) =>
-        collection.Where(
+        collection.WhereAwait(
             async (value, _) => !await negativePredicate(value));
 
     /// <summary>
