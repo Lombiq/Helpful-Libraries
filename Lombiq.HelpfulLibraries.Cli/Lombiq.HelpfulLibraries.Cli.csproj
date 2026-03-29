@@ -23,7 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="CliWrap" Version="3.10.0" />
+    <PackageReference Include="CliWrap" Version="3.10.1" />
   </ItemGroup>
 
   <ItemGroup>
