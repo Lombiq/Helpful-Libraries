@@ -10,7 +10,7 @@
   </ItemGroup>
 
   <ItemGroup>
-     <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI\Lombiq.Tests.UI.csproj" />
+    <ProjectReference Include="..\..\..\..\test\Lombiq.UITestingToolbox\Lombiq.Tests.UI\Lombiq.Tests.UI.csproj" />
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Samples\Lombiq.HelpfulLibraries.Samples.csproj" />
   </ItemGroup>
 
