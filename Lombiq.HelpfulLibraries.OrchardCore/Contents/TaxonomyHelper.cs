@@ -54,7 +54,7 @@ public class TaxonomyHelper : ITaxonomyHelper
         if (contentItem == null) return results;
         if (includeSelf) results.Add(contentItem);
 
-        var partTerms = contentItem.As<TaxonomyPart>()?.Terms ?? Enumerable.Empty<ContentItem>();
+        var partTerms = contentItem.GetOrCreate<TaxonomyPart>()?.Terms ?? Enumerable.Empty<ContentItem>();
         var itemTerms = contentItem.GetProperty<List<ContentItem>>(nameof(TaxonomyPart.Terms)) ?? Enumerable.Empty<ContentItem>();
         foreach (var child in partTerms.Concat(itemTerms))
         {
