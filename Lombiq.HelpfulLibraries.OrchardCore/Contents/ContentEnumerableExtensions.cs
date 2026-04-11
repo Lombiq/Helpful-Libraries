@@ -20,5 +20,5 @@ public static class ContentEnumerableExtensions
     /// <returns>The content part enumeration or empty enumeration if it doesn't exist.</returns>
     public static IEnumerable<TPart> GetOrCreate<TPart>(this IEnumerable<IContent>? contents)
         where TPart : ContentPart, new() =>
-        (contents?.SelectWhere(content => content.GetOrCreate<TPart>())).EmptyIfNull();
+        (contents?.SelectWhere(content => content.GetMaybe<TPart>())).EmptyIfNull();
 }

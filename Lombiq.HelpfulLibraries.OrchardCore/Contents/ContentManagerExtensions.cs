@@ -54,7 +54,7 @@ public static class ContentManagerExtensions
             ? null
             : await contentManager.GetAsync(taxonomyContentItemId);
 
-        return taxonomy?.GetOrCreate<TaxonomyPart>()?.Terms ?? [];
+        return taxonomy?.GetOrCreate<TaxonomyPart>().Terms ?? [];
     }
 
     /// <summary>
