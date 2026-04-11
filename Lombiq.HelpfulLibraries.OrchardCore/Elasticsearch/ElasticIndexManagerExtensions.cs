@@ -1,4 +1,5 @@
 using Elastic.Clients.Elasticsearch;
+using OrchardCore.Elasticsearch.Core.Services;
 using System;
 using System.Threading.Tasks;
 

@@ -2,8 +2,8 @@ using Elastic.Clients.Elasticsearch.Core;
 using Elastic.Clients.Elasticsearch.IndexManagement;
 using Microsoft.Extensions.Configuration;
 using OrchardCore.Environment.Shell.Configuration;
-using OrchardCore.Search.Elasticsearch;
-using OrchardCore.Search.Elasticsearch.Core.Services;
+using OrchardCore.Elasticsearch;
+using OrchardCore.Elasticsearch.Core.Services;
 using System.Linq;
 using System.Threading.Tasks;
 

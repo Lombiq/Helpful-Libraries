@@ -1,5 +1,5 @@
 using OrchardCore.Indexing.Models;
-using OrchardCore.Search.Elasticsearch;
+using OrchardCore.Elasticsearch;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

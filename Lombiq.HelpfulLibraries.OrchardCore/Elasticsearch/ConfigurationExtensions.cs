@@ -1,8 +1,8 @@
 using Elastic.Clients.Elasticsearch;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging.Abstractions;
-using OrchardCore.Search.Elasticsearch.Core.Models;
-using OrchardCore.Search.Elasticsearch.Core.Services;
+using OrchardCore.Elasticsearch.Core.Models;
+using OrchardCore.Elasticsearch.Core.Services;
 using System;
 
 namespace OrchardCore.Environment.Shell.Configuration;
@@ -17,7 +17,7 @@ public static class ConfigurationExtensions
     /// Returns a new instance of the client.
     /// </summary>
     /// <remarks><para>
-    /// Same as the code found in <see cref="OrchardCore.Search.Elasticsearch.Startup.ConfigureServices"/>.
+    /// Same as the code found in <see cref="OrchardCore.Elasticsearch.Startup.ConfigureServices"/>.
     /// </para></remarks>
     public static ElasticsearchClient CreateElasticsearchClient(
         this IShellConfiguration shellConfiguration,
