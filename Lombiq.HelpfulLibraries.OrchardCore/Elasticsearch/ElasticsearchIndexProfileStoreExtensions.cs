@@ -1,8 +1,9 @@
-using OrchardCore.Indexing.Models;
 using OrchardCore.Elasticsearch;
+using OrchardCore.Indexing.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+
 namespace OrchardCore.Indexing;
 
 public static class ElasticsearchIndexProfileStoreExtensions
