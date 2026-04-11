@@ -1,9 +1,8 @@
 using Elastic.Clients.Elasticsearch;
-using OrchardCore.Elasticsearch.Core.Services;
 using System;
 using System.Threading.Tasks;
 
-namespace OrchardCore.Search.Elasticsearch.Core.Services;
+namespace OrchardCore.Elasticsearch.Core.Services;
 
 public static class ElasticIndexManagerExtensions
 {
