@@ -28,6 +28,6 @@ public static class ConfigurationExtensions
         var configuration = shellConfiguration.GetSection(ElasticsearchConnectionOptionsConfigurations.ConfigSectionName);
         var connectionOptions = configuration.Get<ElasticsearchConnectionOptions>();
 
-        return factory.Create(connectionOptions);
+        return connectionOptions == null ? new ElasticsearchClient() : factory.Create(connectionOptions);
     }
 }
