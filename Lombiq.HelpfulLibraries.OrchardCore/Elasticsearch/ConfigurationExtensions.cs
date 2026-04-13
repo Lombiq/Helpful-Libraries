@@ -26,7 +26,7 @@ public static class ConfigurationExtensions
         factory ??= new ElasticsearchClientFactory(NullLogger<ElasticsearchClientFactory>.Instance);
 
         var configuration = shellConfiguration.GetSection(ElasticsearchConnectionOptionsConfigurations.ConfigSectionName);
-        var connectionOptions = configuration.Get<ElasticsearchConnectionOptions>();
+        var connectionOptions = configuration.Get<ElasticsearchConnectionOptions>() ?? new ElasticsearchConnectionOptions();
 
         return factory.Create(connectionOptions);
     }
