@@ -52,9 +52,9 @@ public static class QueryExtensions
         this IQuery<ContentItem> query,
         int pageIndex = 0,
         int count = int.MaxValue)
-        where TPart : ContentPart =>
+        where TPart : ContentPart, new() =>
         PaginateAsync(query, pageIndex, count)
-            .ContinueWith(t => t.Result.As<TPart>(), TaskScheduler.Default);
+            .ContinueWith(t => t.Result.GetOrCreate<TPart>(), TaskScheduler.Default);
 
     /// <summary>
     /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and count

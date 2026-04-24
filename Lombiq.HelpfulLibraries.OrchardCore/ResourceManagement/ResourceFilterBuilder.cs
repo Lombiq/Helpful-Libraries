@@ -166,7 +166,7 @@ public class ResourceFilterBuilder
             var session = context.RequestServices.GetRequiredService<ISession>();
 
             // In case of Edit, we check for both published and draft content items.
-            var query = displayType is "Edit"
+            var query = string.Equals(displayType, "Edit", StringComparison.Ordinal)
                 ? session.QueryIndex<ContentItemIndex>(index => index.Published || (index.Latest && !index.Published))
                 : session.QueryContentItemIndex(PublicationStatus.Published);
 
