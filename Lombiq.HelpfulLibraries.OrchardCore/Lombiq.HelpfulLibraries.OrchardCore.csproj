@@ -37,7 +37,6 @@
     <PackageReference Include="OrchardCore.Infrastructure" Version="3.0.0-preview-18975" />
     <PackageReference Include="OrchardCore.Markdown" Version="3.0.0-preview-18975" />
     <PackageReference Include="OrchardCore.Media.Core" Version="3.0.0-preview-18975" />
-    <PackageReference Include="OrchardCore.Module.Targets" Version="3.0.0-preview-18975" />
     <PackageReference Include="OrchardCore.Queries" Version="3.0.0-preview-18975" />
     <PackageReference Include="OrchardCore.Settings" Version="3.0.0-preview-18975" />
     <PackageReference Include="OrchardCore.Elasticsearch" Version="3.0.0-preview-18975" />
