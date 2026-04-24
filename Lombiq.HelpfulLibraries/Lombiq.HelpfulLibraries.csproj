@@ -1,30 +1,19 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project>
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.props" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.props" Sdk="Lombiq.MSBuild.Library.Sdk" Version="1.0.1-alpha.10.osoe-1208" />
+
   <PropertyGroup>
     <Title>Lombiq Helpful Libraries</Title>
-    <Authors>Lombiq Technologies</Authors>
-    <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-    <Description>Lombiq Helpful Libraries: Various useful libraries that can be handy when developing for .NET, ASP.NET Core, and Orchard Core, to be used from your own projects. This package references all Helpful Libraries libraries, but you can use only the ones specific for your use-case, see the dependencies. See the project website for detailed documentation.</Description>
+    <CopyrightYear>2011</CopyrightYear>
+    <DescriptionBody>Various useful libraries that can be handy when developing for .NET, ASP.NET Core, and Orchard Core, to be used from your own projects. This package references all Helpful Libraries libraries, but you can use only the ones specific for your use-case, see the dependencies. See the project website for detailed documentation.</DescriptionBody>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;DateTime;DependencyInjection;GraphQL;Liquid;Localization;Middlewares;Utilities;LinqToDB</PackageTags>
-    <PackageIcon>NuGetIcon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries</PackageProjectUrl>
-    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
   </PropertyGroup>
-
-  <ItemGroup>
-    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="..\Readme.md" Link="Readme.md" />
-  </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Attributes\Lombiq.HelpfulLibraries.Attributes.csproj" OutputItemType="Analyzer" ReferenceOutputAssembly="true" />
@@ -36,4 +25,6 @@
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Refit\Lombiq.HelpfulLibraries.Refit.csproj" />
   </ItemGroup>
 
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.targets" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.Library.Sdk" Version="1.0.1-alpha.10.osoe-1208" />
 </Project>
