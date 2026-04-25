@@ -72,4 +72,6 @@
         </ItemGroup>
     </Target>
 
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.targets" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.Library.Sdk" Version="1.0.1-alpha.12.osoe-1208" />
 </Project>
