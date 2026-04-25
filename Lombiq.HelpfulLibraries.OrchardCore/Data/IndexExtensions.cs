@@ -16,7 +16,7 @@ public static class IndexExtensions
         this DescribeContext<ContentItem> context,
         Func<TPart, TIndex> map,
         bool latest = true)
-        where TPart : ContentPart
+        where TPart : ContentPart, new()
         where TIndex : IIndex =>
         context.For<TIndex>().Map(map, latest);
 
@@ -28,9 +28,9 @@ public static class IndexExtensions
         this IMapFor<ContentItem, TIndex> mapFor,
         Func<TPart, TIndex> mapPartToIndex,
         bool latest = true)
-        where TPart : ContentPart
+        where TPart : ContentPart, new()
         where TIndex : IIndex =>
         mapFor
             .When(item => item.Has<TPart>() && (item.Latest || !latest))
-            .Map(item => mapPartToIndex(item.As<TPart>()));
+            .Map(item => mapPartToIndex(item.GetOrCreate<TPart>()));
 }

@@ -1,5 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project>
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <IsPackable>true</IsPackable>
@@ -16,22 +15,17 @@
         <PackageId>Lombiq.HelpfulLibraries.SourceGenerators</PackageId>
     </PropertyGroup>
 
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.props" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.props" Sdk="Lombiq.MSBuild.Library.Sdk" Version="1.0.1-alpha.12.osoe-1208" />
+
     <PropertyGroup>
         <Title>Lombiq Helpful Libraries - Source Generators for Orchard Core</Title>
-        <Authors>Lombiq Technologies</Authors>
-        <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-        <Description>Lombiq Helpful Libraries - Source Generators for Orchard Core for Orchard Core: Adds helpful source generators. See the project website for detailed documentation.</Description>
-        <PackageIcon>NuGetIcon.png</PackageIcon>
+        <CopyrightYear>2011</CopyrightYear>
+        <DescriptionBody>Adds helpful source generators. See the project website for detailed documentation.</DescriptionBody>
         <PackageTags>OrchardCore;Lombiq;SourceGenerators</PackageTags>
         <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.SourceGenerators/Readme.md</PackageProjectUrl>
-        <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     </PropertyGroup>
-
-    <ItemGroup>
-        <None Include="Readme.md" />
-        <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
-    </ItemGroup>
 
     <ItemGroup>
         <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0" PrivateAssets="all" />
@@ -78,4 +72,6 @@
         </ItemGroup>
     </Target>
 
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.targets" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.Library.Sdk" Version="1.0.1-alpha.12.osoe-1208" />
 </Project>

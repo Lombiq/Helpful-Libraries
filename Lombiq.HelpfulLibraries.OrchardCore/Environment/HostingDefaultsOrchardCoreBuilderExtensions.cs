@@ -1,3 +1,4 @@
+using Lombiq.HelpfulLibraries.OrchardCore.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
@@ -122,9 +123,8 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
         if (webApplicationBuilder.Configuration.IsAzureHosting())
         {
             builder
-                .AddTenantFeatures(
-                    "OrchardCore.DataProtection.Azure",
-                    "Lombiq.Hosting.BuildVersionDisplay")
+                .AddDefaultTenantFeatures("Lombiq.Hosting.BuildVersionDisplay")
+                .AddTenantFeatures("OrchardCore.DataProtection.Azure")
                 .DisableResourceDebugMode();
 
             if (hostingConfiguration.AlwaysEnableAzureMediaStorage)

@@ -1,58 +1,50 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project>
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
-    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.props" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.props" Sdk="Lombiq.MSBuild.Library.Sdk" Version="1.0.1-alpha.12.osoe-1208" />
+
   <PropertyGroup>
     <Title>Lombiq Helpful Libraries - Orchard Core Libraries</Title>
-    <Authors>Lombiq Technologies</Authors>
-    <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-    <Description>Lombiq Helpful Libraries - Orchard Core Libraries: Various useful libraries that can be handy when developing for Orchard Core, to be used from your own projects. See the project website for detailed documentation.</Description>
+    <CopyrightYear>2011</CopyrightYear>
+    <DescriptionBody>Various useful libraries that can be handy when developing for Orchard Core, to be used from your own projects. See the project website for detailed documentation.</DescriptionBody>
     <PackageTags>OrchardCore;Lombiq;AspNetCore;YesSql;GraphQL;Liquid;DateTime;DependencyInjection</PackageTags>
-    <PackageIcon>NuGetIcon.png</PackageIcon>
     <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
     <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.OrchardCore/Readme.md</PackageProjectUrl>
-    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
   </PropertyGroup>
 
   <ItemGroup>
-    <None Include="Readme.md" />
-    <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="OrchardCore.Alias" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Abstractions" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Autoroute" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.ContentFields" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Search.Elasticsearch.Core" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Email.Abstractions" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Html" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Infrastructure" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Markdown" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Media.Core" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Module.Targets" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Queries" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Settings" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Search.Elasticsearch" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Setup.Abstractions" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Taxonomies" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Themes" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Title" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Users.Core" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.Workflows.Abstractions" Version="3.0.0-preview-18960" />
+    <PackageReference Include="OrchardCore.Alias" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Abstractions" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Autoroute" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.ContentFields" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.ContentManagement" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Elasticsearch.Core" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Email.Abstractions" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Html" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Infrastructure" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Markdown" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Media.Core" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Queries" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Settings" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Elasticsearch" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Setup.Abstractions" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Taxonomies" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Themes" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Title" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Users.Core" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.Workflows.Abstractions" Version="3.0.0-preview-18975" />
   </ItemGroup>
 
   <!-- Necessary so tag helpers will work in the projects depending on this. -->
   <ItemGroup>
-    <PackageReference Include="OrchardCore.DisplayManagement" Version="3.0.0-preview-18960" />
-    <PackageReference Include="OrchardCore.ResourceManagement" Version="3.0.0-preview-18960" />
+    <PackageReference Include="OrchardCore.DisplayManagement" Version="3.0.0-preview-18975" />
+    <PackageReference Include="OrchardCore.ResourceManagement" Version="3.0.0-preview-18975" />
   </ItemGroup>
 
   <ItemGroup>
@@ -60,4 +52,6 @@
     <ProjectReference Include="..\Lombiq.HelpfulLibraries.Common\Lombiq.HelpfulLibraries.Common.csproj" />
   </ItemGroup>
 
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.targets" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.Library.Sdk" Version="1.0.1-alpha.12.osoe-1208" />
 </Project>
