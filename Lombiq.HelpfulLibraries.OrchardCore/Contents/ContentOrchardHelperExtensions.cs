@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement.Metadata.Settings;
 using OrchardCore.DisplayManagement.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
@@ -125,4 +126,11 @@ public static class ContentOrchardHelperExtensions
 
         return urlHelperFactory.GetUrlHelper(actionContext);
     }
+
+    /// <summary>
+    /// Returns <c>ocat-label</c> or <c>ocat-label ocat-label-required</c> depending on the <paramref name="settings"/>.
+    /// This is a simplified version of a removed stock Orchard Core helper, only for content fields.
+    /// </summary>
+    public static string GetLabelClasses(this IOrchardHelper orchardHelper, FieldSettings settings) =>
+        settings.Required ? "ocat-label ocat-label-required" : "ocat-label";
 }
