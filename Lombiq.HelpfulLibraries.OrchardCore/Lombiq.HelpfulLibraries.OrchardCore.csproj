@@ -23,6 +23,7 @@
     <PackageReference Include="OrchardCore.ContentFields" Version="$(OrchardCoreVersion)" />
     <PackageReference Include="OrchardCore.ContentManagement" Version="$(OrchardCoreVersion)" />
     <PackageReference Include="OrchardCore.ContentManagement.Abstractions" Version="$(OrchardCoreVersion)" />
+    <PackageReference Include="OrchardCore.Contents" Version="$(OrchardCoreVersion)" />
     <PackageReference Include="OrchardCore.Elasticsearch.Core" Version="$(OrchardCoreVersion)" />
     <PackageReference Include="OrchardCore.Email.Abstractions" Version="$(OrchardCoreVersion)" />
     <PackageReference Include="OrchardCore.FileStorage.Abstractions" Version="$(OrchardCoreVersion)" />

@@ -150,6 +150,7 @@ public static class SecurityOrchardCoreBuilderExtensions
                 .AddContentSecurityPolicyProvider<BrowserLinkContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<ReCaptchaContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<GoogleAnalyticsContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<MonacoContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             (app, _, serviceProvider) =>
             {
