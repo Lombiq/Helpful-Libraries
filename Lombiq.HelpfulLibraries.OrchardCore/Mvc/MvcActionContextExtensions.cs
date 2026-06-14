@@ -31,17 +31,6 @@ public static class MvcActionContextExtensions
     }
 
     /// <summary>
-    /// Returns a value indicating whether the requested page is a site setting editor for the provided <paramref
-    /// name="groupId"/>.
-    /// </summary>
-    public static bool IsSiteSettingsPage(this ActionContext context, string? groupId) =>
-        context.IsMvcRoute(
-            nameof(SettingsAdminController.Index),
-            _settingsAdminControllerName,
-            $"{nameof(OrchardCore)}.{nameof(OrchardCore.Settings)}") &&
-        context.RouteData.Values.GetMaybe("GroupId")?.ToString() == groupId;
-
-    /// <summary>
     /// Returns a value indicating whether the requested page matches the provided non-empty route values.
     /// </summary>
     public static bool IsMvcRoute(
@@ -63,6 +52,17 @@ public static class MvcActionContextExtensions
             IsMatch(routeValues, "Controller", controller) &&
             IsMatch(routeValues, "Area", area);
     }
+
+    /// <summary>
+    /// Returns a value indicating whether the requested page is a site setting editor for the provided <paramref
+    /// name="groupId"/>.
+    /// </summary>
+    public static bool IsSiteSettingsPage(this ActionContext context, string? groupId) =>
+        context.IsMvcRoute(
+            nameof(SettingsAdminController.Index),
+            _settingsAdminControllerName,
+            $"{nameof(OrchardCore)}.{nameof(OrchardCore.Settings)}") &&
+        context.RouteData.Values.GetMaybe("GroupId")?.ToString() == groupId;
 
     private static bool IsMatch(IDictionary<string, string?> routeValues, string key, string? expected) =>
         routeValues.TryGetValue(key, out var value) &&
