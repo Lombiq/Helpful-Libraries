@@ -8,7 +8,6 @@ using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
-using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives.CommonValues;
 
 namespace Microsoft.AspNetCore.Builder;
 
@@ -42,23 +41,23 @@ public static class ApplicationBuilderExtensions
             var securityPolicies = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
             {
                 // Default values enforcing a same origin policy for all resources.
-                [BaseUri] = Self,
-                [DefaultSrc] = Self,
-                [FrameSrc] = Self,
-                [ScriptSrc] = Self,
-                [StyleSrc] = Self,
-                [FormAction] = Self,
-                [WorkerSrc] = Self,
+                [BaseUri] = CommonValues.Self,
+                [DefaultSrc] = CommonValues.Self,
+                [FrameSrc] = CommonValues.Self,
+                [ScriptSrc] = CommonValues.Self,
+                [StyleSrc] = CommonValues.Self,
+                [FormAction] = CommonValues.Self,
+                [WorkerSrc] = CommonValues.Self,
                 // Needed for SVG images using "data:image/svg+xml,..." data URLs.
-                [ImgSrc] = $"{Self} {Data}",
+                [ImgSrc] = $"{CommonValues.Self} {CommonValues.Data}",
                 // Modern sites shouldn't need <object>, <embed>, and <applet> elements.
-                [ObjectSrc] = None,
+                [ObjectSrc] = CommonValues.None,
                 // Necessary to prevent clickjacking (https://developer.mozilla.org/en-US/docs/Glossary/Clickjacking).
-                [FrameAncestors] = Self,
+                [FrameAncestors] = CommonValues.Self,
             };
 
-            if (options.AllowInlineScript) securityPolicies[ScriptSrc] = $"{Self} {UnsafeInline}";
-            if (options.AllowInlineStyle) securityPolicies[StyleSrc] = $"{Self} {UnsafeInline}";
+            if (options.AllowInlineScript) securityPolicies[ScriptSrc] = $"{CommonValues.Self} {CommonValues.UnsafeInline}";
+            if (options.AllowInlineStyle) securityPolicies[StyleSrc] = $"{CommonValues.Self} {CommonValues.UnsafeInline}";
 
             context.Response.OnStarting(async () =>
             {
