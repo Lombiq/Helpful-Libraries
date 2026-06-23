@@ -16,15 +16,21 @@ public class MonacoContentSecurityPolicyProvider : IContentSecurityPolicyProvide
 {
     public async ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
-        var adminControllerName = typeof(AdminController).ControllerName();
-        var isContentEditor = context.IsMvcRoute(nameof(AdminController.Create), adminControllerName, "OrchardCore.Contents") ||
-            context.IsMvcRoute(nameof(AdminController.Edit), adminControllerName, "OrchardCore.Contents");
-
-        if (isContentEditor)
+        if (IsContentEditor(context) || IsDeployment(context))
         {
             AddMonacoPolicies(securityPolicies);
         }
     }
+
+    private static bool IsContentEditor(HttpContext context)
+    {
+        var adminControllerName = typeof(AdminController).ControllerName();
+        return context.IsMvcRoute(nameof(AdminController.Create), adminControllerName, "OrchardCore.Contents") ||
+            context.IsMvcRoute(nameof(AdminController.Edit), adminControllerName, "OrchardCore.Contents");
+    }
+
+    private static bool IsDeployment(HttpContext context) =>
+        context.IsMvcRoute(area: "OrchardCore.Deployment");
 
     public static void AddMonacoPolicies(IDictionary<string, string> securityPolicies)
     {

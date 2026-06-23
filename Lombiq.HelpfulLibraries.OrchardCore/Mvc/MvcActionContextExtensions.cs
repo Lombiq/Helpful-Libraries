@@ -65,6 +65,6 @@ public static class MvcActionContextExtensions
         context.RouteData.Values.GetMaybe("GroupId")?.ToString() == groupId;
 
     private static bool IsMatch(IDictionary<string, string?> routeValues, string key, string? expected) =>
-        routeValues.TryGetValue(key, out var value) &&
-        (expected?.EqualsOrdinalIgnoreCase(value) ?? value is null);
+        expected == null ||
+        (routeValues.TryGetValue(key, out var value) && (expected?.EqualsOrdinalIgnoreCase(value) ?? value is null));
 }
