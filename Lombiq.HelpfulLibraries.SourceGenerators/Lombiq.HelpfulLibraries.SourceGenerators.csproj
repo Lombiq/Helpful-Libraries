@@ -13,6 +13,9 @@
 
         <RootNamespace>Lombiq.HelpfulLibraries.SourceGenerators</RootNamespace>
         <PackageId>Lombiq.HelpfulLibraries.SourceGenerators</PackageId>
+
+        <!-- Only added to prevent irrelevant NU5104 warning that's suppressed in the publish script anyway -->
+        <Version>1.0.0-preview</Version>
     </PropertyGroup>
 
   <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.props" />
