@@ -33,12 +33,12 @@ public class SimpleTextResponse
     /// <summary>
     /// Gets the HTTP response status code.
     /// </summary>
-    public HttpStatusCode StatusCode { get; }
+    public HttpStatusCode? StatusCode { get; }
 
     /// <summary>
     /// Gets the error captured by the original <see cref="ApiResponse{T}"/> or <see langword="null"/>.
     /// </summary>
-    public ApiException? Error { get; }
+    public ApiExceptionBase? Error { get; }
 
     /// <summary>
     /// Gets the location header in <see cref="Headers"/>.
