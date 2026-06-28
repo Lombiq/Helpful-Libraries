@@ -139,6 +139,9 @@ public static class SecurityOrchardCoreBuilderExtensions
         ContentSecurityPolicyHeaderConfiguration contentSecurityPolicyHeaderConfiguration,
         bool useStaticFiles)
     {
+        builder.ApplicationServices.ConfigureFromShellConfiguration<ContentSecurityPolicyHeaderOptions>(
+            "Lombiq_HelpfulLibraries_OrchardCore_ContentSecurityPolicy");
+
         builder.ApplicationServices.AddInlineStartup(
             services => services
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
