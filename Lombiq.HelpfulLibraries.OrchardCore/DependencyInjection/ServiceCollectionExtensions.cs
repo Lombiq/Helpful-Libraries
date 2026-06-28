@@ -1,9 +1,12 @@
 using Lombiq.HelpfulLibraries.Common.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Options;
 using OrchardCore.Environment.Shell;
+using OrchardCore.Environment.Shell.Configuration;
 using OrchardCore.Environment.Shell.Descriptor.Models;
 using OrchardCore.Modules;
 using System;
@@ -75,4 +78,18 @@ public static class ServiceCollectionExtensions
         this OrchardCoreBuilder builder,
         params string[] featureIds) =>
         builder.ConfigureServices(services => services.AddDefaultTenantFeatures(featureIds));
+
+    /// <summary>
+    /// Configures the <typeparamref name="TOptions"/> using configuration found at the <paramref name="sectionKey"/> in
+    /// the <see cref="IShellConfiguration"/>. This registers the <see cref="IOptions{TOptions}"/> of <typeparamref
+    /// name="TOptions"/> service for use in dependency injection.
+    /// </summary>
+    public static OptionsBuilder<TOptions> ConfigureFromShellConfiguration<TOptions>(
+        this IServiceCollection services,
+        string sectionKey)
+        where TOptions : class =>
+        services
+            .AddOptions<TOptions>()
+            .Configure<IShellConfiguration>((options, configuration) =>
+                configuration.GetSection(sectionKey).Bind(options));
 }
