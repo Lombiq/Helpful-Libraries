@@ -102,8 +102,9 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///     <item>
     ///         <description>
     ///             Adds <see cref="MonacoContentSecurityPolicyProvider"/> that permits <c>eval</c> and <c>blob:</c> in
-    ///             all ~/Admin pages, required by the Monaco text editor widely used in admin. It can be disabled with
-    ///             <see cref="ContentSecurityPolicyHeaderOptions.DisableMonacoContentSecurityPolicyProvider"/> via the
+    ///             all ~/Admin pages, required by the Monaco text editor widely used in the admin. It can be disabled
+    ///             with <see cref="ContentSecurityPolicyHeaderOptions.DisableMonacoContentSecurityPolicyProvider"/> via
+    ///             the
     ///             <c>OrchardCore:Lombiq_HelpfulLibraries_OrchardCore_ContentSecurityPolicy:DisableMonacoContentSecurityPolicyProvider</c>
     ///             app setting.
     ///         </description>
