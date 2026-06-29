@@ -33,11 +33,11 @@ public class MonacoContentSecurityPolicyProvider : IContentSecurityPolicyProvide
     }
 
     private static bool IsEnabled(HttpContext context) =>
-        !context
+        context
             .RequestServices
             .GetRequiredService<IOptions<ContentSecurityPolicyHeaderOptions>>()
             .Value
-            .DisableMonacoContentSecurityPolicyProvider;
+            .EnableMonacoContentSecurityPolicyProvider;
 
     public static void AddMonacoPolicies(IDictionary<string, string> securityPolicies)
     {
