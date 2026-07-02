@@ -76,6 +76,4 @@ public class DocumentedEventActivityDisplayDriverBase<TActivity> : SimpleEventAc
     }
 }
 
-public class DocumentedEventActivityDisplayDriver
-{
-}
+public class DocumentedEventActivityDisplayDriver;
