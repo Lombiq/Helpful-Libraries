@@ -23,7 +23,7 @@ public static class QueryExtensions
     /// <param name="pageIndex">Zero-based index of the desired page.</param>
     /// <param name="count">The page size.</param>
     /// <returns>The desired page of the resulting items.</returns>
-    public static Task<IEnumerable<T>> PaginateAsync<T>(
+    public static Task<IReadOnlyList<T>> PaginateAsync<T>(
         this IQuery<T> query,
         int pageIndex = 0,
         int count = int.MaxValue)
@@ -60,7 +60,7 @@ public static class QueryExtensions
     /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and count
     /// is <see cref="int.MaxValue"/> then the whole query is listed.
     /// </summary>
-    public static Task<IEnumerable<TIndex>> PaginateAsync<TIndex>(
+    public static Task<IReadOnlyList<TIndex>> PaginateAsync<TIndex>(
         this IQueryIndex<TIndex> query,
         int pageIndex = 0,
         int count = int.MaxValue)
@@ -74,7 +74,7 @@ public static class QueryExtensions
     /// <param name="skip">Number of items to skip. Can be null.</param>
     /// <param name="count">Number of items to take. Can be null.</param>
     /// <returns>The desired slices of the resulting <see cref="ContentItem"/>s.</returns>
-    public static Task<IEnumerable<ContentItem>> SliceAsync(this IQuery<ContentItem> query, int? skip, int? count)
+    public static Task<IReadOnlyList<ContentItem>> SliceAsync(this IQuery<ContentItem> query, int? skip, int? count)
     {
         if (skip > 0) query = query.Skip(skip.Value);
         if (count > 0) query = query.Take(count.Value);
