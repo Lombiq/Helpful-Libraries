@@ -48,9 +48,9 @@ public class SimpleTextResponse
     internal SimpleTextResponse(IApiResponse<string> response)
     {
         Content = response.Content;
-        Headers = response.Headers.ToDictionary<KeyValuePair<string, IEnumerable<string>>, string, string?>(
+        Headers = response.Headers?.ToDictionary<KeyValuePair<string, IEnumerable<string>>, string, string?>(
             header => header.Key,
-            header => header.Value.First());
+            header => header.Value.First()) ?? [];
         IsOk = response.Error == null && response.StatusCode == HttpStatusCode.OK;
         StatusCode = response.StatusCode;
         Error = response.Error;
@@ -63,6 +63,11 @@ public class SimpleTextResponse
     public static SimpleTextResponse? ConvertAndDisposeApiResponse(ApiResponse<string>? response)
     {
         if (response == null) return null;
+
+        if (response.Error is { } error)
+        {
+            throw error;
+        }
 
         using (response)
         {
