@@ -51,7 +51,7 @@ public class SimpleTextResponse
         Headers = response.Headers?.ToDictionary<KeyValuePair<string, IEnumerable<string>>, string, string?>(
             header => header.Key,
             header => header.Value.FirstOrDefault())
-            ?? new Dictionary<string, string?>();
+            ?? [];
         IsOk = response.Error == null && response.StatusCode == HttpStatusCode.OK;
         StatusCode = response.StatusCode;
         Error = response.Error;
