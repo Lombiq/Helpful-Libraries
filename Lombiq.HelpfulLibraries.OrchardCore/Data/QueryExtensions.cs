@@ -8,6 +8,7 @@ using OrchardCore.Settings;
 using System.Collections.Generic;
 using System.Globalization;
 using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
 using YesSql.Indexes;
 
@@ -15,6 +16,26 @@ namespace YesSql;
 
 public static class QueryExtensions
 {
+    /// <summary>
+    /// Same as <see cref="IQuery{T}.ListAsync()"/> but returns <see cref="IReadOnlyList{T}"/>.
+    /// </summary>
+    /// <remarks><para>
+    /// Mark this as <c>[Obsolete]</c> after upgrading to YesSql 6.0.0.
+    /// </para></remarks>
+    public static async Task<IReadOnlyList<T>> ListReadOnlyAsync<T>(this IQuery<T> query)
+        where T : class =>
+        (await query.ListAsync()).AsReadOnlyList();
+
+    /// <summary>
+    /// Same as <see cref="IQueryIndex{T}.ListAsync()"/> but returns <see cref="IReadOnlyList{T}"/>.
+    /// </summary>
+    /// <remarks><para>
+    /// Mark this as <c>[Obsolete]</c> after upgrading to YesSql 6.0.0.
+    /// </para></remarks>
+    public static async Task<IReadOnlyList<T>> ListReadOnlyAsync<T>(this IQueryIndex<T> query, CancellationToken token = default)
+        where T : IIndex =>
+        (await query.ListAsync(token)).AsReadOnlyList();
+
     /// <summary>
     /// Breaks the query up into pages and lists the page using the given zero-based index. If pageIndex is 0 and count
     /// is <see cref="int.MaxValue"/> then the whole query is listed.
@@ -31,7 +52,7 @@ public static class QueryExtensions
     {
         if (pageIndex > 0) query = query.Skip(pageIndex * count);
         if (count < int.MaxValue) query = query.Take(count);
-        return query.ListAsync();
+        return query.ListReadOnlyAsync();
     }
 
     /// <summary>
@@ -65,7 +86,7 @@ public static class QueryExtensions
         int pageIndex = 0,
         int count = int.MaxValue)
         where TIndex : IIndex =>
-        query.Skip(pageIndex * count).Take(count).ListAsync();
+        query.Skip(pageIndex * count).Take(count).ListReadOnlyAsync();
 
     /// <summary>
     /// Breaks the query up into slices and lists the slice.
@@ -79,7 +100,7 @@ public static class QueryExtensions
         if (skip > 0) query = query.Skip(skip.Value);
         if (count > 0) query = query.Take(count.Value);
 
-        return query.ListAsync();
+        return query.ListReadOnlyAsync();
     }
 
     /// <summary>

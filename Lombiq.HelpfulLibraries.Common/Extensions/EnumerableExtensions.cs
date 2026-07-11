@@ -164,6 +164,16 @@ public static class EnumerableExtensions
         collection is IList<T> list ? list : [.. collection];
 
     /// <summary>
+    /// Attempts to cast <paramref name="collection"/> into <see cref="IReadOnlyList{T}"/>. If that's not possible then
+    /// converts it into one. Not to be confused with <see cref="Enumerable.ToList{TSource}"/> that always creates a separate
+    /// <see cref="List{T}"/> regardless of source type. This extension is more suitable when the <paramref
+    /// name="collection"/> is expected to be <see cref="IReadOnlyList{T}"/> but has to be stored as <see
+    /// cref="IEnumerable{T}"/>.
+    /// </summary>
+    public static IReadOnlyList<T> AsReadOnlyList<T>(this IEnumerable<T> collection) =>
+        collection is IReadOnlyList<T> list ? list : [.. collection];
+
+    /// <summary>
     /// Transforms the specified <paramref name="collection"/> with the <paramref name="select"/> function and returns
     /// the items that return <see langword="true"/> when passed to the <paramref name="where"/> function.
     /// </summary>
