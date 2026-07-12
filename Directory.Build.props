@@ -1,0 +1,10 @@
+<Project>
+  <!-- Add shared configuration specific to Helpful Libraries projects here. -->
+  <PropertyGroup>
+    <OrchardCoreVersion>3.0.1</OrchardCoreVersion>
+  </PropertyGroup>
+
+  <!-- Inherit parent props file if one exists. -->
+  <Import Condition="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../')) != ''"
+          Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+</Project>

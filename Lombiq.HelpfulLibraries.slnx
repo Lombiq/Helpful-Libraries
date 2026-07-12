@@ -1,4 +1,9 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="NuGet.config" />
+    <File Path="renovate.json5" />
+  </Folder>
   <Project Path="Lombiq.HelpfulLibraries.AspNetCore/Lombiq.HelpfulLibraries.AspNetCore.csproj" />
   <Project Path="Lombiq.HelpfulLibraries.Attributes/Lombiq.HelpfulLibraries.Attributes.csproj" />
   <Project Path="Lombiq.HelpfulLibraries.Cli/Lombiq.HelpfulLibraries.Cli.csproj" />
