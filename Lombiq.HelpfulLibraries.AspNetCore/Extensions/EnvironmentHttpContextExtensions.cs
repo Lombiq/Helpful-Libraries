@@ -33,4 +33,10 @@ public static class EnvironmentHttpContextExtensions
     /// </returns>
     public static bool IsDevelopmentAndLocalhost(this HttpContext httpContext) =>
         httpContext.IsDevelopment() && httpContext.IsLocalhost();
+
+    /// <summary>
+    /// Returns the value for the <c>loading</c> HTML attribute of an <c>&lt;img&gt;</c> element.
+    /// </summary>
+    public static string GetImageLoadingStrategy(this HttpContext httpContext) =>
+        httpContext.IsDevelopmentAndLocalhost() ? "eager" : "lazy";
 }

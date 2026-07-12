@@ -22,9 +22,9 @@ public static class QueryExtensions
     /// <remarks><para>
     /// Mark this as <c>[Obsolete]</c> after upgrading to YesSql 6.0.0.
     /// </para></remarks>
-    public static async Task<IReadOnlyList<T>> ListReadOnlyAsync<T>(this IQuery<T> query)
+    public static async Task<IReadOnlyList<T>> ListReadOnlyAsync<T>(this IQuery<T> query, CancellationToken token = default)
         where T : class =>
-        (await query.ListAsync()).AsReadOnlyList();
+        (await query.ListAsync(token)).AsReadOnlyList();
 
     /// <summary>
     /// Same as <see cref="IQueryIndex{T}.ListAsync()"/> but returns <see cref="IReadOnlyList{T}"/>.
