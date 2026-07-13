@@ -1,7 +1,6 @@
 <Project>
   <!-- Add shared configuration specific to Helpful Libraries projects here. -->
   <PropertyGroup>
-    <OrchardCoreVersion>3.0.1</OrchardCoreVersion>
   </PropertyGroup>
 
   <!-- Inherit parent props file if one exists. -->
