@@ -55,9 +55,9 @@ public static class StringHelper
         string singularTemplate,
         string pluralTemplate,
         int number,
-        params IEnumerable<object> additionalParameters) =>
-        string.Format(
-            CultureInfo.InvariantCulture,
-            number == 1 ? singularTemplate : pluralTemplate,
-            [number, ..additionalParameters]);
+        params IEnumerable<object> additionalParameters)
+    {
+        var template = number == 1 ? singularTemplate : pluralTemplate;
+        return string.Format(CultureInfo.InvariantCulture, template, [number, .. additionalParameters]);
+    }
 }
