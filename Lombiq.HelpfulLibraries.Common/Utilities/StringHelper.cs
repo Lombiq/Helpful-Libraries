@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Runtime.CompilerServices;
@@ -44,4 +45,19 @@ public static class StringHelper
     /// </summary>
     public static string CreateInvariant(this DefaultInterpolatedStringHandler value) =>
         string.Create(CultureInfo.InvariantCulture, ref value);
+
+    /// <summary>
+    /// Formats the <see langword="string"/> using <paramref name="singularTemplate"/> if <paramref name="number"/> is
+    /// exactly 1, otherwise uses <paramref name="pluralTemplate"/>. It uses <see cref="CultureInfo.InvariantCulture"/>
+    /// and <paramref name="number"/> is the first parameter, followed by <paramref name="additionalParameters"/>.
+    /// </summary>
+    public static string PluralizeInvariant(
+        string singularTemplate,
+        string pluralTemplate,
+        int number,
+        params IEnumerable<object> additionalParameters) =>
+        string.Format(
+            CultureInfo.InvariantCulture,
+            number == 1 ? singularTemplate : pluralTemplate,
+            [number, ..additionalParameters]);
 }
