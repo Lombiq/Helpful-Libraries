@@ -65,6 +65,11 @@ public class SimpleTextResponse
     {
         if (response == null) return null;
 
+        if (response.Error is { } error)
+        {
+            throw error;
+        }
+
         using (response)
         {
             return new SimpleTextResponse(response);

@@ -101,6 +101,15 @@ public static class SecurityOrchardCoreBuilderExtensions
     ///     </item>
     ///     <item>
     ///         <description>
+    ///             Adds <see cref="MonacoContentSecurityPolicyProvider"/> that permits <c>eval</c> and <c>blob:</c> in
+    ///             all ~/Admin pages, required by the Monaco text editor widely used in the admin. You can opt out by
+    ///             setting <see cref="ContentSecurityPolicyHeaderOptions.EnableMonacoContentSecurityPolicyProvider"/>
+    ///             to <see langword="false"/> in the
+    ///             <c>OrchardCore:Lombiq_HelpfulLibraries_OrchardCore_ContentSecurityPolicy</c> app setting.
+    ///         </description>
+    ///     </item>
+    ///     <item>
+    ///         <description>
     ///             Adds a middleware that supplies the <c>Content-Security-Policy</c> header.
     ///         </description>
     ///     </item>
@@ -139,6 +148,9 @@ public static class SecurityOrchardCoreBuilderExtensions
         ContentSecurityPolicyHeaderConfiguration contentSecurityPolicyHeaderConfiguration,
         bool useStaticFiles)
     {
+        builder.ApplicationServices.ConfigureFromShellConfiguration<ContentSecurityPolicyHeaderOptions>(
+            "Lombiq_HelpfulLibraries_OrchardCore_ContentSecurityPolicy");
+
         builder.ApplicationServices.AddInlineStartup(
             services => services
                 .AddContentSecurityPolicyProvider<CdnContentSecurityPolicyProvider>()
@@ -150,6 +162,7 @@ public static class SecurityOrchardCoreBuilderExtensions
                 .AddContentSecurityPolicyProvider<BrowserLinkContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<ReCaptchaContentSecurityPolicyProvider>()
                 .AddContentSecurityPolicyProvider<GoogleAnalyticsContentSecurityPolicyProvider>()
+                .AddContentSecurityPolicyProvider<MonacoContentSecurityPolicyProvider>()
                 .ConfigureSessionCookieAlwaysSecure(),
             (app, _, serviceProvider) =>
             {

@@ -1,27 +1,16 @@
-<Project Sdk="Microsoft.NET.Sdk.Razor">
-
+<Project>
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-    <AddRazorSupportForMvc>true</AddRazorSupportForMvc>
+    <TargetFramework>net10.0</TargetFramework>
     <IsPackable>false</IsPackable>
-    <DefaultItemExcludes>$(DefaultItemExcludes);.git*</DefaultItemExcludes>
   </PropertyGroup>
 
-  <ItemGroup>
-    <FrameworkReference Include="Microsoft.AspNetCore.App" />
-  </ItemGroup>
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.OrchardCore.Module.Sdk/Sdk/Import.props" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.props" Sdk="Lombiq.MSBuild.OrchardCore.Module.Sdk" Version="1.0.1-alpha.27.osoe-925" />
 
   <ItemGroup>
-    <PackageReference Include="OrchardCore.ContentFields" Version="2.1.0" />
-    <PackageReference Include="OrchardCore.Module.Targets" Version="2.1.0" />
-    <PackageReference Include="OrchardCore.ContentManagement" Version="2.1.0" />
-    <PackageReference Include="OrchardCore.ContentTypes.Abstractions" Version="2.1.0" />
-    <PackageReference Include="OrchardCore.DisplayManagement" Version="2.1.0" />
-    <PackageReference Include="OrchardCore.Autoroute" Version="2.1.0" />
+    <ProjectReference Include="..\Lombiq.HelpfulLibraries.LinqToDb\Lombiq.HelpfulLibraries.LinqToDb.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\Lombiq.HelpfulLibraries\Lombiq.HelpfulLibraries.csproj" />
-  </ItemGroup>
-
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.OrchardCore.Module.Sdk/Sdk/Import.targets" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.OrchardCore.Module.Sdk" Version="1.0.1-alpha.27.osoe-925" />
 </Project>

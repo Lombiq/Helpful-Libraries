@@ -1,0 +1,9 @@
+<Project>
+  <!-- This is a placeholder for now. You can add shared configuration specific to Helpful Libraries projects here. -->
+  <PropertyGroup>
+  </PropertyGroup>
+
+  <!-- Inherit parent props file if one exists. -->
+  <Import Condition="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../')) != ''"
+          Project="$([MSBuild]::GetPathOfFileAbove('Directory.Build.props', '$(MSBuildThisFileDirectory)../'))" />
+</Project>

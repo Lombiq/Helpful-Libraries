@@ -1,6 +1,8 @@
+using Elastic.Clients.Elasticsearch;
+using System;
 using System.Threading.Tasks;
 
-namespace OrchardCore.Search.Elasticsearch.Core.Services;
+namespace OrchardCore.Elasticsearch.Core.Services;
 
 public static class ElasticIndexManagerExtensions
 {
@@ -8,6 +10,7 @@ public static class ElasticIndexManagerExtensions
     /// Clear all indexes for the tenant (within the prefix, if there is one) by passing a wildcard
     /// character (<c>*</c>) as the index name.
     /// </summary>
-    public static Task<bool> DeleteAllIndexesAsync(this ElasticIndexManager manager) =>
-        manager.DeleteIndex("*");
+    [Obsolete($"Use the equivalent extension method for {nameof(ElasticsearchClient)} instead.")]
+    public static Task<bool> DeleteAllIndexesAsync(this ElasticsearchIndexManager manager) =>
+        throw new NotSupportedException($"Use the equivalent extension method for {nameof(ElasticsearchClient)} instead.");
 }

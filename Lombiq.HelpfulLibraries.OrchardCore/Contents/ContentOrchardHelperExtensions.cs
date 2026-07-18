@@ -1,9 +1,10 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.ContentManagement;
+using OrchardCore.ContentManagement.Metadata.Settings;
+using OrchardCore.DisplayManagement.Extensions;
 using System;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
@@ -16,14 +17,16 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Gets the given content item's edit URL.
     /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
+    [Obsolete($"Use {nameof(GetItemEditUrlAsync)} instead.")]
     public static string GetItemEditUrl(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
         orchardHelper.GetItemEditUrl(contentItem.ContentItemId);
 
     /// <summary>
     /// Gets the given content item's edit URL.
     /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
+    [Obsolete($"Use {nameof(GetItemEditUrlAsync)} instead.")]
     public static string GetItemEditUrl(this IOrchardHelper orchardHelper, string contentItemId)
     {
         var urlHelper = orchardHelper.GetUrlHelper();
@@ -31,12 +34,40 @@ public static class ContentOrchardHelperExtensions
     }
 
     /// <summary>
+    /// Gets the given content item's edit URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
+    public static Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, ContentItem contentItem) =>
+        orchardHelper.GetItemEditUrlAsync(contentItem.ContentItemId);
+
+    /// <summary>
+    /// Gets the given content item's edit URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
+    public static async Task<string> GetItemEditUrlAsync(this IOrchardHelper orchardHelper, string contentItemId)
+    {
+        var urlHelper = await orchardHelper.GetUrlHelperAsync();
+        return urlHelper.EditContentItem(contentItemId);
+    }
+
+    /// <summary>
     /// Gets the given content item's display URL.
     /// </summary>
-    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns relative URL.")]
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
+    [Obsolete($"Use {nameof(GetItemDisplayUrlAsync)} instead.")]
     public static string GetItemDisplayUrl(this IOrchardHelper orchardHelper, string contentItemId)
     {
         var urlHelper = orchardHelper.GetUrlHelper();
+        return urlHelper.DisplayContentItem(contentItemId);
+    }
+
+    /// <summary>
+    /// Gets the given content item's display URL.
+    /// </summary>
+    [SuppressMessage("Design", "CA1055:URI-like return values should not be strings", Justification = "It only returns a relative URL.")]
+    public static async Task<string> GetItemDisplayUrlAsync(this IOrchardHelper orchardHelper, string contentItemId)
+    {
+        var urlHelper = await orchardHelper.GetUrlHelperAsync();
         return urlHelper.DisplayContentItem(contentItemId);
     }
 
@@ -52,17 +83,11 @@ public static class ContentOrchardHelperExtensions
     {
         var httpContext = orchardHelper.HttpContext;
 
-        if (httpContext.Request.Method == "POST")
-        {
-            var previewContentItemId = httpContext.Request.Form["PreviewContentItemId"].ToString();
-            if (!string.IsNullOrEmpty(previewContentItemId) &&
-                httpContext.RequestServices.GetService<IContentManager>() is { } contentManager)
-            {
-                return contentManager.GetAsync(previewContentItemId);
-            }
-        }
-
-        return contentItemGetter();
+        return httpContext.Request.GetFormValueMaybe("PreviewContentItemId") is { } previewContentItemId &&
+            !string.IsNullOrEmpty(previewContentItemId) &&
+            httpContext.RequestServices.GetService<IContentManager>() is { } contentManager
+                ? contentManager.GetAsync(previewContentItemId)
+                : contentItemGetter();
     }
 
     /// <inheritdoc cref="ContentHttpContextExtensions.Action{TController}"/>
@@ -84,13 +109,28 @@ public static class ContentOrchardHelperExtensions
     /// <summary>
     /// Constructs a new <see cref="IUrlHelper"/> instance using the current <see cref="IOrchardHelper.HttpContext"/>.
     /// </summary>
-    public static IUrlHelper GetUrlHelper(this IOrchardHelper orchardHelper)
+    [Obsolete($"Use {nameof(GetUrlHelperAsync)} instead.")]
+    public static IUrlHelper GetUrlHelper(this IOrchardHelper orchardHelper) =>
+        orchardHelper.GetUrlHelperAsync().Result;
+
+    /// <summary>
+    /// Constructs a new <see cref="IUrlHelper"/> instance using the current <see cref="IOrchardHelper.HttpContext"/>.
+    /// </summary>
+    public static async Task<IUrlHelper> GetUrlHelperAsync(this IOrchardHelper orchardHelper)
     {
         var serviceProvider = orchardHelper.HttpContext.RequestServices;
         var urlHelperFactory = serviceProvider.GetRequiredService<IUrlHelperFactory>();
-        var actionContext = serviceProvider.GetService<IActionContextAccessor>()?.ActionContext ??
+
+        var actionContext = await orchardHelper.HttpContext.GetActionContextAsync() ??
             throw new InvalidOperationException("Couldn't access the action context.");
 
         return urlHelperFactory.GetUrlHelper(actionContext);
     }
+
+    /// <summary>
+    /// Returns <c>ocat-label</c> or <c>ocat-label ocat-label-required</c> depending on the <paramref name="settings"/>.
+    /// This is a simplified version of a removed stock Orchard Core helper, only for content fields.
+    /// </summary>
+    public static string GetLabelClasses(this IOrchardHelper orchardHelper, FieldSettings settings) =>
+        settings.Required ? "ocat-label ocat-label-required" : "ocat-label";
 }

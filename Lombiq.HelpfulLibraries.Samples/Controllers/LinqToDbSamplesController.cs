@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc;
 using OrchardCore.Autoroute.Core.Indexes;
 using OrchardCore.ContentManagement.Records;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using YesSql;
@@ -27,7 +26,6 @@ public sealed class LinqToDbSamplesController : Controller
     {
         var result = await _session.LinqQueryAsync(
             accessor => accessor
-                // GetTable method optionally receives a collection name.
                 .GetTable<AutoroutePartIndex>()
                 .Where(index => index.Path.Contains('a', StringComparison.OrdinalIgnoreCase))
                 .OrderByDescending(index => index.Path)

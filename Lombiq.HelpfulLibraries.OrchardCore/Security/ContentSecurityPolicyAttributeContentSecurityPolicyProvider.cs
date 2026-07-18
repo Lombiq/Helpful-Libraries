@@ -1,10 +1,10 @@
 ﻿using Lombiq.HelpfulLibraries.AspNetCore.Security;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc.Controllers;
-using Microsoft.AspNetCore.Mvc.Infrastructure;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
@@ -60,16 +60,22 @@ public class ContentSecurityPolicyAttributeContentSecurityPolicyProvider : ICont
 {
     public ValueTask UpdateAsync(IDictionary<string, string> securityPolicies, HttpContext context)
     {
-        if (context.RequestServices.GetService<IActionContextAccessor>() is
-            { ActionContext.ActionDescriptor: ControllerActionDescriptor actionDescriptor })
+        var actionDescriptor = context
+            .GetEndpoint()?
+            .Metadata
+            .CastWhere<ControllerActionDescriptor>()
+            .FirstOrDefault();
+
+        var attributes = actionDescriptor?
+            .MethodInfo
+            .GetCustomAttributes<ContentSecurityPolicyAttribute>() ?? [];
+
+        foreach (var attribute in attributes)
         {
-            foreach (var attribute in actionDescriptor.MethodInfo.GetCustomAttributes<ContentSecurityPolicyAttribute>())
-            {
-                ContentSecurityPolicyProvider.MergeDirectiveValues(
-                    securityPolicies,
-                    attribute.DirectiveNames,
-                    attribute.DirectiveValue);
-            }
+            ContentSecurityPolicyProvider.MergeDirectiveValues(
+                securityPolicies,
+                attribute.DirectiveNames,
+                attribute.DirectiveValue);
         }
 
         return ValueTask.CompletedTask;

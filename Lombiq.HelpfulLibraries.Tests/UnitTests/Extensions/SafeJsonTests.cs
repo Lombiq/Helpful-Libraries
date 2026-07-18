@@ -120,7 +120,7 @@ public class SafeJsonTests
 
     private sealed record TestResults(
         ListLoggerProvider LoggerProvider,
-        Dictionary<string, string> Failure,
-        Dictionary<string, string> FailureAsync,
-        Dictionary<string, string> Success);
+        IDictionary<string, string> Failure,
+        IDictionary<string, string> FailureAsync,
+        IDictionary<string, string> Success);
 }

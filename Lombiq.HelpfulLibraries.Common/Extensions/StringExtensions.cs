@@ -99,6 +99,12 @@ public static class StringExtensions
         text != null && toFind != null && text.Contains(toFind, StringComparison.InvariantCultureIgnoreCase);
 
     /// <summary>
+    /// A shortcut for <c>string.Equals(string, StringComparison.Ordinal)</c>.
+    /// </summary>
+    public static bool EqualsOrdinal(this string? text, string? value) =>
+        text?.Equals(value, StringComparison.Ordinal) == true;
+
+    /// <summary>
     /// A shortcut for <c>string.Equals(string, StringComparison.OrdinalIgnoreCase)</c>.
     /// </summary>
     public static bool EqualsOrdinalIgnoreCase(this string text, string? value) =>
@@ -435,4 +441,11 @@ public static class StringExtensions
 
     /// <inheritdoc cref="Concat"/>
     public static string Join(this IList<Range> ranges, string text) => text.Concat(ranges);
+
+    /// <summary>
+    /// Returns <see langword="null"/> if the <paramref name="value"/> is <see langword="null"/> or whitespace. This
+    /// makes chaining with the null-coalescing operator (<c>??</c>) easier.
+    /// </summary>
+    public static string? NullIfWhiteSpace(this string value) =>
+        string.IsNullOrWhiteSpace(value) ? null : value;
 }

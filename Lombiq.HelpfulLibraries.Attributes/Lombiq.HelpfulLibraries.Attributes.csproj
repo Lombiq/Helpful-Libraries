@@ -1,27 +1,23 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<Project>
     <PropertyGroup>
       <TargetFramework>netstandard2.0</TargetFramework>
       <IsPackable>true</IsPackable>
       <Nullable>enable</Nullable>
-      <LangVersion>latest</LangVersion>
+      <LangVersion>14.0</LangVersion>
     </PropertyGroup>
+
+    <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.props" />
+    <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.props" Sdk="Lombiq.MSBuild.Library.Sdk" Version="2.0.0" />
 
     <PropertyGroup>
         <Title>Lombiq Helpful Libraries - Attributes for Orchard Core</Title>
-        <Authors>Lombiq Technologies</Authors>
-        <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-        <Description>Lombiq Helpful Libraries - Attributes for Orchard Core: Adds attributes used by other projects. See the project website for detailed documentation.</Description>
-        <PackageIcon>NuGetIcon.png</PackageIcon>
+        <CopyrightYear>2011</CopyrightYear>
+        <DescriptionBody>Adds attributes used by other projects. See the project website for detailed documentation.</DescriptionBody>
         <PackageTags>OrchardCore;Lombiq;Attributes</PackageTags>
         <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.Attributes/Readme.md</PackageProjectUrl>
-        <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     </PropertyGroup>
 
-    <ItemGroup>
-        <None Include="Readme.md" />
-        <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
-    </ItemGroup>
-
+    <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.targets" />
+    <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.Library.Sdk" Version="2.0.0" />
 </Project>

@@ -29,16 +29,15 @@ public static class CommandExtensions
         Action<StandardErrorCommandEvent>? stdErrHandler = default,
         CancellationToken cancellationToken = default)
     {
-        await using var enumerator = command.ListenAsync(cancellationToken).GetAsyncEnumerator(cancellationToken);
-
-        while (await enumerator.MoveNextAsync(cancellationToken))
+        await foreach (var commandEvent in command.ListenAsync(cancellationToken))
         {
-            if (enumerator.Current is StandardOutputCommandEvent stdOut && stdOut.Text.ContainsOrdinalIgnoreCase(outputToWaitFor))
+            if (commandEvent is StandardOutputCommandEvent stdOut &&
+                stdOut.Text.ContainsOrdinalIgnoreCase(outputToWaitFor))
             {
                 return;
             }
 
-            if (enumerator.Current is StandardErrorCommandEvent stdErr)
+            if (commandEvent is StandardErrorCommandEvent stdErr)
             {
                 stdErrHandler?.Invoke(stdErr);
             }

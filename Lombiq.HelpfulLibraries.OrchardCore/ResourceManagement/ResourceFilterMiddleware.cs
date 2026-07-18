@@ -35,16 +35,14 @@ public class ResourceFilterMiddleware
         if (providers.Exists(providerInfo => providerInfo.ThemeRequirements.Count > 0))
         {
             // Without caching, this would issue dozens, if not hundreds of database calls for the Default tenant like
-            // below on each request.
-            // SELECT TOP (1) [Document].* FROM [Document] WHERE [Document].[Type] = @Type
+            // "SELECT TOP (1) [Document].* FROM [Document] WHERE [Document].[Type] = @Type" on each request.
+            // No options are needed for the cache entry, since ideally it's kept for the lifetime of the shell, but it
+            // can be evicted any time.
             var themes = await memoryCache.GetOrCreateAsync(
                 typeof(ResourceFilterMiddleware).FullName + ".Themes",
-                async _ =>
-                    // No options needed for the cache entry since ideally it's kept for the lifetime of the shell, but
-                    // can be evicted any time.
-                    (await services.GetRequiredService<IShellFeaturesManager>().GetAvailableFeaturesAsync())
-                        .SelectWhere(feature => feature.Extension as IThemeExtensionInfo)
-                        .ToDictionary(info => info.Id)) ?? [];
+                async _ => (await services.GetRequiredService<IShellFeaturesManager>().GetAvailableFeaturesAsync())
+                    .SelectWhere(feature => feature.Extension as IThemeExtensionInfo)
+                    .ToDictionary(info => info.Id)) ?? [];
 
             // This is necessary to determine if we are in admin mode, because AdminZoneFilter won't have executed yet
             // by this point of the pipeline.

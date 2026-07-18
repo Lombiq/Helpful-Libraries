@@ -1,10 +1,9 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+<Project>
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <IsPackable>true</IsPackable>
         <Nullable>enable</Nullable>
-        <LangVersion>latest</LangVersion>
+        <LangVersion>14.0</LangVersion>
 
         <EnforceExtendedAnalyzerRules>true</EnforceExtendedAnalyzerRules>
         <IsRoslynComponent>true</IsRoslynComponent>
@@ -14,27 +13,25 @@
 
         <RootNamespace>Lombiq.HelpfulLibraries.SourceGenerators</RootNamespace>
         <PackageId>Lombiq.HelpfulLibraries.SourceGenerators</PackageId>
+
+        <!-- Only added to prevent irrelevant NU5104 warning that's suppressed in the publish script anyway -->
+        <Version>1.0.0-preview</Version>
     </PropertyGroup>
+
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.props" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.props" Sdk="Lombiq.MSBuild.Library.Sdk" Version="2.0.0" />
 
     <PropertyGroup>
         <Title>Lombiq Helpful Libraries - Source Generators for Orchard Core</Title>
-        <Authors>Lombiq Technologies</Authors>
-        <Copyright>Copyright © 2011, Lombiq Technologies Ltd.</Copyright>
-        <Description>Lombiq Helpful Libraries - Source Generators for Orchard Core for Orchard Core: Adds helpful source generators. See the project website for detailed documentation.</Description>
-        <PackageIcon>NuGetIcon.png</PackageIcon>
+        <CopyrightYear>2011</CopyrightYear>
+        <DescriptionBody>Adds helpful source generators. See the project website for detailed documentation.</DescriptionBody>
         <PackageTags>OrchardCore;Lombiq;SourceGenerators</PackageTags>
         <RepositoryUrl>https://github.com/Lombiq/Helpful-Libraries</RepositoryUrl>
         <PackageProjectUrl>https://github.com/Lombiq/Helpful-Libraries/blob/dev/Lombiq.HelpfulLibraries.SourceGenerators/Readme.md</PackageProjectUrl>
-        <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
     </PropertyGroup>
 
     <ItemGroup>
-        <None Include="Readme.md" />
-        <None Include="NuGetIcon.png" Pack="true" PackagePath="" />
-    </ItemGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="4.10.0" PrivateAssets="all" />
+        <PackageReference Include="Microsoft.CodeAnalysis.CSharp" Version="5.0.0" PrivateAssets="all" />
     </ItemGroup>
 
     <ItemGroup>
@@ -44,7 +41,7 @@
     <ItemGroup>
         <!-- Take a private dependency on with (PrivateAssets=all) Consumers of this generator will not reference it.
              Set GeneratePathProperty=true so we can reference the binaries -->
-        <PackageReference Include="System.Text.Json" Version="8.0.6" PrivateAssets="all" GeneratePathProperty="true" />
+        <PackageReference Include="System.Text.Json" Version="10.0.2" PrivateAssets="all" GeneratePathProperty="true" />
         <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="3.11.0" GeneratePathProperty="true">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -78,4 +75,6 @@
         </ItemGroup>
     </Target>
 
+  <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.targets" />
+  <Import Condition="'$(NuGetBuild)' == 'true'" Project="Sdk.targets" Sdk="Lombiq.MSBuild.Library.Sdk" Version="2.0.0" />
 </Project>

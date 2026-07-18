@@ -31,6 +31,7 @@ public sealed class ExpressionSampleMigration : DataMigration
         Justification = "Needed for commenting first arguments.")]
     public async Task<int> CreateAsync()
     {
+#pragma warning disable IDE0055 // Fix formatting, but the extra inline comments are helpful here.
         await _contentDefinitionManager.AlterTypeDefinitionAsync(ExpressionContent, async type => type
             // The point of using SetAbilities instead of individual extensions is that this way you can be explicit
             // about whether you want to refuse some feature or you don't care. This improves maintainability.
@@ -49,6 +50,7 @@ public sealed class ExpressionSampleMigration : DataMigration
                     .WithField(part => part.OtherText, field => field.WithDisplayName("Some Other Text"))
                     .WithField(part => part.SomeNumber, field => field.
                         WithSettings(new NumericFieldSettings { DefaultValue = "10", Minimum = 0 })))));
+#pragma warning restore IDE0055 // Fix formatting.
 
         // This generic overload lets you create an index automatically, using property attributes to set up common
         // constraints.

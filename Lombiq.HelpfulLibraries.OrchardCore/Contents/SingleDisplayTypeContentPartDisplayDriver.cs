@@ -66,7 +66,7 @@ public abstract class SingleDisplayTypeContentPartDisplayDriver<TPart> : Content
             if (placementContext.DisplayType == _driver.DisplayType &&
                 placementContext.Differentiator?.StartsWithOrdinal($"{typeof(TPart).Name}-") == true)
             {
-                return new PlacementInfo { Location = "-" };
+                return new PlacementInfo(location: "-");
             }
 
             return null;

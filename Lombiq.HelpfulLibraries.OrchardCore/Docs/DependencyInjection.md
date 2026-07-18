@@ -13,3 +13,14 @@ var contentItem = await context.ServiceProvider.GetWithShellScopeAsync(scope =>
     return contentManager.GetAsync(contentItemId);
 });
 ```
+
+## Inline Startup
+
+Using the `serviceCollection.AddInlineStartup()` extension method you provide `Startup.Configure()` and `Startup.ConfigureServices()` as lambda expressions without the need to create a whole class. Ideal for your _Program.cs_ or in extension methods.
+
+Usage:
+
+```csharp
+serviceCollection.AddInlineStartup(services => services.AddScoped<IMyService, MyService>());
+serviceCollection.AddInlineStartup(services => services.AddScoped<IMyService, OtherService>(), (app, _, _) => app.UseStaticFiles());
+```

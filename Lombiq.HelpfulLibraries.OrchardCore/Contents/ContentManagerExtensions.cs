@@ -15,7 +15,7 @@ public static class ContentManagerExtensions
     /// <param name="versionOptions">The version data of the content item to retrieve.</param>
     public static async Task<T?> GetAsync<T>(this IContentManager contentManager, string id, VersionOptions? versionOptions = null)
         where T : ContentPart =>
-        (await contentManager.GetAsync(id, versionOptions))?.As<T>();
+        (await contentManager.GetAsync(id, versionOptions))?.TryGet<T>(out var result) == true ? result : null;
 
     /// <summary>
     /// Persists the given <paramref name="contentItem"/> with a new version if it does not exist yet, or updates it
@@ -54,7 +54,7 @@ public static class ContentManagerExtensions
             ? null
             : await contentManager.GetAsync(taxonomyContentItemId);
 
-        return taxonomy?.As<TaxonomyPart>()?.Terms ?? [];
+        return taxonomy?.GetOrCreate<TaxonomyPart>().Terms ?? [];
     }
 
     /// <summary>
@@ -68,7 +68,7 @@ public static class ContentManagerExtensions
         this IContentManager contentManager,
         string taxonomyId) =>
         (await contentManager.GetAsync(taxonomyId))
-        .As<TaxonomyPart>()
+        .GetOrCreate<TaxonomyPart>()
         .Terms
         .ToDictionary(term => term.ContentItemId, term => term.DisplayText);
 

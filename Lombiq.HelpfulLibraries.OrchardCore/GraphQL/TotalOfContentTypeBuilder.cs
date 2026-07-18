@@ -47,4 +47,9 @@ public class TotalOfContentTypeBuilder : IContentTypeBuilder
                 .CountAsync();
         });
     }
+
+    public void Clear()
+    {
+        // Nothing to do here.
+    }
 }

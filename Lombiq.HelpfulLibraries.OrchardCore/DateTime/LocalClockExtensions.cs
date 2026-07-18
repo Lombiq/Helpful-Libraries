@@ -48,11 +48,13 @@ public static class LocalClockExtensions
     /// </summary>
     public static async Task<string?> LocalizeAndFormatAsync(
         this ILocalClock localClock,
-        DateTime? dateTimeUtc)
+        DateTime? dateTimeUtc,
+        IFormatProvider? formatProvider = null)
     {
         if (dateTimeUtc == null) return null;
 
-        return ((DateTime?)(await localClock.ConvertToLocalAsync(dateTime: dateTimeUtc.Value)).DateTime).ToString();
+        var localTime = await localClock.ConvertToLocalAsync(dateTime: dateTimeUtc.Value);
+        return localTime.DateTime.ToString(formatProvider);
     }
 
     private static async Task<T> ExecuteInDifferentTimeZoneAsync<T>(HttpContext httpContext, string timeZoneId, Func<Task<T>> asyncAction)

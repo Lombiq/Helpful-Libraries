@@ -16,9 +16,19 @@ public static class ContentExtensions
     /// Gets a content part by its type.
     /// </summary>
     /// <returns>The content part or <see langword="null"/> if it doesn't exist.</returns>
+    [Obsolete($"Use {nameof(GetOrCreate)} instead.")]
     public static TPart? As<TPart>(this IContent content)
         where TPart : ContentPart =>
         content.ContentItem.As<TPart>();
+
+    /// <summary>
+    /// Gets a content part by its type or create a new one.
+    /// </summary>
+    /// <typeparam name="TPart">The type of the content part.</typeparam>
+    /// <returns>The content part instance or a new one if it doesn't exist.</returns>
+    public static TPart? GetMaybe<TPart>(this IContent? content)
+        where TPart : ContentPart, new() =>
+        content?.ContentItem?.TryGet<TPart>(out var part) == true ? part : null;
 
     /// <summary>
     /// Gets a content part by its type or create a new one.
@@ -129,7 +139,7 @@ public static class ContentExtensions
     /// </summary>
     /// <param name="content">Content item containing <see cref="AliasPart"/>.</param>
     /// <returns>Alias of the content item.</returns>
-    public static string? GetAlias(this IContent content) => content.As<AliasPart>()?.Alias;
+    public static string? GetAlias(this IContent content) => content.GetMaybe<AliasPart>()?.Alias;
 
     /// <summary>
     /// Provides the most essential data for a <see cref="ContentItem"/> enough to identify it in a text format. Can be

@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Abstractions;
 using OrchardCore.Mvc.Core.Utilities;
 using System;
 using System.Collections.Generic;
@@ -18,13 +20,37 @@ public static class MvcActionContextExtensions
         string? controller = null,
         string? area = null)
     {
-        var routeValues = context.ActionDescriptor.RouteValues;
+        var routeValues = new Dictionary<string, string?>(
+            context.ActionDescriptor.RouteValues,
+            StringComparer.OrdinalIgnoreCase);
 
-        if (!string.IsNullOrEmpty(action) && routeValues["Action"]?.EqualsOrdinalIgnoreCase(action) != true) return false;
-        if (!string.IsNullOrEmpty(controller) && routeValues["Controller"]?.EqualsOrdinalIgnoreCase(controller) != true) return false;
-        if (!string.IsNullOrEmpty(area) && routeValues["Area"]?.EqualsOrdinalIgnoreCase(area) != true) return false;
+        return
+            IsMatch(routeValues, "Action", action) &&
+            IsMatch(routeValues, "Controller", controller) &&
+            IsMatch(routeValues, "Area", area);
+    }
 
-        return true;
+    /// <summary>
+    /// Returns a value indicating whether the requested page matches the provided non-empty route values.
+    /// </summary>
+    public static bool IsMvcRoute(
+        this HttpContext context,
+        string? action = null,
+        string? controller = null,
+        string? area = null)
+    {
+        if (context.GetEndpoint()?.Metadata.GetMetadata<ActionDescriptor>()?.RouteValues is not { } routeValues)
+        {
+            return false;
+        }
+
+        // Make it case-insensitive.
+        routeValues = new Dictionary<string, string?>(routeValues, StringComparer.OrdinalIgnoreCase);
+
+        return
+            IsMatch(routeValues, "Action", action) &&
+            IsMatch(routeValues, "Controller", controller) &&
+            IsMatch(routeValues, "Area", area);
     }
 
     /// <summary>
@@ -37,4 +63,8 @@ public static class MvcActionContextExtensions
             _settingsAdminControllerName,
             $"{nameof(OrchardCore)}.{nameof(OrchardCore.Settings)}") &&
         context.RouteData.Values.GetMaybe("GroupId")?.ToString() == groupId;
+
+    private static bool IsMatch(IDictionary<string, string?> routeValues, string key, string? expected) =>
+        expected == null ||
+        (routeValues.TryGetValue(key, out var value) && (expected?.EqualsOrdinalIgnoreCase(value) ?? value is null));
 }

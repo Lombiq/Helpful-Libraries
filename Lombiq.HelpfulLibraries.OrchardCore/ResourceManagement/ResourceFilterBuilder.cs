@@ -164,12 +164,15 @@ public class ResourceFilterBuilder
             }
 
             var session = context.RequestServices.GetRequiredService<ISession>();
-            var query = displayType.EqualsOrdinalIgnoreCase("Edit") ?
-                // We check for both published and draft content items.
-                session.QueryIndex<ContentItemIndex>(index => index.Published || (index.Latest && !index.Published))
+
+            // In case of Edit, we check for both published and draft content items.
+            var query = string.Equals(displayType, "Edit", StringComparison.Ordinal)
+                ? session.QueryIndex<ContentItemIndex>(index => index.Published || (index.Latest && !index.Published))
                 : session.QueryContentItemIndex(PublicationStatus.Published);
-            var contentItemIndex = await query.Where(index => index.ContentItemId == contentItemId)
-                .FirstOrDefaultAsync();
+
+            var contentItemIndex = await query
+                .Where(index => index.ContentItemId == contentItemId)
+                .FirstOrDefaultAsync(context.RequestAborted);
             return contentItemIndex?.ContentType is { } contentType &&
                 contentTypes.Contains(contentType, StringComparer.OrdinalIgnoreCase);
         });
@@ -181,11 +184,9 @@ public class ResourceFilterBuilder
         {
             try
             {
-                if (HttpMethods.IsPost(context.Request.Method)
-                    && (context.Request.ContentType?.ContainsOrdinalIgnoreCase("application/x-www-form-urlencoded") ?? false)
-                    && context.Request.Form.TryGetValue("PreviewContentItemId", out var previewContentItemId))
+                if (context.Request.GetFormValueMaybe("PreviewContentItemId") is { } previewContentItemId)
                 {
-                    contentItemId = previewContentItemId.FirstOrDefault();
+                    contentItemId = previewContentItemId;
 
                     return true;
                 }
@@ -211,7 +212,6 @@ public class ResourceFilterBuilder
         }
 
         contentItemId = null;
-
         return false;
     }
 

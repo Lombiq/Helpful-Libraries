@@ -1,0 +1,18 @@
+<Solution>
+  <Folder Name="/Solution Items/">
+    <File Path="Directory.Build.props" />
+    <File Path="NuGet.config" />
+    <File Path="renovate.json5" />
+  </Folder>
+  <Project Path="Lombiq.HelpfulLibraries.AspNetCore/Lombiq.HelpfulLibraries.AspNetCore.csproj" />
+  <Project Path="Lombiq.HelpfulLibraries.Attributes/Lombiq.HelpfulLibraries.Attributes.csproj" />
+  <Project Path="Lombiq.HelpfulLibraries.Cli/Lombiq.HelpfulLibraries.Cli.csproj" />
+  <Project Path="Lombiq.HelpfulLibraries.Common/Lombiq.HelpfulLibraries.Common.csproj" />
+  <Project Path="Lombiq.HelpfulLibraries.LinqToDb/Lombiq.HelpfulLibraries.LinqToDb.csproj" />
+  <Project Path="Lombiq.HelpfulLibraries.OrchardCore.Testing/Lombiq.HelpfulLibraries.OrchardCore.Testing.csproj" />
+  <Project Path="Lombiq.HelpfulLibraries.OrchardCore/Lombiq.HelpfulLibraries.OrchardCore.csproj" />
+  <Project Path="Lombiq.HelpfulLibraries.Refit/Lombiq.HelpfulLibraries.Refit.csproj" />
+  <Project Path="Lombiq.HelpfulLibraries.RestEase/Lombiq.HelpfulLibraries.RestEase.csproj" />
+  <Project Path="Lombiq.HelpfulLibraries.SourceGenerators/Lombiq.HelpfulLibraries.SourceGenerators.csproj" />
+  <Project Path="Lombiq.HelpfulLibraries/Lombiq.HelpfulLibraries.csproj" />
+</Solution>

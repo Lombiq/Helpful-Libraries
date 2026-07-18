@@ -1,6 +1,7 @@
 using Lombiq.HelpfulLibraries.Tests.Models;
 using Shouldly;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Xunit;
@@ -22,12 +23,17 @@ public class ManualConnectingIndexServiceTests : IClassFixture<ManualConnectingI
     [Fact]
     public Task IndicesShouldHaveMatchingDocuments() => _fixture.SessionAsync(async session =>
     {
-        var indices = (await session.QueryIndex<TestDocumentIndex>().ListAsync()).ToList();
+        var indices = (await session.QueryIndex<TestDocumentIndex>().ListAsync(TestContext.Current.CancellationToken)).ToList();
         indices.ShouldNotBeEmpty();
 
-        var documents = (await session.Query<TestDocument, TestDocumentIndex>().ListAsync())
+        IDictionary<string, TestDocument> documents =
+            (await session.Query<TestDocument, TestDocumentIndex>().ListAsync(TestContext.Current.CancellationToken))
             .ToDictionary(document => document.Name);
-        foreach (var index in indices) documents.ShouldContainKey(NamePrefix + index.Number.ToTechnicalString());
+
+        foreach (var index in indices)
+        {
+            documents.ShouldContainKey(NamePrefix + index.Number.ToTechnicalString());
+        }
     });
 
     [Fact]
@@ -36,7 +42,7 @@ public class ManualConnectingIndexServiceTests : IClassFixture<ManualConnectingI
         // In the example 3's index was intentionally skipped and 6's index was deleted after the fact.
         var numbers = Enumerable.Range(0, 10).Where(i => i is not 3 and not 6).ToList();
         var query = session.Query<TestDocument, TestDocumentIndex>(index => index.Number.IsIn(numbers));
-        var list = await query.ListAsync();
+        var list = await query.ListAsync(TestContext.Current.CancellationToken);
         var documents = list.ToList();
         documents.Select(document => document.Name)
             .ShouldBe(_fixture.Documents.Where((_, index) => index is not 3 and not 6).Select(document => document.Name));
@@ -45,7 +51,10 @@ public class ManualConnectingIndexServiceTests : IClassFixture<ManualConnectingI
     [Fact]
     public Task MissingOrDeletedIndexShouldNotRetrieveAnyDocument() => _fixture.SessionAsync(async session =>
     {
-        var documents = (await session.Query<TestDocument, TestDocumentIndex>(index => index.Number.IsIn(Numbers)).ListAsync()).ToList();
+        var documents = (await session
+                .Query<TestDocument, TestDocumentIndex>(index => index.Number.IsIn(Numbers))
+                .ListAsync(TestContext.Current.CancellationToken))
+            .AsList();
         documents.ShouldBeEmpty();
     });
 }

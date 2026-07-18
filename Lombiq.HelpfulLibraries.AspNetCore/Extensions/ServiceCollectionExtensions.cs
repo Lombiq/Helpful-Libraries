@@ -11,5 +11,5 @@ public static class ServiceCollectionExtensions
     /// </summary>
     public static void AddAsyncResultFilter<TFilter>(this IServiceCollection services)
         where TFilter : IAsyncResultFilter =>
-        services.Configure<MvcOptions>(options => options.Filters.Add(typeof(TFilter)));
+        services.Configure<MvcOptions>(options => options.Filters.Add<TFilter>());
 }
