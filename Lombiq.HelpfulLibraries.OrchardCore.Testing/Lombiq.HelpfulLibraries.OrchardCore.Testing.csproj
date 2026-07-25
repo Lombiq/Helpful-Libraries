@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Moq.AutoMock" Version="4.0.1" />
+    <PackageReference Include="Moq.AutoMock" Version="4.0.2" />
   </ItemGroup>
 
   <ItemGroup>
