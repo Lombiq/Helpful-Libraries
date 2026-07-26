@@ -2,6 +2,10 @@
   <PropertyGroup>
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
+    <!-- The project already explicitly targeted only net10.0 before too, so PKV006 (target framework net8.0 dropped)
+         is a false positive caused by comparing against an older baseline package version; see
+         https://learn.microsoft.com/en-us/dotnet/fundamentals/apicompat/diagnostic-ids#how-to-suppress. -->
+    <NoWarn>$(NoWarn);PKV006</NoWarn>
   </PropertyGroup>
 
   <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.props" />
