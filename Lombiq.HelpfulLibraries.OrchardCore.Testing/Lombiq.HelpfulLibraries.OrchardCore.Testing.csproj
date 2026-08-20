@@ -17,7 +17,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Moq.AutoMock" Version="4.0.3" />
+    <!-- Excluding analyzers: the Moq.AutoMocker.Generators analyzer requires a newer Roslyn than the NuGet packaging
+         pipeline's compiler and isn't used by this project anyway. -->
+    <PackageReference Include="Moq.AutoMock" Version="4.0.3" ExcludeAssets="analyzers" />
   </ItemGroup>
 
   <ItemGroup>
