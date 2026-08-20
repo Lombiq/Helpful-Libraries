@@ -18,8 +18,8 @@
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="1.6.0" />
-    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.10" />
-    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.10" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="10.0.11" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="10.0.11" />
   </ItemGroup>
 
   <Import Condition="'$(NuGetBuild)' != 'true'" Project="../../../Utilities/Lombiq.MSBuild.Targets/Lombiq.MSBuild.Library.Sdk/Sdk/Import.targets" />
