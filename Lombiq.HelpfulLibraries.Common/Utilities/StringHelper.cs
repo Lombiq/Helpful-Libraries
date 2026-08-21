@@ -46,7 +46,7 @@ public static class StringHelper
     /// <remarks>
     /// <para>
     /// This doesn't actually work: the interpolation holes are formatted using the current culture at the call site
-    /// before this method ever runs, since there's no <see cref="System.Runtime.CompilerServices.InterpolatedStringHandlerArgumentAttribute"/>
+    /// before this method ever runs, since there's no <see cref="InterpolatedStringHandlerArgumentAttribute"/>
     /// wiring to pass the invariant culture into the handler's construction. Use <c>string.Create(CultureInfo.InvariantCulture,
     /// $"...")</c> directly instead. See <see
     /// href="https://github.com/meziantou/Meziantou.Analyzer/issues/1316#issuecomment-5363658245"/> for details.
