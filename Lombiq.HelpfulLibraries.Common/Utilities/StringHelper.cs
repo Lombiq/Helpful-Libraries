@@ -43,6 +43,18 @@ public static class StringHelper
     /// Creates a <see langword="string"/> from an interpolated string with the invariant culture. This prevents
     /// culture-sensitive formatting of interpolated values.
     /// </summary>
+    /// <remarks>
+    /// <para>
+    /// This doesn't actually work: the interpolation holes are formatted using the current culture at the call site
+    /// before this method ever runs, since there's no <see cref="InterpolatedStringHandlerArgumentAttribute"/>
+    /// wiring to pass the invariant culture into the handler's construction. Use <c>string.Create(CultureInfo.InvariantCulture,
+    /// $"...")</c> directly instead. See <see
+    /// href="https://github.com/meziantou/Meziantou.Analyzer/issues/1316#issuecomment-5363658245"/> for details.
+    /// </para>
+    /// </remarks>
+    [Obsolete("This doesn't actually apply the invariant culture to interpolation holes. Use " +
+        "string.Create(CultureInfo.InvariantCulture, $\"...\") directly instead. See " +
+        "https://github.com/meziantou/Meziantou.Analyzer/issues/1316#issuecomment-5363658245.")]
     public static string CreateInvariant(this DefaultInterpolatedStringHandler value) =>
         string.Create(CultureInfo.InvariantCulture, ref value);
 

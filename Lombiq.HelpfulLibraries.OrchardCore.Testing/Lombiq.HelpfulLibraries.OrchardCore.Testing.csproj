@@ -17,6 +17,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <!-- Kept on 4.0.2: 4.0.3's Moq.AutoMocker.Generators analyzer requires a newer Roslyn than the NuGet packaging
+         pipeline's compiler supports, breaking "dotnet pack" with CS9057. Not used by this project anyway. -->
     <PackageReference Include="Moq.AutoMock" Version="4.0.2" />
   </ItemGroup>
 

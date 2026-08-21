@@ -1,4 +1,3 @@
-using Lombiq.HelpfulLibraries.Common.Utilities;
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -78,8 +77,8 @@ public abstract class WidgetFilterBase<TViewModel> : IAsyncResultFilter
 
         if (AdminOnly && FrontEndOnly)
         {
-            throw new InvalidOperationException(StringHelper.CreateInvariant(
-                $"You must not set both {nameof(AdminOnly)} and {nameof(FrontEndOnly)} to true!"));
+            throw new InvalidOperationException(
+                $"You must not set both {nameof(AdminOnly)} and {nameof(FrontEndOnly)} to true!");
         }
 
         var isAdmin = AdminAttribute.IsApplied(httpContext);
