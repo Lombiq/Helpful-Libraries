@@ -22,6 +22,16 @@
             enabled: false,
         },
         {
+            // Moq.AutoMock ships the Moq.AutoMocker.Generators analyzer, which can require a newer Roslyn than the
+            // NuGet packaging pipeline's compiler, causing the same kind of CS9057 error as Microsoft.CodeAnalysis.CSharp
+            // above (see OSOE-1311). So, we need to update it manually and verify the "Validate NuGet Publish" workflow
+            // still passes.
+            matchPackageNames: [
+                'Moq.AutoMock',
+            ],
+            enabled: false,
+        },
+        {
             groupName: 'Microsoft.Extensions',
             matchPackageNames: [
                 'Microsoft.Extensions.*',
