@@ -136,8 +136,7 @@ public static class HostingDefaultsOrchardCoreBuilderExtensions
                     "OrchardCore.Liquid",
                     "OrchardCore.Media",
                     "OrchardCore.Media.Azure.Storage",
-                    "OrchardCore.Media.Cache",
-                    "OrchardCore.Settings");
+                    "OrchardCore.Media.Cache");
             }
         }
 
