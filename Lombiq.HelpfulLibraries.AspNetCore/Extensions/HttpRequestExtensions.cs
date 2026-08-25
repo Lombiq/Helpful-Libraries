@@ -32,8 +32,7 @@ public static class HttpRequestExtensions
         if (queryString.StartsWith('?')) queryString = queryString[1..];
 
         var pageQuery = string.IsNullOrEmpty(queryString)
-            // MA0185 doesn't apply: value is an arbitrary object that can hold culture-sensitive data at runtime.
-#pragma warning disable MA0185
+#pragma warning disable MA0185 // doesn't apply: value is an arbitrary object that can hold culture-sensitive data at runtime.
             ? string.Create(CultureInfo.InvariantCulture, $"{key}={value}")
             : string.Create(CultureInfo.InvariantCulture, $"&{key}={value}");
 #pragma warning restore MA0185
