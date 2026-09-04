@@ -27,7 +27,8 @@ public class GoogleAnalyticsContentSecurityPolicyProvider : IContentSecurityPoli
 
         if (googleAnalyticsIsEnabled)
         {
-            CspHelper.MergeValues(securityPolicies, ScriptSrc, "www.googletagmanager.com");
+            CspHelper.MergeValues(securityPolicies, ScriptSrc, "www.googletagmanager.com", "www.google-analytics.com");
+            CspHelper.MergeValues(securityPolicies, ImgSrc, "www.googletagmanager.com");
             CspHelper.MergeValues(securityPolicies, ConnectSrc, "*.google-analytics.com");
         }
     }
