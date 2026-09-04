@@ -17,7 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="CliWrap" Version="3.10.4" />
+    <PackageReference Include="CliWrap" Version="3.10.5" />
   </ItemGroup>
 
   <ItemGroup>
