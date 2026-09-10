@@ -3,9 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using OrchardCore.Environment.Shell;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-
 using static Lombiq.HelpfulLibraries.AspNetCore.Security.ContentSecurityPolicyDirectives;
 
 namespace Lombiq.HelpfulLibraries.OrchardCore.Security;

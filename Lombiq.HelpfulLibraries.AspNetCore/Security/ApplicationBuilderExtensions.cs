@@ -50,6 +50,9 @@ public static class ApplicationBuilderExtensions
                 [WorkerSrc] = CommonValues.Self,
                 // Needed for SVG images using "data:image/svg+xml,..." data URLs.
                 [ImgSrc] = $"{CommonValues.Self} {CommonValues.Data}",
+                // Needed for fonts loaded using "@font-face" as data URLs. Note that Chrome doesn't
+                // care if this directive is missing, but Firefox is stricter about it.
+                [FontSrc] = $"{CommonValues.Self} {CommonValues.Data}",
                 // Modern sites shouldn't need <object>, <embed>, and <applet> elements.
                 [ObjectSrc] = CommonValues.None,
                 // Necessary to prevent clickjacking (https://developer.mozilla.org/en-US/docs/Glossary/Clickjacking).
