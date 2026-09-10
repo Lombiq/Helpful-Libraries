@@ -44,7 +44,7 @@ public class TotalOfContentTypeBuilder : IContentTypeBuilder
                 index.Published &&
                 index.Latest &&
                 index.ContentType == name)
-                .CountAsync();
+                .CountAsync(context.CancellationToken);
         });
     }
 
