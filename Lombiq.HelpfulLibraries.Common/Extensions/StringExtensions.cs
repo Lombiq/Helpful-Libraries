@@ -159,6 +159,12 @@ public static class StringExtensions
         text.EndsWith(value, StringComparison.Ordinal);
 
     /// <summary>
+    /// A shortcut for <c>string.Replace(string, string, StringComparison.Ordinal)</c>.
+    /// </summary>
+    public static string ReplaceOrdinal(this string text, string oldValue, string? newValue = "") =>
+        text.Replace(oldValue, newValue ?? string.Empty, StringComparison.Ordinal);
+
+    /// <summary>
     /// A shortcut for <c>string.CompareOrdinal(string, string)</c> static method.
     /// </summary>
     /// <remarks>
