@@ -1,4 +1,4 @@
-﻿using Lombiq.HelpfulLibraries.OrchardCore.Contents;
+using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Lombiq.HelpfulLibraries.OrchardCore.Fields;
 using OrchardCore.ContentFields.Settings;
 using System;
@@ -65,4 +65,12 @@ public static class ContentPartFieldDefinitionBuilderExtensions
                     .Select(name => new ListValueOption(name, name))
                     .ToArray(),
             });
+
+    /// <summary>
+    /// Configures the content field to be of type <typeparamref name="TField"/>. Shortcut to <see
+    /// cref="ContentPartFieldDefinitionBuilder.OfType(string)"/> that uses the name of the type as the field type name.
+    /// </summary>
+    /// <typeparam name="TField">The type of the content field.</typeparam>
+    public static ContentPartFieldDefinitionBuilder OfType<TField>(this ContentPartFieldDefinitionBuilder builder) =>
+        builder.OfType(nameof(TField));
 }
