@@ -55,6 +55,16 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
     ];
 
     /// <summary>
+    /// Gets the sources that will be added to the <see cref="ConnectSrc"/> directive, on top of everything in <see
+    /// cref="PermittedStyleSources"/>, <see cref="PermittedScriptSources"/> and <see cref="PermittedFontSources"/>.
+    /// </summary>
+    public static ConcurrentBag<string> PermittedConnectSources { get; } =
+    [
+        // Needed by some remote services such as ReCaptcha.
+        "www.google.com",
+    ];
+
+    /// <summary>
     /// Gets the sources that will be added to the <see cref="FrameSrc"/> directive.
     /// </summary>
     public static ConcurrentBag<string> PermittedFrameSources { get; } = [];
@@ -100,7 +110,10 @@ public class CdnContentSecurityPolicyProvider : IContentSecurityPolicyProvider
 
         if (any)
         {
-            var allPermittedSources = PermittedStyleSources.Concat(PermittedScriptSources).Concat(PermittedFontSources);
+            var allPermittedSources = PermittedStyleSources
+                .Concat(PermittedScriptSources)
+                .Concat(PermittedFontSources)
+                .Concat(PermittedConnectSources);
             CspHelper.MergeValues(securityPolicies, ConnectSrc, allPermittedSources);
         }
 
