@@ -72,5 +72,5 @@ public static class ContentPartFieldDefinitionBuilderExtensions
     /// </summary>
     /// <typeparam name="TField">The type of the content field.</typeparam>
     public static ContentPartFieldDefinitionBuilder OfType<TField>(this ContentPartFieldDefinitionBuilder builder) =>
-        builder.OfType(nameof(TField));
+        builder.OfType(typeof(TField).Name);
 }
