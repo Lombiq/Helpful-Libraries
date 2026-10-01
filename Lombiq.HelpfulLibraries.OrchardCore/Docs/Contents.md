@@ -20,6 +20,10 @@
 - `ContentVersionNumberServiceExtensions`: Adds extension methods for retrieving `IContent` version numbers to `IContentVersionNumberService`.
 - `IdStringExtensions`: Adds extension methods relating to content item ID generation.
 
+## Handlers
+
+- `TextFieldDataAnnotationValidationHandler`: Adds data annotation validation to a content type's `TextField` fields. Register it using `services.AddContentPart<TPart>().AddTextFieldDataAnnotationValidationHandler();`.
+
 ## Helpers
 
 - `ContentExceptionHelpers`: Using these helpers, arguments can be tested without writing `if` statements, for example to check if the `ContentItem` has the given part attached to it.

@@ -1,5 +1,6 @@
 using Lombiq.HelpfulLibraries.OrchardCore.Contents;
 using Microsoft.Extensions.DependencyInjection;
+using OrchardCore.ContentFields.Fields;
 using OrchardCore.ContentManagement.Display.ContentDisplay;
 using OrchardCore.Data;
 using OrchardCore.Data.Migration;
@@ -70,4 +71,33 @@ public static class ContentPartOptionBuilderExtensions
     /// </summary>
     public static ContentPartOptionBuilder UseDetailOnlyDriver(this ContentPartOptionBuilder builder) =>
         builder.UseSingleDisplayTypeContentPartDisplayDriver(typeof(DetailOnlyContentPartDisplayDriver<>));
+
+    /// <summary>
+    /// Registers <see cref="TextFieldDataAnnotationValidationHandler{TPart}"/> for the current content part.
+    /// </summary>
+    /// <param name="builder"></param>
+    /// <typeparam name="TPart"></typeparam>
+    /// <returns></returns>
+    public static ContentPartOptionBuilder AddTextFieldDataAnnotationValidationHandler(this ContentPartOptionBuilder builder)
+    {
+        var type = builder.ToContentPartType(typeof(TextFieldDataAnnotationValidationHandler<>));
+
+        builder
+            .Services
+            .AddContentField<TextField>()
+            .AddHandler(type);
+
+        return builder;
+    }
+
+    /// <summary>
+    /// Converts the <c>typeof(SomeType&lt;&gt;)</c> type into one specific to the type of the current <paramref
+    /// name="builder"/>.
+    /// </summary>
+    public static Type ToContentPartType(this ContentPartOptionBuilder builder, Type type)
+    {
+        if (type.GenericTypeArguments.Length == 1) type = type.GetGenericTypeDefinition();
+        if (type.IsGenericType) type = type.MakeGenericType(builder.ContentPartType);
+        return type;
+    }
 }
