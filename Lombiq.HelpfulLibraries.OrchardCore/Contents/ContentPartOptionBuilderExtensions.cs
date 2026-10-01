@@ -75,9 +75,6 @@ public static class ContentPartOptionBuilderExtensions
     /// <summary>
     /// Registers <see cref="TextFieldDataAnnotationValidationHandler{TPart}"/> for the current content part.
     /// </summary>
-    /// <param name="builder"></param>
-    /// <typeparam name="TPart"></typeparam>
-    /// <returns></returns>
     public static ContentPartOptionBuilder AddTextFieldDataAnnotationValidationHandler(this ContentPartOptionBuilder builder)
     {
         var type = builder.ToContentPartType(typeof(TextFieldDataAnnotationValidationHandler<>));
