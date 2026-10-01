@@ -20,7 +20,7 @@ namespace Lombiq.HelpfulLibraries.Tests.UnitTests.ValidationTests;
 public class DataAnnotationValidatorTests
 {
     [Fact]
-    public static void ToContentPartTypeShouldReturnCorrectType()
+    public void ToContentPartTypeShouldReturnCorrectType()
     {
         var services = new ServiceCollection();
         var builder = services.AddContentPart<TestContentPart>();
