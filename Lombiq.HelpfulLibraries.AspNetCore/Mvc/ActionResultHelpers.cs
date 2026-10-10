@@ -22,7 +22,7 @@ public static class ActionResultHelpers
 
         using (var archive = new ZipArchive(outStream, ZipArchiveMode.Create, leaveOpen: true))
         {
-            foreach ((string fileName, var fileStream) in files)
+            foreach (var (fileName, fileStream) in files)
             {
                 var entry = archive.CreateEntry(fileName, CompressionLevel.Optimal);
                 using var entryStream = entry.Open();
