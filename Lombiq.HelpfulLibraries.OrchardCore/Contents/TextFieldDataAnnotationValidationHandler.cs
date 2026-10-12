@@ -49,6 +49,11 @@ public class TextFieldDataAnnotationValidationHandler<TPart> : ContentFieldHandl
         T = stringLocalizer;
     }
 
+    public override Task CreatedAsync(CreateContentFieldContext context, TextField field) =>
+        UpdatingAsync(
+            new UpdateContentFieldContext(context.ContentItem) { ContentPartFieldDefinition = context.ContentPartFieldDefinition },
+            field);
+
     public override Task UpdatingAsync(UpdateContentFieldContext context, TextField field)
     {
         ArgumentNullException.ThrowIfNull(context);
