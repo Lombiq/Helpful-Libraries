@@ -41,7 +41,7 @@ public static class EnumerableExtensions
     /// <returns><see langword="true"/> if the <paramref name="source"/> had at least one item.</returns>
     public static bool ForEach<T>(this IEnumerable<T> source, Action<T> action, Action<T>? beforeFirst = null)
     {
-        bool any = false;
+        var any = false;
 
         foreach (var item in source)
         {
@@ -78,7 +78,7 @@ public static class EnumerableExtensions
         Func<TItem, int, Task<TResult>> asyncOperation)
     {
         var results = new List<TResult>();
-        int index = 0;
+        var index = 0;
         foreach (var item in source) results.Add(await asyncOperation(item, index++));
         return results;
     }
@@ -402,10 +402,10 @@ public static class EnumerableExtensions
 
         if (!isSortedByStart) ranges.Sort((left, right) => left.Start.Value - right.Start.Value);
 
-        for (int currentIndex = 0; currentIndex < ranges.Count - 1; currentIndex++)
+        for (var currentIndex = 0; currentIndex < ranges.Count - 1; currentIndex++)
         {
             var current = ranges[currentIndex];
-            int followingIndex = currentIndex + 1;
+            var followingIndex = currentIndex + 1;
 
             while (followingIndex < ranges.Count && ranges[followingIndex].Start.Value < current.End.Value)
             {

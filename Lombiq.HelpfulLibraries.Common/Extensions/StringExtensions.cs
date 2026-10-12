@@ -290,10 +290,10 @@ public static class StringExtensions
         if (string.IsNullOrEmpty(value)) yield break;
 
         var count = text.Length - value.Length;
-        for (int textIndex = 0; textIndex < count; textIndex++)
+        for (var textIndex = 0; textIndex < count; textIndex++)
         {
             var match = true;
-            for (int valueIndex = 0; match && valueIndex < value.Length; valueIndex++)
+            for (var valueIndex = 0; match && valueIndex < value.Length; valueIndex++)
             {
                 if (text[textIndex + valueIndex] != value[valueIndex]) match = false;
             }
@@ -412,7 +412,7 @@ public static class StringExtensions
             results.Add(startRange);
         }
 
-        for (int i = 0; i < ranges.Count - 1; i++)
+        for (var i = 0; i < ranges.Count - 1; i++)
         {
             var range = new Range(ranges[i].End, ranges[i + 1].Start);
             if (range.Start.Value < range.End.Value) results.Add(range);

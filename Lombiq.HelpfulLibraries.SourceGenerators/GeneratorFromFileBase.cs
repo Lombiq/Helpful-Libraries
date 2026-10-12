@@ -44,7 +44,7 @@ public abstract class GeneratorFromFileBase : IIncrementalGenerator
 
         context.RegisterSourceOutput(namesAndContents.Collect(), (_, contents) =>
         {
-            foreach ((string? content, string path) in contents)
+            foreach (var (content, path) in contents)
             {
                 // Check if path already exists
                 if (!filesAndContents.ContainsKey(path))
