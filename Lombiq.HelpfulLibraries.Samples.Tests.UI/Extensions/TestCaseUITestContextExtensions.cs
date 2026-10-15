@@ -32,6 +32,7 @@ public static class TestCaseUITestContextExtensions
         var simpleQueryOutput = await client.GetStringAsync(simpleQueryUrl, context.Configuration.TestCancellationToken);
         var simpleQueryParsed = JsonSerializer.Deserialize<IList<Dictionary<string, object>>>(simpleQueryOutput);
 
+#pragma warning disable IDE0055 // Needed for inline comments.
         // Cleanup received data.
         simpleQueryParsed = simpleQueryParsed
             .Select(item => item
@@ -42,6 +43,7 @@ public static class TestCaseUITestContextExtensions
                 .OrderBy(pair => pair.Key)
                 .ToDictionary(pair => pair.Key, pair => pair.Value))
             .ToList();
+#pragma warning restore IDE0055
 
         // The results are re-serialized into JSON using standard options, so they can be compared in a consistent way.
         var reserialized = JsonSerializer.Serialize(simpleQueryParsed, JOptions.Default);

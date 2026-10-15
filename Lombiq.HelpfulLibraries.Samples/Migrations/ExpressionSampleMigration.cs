@@ -29,6 +29,7 @@ public sealed class ExpressionSampleMigration : DataMigration
         "StyleCop.CSharp.ReadabilityRules",
         "SA1114:Parameter list should follow declaration",
         Justification = "Needed for commenting first arguments.")]
+    [SuppressMessage("Style", "IDE0055:Fix formatting", Justification = "Needed for inline comments.")]
     public async Task<int> CreateAsync()
     {
         await _contentDefinitionManager.AlterTypeDefinitionAsync(ExpressionContent, async type => type
