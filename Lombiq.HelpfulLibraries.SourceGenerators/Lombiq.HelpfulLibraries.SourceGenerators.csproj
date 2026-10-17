@@ -42,7 +42,7 @@
         <!-- Take a private dependency on with (PrivateAssets=all) Consumers of this generator will not reference it.
              Set GeneratePathProperty=true so we can reference the binaries -->
         <PackageReference Include="System.Text.Json" Version="10.0.13" PrivateAssets="all" GeneratePathProperty="true" />
-        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.6.0" GeneratePathProperty="true">
+        <PackageReference Include="Microsoft.CodeAnalysis.Analyzers" Version="5.9.0" GeneratePathProperty="true">
           <PrivateAssets>all</PrivateAssets>
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
