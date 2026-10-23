@@ -18,7 +18,8 @@ namespace Lombiq.HelpfulLibraries.OrchardCore.Shapes;
 /// <summary>
 /// An altered version of <see cref="ShapeTemplateBindingStrategy"/> that only skips the features it has already bound
 /// the templates to. The original skips the whole extension if any of its features already has a shape descriptor, even
-/// if it's from another <see cref="IShapeTableProvider"/>, so on some tenants the templates are never bound.
+/// if it's from another <see cref="IShapeTableProvider"/>, so on some tenants the templates are never bound. See
+/// <see href="https://github.com/OrchardCMS/OrchardCore/issues/20102"/>.
 /// </summary>
 public class ShapeTemplateBindingStrategyHotfix : ShapeTableProvider, IShapeTableHarvester
 {
